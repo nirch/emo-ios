@@ -1,0 +1,18 @@
+//
+//  emo-prefix.pch
+//  emo
+//
+//  Created by Aviv Wolf on 1/27/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
+//
+
+#ifndef emo_emo_prefix_pch
+#define emo_emo_prefix_pch
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "HMNotificationCenter.h"
+#endif
+
+#endif

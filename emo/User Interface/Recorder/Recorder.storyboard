@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Recorder View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="RecorderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" userLabel="Recording View">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cat-fk-puC" userLabel="Camera preview container">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <connections>
+                                    <segue destination="0Kv-p9-mo5" kind="embed" id="Rkn-hd-Bvg"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WpW-ex-edX" userLabel="Safe frame container">
+                                <rect key="frame" x="0.0" y="124" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="WpW-ex-edX" secondAttribute="height" multiplier="1:1" id="QWM-ju-XTL"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="QwO-lL-lLe" kind="embed" id="TRX-Nc-cpX"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aT-Dl-fP6" userLabel="Top bar container">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="NbN-Rf-bOa" kind="embed" id="7Vl-an-xbg"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ooa-Vx-VYG" userLabel="Bottom bar container">
+                                <rect key="frame" x="0.0" y="444" width="320" height="124"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="a6c-JL-B8V" kind="embed" id="9L8-jD-Tjv"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47C-Qd-Sw6" userLabel="RecordButton" customClass="HMRecordButton">
+                                <rect key="frame" x="116" y="400" width="88" height="88"/>
+                                <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="88" id="3Hm-wR-p9X"/>
+                                    <constraint firstAttribute="width" constant="88" id="hpq-7y-jhO"/>
+                                </constraints>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WpW-ex-edX" firstAttribute="top" secondItem="4aT-Dl-fP6" secondAttribute="bottom" id="78N-1I-XKf"/>
+                            <constraint firstAttribute="centerY" secondItem="WpW-ex-edX" secondAttribute="centerY" id="7Sq-YB-yGZ"/>
+                            <constraint firstItem="WpW-ex-edX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HYL-Yr-nfl"/>
+                            <constraint firstAttribute="centerX" secondItem="4aT-Dl-fP6" secondAttribute="centerX" id="HbR-Ll-mW3"/>
+                            <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="WpW-ex-edX" secondAttribute="bottom" id="RUI-Dr-wtz"/>
+                            <constraint firstAttribute="centerX" secondItem="Ooa-Vx-VYG" secondAttribute="centerX" id="USi-R1-17t"/>
+                            <constraint firstAttribute="centerY" secondItem="Cat-fk-puC" secondAttribute="centerY" id="Y0X-IQ-Gv2"/>
+                            <constraint firstItem="Cat-fk-puC" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="cUg-PP-8Jb"/>
+                            <constraint firstAttribute="centerX" secondItem="Cat-fk-puC" secondAttribute="centerX" id="cuw-ec-Dq1"/>
+                            <constraint firstAttribute="centerX" secondItem="47C-Qd-Sw6" secondAttribute="centerX" id="ec1-o2-juP"/>
+                            <constraint firstItem="4aT-Dl-fP6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oGh-S8-WRU"/>
+                            <constraint firstAttribute="trailing" secondItem="WpW-ex-edX" secondAttribute="trailing" id="ofB-tk-dVT"/>
+                            <constraint firstItem="Ooa-Vx-VYG" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="t4Y-ee-GGj"/>
+                            <constraint firstAttribute="centerX" secondItem="WpW-ex-edX" secondAttribute="centerX" id="tlq-V1-rVz"/>
+                            <constraint firstAttribute="width" secondItem="4aT-Dl-fP6" secondAttribute="width" id="twA-uK-Gbg"/>
+                            <constraint firstAttribute="bottom" secondItem="Ooa-Vx-VYG" secondAttribute="bottom" id="vDC-3f-uql"/>
+                            <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="47C-Qd-Sw6" secondAttribute="bottom" constant="-44" id="vyn-Xh-siy"/>
+                            <constraint firstItem="Cat-fk-puC" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="zAd-tk-olP"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="guiUserControls1Container" destination="4aT-Dl-fP6" id="fVK-cS-ca9"/>
+                        <outlet property="guiUserControls2Container" destination="Ooa-Vx-VYG" id="s2p-Oa-cJ2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="205" y="372"/>
+        </scene>
+        <!--User Frame View Controller-->
+        <scene sceneID="SYd-IN-MO5">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="QwO-lL-lLe" userLabel="User Frame View Controller" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hM8-Vp-2E1"/>
+                        <viewControllerLayoutGuide type="bottom" id="RHl-dB-wtt"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jPb-O8-h64">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vPa-4G-xXx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="806" y="372"/>
+        </scene>
+        <!--Controls Bar View Controller-->
+        <scene sceneID="9Uc-aC-DSy">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="a6c-JL-B8V" customClass="ControlsBarViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="veJ-iE-8dV"/>
+                        <viewControllerLayoutGuide type="bottom" id="TS7-ur-yWf"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Ssc-ej-ngw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lK8-Fu-O5s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="806" y="678"/>
+        </scene>
+        <!--Controls Bar View Controller-->
+        <scene sceneID="H33-DB-oiR">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="NbN-Rf-bOa" customClass="ControlsBarViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pi0-Rv-YGO"/>
+                        <viewControllerLayoutGuide type="bottom" id="xx0-d2-9ba"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MlL-Sl-qUa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ILw-aN-rDW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="806" y="90"/>
+        </scene>
+        <!--Preview View Controller-->
+        <scene sceneID="QHD-cI-qET">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="0Kv-p9-mo5" customClass="PreviewViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wFo-zL-OkK"/>
+                        <viewControllerLayoutGuide type="bottom" id="qlu-V1-Eoh"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jaF-l1-Yz8" userLabel="Camera GL preview view" customClass="HMPreviewView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="guiGLPreviewView" destination="jaF-l1-Yz8" id="xWe-Yp-ofD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="72e-54-hbI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="205" y="1106"/>
+        </scene>
+    </scenes>
+</document>

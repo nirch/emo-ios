@@ -1,0 +1,688 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
+		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
+		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
+		089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
+		089E78BF1A78116A00BC3479 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78BD1A78116A00BC3479 /* main.m */; };
+		089E78C31A78171B00BC3479 /* ControlsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78C21A78171B00BC3479 /* ControlsBarViewController.m */; };
+		089E78C91A78E7B700BC3479 /* HMRecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78C81A78E7B700BC3479 /* HMRecordButton.m */; };
+		089E78CD1A78FFFF00BC3479 /* EmoStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78CC1A78FFFF00BC3479 /* EmoStyleKit.m */; };
+		08D929A71A77A36D00B6A68F /* emoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929A61A77A36D00B6A68F /* emoTests.m */; };
+		08D929B61A77B96500B6A68F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929B21A77B96500B6A68F /* AppDelegate.m */; };
+		08D929BD1A77B96E00B6A68F /* emo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08D929BB1A77B96E00B6A68F /* emo.xcdatamodeld */; };
+		08D929C41A77B97600B6A68F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08D929BF1A77B97600B6A68F /* Images.xcassets */; };
+		08D929C51A77B97600B6A68F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D929C01A77B97600B6A68F /* LaunchScreen.xib */; };
+		08D929CD1A77CC1A00B6A68F /* Recorder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08D929CA1A77CC1A00B6A68F /* Recorder.storyboard */; };
+		08D929CE1A77CC1A00B6A68F /* RecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929CC1A77CC1A00B6A68F /* RecorderViewController.m */; };
+		08D929DF1A77D17200B6A68F /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929DE1A77D17200B6A68F /* PreviewViewController.m */; };
+		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
+		08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */; };
+		08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EC1A77E0B000B6A68F /* AVFoundation.framework */; };
+		08D929EF1A77E0BC00B6A68F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EE1A77E0BC00B6A68F /* CoreMedia.framework */; };
+		08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F01A77E0C300B6A68F /* CoreVideo.framework */; };
+		08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F21A77E0D500B6A68F /* QuartzCore.framework */; };
+		08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */; };
+		08D92A001A77EFBD00B6A68F /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FA1A77EFBD00B6A68F /* HMCaptureSession.mm */; };
+		08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */; };
+		08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		08D929A11A77A36D00B6A68F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D9297C1A77A36D00B6A68F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08D929831A77A36D00B6A68F;
+			remoteInfo = emo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089E78AD1A77FD8600BC3479 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
+		089E78AE1A77FD8600BC3479 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
+		089E78B21A780DEB00BC3479 /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
+		089E78B31A780DEB00BC3479 /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
+		089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
+		089E78B51A780DEB00BC3479 /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
+		089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
+		089E78BB1A78116A00BC3479 /* emo-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "emo-prefix.pch"; sourceTree = "<group>"; };
+		089E78BC1A78116A00BC3479 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		089E78BD1A78116A00BC3479 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		089E78C11A78171B00BC3479 /* ControlsBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlsBarViewController.h; sourceTree = "<group>"; };
+		089E78C21A78171B00BC3479 /* ControlsBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlsBarViewController.m; sourceTree = "<group>"; };
+		089E78C71A78E7B700BC3479 /* HMRecordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRecordButton.h; sourceTree = "<group>"; };
+		089E78C81A78E7B700BC3479 /* HMRecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecordButton.m; sourceTree = "<group>"; };
+		089E78CB1A78FFFF00BC3479 /* EmoStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoStyleKit.h; sourceTree = "<group>"; };
+		089E78CC1A78FFFF00BC3479 /* EmoStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoStyleKit.m; sourceTree = "<group>"; };
+		08D929841A77A36D00B6A68F /* emo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08D929A01A77A36D00B6A68F /* emoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = emoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08D929A51A77A36D00B6A68F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08D929A61A77A36D00B6A68F /* emoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = emoTests.m; sourceTree = "<group>"; };
+		08D929B11A77B96500B6A68F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		08D929B21A77B96500B6A68F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		08D929BC1A77B96E00B6A68F /* emo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emo.xcdatamodel; sourceTree = "<group>"; };
+		08D929BF1A77B97600B6A68F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		08D929C01A77B97600B6A68F /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		08D929CA1A77CC1A00B6A68F /* Recorder.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Recorder.storyboard; sourceTree = "<group>"; };
+		08D929CB1A77CC1A00B6A68F /* RecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderViewController.h; sourceTree = "<group>"; };
+		08D929CC1A77CC1A00B6A68F /* RecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderViewController.m; sourceTree = "<group>"; };
+		08D929DD1A77D17200B6A68F /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
+		08D929DE1A77D17200B6A68F /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		08D929E81A77E09200B6A68F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		08D929EC1A77E0B000B6A68F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		08D929EE1A77E0BC00B6A68F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		08D929F01A77E0C300B6A68F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		08D929F21A77E0D500B6A68F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		08D929F91A77EFBD00B6A68F /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
+		08D929FA1A77EFBD00B6A68F /* HMCaptureSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMCaptureSession.mm; sourceTree = "<group>"; };
+		08D929FC1A77EFBD00B6A68F /* HMPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMPreviewView.h; sourceTree = "<group>"; };
+		08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPreviewView.m; sourceTree = "<group>"; };
+		08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
+		08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		08D929811A77A36D00B6A68F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */,
+				08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */,
+				08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */,
+				08D929EF1A77E0BC00B6A68F /* CoreMedia.framework in Frameworks */,
+				08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */,
+				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
+				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08D9299D1A77A36D00B6A68F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089E78AC1A77FD8600BC3479 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				089E78AD1A77FD8600BC3479 /* passThrough.fsh */,
+				089E78AE1A77FD8600BC3479 /* passThrough.vsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		089E78B11A780DEB00BC3479 /* notifications center */ = {
+			isa = PBXGroup;
+			children = (
+				089E78B21A780DEB00BC3479 /* HMNotificationCenter.h */,
+				089E78B31A780DEB00BC3479 /* NSNotification+Utils.h */,
+				089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */,
+				089E78B51A780DEB00BC3479 /* NSNotificationCenter+Utils.h */,
+				089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */,
+			);
+			path = "notifications center";
+			sourceTree = "<group>";
+		};
+		089E78BA1A78116A00BC3479 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				089E78BB1A78116A00BC3479 /* emo-prefix.pch */,
+				089E78BC1A78116A00BC3479 /* Info.plist */,
+				089E78BD1A78116A00BC3479 /* main.m */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		089E78C01A7816B700BC3479 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				089E78C11A78171B00BC3479 /* ControlsBarViewController.h */,
+				089E78C21A78171B00BC3479 /* ControlsBarViewController.m */,
+				089E78C71A78E7B700BC3479 /* HMRecordButton.h */,
+				089E78C81A78E7B700BC3479 /* HMRecordButton.m */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		089E78CA1A78FFFF00BC3479 /* Style Kit */ = {
+			isa = PBXGroup;
+			children = (
+				089E78CB1A78FFFF00BC3479 /* EmoStyleKit.h */,
+				089E78CC1A78FFFF00BC3479 /* EmoStyleKit.m */,
+			);
+			path = "Style Kit";
+			sourceTree = "<group>";
+		};
+		08D9297B1A77A36D00B6A68F = {
+			isa = PBXGroup;
+			children = (
+				08D929861A77A36D00B6A68F /* emo */,
+				08D929F71A77EFBD00B6A68F /* homageSDK */,
+				08D929A31A77A36D00B6A68F /* emoTests */,
+				08D929851A77A36D00B6A68F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		08D929851A77A36D00B6A68F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08D929841A77A36D00B6A68F /* emo.app */,
+				08D929A01A77A36D00B6A68F /* emoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08D929861A77A36D00B6A68F /* emo */ = {
+			isa = PBXGroup;
+			children = (
+				08D929B01A77B96500B6A68F /* App */,
+				08D929BE1A77B97600B6A68F /* User Interface */,
+				08D929B91A77B96E00B6A68F /* Data */,
+				08D929F61A77E14400B6A68F /* Frameworks */,
+			);
+			path = emo;
+			sourceTree = "<group>";
+		};
+		08D929A31A77A36D00B6A68F /* emoTests */ = {
+			isa = PBXGroup;
+			children = (
+				08D929A61A77A36D00B6A68F /* emoTests.m */,
+				08D929A41A77A36D00B6A68F /* Supporting Files */,
+			);
+			path = emoTests;
+			sourceTree = "<group>";
+		};
+		08D929A41A77A36D00B6A68F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				08D929A51A77A36D00B6A68F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		08D929B01A77B96500B6A68F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				08D929B11A77B96500B6A68F /* AppDelegate.h */,
+				08D929B21A77B96500B6A68F /* AppDelegate.m */,
+				089E78BA1A78116A00BC3479 /* Supporting Files */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		08D929B91A77B96E00B6A68F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				08D929BA1A77B96E00B6A68F /* Model */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		08D929BA1A77B96E00B6A68F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				08D929BB1A77B96E00B6A68F /* emo.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		08D929BE1A77B97600B6A68F /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				08D929BF1A77B97600B6A68F /* Images.xcassets */,
+				08D929C01A77B97600B6A68F /* LaunchScreen.xib */,
+				089E78CA1A78FFFF00BC3479 /* Style Kit */,
+				08D929C91A77CC1A00B6A68F /* Recorder */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		08D929C91A77CC1A00B6A68F /* Recorder */ = {
+			isa = PBXGroup;
+			children = (
+				08D929CA1A77CC1A00B6A68F /* Recorder.storyboard */,
+				08D929CB1A77CC1A00B6A68F /* RecorderViewController.h */,
+				08D929CC1A77CC1A00B6A68F /* RecorderViewController.m */,
+				08D929DC1A77D14F00B6A68F /* Preview */,
+				089E78C01A7816B700BC3479 /* Interface */,
+			);
+			path = Recorder;
+			sourceTree = "<group>";
+		};
+		08D929DC1A77D14F00B6A68F /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				08D929DD1A77D17200B6A68F /* PreviewViewController.h */,
+				08D929DE1A77D17200B6A68F /* PreviewViewController.m */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
+		08D929F61A77E14400B6A68F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */,
+				08D929F21A77E0D500B6A68F /* QuartzCore.framework */,
+				08D929F01A77E0C300B6A68F /* CoreVideo.framework */,
+				08D929EE1A77E0BC00B6A68F /* CoreMedia.framework */,
+				08D929EC1A77E0B000B6A68F /* AVFoundation.framework */,
+				08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */,
+				08D929E81A77E09200B6A68F /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08D929F71A77EFBD00B6A68F /* homageSDK */ = {
+			isa = PBXGroup;
+			children = (
+				089E78B11A780DEB00BC3479 /* notifications center */,
+				08D929F81A77EFBD00B6A68F /* camera and video processing */,
+				08D929FB1A77EFBD00B6A68F /* user interface */,
+			);
+			path = homageSDK;
+			sourceTree = "<group>";
+		};
+		08D929F81A77EFBD00B6A68F /* camera and video processing */ = {
+			isa = PBXGroup;
+			children = (
+				08D929F91A77EFBD00B6A68F /* HMCaptureSession.h */,
+				08D929FA1A77EFBD00B6A68F /* HMCaptureSession.mm */,
+			);
+			path = "camera and video processing";
+			sourceTree = "<group>";
+		};
+		08D929FB1A77EFBD00B6A68F /* user interface */ = {
+			isa = PBXGroup;
+			children = (
+				089E78AC1A77FD8600BC3479 /* Shaders */,
+				08D929FC1A77EFBD00B6A68F /* HMPreviewView.h */,
+				08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */,
+				08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */,
+				08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */,
+			);
+			path = "user interface";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		08D929831A77A36D00B6A68F /* emo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08D929AA1A77A36D00B6A68F /* Build configuration list for PBXNativeTarget "emo" */;
+			buildPhases = (
+				08D929801A77A36D00B6A68F /* Sources */,
+				08D929811A77A36D00B6A68F /* Frameworks */,
+				08D929821A77A36D00B6A68F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = emo;
+			productName = emo;
+			productReference = 08D929841A77A36D00B6A68F /* emo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		08D9299F1A77A36D00B6A68F /* emoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08D929AD1A77A36D00B6A68F /* Build configuration list for PBXNativeTarget "emoTests" */;
+			buildPhases = (
+				08D9299C1A77A36D00B6A68F /* Sources */,
+				08D9299D1A77A36D00B6A68F /* Frameworks */,
+				08D9299E1A77A36D00B6A68F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08D929A21A77A36D00B6A68F /* PBXTargetDependency */,
+			);
+			name = emoTests;
+			productName = emoTests;
+			productReference = 08D929A01A77A36D00B6A68F /* emoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08D9297C1A77A36D00B6A68F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Homage;
+				TargetAttributes = {
+					08D929831A77A36D00B6A68F = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 56F7YSPHC5;
+					};
+					08D9299F1A77A36D00B6A68F = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 08D929831A77A36D00B6A68F;
+					};
+				};
+			};
+			buildConfigurationList = 08D9297F1A77A36D00B6A68F /* Build configuration list for PBXProject "emo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 08D9297B1A77A36D00B6A68F;
+			productRefGroup = 08D929851A77A36D00B6A68F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				08D929831A77A36D00B6A68F /* emo */,
+				08D9299F1A77A36D00B6A68F /* emoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		08D929821A77A36D00B6A68F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
+				08D929C51A77B97600B6A68F /* LaunchScreen.xib in Resources */,
+				08D929C41A77B97600B6A68F /* Images.xcassets in Resources */,
+				089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */,
+				08D929CD1A77CC1A00B6A68F /* Recorder.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08D9299E1A77A36D00B6A68F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		08D929801A77A36D00B6A68F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				089E78BF1A78116A00BC3479 /* main.m in Sources */,
+				089E78CD1A78FFFF00BC3479 /* EmoStyleKit.m in Sources */,
+				08D929CE1A77CC1A00B6A68F /* RecorderViewController.m in Sources */,
+				08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */,
+				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
+				08D929BD1A77B96E00B6A68F /* emo.xcdatamodeld in Sources */,
+				089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */,
+				08D92A001A77EFBD00B6A68F /* HMCaptureSession.mm in Sources */,
+				089E78C91A78E7B700BC3479 /* HMRecordButton.m in Sources */,
+				08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */,
+				089E78C31A78171B00BC3479 /* ControlsBarViewController.m in Sources */,
+				08D929DF1A77D17200B6A68F /* PreviewViewController.m in Sources */,
+				08D929B61A77B96500B6A68F /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08D9299C1A77A36D00B6A68F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08D929A71A77A36D00B6A68F /* emoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		08D929A21A77A36D00B6A68F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08D929831A77A36D00B6A68F /* emo */;
+			targetProxy = 08D929A11A77A36D00B6A68F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		08D929A81A77A36D00B6A68F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		08D929A91A77A36D00B6A68F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		08D929AB1A77A36D00B6A68F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/emo/App/Supporting Files/emo-prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/emo/App/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		08D929AC1A77A36D00B6A68F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/emo/App/Supporting Files/emo-prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/emo/App/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		08D929AE1A77A36D00B6A68F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = emoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/emo.app/emo";
+			};
+			name = Debug;
+		};
+		08D929AF1A77A36D00B6A68F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = emoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/emo.app/emo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08D9297F1A77A36D00B6A68F /* Build configuration list for PBXProject "emo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08D929A81A77A36D00B6A68F /* Debug */,
+				08D929A91A77A36D00B6A68F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08D929AA1A77A36D00B6A68F /* Build configuration list for PBXNativeTarget "emo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08D929AB1A77A36D00B6A68F /* Debug */,
+				08D929AC1A77A36D00B6A68F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08D929AD1A77A36D00B6A68F /* Build configuration list for PBXNativeTarget "emoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08D929AE1A77A36D00B6A68F /* Debug */,
+				08D929AF1A77A36D00B6A68F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		08D929BB1A77B96E00B6A68F /* emo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				08D929BC1A77B96E00B6A68F /* emo.xcdatamodel */,
+			);
+			currentVersion = 08D929BC1A77B96E00B6A68F /* emo.xcdatamodel */;
+			path = emo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 08D9297C1A77A36D00B6A68F /* Project object */;
+}
