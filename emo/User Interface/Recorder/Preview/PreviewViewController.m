@@ -46,4 +46,24 @@
     
 }
 
+-(void)recordingWillStart
+{
+    
+}
+
+-(void)recordingDidStart
+{
+    
+}
+
+-(void)recordingWillStop
+{
+    
+}
+
+-(void)recordingDidStop
+{
+    
+}
+
 @end

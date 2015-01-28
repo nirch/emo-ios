@@ -17,10 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cat-fk-puC" userLabel="Camera preview container">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rU3-fD-N15" userLabel="Camera preview container">
+                                <rect key="frame" x="0.0" y="124" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rU3-fD-N15" secondAttribute="height" multiplier="1:1" id="Zaa-Sg-PEr"/>
+                                </constraints>
                                 <connections>
-                                    <segue destination="0Kv-p9-mo5" kind="embed" id="Rkn-hd-Bvg"/>
+                                    <segue destination="0Kv-p9-mo5" kind="embed" id="mfm-VV-Y8v"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WpW-ex-edX" userLabel="Safe frame container">
@@ -61,15 +65,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="rU3-fD-N15" secondAttribute="centerY" id="5tn-MQ-seC"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="top" secondItem="4aT-Dl-fP6" secondAttribute="bottom" id="78N-1I-XKf"/>
                             <constraint firstAttribute="centerY" secondItem="WpW-ex-edX" secondAttribute="centerY" id="7Sq-YB-yGZ"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HYL-Yr-nfl"/>
                             <constraint firstAttribute="centerX" secondItem="4aT-Dl-fP6" secondAttribute="centerX" id="HbR-Ll-mW3"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="WpW-ex-edX" secondAttribute="bottom" id="RUI-Dr-wtz"/>
                             <constraint firstAttribute="centerX" secondItem="Ooa-Vx-VYG" secondAttribute="centerX" id="USi-R1-17t"/>
-                            <constraint firstAttribute="centerY" secondItem="Cat-fk-puC" secondAttribute="centerY" id="Y0X-IQ-Gv2"/>
-                            <constraint firstItem="Cat-fk-puC" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="cUg-PP-8Jb"/>
-                            <constraint firstAttribute="centerX" secondItem="Cat-fk-puC" secondAttribute="centerX" id="cuw-ec-Dq1"/>
+                            <constraint firstItem="rU3-fD-N15" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XWX-wl-t4X"/>
                             <constraint firstAttribute="centerX" secondItem="47C-Qd-Sw6" secondAttribute="centerX" id="ec1-o2-juP"/>
                             <constraint firstItem="4aT-Dl-fP6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oGh-S8-WRU"/>
                             <constraint firstAttribute="trailing" secondItem="WpW-ex-edX" secondAttribute="trailing" id="ofB-tk-dVT"/>
@@ -78,7 +81,7 @@
                             <constraint firstAttribute="width" secondItem="4aT-Dl-fP6" secondAttribute="width" id="twA-uK-Gbg"/>
                             <constraint firstAttribute="bottom" secondItem="Ooa-Vx-VYG" secondAttribute="bottom" id="vDC-3f-uql"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="47C-Qd-Sw6" secondAttribute="bottom" constant="-44" id="vyn-Xh-siy"/>
-                            <constraint firstItem="Cat-fk-puC" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="zAd-tk-olP"/>
+                            <constraint firstAttribute="centerX" secondItem="rU3-fD-N15" secondAttribute="centerX" id="zSj-xX-IhE"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -103,7 +106,18 @@
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jPb-O8-h64">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="silHeadAndChestHD" translatesAutoresizingMaskIntoConstraints="NO" id="QQM-UT-pU2">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QQM-UT-pU2" secondAttribute="trailing" id="0Nv-iA-vq8"/>
+                            <constraint firstItem="QQM-UT-pU2" firstAttribute="leading" secondItem="jPb-O8-h64" secondAttribute="leading" id="JBQ-CJ-ico"/>
+                            <constraint firstItem="QQM-UT-pU2" firstAttribute="top" secondItem="hM8-Vp-2E1" secondAttribute="bottom" id="LuK-Zg-4B9"/>
+                            <constraint firstItem="QQM-UT-pU2" firstAttribute="bottom" secondItem="RHl-dB-wtt" secondAttribute="top" id="dQx-ZZ-XML"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                 </viewController>
@@ -158,7 +172,7 @@
                         <viewControllerLayoutGuide type="bottom" id="qlu-V1-Eoh"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jaF-l1-Yz8" userLabel="Camera GL preview view" customClass="HMPreviewView">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -172,4 +186,7 @@
             <point key="canvasLocation" x="205" y="1106"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="silHeadAndChestHD" width="720" height="720"/>
+    </resources>
 </document>

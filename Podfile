@@ -1,0 +1,7 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios,          '8.0'
+pod 'AFNetworking',     '~> 2.4.0'
+pod 'Mixpanel', '~> 2.5.0'
+pod 'Facebook-iOS-SDK', '~> 3.19.0'
+pod 'CrashlyticsFramework'
+pod 'SDWebImage', '~> 3.7'

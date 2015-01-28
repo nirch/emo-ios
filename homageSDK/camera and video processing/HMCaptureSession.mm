@@ -78,8 +78,10 @@
 {
     // Create a shallow queue for buffers going to the display for preview.
     OSStatus err = CMBufferQueueCreate(kCFAllocatorDefault, 1, CMBufferQueueGetCallbacksForUnsortedSampleBuffers(), &previewBufferQueue);
-    if (err)
-        [self showError:[NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil]];
+
+    if (err) {
+        // TODO: Handle errors here
+    }
     
     // Create serial queue for movie writing
     movieWritingQueue = dispatch_queue_create("Movie Writing Queue", DISPATCH_QUEUE_SERIAL);
@@ -343,6 +345,24 @@
 	Float64 newRate = (Float64) [previousSecondTimestamps count];
 	self.videoFrameRate = (self.videoFrameRate + newRate) / 2;
 }
+
+#pragma mark - Capture session
+- (void) stopAndTearDownCaptureSession
+{
+    [captureSession stopRunning];
+    if (captureSession)
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureSessionDidStopRunningNotification object:captureSession];
+    captureSession = nil;
+
+    if (previewBufferQueue) {
+        CFRelease(previewBufferQueue);
+        previewBufferQueue = NULL;
+    }
+    if (movieWritingQueue) {
+        movieWritingQueue = NULL;
+    }
+}
+
 
 #pragma mark - Video processing
 - (CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer
@@ -945,22 +965,6 @@
 //	});
 //}
 //
-//- (void) stopAndTearDownCaptureSession
-//{
-//    [captureSession stopRunning];
-//	if (captureSession)
-//		[[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureSessionDidStopRunningNotification object:captureSession];
-//	[captureSession release];
-//	captureSession = nil;
-//	if (previewBufferQueue) {
-//		CFRelease(previewBufferQueue);
-//		previewBufferQueue = NULL;
-//	}
-//	if (movieWritingQueue) {
-//		dispatch_release(movieWritingQueue);
-//		movieWritingQueue = NULL;
-//	}
-//}
 //
 //#pragma mark Error Handling
 //

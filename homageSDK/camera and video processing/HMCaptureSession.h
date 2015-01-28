@@ -9,25 +9,29 @@
     AVCaptureAudioDataOutputSampleBufferDelegate,
     AVCaptureVideoDataOutputSampleBufferDelegate
 >
-{  
+{
+    // Session and connections
+    AVCaptureSession *captureSession;
+    AVCaptureConnection *audioConnection;
+    AVCaptureConnection *videoConnection;
+
+    // Video feed
     AVCaptureDeviceInput *videoIn;
 	NSMutableArray *previousSecondTimestamps;
 	Float64 videoFrameRate;
 	CMVideoDimensions videoDimensions;
 	CMVideoCodecType videoType;
 
-	AVCaptureSession *captureSession;
-	AVCaptureConnection *audioConnection;
-	AVCaptureConnection *videoConnection;
-	CMBufferQueueRef previewBufferQueue;
-	
-	NSURL *movieURL;
+    // Buffer queue
+    CMBufferQueueRef previewBufferQueue;
+    
+    // Writing
 	AVAssetWriter *assetWriter;
 	AVAssetWriterInput *assetWriterAudioIn;
 	AVAssetWriterInput *assetWriterVideoIn;
 	dispatch_queue_t movieWritingQueue;
     
-    
+    // Orientation
 	AVCaptureVideoOrientation referenceOrientation;
 	AVCaptureVideoOrientation videoOrientation;
     
@@ -36,7 +40,6 @@
     BOOL readyToRecordVideo;
 	BOOL recordingWillBeStarted;
 	BOOL recordingWillBeStopped;
-
 	BOOL recording;
 }
 
@@ -52,24 +55,25 @@
 
 @property(readonly, getter=isRecording) BOOL recording;
 
-- (CGAffineTransform)transformFromCurrentVideoOrientationToOrientation:(AVCaptureVideoOrientation)orientation;
+// Setup
+-(void)setupAndStartCaptureSession;
+-(void)stopAndTearDownCaptureSession;
 
-- (void) showError:(NSError*)error;
+// Start and stop recording
+//- (void) startRecording;
+//- (void) stopRecording;
 
-- (void) setupAndStartCaptureSession;
-- (void) stopAndTearDownCaptureSession;
-
-- (void) startRecording;
-- (void) stopRecording;
-
-- (void) pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
-- (void) resumeCaptureSession;
-- ( void ) initGreenMachine;
+// puase and resume session
+//-(void)pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
+//-(void)resumeCaptureSession;
 
 @end
 
 
 #pragma mark - HMCaptureSessionDelegate
+// --------------------------------
+// Capture session delegate.
+// --------------------------------
 @protocol HMCaptureSessionDelegate <NSObject>
 
 @required
