@@ -96,8 +96,7 @@
 
 
 // Video processing (optional)
--(void)prepareForVideoProcessing;
-
+-(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor;
 
 @end
 
