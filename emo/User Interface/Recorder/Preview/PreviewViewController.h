@@ -6,7 +6,10 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#import "HMSDK.h"
 
-@interface PreviewViewController : UIViewController
+@interface PreviewViewController : UIViewController<
+    HMCaptureSessionDisplayDelegate
+>
 
 @end

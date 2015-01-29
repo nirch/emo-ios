@@ -10,12 +10,9 @@
 #import "HMPreviewView.h"
 #import "HMCaptureSession.h"
 
-@interface PreviewViewController () <
-    HMCaptureSessionDelegate
->
+@interface PreviewViewController ()
 
 @property (strong, nonatomic) IBOutlet HMPreviewView *guiGLPreviewView;
-@property (strong, nonatomic) HMCaptureSession *videoProcessor;
 
 @end
 
@@ -23,18 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initPreview];
-}
-
-#pragma mark - GL Preview
--(void)initPreview
-{
-    // Initialize the video processor.
-    self.videoProcessor = [[HMCaptureSession alloc] init];
-    self.videoProcessor.delegate = self;
-    
-    // Setup and start the capture session.
-    [self.videoProcessor setupAndStartCaptureSession];
 }
 
 #pragma mark - HMCaptureSessionDelegate
@@ -43,26 +28,6 @@
     // Don't make OpenGLES calls while in the background.
     if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground )
         [self.guiGLPreviewView displayPixelBuffer:pixelBuffer];
-    
-}
-
--(void)recordingWillStart
-{
-    
-}
-
--(void)recordingDidStart
-{
-    
-}
-
--(void)recordingWillStop
-{
-    
-}
-
--(void)recordingDidStop
-{
     
 }
 

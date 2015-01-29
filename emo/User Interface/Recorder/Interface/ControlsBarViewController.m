@@ -21,14 +21,15 @@
 
 -(void)initGUI
 {
-    UIVisualEffect *blurEffect;
-    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    
-    UIVisualEffectView *visualEffectView;
-    visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    
-    visualEffectView.frame = self.view.bounds;
-    [self.view addSubview:visualEffectView];
+    self.view.backgroundColor = [UIColor whiteColor];
+//    UIVisualEffect *blurEffect;
+//    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    
+//    UIVisualEffectView *visualEffectView;
+//    visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    
+//    visualEffectView.frame = self.view.bounds;
+//    [self.view addSubview:visualEffectView];
 }
 
 @end

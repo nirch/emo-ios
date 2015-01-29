@@ -1,9 +1,28 @@
-/**/
+/*
+  HMCaptureSession.h
+  homage sdk
+ 
+  Capture session:
+
+    An api for the initialization, tearing down and
+    controlling the camera and audio inputs.
+    Also takes care of sav
+    
+    No image processing is performed in this class.
+ 
+    On initialization, an instance of an image processing class
+    (conforming to the video processor protocol) can be passed and will be used
+    while recording.
+
+  Copyright (c) 2015 Homage. All rights reserved.
+*/
 
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CMBufferQueue.h>
 
+@protocol HMCaptureSessionDisplayDelegate;
 @protocol HMCaptureSessionDelegate;
+@protocol HMVideoProcessingProtocol;
 
 @interface HMCaptureSession : NSObject <
     AVCaptureAudioDataOutputSampleBufferDelegate,
@@ -43,32 +62,59 @@
 	BOOL recording;
 }
 
-@property (nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferIn;
+// Capture session display delegate
+@property (weak, nonatomic) id <HMCaptureSessionDisplayDelegate> sessionDisplayDelegate;
 
-@property (readwrite, assign) id <HMCaptureSessionDelegate> delegate;
+// Capture session delegate
+@property (weak, nonatomic) id <HMCaptureSessionDelegate> sessionDelegate;
 
-@property (readonly) Float64 videoFrameRate;
-@property (readonly) CMVideoDimensions videoDimensions;
-@property (readonly) CMVideoCodecType videoType;
-
-@property (readwrite) AVCaptureVideoOrientation referenceOrientation;
-
-@property(readonly, getter=isRecording) BOOL recording;
+// Video processor
+@property (nonatomic) id<HMVideoProcessingProtocol> videoProcessor;
 
 // Setup
 -(void)setupAndStartCaptureSession;
 -(void)stopAndTearDownCaptureSession;
 
-// Start and stop recording
-//- (void) startRecording;
-//- (void) stopRecording;
+// Inputs
+@property (readwrite) AVCaptureVideoOrientation referenceOrientation;
+@property (readonly) Float64 videoFrameRate;
+@property (readonly) CMVideoDimensions videoDimensions;
+@property (readonly) CMVideoCodecType videoType;
 
 // puase and resume session
 //-(void)pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
 //-(void)resumeCaptureSession;
 
+// Recording
+//- (void) startRecording;
+//- (void) stopRecording;
+@property(readonly, getter=isRecording) BOOL recording;
+
+
+// Output
+@property (nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferIn;
+
+
+// Video processing (optional)
+-(void)prepareForVideoProcessing;
+
+
 @end
 
+
+#pragma mark - HMCaptureSessionDisplayDelegate
+@protocol HMCaptureSessionDisplayDelegate <NSObject>
+// ---------------------------------
+// Capture session display delegate.
+// ---------------------------------
+
+@required
+/**
+ *  Called on the main thread when a pixel buffer is ready to be displayed.
+ */
+- (void)pixelBufferReadyForDisplay:(CVPixelBufferRef)pixelBuffer;
+
+@end
 
 #pragma mark - HMCaptureSessionDelegate
 // --------------------------------
@@ -77,11 +123,6 @@
 @protocol HMCaptureSessionDelegate <NSObject>
 
 @required
-/**
- *  Called on the main thread when a pixel buffer is ready to be displayed.
- */
-- (void)pixelBufferReadyForDisplay:(CVPixelBufferRef)pixelBuffer;
-
 /**
  *  Recording is about to start.
  */

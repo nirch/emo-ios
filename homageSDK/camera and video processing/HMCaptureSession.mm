@@ -1,5 +1,10 @@
-/*
- */
+//
+//  HMCaptureSession.h
+//  homage sdk
+//
+//  Created by Aviv Wolf on 1/27/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
+//
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -12,41 +17,32 @@
 #import "ImageMark/ImageMark.h"
 #import "Utime/GpTime.h"
 
+#import "HMVideoProcessingProtocol.h"
+
 //#import "Data.h"
 
 #define BYTES_PER_PIXEL 4
 
-@interface HMCaptureSession () {
-    
-    //int counter;
-    CUniformBackground *m_foregroundExtraction;
-    image_type *m_original_image;
-    image_type *m_foreground_image;
-    image_type *m_output_image;
-    image_type *m_background_image;
-    
-}
+@interface HMCaptureSession ()
 
-
-// Redeclared as readwrite so that we can write to the property and still be atomic with external readers.
+// Redeclared as readwrite so that we can write to the property and still
+// be atomic with external readers.
 @property (readwrite) Float64 videoFrameRate;
 @property (readwrite) CMVideoDimensions videoDimensions;
 @property (readwrite) CMVideoCodecType videoType;
-
 @property (readwrite, getter=isRecording) BOOL recording;
-
 @property (readwrite) AVCaptureVideoOrientation videoOrientation;
 
 @end
 
 @implementation HMCaptureSession
 
-@synthesize delegate;
 @synthesize videoFrameRate, videoDimensions, videoType;
 @synthesize referenceOrientation;
 @synthesize videoOrientation;
 @synthesize recording;
 
+#pragma mark - Initializations
 - (id) init
 {
     if (self = [super init]) {
@@ -65,6 +61,12 @@
                  selector:@selector(onCaptureSessionRuntimeError:)
                      name:AVCaptureSessionRuntimeErrorNotification
                    object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:AVCaptureSessionRuntimeErrorNotification object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -88,8 +90,6 @@
     
     if ( !captureSession )
         [self setupCaptureSession];
-    
-    
     
     if ( !captureSession.isRunning )
         [captureSession startRunning];
@@ -194,21 +194,24 @@
 		if ( self.videoType == 0 )
 			self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
 
-        // GreenMachine
-        processedSampleBuffer = [self processFrame:sampleBuffer];
+        // Process the frame with the set video processor.
+        // If no video processor set, continue without processing the image.
+        if (self.videoProcessor) {
+            processedSampleBuffer = [self.videoProcessor processFrame:sampleBuffer];
+        } else {
+            processedSampleBuffer = sampleBuffer;
+        }
 
 		// Enqueue it for preview.  This is a shallow queue, so if image processing is taking too long,
 		// we'll drop this frame for preview (this keeps preview latency low).
 		OSStatus err = CMBufferQueueEnqueue(previewBufferQueue, processedSampleBuffer);
-
 		if ( !err ) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				//CVPixelBufferRef pixBuf = (CVPixelBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
                 CMSampleBufferRef sbuf = (CMSampleBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
                 if (sbuf) {
                     CVImageBufferRef pixBuf = CMSampleBufferGetImageBuffer(sbuf);
-
-					[self.delegate pixelBufferReadyForDisplay:pixBuf];
+					[self.sessionDisplayDelegate pixelBufferReadyForDisplay:pixBuf];
 					CFRelease(sbuf);
                 }
 			});
@@ -263,72 +266,22 @@
         }
         CFRelease(sampleBuffer);
         CFRelease(formatDescription);
-        if ( m_foregroundExtraction != NULL)
-            if (connection == videoConnection && processedSampleBuffer) CFRelease(processedSampleBuffer);
+        if (_videoProcessor && connection == videoConnection && processedSampleBuffer) {
+            CFRelease(processedSampleBuffer);
+        }
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-//- ( void ) initGreenMachine {
-//
-//    // Lock focus
-//    dispatch_async(movieWritingQueue, ^{
-//        CGPoint point = CGPointMake(100,100);
-//        AVCaptureDevice *device = [videoIn device];
-//        NSError *error = nil;
-//        if ([device lockForConfiguration:&error])
-//        {
-//            if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeLocked])
-//            {
-//                [device setFocusMode:AVCaptureFocusModeLocked];
-//                [device setFocusPointOfInterest:point];
-//            }
-//            if ([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeLocked])
-//            {
-//                [device setExposureMode:AVCaptureExposureModeLocked];
-//                [device setExposurePointOfInterest:point];
-//            }
-//            [device setSubjectAreaChangeMonitoringEnabled:false];
-//            [device unlockForConfiguration];
-//        }
-//        else
-//        {
-//            NSLog(@"%@", error);
-//        }
-//    });
-//
-//    
-//    m_foregroundExtraction = new CUniformBackground();
-//    
-//    
-//    
-//    NSString *backgroundImageName = [NSString stringWithFormat:@"LANDSCAPE %d 640x360.png", [[Data shared].currentBackground intValue]+1];
-//    NSString * backgroundImagePath = [[NSBundle bundleForClass:[self class]] pathForResource:backgroundImageName ofType:nil];
-//    UIImage *backgroundImage = [UIImage imageWithContentsOfFile:backgroundImagePath];
-//    image_type *background_image4 = CVtool::DecomposeUIimage(backgroundImage);
-//    m_background_image = image3_from(background_image4, NULL);
-//    image_destroy(background_image4, 1);
-//    
-//    NSString * countourFileName = [[Data shared].contours objectAtIndex:[[Data shared].currentFormat intValue]];
-//                                   
-//    NSString *contourFile = [[NSBundle mainBundle] pathForResource:countourFileName ofType:@"ctr"];
-//    
-//    m_foregroundExtraction->ReadMask((char*)contourFile.UTF8String, 640, 360);
-//    
-//    m_original_image = NULL;
-//    m_foreground_image = NULL;
-//    m_output_image = NULL;
-//}
-//
+-(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor
+{
+    self.videoProcessor = videoProcessor;
+    
+    // Prepare the camera state fot the video processing
+    [self prepareCameraStateForVideoProcessing];
+    
+    // Prepare the video processor for the video processing.
+    [self.videoProcessor prepareForVideoProcessing];
+}
 
 
 #pragma mark Utilities
@@ -349,10 +302,11 @@
 #pragma mark - Capture session
 - (void) stopAndTearDownCaptureSession
 {
-    [captureSession stopRunning];
-    if (captureSession)
+    if (captureSession) {
+        [captureSession stopRunning];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureSessionDidStopRunningNotification object:captureSession];
-    captureSession = nil;
+        captureSession = nil;
+    }
 
     if (previewBufferQueue) {
         CFRelease(previewBufferQueue);
@@ -363,83 +317,33 @@
     }
 }
 
-
-#pragma mark - Video processing
-- (CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer
+-(void)prepareCameraStateForVideoProcessing
 {
-    return sampleBuffer;
-    
-//    if ( m_foregroundExtraction == NULL ) {
-//        return sampleBuffer;
-//    }
-//    else {
-//        CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-//        
-//        
-//        //[self savePixelBuffer:pixelBuffer withName:@"Original"];
-//        
-//        // Converting the given PixelBuffer to image_type (and then converting it to BGR)
-//        m_original_image = CVtool::CVPixelBufferRef_to_image_sample2(pixelBuffer, m_original_image);
-//        //m_original_image = CVtool::CVPixelBufferRef_to_image(pixelBuffer, m_original_image);
-//        image_type* original_bgr_image = image3_to_BGR(m_original_image, NULL);
-//        
-//        // Extracting the foreground
-//        
-//        //    // SAVING IMAGE TO DISK
-//        //    static int counter = 0;
-//        //    counter++;
-//        //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        //    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-//        //    NSString *path = [NSString stringWithFormat:@"/%d.jpg" , counter];
-//        //    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-//        //    image_type *image = image4_from(original_bgr_image, NULL);
-//        //    UIImage *bgImage = CVtool::CreateUIImage(image);
-//        //    [UIImageJPEGRepresentation(bgImage, 1.0) writeToFile:dataPath atomically:YES];
-//        //    image_destroy(image, 1);
-//        
-//        //[self saveImageType3:original_bgr_image];
-//        
-//        
-//        m_foregroundExtraction->Process(original_bgr_image, 1, &m_foreground_image);
-//        
-//        // Stitching the foreground and the background together (and then converting to RGB)
-//        m_output_image = m_foregroundExtraction->GetImage(m_background_image, m_output_image);
-//        image3_bgr2rgb(m_output_image);
-//        
-//        // Destroying the temp image
-//        image_destroy(original_bgr_image, 1);
-//        
-//        //[self saveImageType3:m_output_image withName:@"before"];
-//        
-//        // Converting the result of the algo into CVPixelBuffer
-//        CVImageBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_output_image);
-//        
-//        //image_type *processedImageType = CVtool::CVPixelBufferRef_to_image(processedPixelBuffer, NULL);
-//        //[self savePixelBuffer:processedPixelBuffer withName:@"afterPixel"];
-//        //[self saveImageType3:processedImageType withName:@"afterImageType"];
-//        
-//        // Getting the sample timing info from the sample buffer
-//        CMSampleTimingInfo sampleTimingInfo = kCMTimingInfoInvalid;
-//        CMSampleBufferGetSampleTimingInfo(sampleBuffer, 0, &sampleTimingInfo);
-//        
-//        CMVideoFormatDescriptionRef videoInfo = NULL;
-//        CMVideoFormatDescriptionCreateForImageBuffer(NULL, processedPixelBuffer, &videoInfo);
-//        
-//        CMSampleBufferRef processedSampleBuffer = NULL;
-//        CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, processedPixelBuffer, true, NULL, NULL, videoInfo, &sampleTimingInfo, &processedSampleBuffer);
-//        
-//        CFRelease(processedPixelBuffer);
-//        //CFRelease(videoInfo);
-//        
-//        return processedSampleBuffer;
-//        
-//        // Updating the current pixelbuffer with the new foreground/background image
-//        //[self updatePixelBuffer:pixelBuffer fromImageType:m_output_image];
-//    }
-    
+    dispatch_async(movieWritingQueue, ^{
+        CGPoint point = CGPointMake(100,100);
+        AVCaptureDevice *device = [videoIn device];
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error])
+        {
+            if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeLocked])
+            {
+                [device setFocusMode:AVCaptureFocusModeLocked];
+                [device setFocusPointOfInterest:point];
+            }
+            if ([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeLocked])
+            {
+                [device setExposureMode:AVCaptureExposureModeLocked];
+                [device setExposurePointOfInterest:point];
+            }
+            [device setSubjectAreaChangeMonitoringEnabled:false];
+            [device unlockForConfiguration];
+        }
+        else
+        {
+            NSLog(@"%@", error);
+        }
+    });
 }
-
-
 
 //
 //- (void)removeFile:(NSURL *)fileURL

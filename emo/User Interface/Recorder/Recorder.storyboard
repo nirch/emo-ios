@@ -24,7 +24,7 @@
                                     <constraint firstAttribute="width" secondItem="rU3-fD-N15" secondAttribute="height" multiplier="1:1" id="Zaa-Sg-PEr"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="0Kv-p9-mo5" kind="embed" id="mfm-VV-Y8v"/>
+                                    <segue destination="0Kv-p9-mo5" kind="embed" identifier="embed preview segue" id="mfm-VV-Y8v"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WpW-ex-edX" userLabel="Safe frame container">
@@ -62,18 +62,31 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scd-dw-jl9" userLabel="Debug button">
+                                <rect key="frame" x="0.0" y="531" width="320" height="37"/>
+                                <state key="normal" title="Debug Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedDebugButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lmn-7b-8Vn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="rU3-fD-N15" secondAttribute="centerY" id="5tn-MQ-seC"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="top" secondItem="4aT-Dl-fP6" secondAttribute="bottom" id="78N-1I-XKf"/>
                             <constraint firstAttribute="centerY" secondItem="WpW-ex-edX" secondAttribute="centerY" id="7Sq-YB-yGZ"/>
+                            <constraint firstItem="scd-dw-jl9" firstAttribute="top" secondItem="47C-Qd-Sw6" secondAttribute="bottom" constant="43" id="G5B-8y-XQd"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HYL-Yr-nfl"/>
                             <constraint firstAttribute="centerX" secondItem="4aT-Dl-fP6" secondAttribute="centerX" id="HbR-Ll-mW3"/>
+                            <constraint firstItem="scd-dw-jl9" firstAttribute="trailing" secondItem="Ooa-Vx-VYG" secondAttribute="trailing" id="JUB-la-ut8"/>
+                            <constraint firstItem="scd-dw-jl9" firstAttribute="leading" secondItem="Ooa-Vx-VYG" secondAttribute="leading" id="KBD-BF-Ihz"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="WpW-ex-edX" secondAttribute="bottom" id="RUI-Dr-wtz"/>
                             <constraint firstAttribute="centerX" secondItem="Ooa-Vx-VYG" secondAttribute="centerX" id="USi-R1-17t"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XWX-wl-t4X"/>
                             <constraint firstAttribute="centerX" secondItem="47C-Qd-Sw6" secondAttribute="centerX" id="ec1-o2-juP"/>
+                            <constraint firstItem="scd-dw-jl9" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gCa-4j-tHq"/>
                             <constraint firstItem="4aT-Dl-fP6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oGh-S8-WRU"/>
                             <constraint firstAttribute="trailing" secondItem="WpW-ex-edX" secondAttribute="trailing" id="ofB-tk-dVT"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="t4Y-ee-GGj"/>
@@ -95,10 +108,10 @@
             </objects>
             <point key="canvasLocation" x="205" y="372"/>
         </scene>
-        <!--User Frame View Controller-->
+        <!--User Interaction View Controller-->
         <scene sceneID="SYd-IN-MO5">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="QwO-lL-lLe" userLabel="User Frame View Controller" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="QwO-lL-lLe" userLabel="User Interaction View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hM8-Vp-2E1"/>
                         <viewControllerLayoutGuide type="bottom" id="RHl-dB-wtt"/>
@@ -136,7 +149,7 @@
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Ssc-ej-ngw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                 </viewController>
@@ -155,7 +168,7 @@
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MlL-Sl-qUa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                 </viewController>
@@ -183,10 +196,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="72e-54-hbI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="205" y="1106"/>
+            <point key="canvasLocation" x="205" y="936"/>
         </scene>
     </scenes>
     <resources>
-        <image name="silHeadAndChestHD" width="720" height="720"/>
+        <image name="silHeadAndChestHD" width="360" height="360"/>
     </resources>
 </document>
