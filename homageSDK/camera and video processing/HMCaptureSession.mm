@@ -9,6 +9,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HMCaptureSession.h"
+#import "HMVideoProcessingProtocol.h"
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
@@ -16,8 +17,6 @@
 #import "ImageType/ImageTool.h"
 #import "ImageMark/ImageMark.h"
 #import "Utime/GpTime.h"
-
-#import "HMVideoProcessingProtocol.h"
 
 //#import "Data.h"
 
