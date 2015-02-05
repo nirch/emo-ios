@@ -10,3 +10,4 @@
 #import "HMCaptureSession.h"
 #import "HMPreviewView.h"
 #import "HMVideoProcessingProtocol.h"
+#import "HMGreenMachine.h"

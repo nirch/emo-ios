@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		083334711A82100E008AC771 /* test640x360.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 0833346F1A82100E008AC771 /* test640x360.ctr */; };
+		083334721A82100E008AC771 /* test640x360.png in Resources */ = {isa = PBXBuildFile; fileRef = 083334701A82100E008AC771 /* test640x360.png */; };
+		083334751A82234F008AC771 /* uniform_bg_params.xml in Resources */ = {isa = PBXBuildFile; fileRef = 083334741A82234F008AC771 /* uniform_bg_params.xml */; };
+		0833347E1A82477F008AC771 /* HMAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0833347D1A82477F008AC771 /* HMAnalytics.m */; };
+		083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083334841A827D79008AC771 /* HMCaptureSession.mm */; };
+		0833348C1A827D81008AC771 /* HMGMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 083334881A827D81008AC771 /* HMGMError.m */; };
+		0833348D1A827D81008AC771 /* HMGreenMachine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0833348A1A827D81008AC771 /* HMGreenMachine.mm */; };
+		083334921A839030008AC771 /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083334911A839030008AC771 /* HMImageTools.mm */; };
+		083334941A83A88C008AC771 /* test240x240.png in Resources */ = {isa = PBXBuildFile; fileRef = 083334931A83A88C008AC771 /* test240x240.png */; };
+		083334991A83B231008AC771 /* Config.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 083334971A83B231008AC771 /* Config.debug.xcconfig */; };
+		0833349A1A83B231008AC771 /* Config.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 083334981A83B231008AC771 /* Config.release.xcconfig */; };
+		0833349D1A83D6DF008AC771 /* head_and_chest_240X240.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 0833349B1A83D6DF008AC771 /* head_and_chest_240X240.ctr */; };
+		0833349E1A83D6DF008AC771 /* head_and_chest_480X480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 0833349C1A83D6DF008AC771 /* head_and_chest_480X480.ctr */; };
 		089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
@@ -15,6 +28,7 @@
 		089E78C31A78171B00BC3479 /* ControlsBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78C21A78171B00BC3479 /* ControlsBarViewController.m */; };
 		089E78C91A78E7B700BC3479 /* HMRecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78C81A78E7B700BC3479 /* HMRecordButton.m */; };
 		089E78CD1A78FFFF00BC3479 /* EmoStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78CC1A78FFFF00BC3479 /* EmoStyleKit.m */; };
+		08D7B8D31A7AA24500644842 /* silHeadAndChest.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08D7B8D21A7AA24500644842 /* silHeadAndChest.ctr */; };
 		08D929A71A77A36D00B6A68F /* emoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929A61A77A36D00B6A68F /* emoTests.m */; };
 		08D929B61A77B96500B6A68F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929B21A77B96500B6A68F /* AppDelegate.m */; };
 		08D929BD1A77B96E00B6A68F /* emo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08D929BB1A77B96E00B6A68F /* emo.xcdatamodeld */; };
@@ -30,10 +44,8 @@
 		08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F01A77E0C300B6A68F /* CoreVideo.framework */; };
 		08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F21A77E0D500B6A68F /* QuartzCore.framework */; };
 		08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */; };
-		08D92A001A77EFBD00B6A68F /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FA1A77EFBD00B6A68F /* HMCaptureSession.mm */; };
 		08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */; };
 		08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
-		08FC03C71A7A4ADF00697075 /* HMGreenMachine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08FC03C61A7A4ADF00697075 /* HMGreenMachine.mm */; };
 		A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +60,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0833346F1A82100E008AC771 /* test640x360.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test640x360.ctr; sourceTree = "<group>"; };
+		083334701A82100E008AC771 /* test640x360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test640x360.png; sourceTree = "<group>"; };
+		083334741A82234F008AC771 /* uniform_bg_params.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = uniform_bg_params.xml; path = ../../../../../../../Desktop/uniform_bg_params.xml; sourceTree = "<group>"; };
+		083334761A822E4D008AC771 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		083334781A822E8D008AC771 /* libMattingLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMattingLib.a; path = "../homage-cv-app/Homage/Lib/Release-iphoneos/libMattingLib.a"; sourceTree = "<group>"; };
+		0833347C1A82477F008AC771 /* HMAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnalytics.h; sourceTree = "<group>"; };
+		0833347D1A82477F008AC771 /* HMAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnalytics.m; sourceTree = "<group>"; };
+		083334831A827D79008AC771 /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
+		083334841A827D79008AC771 /* HMCaptureSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMCaptureSession.mm; sourceTree = "<group>"; };
+		083334871A827D81008AC771 /* HMGMError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGMError.h; sourceTree = "<group>"; };
+		083334881A827D81008AC771 /* HMGMError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGMError.m; sourceTree = "<group>"; };
+		083334891A827D81008AC771 /* HMGreenMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGreenMachine.h; sourceTree = "<group>"; };
+		0833348A1A827D81008AC771 /* HMGreenMachine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMGreenMachine.mm; sourceTree = "<group>"; };
+		0833348B1A827D81008AC771 /* HMVideoProcessingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoProcessingProtocol.h; sourceTree = "<group>"; };
+		0833348E1A838F2D008AC771 /* HMImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMImageTools.h; sourceTree = "<group>"; };
+		083334911A839030008AC771 /* HMImageTools.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMImageTools.mm; sourceTree = "<group>"; };
+		083334931A83A88C008AC771 /* test240x240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test240x240.png; sourceTree = "<group>"; };
+		083334971A83B231008AC771 /* Config.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
+		083334981A83B231008AC771 /* Config.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.release.xcconfig; sourceTree = "<group>"; };
+		0833349B1A83D6DF008AC771 /* head_and_chest_240X240.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = head_and_chest_240X240.ctr; path = ../../../../../../../Downloads/head_and_chest_240X240.ctr; sourceTree = "<group>"; };
+		0833349C1A83D6DF008AC771 /* head_and_chest_480X480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = head_and_chest_480X480.ctr; path = ../../../../../../../Downloads/head_and_chest_480X480.ctr; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSDK.h; sourceTree = "<group>"; };
 		089E78AD1A77FD8600BC3479 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
 		089E78AE1A77FD8600BC3479 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
@@ -65,6 +98,7 @@
 		089E78C81A78E7B700BC3479 /* HMRecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRecordButton.m; sourceTree = "<group>"; };
 		089E78CB1A78FFFF00BC3479 /* EmoStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoStyleKit.h; sourceTree = "<group>"; };
 		089E78CC1A78FFFF00BC3479 /* EmoStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoStyleKit.m; sourceTree = "<group>"; };
+		08D7B8D21A7AA24500644842 /* silHeadAndChest.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = silHeadAndChest.ctr; sourceTree = "<group>"; };
 		08D929841A77A36D00B6A68F /* emo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D929A01A77A36D00B6A68F /* emoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = emoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D929A51A77A36D00B6A68F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -86,15 +120,10 @@
 		08D929F01A77E0C300B6A68F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		08D929F21A77E0D500B6A68F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		08D929F91A77EFBD00B6A68F /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
-		08D929FA1A77EFBD00B6A68F /* HMCaptureSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMCaptureSession.mm; sourceTree = "<group>"; };
 		08D929FC1A77EFBD00B6A68F /* HMPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMPreviewView.h; sourceTree = "<group>"; };
 		08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPreviewView.m; sourceTree = "<group>"; };
 		08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
 		08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
-		08FC03C31A7A4AC200697075 /* HMGreenMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGreenMachine.h; sourceTree = "<group>"; };
-		08FC03C61A7A4ADF00697075 /* HMGreenMachine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMGreenMachine.mm; sourceTree = "<group>"; };
-		08FC03C81A7A4B9800697075 /* HMVideoProcessingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoProcessingProtocol.h; sourceTree = "<group>"; };
 		63EBC61D3F02128F78B223F3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		79CFE9051A98F6D7D2C3BBED /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A9E28DB442779D1DF1167B33 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +155,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0833346E1A82100E008AC771 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0833349B1A83D6DF008AC771 /* head_and_chest_240X240.ctr */,
+				0833349C1A83D6DF008AC771 /* head_and_chest_480X480.ctr */,
+				0833346F1A82100E008AC771 /* test640x360.ctr */,
+				083334701A82100E008AC771 /* test640x360.png */,
+				083334931A83A88C008AC771 /* test240x240.png */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		083334731A822344008AC771 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				083334741A82234F008AC771 /* uniform_bg_params.xml */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		0833347A1A824740008AC771 /* Integration */ = {
+			isa = PBXGroup;
+			children = (
+				0833347B1A824756008AC771 /* Analytics */,
+			);
+			path = Integration;
+			sourceTree = "<group>";
+		};
+		0833347B1A824756008AC771 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				0833347C1A82477F008AC771 /* HMAnalytics.h */,
+				0833347D1A82477F008AC771 /* HMAnalytics.m */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		083334821A827D79008AC771 /* capture session */ = {
+			isa = PBXGroup;
+			children = (
+				083334831A827D79008AC771 /* HMCaptureSession.h */,
+				083334841A827D79008AC771 /* HMCaptureSession.mm */,
+			);
+			path = "capture session";
+			sourceTree = "<group>";
+		};
+		083334861A827D81008AC771 /* video processing */ = {
+			isa = PBXGroup;
+			children = (
+				0833348B1A827D81008AC771 /* HMVideoProcessingProtocol.h */,
+				083334871A827D81008AC771 /* HMGMError.h */,
+				083334881A827D81008AC771 /* HMGMError.m */,
+				083334891A827D81008AC771 /* HMGreenMachine.h */,
+				0833348A1A827D81008AC771 /* HMGreenMachine.mm */,
+				0833348E1A838F2D008AC771 /* HMImageTools.h */,
+				083334911A839030008AC771 /* HMImageTools.mm */,
+			);
+			path = "video processing";
+			sourceTree = "<group>";
+		};
 		089E78AC1A77FD8600BC3479 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +242,8 @@
 				089E78BB1A78116A00BC3479 /* emo-prefix.pch */,
 				089E78BC1A78116A00BC3479 /* Info.plist */,
 				089E78BD1A78116A00BC3479 /* main.m */,
+				083334971A83B231008AC771 /* Config.debug.xcconfig */,
+				083334981A83B231008AC771 /* Config.release.xcconfig */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -175,6 +266,14 @@
 				089E78CC1A78FFFF00BC3479 /* EmoStyleKit.m */,
 			);
 			path = "Style Kit";
+			sourceTree = "<group>";
+		};
+		08D7B8D11A7AA24500644842 /* Contours */ = {
+			isa = PBXGroup;
+			children = (
+				08D7B8D21A7AA24500644842 /* silHeadAndChest.ctr */,
+			);
+			path = Contours;
 			sourceTree = "<group>";
 		};
 		08D9297B1A77A36D00B6A68F = {
@@ -240,6 +339,9 @@
 			isa = PBXGroup;
 			children = (
 				08D929BA1A77B96E00B6A68F /* Model */,
+				0833347A1A824740008AC771 /* Integration */,
+				08D7B8D11A7AA24500644842 /* Contours */,
+				0833346E1A82100E008AC771 /* Tests */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -312,11 +414,9 @@
 		08D929F81A77EFBD00B6A68F /* camera and video processing */ = {
 			isa = PBXGroup;
 			children = (
-				08FC03C81A7A4B9800697075 /* HMVideoProcessingProtocol.h */,
-				08D929F91A77EFBD00B6A68F /* HMCaptureSession.h */,
-				08D929FA1A77EFBD00B6A68F /* HMCaptureSession.mm */,
-				08FC03C31A7A4AC200697075 /* HMGreenMachine.h */,
-				08FC03C61A7A4ADF00697075 /* HMGreenMachine.mm */,
+				083334861A827D81008AC771 /* video processing */,
+				083334821A827D79008AC771 /* capture session */,
+				083334731A822344008AC771 /* resources */,
 			);
 			path = "camera and video processing";
 			sourceTree = "<group>";
@@ -345,6 +445,8 @@
 		F818AC31536FB92317D788B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				083334781A822E8D008AC771 /* libMattingLib.a */,
+				083334761A822E4D008AC771 /* libz.dylib */,
 				A9E28DB442779D1DF1167B33 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -433,10 +535,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				083334941A83A88C008AC771 /* test240x240.png in Resources */,
+				083334711A82100E008AC771 /* test640x360.ctr in Resources */,
 				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
 				08D929C51A77B97600B6A68F /* LaunchScreen.xib in Resources */,
+				083334751A82234F008AC771 /* uniform_bg_params.xml in Resources */,
 				08D929C41A77B97600B6A68F /* Images.xcassets in Resources */,
+				083334991A83B231008AC771 /* Config.debug.xcconfig in Resources */,
+				0833349A1A83B231008AC771 /* Config.release.xcconfig in Resources */,
 				089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */,
+				0833349D1A83D6DF008AC771 /* head_and_chest_240X240.ctr in Resources */,
+				0833349E1A83D6DF008AC771 /* head_and_chest_480X480.ctr in Resources */,
+				083334721A82100E008AC771 /* test640x360.png in Resources */,
+				08D7B8D31A7AA24500644842 /* silHeadAndChest.ctr in Resources */,
 				08D929CD1A77CC1A00B6A68F /* Recorder.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,15 +599,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				083334921A839030008AC771 /* HMImageTools.mm in Sources */,
 				089E78BF1A78116A00BC3479 /* main.m in Sources */,
+				0833347E1A82477F008AC771 /* HMAnalytics.m in Sources */,
+				0833348C1A827D81008AC771 /* HMGMError.m in Sources */,
 				089E78CD1A78FFFF00BC3479 /* EmoStyleKit.m in Sources */,
+				0833348D1A827D81008AC771 /* HMGreenMachine.mm in Sources */,
 				08D929CE1A77CC1A00B6A68F /* RecorderViewController.m in Sources */,
 				08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */,
-				08FC03C71A7A4ADF00697075 /* HMGreenMachine.mm in Sources */,
 				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
+				083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */,
 				08D929BD1A77B96E00B6A68F /* emo.xcdatamodeld in Sources */,
 				089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */,
-				08D92A001A77EFBD00B6A68F /* HMCaptureSession.mm in Sources */,
 				089E78C91A78E7B700BC3479 /* HMRecordButton.m in Sources */,
 				08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */,
 				089E78C31A78171B00BC3479 /* ControlsBarViewController.m in Sources */,
@@ -604,15 +718,17 @@
 		};
 		08D929AB1A77A36D00B6A68F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 63EBC61D3F02128F78B223F3 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 083334971A83B231008AC771 /* Config.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -622,17 +738,80 @@
 					"../homage-cv-app/Core/Util/**",
 					"../homage-cv-app/Core/ImageLib/**",
 					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/emo/App/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"/Users/aviv/DEV/workspaces/xcode/homage-cv-app/Homage/Lib/Release-iphoneos",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lPlnTracker",
+					"-lMattingLib",
+					"-lEdgeLib",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-Bolts\"",
+					"-l\"Pods-CrashlyticsFramework\"",
+					"-l\"Pods-Facebook-iOS-SDK\"",
+					"-l\"Pods-Mixpanel\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"icucore\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -641,7 +820,7 @@
 		};
 		08D929AC1A77A36D00B6A68F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CFE9051A98F6D7D2C3BBED /* Pods.release.xcconfig */;
+			baseConfigurationReference = 083334981A83B231008AC771 /* Config.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -650,6 +829,8 @@
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -659,6 +840,7 @@
 					"../homage-cv-app/Core/Util/**",
 					"../homage-cv-app/Core/ImageLib/**",
 					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
@@ -668,8 +850,69 @@
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"/Users/aviv/DEV/workspaces/xcode/homage-cv-app/Homage/Lib/Release-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lPlnTracker",
+					"-lMattingLib",
+					"-lEdgeLib",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-Bolts\"",
+					"-l\"Pods-CrashlyticsFramework\"",
+					"-l\"Pods-Facebook-iOS-SDK\"",
+					"-l\"Pods-Mixpanel\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"icucore\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

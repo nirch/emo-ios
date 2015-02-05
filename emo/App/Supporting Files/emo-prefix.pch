@@ -13,6 +13,26 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "HMNotificationCenter.h"
+
+
+    // Logging
+    #import <NSLogger/NSLogger.h>
+
+    #define ERR 0
+    #define APP 1
+    #define DBG 2
+    #define DATA 3
+    #define VERBOSE 4
+
+    #ifdef DEBUG
+        #define HMLOG(tag, level, ...) LogMessage(tag,level,__VA_ARGS__)
+    #else
+        #define HMLOG(...)   do{}while(0)
+    #endif
+
+    // Some macros
+    #define SF NSString stringWithFormat
+
 #endif
 
 #endif

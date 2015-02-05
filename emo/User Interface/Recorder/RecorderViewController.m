@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"RecorderVC"
+
 #import "HMSDK.h"
 #import "RecorderViewController.h"
 #import "PreviewViewController.h"
@@ -30,7 +32,12 @@
 #pragma mark - VC life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    // Initializations
     [self initCaptureSession];
+    [self initVideoProcessing];
+
+    //DDLogDebug(@"%@:Recorder view did load.", [self class]);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -68,7 +75,10 @@
 -(void)initCaptureSession
 {
     // Initialize the video processor.
+    // Set the recorderVC as the session delegate.
     self.captureSession = [[HMCaptureSession alloc] init];
+    self.captureSession.prefferedSessionPreset = AVCaptureSessionPreset640x480;
+    self.captureSession.prefferedSize = CGSizeMake(240, 240);
     self.captureSession.sessionDelegate = self;
 
     // Setup and start the capture session.
@@ -76,6 +86,34 @@
     
     // The preview view
     self.captureSession.sessionDisplayDelegate = self.previewVC;
+    
+    // Initialized.
+    HMLOG(TAG, DBG, @"Initialized capture session");
+}
+
+#pragma mark - Video processing
+-(void)initVideoProcessing
+{
+    //
+    // Start green machine processing.
+    // And check for errors in initalization.
+    //
+    NSError *error;
+    HMGreenMachine *gm = [HMGreenMachine greenMachineWithBGImageFileName:@"test240x240"
+                                                         contourFileName:@"head_and_chest_240X240"
+                                                                   error:&error];
+    if (error) {
+        HMLOG(TAG, ERR, @"GM error: %@", [error localizedDescription]);
+        [self.captureSession stopAndTearDownCaptureSession];
+        return;
+    }
+
+    // Give the initialized instance of the green machine
+    // to the control of the capture session object.
+    // The capture session will use the green machine for
+    // processing the feed of video frames.
+    [self.captureSession initializeVideoProcessor:gm];
+    HMLOG(TAG, DBG, @"Initialized video processing.");
 }
 
 #pragma mark - Capture session delegate
@@ -105,8 +143,6 @@
 // ===========
 - (IBAction)onPressedDebugButton:(id)sender
 {
-    // Start green machine processing.
-    //[self.captureSession startImageProcessing];
 }
 
 

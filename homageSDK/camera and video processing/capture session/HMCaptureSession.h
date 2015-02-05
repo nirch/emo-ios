@@ -40,6 +40,7 @@
 	Float64 videoFrameRate;
 	CMVideoDimensions videoDimensions;
 	CMVideoCodecType videoType;
+    BOOL backgroundDetectionEnabled;
 
     // Buffer queue
     CMBufferQueueRef previewBufferQueue;
@@ -54,13 +55,18 @@
 	AVCaptureVideoOrientation referenceOrientation;
 	AVCaptureVideoOrientation videoOrientation;
     
-	// Only accessed on movie writing queue
+	// Should only be accessed on movie writing queue
     BOOL readyToRecordAudio; 
     BOOL readyToRecordVideo;
 	BOOL recordingWillBeStarted;
 	BOOL recordingWillBeStopped;
 	BOOL recording;
+    BOOL processingVideoFrames;
 }
+
+#pragma mark - session
+@property (nonatomic) NSString *prefferedSessionPreset;
+@property (nonatomic) CGSize prefferedSize;
 
 // Capture session display delegate
 @property (weak, nonatomic) id <HMCaptureSessionDisplayDelegate> sessionDisplayDelegate;
@@ -68,23 +74,23 @@
 // Capture session delegate
 @property (weak, nonatomic) id <HMCaptureSessionDelegate> sessionDelegate;
 
-// Video processor
-@property (nonatomic) id<HMVideoProcessingProtocol> videoProcessor;
-
 // Setup
 -(void)setupAndStartCaptureSession;
 -(void)stopAndTearDownCaptureSession;
 
+#pragma mark - Inputs
 // Inputs
 @property (readwrite) AVCaptureVideoOrientation referenceOrientation;
 @property (readonly) Float64 videoFrameRate;
 @property (readonly) CMVideoDimensions videoDimensions;
 @property (readonly) CMVideoCodecType videoType;
+@property (readonly) BOOL processingVideoFrames;
 
 // puase and resume session
 //-(void)pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
 //-(void)resumeCaptureSession;
 
+#pragma mark - Recording
 // Recording
 //- (void) startRecording;
 //- (void) stopRecording;
@@ -95,6 +101,7 @@
 @property (nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferIn;
 
 
+#pragma mark - Video processing
 // Video processing (optional)
 -(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor;
 

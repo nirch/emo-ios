@@ -1,0 +1,10 @@
+//
+//  Config.xcconfig
+//  emo
+//
+//  Created by Aviv Wolf on 2/5/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
+//
+#include "./Pods/Target Support Files/Pods/Pods.debug.xcconfig"
+
+CV_BUILD_TYPE = "Release"

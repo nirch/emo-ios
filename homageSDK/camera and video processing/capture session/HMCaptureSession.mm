@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"HMCaptureSession"
+
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HMCaptureSession.h"
@@ -18,11 +20,11 @@
 #import "ImageMark/ImageMark.h"
 #import "Utime/GpTime.h"
 
-//#import "Data.h"
-
 #define BYTES_PER_PIXEL 4
 
 @interface HMCaptureSession ()
+
+@property (nonatomic) NSInteger extractCounter;
 
 // Redeclared as readwrite so that we can write to the property and still
 // be atomic with external readers.
@@ -31,6 +33,12 @@
 @property (readwrite) CMVideoCodecType videoType;
 @property (readwrite, getter=isRecording) BOOL recording;
 @property (readwrite) AVCaptureVideoOrientation videoOrientation;
+@property (readwrite) BOOL processingVideoFrames;
+@property (readwrite) BOOL backgroundDetectionEnabled;
+
+// Video processor
+@property (nonatomic) id<HMVideoProcessingProtocol> videoProcessor;
+//@property (nonatomic) image_type *m_original_image;
 
 @end
 
@@ -40,13 +48,18 @@
 @synthesize referenceOrientation;
 @synthesize videoOrientation;
 @synthesize recording;
+@synthesize processingVideoFrames;
+@synthesize backgroundDetectionEnabled;
+@synthesize extractCounter;
 
 #pragma mark - Initializations
-- (id) init
+-(id)init
 {
     if (self = [super init]) {
         previousSecondTimestamps = [[NSMutableArray alloc] init];
         referenceOrientation = AVCaptureVideoOrientationPortrait;
+        backgroundDetectionEnabled = NO;
+        extractCounter = 0;
         [self initObservers];
     }
     return self;
@@ -71,7 +84,6 @@
 #pragma mark - Observers handlers
 -(void)onCaptureSessionRuntimeError:(NSNotification *)notification
 {
-    NSLog(@"%@", notification);
 }
 
 #pragma mark - capture session
@@ -99,8 +111,8 @@
     /*
 	 * Create capture session
 	 */
-    captureSession = [[AVCaptureSession alloc] init];
-    captureSession.sessionPreset = AVCaptureSessionPresetHigh;
+    captureSession = [AVCaptureSession new];
+    captureSession.sessionPreset = self.prefferedSessionPreset;
     
     /*
 	 * Create audio connection
@@ -109,7 +121,7 @@
     if ([captureSession canAddInput:audioIn])
         [captureSession addInput:audioIn];
 
-	AVCaptureAudioDataOutput *audioOut = [[AVCaptureAudioDataOutput alloc] init];
+	AVCaptureAudioDataOutput *audioOut = [AVCaptureAudioDataOutput new];
 	dispatch_queue_t audioCaptureQueue = dispatch_queue_create("Audio Capture Queue", DISPATCH_QUEUE_SERIAL);
 	[audioOut setSampleBufferDelegate:self queue:audioCaptureQueue];
 
@@ -125,20 +137,22 @@
     if ([captureSession canAddInput:videoIn])
         [captureSession addInput:videoIn];
 
-	AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
+	AVCaptureVideoDataOutput *videoOut = [AVCaptureVideoDataOutput new];
 	/*
-     RosyWriter prefers to discard late video frames early in the capture pipeline, since its
+     Discard late video frames early in the capture pipeline, since its
      processing can take longer than real-time on some platforms (such as iPhone 3GS).
      Clients whose image processing is faster than real-time should consider setting AVCaptureVideoDataOutput's
      alwaysDiscardsLateVideoFrames property to NO.
 	 */
 	[videoOut setAlwaysDiscardsLateVideoFrames:YES];
-	[videoOut setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
+    NSDictionary *videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
+	[videoOut setVideoSettings:videoSettings];
 	dispatch_queue_t videoCaptureQueue = dispatch_queue_create("Video Capture Queue", DISPATCH_QUEUE_SERIAL);
 	[videoOut setSampleBufferDelegate:self queue:videoCaptureQueue];
 
     if ([captureSession canAddOutput:videoOut])
 		[captureSession addOutput:videoOut];
+    
 	videoConnection = [videoOut connectionWithMediaType:AVMediaTypeVideo];
     videoConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
 	self.videoOrientation = [videoConnection videoOrientation];
@@ -171,37 +185,42 @@
     return nil;
 }
 
-
 #pragma mark - Capture
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
 	CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer);
     CMSampleBufferRef processedSampleBuffer = nil;
-
+    BOOL sample = ++extractCounter % 25 == 0;
+    
     if ( connection == videoConnection ) {
-        
 		// Get framerate
 		CMTime timestamp = CMSampleBufferGetPresentationTimeStamp( sampleBuffer );
 		[self calculateFramerateAtTimestamp:timestamp];
 
-		// Get frame dimensions (for onscreen display)
-		if (self.videoDimensions.width == 0 && self.videoDimensions.height == 0)
-			self.videoDimensions = CMVideoFormatDescriptionGetDimensions( formatDescription );
-
-		// Get buffer type
-		if ( self.videoType == 0 )
-			self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
+//		// Get frame dimensions (for onscreen display)
+//		if (self.videoDimensions.width == 0 && self.videoDimensions.height == 0)
+//			self.videoDimensions = CMVideoFormatDescriptionGetDimensions( formatDescription );
+//
+//		// Get buffer type
+//		if ( self.videoType == 0 )
+//			self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
 
         // Process the frame with the set video processor.
-        // If no video processor set, continue without processing the image.
         if (self.videoProcessor) {
             processedSampleBuffer = [self.videoProcessor processFrame:sampleBuffer];
         } else {
             processedSampleBuffer = sampleBuffer;
         }
-
-		// Enqueue it for preview.  This is a shallow queue, so if image processing is taking too long,
+        
+        // Once every few frames, inspect the frame (if required).
+        if (sample) {
+            // SampleBuffer to PixelBuffer
+            [self.videoProcessor inspectFrame];
+            HMLOG(TAG, VERBOSE, @"total frames captured: %@", @(extractCounter));
+        }
+        
+        // Enqueue it for preview.  This is a shallow queue, so if image processing is taking too long,
 		// we'll drop this frame for preview (this keeps preview latency low).
 		OSStatus err = CMBufferQueueEnqueue(previewBufferQueue, processedSampleBuffer);
 		if ( !err ) {
@@ -222,7 +241,7 @@
     
     dispatch_async(movieWritingQueue, ^{
 
-        if ( assetWriter && NO) {
+        if ( assetWriter ) {
 
 //            BOOL wasReadyToRecord = (readyToRecordAudio && readyToRecordVideo);
 //
@@ -262,10 +281,15 @@
 //                self.recording = YES;
 //                [self.delegate recordingDidStart];
 //            }
+            
         }
         CFRelease(sampleBuffer);
         CFRelease(formatDescription);
-        if (_videoProcessor && connection == videoConnection && processedSampleBuffer) {
+
+        if (_videoProcessor &&
+            connection == videoConnection &&
+            processedSampleBuffer &&
+            processingVideoFrames) {
             CFRelease(processedSampleBuffer);
         }
     });
@@ -274,12 +298,6 @@
 -(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor
 {
     self.videoProcessor = videoProcessor;
-    
-    // Prepare the camera state fot the video processing
-    [self prepareCameraStateForVideoProcessing];
-    
-    // Prepare the video processor for the video processing.
-    [self.videoProcessor prepareForVideoProcessing];
 }
 
 

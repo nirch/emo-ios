@@ -14,9 +14,24 @@
 
 @implementation AppDelegate
 
+-(void)initLogging
+{
+    Logger *logger = LoggerGetDefaultLogger();
+    LoggerSetOptions(logger,
+                     kLoggerOption_LogToConsole |
+                     kLoggerOption_BufferLogsUntilConnection |
+                     kLoggerOption_BrowseBonjour |
+                     kLoggerOption_BrowseOnlyLocalDomain |
+                     kLoggerOption_UseSSL
+                     );
+}
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+#pragma mark - App Delegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Initialize Logging
+    [self initLogging];
+    
     return YES;
 }
 
