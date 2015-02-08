@@ -12,6 +12,15 @@
 
 
 /**
+ *  Prepare a single frame for processing or inspection.
+ *
+ *  @param sampleBuffer sampleBuffer CMSampleBufferRef to the frame data to be processed.
+ *
+ */
+-(void)prepareFrame:(CMSampleBufferRef)sampleBuffer;
+
+
+/**
  *  Process a single frame.
  *
  *  @param sampleBuffer CMSampleBufferRef to the frame data to be processed.
@@ -19,6 +28,7 @@
  *  @return A ref to a buffer after processing.
  */
 -(CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer;
+
 
 /**
  *  Inspect a frame. 

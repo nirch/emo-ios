@@ -9,10 +9,14 @@
 #define TAG @"RecorderVC"
 
 #import "HMSDK.h"
-#import "RecorderViewController.h"
-#import "PreviewViewController.h"
 
-@interface RecorderViewController () <
+#import "EMRecorderVC.h"
+#import "EMRecorderVC+States.h"
+
+#import "EMPreviewVC.h"
+#import "EMBGFeedBackVC.h"
+
+@interface EMRecorderVC () <
     HMCaptureSessionDelegate
 >
 
@@ -20,24 +24,24 @@
 @property (weak, nonatomic) IBOutlet UIView *guiUserControls2Container;
 
 // The video capture session
-@property (strong, nonatomic) HMCaptureSession *captureSession;
+@property (strong, nonatomic, readwrite) HMCaptureSession *captureSession;
 
 // The preview VC
-@property (weak, nonatomic) PreviewViewController *previewVC;
+@property (weak, nonatomic) EMPreviewVC *previewVC;
+@property (weak, nonatomic) EMBGFeedBackVC *bgFeedBackVC;
 
 @end
 
-@implementation RecorderViewController
+@implementation EMRecorderVC
 
 #pragma mark - VC life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Initializations
+    [self initState];
     [self initCaptureSession];
     [self initVideoProcessing];
-
-    //DDLogDebug(@"%@:Recorder view did load.", [self class]);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -49,11 +53,49 @@
 {
     [super viewDidAppear:animated];
     [self initGUI];
+
+    // Observers
+    [self initObservers];
+    
+    // Start the flow of the recorder.
+    [self handleStateWithInfo:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    [self removeObservers];
 }
 
 #pragma mark - Initializations
 -(void)initGUI
 {
+    self.view.backgroundColor = [UIColor clearColor];
+}
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addUniqueObserver:self
+                 selector:@selector(onBackgroundDetectionInfo:)
+                     name:hmkNotificationBGDetectionInfo
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:hmkNotificationBGDetectionInfo];
+}
+
+#pragma mark - Observers handlers
+-(void)onBackgroundDetectionInfo:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    CGFloat weight = [info[hmkInfoBGMarkWeight] floatValue];
+    self.bgFeedBackVC.goodBackgroundWeight = weight;
 }
 
 #pragma mark - VC preferences
@@ -66,8 +108,15 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"embed preview segue"]) {
-        // The preview view.
+        
+        // The preview view controller.
         self.previewVC = segue.destinationViewController;
+
+    } else if ([segue.identifier isEqualToString:@"embed bg feedback segue"]) {
+    
+        // The background user feedback view controller.
+        self.bgFeedBackVC = segue.destinationViewController;
+        
     }
 }
 
@@ -78,8 +127,10 @@
     // Set the recorderVC as the session delegate.
     self.captureSession = [[HMCaptureSession alloc] init];
     self.captureSession.prefferedSessionPreset = AVCaptureSessionPreset640x480;
-    self.captureSession.prefferedSize = CGSizeMake(240, 240);
+    self.captureSession.prefferedSize = CGSizeMake(480, 480);
     self.captureSession.sessionDelegate = self;
+    self.captureSession.shouldInspectVideoFrames = NO;
+    self.captureSession.shouldProcessVideoFrames = NO;
 
     // Setup and start the capture session.
     [self.captureSession setupAndStartCaptureSession];
@@ -99,8 +150,8 @@
     // And check for errors in initalization.
     //
     NSError *error;
-    HMGreenMachine *gm = [HMGreenMachine greenMachineWithBGImageFileName:@"test240x240"
-                                                         contourFileName:@"head_and_chest_240X240"
+    HMGreenMachine *gm = [HMGreenMachine greenMachineWithBGImageFileName:@"test480x480"
+                                                         contourFileName:@"headAndChest480X480"
                                                                    error:&error];
     if (error) {
         HMLOG(TAG, ERR, @"GM error: %@", [error localizedDescription]);

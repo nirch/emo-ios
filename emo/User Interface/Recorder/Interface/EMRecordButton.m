@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import "HMRecordButton.h"
+#import "EMRecordButton.h"
 #import "EmoStyleKit.h"
 
-@implementation HMRecordButton
+@implementation EMRecordButton
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {

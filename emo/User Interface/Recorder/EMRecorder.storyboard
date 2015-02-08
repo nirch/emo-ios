@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Recorder View Controller-->
+        <!--RecorderVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="RecorderViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="EMRecorderVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -34,7 +34,7 @@
                                     <constraint firstAttribute="width" secondItem="WpW-ex-edX" secondAttribute="height" multiplier="1:1" id="QWM-ju-XTL"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="QwO-lL-lLe" kind="embed" id="TRX-Nc-cpX"/>
+                                    <segue destination="QwO-lL-lLe" kind="embed" identifier="embed bg feedback segue" id="TRX-Nc-cpX"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aT-Dl-fP6" userLabel="Top bar container">
@@ -51,7 +51,7 @@
                                     <segue destination="a6c-JL-B8V" kind="embed" id="9L8-jD-Tjv"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47C-Qd-Sw6" userLabel="RecordButton" customClass="HMRecordButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47C-Qd-Sw6" userLabel="RecordButton" customClass="EMRecordButton">
                                 <rect key="frame" x="116" y="400" width="88" height="88"/>
                                 <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -62,31 +62,18 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scd-dw-jl9" userLabel="Debug button">
-                                <rect key="frame" x="0.0" y="531" width="320" height="37"/>
-                                <state key="normal" title="Debug Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedDebugButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lmn-7b-8Vn"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="rU3-fD-N15" secondAttribute="centerY" id="5tn-MQ-seC"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="top" secondItem="4aT-Dl-fP6" secondAttribute="bottom" id="78N-1I-XKf"/>
                             <constraint firstAttribute="centerY" secondItem="WpW-ex-edX" secondAttribute="centerY" id="7Sq-YB-yGZ"/>
-                            <constraint firstItem="scd-dw-jl9" firstAttribute="top" secondItem="47C-Qd-Sw6" secondAttribute="bottom" constant="43" id="G5B-8y-XQd"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HYL-Yr-nfl"/>
                             <constraint firstAttribute="centerX" secondItem="4aT-Dl-fP6" secondAttribute="centerX" id="HbR-Ll-mW3"/>
-                            <constraint firstItem="scd-dw-jl9" firstAttribute="trailing" secondItem="Ooa-Vx-VYG" secondAttribute="trailing" id="JUB-la-ut8"/>
-                            <constraint firstItem="scd-dw-jl9" firstAttribute="leading" secondItem="Ooa-Vx-VYG" secondAttribute="leading" id="KBD-BF-Ihz"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="WpW-ex-edX" secondAttribute="bottom" id="RUI-Dr-wtz"/>
                             <constraint firstAttribute="centerX" secondItem="Ooa-Vx-VYG" secondAttribute="centerX" id="USi-R1-17t"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XWX-wl-t4X"/>
                             <constraint firstAttribute="centerX" secondItem="47C-Qd-Sw6" secondAttribute="centerX" id="ec1-o2-juP"/>
-                            <constraint firstItem="scd-dw-jl9" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gCa-4j-tHq"/>
                             <constraint firstItem="4aT-Dl-fP6" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oGh-S8-WRU"/>
                             <constraint firstAttribute="trailing" secondItem="WpW-ex-edX" secondAttribute="trailing" id="ofB-tk-dVT"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="t4Y-ee-GGj"/>
@@ -108,10 +95,10 @@
             </objects>
             <point key="canvasLocation" x="205" y="372"/>
         </scene>
-        <!--User Interaction View Controller-->
+        <!--BG Feedback View Controller-->
         <scene sceneID="SYd-IN-MO5">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="QwO-lL-lLe" userLabel="User Interaction View Controller" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="QwO-lL-lLe" userLabel="BG Feedback View Controller" customClass="EMBGFeedBackVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hM8-Vp-2E1"/>
                         <viewControllerLayoutGuide type="bottom" id="RHl-dB-wtt"/>
@@ -122,26 +109,75 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="silHeadAndChestHD" translatesAutoresizingMaskIntoConstraints="NO" id="QQM-UT-pU2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="silHeadAndChestHDContourGreen" translatesAutoresizingMaskIntoConstraints="NO" id="Y3B-lq-lM9" userLabel="contourGood">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                            </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="AGI-UV-vRQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                <color key="progressTintColor" red="0.0" green="1" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="trackTintColor" red="1" green="0.1450980392" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </progressView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4mc-BB-ebw" userLabel="contourBadContainer">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="silHeadAndChestHDContourRed" translatesAutoresizingMaskIntoConstraints="NO" id="ACh-Kv-zma" userLabel="contourBad">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="320" id="fta-b8-2Ho"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="fta-b8-2Ho"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ACh-Kv-zma" firstAttribute="top" secondItem="4mc-BB-ebw" secondAttribute="top" id="1PG-Ct-Mm4"/>
+                                    <constraint firstItem="ACh-Kv-zma" firstAttribute="leading" secondItem="4mc-BB-ebw" secondAttribute="leading" id="3yY-rg-fmh"/>
+                                    <constraint firstAttribute="trailing" secondItem="ACh-Kv-zma" secondAttribute="trailing" id="cG0-Wo-nDd"/>
+                                    <constraint firstAttribute="bottom" secondItem="ACh-Kv-zma" secondAttribute="bottom" id="eLE-3o-JD2"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="4mc-BB-ebw" firstAttribute="top" secondItem="AGI-UV-vRQ" secondAttribute="top" id="0Ha-Nf-rW7"/>
                             <constraint firstAttribute="trailing" secondItem="QQM-UT-pU2" secondAttribute="trailing" id="0Nv-iA-vq8"/>
+                            <constraint firstItem="Y3B-lq-lM9" firstAttribute="top" secondItem="QQM-UT-pU2" secondAttribute="top" id="3Fj-Yq-UCv"/>
+                            <constraint firstItem="AGI-UV-vRQ" firstAttribute="trailing" secondItem="Y3B-lq-lM9" secondAttribute="trailing" id="D44-GI-eGa"/>
                             <constraint firstItem="QQM-UT-pU2" firstAttribute="leading" secondItem="jPb-O8-h64" secondAttribute="leading" id="JBQ-CJ-ico"/>
                             <constraint firstItem="QQM-UT-pU2" firstAttribute="top" secondItem="hM8-Vp-2E1" secondAttribute="bottom" id="LuK-Zg-4B9"/>
+                            <constraint firstItem="4mc-BB-ebw" firstAttribute="leading" secondItem="Y3B-lq-lM9" secondAttribute="leading" id="Od4-gs-t06"/>
+                            <constraint firstItem="Y3B-lq-lM9" firstAttribute="bottom" secondItem="RHl-dB-wtt" secondAttribute="top" id="RlV-bq-TjJ"/>
+                            <constraint firstItem="Y3B-lq-lM9" firstAttribute="trailing" secondItem="QQM-UT-pU2" secondAttribute="trailing" id="V91-B4-aYH"/>
+                            <constraint firstItem="AGI-UV-vRQ" firstAttribute="leading" secondItem="QQM-UT-pU2" secondAttribute="leading" id="bVB-xI-Xmf"/>
+                            <constraint firstItem="4mc-BB-ebw" firstAttribute="trailing" secondItem="AGI-UV-vRQ" secondAttribute="trailing" id="cgP-DF-twV"/>
                             <constraint firstItem="QQM-UT-pU2" firstAttribute="bottom" secondItem="RHl-dB-wtt" secondAttribute="top" id="dQx-ZZ-XML"/>
+                            <constraint firstItem="4mc-BB-ebw" firstAttribute="bottom" secondItem="RHl-dB-wtt" secondAttribute="top" id="k2c-wI-zC8"/>
+                            <constraint firstItem="4mc-BB-ebw" firstAttribute="top" secondItem="QQM-UT-pU2" secondAttribute="top" id="kHS-ti-igE"/>
+                            <constraint firstItem="Y3B-lq-lM9" firstAttribute="leading" secondItem="QQM-UT-pU2" secondAttribute="leading" id="rsa-cx-wa2"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
+                    <connections>
+                        <outlet property="guiContourBad" destination="ACh-Kv-zma" id="Tea-gA-JtL"/>
+                        <outlet property="guiContourBadContainer" destination="4mc-BB-ebw" id="yQf-OM-rv8"/>
+                        <outlet property="guiContourGood" destination="Y3B-lq-lM9" id="EcF-rC-WOy"/>
+                        <outlet property="guiWeightIndicator" destination="AGI-UV-vRQ" id="S7S-wg-gse"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vPa-4G-xXx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="806" y="372"/>
         </scene>
-        <!--Controls Bar View Controller-->
+        <!--Controls BarVC-->
         <scene sceneID="9Uc-aC-DSy">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="a6c-JL-B8V" customClass="ControlsBarViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="a6c-JL-B8V" customClass="EMControlsBarVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="veJ-iE-8dV"/>
                         <viewControllerLayoutGuide type="bottom" id="TS7-ur-yWf"/>
@@ -157,10 +193,10 @@
             </objects>
             <point key="canvasLocation" x="806" y="678"/>
         </scene>
-        <!--Controls Bar View Controller-->
+        <!--Controls BarVC-->
         <scene sceneID="H33-DB-oiR">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="NbN-Rf-bOa" customClass="ControlsBarViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="NbN-Rf-bOa" customClass="EMControlsBarVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Pi0-Rv-YGO"/>
                         <viewControllerLayoutGuide type="bottom" id="xx0-d2-9ba"/>
@@ -176,10 +212,10 @@
             </objects>
             <point key="canvasLocation" x="806" y="90"/>
         </scene>
-        <!--Preview View Controller-->
+        <!--PreviewVC-->
         <scene sceneID="QHD-cI-qET">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="0Kv-p9-mo5" customClass="PreviewViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="0Kv-p9-mo5" customClass="EMPreviewVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wFo-zL-OkK"/>
                         <viewControllerLayoutGuide type="bottom" id="qlu-V1-Eoh"/>
@@ -201,5 +237,7 @@
     </scenes>
     <resources>
         <image name="silHeadAndChestHD" width="360" height="360"/>
+        <image name="silHeadAndChestHDContourGreen" width="360" height="360"/>
+        <image name="silHeadAndChestHDContourRed" width="360" height="360"/>
     </resources>
 </document>

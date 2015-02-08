@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HMRecordButton : UIButton
+@interface EMRecordButton : UIButton
 
 @end

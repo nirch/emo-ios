@@ -61,7 +61,6 @@
 	BOOL recordingWillBeStarted;
 	BOOL recordingWillBeStopped;
 	BOOL recording;
-    BOOL processingVideoFrames;
 }
 
 #pragma mark - session
@@ -84,7 +83,10 @@
 @property (readonly) Float64 videoFrameRate;
 @property (readonly) CMVideoDimensions videoDimensions;
 @property (readonly) CMVideoCodecType videoType;
-@property (readonly) BOOL processingVideoFrames;
+
+// Should process or inspect frames?
+@property (atomic) BOOL shouldProcessVideoFrames;
+@property (atomic) BOOL shouldInspectVideoFrames;
 
 // puase and resume session
 //-(void)pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.

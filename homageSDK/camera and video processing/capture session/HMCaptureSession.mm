@@ -33,8 +33,7 @@
 @property (readwrite) CMVideoCodecType videoType;
 @property (readwrite, getter=isRecording) BOOL recording;
 @property (readwrite) AVCaptureVideoOrientation videoOrientation;
-@property (readwrite) BOOL processingVideoFrames;
-@property (readwrite) BOOL backgroundDetectionEnabled;
+
 
 // Video processor
 @property (nonatomic) id<HMVideoProcessingProtocol> videoProcessor;
@@ -48,8 +47,6 @@
 @synthesize referenceOrientation;
 @synthesize videoOrientation;
 @synthesize recording;
-@synthesize processingVideoFrames;
-@synthesize backgroundDetectionEnabled;
 @synthesize extractCounter;
 
 #pragma mark - Initializations
@@ -186,39 +183,58 @@
 }
 
 #pragma mark - Capture
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
-       fromConnection:(AVCaptureConnection *)connection
+-  (void)captureOutput:(AVCaptureOutput *)captureOutput
+ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+        fromConnection:(AVCaptureConnection *)connection
 {
 	CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer);
     CMSampleBufferRef processedSampleBuffer = nil;
-    BOOL sample = ++extractCounter % 25 == 0;
+    extractCounter++;
     
+    BOOL thisFrameShouldBeProcessed = _shouldProcessVideoFrames;
+    BOOL thisFrameShouldBeInspected = _shouldInspectVideoFrames && (extractCounter % 13 == 0);
+
     if ( connection == videoConnection ) {
 		// Get framerate
 		CMTime timestamp = CMSampleBufferGetPresentationTimeStamp( sampleBuffer );
 		[self calculateFramerateAtTimestamp:timestamp];
 
-//		// Get frame dimensions (for onscreen display)
-//		if (self.videoDimensions.width == 0 && self.videoDimensions.height == 0)
-//			self.videoDimensions = CMVideoFormatDescriptionGetDimensions( formatDescription );
-//
-//		// Get buffer type
-//		if ( self.videoType == 0 )
-//			self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
+		// Get frame dimensions (for onscreen display)
+		if (self.videoDimensions.width == 0 && self.videoDimensions.height == 0)
+			self.videoDimensions = CMVideoFormatDescriptionGetDimensions( formatDescription );
 
-        // Process the frame with the set video processor.
+		// Get buffer type
+		if ( self.videoType == 0 )
+			self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
+        
+        
         if (self.videoProcessor) {
-            processedSampleBuffer = [self.videoProcessor processFrame:sampleBuffer];
-        } else {
-            processedSampleBuffer = sampleBuffer;
+            //
+            // 1. Prepare the frame (crop / resize according to settings)
+            //
+            [self.videoProcessor prepareFrame:sampleBuffer];
+            
+            //
+            // 2. Process the frame with the set video processor
+            //    (only if currently should be processing frames)
+            //
+            if (thisFrameShouldBeProcessed) {
+                processedSampleBuffer = [self.videoProcessor processFrame:sampleBuffer];
+            } else {
+                processedSampleBuffer = sampleBuffer;
+            }
+
+            //
+            // 3. Once every few frames, inspect the frame if required.
+            //
+            if (thisFrameShouldBeInspected) {
+                // SampleBuffer to PixelBuffer
+                [self.videoProcessor inspectFrame];
+                // HMLOG(TAG, VERBOSE, @"total frames captured: %@", @(extractCounter));
+            }
         }
         
-        // Once every few frames, inspect the frame (if required).
-        if (sample) {
-            // SampleBuffer to PixelBuffer
-            [self.videoProcessor inspectFrame];
-            HMLOG(TAG, VERBOSE, @"total frames captured: %@", @(extractCounter));
-        }
+        
         
         // Enqueue it for preview.  This is a shallow queue, so if image processing is taking too long,
 		// we'll drop this frame for preview (this keeps preview latency low).
@@ -289,7 +305,7 @@
         if (_videoProcessor &&
             connection == videoConnection &&
             processedSampleBuffer &&
-            processingVideoFrames) {
+            thisFrameShouldBeProcessed) {
             CFRelease(processedSampleBuffer);
         }
     });
@@ -299,7 +315,6 @@
 {
     self.videoProcessor = videoProcessor;
 }
-
 
 #pragma mark Utilities
 -(void)calculateFramerateAtTimestamp:(CMTime) timestamp
@@ -317,7 +332,7 @@
 }
 
 #pragma mark - Capture session
-- (void) stopAndTearDownCaptureSession
+- (void)stopAndTearDownCaptureSession
 {
     if (captureSession) {
         [captureSession stopRunning];
@@ -361,545 +376,5 @@
         }
     });
 }
-
-//
-//- (void)removeFile:(NSURL *)fileURL
-//{
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *filePath = [fileURL path];
-//    if ([fileManager fileExistsAtPath:filePath]) {
-//        NSError *error;
-//        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-//		if (!success)
-//			[self showError:error];
-//    }
-//}
-//
-//- (CGFloat)angleOffsetFromPortraitOrientationToOrientation:(AVCaptureVideoOrientation)orientation
-//{
-//	CGFloat angle = 0.0;
-//	
-//	switch (orientation) {
-//		case AVCaptureVideoOrientationPortrait:
-//			angle = 0.0;
-//			break;
-//		case AVCaptureVideoOrientationPortraitUpsideDown:
-//			angle = M_PI;
-//			break;
-//		case AVCaptureVideoOrientationLandscapeRight:
-//			angle = -M_PI_2;
-//			break;
-//		case AVCaptureVideoOrientationLandscapeLeft:
-//			angle = M_PI_2;
-//			break;
-//		default:
-//			break;
-//	}
-//    
-//	return angle;
-//}
-//
-//- (CGAffineTransform)transformFromCurrentVideoOrientationToOrientation:(AVCaptureVideoOrientation)orientation
-//{
-//	CGAffineTransform transform = CGAffineTransformIdentity;
-//    
-//	// Calculate offsets from an arbitrary reference orientation (portrait)
-//	CGFloat orientationAngleOffset = [self angleOffsetFromPortraitOrientationToOrientation:orientation];
-//	CGFloat videoOrientationAngleOffset = [self angleOffsetFromPortraitOrientationToOrientation:self.videoOrientation];
-//	
-//	// Find the difference in angle between the passed in orientation and the current video orientation
-//	CGFloat angleOffset = orientationAngleOffset - videoOrientationAngleOffset;
-//	transform = CGAffineTransformMakeRotation(angleOffset);
-//	
-//	return transform;
-//}
-//
-//#pragma mark Recording
-//
-//- (void)saveMovieToCameraRoll
-//{
-//	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-//	[library writeVideoAtPathToSavedPhotosAlbum:movieURL
-//								completionBlock:^(NSURL *assetURL, NSError *error) {
-//									if (error)
-//										[self showError:error];
-//									else
-//										[self removeFile:movieURL];
-//									
-//									dispatch_async(movieWritingQueue, ^{
-//										recordingWillBeStopped = NO;
-//										self.recording = NO;
-//										
-//										[self.delegate recordingDidStop];
-//									});
-//								}];
-//	[library release];
-//}
-//
-//- (void) writeSampleBuffer:(CMSampleBufferRef)sampleBuffer ofType:(NSString *)mediaType withPixelBuffer:(CVPixelBufferRef)processedPixelBuffer
-//{
-//	if ( assetWriter.status == AVAssetWriterStatusUnknown ) {
-//		
-//        if ([assetWriter startWriting]) {
-//			[assetWriter startSessionAtSourceTime:CMSampleBufferGetPresentationTimeStamp(sampleBuffer)];
-//		}
-//		else {
-//			[self showError:[assetWriter error]];
-//		}
-//	}
-//	
-//	if ( assetWriter.status == AVAssetWriterStatusWriting ) {
-//		
-//		if (mediaType == AVMediaTypeVideo) {
-//			if (assetWriterVideoIn.readyForMoreMediaData) {
-//				//if (![assetWriterVideoIn appendSampleBuffer:sampleBuffer]) {
-//                if (![_assetWriterPixelBufferIn appendPixelBuffer:processedPixelBuffer withPresentationTime:CMSampleBufferGetPresentationTimeStamp(sampleBuffer)]) {
-//					[self showError:[assetWriter error]];
-//				}
-//			}
-//		}
-//		else if (mediaType == AVMediaTypeAudio) {
-//			if (assetWriterAudioIn.readyForMoreMediaData) {
-//				if (![assetWriterAudioIn appendSampleBuffer:sampleBuffer]) {
-//					[self showError:[assetWriter error]];
-//				}
-//			}
-//		}
-//	}
-//}
-
-
-//
-//- (BOOL) setupAssetWriterAudioInput:(CMFormatDescriptionRef)currentFormatDescription
-//{
-//	const AudioStreamBasicDescription *currentASBD = CMAudioFormatDescriptionGetStreamBasicDescription(currentFormatDescription);
-//    
-//	size_t aclSize = 0;
-//	const AudioChannelLayout *currentChannelLayout = CMAudioFormatDescriptionGetChannelLayout(currentFormatDescription, &aclSize);
-//	NSData *currentChannelLayoutData = nil;
-//	
-//	// AVChannelLayoutKey must be specified, but if we don't know any better give an empty data and let AVAssetWriter decide.
-//	if ( currentChannelLayout && aclSize > 0 )
-//		currentChannelLayoutData = [NSData dataWithBytes:currentChannelLayout length:aclSize];
-//	else
-//		currentChannelLayoutData = [NSData data];
-//	
-//	NSDictionary *audioCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-//											  [NSNumber numberWithInteger:kAudioFormatMPEG4AAC], AVFormatIDKey,
-//											  [NSNumber numberWithFloat:currentASBD->mSampleRate], AVSampleRateKey,
-//											  [NSNumber numberWithInt:64000], AVEncoderBitRatePerChannelKey,
-//											  [NSNumber numberWithInteger:currentASBD->mChannelsPerFrame], AVNumberOfChannelsKey,
-//											  currentChannelLayoutData, AVChannelLayoutKey,
-//											  nil];
-//	if ([assetWriter canApplyOutputSettings:audioCompressionSettings forMediaType:AVMediaTypeAudio]) {
-//		assetWriterAudioIn = [[AVAssetWriterInput alloc] initWithMediaType:AVMediaTypeAudio outputSettings:audioCompressionSettings];
-//		assetWriterAudioIn.expectsMediaDataInRealTime = YES;
-//		if ([assetWriter canAddInput:assetWriterAudioIn])
-//			[assetWriter addInput:assetWriterAudioIn];
-//		else {
-//			NSLog(@"Couldn't add asset writer audio input.");
-//            return NO;
-//		}
-//	}
-//	else {
-//		NSLog(@"Couldn't apply audio output settings.");
-//        return NO;
-//	}
-//    
-//    return YES;
-//}
-//
-//- (BOOL) setupAssetWriterVideoInput:(CMFormatDescriptionRef)currentFormatDescription
-//{
-//	float bitsPerPixel;
-//	CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(currentFormatDescription);
-//	int numPixels = dimensions.width * dimensions.height;
-//	int bitsPerSecond;
-//	
-//	// Assume that lower-than-SD resolutions are intended for streaming, and use a lower bitrate
-//	if ( numPixels < (640 * 480) )
-//		bitsPerPixel = 4.05; // This bitrate matches the quality produced by AVCaptureSessionPresetMedium or Low.
-//	else
-//		bitsPerPixel = 11.4; // This bitrate matches the quality produced by AVCaptureSessionPresetHigh.
-//	
-//	bitsPerSecond = numPixels * bitsPerPixel;
-//	
-//	NSDictionary *videoCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-//											  AVVideoCodecH264, AVVideoCodecKey,
-//											  [NSNumber numberWithInteger:dimensions.width], AVVideoWidthKey,
-//											  [NSNumber numberWithInteger:dimensions.height], AVVideoHeightKey,
-//											  [NSDictionary dictionaryWithObjectsAndKeys:
-//											   [NSNumber numberWithInteger:bitsPerSecond], AVVideoAverageBitRateKey,
-//											   [NSNumber numberWithInteger:30], AVVideoMaxKeyFrameIntervalKey,
-//											   nil], AVVideoCompressionPropertiesKey,
-//											  nil];
-//	if ([assetWriter canApplyOutputSettings:videoCompressionSettings forMediaType:AVMediaTypeVideo]) {
-//		assetWriterVideoIn = [[AVAssetWriterInput alloc] initWithMediaType:AVMediaTypeVideo outputSettings:videoCompressionSettings];
-//		assetWriterVideoIn.expectsMediaDataInRealTime = YES;
-//		assetWriterVideoIn.transform = [self transformFromCurrentVideoOrientationToOrientation:self.referenceOrientation];
-//        _assetWriterPixelBufferIn = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:assetWriterVideoIn sourcePixelBufferAttributes:nil];
-//        [_assetWriterPixelBufferIn retain];
-//		if ([assetWriter canAddInput:assetWriterVideoIn])
-//			[assetWriter addInput:assetWriterVideoIn];
-//		else {
-//			NSLog(@"Couldn't add asset writer video input.");
-//            return NO;
-//		}
-//	}
-//	else {
-//		NSLog(@"Couldn't apply video output settings.");
-//        return NO;
-//	}
-//    
-//    return YES;
-//}
-//
-//- (void) startRecording
-//{
-//	dispatch_async(movieWritingQueue, ^{
-//        
-//		if ( recordingWillBeStarted || self.recording )
-//			return;
-//        
-//		recordingWillBeStarted = YES;
-//        
-//		// recordingDidStart is called from captureOutput:didOutputSampleBuffer:fromConnection: once the asset writer is setup
-//		[self.delegate recordingWillStart];
-//        
-//		// Remove the file if one with the same name already exists
-//		[self removeFile:movieURL];
-//        
-//		// Create an asset writer
-//		NSError *error;
-//		assetWriter = [[AVAssetWriter alloc] initWithURL:movieURL fileType:(NSString *)kUTTypeQuickTimeMovie error:&error];
-//		if (error)
-//			[self showError:error];
-//	});
-//}
-//
-//- (void) stopRecording
-//{
-//	dispatch_async(movieWritingQueue, ^{
-//		
-//		if ( recordingWillBeStopped || (self.recording == NO) )
-//			return;
-//		
-//		recordingWillBeStopped = YES;
-//		
-//		// recordingDidStop is called from saveMovieToCameraRoll
-//		[self.delegate recordingWillStop];
-//        
-//		if ([assetWriter finishWriting]) {
-//			[assetWriterAudioIn release];
-//			[assetWriterVideoIn release];
-//			[assetWriter release];
-//            [_assetWriterPixelBufferIn release];
-//			assetWriter = nil;
-//			
-//			readyToRecordVideo = NO;
-//			readyToRecordAudio = NO;
-//			
-//			[self saveMovieToCameraRoll];
-//		}
-//		else {
-//			[self showError:[assetWriter error]];
-//		}
-//	});
-//}
-//
-//#pragma mark Processing
-//
-//- (void)processPixelBuffer: (CVImageBufferRef)pixelBuffer
-//{
-//	CVPixelBufferLockBaseAddress( pixelBuffer, 0 );
-//	
-//	int bufferWidth = CVPixelBufferGetWidth(pixelBuffer);
-//	int bufferHeight = CVPixelBufferGetHeight(pixelBuffer);
-//	unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
-//    
-//	for( int row = 0; row < bufferHeight; row++ ) {
-//		for( int column = 0; column < bufferWidth; column++ ) {
-//			pixel[1] = 0; // De-green (second pixel in BGRA is green)
-//			pixel += BYTES_PER_PIXEL;
-//		}
-//	}
-//	
-//	CVPixelBufferUnlockBaseAddress( pixelBuffer, 0 );
-//}
-//
-//-(void)updatePixelBuffer:(CVImageBufferRef)pixelBuffer fromImageType:(image_type *)im
-//{
-//    int i,   j;
-//	
-//	u_char *sp = im->data;
-//    
-//    CVPixelBufferLockBaseAddress(pixelBuffer, 0 );
-//	unsigned char *buffer = (u_char *)CVPixelBufferGetBaseAddress(pixelBuffer);
-//    int k;
-//	for( i = 0, k = 0 ; i < im->height ; i++ ){
-//		for( j = 0 ; j < im->width ; j++, sp += 3, k+= 4 ){
-//			buffer[k] = sp[0];   // R
-//			buffer[k+1] = sp[1]; // G
-//			buffer[k+2] = sp[2]; // B
-//			buffer[k+3] = 0;     // A
-//            
-//            
-//		}
-//	}
-//    
-//    CVPixelBufferUnlockBaseAddress(pixelBuffer,0);
-//}
-//
-
-
-//
-//- (UIImage*) UIImageFromPixelBuffer:(CVPixelBufferRef) pixelBuffer
-//{
-//    
-//    size_t width = CVPixelBufferGetWidth(pixelBuffer);
-//    size_t height = CVPixelBufferGetHeight(pixelBuffer);
-//    
-//    CVPixelBufferLockBaseAddress(pixelBuffer, 0 );
-//    unsigned char *pixels = (u_char *)CVPixelBufferGetBaseAddress(pixelBuffer);
-//    
-//    int size = (int)(width * height * 4);
-//    
-//    //   size_t width                    = width;
-//    //   size_t height                   = height;
-//    size_t bitsPerComponent         = 8;
-//    size_t bitsPerPixel             = 32;
-//    size_t bytesPerRow              = width * 4;
-//    
-//    CGColorSpaceRef colorspace      = CGColorSpaceCreateDeviceRGB();
-//    CGBitmapInfo bitmapInfo         = kCGBitmapByteOrderDefault;
-//    
-//    NSData* newPixelData = [NSData dataWithBytes:pixels length:size];
-//    CFDataRef imgData = (CFDataRef)newPixelData;
-//    CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData(imgData);
-//    
-//    CGImageRef newImageRef = CGImageCreate (
-//                                            width,
-//                                            height,
-//                                            bitsPerComponent,
-//                                            bitsPerPixel,
-//                                            bytesPerRow,
-//                                            colorspace,
-//                                            bitmapInfo,
-//                                            imgDataProvider,
-//                                            NULL,
-//                                            NO,
-//                                            kCGRenderingIntentDefault
-//                                            );
-//    
-//    UIImage *newImage   = [[UIImage alloc] initWithCGImage:newImageRef];//[UIImage imageWithCGImage:newImageRef];
-//    
-//    CGColorSpaceRelease(colorspace);
-//    CGDataProviderRelease(imgDataProvider);
-//    CGImageRelease(newImageRef);
-//    
-//    
-//    CVPixelBufferUnlockBaseAddress(pixelBuffer,0);
-//    
-//    
-//    return [newImage autorelease];
-//}
-//- (void)saveImageType3:(image_type *)image3 withName:(NSString *)name
-//{
-//    image_type* image4 = image4_from(image3, NULL);
-//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
-//    [self saveImage:imageToSave withName:name];
-//    image_destroy(image4, 1);
-//}
-//     
-//- (void)savePixelBuffer:(CVPixelBufferRef)pixelBuffer withName:(NSString *)name
-//{
-//    UIImage *image = [self imageFromPixelBuffer:pixelBuffer];
-//    //UIImage *image = [self UIImageFromPixelBuffer:pixelBuffer];
-//    [self saveImage:image withName:name];
-//}
-//
-//- (void)saveSampleBuffer:(CMSampleBufferRef)samlpleBuffer withName:(NSString *)name
-//{
-//    UIImage *bgImage = [self imageFromSampleBuffer:samlpleBuffer];
-//    [self saveImage:bgImage withName:name];
-//}
-//
-//- (void)saveImage:(UIImage *) image withName:(NSString *)name
-//{
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-//
-//    static int counter = 0;
-//    ++counter;
-//    
-//    NSString *path = [NSString stringWithFormat:@"%@-%d.jpg" , name, counter];
-//    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-//    
-//    [UIImageJPEGRepresentation(image, 1.0) writeToFile:dataPath atomically:YES];
-//}
-//
-//// Create a UIImage from sample buffer data
-//- (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
-//{
-//    // Get a CMSampleBuffer's Core Video image buffer for the media data
-//    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-//
-//    return [self imageFromPixelBuffer:imageBuffer];
-//}
-//
-//// Create a UIImage from sample buffer data
-//- (UIImage *) imageFromPixelBuffer:(CVImageBufferRef) imageBuffer
-//{
-//    // Lock the base address of the pixel buffer
-//    CVPixelBufferLockBaseAddress(imageBuffer, 0);
-//    
-//    // Get the number of bytes per row for the pixel buffer
-//    void *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
-//    
-//    // Get the number of bytes per row for the pixel buffer
-//    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-//    // Get the pixel buffer width and height
-//    size_t width = CVPixelBufferGetWidth(imageBuffer);
-//    size_t height = CVPixelBufferGetHeight(imageBuffer);
-//    
-//    // Create a device-dependent RGB color space
-//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-//    
-//    // Create a bitmap graphics context with the sample buffer data
-//    CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8,
-//                                                 bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-//    // Create a Quartz image from the pixel data in the bitmap graphics context
-//    CGImageRef quartzImage = CGBitmapContextCreateImage(context);
-//    // Unlock the pixel buffer
-//    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-//    
-//    // Free up the context and color space
-//    CGContextRelease(context);
-//    CGColorSpaceRelease(colorSpace);
-//    
-//    // Create an image object from the Quartz image
-//    UIImage *image = [UIImage imageWithCGImage:quartzImage];
-//    
-//    // Release the Quartz image
-//    CGImageRelease(quartzImage);
-//    
-//    return (image);
-//}
-//
-//
-
-//
-//
-//- (BOOL) setupCaptureSession
-//{
-//	/*
-//     Overview: RosyWriter uses separate GCD queues for audio and video capture.  If a single GCD queue
-//     is used to deliver both audio and video buffers, and our video processing consistently takes
-//     too long, the delivery queue can back up, resulting in audio being dropped.
-//     
-//     When recording, RosyWriter creates a third GCD queue for calls to AVAssetWriter.  This ensures
-//     that AVAssetWriter is not called to start or finish writing from multiple threads simultaneously.
-//     
-//     RosyWriter uses AVCaptureSession's default preset, AVCaptureSessionPresetHigh.
-//	 */
-//    
-//    /*
-//	 * Create capture session
-//	 */
-//    captureSession = [[AVCaptureSession alloc] init];
-//    
-//    captureSession.sessionPreset = AVCaptureSessionPreset1280x720;
-//    
-//    /*
-//	 * Create audio connection
-//	 */
-//    AVCaptureDeviceInput *audioIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self audioDevice] error:nil];
-//    if ([captureSession canAddInput:audioIn])
-//        [captureSession addInput:audioIn];
-//	[audioIn release];
-//	
-//	AVCaptureAudioDataOutput *audioOut = [[AVCaptureAudioDataOutput alloc] init];
-//	dispatch_queue_t audioCaptureQueue = dispatch_queue_create("Audio Capture Queue", DISPATCH_QUEUE_SERIAL);
-//	[audioOut setSampleBufferDelegate:self queue:audioCaptureQueue];
-//	dispatch_release(audioCaptureQueue);
-//	if ([captureSession canAddOutput:audioOut])
-//		[captureSession addOutput:audioOut];
-//	audioConnection = [audioOut connectionWithMediaType:AVMediaTypeAudio];
-//	[audioOut release];
-//    
-//	/*
-//	 * Create video connection
-//	 */
-//    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self videoDeviceWithPosition:AVCaptureDevicePositionBack] error:nil];
-//
-//    
-//    if ([captureSession canAddInput:videoIn])
-//        [captureSession addInput:videoIn];
-////	[videoIn release];
-//    
-//	AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
-//	/*
-//     RosyWriter prefers to discard late video frames early in the capture pipeline, since its
-//     processing can take longer than real-time on some platforms (such as iPhone 3GS).
-//     Clients whose image processing is faster than real-time should consider setting AVCaptureVideoDataOutput's
-//     alwaysDiscardsLateVideoFrames property to NO.
-//	 */
-//	[videoOut setAlwaysDiscardsLateVideoFrames:YES];
-//	[videoOut setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
-//	dispatch_queue_t videoCaptureQueue = dispatch_queue_create("Video Capture Queue", DISPATCH_QUEUE_SERIAL);
-//	[videoOut setSampleBufferDelegate:self queue:videoCaptureQueue];
-//	dispatch_release(videoCaptureQueue);
-//	if ([captureSession canAddOutput:videoOut])
-//		[captureSession addOutput:videoOut];
-//	videoConnection = [videoOut connectionWithMediaType:AVMediaTypeVideo];
-//	self.videoOrientation = [videoConnection videoOrientation];
-//	[videoOut release];
-//    
-//    
-//    
-//
-//    
-//    
-//	return YES;
-//}
-//
-
-//
-//- (void) pauseCaptureSession
-//{
-//	if ( captureSession.isRunning )
-//		[captureSession stopRunning];
-//}
-//
-//- (void) resumeCaptureSession
-//{
-//	if ( !captureSession.isRunning )
-//		[captureSession startRunning];
-//}
-//
-//- (void)captureSessionStoppedRunningNotification:(NSNotification *)notification
-//{
-//	dispatch_async(movieWritingQueue, ^{
-//		if ( [self isRecording] ) {
-//			[self stopRecording];
-//		}
-//	});
-//}
-//
-//
-//#pragma mark Error Handling
-//
-//- (void)showError:(NSError *)error
-//{
-//    CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^(void) {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription]
-//                                                            message:[error localizedFailureReason]
-//                                                           delegate:nil
-//                                                  cancelButtonTitle:@"OK"
-//                                                  otherButtonTitles:nil];
-//        [alertView show];
-//        [alertView release];
-//    });
-//}
 
 @end

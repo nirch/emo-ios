@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import "PreviewViewController.h"
+#import "EMPreviewVC.h"
 #import "HMPreviewView.h"
 #import "HMCaptureSession.h"
 
-@interface PreviewViewController ()
+@interface EMPreviewVC ()
 
 @property (strong, nonatomic) IBOutlet HMPreviewView *guiGLPreviewView;
 
 @end
 
-@implementation PreviewViewController
+@implementation EMPreviewVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];

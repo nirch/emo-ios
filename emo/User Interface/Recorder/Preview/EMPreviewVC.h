@@ -8,7 +8,7 @@
 
 #import "HMSDK.h"
 
-@interface PreviewViewController : UIViewController<
+@interface EMPreviewVC : UIViewController<
     HMCaptureSessionDisplayDelegate
 >
 

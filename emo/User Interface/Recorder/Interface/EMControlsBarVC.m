@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import "ControlsBarViewController.h"
+#import "EMControlsBarVC.h"
 
-@interface ControlsBarViewController ()
+@interface EMControlsBarVC ()
 
 @end
 
-@implementation ControlsBarViewController
+@implementation EMControlsBarVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
