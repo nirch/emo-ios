@@ -9,6 +9,13 @@
 #import "EMRecordButton.h"
 #import "EmoStyleKit.h"
 
+@interface EMRecordButton()
+
+@property (nonatomic) NSInteger counter;
+@property (nonatomic) BOOL isNowCounting;
+
+@end
+
 @implementation EMRecordButton
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -27,6 +34,48 @@
 
 - (void)drawRect:(CGRect)rect {
     [EmoStyleKit drawRecorderRecordButton];
+}
+
+-(void)startCountDownFromNumber:(NSInteger)number
+{
+    self.counter = number;
+    self.isNowCounting = YES;
+    [self.delegate countDownWillStartFromNumber:number];
+    [self count];
+}
+
+-(void)cancelCountDown
+{
+    self.isNowCounting = NO;
+    [self.delegate countDownWasCanceled];
+}
+
+-(BOOL)isCounting
+{
+    return self.isNowCounting;
+}
+
+-(void)count
+{
+    if (self.counter <= 0) {
+        // Finished counting.
+        self.counter = 0;
+        self.isNowCounting = NO;        
+        [self.delegate countDownDidFinish];
+    }
+    
+    // Still counting
+    __weak EMRecordButton *weakSelf = self;
+    dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
+        if (!weakSelf.isNowCounting)
+            return;
+
+        weakSelf.counter--;
+        [weakSelf.delegate countDownDidCountToNumber:self.counter];
+        
+        // Next tick.
+        [weakSelf count];
+    });
 }
 
 @end

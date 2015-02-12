@@ -11,9 +11,10 @@
 @interface EMBGFeedBackVC ()
 
 @property (weak, nonatomic) IBOutlet UIProgressView *guiWeightIndicator;
-@property (weak, nonatomic) IBOutlet UIImageView *guiContourGood;
-@property (weak, nonatomic) IBOutlet UIImageView *guiContourBad;
+@property (weak, nonatomic) IBOutlet UISlider *guiWeightSlider;
+
 @property (weak, nonatomic) IBOutlet UIView *guiContourBadContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiContourGoodContainer;
 
 @property (nonatomic) CGRect badBGStartFrame;
 
@@ -36,6 +37,7 @@
 -(void)initGUI
 {
     self.guiWeightIndicator.progress = 0;
+    self.guiWeightSlider.value = 0;
     self.guiWeightIndicator.hidden = YES; // Used for debug
 }
 
@@ -55,12 +57,23 @@
 {
     self.guiWeightIndicator.progress = self.goodBackgroundWeight;
     
-    CGRect f = self.badBGStartFrame;
-    f.size.height *= (1-self.goodBackgroundWeight);
+    CGRect fBad = self.badBGStartFrame;
+    fBad.size.height *= (1-self.goodBackgroundWeight);
     
     [UIView animateWithDuration:0.5 animations:^{
-        self.guiContourBadContainer.frame = f;
+        self.guiContourBadContainer.frame = fBad;
     }];
 }
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onWeightSliderValueChanged:(UISlider *)slider
+{
+    _goodBackgroundWeight = slider.value;
+    [self update];
+}
+
 
 @end

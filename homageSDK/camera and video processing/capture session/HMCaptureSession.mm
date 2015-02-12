@@ -26,18 +26,18 @@
 
 @property (nonatomic) NSInteger extractCounter;
 
-// Redeclared as readwrite so that we can write to the property and still
-// be atomic with external readers.
+// Video feed
 @property (readwrite) Float64 videoFrameRate;
 @property (readwrite) CMVideoDimensions videoDimensions;
 @property (readwrite) CMVideoCodecType videoType;
-@property (readwrite, getter=isRecording) BOOL recording;
 @property (readwrite) AVCaptureVideoOrientation videoOrientation;
 
+// Video processing
+@property (atomic, readwrite) id<HMVideoProcessingProtocol> videoProcessor;
+@property (atomic, readwrite) HMVideoProcessingState videoProcessingState;
 
-// Video processor
-@property (nonatomic) id<HMVideoProcessingProtocol> videoProcessor;
-//@property (nonatomic) image_type *m_original_image;
+// Recording
+@property (readwrite, getter=isRecording) BOOL recording;
 
 @end
 
@@ -87,18 +87,24 @@
 - (void)setupAndStartCaptureSession
 {
     // Create a shallow queue for buffers going to the display for preview.
-    OSStatus err = CMBufferQueueCreate(kCFAllocatorDefault, 1, CMBufferQueueGetCallbacksForUnsortedSampleBuffers(), &previewBufferQueue);
+    OSStatus err = CMBufferQueueCreate(kCFAllocatorDefault,
+                                       1,
+                                       CMBufferQueueGetCallbacksForUnsortedSampleBuffers(),
+                                       &previewBufferQueue);
 
     if (err) {
         // TODO: Handle errors here
     }
     
     // Create serial queue for movie writing
-    movieWritingQueue = dispatch_queue_create("Movie Writing Queue", DISPATCH_QUEUE_SERIAL);
+    movieWritingQueue = dispatch_queue_create("Movie Writing Queue",
+                                              DISPATCH_QUEUE_SERIAL);
     
+    // If capture session not set up yet, set it up.
     if ( !captureSession )
         [self setupCaptureSession];
     
+    // If capture session is not running yet, start running.
     if ( !captureSession.isRunning )
         [captureSession startRunning];
 }
@@ -141,7 +147,7 @@
      Clients whose image processing is faster than real-time should consider setting AVCaptureVideoDataOutput's
      alwaysDiscardsLateVideoFrames property to NO.
 	 */
-	[videoOut setAlwaysDiscardsLateVideoFrames:YES];
+	[videoOut setAlwaysDiscardsLateVideoFrames:NO];
     NSDictionary *videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
 	[videoOut setVideoSettings:videoSettings];
 	dispatch_queue_t videoCaptureQueue = dispatch_queue_create("Video Capture Queue", DISPATCH_QUEUE_SERIAL);
@@ -191,42 +197,32 @@
     CMSampleBufferRef processedSampleBuffer = nil;
     extractCounter++;
     
-    BOOL thisFrameShouldBeProcessed = _shouldProcessVideoFrames;
-    BOOL thisFrameShouldBeInspected = _shouldInspectVideoFrames && (extractCounter % 13 == 0);
+    HMVideoProcessingState state = self.videoProcessingState;
+    
+    // Should inpect the frame?
+    BOOL thisFrameShouldBeInspected = (state == HMVideoProcessingStateInspectFrames ||
+                                       state == HMVideoProcessingStateInspectAndProcessFrames) &&
+                                        (extractCounter % 13 == 0);
+    
+    // Should process the frame?
+    BOOL thisFrameShouldBeProcessed = state == HMVideoProcessingStateProcessFrames ||
+                                        state == HMVideoProcessingStateInspectAndProcessFrames;
 
     if ( connection == videoConnection ) {
-		// Get framerate
-		CMTime timestamp = CMSampleBufferGetPresentationTimeStamp( sampleBuffer );
-		[self calculateFramerateAtTimestamp:timestamp];
-
-		// Get frame dimensions (for onscreen display)
-		if (self.videoDimensions.width == 0 && self.videoDimensions.height == 0)
-			self.videoDimensions = CMVideoFormatDescriptionGetDimensions( formatDescription );
-
-		// Get buffer type
-		if ( self.videoType == 0 )
-			self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
-        
-        
         if (self.videoProcessor) {
-            //
+
             // 1. Prepare the frame (crop / resize according to settings)
-            //
             [self.videoProcessor prepareFrame:sampleBuffer];
             
-            //
             // 2. Process the frame with the set video processor
             //    (only if currently should be processing frames)
-            //
             if (thisFrameShouldBeProcessed) {
                 processedSampleBuffer = [self.videoProcessor processFrame:sampleBuffer];
             } else {
                 processedSampleBuffer = sampleBuffer;
             }
 
-            //
             // 3. Once every few frames, inspect the frame if required.
-            //
             if (thisFrameShouldBeInspected) {
                 // SampleBuffer to PixelBuffer
                 [self.videoProcessor inspectFrame];
@@ -234,14 +230,11 @@
             }
         }
         
-        
-        
         // Enqueue it for preview.  This is a shallow queue, so if image processing is taking too long,
 		// we'll drop this frame for preview (this keeps preview latency low).
 		OSStatus err = CMBufferQueueEnqueue(previewBufferQueue, processedSampleBuffer);
 		if ( !err ) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				//CVPixelBufferRef pixBuf = (CVPixelBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
                 CMSampleBufferRef sbuf = (CMSampleBufferRef)CMBufferQueueDequeueAndRetain(previewBufferQueue);
                 if (sbuf) {
                     CVImageBufferRef pixBuf = CMSampleBufferGetImageBuffer(sbuf);
@@ -256,49 +249,11 @@
     CFRetain(formatDescription);
     
     dispatch_async(movieWritingQueue, ^{
-
+        
+        // Writing.
         if ( assetWriter ) {
-
-//            BOOL wasReadyToRecord = (readyToRecordAudio && readyToRecordVideo);
-//
-//            if (connection == videoConnection) {
-//
-//                // Initialize the video input if this is not done yet
-//                if (!readyToRecordVideo)
-//                {
-//                    CMFormatDescriptionRef processedFormatDesc = CMSampleBufferGetFormatDescription(processedSampleBuffer);
-//                    readyToRecordVideo = [self setupAssetWriterVideoInput:processedFormatDesc];
-//                }
-//
-//                // Write video data to file
-//                if (readyToRecordVideo && readyToRecordAudio)
-//                {
-//                    //[self saveSampleBuffer:processedSampleBuffer withName:@"beforewriting"];
-//                    CVPixelBufferRef processedPixelBuffer = CMSampleBufferGetImageBuffer(processedSampleBuffer);
-//                    CVPixelBufferRetain(processedPixelBuffer);
-//                    [self writeSampleBuffer:sampleBuffer ofType:AVMediaTypeVideo withPixelBuffer:processedPixelBuffer];
-//                    CVPixelBufferRelease(processedPixelBuffer);
-//                }
-//            }
-//            else if (connection == audioConnection) {
-//
-//                // Initialize the audio input if this is not done yet
-//                if (!readyToRecordAudio)
-//                    readyToRecordAudio = [self setupAssetWriterAudioInput:formatDescription];
-//
-//                // Write audio data to file
-//                if (readyToRecordAudio && readyToRecordVideo)
-//                    [self writeSampleBuffer:sampleBuffer ofType:AVMediaTypeAudio withPixelBuffer:nil];
-//            }
-//
-//            BOOL isReadyToRecord = (readyToRecordAudio && readyToRecordVideo);
-//            if ( !wasReadyToRecord && isReadyToRecord ) {
-//                recordingWillBeStarted = NO;
-//                self.recording = YES;
-//                [self.delegate recordingDidStart];
-//            }
-            
         }
+
         CFRelease(sampleBuffer);
         CFRelease(formatDescription);
 
@@ -311,9 +266,13 @@
     });
 }
 
+
 -(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor
 {
     self.videoProcessor = videoProcessor;
+    if (movieWritingQueue) {
+        videoProcessor.outputQueue = movieWritingQueue;
+    }
 }
 
 #pragma mark Utilities
@@ -349,30 +308,79 @@
     }
 }
 
--(void)prepareCameraStateForVideoProcessing
+#pragma mark - Video Processing
+-(void)setVideoProcessingState:(HMVideoProcessingState)state info:(NSDictionary *)info
+{
+    self.videoProcessingState = state;
+}
+
+#pragma mark - Camera
+-(void)cameraLockedFocus
 {
     dispatch_async(movieWritingQueue, ^{
-        CGPoint point = CGPointMake(100,100);
+        CGPoint point = CGPointMake(0.5, 0.5);
         AVCaptureDevice *device = [videoIn device];
         NSError *error = nil;
-        if ([device lockForConfiguration:&error])
-        {
-            if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:AVCaptureFocusModeLocked])
-            {
-                [device setFocusMode:AVCaptureFocusModeLocked];
-                [device setFocusPointOfInterest:point];
+        if ([device lockForConfiguration:&error]) {
+
+            // Lock focus on point of interest.
+            if ([device isFocusPointOfInterestSupported] &&
+                [device isFocusModeSupported:AVCaptureFocusModeLocked]) {
+                
+                device.focusPointOfInterest = point;
+                device.focusMode = AVCaptureFocusModeLocked;
             }
-            if ([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:AVCaptureExposureModeLocked])
-            {
-                [device setExposureMode:AVCaptureExposureModeLocked];
-                [device setExposurePointOfInterest:point];
+            
+            // Lock exposure point to the middle of the screen.
+            if ([device isExposurePointOfInterestSupported] &&
+                [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
+
+                device.exposurePointOfInterest = point;
+                device.exposureMode = AVCaptureExposureModeLocked;
             }
-            [device setSubjectAreaChangeMonitoringEnabled:false];
+            
+            // Disable monitoring of subject area changes.
+            [device setSubjectAreaChangeMonitoringEnabled:NO];
+            
+            // Done with configuring the cam.
             [device unlockForConfiguration];
+        } else {
+            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
         }
-        else
-        {
-            NSLog(@"%@", error);
+    });
+}
+
+-(void)cameraUnlockedFocus
+{
+    dispatch_async(movieWritingQueue, ^{
+        CGPoint point = CGPointMake(0.5, 0.5);
+        AVCaptureDevice *device = [videoIn device];
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error]) {
+            
+            // Auto focus on point of interest.
+            if ([device isFocusPointOfInterestSupported] &&
+                [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+                
+                device.focusPointOfInterest = point;
+                device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+            }
+            
+            // Auto exposure on point of interest,
+            if ([device isExposurePointOfInterestSupported] &&
+                [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+                
+                device.exposurePointOfInterest = point;
+                device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+            }
+            
+            // Disable monitoring of subject area changes.
+            [device setSubjectAreaChangeMonitoringEnabled:YES];
+            
+            // Done with configuring the cam.
+            [device unlockForConfiguration];
+        } else {
+            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
         }
     });
 }

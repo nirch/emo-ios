@@ -25,8 +25,13 @@
     CUniformBackground *m_foregroundExtraction;
     image_type *m_original_image;
     image_type *m_foreground_image;
-    image_type *m_output_image;
     image_type *m_background_image;
+
+    // Image sent to display
+    image_type *m_display_image;
+    
+    // Image sent to output
+    image_type *m_output_image;
 }
 
 @property (nonatomic) UIImage *backgroundImage;
@@ -49,6 +54,7 @@
 @synthesize backgroundImage = _backgroundImage;
 @synthesize contourFileName = _contourFileName;
 @synthesize processCounter = _processCounter;
+@synthesize outputQueue = _outputQueue;
 
 +(HMGreenMachine *)greenMachineWithBGImageFileName:(NSString *)bgImageFilename
                                    contourFileName:(NSString *)contourFileName
@@ -146,7 +152,7 @@
     // Currently hard coded resizing and cropping 640x480 -> 480x480
     // TODO: make this configurable using the SDK API.
     m_original_image = CVtool::CVPixelBufferRef_to_image_crop(pixelBuffer,
-                                                              0, 0, 480, 480,
+                                                              0, 80, 480, 480,
                                                               m_original_image);
 }
 
@@ -158,14 +164,19 @@
     m_foregroundExtraction->Process(original_bgr_image, 1, &m_foreground_image);
     
     // Stitching the foreground and the background together (and then converting to RGB)
-    m_output_image = m_foregroundExtraction->GetImage(m_background_image, m_output_image);
-    image3_bgr2rgb(m_output_image);
+    m_display_image = m_foregroundExtraction->GetImage(m_background_image, m_display_image);
+    
+    // Convert display image from bgr to rgb
+    image3_bgr2rgb(m_display_image);
+
+    // Set everything that is not the extracted background, as alpha with maximum transparency.
+    m_output_image = imageA_set_alpha(original_bgr_image, 255, m_foreground_image, m_output_image);
     
     // Destroying the temp image
     image_destroy(original_bgr_image, 1);
-    
+
     // Converting the result of the algo into CVPixelBuffer
-    CVImageBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_output_image);
+    CVImageBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_display_image);
     
     // Getting the sample timing info from the sample buffer
     CMSampleTimingInfo sampleTimingInfo = kCMTimingInfoInvalid;
@@ -242,11 +253,48 @@
                                                       userInfo:info];
 }
 
--(UIImage *)imageFromImageType3:(image_type *)image3
+-(void)reset
 {
-    image_type* image4 = image4_from(image3, NULL);
-    UIImage *image = CVtool::CreateUIImage(image4);
-    return image;
+    self.bgMarkWeight = 0;
+    self.lastBGMark = HMBGMarkUnrecognized;
 }
+
+//#pragma mark - Tools
+//- (void)saveImageType3:(image_type *)image3 withName:(NSString *)name
+//{
+//    image_type* image4 = image4_from(image3, NULL);
+//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
+//    [self saveImage:imageToSave withName:name];
+//    image_destroy(image4, 1);
+//}
+//
+//-(UIImage *)imageFromImageType3:(image_type *)image3
+//{
+//    image_type* image4 = image4_from(image3, NULL);
+//    UIImage *image = CVtool::CreateUIImage(image4);
+//    return image;
+//}
+//
+//- (void)saveImageType4:(image_type *)image4 withName:(NSString *)name
+//{
+//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
+//    [self saveImage:imageToSave withName:name];
+//    //image_destroy(image4, 1);
+//}
+//
+//- (void)saveImage:(UIImage *)image withName:(NSString *)name
+//{
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+//    
+//    static int pCounter = 0;
+//    ++pCounter;
+//    
+//    NSString *path = [NSString stringWithFormat:@"%@-%d.png" , name, pCounter];
+//    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
+//    
+//    [UIImagePNGRepresentation(image) writeToFile:dataPath atomically:YES];
+//
+//}
 
 @end

@@ -10,6 +10,19 @@
 
 @protocol HMVideoProcessingProtocol <NSObject>
 
+// Video Processing States
+typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
+    HMVideoProcessingStateIdle                                  = 0,
+    HMVideoProcessingStateInspectFrames                         = 1,
+    HMVideoProcessingStateProcessFrames                         = 2,
+    HMVideoProcessingStateInspectAndProcessFrames               = 3
+};
+
+/**
+ *  Output queue (optional)
+ */
+@property (weak, atomic) dispatch_queue_t outputQueue;
+
 
 /**
  *  Prepare a single frame for processing or inspection.

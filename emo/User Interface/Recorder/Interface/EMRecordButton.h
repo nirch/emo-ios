@@ -6,8 +6,14 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "EMCountDownDelegate.h"
 
 @interface EMRecordButton : UIButton
+
+@property (weak, nonatomic) id<EMCountDownDelegate> delegate;
+
+-(void)startCountDownFromNumber:(NSInteger)number;
+-(void)cancelCountDown;
+-(BOOL)isCounting;
 
 @end

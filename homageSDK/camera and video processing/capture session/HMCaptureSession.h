@@ -19,6 +19,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CMBufferQueue.h>
+#import "HMVideoProcessingProtocol.h"
 
 @protocol HMCaptureSessionDisplayDelegate;
 @protocol HMCaptureSessionDelegate;
@@ -84,9 +85,13 @@
 @property (readonly) CMVideoDimensions videoDimensions;
 @property (readonly) CMVideoCodecType videoType;
 
-// Should process or inspect frames?
-@property (atomic) BOOL shouldProcessVideoFrames;
-@property (atomic) BOOL shouldInspectVideoFrames;
+#pragma mark - Video Processing
+// Video processing (optional)
+-(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor;
+
+// Change to a new video processing state
+@property (atomic, readonly) HMVideoProcessingState videoProcessingState;
+-(void)setVideoProcessingState:(HMVideoProcessingState)state info:(NSDictionary *)info;
 
 // puase and resume session
 //-(void)pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
@@ -101,11 +106,6 @@
 
 // Output
 @property (nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferIn;
-
-
-#pragma mark - Video processing
-// Video processing (optional)
--(void)initializeVideoProcessor:(id<HMVideoProcessingProtocol>)videoProcessor;
 
 @end
 

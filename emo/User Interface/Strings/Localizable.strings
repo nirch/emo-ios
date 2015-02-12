@@ -1,0 +1,31 @@
+/* This string is used only for testing the localizable file */
+"TEST_LOCAL" = "Testing:EN";
+
+/* 
+ ------------------------------------
+              Recorder
+ ------------------------------------
+*/
+
+// Onboarding
+"ONBOARDING_TITLE_0_WELCOME" = "Welcome :-)";
+
+"ONBOARDING_TITLE_1_ALIGN" = "Align to the figure";
+"ONBOARDING_MSG_1_ALIGN" = "Align yourself and use a uniform background. If the background is good, the figure will turn green. We will give some tips on the fly for best results.";
+
+"ONBOARDING_TITLE_2_EXTRACTION_PREVIEW" = "Press record, when ready.";
+"ONBOARDING_MSG_2_EXTRACTION_PREVIEW" = "Your image will be extracted from the background in realtime. When you are happy with the result, press the record button.";
+
+"ONBOARDING_TITLE_3_COUNTING_DOWN" = "About to start";
+
+"ONBOARDING_TITLE_4_RECORDING" = "Recording...";
+
+"ONBOARDING_TITLE_5_DONE" = "Good job!";
+
+// Bad background marks
+"RECORDER_BGM_NOISY" = "Use a solid color wall!";
+"RECORDER_BGM_DARK" = "Use well lit areas!";
+"RECORDER_BGM_SILHOUETTE" = "Make sure you're inside the silhouette!";
+"RECORDER_BGM_SHADOW" = "There is a shadow behind you! step a bit forward!";
+"RECORDER_BGM_CLOTH" = "Your shirt is too similar to the wall!";
+"RECORDER_BGM_GENERAL_MESSAGE" = "Make sure you're in front of a solid color wall!";
