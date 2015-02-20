@@ -1,0 +1,6 @@
+{
+    {"defaults":{
+        "output_anim_gif_max_fps": 8,
+        "output_video_max_fps": 15
+    }
+}

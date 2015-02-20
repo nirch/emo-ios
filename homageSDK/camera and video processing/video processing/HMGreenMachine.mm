@@ -1,6 +1,6 @@
 //
 //  HMGreenMachine.m
-//  emo
+//  emu
 //
 //  Created by Aviv Wolf on 1/29/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
@@ -10,6 +10,7 @@
 
 #import "HMGreenMachine.h"
 #import "HMBackgroundMarks.h"
+#import "HMGMError.h"
 
 #import "HMImageTools.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
@@ -23,8 +24,14 @@
     
     //int counter;
     CUniformBackground *m_foregroundExtraction;
+
+    // The original captured image
     image_type *m_original_image;
-    image_type *m_foreground_image;
+    
+    // The mask is the result of the algorithm
+    // (the result of CUniformBackground -> Process() )
+    // It contains the information seperating the user from the background.
+    image_type *m_mask;
     image_type *m_background_image;
 
     // Image sent to display
@@ -32,6 +39,9 @@
     
     // Image sent to output
     image_type *m_output_image;
+    
+    // A processed sample buffer
+    //CMSampleBufferRef latestProcessedSampleBuffer;
 }
 
 @property (nonatomic) UIImage *backgroundImage;
@@ -80,8 +90,10 @@
         if (self.backgroundImage == nil) {
             // Missing background image file.
             // Missing contour file.
-            *error = [HMGMError errorOfType:HMGMErrorTypeMissingResource
-                               errorMessage:[NSString stringWithFormat:@"Missing background image file of name %@", bgImageFilename]];
+            NSString *errorMessage = [NSString stringWithFormat:@"Missing background image file of name %@", bgImageFilename];
+            *error = [[HMGMError alloc] initWithErrorType:HMGMErrorTypeMissingResource
+                                             errorMessage:errorMessage
+                                                 userInfo:nil];
             return nil;
         }
         self.size = self.backgroundImage.size;
@@ -92,8 +104,10 @@
         self.contourFileName = [[NSBundle mainBundle] pathForResource:contourFileName ofType:@"ctr"];
         if (self.contourFileName == nil) {
             // Missing contour file.
-            *error = [HMGMError errorOfType:HMGMErrorTypeMissingResource
-                               errorMessage:[NSString stringWithFormat:@"Missing contour file of name %@", contourFileName]];
+            NSString *errorMessage = [NSString stringWithFormat:@"Missing contour file of name %@", contourFileName];
+            *error = [[HMGMError alloc] initWithErrorType:HMGMErrorTypeMissingResource
+                                             errorMessage:errorMessage
+                                                 userInfo:nil];
             return nil;
         }
         
@@ -130,7 +144,10 @@
         NSString *errorMessage = [SF:@"FG extraction init failed. Something wrong with ctr or xml file? %@, %@",
                                   self.paramsXMLFileName,
                                   self.contourFileName];
-        *error = [HMGMError errorOfType:HMGMErrorTypeInitializationFailed errorMessage:errorMessage];
+
+        *error = [[HMGMError alloc] initWithErrorType:HMGMErrorTypeInitializationFailed
+                                         errorMessage:errorMessage
+                                             userInfo:nil];
         return;
     }
     
@@ -161,7 +178,7 @@
     image_type* original_bgr_image = image3_to_BGR(m_original_image, NULL);
     
     // Where the magic happens. Process the frame and extract the foreground.
-    m_foregroundExtraction->Process(original_bgr_image, 1, &m_foreground_image);
+    m_foregroundExtraction->Process(original_bgr_image, 1, &m_mask);
     
     // Stitching the foreground and the background together (and then converting to RGB)
     m_display_image = m_foregroundExtraction->GetImage(m_background_image, m_display_image);
@@ -170,7 +187,20 @@
     image3_bgr2rgb(m_display_image);
 
     // Set everything that is not the extracted background, as alpha with maximum transparency.
-    m_output_image = imageA_set_alpha(original_bgr_image, 255, m_foreground_image, m_output_image);
+    m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
+                                                    255,                 // The alpha amount to add to the pixels marked in the mask.
+                                                    m_mask,  // The mask calculated by the algorithm ->Process method.
+                                                    m_output_image);     // The output image.
+
+//        static int x = 0;
+//        x++;
+//        if (x % 10 == 0) {
+//            dispatch_async(self.outputQueue, ^{
+//                UIImage *image = [HMImageTools createUIImageFromImageType:m_output_image];
+//                NSData *imageData = UIImagePNGRepresentation(image);
+//                LogImageData(TAG, VERBOSE, 480, 480, imageData);
+//            });
+//        }
     
     // Destroying the temp image
     image_destroy(original_bgr_image, 1);
@@ -180,15 +210,45 @@
     
     // Getting the sample timing info from the sample buffer
     CMSampleTimingInfo sampleTimingInfo = kCMTimingInfoInvalid;
-    CMSampleBufferGetSampleTimingInfo(sampleBuffer, 0, &sampleTimingInfo);    
+    CMSampleBufferGetSampleTimingInfo(sampleBuffer, 0, &sampleTimingInfo);
+
+    // Add info to the frame.
     CMVideoFormatDescriptionRef videoInfo = NULL;
     CMVideoFormatDescriptionCreateForImageBuffer(NULL, processedPixelBuffer, &videoInfo);
-    CMSampleBufferRef processedSampleBuffer = NULL;
-    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, processedPixelBuffer, true, NULL, NULL, videoInfo, &sampleTimingInfo, &processedSampleBuffer);
-    CFRelease(processedPixelBuffer);
     
+    // Create the processed sample buffer with all
+    // needed info and return it.
+    CMSampleBufferRef processedSampleBuffer = NULL;
+    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault,
+                                       processedPixelBuffer,
+                                       true,
+                                       NULL,
+                                       NULL,
+                                       videoInfo,
+                                       &sampleTimingInfo,
+                                       &processedSampleBuffer);
+    CFRelease(processedPixelBuffer);
+
+    // Store the latest processed sample buffer.
     return processedSampleBuffer;
 }
+
+//-(CMSampleBufferRef)latestProcessedSampleBuffer
+//{
+//    return latestProcessedSampleBuffer;
+//}
+
+// Debug
+//    static int x = 0;
+//    x++;
+//    if (x % 10 == 0) {
+//        dispatch_async(self.outputQueue, ^{
+//            UIImage *image = [HMImageTools createUIImageFromImageType:m_output_image];
+//            NSData *imageData = UIImagePNGRepresentation(image);
+//            LogImageData(TAG, VERBOSE, 480, 480, imageData);
+//        });
+//    }
+
 
 -(void)inspectFrame
 {
@@ -213,13 +273,8 @@
         [self postBGMark];
         return;
     }
-
-    // Log image
-//    image3_bgr2rgb(m_original_image);
-//    UIImage *image = [self imageFromImageType3:m_original_image];
-//    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-//    LogImageData(TAG, VERBOSE, image.size.width, image.size.height, imageData);
 }
+
 
 -(void)postBGMark
 {
@@ -259,42 +314,14 @@
     self.lastBGMark = HMBGMarkUnrecognized;
 }
 
-//#pragma mark - Tools
-//- (void)saveImageType3:(image_type *)image3 withName:(NSString *)name
-//{
-//    image_type* image4 = image4_from(image3, NULL);
-//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
-//    [self saveImage:imageToSave withName:name];
-//    image_destroy(image4, 1);
-//}
-//
-//-(UIImage *)imageFromImageType3:(image_type *)image3
-//{
-//    image_type* image4 = image4_from(image3, NULL);
-//    UIImage *image = CVtool::CreateUIImage(image4);
-//    return image;
-//}
-//
-//- (void)saveImageType4:(image_type *)image4 withName:(NSString *)name
-//{
-//    UIImage *imageToSave = CVtool::CreateUIImage(image4);
-//    [self saveImage:imageToSave withName:name];
-//    //image_destroy(image4, 1);
-//}
-//
-//- (void)saveImage:(UIImage *)image withName:(NSString *)name
-//{
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-//    
-//    static int pCounter = 0;
-//    ++pCounter;
-//    
-//    NSString *path = [NSString stringWithFormat:@"%@-%d.png" , name, pCounter];
-//    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:path];
-//    
-//    [UIImagePNGRepresentation(image) writeToFile:dataPath atomically:YES];
-//
-//}
+-(void *)currentOutputImage
+{
+    return m_output_image;
+}
+
+-(void *)currentMask
+{
+    return m_mask;
+}
 
 @end

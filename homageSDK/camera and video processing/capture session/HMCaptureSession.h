@@ -20,6 +20,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CMBufferQueue.h>
 #import "HMVideoProcessingProtocol.h"
+#import "HMWriterProtocol.h"
 
 @protocol HMCaptureSessionDisplayDelegate;
 @protocol HMCaptureSessionDelegate;
@@ -46,11 +47,12 @@
     // Buffer queue
     CMBufferQueueRef previewBufferQueue;
     
-    // Writing
-	AVAssetWriter *assetWriter;
-	AVAssetWriterInput *assetWriterAudioIn;
-	AVAssetWriterInput *assetWriterVideoIn;
+//    // Writing
+//	AVAssetWriter *assetWriter;
+//	AVAssetWriterInput *assetWriterAudioIn;
+//	AVAssetWriterInput *assetWriterVideoIn;
 	dispatch_queue_t movieWritingQueue;
+    
     
     // Orientation
 	AVCaptureVideoOrientation referenceOrientation;
@@ -93,19 +95,37 @@
 @property (atomic, readonly) HMVideoProcessingState videoProcessingState;
 -(void)setVideoProcessingState:(HMVideoProcessingState)state info:(NSDictionary *)info;
 
-// puase and resume session
-//-(void)pauseCaptureSession; // Pausing while a recording is in progress will cause the recording to be stopped and saved.
-//-(void)resumeCaptureSession;
-
 #pragma mark - Recording
-// Recording
-//- (void) startRecording;
-//- (void) stopRecording;
+
+/**
+ *  Start recording captured frames to a file (or files) using the passed writer.
+ *
+ *  @param writer   The writer object conforming to the HMWriterProtocol.
+ *  @param duration The max duration of the recording. 
+ *         If you are not interested in an automatic finish of the recording
+ *         set the duration to be 0. When set to 0, recording will need to be
+ *         stopped manually.
+ */
+-(void)startRecordingUsingWriter:(id<HMWriterProtocol>)writer
+                        duration:(NSTimeInterval)duration;
+
+/**
+ *  Cancel recording and delete all temp files.
+ */
+-(void)cancelRecording;
+
+/**
+ *  Stop the recording and close output files if required.
+ *  will happen automatically if reached duration set in 
+ *  startRecordingToFile:duration:error:
+ */
+-(void)stopRecording;
+
+/**
+ *  YES if currently recording.
+ */
 @property(readonly, getter=isRecording) BOOL recording;
 
-
-// Output
-@property (nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *assetWriterPixelBufferIn;
 
 @end
 
@@ -121,7 +141,6 @@
  *  Called on the main thread when a pixel buffer is ready to be displayed.
  */
 - (void)pixelBufferReadyForDisplay:(CVPixelBufferRef)pixelBuffer;
-
 @end
 
 #pragma mark - HMCaptureSessionDelegate
@@ -130,25 +149,37 @@
 // --------------------------------
 @protocol HMCaptureSessionDelegate <NSObject>
 
+
 @required
 /**
- *  Recording is about to start.
- */
-- (void)recordingWillStart;
-
-/**
  *  Recording did start.
+ *
+ *  @param info Extra info about the recording.
  */
-- (void)recordingDidStart;
+- (void)recordingDidStartWithInfo:(NSDictionary *)info;
+
 
 /**
- *  Recording will stop.
+ *  Recording did stop with info.
+ *
+ *  @param info Extra info about the recording.
  */
-- (void)recordingWillStop;
+- (void)recordingDidStopWithInfo:(NSDictionary *)info;
+
 
 /**
- *  Recording did stop.
+ *  Recording did stop with info.
+ *
+ *  @param info Extra info about the recording.
  */
-- (void)recordingDidStop;
+- (void)recordingWasCanceledWithInfo:(NSDictionary *)info;
+
+
+/**
+ *  Recording did fail, returning an error.
+ *
+ *  @param error The error causing the recording to fail.
+ */
+-(void)recordingDidFailWithError:(NSError *)error;
 
 @end

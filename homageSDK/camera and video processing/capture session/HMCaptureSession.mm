@@ -7,11 +7,13 @@
 //
 
 #define TAG @"HMCaptureSession"
+#define CS_ERROR_DOMAIN @"Capture session error domain"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HMCaptureSession.h"
 #import "HMVideoProcessingProtocol.h"
+#import "HMCaptureSessionError.h"
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
@@ -38,6 +40,9 @@
 
 // Recording
 @property (readwrite, getter=isRecording) BOOL recording;
+@property (nonatomic) id<HMWriterProtocol> writer;
+@property (nonatomic) NSTimeInterval duration;
+@property (nonatomic) NSInteger maxFramesPerSecond;
 
 @end
 
@@ -57,6 +62,7 @@
         referenceOrientation = AVCaptureVideoOrientationPortrait;
         backgroundDetectionEnabled = NO;
         extractCounter = 0;
+        self.maxFramesPerSecond = 15;
         [self initObservers];
     }
     return self;
@@ -81,6 +87,77 @@
 #pragma mark - Observers handlers
 -(void)onCaptureSessionRuntimeError:(NSNotification *)notification
 {
+}
+
+#pragma mark - Camera
+-(void)cameraLockedFocus
+{
+    dispatch_async(movieWritingQueue, ^{
+        CGPoint point = CGPointMake(0.5, 0.5);
+        AVCaptureDevice *device = [videoIn device];
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error]) {
+            
+            // Lock focus on point of interest.
+            if ([device isFocusPointOfInterestSupported] &&
+                [device isFocusModeSupported:AVCaptureFocusModeLocked]) {
+                
+                device.focusPointOfInterest = point;
+                device.focusMode = AVCaptureFocusModeLocked;
+            }
+            
+            // Lock exposure point to the middle of the screen.
+            if ([device isExposurePointOfInterestSupported] &&
+                [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
+                
+                device.exposurePointOfInterest = point;
+                device.exposureMode = AVCaptureExposureModeLocked;
+            }
+            
+            // Disable monitoring of subject area changes.
+            [device setSubjectAreaChangeMonitoringEnabled:NO];
+            
+            // Done with configuring the cam.
+            [device unlockForConfiguration];
+        } else {
+            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
+        }
+    });
+}
+
+-(void)cameraUnlockedFocus
+{
+    dispatch_async(movieWritingQueue, ^{
+        CGPoint point = CGPointMake(0.5, 0.5);
+        AVCaptureDevice *device = [videoIn device];
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error]) {
+            
+            // Auto focus on point of interest.
+            if ([device isFocusPointOfInterestSupported] &&
+                [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+                
+                device.focusPointOfInterest = point;
+                device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+            }
+            
+            // Auto exposure on point of interest,
+            if ([device isExposurePointOfInterestSupported] &&
+                [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+                
+                device.exposurePointOfInterest = point;
+                device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+            }
+            
+            // Disable monitoring of subject area changes.
+            [device setSubjectAreaChangeMonitoringEnabled:YES];
+            
+            // Done with configuring the cam.
+            [device unlockForConfiguration];
+        } else {
+            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
+        }
+    });
 }
 
 #pragma mark - capture session
@@ -135,7 +212,8 @@
 	/*
 	 * Create video connection
 	 */
-    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self videoDeviceWithPosition:AVCaptureDevicePositionFront] error:nil];
+    AVCaptureDevice *camera = [self videoDeviceWithPosition:AVCaptureDevicePositionFront];
+    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:camera error:nil];
     
     if ([captureSession canAddInput:videoIn])
         [captureSession addInput:videoIn];
@@ -193,7 +271,7 @@
  didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         fromConnection:(AVCaptureConnection *)connection
 {
-	CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer);
+	//CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer);
     CMSampleBufferRef processedSampleBuffer = nil;
     extractCounter++;
     
@@ -244,26 +322,35 @@
 			});
         }
     }
-
-    CFRetain(sampleBuffer);
-    CFRetain(formatDescription);
     
-    dispatch_async(movieWritingQueue, ^{
-        
-        // Writing.
-        if ( assetWriter ) {
-        }
+    if (_videoProcessor &&
+        connection == videoConnection &&
+        processedSampleBuffer &&
+        thisFrameShouldBeProcessed) {
+        CFRelease(processedSampleBuffer);
+    }
 
-        CFRelease(sampleBuffer);
-        CFRelease(formatDescription);
-
-        if (_videoProcessor &&
-            connection == videoConnection &&
-            processedSampleBuffer &&
-            thisFrameShouldBeProcessed) {
-            CFRelease(processedSampleBuffer);
-        }
-    });
+//    // Retain
+//    CFRetain(sampleBuffer);
+//    CFRetain(formatDescription);
+//    
+//    dispatch_async(movieWritingQueue, ^{
+//        if (recording && self.writer) {
+////            image_type *output =(image_type *)[self.videoProcessor currentOutputImage];
+////            [self.writer writeImageTypeFrame:output];
+//            [self.videoProcessor writeFrameUsingWriter:self.writer];
+//        }
+//
+//        CFRelease(sampleBuffer);
+//        CFRelease(formatDescription);
+//
+//        if (_videoProcessor &&
+//            connection == videoConnection &&
+//            processedSampleBuffer &&
+//            thisFrameShouldBeProcessed) {
+//            CFRelease(processedSampleBuffer);
+//        }
+//    });
 }
 
 
@@ -314,74 +401,68 @@
     self.videoProcessingState = state;
 }
 
-#pragma mark - Camera
--(void)cameraLockedFocus
+
+#pragma mark - Recording
+-(void)startRecordingUsingWriter:(id<HMWriterProtocol>)writer
+                        duration:(NSTimeInterval)duration
 {
     dispatch_async(movieWritingQueue, ^{
-        CGPoint point = CGPointMake(0.5, 0.5);
-        AVCaptureDevice *device = [videoIn device];
-        NSError *error = nil;
-        if ([device lockForConfiguration:&error]) {
-
-            // Lock focus on point of interest.
-            if ([device isFocusPointOfInterestSupported] &&
-                [device isFocusModeSupported:AVCaptureFocusModeLocked]) {
-                
-                device.focusPointOfInterest = point;
-                device.focusMode = AVCaptureFocusModeLocked;
-            }
+        // Validate state.
+        if (self.writer || self.recording) {
+            // Session in wrong state.
+            // Recording should fail.
+            HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
+                                                                               errorMessage:@"Failed to start recording. Capture session in wrong state"
+                                                                                   userInfo:nil];
             
-            // Lock exposure point to the middle of the screen.
-            if ([device isExposurePointOfInterestSupported] &&
-                [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
-
-                device.exposurePointOfInterest = point;
-                device.exposureMode = AVCaptureExposureModeLocked;
-            }
-            
-            // Disable monitoring of subject area changes.
-            [device setSubjectAreaChangeMonitoringEnabled:NO];
-            
-            // Done with configuring the cam.
-            [device unlockForConfiguration];
-        } else {
-            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
+            [self.sessionDelegate recordingDidFailWithError:error];
+            return;
         }
+
+        // Start a new recording session
+        self.writer = writer;
+        self.duration = duration;
+        [self.writer prepareWithInfo:nil];
+        self.recording = YES;
+        [self.sessionDelegate recordingDidStartWithInfo:nil];
     });
 }
 
--(void)cameraUnlockedFocus
+-(void)stopRecording
 {
     dispatch_async(movieWritingQueue, ^{
-        CGPoint point = CGPointMake(0.5, 0.5);
-        AVCaptureDevice *device = [videoIn device];
-        NSError *error = nil;
-        if ([device lockForConfiguration:&error]) {
-            
-            // Auto focus on point of interest.
-            if ([device isFocusPointOfInterestSupported] &&
-                [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
-                
-                device.focusPointOfInterest = point;
-                device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
-            }
-            
-            // Auto exposure on point of interest,
-            if ([device isExposurePointOfInterestSupported] &&
-                [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
-                
-                device.exposurePointOfInterest = point;
-                device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
-            }
-            
-            // Disable monitoring of subject area changes.
-            [device setSubjectAreaChangeMonitoringEnabled:YES];
-            
-            // Done with configuring the cam.
-            [device unlockForConfiguration];
-        } else {
-            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
+        // Validate state.
+        if (self.writer == nil || self.recording) {
+            HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
+                                                                               errorMessage:@"Recording failed on stop. Capture session in wrong state"
+                                                                                   userInfo:nil];
+            [self.sessionDelegate recordingDidFailWithError:error];
+            return;
         }
+        
+        // Finish up current recording session.
+        self.recording = NO;
+        [self.writer finishReturningInfo];
+        self.writer = nil;
+    });
+}
+
+-(void)cancelRecording
+{
+    dispatch_async(movieWritingQueue, ^{
+        // Validate state.
+        if (self.writer == nil || self.recording) {
+            HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
+                                                                               errorMessage:@"Recording failed on stop. Capture session in wrong state"
+                                                                                   userInfo:nil];
+            [self.sessionDelegate recordingDidFailWithError:error];
+            return;
+        }
+        
+        // Finish up current recording session.
+        self.recording = NO;
+        [self.writer cancel];
+        self.writer = nil;
     });
 }
 

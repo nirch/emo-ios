@@ -1,0 +1,18 @@
+{
+    "emuticons":[
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000e5"},
+                 "name": "test",
+                 "order": 1,
+                 "duration": 2.0,
+                 "source_back_layer": "test_yellow_bg.gif",
+                 "source_front_layer": "test_i_love_you.gif",
+                 "source_user_layer_mask": "test_mask.png",
+                 "thumbnail_frame_index": 23,
+                 "output_video_max_fps": 15,
+                 "output_anim_gif_max_fps": 7,
+                 "tags": ["love","happy","hearts"],
+                 "package": {"$oid": "12349516454c61f4080000e1"}
+                 }
+                 ]
+}

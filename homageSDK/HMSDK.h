@@ -1,6 +1,6 @@
 //
 //  HMSDK.h
-//  emo
+//  emu
 //
 //  Created by Aviv Wolf on 1/29/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
@@ -11,3 +11,4 @@
 #import "HMPreviewView.h"
 #import "HMVideoProcessingProtocol.h"
 #import "HMGreenMachine.h"
+#import "HMParser.h"
