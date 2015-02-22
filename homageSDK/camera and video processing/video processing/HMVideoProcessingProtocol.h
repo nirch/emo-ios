@@ -51,10 +51,11 @@ typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
 -(void)inspectFrame;
 
 
-///**
-// *  @return latest output image.
-// */
-//-(void *)latestOutputImage;
+/**
+ *  @return latest output image.
+ */
+-(void *)latestOutputImage;
+
 //
 ///**
 // *  @return latest processed sample buffer

@@ -186,24 +186,19 @@
     // Convert display image from bgr to rgb
     image3_bgr2rgb(m_display_image);
 
-    // Set everything that is not the extracted background, as alpha with maximum transparency.
-    m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
-                                                    255,                 // The alpha amount to add to the pixels marked in the mask.
-                                                    m_mask,  // The mask calculated by the algorithm ->Process method.
-                                                    m_output_image);     // The output image.
-
-//        static int x = 0;
-//        x++;
-//        if (x % 10 == 0) {
-//            dispatch_async(self.outputQueue, ^{
-//                UIImage *image = [HMImageTools createUIImageFromImageType:m_output_image];
-//                NSData *imageData = UIImagePNGRepresentation(image);
-//                LogImageData(TAG, VERBOSE, 480, 480, imageData);
-//            });
-//        }
     
-    // Destroying the temp image
-    image_destroy(original_bgr_image, 1);
+    // Taking care of the output image.
+    CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+    dispatch_async(self.outputQueue, ^{
+        // Set everything that is not the extracted background, as alpha with maximum transparency.
+        m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
+                                                        255,                 // The alpha amount to add to the pixels marked in the mask.
+                                                        m_mask,              // The mask calculated by the algorithm ->Process method.
+                                                        m_output_image);     // The output image.
+        m_output_image->timeStamp = output_t.value;
+        // Destroying the temp image
+        image_destroy(original_bgr_image, 1);
+    });
 
     // Converting the result of the algo into CVPixelBuffer
     CVImageBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_display_image);
@@ -232,22 +227,6 @@
     // Store the latest processed sample buffer.
     return processedSampleBuffer;
 }
-
-//-(CMSampleBufferRef)latestProcessedSampleBuffer
-//{
-//    return latestProcessedSampleBuffer;
-//}
-
-// Debug
-//    static int x = 0;
-//    x++;
-//    if (x % 10 == 0) {
-//        dispatch_async(self.outputQueue, ^{
-//            UIImage *image = [HMImageTools createUIImageFromImageType:m_output_image];
-//            NSData *imageData = UIImagePNGRepresentation(image);
-//            LogImageData(TAG, VERBOSE, 480, 480, imageData);
-//        });
-//    }
 
 
 -(void)inspectFrame
@@ -314,14 +293,9 @@
     self.lastBGMark = HMBGMarkUnrecognized;
 }
 
--(void *)currentOutputImage
+-(void *)latestOutputImage
 {
     return m_output_image;
-}
-
--(void *)currentMask
-{
-    return m_mask;
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "EMBGFeedBackVC.h"
 #import "EMSilhouetteView.h"
 #import "AWFanOpeningView.h"
+#import "EMProgressView.h"
 
 @interface EMBGFeedBackVC ()
 
@@ -19,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet AWFanOpeningView *guiContourGoodContainer;
 
 @property (weak, nonatomic) IBOutlet EMSilhouetteView *guiSilhouetteBG;
+
+@property (weak, nonatomic) IBOutlet EMProgressView *guiProgressView;
 
 @property (nonatomic) CGRect badBGStartFrame;
 
@@ -119,6 +122,13 @@
     CGAffineTransform t = CGAffineTransformMakeScale(3.5, 3.5);
     t = CGAffineTransformTranslate(t, 0, -self.view.bounds.size.height/3.0);
     self.view.transform = t;
+}
+
+#pragma mark - recording progress
+-(void)showRecordingProgressOfDuration:(NSTimeInterval)duration
+{
+    [self.guiProgressView reset];
+    
 }
 
 

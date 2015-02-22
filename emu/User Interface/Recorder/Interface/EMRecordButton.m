@@ -32,8 +32,6 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
-//- (void)drawRect:(CGRect)rect {
-//}
 
 -(void)startCountDownFromNumber:(NSInteger)number
 {

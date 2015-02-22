@@ -8,24 +8,24 @@
 */
 
 // Onboarding
-"ONBOARDING_TITLE_0_WELCOME" = "Welcome :-)";
+"ONBOARDING_TITLE_WELCOME" = "Welcome :-)";
+"ONBOARDING_TITLE_ALIGN" = "Align to the figure";
+"ONBOARDING_TITLE_EXTRACTION_PREVIEW" = "Removing background";
+"ONBOARDING_TITLE_RECORDING" = "Recording...";
+"ONBOARDING_TITLE_DONE" = "Good job!";
 
-"ONBOARDING_TITLE_1_ALIGN" = "Align to the figure";
-"ONBOARDING_MSG_1_ALIGN" = "Align yourself and use a uniform background. If the background is good, the figure will turn green. We will give some tips on the fly for best results.";
-
-"ONBOARDING_TITLE_2_EXTRACTION_PREVIEW" = "Press record, when ready.";
-"ONBOARDING_MSG_2_EXTRACTION_PREVIEW" = "Your image will be extracted from the background in realtime. When you are happy with the result, press the record button.";
-
-"ONBOARDING_TITLE_3_COUNTING_DOWN" = "About to start";
-
-"ONBOARDING_TITLE_4_RECORDING" = "Recording...";
-
-"ONBOARDING_TITLE_5_DONE" = "Good job!";
-
-// Bad background marks
+// Background marks
 "RECORDER_BGM_NOISY" = "Use a solid color wall!";
 "RECORDER_BGM_DARK" = "Use well lit areas!";
 "RECORDER_BGM_SILHOUETTE" = "Reposition to fit in silhouette.";
 "RECORDER_BGM_SHADOW" = "Shadows! step a bit forward.";
 "RECORDER_BGM_CLOTH" = "Clothes should differ from background.";
 "RECORDER_BGM_GENERAL_MESSAGE" = "Use a solid color wall!";
+"RECORDER_BGM_GOOD" = "Looking good.";
+
+// Messages
+"RECORDER_MESSAGE_WHEN_READY" = "When ready, press record!";
+
+// Recorder interface button
+"RECORDER_CONTINUE_ANYWAY_BUTTON" = "CONTINUE ANYWAY";
+"RECORDER_CONTINUE_BUTTON" = "CONTINUE";

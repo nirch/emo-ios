@@ -10,7 +10,10 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"EMPNGSequenceWriter"
+
 #import "EMPNGSequenceWriter.h"
+#import "EMFiles.h"
 
 #import "HMImageTools.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
@@ -18,8 +21,14 @@
 
 @interface EMPNGSequenceWriter() {
     image_type *resampled_image;
-    vTime_type previousTimeStamp;
-    vTime_type deltaTimeStamp;
+    
+    vTime_type firstFrameTimeStamp;
+    vTime_type totalTime;
+    
+    vTime_type duration;
+    
+    BOOL done;
+    BOOL canceled;
 }
 
 
@@ -41,24 +50,31 @@
     self.writesFramesOfType = HMWritesFramesOfTypeImageType;
     self.framesCount = 0;
     self.pngs = [NSMutableArray new];
+    
+    firstFrameTimeStamp = 0;
+    totalTime = 0;
+    
+    // Duration
+    duration = [info[@"duration"] doubleValue] * 1000000000;
+    
+    // done flag
+    done = NO;
+    canceled = NO;
 }
 
 
 -(NSDictionary *)finishReturningInfo
 {
     NSString *oid = [[NSUUID UUID] UUIDString];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // Create a new user footage object.
-        
-        
-        [self clean];
-    });
+    [EMFiles savePNGSequence:self.pngs toFolderNamed:oid];
+    [self clean];
     return @{@"oid":oid};
 }
 
 
 -(void)cancel
 {
+    canceled = YES;
     [self clean];
 }
 
@@ -71,24 +87,31 @@
 
 -(void)writeImageTypeFrame:(void *)image
 {
+    if (done || canceled) return;
+    
     image_type *output_image = (image_type *)image;
     resampled_image = image_sample2(output_image, resampled_image);
     resampled_image->timeStamp = output_image->timeStamp;
     
-    // Get time passed since previous framce
-    vTime_type t = resampled_image->timeStamp;
-    if (previousTimeStamp > 0) {
-        deltaTimeStamp = t - previousTimeStamp;
+    // If first frame, store the time stamp of the first frame.
+    if (self.framesCount == 0) {
+        firstFrameTimeStamp = output_image->timeStamp;
+    } else {
+        totalTime = output_image->timeStamp - firstFrameTimeStamp;
+
+        if (totalTime > duration) {
+            // Done! Skip future frames.
+            done = YES;
+            return;
+        }
     }
-    previousTimeStamp = t;
     
-    // Build the output url for the png.
+    // Counting frames
     self.framesCount++;
-    
+
     // Convert the image passed as image_type to UIImage.
-    //NSString *pngName = [self frameNameForIndex:self.framesCount];
-    //UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image];
-    
+    UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image];
+    [self.pngs addObject:png];
 }
 
 
@@ -98,5 +121,14 @@
                 format:@"Unimplemented %@", NSStringFromSelector(_cmd)];
 }
 
+-(BOOL)shouldFinish
+{
+    return done;
+}
+
+-(BOOL)wasCanceled
+{
+    return canceled;
+}
 
 @end

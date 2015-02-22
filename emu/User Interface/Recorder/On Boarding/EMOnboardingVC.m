@@ -46,17 +46,16 @@
 -(void)initContent
 {
     self.shownIndex = 0;
-    self.textsKeys = @[@"ONBOARDING_TITLE_0_WELCOME",
-                       @"ONBOARDING_TITLE_1_ALIGN",
-                       @"ONBOARDING_TITLE_2_EXTRACTION_PREVIEW",
-                       @"ONBOARDING_TITLE_3_COUNTING_DOWN",
-                       @"ONBOARDING_TITLE_4_RECORDING",
-                       @"ONBOARDING_TITLE_5_DONE"
+    self.textsKeys = @[@"ONBOARDING_TITLE_WELCOME",
+                       @"ONBOARDING_TITLE_ALIGN",
+                       @"ONBOARDING_TITLE_EXTRACTION_PREVIEW",
+                       @"ONBOARDING_TITLE_RECORDING",
+                       @"ONBOARDING_TITLE_DONE"
                        ];
     
     self.subTextsKeys = @[[NSNull null],
-                          @"ONBOARDING_MSG_1_ALIGN",
-                          @"ONBOARDING_MSG_2_EXTRACTION_PREVIEW",
+                          [NSNull null],
+                          [NSNull null],
                           [NSNull null],
                           [NSNull null],
                           [NSNull null]
@@ -103,21 +102,21 @@
     NSString *textKey = self.textsKeys[indexPath.item];
     cell.guiLabel.text = LS(textKey);
 
-    NSString *subTextKey = self.subTextsKeys[indexPath.item];
-    cell.guiSubLabel.text = nil;
-    cell.guiSubLabel.alpha = 0;
-    
-    if (!isNSNull(subTextKey)) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.7 animations:^{
-                cell.guiSubLabel.text = LS(subTextKey);
-                cell.guiSubLabel.alpha = 1;
-                [cell layoutIfNeeded];
-            }];
-        });
-    } else {
-        cell.guiSubLabel.text = nil;
-    }
+//    NSString *subTextKey = self.subTextsKeys[indexPath.item];
+//    cell.guiSubLabel.text = nil;
+//    cell.guiSubLabel.alpha = 0;
+//    
+//    if (!isNSNull(subTextKey)) {
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [UIView animateWithDuration:0.7 animations:^{
+//                cell.guiSubLabel.text = LS(subTextKey);
+//                cell.guiSubLabel.alpha = 1;
+//                [cell layoutIfNeeded];
+//            }];
+//        });
+//    } else {
+//        cell.guiSubLabel.text = nil;
+//    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

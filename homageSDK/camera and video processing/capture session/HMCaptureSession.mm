@@ -42,7 +42,6 @@
 @property (readwrite, getter=isRecording) BOOL recording;
 @property (nonatomic) id<HMWriterProtocol> writer;
 @property (nonatomic) NSTimeInterval duration;
-@property (nonatomic) NSInteger maxFramesPerSecond;
 
 @end
 
@@ -62,7 +61,6 @@
         referenceOrientation = AVCaptureVideoOrientationPortrait;
         backgroundDetectionEnabled = NO;
         extractCounter = 0;
-        self.maxFramesPerSecond = 15;
         [self initObservers];
     }
     return self;
@@ -295,6 +293,11 @@
             // 2. Process the frame with the set video processor
             //    (only if currently should be processing frames)
             if (thisFrameShouldBeProcessed) {
+                // Process and returns the processedSampleBuffer that is used for display.
+                // processFrame method may also store an output image
+                // (implementation of the video processor needs to store that image
+                // on the movieWritingQueue, and writing that image also must
+                // look at that image on the movieWritingQueue).
                 processedSampleBuffer = [self.videoProcessor processFrame:sampleBuffer];
             } else {
                 processedSampleBuffer = sampleBuffer;
@@ -304,7 +307,6 @@
             if (thisFrameShouldBeInspected) {
                 // SampleBuffer to PixelBuffer
                 [self.videoProcessor inspectFrame];
-                // HMLOG(TAG, VERBOSE, @"total frames captured: %@", @(extractCounter));
             }
         }
         
@@ -323,6 +325,9 @@
         }
     }
     
+    // If we processed a sample buffer using the video processor,
+    // we already enqueued the processed sample buffer for display.
+    // We don't need it anymore so we can release it.
     if (_videoProcessor &&
         connection == videoConnection &&
         processedSampleBuffer &&
@@ -330,27 +335,21 @@
         CFRelease(processedSampleBuffer);
     }
 
-//    // Retain
-//    CFRetain(sampleBuffer);
-//    CFRetain(formatDescription);
-//    
-//    dispatch_async(movieWritingQueue, ^{
-//        if (recording && self.writer) {
-////            image_type *output =(image_type *)[self.videoProcessor currentOutputImage];
-////            [self.writer writeImageTypeFrame:output];
-//            [self.videoProcessor writeFrameUsingWriter:self.writer];
-//        }
-//
-//        CFRelease(sampleBuffer);
-//        CFRelease(formatDescription);
-//
-//        if (_videoProcessor &&
-//            connection == videoConnection &&
-//            processedSampleBuffer &&
-//            thisFrameShouldBeProcessed) {
-//            CFRelease(processedSampleBuffer);
-//        }
-//    });
+    // If should be recording and a writer was set
+    // pass the latest output frame to the writer, on the movie writing queue.
+    dispatch_async(movieWritingQueue, ^{
+        if (recording && self.writer) {
+            image_type *output =(image_type *)[self.videoProcessor latestOutputImage];
+            [self.writer writeImageTypeFrame:output];
+            
+            // If reached duration or max number of frames, stop recording
+            // and finish up.
+            if (self.writer.shouldFinish) {
+                [self _stopRecording];
+            }
+        }
+    });
+
 }
 
 
@@ -403,50 +402,71 @@
 
 
 #pragma mark - Recording
+//
+// Start
+//
 -(void)startRecordingUsingWriter:(id<HMWriterProtocol>)writer
                         duration:(NSTimeInterval)duration
 {
     dispatch_async(movieWritingQueue, ^{
-        // Validate state.
-        if (self.writer || self.recording) {
-            // Session in wrong state.
-            // Recording should fail.
-            HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
-                                                                               errorMessage:@"Failed to start recording. Capture session in wrong state"
-                                                                                   userInfo:nil];
-            
-            [self.sessionDelegate recordingDidFailWithError:error];
-            return;
-        }
-
-        // Start a new recording session
-        self.writer = writer;
-        self.duration = duration;
-        [self.writer prepareWithInfo:nil];
-        self.recording = YES;
-        [self.sessionDelegate recordingDidStartWithInfo:nil];
+        [self _startRecordingUsingWriter:writer
+                                duration:duration];
     });
 }
 
+-(void)_startRecordingUsingWriter:(id<HMWriterProtocol>)writer
+                         duration:(NSTimeInterval)duration
+{
+    // Validate state.
+    if (self.writer || self.recording) {
+        // Session in wrong state.
+        // Recording should fail.
+        HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
+                                                                           errorMessage:@"Failed to start recording. Capture session in wrong state"
+                                                                               userInfo:nil];
+        
+        [self.sessionDelegate recordingDidFailWithError:error];
+        return;
+    }
+    
+    // Start a new recording session
+    self.writer = writer;
+    self.duration = duration;
+    [self.writer prepareWithInfo:@{@"duration":@(duration)}];
+    self.recording = YES;
+    [self.sessionDelegate recordingDidStartWithInfo:nil];
+}
+
+//
+// Stop
+//
 -(void)stopRecording
 {
     dispatch_async(movieWritingQueue, ^{
-        // Validate state.
-        if (self.writer == nil || self.recording) {
-            HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
-                                                                               errorMessage:@"Recording failed on stop. Capture session in wrong state"
-                                                                                   userInfo:nil];
-            [self.sessionDelegate recordingDidFailWithError:error];
-            return;
-        }
-        
-        // Finish up current recording session.
-        self.recording = NO;
-        [self.writer finishReturningInfo];
-        self.writer = nil;
+        [self _stopRecording];
     });
 }
 
+-(void)_stopRecording
+{
+    // Validate state.
+    if (self.writer == nil || !self.recording) {
+        HMCaptureSessionError *error = [[HMCaptureSessionError alloc] initWithErrorType:HMCSErrorTypeWrongState
+                                                                           errorMessage:@"Recording failed on stop. Capture session in wrong state"
+                                                                               userInfo:nil];
+        [self.sessionDelegate recordingDidFailWithError:error];
+        return;
+    }
+    
+    // Finish up current recording session.
+    self.recording = NO;
+    [self.writer finishReturningInfo];
+    self.writer = nil;
+}
+
+//
+// Cancel
+//
 -(void)cancelRecording
 {
     dispatch_async(movieWritingQueue, ^{
@@ -465,5 +485,33 @@
         self.writer = nil;
     });
 }
+
+
+
+
+
+
+
+//    // Retain
+//    CFRetain(sampleBuffer);
+//    CFRetain(formatDescription);
+//
+//    dispatch_async(movieWritingQueue, ^{
+//        if (recording && self.writer) {
+////            image_type *output =(image_type *)[self.videoProcessor currentOutputImage];
+////            [self.writer writeImageTypeFrame:output];
+//            [self.videoProcessor writeFrameUsingWriter:self.writer];
+//        }
+//
+//        CFRelease(sampleBuffer);
+//        CFRelease(formatDescription);
+//
+//        if (_videoProcessor &&
+//            connection == videoConnection &&
+//            processedSampleBuffer &&
+//            thisFrameShouldBeProcessed) {
+//            CFRelease(processedSampleBuffer);
+//        }
+//    });
 
 @end

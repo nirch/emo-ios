@@ -38,6 +38,21 @@ typedef NS_ENUM(NSInteger, HMWritesFramesOfType) {
  */
 -(void)cancel;
 
+/**
+ *  Indicates if a finish condition was met while writing frames.
+ *  It is upto the implementation of the writer to decide what that condition is.
+ *  (An example for such a condition is if the writer reached the duration limit of the recording)
+ *
+ *  @return YES if should finish writing. Call finishReturningInfo after that.
+ */
+-(BOOL)shouldFinish;
+
+/**
+ *  Indicates if cancel was called after the last prepareWithInfo was called.
+ *
+ *  @return YES if the writing was canceled. 
+ */
+-(BOOL)wasCanceled;
 
 @optional
 /**
@@ -69,6 +84,5 @@ typedef NS_ENUM(NSInteger, HMWritesFramesOfType) {
  *  Optional value indicating the base name of the output file (or files).
  */
 @property (nonatomic) NSString *outputFileName;
-
 
 @end

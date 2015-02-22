@@ -30,10 +30,7 @@ typedef NS_ENUM(NSInteger, EMRecorderState) {
 
 #pragma mark - Capture session
 @property (nonatomic, readonly) HMCaptureSession *captureSession;
-
-#pragma mark - BG FeedBack
--(void)hideBGFeedBackAnimated:(BOOL)animated;
--(void)showBGFeedBackAnimated:(BOOL)animated;
+@property (nonatomic) NSTimeInterval recordingDuration;
 
 #pragma mark - States
 @property (readonly) EMRecorderState recorderState;

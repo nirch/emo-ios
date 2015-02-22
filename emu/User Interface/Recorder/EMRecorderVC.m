@@ -23,6 +23,7 @@
 
 #import "HMSDK.h"
 
+#import "EMUISound.h"
 #import "EMRecorderVC.h"
 #import "EMPreviewVC.h"
 #import "EMBGFeedBackVC.h"
@@ -38,43 +39,50 @@
     EMRecorderControlsDelegate
 >
 
-@property (weak, nonatomic) IBOutlet UIView *guiUserControls1Container;
-@property (weak, nonatomic) IBOutlet UIView *guiUserControls2Container;
+//
+// Containers and sub view controllers
+//
+
+// User controls: recorder flow, user interaction, record, etc.
+@property (weak, nonatomic) IBOutlet UIView *guiUserControlsContainer;
+@property (weak) EMControlsBarVC *controlsVC;
+
+
+// Background detection
 @property (weak, nonatomic) IBOutlet UIView *guiBGFeedBackContainer;
-@property (weak, nonatomic) IBOutlet EMRecordButton *guiRecordButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiGoodBGIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *guiBadBGIcon;
+@property (weak) EMBGFeedBackVC *feedBackVC;
 
 
-
-
+// The preview container and view controller
+@property (weak, nonatomic) IBOutlet UIView *guiPreviewContainerView;
+@property (weak) EMPreviewVC *previewVC;
 
 
 // Onboarding
 @property (nonatomic, readwrite) BOOL shouldPresentOnBoarding;
-
-// The video capture session
-@property (strong, nonatomic, readwrite) HMCaptureSession *captureSession;
-
-// The preview
-@property (weak) IBOutlet UIView *guiPreviewCover;
-@property (weak, nonatomic) IBOutlet UIView *guiPreviewContainerView;
-@property (weak) EMPreviewVC *previewVC;
-
-// Background detection feedback
-@property (weak) EMBGFeedBackVC *bgFeedBackVC;
-
-// Onboarding
 @property (weak) EMOnboardingVC *onBoardingVC;
 
-// User controls
-@property (weak) EMControlsBarVC *controlsVC;
 
-// Recorder states
+//
+// The video capture session
+//
+@property (strong, nonatomic, readwrite) HMCaptureSession *captureSession;
+
+
+//
+// Recording and recorder states
+//
 @property (readwrite) EMRecorderState recorderState;
+
 
 
 @end
 
 @implementation EMRecorderVC
+
+@synthesize recorderState = _recorderState;
 
 -(id)awakeAfterUsingCoder:(NSCoder *)aDecoder
 {
@@ -128,13 +136,12 @@
 {
     [EMBackend.sh refetchEmuticonsDefinitions];
     [EMBackend.sh refetchAppCFG];
+    
+    self.recordingDuration = 3.0;
 }
 
 -(void)initGUI
 {
-    self.guiPreviewCover.alpha = 1;
-    [self hideRecordButtonAnimated:NO];
-    
     // Camera preview border
     CALayer *layer = self.guiPreviewContainerView.layer;
     layer.cornerRadius = 10;
@@ -146,6 +153,7 @@
     layer.cornerRadius = 10;
     layer.borderWidth = 7;
     layer.borderColor = [UIColor whiteColor].CGColor;
+    [self hideBGIconsAnimated:NO];
     
     //
     // Style kit related
@@ -177,15 +185,93 @@
 #pragma mark - Observers handlers
 -(void)onBackgroundDetectionInfo:(NSNotification *)notification
 {
+    // This info is interesting only when the recorder
+    // is in the background detection state.
+    // Otherwise, ignore the info.
+    if (self.recorderState != EMRecorderStateBGDetectionInProgress)
+        return;
+    
     NSDictionary *info = notification.userInfo;
     CGFloat weight = [info[hmkInfoBGMarkWeight] floatValue];
-    self.bgFeedBackVC.goodBackgroundWeight = weight;
+
+    // Update indicator about the good/bad background weight.
+    self.feedBackVC.goodBackgroundWeight = weight;
+
+    // Pass info to the user controls that will show messages
+    // about good/bad backgrounds.
     [self.controlsVC updateBackgroundInfo:info];
     
+    
+    // Show/Hide the good/bad bg icon.
+    if (weight > 0.8 && self.guiGoodBGIcon.alpha <= 0) {
+        [self hideBGIconsAnimated:YES];
+    } else if (weight < 0.8 && self.guiBadBGIcon.alpha <= 0) {
+        [self showBadBGIconAnimated:YES];
+    }
+
+    // Check if good bg threshold was satisfied.
     if (info[hmkInfoGoodBGSatisfied]) {
         // Good background threshold was satisfied!
         [self handleStateWithInfo:@{hmkInfoGoodBGSatisfied:@YES}];
     }
+}
+
+#pragma mark - Good/Bad BG Icon
+-(void)showGoodBGIconAnimated:(BOOL)animated
+{
+    [self hideBGIconsAnimated:NO];
+
+    if (!animated) {
+        self.guiGoodBGIcon.transform = CGAffineTransformIdentity;
+        self.guiGoodBGIcon.alpha = 1;
+        return;
+    }
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.3
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.5
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.guiGoodBGIcon.transform = CGAffineTransformIdentity;
+                         self.guiGoodBGIcon.alpha = 1;
+                     } completion:nil];
+}
+
+-(void)showBadBGIconAnimated:(BOOL)animated
+{
+    [self hideBGIconsAnimated:NO];
+    
+    if (!animated) {
+        self.guiBadBGIcon.transform = CGAffineTransformIdentity;
+        self.guiBadBGIcon.alpha = 1;
+        return;
+    }
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.3
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.5
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.guiBadBGIcon.transform = CGAffineTransformIdentity;
+                         self.guiBadBGIcon.alpha = 1;
+                     } completion:nil];
+}
+
+-(void)hideBGIconsAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self hideBGIconsAnimated:NO];
+        }];
+        return;
+    }
+
+    self.guiGoodBGIcon.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    self.guiGoodBGIcon.alpha = 0;
+    self.guiBadBGIcon.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    self.guiBadBGIcon.alpha = 0;
 }
 
 #pragma mark - VC preferences
@@ -205,7 +291,7 @@
     } else if ([segue.identifier isEqualToString:@"embed bg feedback segue"]) {
     
         // The background user feedback view controller.
-        self.bgFeedBackVC = segue.destinationViewController;
+        self.feedBackVC = segue.destinationViewController;
         
     } else if ([segue.identifier isEqualToString:@"onboarding segue"]) {
         
@@ -269,41 +355,6 @@
     HMLOG(TAG, DBG, @"Initialized video processing.");
 }
 
-#pragma mark - BG Feedback
--(void)hideBGFeedBackAnimated:(BOOL)animated
-{
-    [self.bgFeedBackVC hideAnimated:animated];
-}
-
--(void)showBGFeedBackAnimated:(BOOL)animated
-{
-    [self.bgFeedBackVC showAnimated:animated];
-}
-
-#pragma mark - The record button
--(void)hideRecordButtonAnimated:(BOOL)animated
-{
-    if (animated) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [self hideRecordButtonAnimated:NO];
-        }];
-        return;
-    }
-    
-    self.guiRecordButton.alpha = 0;
-}
-
--(void)showRecordButtonAnimated:(BOOL)animated
-{
-    if (animated) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [self showRecordButtonAnimated:NO];
-        }];
-        return;
-    }
-    
-    self.guiRecordButton.alpha = 1;
-}
 
 #pragma mark - Output
 -(NSURL *)outputFolder
@@ -352,6 +403,20 @@
 }
 
 #pragma mark - Updating States
+-(void)setRecorderState:(EMRecorderState)recorderState
+{
+    @synchronized(self) {
+        _recorderState = recorderState;
+    }
+}
+
+-(EMRecorderState)recorderState
+{
+    @synchronized(self) {
+        return _recorderState;
+    }
+}
+
 -(void)initState
 {
     self.recorderState = EMRecorderStateStarting;
@@ -393,7 +458,7 @@
             
         case EMRecorderStateFGExtractionShouldStart:
             // Ready to start FG extraction.
-            [self _stateStartFGExtraction];
+            [self _stateShouldStartFGExtraction];
             break;
             
         case EMRecorderStateFGExtractionInProgress:
@@ -462,14 +527,11 @@
     //
     [self.controlsVC setState:EMRecorderControlsStateHidden
                      animated:YES];
-    [self showBGFeedBackAnimated:YES];
+    
+    [self.feedBackVC showBGFeedbackAnimated:NO];
     
     // Wait a bit before going to the next state.
     dispatch_after(DTIME(1.5), dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:0.1 animations:^{
-            self.guiPreviewCover.alpha = 0;
-        }];
-
         // Change to the BG Detection should start state.
         [self handleStateWithInfo:nil nextState:@(EMRecorderStateBGDetectionShouldStart)];
     });
@@ -499,6 +561,8 @@
     self.recorderState = EMRecorderStateBGDetectionInProgress;
     [self.controlsVC setState:EMRecorderControlsStateBackgroundDetection
                      animated:YES];
+    [self hideBGIconsAnimated:NO];
+
     
     //
     // Onboarding UI
@@ -522,10 +586,30 @@
     // Info provided indicates that a good background threshold was satisfied.
     // It is time to stop the background detection sampling and start
     // the foreground extraction algorithm.
-//    [self handleStateWithInfo:nil
-//                    nextState:@(EMRecorderStateFGExtractionShouldStart)];
+    [self handleStateWithInfo:nil
+                    nextState:@(EMRecorderStateFGExtractionShouldStart)];
 }
 
+-(void)_stateShouldStartFGExtraction
+{
+    //
+    // Recorder and UI state.
+    //
+    
+    // Play a happy sound.
+    [EMUISound.sh playSoundNamed:SND_HAPPY];
+    
+    // Hide the background detection user interface.
+    [self.feedBackVC hideBGFeedbackAnimated:YES];
+    [self.controlsVC setState:EMRecorderControlsStatePreparing animated:NO];
+    
+    // Show good background indications
+    [self showGoodBGIconAnimated:YES];
+    
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        [self _stateStartFGExtraction];
+    });
+}
 
 -(void)_stateStartFGExtraction
 {
@@ -541,7 +625,8 @@
 
     // No need for the UI that shows BG Detection feedback.
     [self setRecorderState:EMRecorderStateFGExtractionInProgress];
-    [self hideBGFeedBackAnimated:YES];
+    [self hideBGIconsAnimated:NO];
+
     
     // Show the record button.
     [self.controlsVC setState:EMRecorderControlsStateReadyToRecord
@@ -553,8 +638,9 @@
     if (self.shouldPresentOnBoarding)
         [self.onBoardingVC setOnBoardingStage:EMOnBoardingStageExtractionPreview
                                      animated:YES];
-
 }
+
+
 
 -(void)_stateStartRecording
 {
@@ -565,12 +651,19 @@
     // Create a new writer to be used in recording the png sequence.
     EMPNGSequenceWriter *writer = [EMPNGSequenceWriter new];
     writer.writesFramesOfType = HMWritesFramesOfTypeImageType;
-    [self.captureSession startRecordingUsingWriter:writer duration:3.0];
+    [self.captureSession startRecordingUsingWriter:writer
+                                          duration:self.recordingDuration];
     
     //
     // Recorder and UI state.
     //
-
+    
+    // Show recording progress
+    [self.feedBackVC showRecordingProgressOfDuration:self.recordingDuration];
+    
+    // Play start recording sound
+    [EMUISound.sh playSoundNamed:SND_START_RECORDING];
+    
     //
     // Onboarding UI
     //

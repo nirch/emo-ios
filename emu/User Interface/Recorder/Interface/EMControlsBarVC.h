@@ -28,32 +28,37 @@ typedef NS_ENUM(NSInteger, EMRecorderControlsState){
     EMRecorderControlsStateBackgroundDetection            = 1,
 
     /**
+     *  Waiting for everything to be set up for the prepared for recording state.
+     */
+    EMRecorderControlsStatePreparing                      = 2,
+    
+    /**
      *  A record button is displayed, allowing the user to start recording.
      */
-    EMRecorderControlsStateReadyToRecord                  = 2,
+    EMRecorderControlsStateReadyToRecord                  = 3,
 
     /**
      *  A countdown to the beginning of recording is shown/animated.
      *  when the user pressed the countdown, the recording is canceled.
      *  when the countdown is finished, recording will start.
      */
-    EMRecorderControlsStateCountingDownToRecording        = 3,
+    EMRecorderControlsStateCountingDownToRecording        = 4,
 
     /**
      *  The interface shown while recording a video.
      */
-    EMRecorderControlsStateRecording                      = 4,
+    EMRecorderControlsStateRecording                      = 5,
 
     /**
      *  Finished the recording. Asks user for confirmation of the video,
      *  and also allowing the user to go back and reshoot.
      */
-    EMRecorderControlsStateVideoSaved                     = 5,
+    EMRecorderControlsStateVideoSaved                     = 6,
 
     /**
      *  Done.
      */
-    EMRecorderControlsStateVideoDone                      = 6
+    EMRecorderControlsStateVideoDone                      = 7
 };
 
 /**

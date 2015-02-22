@@ -8,30 +8,36 @@
 
 #define TAG @"EMControlsBarVC"
 
+#import "EMUISound.h"
 #import "EMControlsBarVC.h"
 #import "HMBackgroundMarks.h"
 #import "EMRecordButton.h"
+#import "EMFlowButton.h"
+#import "EMMessageButton.h"
+#import "EMLabel.h"
 
 @interface EMControlsBarVC () <
     EMCountDownDelegate
 >
 
-@property (weak, nonatomic) IBOutlet UIButton *guiMessageButton;
-
-
-// Background detection
+// Background detection messages
+@property (weak, nonatomic) IBOutlet EMMessageButton *guiBadMessageButton;
+@property (weak, nonatomic) IBOutlet EMMessageButton *guiGoodMessageButton;
 @property (nonatomic) HMBGMark latestBGMark;
 @property (nonatomic) HMBackgroundMarks *bgMarks;
 @property (nonatomic) NSTimeInterval latestBGMarkTime;
 
 // User buttons
+@property (weak, nonatomic) IBOutlet EMFlowButton *guiContinueButton;
+
+
+// TODO: sort this out
 @property (weak, nonatomic) IBOutlet UIButton *guiNegativeButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiPositiveButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiContinueButton;
-@property (weak, nonatomic) IBOutlet EMRecordButton *guiRecordButton;
 
-// Countdown
-@property (weak, nonatomic) IBOutlet UILabel *guiCountdownLabel;
+// Recording & Countdown
+@property (weak, nonatomic) IBOutlet EMRecordButton *guiRecordButton;
+@property (weak, nonatomic) IBOutlet EMLabel *guiCountdownLabel;
 @property (nonatomic) NSInteger countDownNumber;
 
 @end
@@ -55,10 +61,16 @@
 
 -(void)initGUI
 {
-    self.guiMessageButton.alpha = 0;
+    [self hideAll];
+
     [self.guiContinueButton setTitle:nil forState:UIControlStateNormal];
     self.guiRecordButton.delegate = self;
+    [self.guiBadMessageButton updateShowingIcon:YES
+                                       positive:NO];
+    [self.guiGoodMessageButton updateShowingIcon:YES
+                                       positive:YES];
 }
+
 
 #pragma mark - States
 -(void)setState:(EMRecorderControlsState)state animated:(BOOL)animated
@@ -77,6 +89,10 @@
             
         case EMRecorderControlsStateBackgroundDetection:
             [self stateBGDetectionAnimated:animated];
+            break;
+            
+        case EMRecorderControlsStatePreparing:
+            [self statePreparing];
             break;
             
         case EMRecorderControlsStateReadyToRecord:
@@ -107,9 +123,10 @@
 
 -(void)hideAll
 {
+    self.guiGoodMessageButton.alpha = 0;
+    self.guiBadMessageButton.alpha = 0;
     self.guiNegativeButton.alpha = 0;
     self.guiPositiveButton.alpha = 0;
-    self.guiMessageButton.alpha = 0;
     self.guiContinueButton.alpha = 0;
     self.guiRecordButton.alpha = 0;
     self.guiCountdownLabel.alpha = 0;
@@ -122,16 +139,26 @@
 
 -(void)stateBGDetectionAnimated:(BOOL)animated
 {
+    [self hideAll];    
+}
+
+-(void)statePreparing
+{
     [self hideAll];
     
-    self.guiContinueButton.alpha = 1;
+    self.guiGoodMessageButton.alpha = 1;
 }
+
 
 -(void)stateReadyToRecordAnimated:(BOOL)animated
 {
     [self hideAll];
     
     self.guiRecordButton.alpha = 1;
+    self.guiGoodMessageButton.alpha = 1;
+    [self.guiGoodMessageButton setTitle:LS(@"RECORDER_MESSAGE_WHEN_READY")
+                               forState:UIControlStateNormal];
+    [self.guiGoodMessageButton updateShowingIcon:NO positive:YES];
 }
 
 -(void)stateCountingDownAnimated:(BOOL)animated
@@ -164,13 +191,11 @@
 -(void)updateBackgroundInfo:(NSDictionary *)info
 {
     if (self.state != EMRecorderControlsStateBackgroundDetection) {
-        self.guiMessageButton.alpha = 0;
+        self.guiBadMessageButton.alpha = 0;
         return;
     }
 
     HMBGMark bgMark = [info[hmkInfoBGMark] integerValue];
-    
-    // Don't update the messages too often.
     
     // If bad background mark is different than the last one,
     // update the message and the stored last mark.
@@ -181,33 +206,51 @@
     HMLOG(TAG, DBG, @"BG Mark: %@", @(bgMark));
 
     if (bgMark == HMBGMarkGood) {
-        self.guiMessageButton.alpha -= 0.4;
-        self.guiContinueButton.alpha -= 0.4;
+        //
+        // notified about good background
+        // slowly hide the bad background message
+        // if bad background message completely gone,
+        // show the good background message
+        //
+        self.guiBadMessageButton.alpha = MAX(0, self.guiBadMessageButton.alpha - 0.3);
+        if (self.guiBadMessageButton.alpha <= 0) {
+            [self.guiContinueButton setTitle:LS(@"RECORDER_CONTINUE_BUTTON")
+                                    forState:UIControlStateNormal];
+            [self.guiGoodMessageButton setTitle:LS(@"RECORDER_BGM_GOOD")
+                                       forState:UIControlStateNormal];
+            self.guiGoodMessageButton.alpha = 1;
+        }
         return;
     }
     
     if (bgMark == self.latestBGMark) {
-        self.guiMessageButton.alpha += 0.1;
+        self.guiBadMessageButton.alpha += 0.1;
+        self.guiGoodMessageButton.alpha -= 0.5;
         return;
     }
     
     if (timePassed < 5) {
         if (timePassed > 2 && bgMark != self.latestBGMark) {
-            self.guiMessageButton.alpha -= 0.1;
+            self.guiBadMessageButton.alpha -= 0.1;
         }
         return;
     }
     
     [UIView animateWithDuration:0.1 animations:^{
-        self.guiMessageButton.alpha = 1;
+        self.guiBadMessageButton.alpha = 1;
     }];
     
     // Bad background message.
     NSString *messageKey = [self.bgMarks textKeyForMark:bgMark keyPrefix:@"RECORDER"];
-    [self.guiMessageButton setTitle:LS(messageKey) forState:UIControlStateNormal];
+    [self.guiBadMessageButton setTitle:LS(messageKey) forState:UIControlStateNormal];
     self.latestBGMark = bgMark;
     self.latestBGMarkTime = now;
+    
+    // Continue button
     self.guiContinueButton.alpha = 1;
+    self.guiGoodMessageButton.alpha = 0;
+    [self.guiContinueButton setTitle:LS(@"RECORDER_CONTINUE_ANYWAY_BUTTON")
+                            forState:UIControlStateNormal];
 }
 
 #pragma mark - EMCountDownDelegate
@@ -256,8 +299,12 @@
     if (recordButton.isCounting) {
         [self setState:EMRecorderControlsStateReadyToRecord animated:YES];
         [recordButton cancelCountDown];
+        [EMUISound.sh playSoundNamed:SND_CANCEL];
+        self.guiGoodMessageButton.alpha = 1;
     } else {
-        [recordButton startCountDownFromNumber:5];
+        [recordButton startCountDownFromNumber:3];
+        [EMUISound.sh playSoundNamed:SND_PRESSED_BUTTON];
+        self.guiGoodMessageButton.alpha = 0;
     }
 }
 

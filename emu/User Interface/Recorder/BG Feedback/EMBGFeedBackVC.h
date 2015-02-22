@@ -12,7 +12,12 @@
 
 @property (nonatomic) CGFloat goodBackgroundWeight;
 
--(void)showAnimated:(BOOL)animated;
--(void)hideAnimated:(BOOL)animted;
+#pragma mark - Background feedback
+-(void)showBGFeedbackAnimated:(BOOL)animated;
+-(void)hideBGFeedbackAnimated:(BOOL)animted;
+
+#pragma mark - Recording progress
+-(void)showRecordingProgressOfDuration:(NSTimeInterval)duration;
+-(void)hideRecordingProgressAnimated:(BOOL)animated;
 
 @end
