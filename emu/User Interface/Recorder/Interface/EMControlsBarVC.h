@@ -50,10 +50,10 @@ typedef NS_ENUM(NSInteger, EMRecorderControlsState){
     EMRecorderControlsStateRecording                      = 5,
 
     /**
-     *  Finished the recording. Asks user for confirmation of the video,
+     *  Finished the recording. Asks user for confirmation of the result,
      *  and also allowing the user to go back and reshoot.
      */
-    EMRecorderControlsStateVideoSaved                     = 6,
+    EMRecorderControlsStateReview                         = 6,
 
     /**
      *  Done.
@@ -74,6 +74,8 @@ typedef NS_ENUM(NSInteger, EMRecorderControlsState){
  *  @param animated Boolean value indicating if to change to the new state with animations.
  */
 -(void)setState:(EMRecorderControlsState)state animated:(BOOL)animated;
+-(void)setState:(EMRecorderControlsState)state animated:(BOOL)animated info:(NSDictionary *)info;
+
 
 #pragma mark - Background detection
 /**

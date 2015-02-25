@@ -11,5 +11,6 @@
 @interface EMLabel : UILabel
 
 @property (nonatomic) NSString *styleFont;
+@property (nonatomic) NSString *styleColor;
 
 @end

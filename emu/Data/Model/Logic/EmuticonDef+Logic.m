@@ -8,6 +8,7 @@
 
 #import "EmuticonDef+Logic.h"
 #import "NSManagedObject+FindAndCreate.h"
+#import "EMFiles.h"
 
 @implementation EmuticonDef (Logic)
 
@@ -19,6 +20,44 @@
                                                                    oid:oid
                                                                context:context];
     return (EmuticonDef *)object;
+}
+
+
++(EmuticonDef *)findWithID:(NSString *)oid
+                   context:(NSManagedObjectContext *)context
+{
+    NSManagedObject *object = [NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
+                                                               withID:oid
+                                                            inContext:context];
+    return (EmuticonDef *)object;
+}
+
+
++(EmuticonDef *)findEmuDefForPreviewInContext:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"useForPreview=%@", @YES];
+    EmuticonDef *emuDef = (EmuticonDef *)[NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
+                                                                   withPredicate:predicate
+                                                                       inContext:context];
+    return emuDef;
+}
+
+
+-(NSString *)pathForUserLayerMask
+{
+    return [EMFiles pathForResourceNamed:self.sourceUserLayerMask];
+}
+
+
+-(NSString *)pathForBackLayer
+{
+    return [EMFiles pathForResourceNamed:self.sourceBackLayer];
+}
+
+
+-(NSString *)pathForFrontLayer
+{
+    return [EMFiles pathForResourceNamed:self.sourceFrontLayer];
 }
 
 @end

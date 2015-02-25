@@ -11,8 +11,8 @@
 
 @interface EMRecordButton()
 
-@property (nonatomic) NSInteger counter;
-@property (nonatomic) BOOL isNowCounting;
+@property (atomic) NSInteger counter;
+@property (atomic) NSTimer *timer;
 
 @end
 
@@ -35,44 +35,44 @@
 
 -(void)startCountDownFromNumber:(NSInteger)number
 {
+    if (self.timer)
+        return;
+    
     self.counter = number;
-    self.isNowCounting = YES;
     [self.delegate countDownWillStartFromNumber:number];
-    [self count];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                  target:self
+                                                selector:@selector(count:)
+                                                userInfo:nil
+                                                 repeats:YES];
 }
 
 -(void)cancelCountDown
 {
-    self.isNowCounting = NO;
-    [self.delegate countDownWasCanceled];
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+        [self.delegate countDownWasCanceled];
+    }
 }
 
 -(BOOL)isCounting
 {
-    return self.isNowCounting;
+    if (self.timer == nil) return NO;
+    return self.timer.isValid && self.counter > 0;
 }
 
--(void)count
+-(void)count:(NSTimer *)timer
 {
-    if (self.counter <= 0) {
+    self.counter--;
+    if (self.counter <= 0 && timer.isValid) {
         // Finished counting.
         self.counter = 0;
-        self.isNowCounting = NO;        
         [self.delegate countDownDidFinish];
+        [self.timer invalidate];
+        self.timer = nil;
     }
-    
-    // Still counting
-    __weak EMRecordButton *weakSelf = self;
-    dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
-        if (!weakSelf.isNowCounting)
-            return;
-
-        weakSelf.counter--;
-        [weakSelf.delegate countDownDidCountToNumber:self.counter];
-        
-        // Next tick.
-        [weakSelf count];
-    });
+    [self.delegate countDownDidCountToNumber:self.counter];
 }
 
 @end

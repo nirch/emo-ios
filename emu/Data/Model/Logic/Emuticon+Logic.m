@@ -7,18 +7,48 @@
 //
 
 #import "Emuticon+Logic.h"
-#import "NSManagedObject+FindAndCreate.h"
+#import "EMDB.h"
+#import "EMFiles.h"
 
 @implementation Emuticon (Logic)
 
-#pragma mark - Find or create
-+(Emuticon *)findOrCreateWithID:(NSString *)oid
-                           context:(NSManagedObjectContext *)context
++(Emuticon *)findWithID:(NSString *)oid
+                context:(NSManagedObjectContext *)context
 {
-    NSManagedObject *object = [NSManagedObject findOrCreateEntityNamed:E_EMU
-                                                                   oid:oid
-                                                               context:context];
+    NSManagedObject *object = [NSManagedObject fetchSingleEntityNamed:E_EMU
+                                                               withID:oid
+                                                            inContext:context];
     return (Emuticon *)object;
+}
+
+
++(Emuticon *)previewWithOID:(NSString *)oid
+                 footageOID:(NSString *)footageOID
+             emuticonDefOID:(NSString *)emuticonDefOID
+                    context:(NSManagedObjectContext *)context;
+{
+    // footage and emuticon definition must exist.
+    UserFootage *userFootage = [UserFootage findWithID:footageOID context:context];
+    EmuticonDef *emuDef = [EmuticonDef findWithID:emuticonDefOID context:context];
+    if (userFootage == nil || emuDef == nil) return nil;
+    
+    // Create the emuticon preview object.
+    Emuticon *emu = (Emuticon *)[NSManagedObject findOrCreateEntityNamed:E_EMU
+                                                                     oid:oid
+                                                                 context:context];
+    emu.userFootage = userFootage;
+    emu.emuticonDef = emuDef;
+    emu.usageCount = @0;
+    emu.isPreview = @YES;
+    return emu;
+}
+
+-(NSURL *)animatedGifURL
+{
+    NSString *gifName = [SF:@"%@.gif", self.oid];
+    NSString *outputPath = [EMFiles outputPathForFileName:gifName];
+    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" ,outputPath]];
+    return url;
 }
 
 @end

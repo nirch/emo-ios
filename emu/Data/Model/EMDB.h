@@ -20,10 +20,20 @@
 #import "EmuticonDef+Logic.h"
 
 #import "UserFootage.h"
-//#import "UserFootage+Logic.h"
+#import "UserFootage+Logic.h"
 
 #import "AppCFG.h"
 #import "AppCFG+Logic.h"
+
+// Keys for passing info around
+#define emkOID              @"oid"
+#define emkEmuticonOID      @"emuticon oid"
+#define emkEmuticonDefOID   @"emuticon definition oid"
+#define emkFootageOID       @"footage oid"
+#define emkOutputOID        @"output oid"
+#define emkNumberOfFrames   @"number of frames"
+#define emkDuration         @"duration"
+#define emkDate             @"date"
 
 @interface EMDB : NSObject
 

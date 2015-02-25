@@ -9,21 +9,30 @@
 #import "EMBGFeedBackVC.h"
 #import "EMSilhouetteView.h"
 #import "AWFanOpeningView.h"
-#import "EMProgressView.h"
+#import "EMTickingProgressView.h"
+#import "EMTickingProgressDelegate.h"
 
-@interface EMBGFeedBackVC ()
+@interface EMBGFeedBackVC () <
+    EMTickingProgressDelegate
+>
 
-@property (weak, nonatomic) IBOutlet UIProgressView *guiWeightIndicator;
-@property (weak, nonatomic) IBOutlet UISlider *guiWeightSlider;
-
+//
+// Background marks feedback
+//
+@property (weak, nonatomic) IBOutlet UIView *guiBGFeedBackContainerView;
 @property (weak, nonatomic) IBOutlet AWFanOpeningView *guiContourBadContainer;
 @property (weak, nonatomic) IBOutlet AWFanOpeningView *guiContourGoodContainer;
-
 @property (weak, nonatomic) IBOutlet EMSilhouetteView *guiSilhouetteBG;
 
-@property (weak, nonatomic) IBOutlet EMProgressView *guiProgressView;
 
-@property (nonatomic) CGRect badBGStartFrame;
+
+//
+// Recording progress feedback
+//
+@property (weak, nonatomic) IBOutlet EMTickingProgressView *guiRecordingProgressView;
+
+// Used for debugging (should be hidden!)
+@property (weak, nonatomic) IBOutlet UISlider *guiWeightSlider;
 
 @end
 
@@ -43,28 +52,20 @@
 {
     [super viewDidAppear:animated];
     [self setupEffects];
-    [self storeLayoutInfo];
     [self update];
 }
 
 #pragma mark - initializations
 -(void)initGUI
 {
-    self.guiWeightIndicator.progress = 0;
     self.guiWeightSlider.value = 0;
-    self.guiWeightIndicator.hidden = YES; // Used for debug
+    self.guiRecordingProgressView.delegate = self;
 }
 
 
 -(void)setupEffects
 {
     [self.guiSilhouetteBG setupEffects];
-}
-
-
--(void)storeLayoutInfo
-{
-    self.badBGStartFrame = self.guiContourBadContainer.frame;
 }
 
 #pragma mark - User feedback
@@ -76,8 +77,6 @@
 
 -(void)update
 {
-    self.guiWeightIndicator.progress = self.goodBackgroundWeight;
-    
     CGFloat p1 = 1-self.goodBackgroundWeight;
     
     self.guiContourGoodContainer.startAngle = 180*p1 - 180;
@@ -89,47 +88,80 @@
     [self.guiContourBadContainer updateSlice];
 }
 
-#pragma mark - Show/Hide
--(void)showAnimated:(BOOL)animated
+#pragma mark - Show/Hide BG feedback
+-(void)showBGFeedbackAnimated:(BOOL)animated
 {
-    self.view.hidden = NO;
+    UIView *containerView = self.guiBGFeedBackContainerView;
+
+    containerView.hidden = NO;
 
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
-            [self showAnimated:NO];
+            [self showBGFeedbackAnimated:NO];
         }];
         return;
     }
 
-    self.view.alpha = 1;
-    self.view.transform = CGAffineTransformIdentity;
+    containerView.alpha = 1;
+    containerView.transform = CGAffineTransformIdentity;
 }
 
--(void)hideAnimated:(BOOL)animated
+-(void)hideBGFeedbackAnimated:(BOOL)animated
 {
+    UIView *containerView = self.guiBGFeedBackContainerView;
     if (animated) {
         [UIView animateWithDuration:0.2
                               delay:0
                             options:UIViewAnimationOptionCurveEaseIn
                          animations:^{
-                             [self hideAnimated:NO];
+                             [self hideBGFeedbackAnimated:NO];
                          } completion:^(BOOL finished) {
-                             self.view.hidden = YES;
+                             containerView.hidden = YES;
                          }];
         return;
     }
 
     CGAffineTransform t = CGAffineTransformMakeScale(3.5, 3.5);
-    t = CGAffineTransformTranslate(t, 0, -self.view.bounds.size.height/3.0);
-    self.view.transform = t;
+    t = CGAffineTransformTranslate(t, 0, -containerView.bounds.size.height/3.0);
+    containerView.transform = t;
 }
 
-#pragma mark - recording progress
+#pragma mark - Recording progress
 -(void)showRecordingProgressOfDuration:(NSTimeInterval)duration
 {
-    [self.guiProgressView reset];
+    self.guiRecordingProgressView.alpha = 1;
     
+    [self.guiRecordingProgressView startTickingForDuration:duration
+                                            ticksPerSecond:24];
 }
+
+-(void)hideRecordingProgressAnimated:(BOOL)animated
+{
+    self.guiRecordingProgressView.alpha = 0;
+}
+
+#pragma mark - EMTickingProgressDelegate
+-(void)tickingProgressDidFinish
+{
+    // Tell the recorder that the duration of the recording ended.
+    // This action is only related to the UI presented to the user
+    // and it got nothing to do with the actual recording session
+    // taking care of in the background by the capture session objects.
+    // After this action, the ui should change to some UIActivity
+    // indicating to the user to wait until the recording and processing
+    // has really finished.
+    [self.delegate controlSentAction:EMRecorderControlsActionRecordingDurationEnded
+                                info:nil];
+}
+
+-(void)tickingProgressDidStart
+{
+}
+
+-(void)tickingProgressWasCanceled
+{
+}
+
 
 
 #pragma mark - IB Actions

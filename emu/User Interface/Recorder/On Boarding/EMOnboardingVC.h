@@ -10,7 +10,7 @@
 
 #import "EMOnboardingDelegate.h"
 
-#define EMOB_STAGES 5
+#define EMOB_STAGES 6
 
 @interface EMOnboardingVC : UIViewController
 
@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, EMOnBoardingStage) {
     EMOnBoardingStageAlign                         = 1,
     EMOnBoardingStageExtractionPreview             = 2,
     EMOnBoardingStageRecording                     = 3,
-    EMOnBoardingStageDone                          = 4
+    EMOnBoardingStageFinishingUp                   = 4,
+    EMOnBoardingStageReview                        = 5
 };
 
 @property (nonatomic) id<EMOnboardingDelegate> delegate;

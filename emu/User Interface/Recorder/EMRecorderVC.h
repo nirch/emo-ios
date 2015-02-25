@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#import "EMRecorderDelegate.h"
+
 typedef NS_ENUM(NSInteger, EMRecorderState) {
     EMRecorderStateStarting                         = 0,
     EMRecorderStateBGDetectionShouldStart           = 1,
@@ -14,13 +16,19 @@ typedef NS_ENUM(NSInteger, EMRecorderState) {
     EMRecorderStateFGExtractionInProgress           = 4,
     EMRecorderStateShouldStartRecording             = 5,
     EMRecorderStateRecording                        = 6,
-    EMRecorderStateDone                             = 7,
-    EMRecorderStateFatalError                       = 8
+    EMRecorderStateFinishingUp                      = 7,
+    EMRecorderStateReviewPreview                    = 8,
+    EMRecorderStateDone                             = 9,
+    EMRecorderStateFatalError                       = 10
 };
 
 @class HMCaptureSession;
 
 @interface EMRecorderVC : UIViewController
+
++(EMRecorderVC *)recorderVCWithInfo:(NSDictionary *)info;
+
+@property (weak, nonatomic) id<EMRecorderDelegate>delegate;
 
 // TODO: remove this. Used for debugging.
 @property (weak, nonatomic) IBOutlet UIImageView *gaga;

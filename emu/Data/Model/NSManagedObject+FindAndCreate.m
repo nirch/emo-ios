@@ -62,6 +62,17 @@
     return [self firstResult:results];
 }
 
++(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName
+                                    withID:(NSString *)oid
+                                 inContext:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"oid=%@", oid];
+    return [self fetchSingleEntityNamed:entityName
+                          withPredicate:predicate
+                              inContext:context];
+}
+
+
 +(NSManagedObject *)firstResult:(NSArray *)results
 {
     if (!results) return nil;

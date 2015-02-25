@@ -16,6 +16,9 @@
     UICollectionViewDelegateFlowLayout
 >
 
+
+@property (weak, nonatomic) IBOutlet UIButton *guiEmuButton;
+
 // A changing title depending on current stage of the flow
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 
@@ -43,6 +46,13 @@
     //c.constant = 80;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiPagerView.alpha = 1;
+    }];
+}
+
 -(void)initContent
 {
     self.shownIndex = 0;
@@ -50,7 +60,8 @@
                        @"ONBOARDING_TITLE_ALIGN",
                        @"ONBOARDING_TITLE_EXTRACTION_PREVIEW",
                        @"ONBOARDING_TITLE_RECORDING",
-                       @"ONBOARDING_TITLE_DONE"
+                       @"ONBOARDING_TITLE_FINISHING_UP",
+                       @"ONBOARDING_TITLE_REVIEW"
                        ];
     
     self.subTextsKeys = @[[NSNull null],
@@ -64,8 +75,8 @@
 
 -(void)initGUI
 {
-    //self.guiStageIndicator.numberOfPages = EMOB_STAGES;
-    self.guiPagerView.pagesCount = EMOB_STAGES;
+    self.guiPagerView.pagesCount = EMOB_STAGES-1;
+    self.guiPagerView.alpha = 0;
     [self update];
 }
 
@@ -101,22 +112,6 @@
 {
     NSString *textKey = self.textsKeys[indexPath.item];
     cell.guiLabel.text = LS(textKey);
-
-//    NSString *subTextKey = self.subTextsKeys[indexPath.item];
-//    cell.guiSubLabel.text = nil;
-//    cell.guiSubLabel.alpha = 0;
-//    
-//    if (!isNSNull(subTextKey)) {
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [UIView animateWithDuration:0.7 animations:^{
-//                cell.guiSubLabel.text = LS(subTextKey);
-//                cell.guiSubLabel.alpha = 1;
-//                [cell layoutIfNeeded];
-//            }];
-//        });
-//    } else {
-//        cell.guiSubLabel.text = nil;
-//    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -149,7 +144,7 @@
 
 -(void)updatePageIndicatorToIndex:(NSInteger)index
 {
-    self.guiPagerView.currentPage = index;
+    self.guiPagerView.currentPage = index-1;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -162,5 +157,17 @@
         [self.delegate onboardingDidGoBackToStageNumber:currentPage];
     }
 }
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedEmuButton:(UIButton *)sender
+{
+    self.stage = 0;
+    [self update];
+    [self.delegate onboardingDidGoBackToStageNumber:0];
+}
+
 
 @end

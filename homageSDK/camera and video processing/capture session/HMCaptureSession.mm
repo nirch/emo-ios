@@ -269,10 +269,10 @@
  didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         fromConnection:(AVCaptureConnection *)connection
 {
-	//CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer);
     CMSampleBufferRef processedSampleBuffer = nil;
     extractCounter++;
-    
+
+    // The video processing state.
     HMVideoProcessingState state = self.videoProcessingState;
     
     // Should inpect the frame?
@@ -346,6 +346,9 @@
             // and finish up.
             if (self.writer.shouldFinish) {
                 [self _stopRecording];
+                
+                // Also stop video processing for this session.
+                [self setVideoProcessingState:HMVideoProcessingStateIdle];
             }
         }
     });
@@ -434,7 +437,12 @@
     self.duration = duration;
     [self.writer prepareWithInfo:@{@"duration":@(duration)}];
     self.recording = YES;
-    [self.sessionDelegate recordingDidStartWithInfo:nil];
+    
+    // Tell delegate that recording did start
+    // (communincates this to the delegate on the main thread)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.sessionDelegate recordingDidStartWithInfo:nil];
+    });
 }
 
 //
@@ -460,8 +468,14 @@
     
     // Finish up current recording session.
     self.recording = NO;
-    [self.writer finishReturningInfo];
+    NSDictionary *info = [self.writer finishReturningInfo];
     self.writer = nil;
+    
+    // Tell the delegate that the recording session ended,
+    // on the main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.sessionDelegate recordingDidStopWithInfo:info];
+    });
 }
 
 //
@@ -485,33 +499,5 @@
         self.writer = nil;
     });
 }
-
-
-
-
-
-
-
-//    // Retain
-//    CFRetain(sampleBuffer);
-//    CFRetain(formatDescription);
-//
-//    dispatch_async(movieWritingQueue, ^{
-//        if (recording && self.writer) {
-////            image_type *output =(image_type *)[self.videoProcessor currentOutputImage];
-////            [self.writer writeImageTypeFrame:output];
-//            [self.videoProcessor writeFrameUsingWriter:self.writer];
-//        }
-//
-//        CFRelease(sampleBuffer);
-//        CFRelease(formatDescription);
-//
-//        if (_videoProcessor &&
-//            connection == videoConnection &&
-//            processedSampleBuffer &&
-//            thisFrameShouldBeProcessed) {
-//            CFRelease(processedSampleBuffer);
-//        }
-//    });
 
 @end

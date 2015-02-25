@@ -18,6 +18,21 @@
     return paths[0];
 }
 
++(NSString *)outputPath
+{
+    return [SF:@"%@/%@", [self docsPath], @"output"];
+}
+
++(void)ensureOutputPathExists
+{
+    [self createDirectoryNamed:@"output"];
+}
+
++(NSString *)outputPathForFileName:(NSString *)fileName
+{
+    return [SF:@"%@/%@", [self outputPath], fileName];
+}
+
 +(NSString *)createDirectoryNamed:(NSString *)directoryName
 {
     // Get the paths
@@ -34,9 +49,10 @@
     return dirPath;
 }
 
+
+
 +(void)savePNGSequence:(NSArray *)pngs toFolderNamed:(NSString *)folderName
 {
-    // Create a new folder under the cache directory.
     NSString *path = [EMFiles createDirectoryNamed:folderName];
     
     NSInteger i = 0;
@@ -48,5 +64,28 @@
     }
 }
 
++(NSURL *)urlForBundledResourceNamed:(NSString *)resourceName
+                       withExtension:(NSString *)extension
+{
+    return [[NSBundle mainBundle] URLForResource:resourceName
+                                   withExtension:extension];
+}
+
+
++(NSString *)pathForResourceNamed:(NSString *)resourceName
+{
+    NSString *extension = [resourceName pathExtension];
+    NSInteger trimIndex = resourceName.length - extension.length - 1;
+    NSString *name = [resourceName substringToIndex:trimIndex];
+    NSString *path = [[NSBundle mainBundle] pathForResource:name
+                                                     ofType:extension];
+    
+    return path;
+}
+
+//+(NSString *)outputPath
+//{
+//    NSString *path = [EMFiles createDirectoryNamed:@"output"];
+//}
 
 @end

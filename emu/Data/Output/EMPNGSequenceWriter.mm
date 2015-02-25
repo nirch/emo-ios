@@ -12,8 +12,11 @@
 
 #define TAG @"EMPNGSequenceWriter"
 
+#define MAX_NUMBER_OF_FRAMES 150
+
 #import "EMPNGSequenceWriter.h"
 #import "EMFiles.h"
+#import "EMDB.h"
 
 #import "HMImageTools.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
@@ -31,7 +34,7 @@
     BOOL canceled;
 }
 
-
+@property (nonatomic) NSTimeInterval durationInSeconds;
 @property (nonatomic) NSMutableArray *pngs;
 @property (nonatomic) NSInteger framesCount;
 
@@ -55,7 +58,8 @@
     totalTime = 0;
     
     // Duration
-    duration = [info[@"duration"] doubleValue] * 1000000000;
+    self.durationInSeconds = [info[@"duration"] doubleValue];
+    duration = self.durationInSeconds * 1000000000;
     
     // done flag
     done = NO;
@@ -68,7 +72,12 @@
     NSString *oid = [[NSUUID UUID] UUIDString];
     [EMFiles savePNGSequence:self.pngs toFolderNamed:oid];
     [self clean];
-    return @{@"oid":oid};
+    return @{
+             emkOID:oid,
+             emkNumberOfFrames:@(self.framesCount),
+             emkDate:[NSDate date],
+             emkDuration:@(self.durationInSeconds)
+             };
 }
 
 
@@ -91,15 +100,19 @@
     
     image_type *output_image = (image_type *)image;
     resampled_image = image_sample2(output_image, resampled_image);
-    resampled_image->timeStamp = output_image->timeStamp;
+    
+    vTime_type currentFrameTimeStamp = output_image->timeStamp;
+    resampled_image->timeStamp = currentFrameTimeStamp;
+    
+    // HMLOG(TAG, DBG, @"Frame time stamp:%@", @(currentFrameTimeStamp));
     
     // If first frame, store the time stamp of the first frame.
     if (self.framesCount == 0) {
-        firstFrameTimeStamp = output_image->timeStamp;
+        firstFrameTimeStamp = currentFrameTimeStamp;
     } else {
-        totalTime = output_image->timeStamp - firstFrameTimeStamp;
+        totalTime = currentFrameTimeStamp - firstFrameTimeStamp;
 
-        if (totalTime > duration) {
+        if (totalTime > duration || self.framesCount > MAX_NUMBER_OF_FRAMES) {
             // Done! Skip future frames.
             done = YES;
             return;

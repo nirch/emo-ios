@@ -7,12 +7,18 @@
  ------------------------------------
 */
 
+// General
+"EPIC_FAIL" = "Epic Fail!";
+"SOMETHING_WENT_WRONG" = "Emu is sorry, but something went wrong. Please try again.";
+"TRY_AGAIN" = "Try again.";
+
 // Onboarding
-"ONBOARDING_TITLE_WELCOME" = "Welcome :-)";
+"ONBOARDING_TITLE_WELCOME" = "Hi!";
 "ONBOARDING_TITLE_ALIGN" = "Align to the figure";
 "ONBOARDING_TITLE_EXTRACTION_PREVIEW" = "Removing background";
 "ONBOARDING_TITLE_RECORDING" = "Recording...";
-"ONBOARDING_TITLE_DONE" = "Good job!";
+"ONBOARDING_TITLE_FINISHING_UP" = "Finishing up...";
+"ONBOARDING_TITLE_REVIEW" = "Review";
 
 // Background marks
 "RECORDER_BGM_NOISY" = "Use a solid color wall!";
@@ -25,7 +31,11 @@
 
 // Messages
 "RECORDER_MESSAGE_WHEN_READY" = "When ready, press record!";
+"RECORDER_MESSAGE_REVIEW_PREVIEW" = "Happy with the resualt?";
 
 // Recorder interface button
 "RECORDER_CONTINUE_ANYWAY_BUTTON" = "CONTINUE ANYWAY";
 "RECORDER_CONTINUE_BUTTON" = "CONTINUE";
+"RECORDER_PREVIEW_TRY_AGAIN_BUTTON" = "LETS TRY IT AGAIN";
+"RECORDER_PREVIEW_CONFIRM" = "I LOVE IT!";
+

@@ -18,8 +18,36 @@
  *
  *  @param oid     The id of the object.
  *  @param context The managed object context.
+ *
+ *  @return EmuticonDef object.
  */
 +(EmuticonDef *)findOrCreateWithID:(NSString *)oid
                            context:(NSManagedObjectContext *)context;
+
+
+/**
+ *  Finds emuticon definition object with the provided oid.
+ *
+ *  @param oid     The id of the object
+ *  @param context The managed object context if exists. nil if doesn't exist.
+ */
++(EmuticonDef *)findWithID:(NSString *)oid
+                   context:(NSManagedObjectContext *)context;
+
+
+/**
+ *  Find an emuticon definition that is marked to be used in previews.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return EmuticonDef object or nil if none found.
+ */
++(EmuticonDef *)findEmuDefForPreviewInContext:(NSManagedObjectContext *)context;
+
+
+-(NSString *)pathForUserLayerMask;
+-(NSString *)pathForBackLayer;
+-(NSString *)pathForFrontLayer;
+
 
 @end

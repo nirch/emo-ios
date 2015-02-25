@@ -14,4 +14,15 @@
                                         oid:(NSString *)oid
                                     context:(NSManagedObjectContext *)ctx;
 
+#pragma mark - Easier fetches
++(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName
+                             withPredicate:(NSPredicate *)predicate
+                                 inContext:(NSManagedObjectContext *)context;
+
+
++(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName
+                                    withID:(NSString *)oid
+                                 inContext:(NSManagedObjectContext *)context;
+
+
 @end

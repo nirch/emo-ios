@@ -53,7 +53,8 @@
     self.soundFiles = @{SND_HAPPY:@"goodBG.wav",
                         SND_PRESSED_BUTTON:@"pressedButton.wav",
                         SND_CANCEL:@"cancel.wav",
-                        SND_START_RECORDING:@"startRecording.wav"
+                        SND_START_RECORDING:@"startRecording.wav",
+                        SND_RECORDING_ENDED:@"endRecording.wav"
                         };
     
     // Load audio files from bundle.

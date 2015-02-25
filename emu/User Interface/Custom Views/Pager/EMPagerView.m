@@ -56,7 +56,7 @@
 
 -(void)setCurrentPage:(NSInteger)currentPage
 {
-    _currentPage = currentPage;
+    _currentPage = MAX(currentPage,0);
     NSLayoutConstraint *widthConstraint = self.constraints.firstObject;
     widthConstraint.constant = self.pw * self.pagesCount;
     [self setNeedsDisplay];

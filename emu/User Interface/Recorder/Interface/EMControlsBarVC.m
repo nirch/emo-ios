@@ -29,11 +29,8 @@
 
 // User buttons
 @property (weak, nonatomic) IBOutlet EMFlowButton *guiContinueButton;
-
-
-// TODO: sort this out
-@property (weak, nonatomic) IBOutlet UIButton *guiNegativeButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiPositiveButton;
+@property (weak, nonatomic) IBOutlet EMFlowButton *guiNegativeButton;
+@property (weak, nonatomic) IBOutlet EMFlowButton *guiPositiveButton;
 
 // Recording & Countdown
 @property (weak, nonatomic) IBOutlet EMRecordButton *guiRecordButton;
@@ -73,14 +70,22 @@
 
 
 #pragma mark - States
--(void)setState:(EMRecorderControlsState)state animated:(BOOL)animated
+-(void)setState:(EMRecorderControlsState)state
+       animated:(BOOL)animated
+{
+    [self setState:state animated:animated info:nil];
+}
+
+-(void)setState:(EMRecorderControlsState)state
+       animated:(BOOL)animated
+           info:(NSDictionary *)info
 {
     _state = state;
-    [self handleStateAnimated:animated];
+    [self handleStateAnimated:animated info:info];
 }
 
 
--(void)handleStateAnimated:(BOOL)animated
+-(void)handleStateAnimated:(BOOL)animated info:(NSDictionary *)info
 {
     switch (self.state) {
         case EMRecorderControlsStateHidden:
@@ -92,7 +97,7 @@
             break;
             
         case EMRecorderControlsStatePreparing:
-            [self statePreparing];
+            [self statePreparingWithInfo:info];
             break;
             
         case EMRecorderControlsStateReadyToRecord:
@@ -107,8 +112,8 @@
             [self stateRecordingAnimated:animated];
             break;
             
-        case EMRecorderControlsStateVideoSaved:
-            [self stateVideoSavedAnimated:animated];
+        case EMRecorderControlsStateReview:
+            [self stateReviewAnimated:animated];
             break;
             
         case EMRecorderControlsStateVideoDone:
@@ -142,11 +147,17 @@
     [self hideAll];    
 }
 
--(void)statePreparing
+-(void)statePreparingWithInfo:(NSDictionary *)info
 {
     [self hideAll];
     
-    self.guiGoodMessageButton.alpha = 1;
+    BOOL satisfactoryBGDetected = (info != nil && info[hmkInfoGoodBGSatisfied]);
+
+    if (satisfactoryBGDetected) {
+        self.guiGoodMessageButton.alpha = 1;
+    } else {
+        self.guiGoodMessageButton.alpha = 0;
+    }
 }
 
 
@@ -179,8 +190,28 @@
                                 info:nil];
 }
 
--(void)stateVideoSavedAnimated:(BOOL)animated
+-(void)stateReviewAnimated:(BOOL)animated
 {
+    [self hideAll];
+    
+    self.guiPositiveButton.alpha = 1;
+    self.guiNegativeButton.alpha = 1;
+    self.guiGoodMessageButton.alpha = 1;
+    
+    self.guiPositiveButton.positive = YES;
+    self.guiNegativeButton.positive = NO;
+    
+    [self.guiGoodMessageButton updateShowingIcon:NO
+                                        positive:YES];
+    [self.guiGoodMessageButton setTitle:LS(@"RECORDER_MESSAGE_REVIEW_PREVIEW")
+                               forState:UIControlStateNormal];
+    
+    [self.guiNegativeButton setTitle:LS(@"RECORDER_PREVIEW_TRY_AGAIN_BUTTON")
+                            forState:UIControlStateNormal];
+
+    [self.guiPositiveButton setTitle:LS(@"RECORDER_PREVIEW_CONFIRM")
+                            forState:UIControlStateNormal];
+
 }
 
 -(void)stateDoneAnimated:(BOOL)animated
@@ -260,7 +291,7 @@
         return;
     
     self.countDownNumber = number;
-    [self handleStateAnimated:YES];
+    [self handleStateAnimated:YES info:nil];
 }
 
 -(void)countDownWasCanceled
@@ -290,6 +321,8 @@
 // ===========
 - (IBAction)onPressedContinueAnywayButton:(UIButton *)sender
 {
+    self.guiGoodMessageButton.alpha = 0;
+    self.guiBadMessageButton.alpha = 0;
     [self.delegate controlSentAction:EMRecorderControlsActionContinueWithBadBackground
                                 info:nil];
 }
@@ -308,6 +341,19 @@
     }
 }
 
+- (IBAction)onPressedNegativeButton:(UIButton *)sender
+{
+    [self hideAll];
+    [self.delegate controlSentAction:EMRecorderControlsActionNo
+                                info:nil];
+}
+
+- (IBAction)onPressedPositiveButton:(UIButton *)sender
+{
+    [self hideAll];
+    [self.delegate controlSentAction:EMRecorderControlsActionYes
+                                info:nil];
+}
 
 
 @end

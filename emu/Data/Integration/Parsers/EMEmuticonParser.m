@@ -45,15 +45,14 @@
     // Parse the emuticon definition info.
     emuDef.name                        = [info safeStringForKey:@"name"];
     emuDef.order                       = [info safeNumberForKey:@"order"];
-    emuDef.duration                    = [info safeDecimalNumberForKey:@"duration"];
     emuDef.sourceBackLayer             = [info safeStringForKey:@"source_back_layer"];
-    emuDef.sourceBackLayerFramesCount  = [info safeNumberForKey:@"source_front_layer_frames"];
     emuDef.sourceFrontLayer            = [info safeStringForKey:@"source_front_layer"];
-    emuDef.sourceFrontLayerFramesCount = [info safeNumberForKey:@"source_front_layer_frames"];
+    emuDef.framesCount                 = [info safeNumberForKey:@"frames_count"];
     emuDef.sourceUserLayerMask         = [info safeStringForKey:@"source_user_layer_mask"];
     emuDef.outputVideoMaxFPS           = [info safeNumberForKey:@"output_video_max_fps"];
     emuDef.outputAnimGifMaxFPS         = [info safeNumberForKey:@"output_anim_gif_max_fps"];
-    
+    emuDef.useForPreview               = [info safeBoolNumberForKey:@"use_for_preview"];
+    emuDef.duration                    = @2.0;
 }
 
 @end

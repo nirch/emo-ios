@@ -9,8 +9,17 @@
 #import "NSNotificationCenter+Utils.h"
 #import "NSNotification+Utils.h"
 
+//
+// Notifications
+//
+
+// BG Detection
 #define hmkNotificationBGDetectionInfo @"hmsdk bg detection info"
 
 #define hmkInfoBGMark           @"hmk background mark"
 #define hmkInfoBGMarkWeight     @"hmk background mark weight"
 #define hmkInfoGoodBGSatisfied  @"hmk good background satisfied"
+
+// Rendering
+#define hmkRenderingFinishedPreview  @"hmk finished rendering preview"
+

@@ -10,8 +10,17 @@
 
 @interface EMFiles : NSObject
 
-+(NSString *)docsPath;
 +(void)savePNGSequence:(NSArray *)pngs toFolderNamed:(NSString *)folderName;
++(NSString *)pathForResourceNamed:(NSString *)resourceName;
++(NSURL *)urlForBundledResourceNamed:(NSString *)resourceName
+                       withExtension:(NSString *)extension;
+
+
++(NSString *)docsPath;
++(NSString *)outputPath;
++(void)ensureOutputPathExists;
++(NSString *)outputPathForFileName:(NSString *)fileName;
+
 
 
 @end

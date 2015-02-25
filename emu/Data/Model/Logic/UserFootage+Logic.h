@@ -18,8 +18,49 @@
  *
  *  @param oid     The id of the object.
  *  @param context The managed object context.
+ *
+ *  @return A UserFootage object.
  */
 +(UserFootage *)findOrCreateWithID:(NSString *)oid
                            context:(NSManagedObjectContext *)context;
+
+
+/**
+ *  Finds a user footage object with the provided oid.
+ *
+ *  @param oid     The id of the object
+ *  @param context <#context description#>
+ *
+ *  @param context The managed object context if exists. nil if doesn't exist.
+ */
++(UserFootage *)findWithID:(NSString *)oid
+                   context:(NSManagedObjectContext *)context;
+
+
+/**
+ *  Finds or creates a user footage object with the provided info.
+ *
+ *  @param info    A dictionary containing info about the footage.
+ *                 Should include the following info:
+ *                      oid - Object id
+ *                      
+ *
+ *
+ *
+ *  @param context The managed object context.
+ *
+ *  @return A UserFootage object.
+ */
++(UserFootage *)userFootageWithInfo:(NSDictionary *)info
+                           context:(NSManagedObjectContext *)context;
+
+
+/**
+ *  The path to the stored images of the footage.
+ *
+ *  @return A string path to the user images. nil if missing.
+ */
+-(NSString *)pathForUserImages;
+
 
 @end

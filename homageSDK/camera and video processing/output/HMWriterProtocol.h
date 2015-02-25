@@ -10,6 +10,8 @@
 
 @protocol HMWriterProtocol <NSObject>
 
+
+
 typedef NS_ENUM(NSInteger, HMWritesFramesOfType) {
     HMWritesFramesOfTypeAnyType                     = 0,
     HMWritesFramesOfTypeImageType                   = 1,

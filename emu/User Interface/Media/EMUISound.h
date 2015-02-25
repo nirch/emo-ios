@@ -8,6 +8,7 @@
 
 #define SND_HAPPY           @"happy"
 #define SND_START_RECORDING @"start recording"
+#define SND_RECORDING_ENDED @"end recording"
 #define SND_PRESSED_BUTTON  @"pressed button"
 #define SND_CANCEL          @"cancel"
 

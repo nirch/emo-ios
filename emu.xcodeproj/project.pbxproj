@@ -19,7 +19,6 @@
 		085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 085C66E81A937EC9007BC910 /* silHeadAndChest.ctr */; };
 		085C67641A937EC9007BC910 /* HMAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66EC1A937EC9007BC910 /* HMAnalytics.m */; };
 		085C67651A937EC9007BC910 /* EMBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66EE1A937EC9007BC910 /* EMBackend.m */; };
-		085C67661A937EC9007BC910 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66F01A937EC9007BC910 /* EMDB.m */; };
 		085C67671A937EC9007BC910 /* EMAppCFGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66F31A937EC9007BC910 /* EMAppCFGParser.m */; };
 		085C67681A937EC9007BC910 /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66F51A937EC9007BC910 /* EMEmuticonParser.m */; };
 		085C67691A937EC9007BC910 /* EMEmuticonsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66F71A937EC9007BC910 /* EMEmuticonsParser.m */; };
@@ -42,17 +41,6 @@
 		085C67831A937EC9007BC910 /* test640x360.png in Resources */ = {isa = PBXBuildFile; fileRef = 085C67221A937EC9007BC910 /* test640x360.png */; };
 		085C67841A937EC9007BC910 /* test_back.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C67231A937EC9007BC910 /* test_back.gif */; };
 		085C67851A937EC9007BC910 /* test_front.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C67241A937EC9007BC910 /* test_front.gif */; };
-		085C67861A937EC9007BC910 /* 1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C67281A937EC9007BC910 /* 1.gif */; };
-		085C67871A937EC9007BC910 /* 2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C67291A937EC9007BC910 /* 2.gif */; };
-		085C67881A937EC9007BC910 /* 3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C672A1A937EC9007BC910 /* 3.gif */; };
-		085C67891A937EC9007BC910 /* 4.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C672B1A937EC9007BC910 /* 4.gif */; };
-		085C678A1A937EC9007BC910 /* 5.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C672C1A937EC9007BC910 /* 5.gif */; };
-		085C678B1A937EC9007BC910 /* 6.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C672D1A937EC9007BC910 /* 6.gif */; };
-		085C678C1A937EC9007BC910 /* 7.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C672E1A937EC9007BC910 /* 7.gif */; };
-		085C678D1A937EC9007BC910 /* 8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 085C672F1A937EC9007BC910 /* 8.gif */; };
-		085C678E1A937EC9007BC910 /* EMExperimentalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67311A937EC9007BC910 /* EMExperimentalCell.m */; };
-		085C678F1A937EC9007BC910 /* EMExperimentalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67331A937EC9007BC910 /* EMExperimentalVC.m */; };
-		085C67901A937EC9007BC910 /* Experimental.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C67341A937EC9007BC910 /* Experimental.storyboard */; };
 		085C67911A937EC9007BC910 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C67361A937EC9007BC910 /* LaunchScreen.xib */; };
 		085C67931A937EC9007BC910 /* goodBG.wav in Resources */ = {isa = PBXBuildFile; fileRef = 085C67381A937EC9007BC910 /* goodBG.wav */; };
@@ -66,18 +54,16 @@
 		085C679B1A937EC9007BC910 /* EMOBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C674B1A937EC9007BC910 /* EMOBCell.m */; };
 		085C679C1A937EC9007BC910 /* EMOnboardingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C674E1A937EC9007BC910 /* EMOnboardingVC.m */; };
 		085C679D1A937EC9007BC910 /* EMPreviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67511A937EC9007BC910 /* EMPreviewVC.m */; };
-		085C679E1A937EC9007BC910 /* Sharer.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67541A937EC9007BC910 /* Sharer.m */; };
-		085C679F1A937EC9007BC910 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 085C67561A937EC9007BC910 /* Localizable.strings */; };
 		0860054C1A978AAB008CD7DE /* EMFlowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860054B1A978AAB008CD7DE /* EMFlowButton.m */; };
 		0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860054E1A97C210008CD7DE /* EMMessageButton.m */; };
 		086005531A98A839008CD7DE /* cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 086005501A98A839008CD7DE /* cancel.wav */; };
 		086005541A98A839008CD7DE /* pressedButton.wav in Resources */ = {isa = PBXBuildFile; fileRef = 086005511A98A839008CD7DE /* pressedButton.wav */; };
 		086005551A98A839008CD7DE /* startRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 086005521A98A839008CD7DE /* startRecording.wav */; };
 		086005581A98B153008CD7DE /* EMUISound.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005571A98B153008CD7DE /* EMUISound.m */; };
-		0860055C1A98BEB9008CD7DE /* EMProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860055B1A98BEB9008CD7DE /* EMProgressView.m */; };
 		0860055E1A98E2FE008CD7DE /* endRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0860055D1A98E2FE008CD7DE /* endRecording.wav */; };
 		086005621A993FE5008CD7DE /* EMFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005611A993FE5008CD7DE /* EMFiles.m */; };
 		086005651A99483E008CD7DE /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005641A99483E008CD7DE /* HMImages.m */; };
+		0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
@@ -87,11 +73,6 @@
 		08B589711A938BCC008D9068 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08B5896F1A938BCC008D9068 /* emu.xcdatamodeld */; };
 		08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
 		08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
-		08B5898C1A93AA49008D9068 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5898B1A93AA49008D9068 /* Emuticon.m */; };
-		08B5898F1A93AA49008D9068 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5898E1A93AA49008D9068 /* AppCFG.m */; };
-		08B589921A93AA49008D9068 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589911A93AA49008D9068 /* Tag.m */; };
-		08B589951A93AA49008D9068 /* UserFootage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589941A93AA49008D9068 /* UserFootage.m */; };
-		08B589981A93B73F008D9068 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589971A93B73F008D9068 /* EmuticonDef.m */; };
 		08B5899C1A93B9E5008D9068 /* EMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899B1A93B9E5008D9068 /* EMLabel.m */; };
 		08B5899F1A93B9F7008D9068 /* EMButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899E1A93B9F7008D9068 /* EMButton.m */; };
 		08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A11A93BB65008D9068 /* EmuBaseStyle.m */; };
@@ -104,6 +85,39 @@
 		08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */; };
 		08CAEAD71A9757BF008A3E0A /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD51A9757BF008A3E0A /* SourceSansPro-Regular.ttf */; };
 		08CAEAD81A9757BF008A3E0A /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD61A9757BF008A3E0A /* SourceSansPro-Semibold.ttf */; };
+		08CB895E1A9A8F0900224A38 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08CB895D1A9A8F0900224A38 /* Localizable.strings */; };
+		08CB89781A9AA12A00224A38 /* EMAnimatedGifPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89661A9AA12A00224A38 /* EMAnimatedGifPlayer.m */; };
+		08CB89791A9AA12A00224A38 /* 1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89681A9AA12A00224A38 /* 1.gif */; };
+		08CB897A1A9AA12A00224A38 /* 2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89691A9AA12A00224A38 /* 2.gif */; };
+		08CB897B1A9AA12A00224A38 /* 3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896A1A9AA12A00224A38 /* 3.gif */; };
+		08CB897C1A9AA12A00224A38 /* 4.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896B1A9AA12A00224A38 /* 4.gif */; };
+		08CB897D1A9AA12A00224A38 /* 5.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896C1A9AA12A00224A38 /* 5.gif */; };
+		08CB897E1A9AA12A00224A38 /* 6.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896D1A9AA12A00224A38 /* 6.gif */; };
+		08CB897F1A9AA12A00224A38 /* 7.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896E1A9AA12A00224A38 /* 7.gif */; };
+		08CB89801A9AA12A00224A38 /* 8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896F1A9AA12A00224A38 /* 8.gif */; };
+		08CB89811A9AA12A00224A38 /* EMExperimentalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89711A9AA12A00224A38 /* EMExperimentalCell.m */; };
+		08CB89821A9AA12A00224A38 /* EMExperimentalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89731A9AA12A00224A38 /* EMExperimentalVC.m */; };
+		08CB89831A9AA12A00224A38 /* Experimental.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89741A9AA12A00224A38 /* Experimental.storyboard */; };
+		08CB89841A9AA12A00224A38 /* Sharer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89771A9AA12A00224A38 /* Sharer.m */; };
+		08CB89871A9B217D00224A38 /* EMShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89861A9B217D00224A38 /* EMShareViewController.m */; };
+		08CB898F1A9B2FAE00224A38 /* EMRenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */; };
+		08CB899A1A9B452B00224A38 /* angel-back-layer.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89971A9B452B00224A38 /* angel-back-layer.gif */; };
+		08CB899B1A9B452B00224A38 /* angel-front-layer.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89981A9B452B00224A38 /* angel-front-layer.gif */; };
+		08CB899C1A9B452B00224A38 /* circle_mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89991A9B452B00224A38 /* circle_mask.jpg */; };
+		08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89BE1A9B61FA00224A38 /* EMRenderer.mm */; };
+		08CB89CD1A9B92AD00224A38 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89CC1A9B92AD00224A38 /* EMDB.m */; };
+		08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D51A9B9EE400224A38 /* PngSource.mm */; };
+		08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D91A9CD18100224A38 /* EMunizingView.m */; };
+		08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89DF1A9D10D100224A38 /* clear480x480.png */; };
+		08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89F01A9D28BA00224A38 /* activityAnimation.gif */; };
+		08CB89F31A9D5D2F00224A38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89F21A9D5D2F00224A38 /* Main.storyboard */; };
+		08CB89F71A9D5D6400224A38 /* EMMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89F61A9D5D6400224A38 /* EMMainVC.m */; };
+		08CB89FA1A9D74EE00224A38 /* UserFootage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89F91A9D74EE00224A38 /* UserFootage.m */; };
+		08CB89FD1A9D74EF00224A38 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89FC1A9D74EF00224A38 /* Emuticon.m */; };
+		08CB8A001A9D74EF00224A38 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89FF1A9D74EF00224A38 /* AppCFG.m */; };
+		08CB8A031A9D74EF00224A38 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB8A021A9D74EF00224A38 /* Tag.m */; };
+		08CB8A061A9D74EF00224A38 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB8A051A9D74EF00224A38 /* EmuticonDef.m */; };
+		08CB8A0A1A9D7C6600224A38 /* EMMainNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB8A091A9D7C6600224A38 /* EMMainNavigationVC.m */; };
 		08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CE39CB1A912C5000B82DB9 /* HMError.m */; };
 		08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CE39CE1A91522700B82DB9 /* HMCaptureSessionError.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
@@ -147,8 +161,6 @@
 		085C66EC1A937EC9007BC910 /* HMAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnalytics.m; sourceTree = "<group>"; };
 		085C66ED1A937EC9007BC910 /* EMBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMBackend.h; sourceTree = "<group>"; };
 		085C66EE1A937EC9007BC910 /* EMBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMBackend.m; sourceTree = "<group>"; };
-		085C66EF1A937EC9007BC910 /* EMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDB.h; sourceTree = "<group>"; };
-		085C66F01A937EC9007BC910 /* EMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDB.m; sourceTree = "<group>"; };
 		085C66F21A937EC9007BC910 /* EMAppCFGParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAppCFGParser.h; sourceTree = "<group>"; };
 		085C66F31A937EC9007BC910 /* EMAppCFGParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAppCFGParser.m; sourceTree = "<group>"; };
 		085C66F41A937EC9007BC910 /* EMEmuticonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmuticonParser.h; sourceTree = "<group>"; };
@@ -178,19 +190,6 @@
 		085C67221A937EC9007BC910 /* test640x360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test640x360.png; sourceTree = "<group>"; };
 		085C67231A937EC9007BC910 /* test_back.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test_back.gif; sourceTree = "<group>"; };
 		085C67241A937EC9007BC910 /* test_front.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test_front.gif; sourceTree = "<group>"; };
-		085C67281A937EC9007BC910 /* 1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 1.gif; sourceTree = "<group>"; };
-		085C67291A937EC9007BC910 /* 2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 2.gif; sourceTree = "<group>"; };
-		085C672A1A937EC9007BC910 /* 3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 3.gif; sourceTree = "<group>"; };
-		085C672B1A937EC9007BC910 /* 4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 4.gif; sourceTree = "<group>"; };
-		085C672C1A937EC9007BC910 /* 5.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 5.gif; sourceTree = "<group>"; };
-		085C672D1A937EC9007BC910 /* 6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 6.gif; sourceTree = "<group>"; };
-		085C672E1A937EC9007BC910 /* 7.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 7.gif; sourceTree = "<group>"; };
-		085C672F1A937EC9007BC910 /* 8.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 8.gif; sourceTree = "<group>"; };
-		085C67301A937EC9007BC910 /* EMExperimentalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMExperimentalCell.h; sourceTree = "<group>"; };
-		085C67311A937EC9007BC910 /* EMExperimentalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMExperimentalCell.m; sourceTree = "<group>"; };
-		085C67321A937EC9007BC910 /* EMExperimentalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMExperimentalVC.h; sourceTree = "<group>"; };
-		085C67331A937EC9007BC910 /* EMExperimentalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMExperimentalVC.m; sourceTree = "<group>"; };
-		085C67341A937EC9007BC910 /* Experimental.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Experimental.storyboard; sourceTree = "<group>"; };
 		085C67351A937EC9007BC910 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		085C67361A937EC9007BC910 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		085C67381A937EC9007BC910 /* goodBG.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = goodBG.wav; sourceTree = "<group>"; };
@@ -206,7 +205,6 @@
 		085C67451A937EC9007BC910 /* EMCountDownDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCountDownDelegate.h; sourceTree = "<group>"; };
 		085C67461A937EC9007BC910 /* EMRecordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRecordButton.h; sourceTree = "<group>"; };
 		085C67471A937EC9007BC910 /* EMRecordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMRecordButton.m; sourceTree = "<group>"; };
-		085C67481A937EC9007BC910 /* EMRecorderControlsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRecorderControlsDelegate.h; sourceTree = "<group>"; };
 		085C674A1A937EC9007BC910 /* EMOBCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMOBCell.h; sourceTree = "<group>"; };
 		085C674B1A937EC9007BC910 /* EMOBCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMOBCell.m; sourceTree = "<group>"; };
 		085C674C1A937EC9007BC910 /* EMOnboardingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMOnboardingDelegate.h; sourceTree = "<group>"; };
@@ -214,9 +212,6 @@
 		085C674E1A937EC9007BC910 /* EMOnboardingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMOnboardingVC.m; sourceTree = "<group>"; };
 		085C67501A937EC9007BC910 /* EMPreviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPreviewVC.h; sourceTree = "<group>"; };
 		085C67511A937EC9007BC910 /* EMPreviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPreviewVC.m; sourceTree = "<group>"; };
-		085C67531A937EC9007BC910 /* Sharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sharer.h; sourceTree = "<group>"; };
-		085C67541A937EC9007BC910 /* Sharer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sharer.m; sourceTree = "<group>"; };
-		085C67561A937EC9007BC910 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0860054A1A978AAB008CD7DE /* EMFlowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFlowButton.h; sourceTree = "<group>"; };
 		0860054B1A978AAB008CD7DE /* EMFlowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFlowButton.m; sourceTree = "<group>"; };
 		0860054D1A97C210008CD7DE /* EMMessageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMessageButton.h; sourceTree = "<group>"; };
@@ -226,13 +221,13 @@
 		086005521A98A839008CD7DE /* startRecording.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = startRecording.wav; sourceTree = "<group>"; };
 		086005561A98B153008CD7DE /* EMUISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUISound.h; sourceTree = "<group>"; };
 		086005571A98B153008CD7DE /* EMUISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUISound.m; sourceTree = "<group>"; };
-		0860055A1A98BEB9008CD7DE /* EMProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMProgressView.h; sourceTree = "<group>"; };
-		0860055B1A98BEB9008CD7DE /* EMProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMProgressView.m; sourceTree = "<group>"; };
 		0860055D1A98E2FE008CD7DE /* endRecording.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = endRecording.wav; sourceTree = "<group>"; };
 		086005601A993FE5008CD7DE /* EMFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFiles.h; sourceTree = "<group>"; };
 		086005611A993FE5008CD7DE /* EMFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFiles.m; sourceTree = "<group>"; };
 		086005631A99483E008CD7DE /* HMImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMImages.h; sourceTree = "<group>"; };
 		086005641A99483E008CD7DE /* HMImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMImages.m; sourceTree = "<group>"; };
+		0864F7081A9A195500F5EAF7 /* EMTickingProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTickingProgressView.h; sourceTree = "<group>"; };
+		0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTickingProgressView.m; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -251,16 +246,6 @@
 		08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+Logic.m"; sourceTree = "<group>"; };
 		08B589841A9391B3008D9068 /* Emuticon+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+Logic.h"; sourceTree = "<group>"; };
 		08B589851A9391B3008D9068 /* Emuticon+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Emuticon+Logic.m"; sourceTree = "<group>"; };
-		08B5898A1A93AA49008D9068 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
-		08B5898B1A93AA49008D9068 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
-		08B5898D1A93AA49008D9068 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
-		08B5898E1A93AA49008D9068 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
-		08B589901A93AA49008D9068 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
-		08B589911A93AA49008D9068 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
-		08B589931A93AA49008D9068 /* UserFootage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFootage.h; sourceTree = "<group>"; };
-		08B589941A93AA49008D9068 /* UserFootage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFootage.m; sourceTree = "<group>"; };
-		08B589961A93B73F008D9068 /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
-		08B589971A93B73F008D9068 /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
 		08B5899A1A93B9E5008D9068 /* EMLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMLabel.h; sourceTree = "<group>"; };
 		08B5899B1A93B9E5008D9068 /* EMLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMLabel.m; sourceTree = "<group>"; };
 		08B5899D1A93B9F7008D9068 /* EMButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMButton.h; sourceTree = "<group>"; };
@@ -281,6 +266,62 @@
 		08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWFanOpeningView.m; sourceTree = "<group>"; };
 		08CAEAD51A9757BF008A3E0A /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		08CAEAD61A9757BF008A3E0A /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
+		08CB89551A9A5D2300224A38 /* EMTickingProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTickingProgressDelegate.h; sourceTree = "<group>"; };
+		08CB89561A9A641C00224A38 /* EMRecorderControlsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRecorderControlsDelegate.h; sourceTree = "<group>"; };
+		08CB895D1A9A8F0900224A38 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		08CB89651A9AA12A00224A38 /* EMAnimatedGifPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAnimatedGifPlayer.h; sourceTree = "<group>"; };
+		08CB89661A9AA12A00224A38 /* EMAnimatedGifPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAnimatedGifPlayer.m; sourceTree = "<group>"; };
+		08CB89681A9AA12A00224A38 /* 1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 1.gif; sourceTree = "<group>"; };
+		08CB89691A9AA12A00224A38 /* 2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 2.gif; sourceTree = "<group>"; };
+		08CB896A1A9AA12A00224A38 /* 3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 3.gif; sourceTree = "<group>"; };
+		08CB896B1A9AA12A00224A38 /* 4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 4.gif; sourceTree = "<group>"; };
+		08CB896C1A9AA12A00224A38 /* 5.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 5.gif; sourceTree = "<group>"; };
+		08CB896D1A9AA12A00224A38 /* 6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 6.gif; sourceTree = "<group>"; };
+		08CB896E1A9AA12A00224A38 /* 7.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 7.gif; sourceTree = "<group>"; };
+		08CB896F1A9AA12A00224A38 /* 8.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 8.gif; sourceTree = "<group>"; };
+		08CB89701A9AA12A00224A38 /* EMExperimentalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMExperimentalCell.h; sourceTree = "<group>"; };
+		08CB89711A9AA12A00224A38 /* EMExperimentalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMExperimentalCell.m; sourceTree = "<group>"; };
+		08CB89721A9AA12A00224A38 /* EMExperimentalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMExperimentalVC.h; sourceTree = "<group>"; };
+		08CB89731A9AA12A00224A38 /* EMExperimentalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMExperimentalVC.m; sourceTree = "<group>"; };
+		08CB89741A9AA12A00224A38 /* Experimental.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Experimental.storyboard; sourceTree = "<group>"; };
+		08CB89761A9AA12A00224A38 /* Sharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sharer.h; sourceTree = "<group>"; };
+		08CB89771A9AA12A00224A38 /* Sharer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sharer.m; sourceTree = "<group>"; };
+		08CB89851A9B217D00224A38 /* EMShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareViewController.h; sourceTree = "<group>"; };
+		08CB89861A9B217D00224A38 /* EMShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareViewController.m; sourceTree = "<group>"; };
+		08CB89881A9B22BD00224A38 /* EMShareProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareProtocol.h; sourceTree = "<group>"; };
+		08CB898D1A9B2FAE00224A38 /* EMRenderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRenderManager.h; sourceTree = "<group>"; };
+		08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMRenderManager.m; sourceTree = "<group>"; };
+		08CB89971A9B452B00224A38 /* angel-back-layer.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-back-layer.gif"; sourceTree = "<group>"; };
+		08CB89981A9B452B00224A38 /* angel-front-layer.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-front-layer.gif"; sourceTree = "<group>"; };
+		08CB89991A9B452B00224A38 /* circle_mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circle_mask.jpg; sourceTree = "<group>"; };
+		08CB89BB1A9B5C0300224A38 /* EMRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRenderer.h; sourceTree = "<group>"; };
+		08CB89BE1A9B61FA00224A38 /* EMRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EMRenderer.mm; sourceTree = "<group>"; };
+		08CB89C51A9B84F400224A38 /* VideoOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoOutput.h; sourceTree = "<group>"; };
+		08CB89C61A9B84F400224A38 /* VideoOutput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoOutput.mm; sourceTree = "<group>"; };
+		08CB89CB1A9B92AD00224A38 /* EMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDB.h; sourceTree = "<group>"; };
+		08CB89CC1A9B92AD00224A38 /* EMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDB.m; sourceTree = "<group>"; };
+		08CB89D41A9B9EE400224A38 /* PngSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PngSource.h; sourceTree = "<group>"; };
+		08CB89D51A9B9EE400224A38 /* PngSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PngSource.mm; sourceTree = "<group>"; };
+		08CB89D81A9CD18100224A38 /* EMunizingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMunizingView.h; sourceTree = "<group>"; };
+		08CB89D91A9CD18100224A38 /* EMunizingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMunizingView.m; sourceTree = "<group>"; };
+		08CB89DF1A9D10D100224A38 /* clear480x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clear480x480.png; sourceTree = "<group>"; };
+		08CB89F01A9D28BA00224A38 /* activityAnimation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = activityAnimation.gif; sourceTree = "<group>"; };
+		08CB89F21A9D5D2F00224A38 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		08CB89F51A9D5D6400224A38 /* EMMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMainVC.h; sourceTree = "<group>"; };
+		08CB89F61A9D5D6400224A38 /* EMMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMainVC.m; sourceTree = "<group>"; };
+		08CB89F81A9D74EE00224A38 /* UserFootage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFootage.h; sourceTree = "<group>"; };
+		08CB89F91A9D74EE00224A38 /* UserFootage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFootage.m; sourceTree = "<group>"; };
+		08CB89FB1A9D74EF00224A38 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
+		08CB89FC1A9D74EF00224A38 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
+		08CB89FE1A9D74EF00224A38 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
+		08CB89FF1A9D74EF00224A38 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
+		08CB8A011A9D74EF00224A38 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		08CB8A021A9D74EF00224A38 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		08CB8A041A9D74EF00224A38 /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
+		08CB8A051A9D74EF00224A38 /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
+		08CB8A071A9D770A00224A38 /* EMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRecorderDelegate.h; sourceTree = "<group>"; };
+		08CB8A081A9D7C6600224A38 /* EMMainNavigationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMainNavigationVC.h; sourceTree = "<group>"; };
+		08CB8A091A9D7C6600224A38 /* EMMainNavigationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMainNavigationVC.m; sourceTree = "<group>"; };
 		08CE39C61A91021E00B82DB9 /* HMWriterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMWriterProtocol.h; sourceTree = "<group>"; };
 		08CE39CA1A912C5000B82DB9 /* HMError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMError.h; sourceTree = "<group>"; };
 		08CE39CB1A912C5000B82DB9 /* HMError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMError.m; sourceTree = "<group>"; };
@@ -430,8 +471,6 @@
 			children = (
 				085C66ED1A937EC9007BC910 /* EMBackend.h */,
 				085C66EE1A937EC9007BC910 /* EMBackend.m */,
-				085C66EF1A937EC9007BC910 /* EMDB.h */,
-				085C66F01A937EC9007BC910 /* EMDB.m */,
 				085C66EA1A937EC9007BC910 /* Analytics */,
 				085C66F11A937EC9007BC910 /* Parsers */,
 			);
@@ -473,6 +512,8 @@
 			isa = PBXGroup;
 			children = (
 				08B5896F1A938BCC008D9068 /* emu.xcdatamodeld */,
+				08CB89CB1A9B92AD00224A38 /* EMDB.h */,
+				08CB89CC1A9B92AD00224A38 /* EMDB.m */,
 				085C67101A937EC9007BC910 /* NSManagedObject+FindAndCreate.h */,
 				085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */,
 				085C66FE1A937EC9007BC910 /* Entities */,
@@ -484,16 +525,16 @@
 		085C66FE1A937EC9007BC910 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				08B589961A93B73F008D9068 /* EmuticonDef.h */,
-				08B589971A93B73F008D9068 /* EmuticonDef.m */,
-				08B589931A93AA49008D9068 /* UserFootage.h */,
-				08B589941A93AA49008D9068 /* UserFootage.m */,
-				08B589901A93AA49008D9068 /* Tag.h */,
-				08B589911A93AA49008D9068 /* Tag.m */,
-				08B5898D1A93AA49008D9068 /* AppCFG.h */,
-				08B5898E1A93AA49008D9068 /* AppCFG.m */,
-				08B5898A1A93AA49008D9068 /* Emuticon.h */,
-				08B5898B1A93AA49008D9068 /* Emuticon.m */,
+				08CB8A041A9D74EF00224A38 /* EmuticonDef.h */,
+				08CB8A051A9D74EF00224A38 /* EmuticonDef.m */,
+				08CB8A011A9D74EF00224A38 /* Tag.h */,
+				08CB8A021A9D74EF00224A38 /* Tag.m */,
+				08CB89FE1A9D74EF00224A38 /* AppCFG.h */,
+				08CB89FF1A9D74EF00224A38 /* AppCFG.m */,
+				08CB89FB1A9D74EF00224A38 /* Emuticon.h */,
+				08CB89FC1A9D74EF00224A38 /* Emuticon.m */,
+				08CB89F81A9D74EE00224A38 /* UserFootage.h */,
+				08CB89F91A9D74EE00224A38 /* UserFootage.m */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -525,6 +566,7 @@
 		085C67151A937EC9007BC910 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				08CB89DF1A9D10D100224A38 /* clear480x480.png */,
 				085C67161A937EC9007BC910 /* contourCloseupGreen.png */,
 				085C67171A937EC9007BC910 /* contourCloseupRed.png */,
 				085C671A1A937EC9007BC910 /* silCloseup480p.png */,
@@ -547,12 +589,10 @@
 			children = (
 				085C67361A937EC9007BC910 /* LaunchScreen.xib */,
 				085C67351A937EC9007BC910 /* Images.xcassets */,
-				085C67261A937EC9007BC910 /* Custom Views */,
-				085C67271A937EC9007BC910 /* Experimental */,
-				085C67371A937EC9007BC910 /* Media */,
+				08CB89631A9AA12A00224A38 /* Main */,
 				085C673B1A937EC9007BC910 /* Recorder */,
-				085C67521A937EC9007BC910 /* Sharing */,
-				085C67551A937EC9007BC910 /* Strings */,
+				085C67371A937EC9007BC910 /* Media */,
+				085C67261A937EC9007BC910 /* Custom Views */,
 				085C67571A937EC9007BC910 /* Style Kit */,
 			);
 			path = "User Interface";
@@ -561,32 +601,13 @@
 		085C67261A937EC9007BC910 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				08CB89D71A9CD15700224A38 /* EmunizingView */,
 				08CAEACE1A967906008A3E0A /* Pie Slice */,
 				083C3E471A94BD6F007A298C /* Pager */,
 				08B589A61A93CEF8008D9068 /* Gradients */,
 				08B589991A93B9AF008D9068 /* Fonts Related */,
 			);
 			path = "Custom Views";
-			sourceTree = "<group>";
-		};
-		085C67271A937EC9007BC910 /* Experimental */ = {
-			isa = PBXGroup;
-			children = (
-				085C67281A937EC9007BC910 /* 1.gif */,
-				085C67291A937EC9007BC910 /* 2.gif */,
-				085C672A1A937EC9007BC910 /* 3.gif */,
-				085C672B1A937EC9007BC910 /* 4.gif */,
-				085C672C1A937EC9007BC910 /* 5.gif */,
-				085C672D1A937EC9007BC910 /* 6.gif */,
-				085C672E1A937EC9007BC910 /* 7.gif */,
-				085C672F1A937EC9007BC910 /* 8.gif */,
-				085C67301A937EC9007BC910 /* EMExperimentalCell.h */,
-				085C67311A937EC9007BC910 /* EMExperimentalCell.m */,
-				085C67321A937EC9007BC910 /* EMExperimentalVC.h */,
-				085C67331A937EC9007BC910 /* EMExperimentalVC.m */,
-				085C67341A937EC9007BC910 /* Experimental.storyboard */,
-			);
-			path = Experimental;
 			sourceTree = "<group>";
 		};
 		085C67371A937EC9007BC910 /* Media */ = {
@@ -609,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				085C673F1A937EC9007BC910 /* EMRecorder.storyboard */,
+				08CB89561A9A641C00224A38 /* EMRecorderControlsDelegate.h */,
 				085C67401A937EC9007BC910 /* EMRecorderVC.h */,
 				085C67411A937EC9007BC910 /* EMRecorderVC.m */,
 				086005591A98BE27008CD7DE /* Progress */,
@@ -639,7 +661,6 @@
 				085C67451A937EC9007BC910 /* EMCountDownDelegate.h */,
 				085C67461A937EC9007BC910 /* EMRecordButton.h */,
 				085C67471A937EC9007BC910 /* EMRecordButton.m */,
-				085C67481A937EC9007BC910 /* EMRecorderControlsDelegate.h */,
 				0860054A1A978AAB008CD7DE /* EMFlowButton.h */,
 				0860054B1A978AAB008CD7DE /* EMFlowButton.m */,
 				0860054D1A97C210008CD7DE /* EMMessageButton.h */,
@@ -669,23 +690,6 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
-		085C67521A937EC9007BC910 /* Sharing */ = {
-			isa = PBXGroup;
-			children = (
-				085C67531A937EC9007BC910 /* Sharer.h */,
-				085C67541A937EC9007BC910 /* Sharer.m */,
-			);
-			path = Sharing;
-			sourceTree = "<group>";
-		};
-		085C67551A937EC9007BC910 /* Strings */ = {
-			isa = PBXGroup;
-			children = (
-				085C67561A937EC9007BC910 /* Localizable.strings */,
-			);
-			path = Strings;
-			sourceTree = "<group>";
-		};
 		085C67571A937EC9007BC910 /* Style Kit */ = {
 			isa = PBXGroup;
 			children = (
@@ -700,8 +704,9 @@
 		086005591A98BE27008CD7DE /* Progress */ = {
 			isa = PBXGroup;
 			children = (
-				0860055A1A98BEB9008CD7DE /* EMProgressView.h */,
-				0860055B1A98BEB9008CD7DE /* EMProgressView.m */,
+				08CB89551A9A5D2300224A38 /* EMTickingProgressDelegate.h */,
+				0864F7081A9A195500F5EAF7 /* EMTickingProgressView.h */,
+				0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */,
 			);
 			name = Progress;
 			path = "emu/User Interface/Custom Views/Progress";
@@ -779,6 +784,132 @@
 			path = "Pie Slice";
 			sourceTree = "<group>";
 		};
+		08CB895C1A9A8F0900224A38 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				08CB895D1A9A8F0900224A38 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		08CB89631A9AA12A00224A38 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89F21A9D5D2F00224A38 /* Main.storyboard */,
+				08CB89F41A9D5D4700224A38 /* Main */,
+				08CB89641A9AA12A00224A38 /* Emoticons */,
+				08CB89671A9AA12A00224A38 /* Experimental */,
+				08CB89751A9AA12A00224A38 /* Sharing */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		08CB89641A9AA12A00224A38 /* Emoticons */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89651A9AA12A00224A38 /* EMAnimatedGifPlayer.h */,
+				08CB89661A9AA12A00224A38 /* EMAnimatedGifPlayer.m */,
+			);
+			path = Emoticons;
+			sourceTree = "<group>";
+		};
+		08CB89671A9AA12A00224A38 /* Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89681A9AA12A00224A38 /* 1.gif */,
+				08CB89691A9AA12A00224A38 /* 2.gif */,
+				08CB896A1A9AA12A00224A38 /* 3.gif */,
+				08CB896B1A9AA12A00224A38 /* 4.gif */,
+				08CB896C1A9AA12A00224A38 /* 5.gif */,
+				08CB896D1A9AA12A00224A38 /* 6.gif */,
+				08CB896E1A9AA12A00224A38 /* 7.gif */,
+				08CB896F1A9AA12A00224A38 /* 8.gif */,
+				08CB89701A9AA12A00224A38 /* EMExperimentalCell.h */,
+				08CB89711A9AA12A00224A38 /* EMExperimentalCell.m */,
+				08CB89721A9AA12A00224A38 /* EMExperimentalVC.h */,
+				08CB89731A9AA12A00224A38 /* EMExperimentalVC.m */,
+				08CB89741A9AA12A00224A38 /* Experimental.storyboard */,
+			);
+			path = Experimental;
+			sourceTree = "<group>";
+		};
+		08CB89751A9AA12A00224A38 /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89851A9B217D00224A38 /* EMShareViewController.h */,
+				08CB89861A9B217D00224A38 /* EMShareViewController.m */,
+				08CB89881A9B22BD00224A38 /* EMShareProtocol.h */,
+				08CB89761A9AA12A00224A38 /* Sharer.h */,
+				08CB89771A9AA12A00224A38 /* Sharer.m */,
+			);
+			path = Sharing;
+			sourceTree = "<group>";
+		};
+		08CB898C1A9B2F9200224A38 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				08CB898D1A9B2FAE00224A38 /* EMRenderManager.h */,
+				08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */,
+				08CB89BB1A9B5C0300224A38 /* EMRenderer.h */,
+				08CB89BE1A9B61FA00224A38 /* EMRenderer.mm */,
+				08CB89C01A9B6CCF00224A38 /* source */,
+				08CB89C41A9B84F400224A38 /* output */,
+				08CB89961A9B452B00224A38 /* Resources */,
+			);
+			path = Render;
+			sourceTree = "<group>";
+		};
+		08CB89961A9B452B00224A38 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89971A9B452B00224A38 /* angel-back-layer.gif */,
+				08CB89981A9B452B00224A38 /* angel-front-layer.gif */,
+				08CB89991A9B452B00224A38 /* circle_mask.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		08CB89C01A9B6CCF00224A38 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89D41A9B9EE400224A38 /* PngSource.h */,
+				08CB89D51A9B9EE400224A38 /* PngSource.mm */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		08CB89C41A9B84F400224A38 /* output */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89C51A9B84F400224A38 /* VideoOutput.h */,
+				08CB89C61A9B84F400224A38 /* VideoOutput.mm */,
+			);
+			path = output;
+			sourceTree = "<group>";
+		};
+		08CB89D71A9CD15700224A38 /* EmunizingView */ = {
+			isa = PBXGroup;
+			children = (
+				08CB89F01A9D28BA00224A38 /* activityAnimation.gif */,
+				08CB89D81A9CD18100224A38 /* EMunizingView.h */,
+				08CB89D91A9CD18100224A38 /* EMunizingView.m */,
+			);
+			name = EmunizingView;
+			path = "emu/User Interface/EmunizingView";
+			sourceTree = SOURCE_ROOT;
+		};
+		08CB89F41A9D5D4700224A38 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				08CB8A071A9D770A00224A38 /* EMRecorderDelegate.h */,
+				08CB8A081A9D7C6600224A38 /* EMMainNavigationVC.h */,
+				08CB8A091A9D7C6600224A38 /* EMMainNavigationVC.m */,
+				08CB89F51A9D5D6400224A38 /* EMMainVC.h */,
+				08CB89F61A9D5D6400224A38 /* EMMainVC.m */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		08CE39C51A91021E00B82DB9 /* output */ = {
 			isa = PBXGroup;
 			children = (
@@ -811,7 +942,9 @@
 			children = (
 				085C66DD1A937EC9007BC910 /* App */,
 				085C67251A937EC9007BC910 /* User Interface */,
+				08CB895C1A9A8F0900224A38 /* Localization */,
 				085C66E61A937EC9007BC910 /* Data */,
+				08CB898C1A9B2F9200224A38 /* Render */,
 				08D929F61A77E14400B6A68F /* Frameworks */,
 			);
 			path = emu;
@@ -950,46 +1083,52 @@
 				085C67951A937EC9007BC910 /* recordingEnd.wav in Resources */,
 				08CAEAD71A9757BF008A3E0A /* SourceSansPro-Regular.ttf in Resources */,
 				085C676B1A937EC9007BC910 /* emuticonsDefinitions.json in Resources */,
-				085C678D1A937EC9007BC910 /* 8.gif in Resources */,
+				08CB897A1A9AA12A00224A38 /* 2.gif in Resources */,
 				085C67801A937EC9007BC910 /* test480x480b.png in Resources */,
 				085C67851A937EC9007BC910 /* test_front.gif in Resources */,
-				085C679F1A937EC9007BC910 /* Localizable.strings in Resources */,
 				086005551A98A839008CD7DE /* startRecording.wav in Resources */,
-				085C678B1A937EC9007BC910 /* 6.gif in Resources */,
+				08CB89F31A9D5D2F00224A38 /* Main.storyboard in Resources */,
+				08CB895E1A9A8F0900224A38 /* Localizable.strings in Resources */,
 				08CAEAD81A9757BF008A3E0A /* SourceSansPro-Semibold.ttf in Resources */,
-				085C67901A937EC9007BC910 /* Experimental.storyboard in Resources */,
 				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
+				08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */,
 				085C67931A937EC9007BC910 /* goodBG.wav in Resources */,
 				085C677F1A937EC9007BC910 /* test480x480.png in Resources */,
 				085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */,
 				085C677B1A937EC9007BC910 /* silCloseup480p.png in Resources */,
 				085C67911A937EC9007BC910 /* Images.xcassets in Resources */,
 				085C67831A937EC9007BC910 /* test640x360.png in Resources */,
+				08CB899B1A9B452B00224A38 /* angel-front-layer.gif in Resources */,
+				08CB897B1A9AA12A00224A38 /* 3.gif in Resources */,
 				085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */,
 				08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */,
 				085C677D1A937EC9007BC910 /* test240x240.png in Resources */,
+				08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */,
+				08CB89791A9AA12A00224A38 /* 1.gif in Resources */,
 				085C677C1A937EC9007BC910 /* silCloseup720p.png in Resources */,
 				085C676A1A937EC9007BC910 /* appCFG.json in Resources */,
-				085C67891A937EC9007BC910 /* 4.gif in Resources */,
-				085C67861A937EC9007BC910 /* 1.gif in Resources */,
+				08CB899A1A9B452B00224A38 /* angel-back-layer.gif in Resources */,
+				08CB897E1A9AA12A00224A38 /* 6.gif in Resources */,
 				085C67841A937EC9007BC910 /* test_back.gif in Resources */,
+				08CB897F1A9AA12A00224A38 /* 7.gif in Resources */,
 				085C67771A937EC9007BC910 /* contourCloseupGreen.png in Resources */,
 				0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */,
-				085C67881A937EC9007BC910 /* 3.gif in Resources */,
 				086005531A98A839008CD7DE /* cancel.wav in Resources */,
 				085C67821A937EC9007BC910 /* test640x360.ctr in Resources */,
-				085C678C1A937EC9007BC910 /* 7.gif in Resources */,
 				085C67781A937EC9007BC910 /* contourCloseupRed.png in Resources */,
-				085C678A1A937EC9007BC910 /* 5.gif in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
 				08CAEAC71A9600E1008A3E0A /* headAndChest480X480.ctr in Resources */,
 				085C67941A937EC9007BC910 /* recordingCountDown.wav in Resources */,
 				085C677E1A937EC9007BC910 /* test240x240Green.png in Resources */,
 				086005541A98A839008CD7DE /* pressedButton.wav in Resources */,
 				0860055E1A98E2FE008CD7DE /* endRecording.wav in Resources */,
+				08CB89831A9AA12A00224A38 /* Experimental.storyboard in Resources */,
 				085C67811A937EC9007BC910 /* test480x480Green.png in Resources */,
+				08CB899C1A9B452B00224A38 /* circle_mask.jpg in Resources */,
+				08CB897D1A9AA12A00224A38 /* 5.gif in Resources */,
+				08CB89801A9AA12A00224A38 /* 8.gif in Resources */,
 				089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */,
-				085C67871A937EC9007BC910 /* 2.gif in Resources */,
+				08CB897C1A9AA12A00224A38 /* 4.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,6 +1172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08CB89FD1A9D74EF00224A38 /* Emuticon.m in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
 				085C679D1A937EC9007BC910 /* EMPreviewVC.m in Sources */,
 				087F20911A8F5A03002B1678 /* HMParser.m in Sources */,
@@ -1041,34 +1181,41 @@
 				083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */,
 				08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */,
 				0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */,
+				08CB89781A9AA12A00224A38 /* EMAnimatedGifPlayer.m in Sources */,
 				0833348D1A827D81008AC771 /* HMGreenMachine.mm in Sources */,
 				087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */,
 				086005621A993FE5008CD7DE /* EMFiles.m in Sources */,
 				08B5899F1A93B9F7008D9068 /* EMButton.m in Sources */,
-				085C678E1A937EC9007BC910 /* EMExperimentalCell.m in Sources */,
 				085C67691A937EC9007BC910 /* EMEmuticonsParser.m in Sources */,
 				086005651A99483E008CD7DE /* HMImages.m in Sources */,
 				085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */,
 				085C67641A937EC9007BC910 /* HMAnalytics.m in Sources */,
 				08B589A51A93BB7B008D9068 /* EmuStyle.m in Sources */,
+				08CB8A031A9D74EF00224A38 /* Tag.m in Sources */,
 				08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */,
 				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
+				08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
+				08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */,
 				085C67681A937EC9007BC910 /* EMEmuticonParser.m in Sources */,
+				08CB89871A9B217D00224A38 /* EMShareViewController.m in Sources */,
+				08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */,
 				08CAEAD31A967906008A3E0A /* AWFanOpeningLayer.m in Sources */,
 				085C679B1A937EC9007BC910 /* EMOBCell.m in Sources */,
+				08CB89811A9AA12A00224A38 /* EMExperimentalCell.m in Sources */,
 				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
+				08CB89841A9AA12A00224A38 /* Sharer.m in Sources */,
 				08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */,
 				085C679A1A937EC9007BC910 /* EMRecordButton.m in Sources */,
-				085C67661A937EC9007BC910 /* EMDB.m in Sources */,
 				08B589711A938BCC008D9068 /* emu.xcdatamodeld in Sources */,
 				085C67981A937EC9007BC910 /* EMRecorderVC.m in Sources */,
 				086005581A98B153008CD7DE /* EMUISound.m in Sources */,
 				083334D61A83EC98008AC771 /* HMBackgroundMarks.m in Sources */,
-				085C678F1A937EC9007BC910 /* EMExperimentalVC.m in Sources */,
-				08B589951A93AA49008D9068 /* UserFootage.m in Sources */,
 				085C679C1A937EC9007BC910 /* EMOnboardingVC.m in Sources */,
 				083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */,
+				08CB89FA1A9D74EE00224A38 /* UserFootage.m in Sources */,
+				08CB89821A9AA12A00224A38 /* EMExperimentalVC.m in Sources */,
+				0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */,
 				085C67651A937EC9007BC910 /* EMBackend.m in Sources */,
 				08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */,
 				085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */,
@@ -1076,21 +1223,21 @@
 				08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */,
 				08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */,
 				0860054C1A978AAB008CD7DE /* EMFlowButton.m in Sources */,
+				08CB89F71A9D5D6400224A38 /* EMMainVC.m in Sources */,
 				08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */,
-				085C679E1A937EC9007BC910 /* Sharer.m in Sources */,
 				085C67741A937EC9007BC910 /* UserFootage+Logic.m in Sources */,
 				08B589A91A93CF12008D9068 /* EMGradientView.m in Sources */,
-				0860055C1A98BEB9008CD7DE /* EMProgressView.m in Sources */,
+				08CB8A0A1A9D7C6600224A38 /* EMMainNavigationVC.m in Sources */,
+				08CB8A061A9D74EF00224A38 /* EmuticonDef.m in Sources */,
 				085C67751A937EC9007BC910 /* NSManagedObject+FindAndCreate.m in Sources */,
-				08B5898C1A93AA49008D9068 /* Emuticon.m in Sources */,
 				08B5899C1A93B9E5008D9068 /* EMLabel.m in Sources */,
+				08CB89CD1A9B92AD00224A38 /* EMDB.m in Sources */,
 				089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */,
-				08B589981A93B73F008D9068 /* EmuticonDef.m in Sources */,
 				085C67671A937EC9007BC910 /* EMAppCFGParser.m in Sources */,
-				08B5898F1A93AA49008D9068 /* AppCFG.m in Sources */,
 				08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */,
 				08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */,
-				08B589921A93AA49008D9068 /* Tag.m in Sources */,
+				08CB898F1A9B2FAE00224A38 /* EMRenderManager.m in Sources */,
+				08CB8A001A9D74EF00224A38 /* AppCFG.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

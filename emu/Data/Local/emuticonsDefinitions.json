@@ -2,17 +2,19 @@
     "emuticons":[
                  {
                  "oid": {"$oid": "54919516454c61f4080000e5"},
-                 "name": "test",
+                 "name": "angel",
                  "order": 1,
                  "duration": 2.0,
-                 "source_back_layer": "test_yellow_bg.gif",
-                 "source_front_layer": "test_i_love_you.gif",
-                 "source_user_layer_mask": "test_mask.png",
+                 "source_back_layer": "angel-back-layer.gif",
+                 "source_front_layer": "angel-front-layer.gif",
+                 "source_user_layer_mask": "circle_mask.jpg",
+                 "frames_count": 24, 
                  "thumbnail_frame_index": 23,
                  "output_video_max_fps": 15,
                  "output_anim_gif_max_fps": 7,
                  "tags": ["love","happy","hearts"],
-                 "package": {"$oid": "12349516454c61f4080000e1"}
+                 "package": {"$oid": "12349516454c61f4080000e1"},
+                 "use_for_preview":true
                  }
                  ]
 }

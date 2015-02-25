@@ -13,7 +13,8 @@ typedef NS_ENUM(NSInteger, EMRecorderControlsAction) {
     EMRecorderControlsActionContinueWithBadBackground   = 1000,
     EMRecorderControlsActionYes                         = 1100,
     EMRecorderControlsActionNo                          = 1200,
-    EMRecorderControlsActionStartRecording              = 1300
+    EMRecorderControlsActionStartRecording              = 1300,
+    EMRecorderControlsActionRecordingDurationEnded      = 1400
 };
 
 -(void)controlSentAction:(EMRecorderControlsAction)action

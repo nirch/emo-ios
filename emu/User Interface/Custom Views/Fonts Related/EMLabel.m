@@ -24,5 +24,13 @@
     [self setFont:customFont];
 }
 
+-(void)setStyleColor:(NSString *)styleColor
+{
+    UIColor *color = [EmuStyle.sh styleColorNamed:styleColor];
+    if (color) {
+        [self setTextColor:color];
+    }
+}
+
 
 @end

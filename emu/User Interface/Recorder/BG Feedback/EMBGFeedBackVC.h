@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EMRecorderControlsDelegate.h"
 
 @interface EMBGFeedBackVC : UIViewController
+
+@property (nonatomic, weak) id<EMRecorderControlsDelegate> delegate;
 
 @property (nonatomic) CGFloat goodBackgroundWeight;
 
