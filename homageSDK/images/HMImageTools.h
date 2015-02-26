@@ -23,6 +23,10 @@
  *      - bitsPerComponent = 8
  *      - 4 channels (rgba)
  *
+ *  @param withAlpha - boolean.
+ *          if YES: bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaLast
+ *          if NO : bitmapInfo = kCGBitmapByteOrderDefault
+ *
  *  @return newly created UIImage object. 
  *
  *      Creates image with the following settings:
@@ -31,7 +35,7 @@
  *          color space = CGColorSpaceCreateDeviceRGB
  *          
  */
-+(UIImage *)createUIImageFromImageType:(image_type *)image;
++(UIImage *)createUIImageFromImageType:(image_type *)image withAlpha:(BOOL)withAlpha;
 
 #pragma mark - Saving image_type
 

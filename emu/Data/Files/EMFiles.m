@@ -20,7 +20,8 @@
 
 +(NSString *)outputPath
 {
-    return [SF:@"%@/%@", [self docsPath], @"output"];
+    NSString *op = [SF:@"%@/%@", [self docsPath], @"output"];
+    return op;
 }
 
 +(void)ensureOutputPathExists
@@ -30,7 +31,8 @@
 
 +(NSString *)outputPathForFileName:(NSString *)fileName
 {
-    return [SF:@"%@/%@", [self outputPath], fileName];
+    NSString *op = [SF:@"%@/%@", [self outputPath], fileName];
+    return op;
 }
 
 +(NSString *)createDirectoryNamed:(NSString *)directoryName

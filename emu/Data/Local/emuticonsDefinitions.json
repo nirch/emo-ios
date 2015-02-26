@@ -1,20 +1,89 @@
 {
     "emuticons":[
+                 
                  {
                  "oid": {"$oid": "54919516454c61f4080000e5"},
                  "name": "angel",
                  "order": 1,
                  "duration": 2.0,
-                 "source_back_layer": "angel-back-layer.gif",
-                 "source_front_layer": "angel-front-layer.gif",
-                 "source_user_layer_mask": "circle_mask.jpg",
+                 "source_back_layer": "angel-bg.gif",
+                 "source_front_layer": "angel-fg.gif",
+                 "source_user_layer_mask": "angel-mask.jpg",
                  "frames_count": 24, 
                  "thumbnail_frame_index": 23,
                  "output_video_max_fps": 15,
                  "output_anim_gif_max_fps": 7,
-                 "tags": ["love","happy","hearts"],
-                 "package": {"$oid": "12349516454c61f4080000e1"},
-                 "use_for_preview":true
+                 "tags": ["love","angel","divine"],
+                 "package": {"$oid": "123456"}
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000e6"},
+                 "name": "green-love",
+                 "order": 2,
+                 "duration": 2.0,
+                 "source_back_layer": "green-love-bg.gif",
+                 "source_front_layer": "green-love-fg.gif",
+                 "source_user_layer_mask": "green-love-mask.jpg",
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23,
+                 "output_video_max_fps": 15,
+                 "output_anim_gif_max_fps": 7,
+                 "tags": ["love","green"],
+                 "use_for_preview":true,
+                 "package": {"$oid": "123456"}
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000e7"},
+                 "name": "hearts",
+                 "order": 3,
+                 "duration": 2.0,
+                 "source_back_layer": "hearts-bg.gif",
+                 "source_front_layer": "hearts-fg.gif",
+                 "source_user_layer_mask": "hearts-mask.jpg",
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23,
+                 "output_video_max_fps": 15,
+                 "output_anim_gif_max_fps": 7,
+                 "tags": ["love","hearts"],
+                 "package": {"$oid": "123456"}
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000e8"},
+                 "name": "kiss",
+                 "order": 1,
+                 "duration": 2.0,
+                 "source_back_layer": "kiss-bg.gif",
+                 "source_user_layer_mask": "kiss-mask.jpg",
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23,
+                 "output_video_max_fps": 15,
+                 "output_anim_gif_max_fps": 7,
+                 "tags": ["love","kiss"],
+                 "package": {"$oid": "123456"}
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000e9"},
+                 "name": "hot",
+                 "order": 1,
+                 "duration": 2.0,
+                 "source_back_layer": "hot-bg.gif",
+                 "source_user_layer_mask": "hot-mask.jpg",
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23,
+                 "output_video_max_fps": 15,
+                 "output_anim_gif_max_fps": 7,
+                 "tags": ["love","hot"],
+                 "package": {"$oid": "123456"}
                  }
+
+                 
                  ]
 }

@@ -441,7 +441,7 @@
     //
     NSError *error;
     HMGreenMachine *gm = [HMGreenMachine greenMachineWithBGImageFileName:@"clear480x480"
-                                                         contourFileName:@"headAndChest480X480"
+                                                         contourFileName:@"1" // @"headAndChest480X480"
                                                                    error:&error];
     if (error) {
         HMLOG(TAG, ERR, @"GM error: %@", [error localizedDescription]);

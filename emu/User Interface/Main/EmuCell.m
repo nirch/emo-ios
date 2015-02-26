@@ -1,26 +1,22 @@
 //
-//  EMAnimatedGifPlayer.m
+//  EmuCell.m
 //  emu
 //
-//  Created by Aviv Wolf on 2/23/15.
+//  Created by Aviv Wolf on 2/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import "EMAnimatedGifPlayer.h"
+#import "EmuCell.h"
 #import <FLAnimatedImageView.h>
 #import <FLAnimatedImage.h>
 
-@interface EMAnimatedGifPlayer ()
+@interface EmuCell()
 
-@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimGifView;
+
 
 @end
 
-@implementation EMAnimatedGifPlayer
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
+@implementation EmuCell
 
 -(void)setAnimatedGifURL:(NSURL *)animatedGifURL
 {
@@ -28,10 +24,8 @@
     
     NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
     FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-    
     self.guiAnimGifView.animatedImage = animGif;
-    self.guiAnimGifView.contentMode = UIViewContentModeCenter;
-    
+    self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
     [self.guiAnimGifView startAnimating];
 }
 

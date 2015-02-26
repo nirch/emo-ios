@@ -22,9 +22,9 @@
         <attribute name="order" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="outputAnimGifMaxFPS" attributeType="Integer 16" syncable="YES"/>
         <attribute name="outputVideoMaxFPS" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="sourceBackLayer" attributeType="String" syncable="YES"/>
-        <attribute name="sourceFrontLayer" attributeType="String" syncable="YES"/>
-        <attribute name="sourceUserLayerMask" attributeType="String" syncable="YES"/>
+        <attribute name="sourceBackLayer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceFrontLayer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceUserLayerMask" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="useForPreview" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <relationship name="emus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Emuticon" inverseName="emuticonDef" inverseEntity="Emuticon" syncable="YES"/>
         <relationship name="packageTag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="packageEmus" inverseEntity="Tag" syncable="YES"/>
@@ -48,7 +48,7 @@
     <elements>
         <element name="AppCFG" positionX="-171" positionY="-423" width="128" height="118"/>
         <element name="Emuticon" positionX="72" positionY="-130" width="252" height="118"/>
-        <element name="EmuticonDef" positionX="27" positionY="-414" width="333" height="253"/>
+        <element name="EmuticonDef" positionX="27" positionY="-414" width="333" height="255"/>
         <element name="Tag" positionX="-173" positionY="-297" width="128" height="120"/>
         <element name="UserFootage" positionX="-180" positionY="99" width="432" height="133"/>
     </elements>

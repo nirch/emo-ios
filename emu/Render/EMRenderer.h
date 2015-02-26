@@ -17,7 +17,7 @@
 @property (nonatomic) NSString *userMaskPath;
 @property (nonatomic) NSString *userImagesPath;
 @property (nonatomic) NSString *backLayerPath;
-@property (nonatomic) NSString *frontLayerPathPath;
+@property (nonatomic) NSString *frontLayerPath;
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSInteger numberOfFrames;

@@ -26,6 +26,7 @@
                               @(HMBGMarkNoisy):@"BGM_NOISY",
                               @(HMBGMarkDark):@"BGM_DARK",
                               @(HMBGMarkSilhouette):@"BGM_SILHOUETTE",
+                              @(HMBGMarkHeadMissing):@"BGM_SILHOUETTE",
                               @(HMBGMarkShadow):@"BGM_SHADOW",
                               @(HMBGMarkCloth):@"BGM_CLOTH",
                               @(HMBGMarkUnrecognized):@"BGM_GENERAL_MESSAGE",

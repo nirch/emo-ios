@@ -46,18 +46,18 @@
                                     <segue destination="Xel-0j-fjL" kind="embed" identifier="review result segue" id="zVB-Yv-B4u"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WpW-ex-edX" userLabel="BG Feedback container">
-                                <rect key="frame" x="16" y="108" width="343" height="343"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="QwO-lL-lLe" kind="embed" identifier="embed bg feedback segue" id="TRX-Nc-cpX"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ooa-Vx-VYG" userLabel="Bottom bar container">
                                 <rect key="frame" x="0.0" y="456" width="375" height="211"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="a6c-JL-B8V" kind="embed" identifier="controls segue" id="9L8-jD-Tjv"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WpW-ex-edX" userLabel="BG Feedback container">
+                                <rect key="frame" x="16" y="108" width="343" height="343"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="QwO-lL-lLe" kind="embed" identifier="embed bg feedback segue" id="TRX-Nc-cpX"/>
                                 </connections>
                             </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="badBGIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Ocg-rD-rpG" userLabel="badBGIcon">
@@ -74,7 +74,7 @@
                                     <constraint firstAttribute="width" constant="37" id="zpr-9d-xZk"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mbm-Lk-tB3" customClass="EMunizingView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mbm-Lk-tB3" userLabel="EMunizing View" customClass="EMunizingView">
                                 <rect key="frame" x="112" y="205" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>

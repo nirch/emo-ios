@@ -12,7 +12,7 @@
 @implementation HMImageTools
 
 #pragma mark - UIImage
-+(UIImage *)createUIImageFromImageType:(image_type *)imageData
++(UIImage *)createUIImageFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha
 {
     // Get the data
     unsigned char *pixels        = imageData->data;
@@ -25,7 +25,13 @@
     size_t bitsPerPixel             = 32;
     size_t bytesPerRow              = imageData->width * 4;
     CGColorSpaceRef colorspace      = CGColorSpaceCreateDeviceRGB();
-    CGBitmapInfo bitmapInfo         = kCGBitmapByteOrderDefault | kCGImageAlphaLast;
+    
+    CGBitmapInfo bitmapInfo;
+    if (withAlpha) {
+        bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaLast;
+    } else {
+        bitmapInfo = kCGBitmapByteOrderDefault;
+    }
     
     // Creation of a new CGImage object.
     NSData* newPixelData = [NSData dataWithBytes:pixels length:size];
@@ -59,13 +65,13 @@
 +(void)saveImageType3:(image_type *)image3 withName:(NSString *)name
 {
     image_type* image4 = image4_from(image3, NULL);
-    UIImage *imageToSave = [self createUIImageFromImageType:image4];
+    UIImage *imageToSave = [self createUIImageFromImageType:image4 withAlpha:NO];
     [HMImages savePNGOfUIImage:imageToSave withName:name];
 }
 
 +(void)saveImageType4:(image_type *)image4 withName:(NSString *)name
 {
-    UIImage *imageToSave = [self createUIImageFromImageType:image4];
+    UIImage *imageToSave = [self createUIImageFromImageType:image4 withAlpha:YES];
     [HMImages savePNGOfUIImage:imageToSave withName:name];
 }
 

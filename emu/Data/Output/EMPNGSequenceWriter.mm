@@ -123,7 +123,7 @@
     self.framesCount++;
 
     // Convert the image passed as image_type to UIImage.
-    UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image];
+    UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image withAlpha:YES];
     [self.pngs addObject:png];
 }
 

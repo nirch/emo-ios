@@ -32,5 +32,9 @@
     }
 }
 
+-(void)setStringKey:(NSString *)stringKey
+{
+    self.text = LS(stringKey);
+}
 
 @end

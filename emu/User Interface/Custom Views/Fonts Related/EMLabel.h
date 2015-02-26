@@ -12,5 +12,6 @@
 
 @property (nonatomic) NSString *styleFont;
 @property (nonatomic) NSString *styleColor;
+@property (nonatomic) NSString *stringKey;
 
 @end

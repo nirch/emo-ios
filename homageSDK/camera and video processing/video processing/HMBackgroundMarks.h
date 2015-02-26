@@ -37,6 +37,11 @@ typedef NS_ENUM(NSInteger, HMBGMark){
     HMBGMarkSilhouette = -5,
     
     /**
+     *  Head is missing.
+     */
+    HMBGMarkHeadMissing = -6,
+    
+    /**
      *  A shadow was detected behind the user.
      */
     HMBGMarkShadow = -4,

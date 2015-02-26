@@ -16,7 +16,7 @@
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
 //#import "Image3/Image3Tool.h"
-//#import "ImageType/ImageTool.h"
+#import "ImageType/ImageTool.h"
 //#import "ImageMark/ImageMark.h"
 //#import "Utime/GpTime.h"
 
@@ -130,14 +130,14 @@
     m_foregroundExtraction = new CUniformBackground();
     
     // Initialize the mask/silhouette using the contour file.
-    int result = m_foregroundExtraction->ReadMask((char*)self.contourFileName.UTF8String,
-                                                  self.size.height,
-                                                  self.size.width);
+//    int result = m_foregroundExtraction->ReadMask((char*)self.contourFileName.UTF8String,
+//                                                  self.size.height,
+//                                                  self.size.width);
     
-//    int result = m_foregroundExtraction->Init((char*)self.paramsXMLFileName.UTF8String,
-//                                              (char*)self.contourFileName.UTF8String,
-//                                              self.size.height,
-//                                              self.size.width);
+    int result = m_foregroundExtraction->Init((char*)self.paramsXMLFileName.UTF8String,
+                                              (char*)self.contourFileName.UTF8String,
+                                              self.size.height,
+                                              self.size.width);
 
     if (result == -1) {
         // Errors on initializing CUniformBackground
@@ -186,11 +186,15 @@
     // Convert display image from bgr to rgb
     image3_bgr2rgb(m_display_image);
 
-    
     // Taking care of the output image.
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     dispatch_async(self.outputQueue, ^{
-        // Set everything that is not the extracted background, as alpha with maximum transparency.
+//        static int i = 0;
+//        i++;
+//        [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Original-%@",@(i)]];
+        
+        // Using the mask we got from UB->Process()
+        // Set everything that is not the extracted background as alpha with maximum transparency.
         m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
                                                         255,                 // The alpha amount to add to the pixels marked in the mask.
                                                         m_mask,              // The mask calculated by the algorithm ->Process method.
@@ -235,19 +239,20 @@
     if (m_original_image == NULL) return;
     
     // Get the background detection mark for this frame.
-    HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+    //HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+    //HMLOG(TAG, DBG, @"Background mark: %@", @(bgMark));
+    
+    HMBGMark bgMark = HMBGMarkGood;
     
     if (bgMark == HMBGMarkGood && _bgMarkWeight < 1) {
+        // Good background (Still under threshold)
         _bgMarkWeight = MIN(_bgMarkWeight + BG_MARK_WEIGHT_DELTA*2, 1);
         self.lastBGMark = bgMark;
         [self postBGMark];
         return;
-    } else if (_bgMarkWeight > 0) {
+    } else if (bgMark != HMBGMarkGood) {
+        // Bad background
         _bgMarkWeight = MAX(_bgMarkWeight - BG_MARK_WEIGHT_DELTA, 0);
-        self.lastBGMark = bgMark;
-        [self postBGMark];
-        return;
-    } if (bgMark != self.lastBGMark) {
         self.lastBGMark = bgMark;
         [self postBGMark];
         return;

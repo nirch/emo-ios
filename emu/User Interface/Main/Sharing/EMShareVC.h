@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EMShareViewController : UIViewController
+#import "EMShareDelegate.h"
+
+@interface EMShareVC : UIViewController
+
+@property (nonatomic, weak) id<EMShareDelegate> delegate;
 
 @end

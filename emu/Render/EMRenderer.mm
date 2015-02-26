@@ -15,7 +15,7 @@
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "PngSource.h"
-//#import "VideoOutput.h"
+#import "VideoOutput.h"
 #import "MattingLib/HomageRenderer/HomageRenderer.h"
 #import "MattingLib/HomageRenderer/HrSourceGif.h"
 #import "MattingLib/HomageRenderer/HrOutputGif.h"
@@ -45,15 +45,24 @@
     //
     // Background source.
     //
-    CHrSourceGif *bgSource = new CHrSourceGif();
-    bgSource->Init((char*)self.backLayerPath.UTF8String);
+    CHrSourceGif *bgSource;
+    if (self.backLayerPath) {
+        bgSource = new CHrSourceGif();
+        bgSource->Init((char*)self.backLayerPath.UTF8String);
+    } else {
+        bgSource = NULL;
+    }
 
     //
     // Foreground source.
     //
-    CHrSourceGif *fgSource = new CHrSourceGif();
-    fgSource->Init((char*)self.frontLayerPathPath.UTF8String);
-
+    CHrSourceGif *fgSource;
+    if (self.frontLayerPath) {
+        fgSource = new CHrSourceGif();
+        fgSource->Init((char*)self.frontLayerPath.UTF8String);
+    } else {
+        fgSource = NULL;
+    }
     
     //
     // Dimensions.
@@ -127,6 +136,8 @@
         
         // Just to be safe, Keep index in bounds.
         sourceIndex = MIN(storedImagesCount,sourceIndex);
+        
+        // HMLOG(@"xxx", DBG, @"Index:%@", @(sourceIndex));
         
         // Populate the list with the paths to frames.
         pngs[(int)i] = [SF:@"%@/img-%ld.png", path, (long)sourceIndex];

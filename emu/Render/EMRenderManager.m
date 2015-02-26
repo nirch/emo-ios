@@ -72,7 +72,7 @@
     renderer.backLayerPath = [emuDef pathForBackLayer];
     renderer.userImagesPath = [footage pathForUserImages];
     renderer.userMaskPath = [emuDef pathForUserLayerMask];
-    renderer.frontLayerPathPath = [emuDef pathForFrontLayer];
+    renderer.frontLayerPath = [emuDef pathForFrontLayer];
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
     renderer.outputOID = [[NSUUID UUID] UUIDString];

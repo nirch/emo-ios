@@ -7,4 +7,4 @@
 //
 #include "./Pods/Target Support Files/Pods/Pods.debug.xcconfig"
 
-CV_BUILD_TYPE = "Release"
+CV_BUILD_TYPE = "Debug"
