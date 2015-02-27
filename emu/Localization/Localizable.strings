@@ -11,6 +11,7 @@
 "EPIC_FAIL" = "Epic Fail!";
 "SOMETHING_WENT_WRONG" = "Emu is sorry, but something went wrong. Please try again.";
 "TRY_AGAIN" = "Try again.";
+"CANCEL" = "Cancel";
 
 // Onboarding
 "ONBOARDING_TITLE_WELCOME" = "Hi!";
@@ -42,3 +43,18 @@
 
 // Share
 "SHARE_IT_TITLE" = "Share it:";
+"SHARE_SAVE_EMU_CHOICE_TITLE" = "Save as:";
+
+"SHARE_TOAST_SHARED" = "Emuji shared";
+"SHARE_TOAST_COPIED" = "Emuji copied";
+"SHARE_TOAST_SAVED" = "Emuji saved to camera roll";
+"SHARE_TOAST_FAILED" = "Failed";
+"SHARE_TOAST_CANCELED" = "Canceled";
+
+"SHARE_TOAST_MAIL_CLIENT_NOT_CONFIGURED" = "Oops: an email client is not set on your device. Set it up and try again.";
+"SHARE_TOAST_MAIL_SENT" = "Emuji sent by mail";
+"SHARE_TOAST_MAIL_SAVED" = "Saved draft mail";
+
+// Share options
+"ANIM_GIF" = "Animated gif";
+"VIDEO" = "Video";

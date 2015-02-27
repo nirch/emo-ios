@@ -19,6 +19,11 @@
 		083E52621A9E1E6B00A66FC8 /* EMMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E52601A9E1E6B00A66FC8 /* EMMainVC.m */; };
 		083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E52641A9E1EB100A66FC8 /* EMEmuticonScreenVC.m */; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
+		0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
+		0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
+		0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
+		0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */; };
+		0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */; };
 		085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66DF1A937EC9007BC910 /* AppDelegate.m */; };
 		085C67621A937EC9007BC910 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66E51A937EC9007BC910 /* main.m */; };
 		085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 085C66E81A937EC9007BC910 /* silHeadAndChest.ctr */; };
@@ -104,7 +109,6 @@
 		08CB89811A9AA12A00224A38 /* EMExperimentalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89711A9AA12A00224A38 /* EMExperimentalCell.m */; };
 		08CB89821A9AA12A00224A38 /* EMExperimentalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89731A9AA12A00224A38 /* EMExperimentalVC.m */; };
 		08CB89831A9AA12A00224A38 /* Experimental.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89741A9AA12A00224A38 /* Experimental.storyboard */; };
-		08CB89841A9AA12A00224A38 /* Sharer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89771A9AA12A00224A38 /* Sharer.m */; };
 		08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89861A9B217D00224A38 /* EMShareVC.m */; };
 		08CB898F1A9B2FAE00224A38 /* EMRenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */; };
 		08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89BE1A9B61FA00224A38 /* EMRenderer.mm */; };
@@ -175,6 +179,17 @@
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
 		0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCell.m; sourceTree = "<group>"; };
 		0854EE2F1A9F93B700FD3833 /* EMShareDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareDelegate.h; sourceTree = "<group>"; };
+		0854EE311A9FA6CE00FD3833 /* EMShareCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCopy.h; sourceTree = "<group>"; };
+		0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCopy.m; sourceTree = "<group>"; };
+		0854EE341A9FA6F900FD3833 /* EMShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShare.h; sourceTree = "<group>"; };
+		0854EE351A9FA6F900FD3833 /* EMShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShare.m; sourceTree = "<group>"; };
+		0854EE371A9FB21D00FD3833 /* EMShareProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMShareProtocol.h; sourceTree = "<group>"; };
+		0854EE381A9FC37000FD3833 /* EMShareSaveToCameraRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareSaveToCameraRoll.h; sourceTree = "<group>"; };
+		0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareSaveToCameraRoll.m; sourceTree = "<group>"; };
+		0854EE3B1AA07FBF00FD3833 /* EMShareMail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareMail.h; sourceTree = "<group>"; };
+		0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareMail.m; sourceTree = "<group>"; };
+		0854EE3E1AA08E0F00FD3833 /* EMShareAppleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareAppleMessage.h; sourceTree = "<group>"; };
+		0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareAppleMessage.m; sourceTree = "<group>"; };
 		085C66DE1A937EC9007BC910 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085C66DF1A937EC9007BC910 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		085C66E11A937EC9007BC910 /* Config.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
@@ -311,11 +326,8 @@
 		08CB89721A9AA12A00224A38 /* EMExperimentalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMExperimentalVC.h; sourceTree = "<group>"; };
 		08CB89731A9AA12A00224A38 /* EMExperimentalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMExperimentalVC.m; sourceTree = "<group>"; };
 		08CB89741A9AA12A00224A38 /* Experimental.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Experimental.storyboard; sourceTree = "<group>"; };
-		08CB89761A9AA12A00224A38 /* Sharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sharer.h; sourceTree = "<group>"; };
-		08CB89771A9AA12A00224A38 /* Sharer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sharer.m; sourceTree = "<group>"; };
 		08CB89851A9B217D00224A38 /* EMShareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareVC.h; sourceTree = "<group>"; };
 		08CB89861A9B217D00224A38 /* EMShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareVC.m; sourceTree = "<group>"; };
-		08CB89881A9B22BD00224A38 /* EMShareProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareProtocol.h; sourceTree = "<group>"; };
 		08CB898D1A9B2FAE00224A38 /* EMRenderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRenderManager.h; sourceTree = "<group>"; };
 		08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMRenderManager.m; sourceTree = "<group>"; };
 		08CB89BB1A9B5C0300224A38 /* EMRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRenderer.h; sourceTree = "<group>"; };
@@ -448,6 +460,24 @@
 				083D54741A8CB0A10048604A /* HMImageTools.mm */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		0854EE301A9FA6AA00FD3833 /* Share Methods */ = {
+			isa = PBXGroup;
+			children = (
+				0854EE371A9FB21D00FD3833 /* EMShareProtocol.h */,
+				0854EE341A9FA6F900FD3833 /* EMShare.h */,
+				0854EE351A9FA6F900FD3833 /* EMShare.m */,
+				0854EE311A9FA6CE00FD3833 /* EMShareCopy.h */,
+				0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */,
+				0854EE381A9FC37000FD3833 /* EMShareSaveToCameraRoll.h */,
+				0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */,
+				0854EE3B1AA07FBF00FD3833 /* EMShareMail.h */,
+				0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */,
+				0854EE3E1AA08E0F00FD3833 /* EMShareAppleMessage.h */,
+				0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */,
+			);
+			path = "Share Methods";
 			sourceTree = "<group>";
 		};
 		085C66DD1A937EC9007BC910 /* App */ = {
@@ -877,14 +907,12 @@
 		08CB89751A9AA12A00224A38 /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
-				08CB89881A9B22BD00224A38 /* EMShareProtocol.h */,
 				0854EE2F1A9F93B700FD3833 /* EMShareDelegate.h */,
 				08CB89851A9B217D00224A38 /* EMShareVC.h */,
 				08CB89861A9B217D00224A38 /* EMShareVC.m */,
 				0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */,
 				0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */,
-				08CB89761A9AA12A00224A38 /* Sharer.h */,
-				08CB89771A9AA12A00224A38 /* Sharer.m */,
+				0854EE301A9FA6AA00FD3833 /* Share Methods */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -1286,6 +1314,7 @@
 				086005621A993FE5008CD7DE /* EMFiles.m in Sources */,
 				08B5899F1A93B9F7008D9068 /* EMButton.m in Sources */,
 				085C67691A937EC9007BC910 /* EMEmuticonsParser.m in Sources */,
+				0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */,
 				086005651A99483E008CD7DE /* HMImages.m in Sources */,
 				085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */,
 				085C67641A937EC9007BC910 /* HMAnalytics.m in Sources */,
@@ -1293,6 +1322,7 @@
 				08CB8A031A9D74EF00224A38 /* Tag.m in Sources */,
 				08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */,
 				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
+				0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */,
 				08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
 				08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */,
@@ -1305,11 +1335,12 @@
 				085C679B1A937EC9007BC910 /* EMOBCell.m in Sources */,
 				08CB89811A9AA12A00224A38 /* EMExperimentalCell.m in Sources */,
 				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
-				08CB89841A9AA12A00224A38 /* Sharer.m in Sources */,
 				08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */,
 				085C679A1A937EC9007BC910 /* EMRecordButton.m in Sources */,
 				08B589711A938BCC008D9068 /* emu.xcdatamodeld in Sources */,
 				085C67981A937EC9007BC910 /* EMRecorderVC.m in Sources */,
+				0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */,
+				0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */,
 				086005581A98B153008CD7DE /* EMUISound.m in Sources */,
 				083334D61A83EC98008AC771 /* HMBackgroundMarks.m in Sources */,
 				085C679C1A937EC9007BC910 /* EMOnboardingVC.m in Sources */,
@@ -1324,6 +1355,7 @@
 				085C67621A937EC9007BC910 /* main.m in Sources */,
 				08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */,
 				08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */,
+				0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */,
 				0860054C1A978AAB008CD7DE /* EMFlowButton.m in Sources */,
 				08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */,
 				085C67741A937EC9007BC910 /* UserFootage+Logic.m in Sources */,

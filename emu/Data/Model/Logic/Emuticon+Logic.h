@@ -45,4 +45,18 @@
  */
 -(NSURL *)animatedGifURL;
 
+/**
+ *  The path to the animated gif rendered for this emuticon object;
+ *
+ *  @return NSString of the path to the rendered animated gif.
+ */
+-(NSString *)animatedGifPath;
+
+/**
+ *  The raw data of the animated gif rendered for this emuticon object.
+ *
+ *  @return NSData of the raw data of the animated gif.
+ */
+-(NSData *)animatedGifData;
+
 @end

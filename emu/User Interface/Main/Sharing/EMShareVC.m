@@ -14,17 +14,25 @@
 #import "EMLabel.h"
 #import "EMDB.h"
 
+// Share methods
+#import "EMShareCopy.h"
+#import "EMShareSaveToCameraRoll.h"
+#import "EMShareMail.h"
+#import "EMShareAppleMessage.h"
+
 #define TAG @"EMShareVC"
 
 @interface EMShareVC () <
     UICollectionViewDataSource,
-    UICollectionViewDelegate
+    UICollectionViewDelegate,
+    EMShareDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 
 @property (nonatomic) NSArray *shareMethods;
 @property (nonatomic) NSDictionary *shareIcons;
+@property (nonatomic) EMShare *sharer;
 
 @end
 
@@ -35,31 +43,35 @@
     [self initData];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 #pragma mark - Data
 -(void)initData
 {
     // A priorized list of share methods.
     self.shareMethods = @[
-                          @(emShareMethodAppleMessages),
-                          @(emShareMethodWhatsapp),
-                          @(emShareMethodFacebookMessanger),
-                          @(emShareMethodFacebook),
-                          @(emShareMethodMail),
-                          @(emShareMethodSaveToCameraRoll),
-                          @(emShareMethodCopy)
+                          @(emkShareMethodAppleMessages),
+                          //@(emkShareMethodWhatsapp),
+                          //@(emkShareMethodFacebookMessanger),
+                          //@(emkShareMethodFacebook),
+                          @(emkShareMethodMail),
+                          @(emkShareMethodSaveToCameraRoll),
+                          @(emkShareMethodCopy)
                           ];
     
     self.shareIcons = @{
-                        @(emShareMethodAppleMessages):      @"iMessage",
-                        @(emShareMethodWhatsapp):           @"whatsapp",
-                        @(emShareMethodFacebookMessanger):  @"facebookm",
-                        @(emShareMethodFacebook):           @"facebook",
-                        @(emShareMethodMail):               @"mail",
-                        @(emShareMethodSaveToCameraRoll):   @"savetocm",
-                        @(emShareMethodCopy):               @"copy"
+                        @(emkShareMethodAppleMessages):      @"iMessage",
+                        @(emkShareMethodWhatsapp):           @"whatsapp",
+                        @(emkShareMethodFacebookMessanger):  @"facebookm",
+                        @(emkShareMethodFacebook):           @"facebook",
+                        @(emkShareMethodMail):               @"mail",
+                        @(emkShareMethodSaveToCameraRoll):   @"savetocm",
+                        @(emkShareMethodCopy):               @"copy"
                         };
 }
-
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -95,31 +107,100 @@
     cell.guiButton.tag = indexPath.item;
 }
 
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout*)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
+{
+    CGFloat edgeInsets = 10;
+    CGFloat width = collectionView.bounds.size.width;
+    CGFloat contentSize = edgeInsets + self.shareMethods.count * 70;
+    if (contentSize < width) {
+        edgeInsets = (width - contentSize) / 2.0;
+    }
+    return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
+}
+
 #pragma mark - Sharing
 -(void)shareEmuticonUsingMethodAtIndex:(NSInteger)index
 {
     NSString *emuticonOID = [self.delegate shareObjectIdentifier];
     Emuticon *emu = [Emuticon findWithID:emuticonOID context:EMDB.sh.context];
-   
-   
-    /**
-    NSURL *url = [emu animatedGifURL];
+    
+    EMKShareMethod shareMethod = [self.shareMethods[index] integerValue];
+    [self shareEmuticon:emu usingMethod:shareMethod];
+}
 
-//    UIImage *image = [UIImage imageWithData:data];
-//    [UIPasteboard generalPasteboard].image = image;
+-(void)shareEmuticon:(Emuticon *)emu usingMethod:(EMKShareMethod)method
+{
+    // Only one share operation at a time.
+    if (self.sharer) return;
     
-//    NSData *data = [NSData dataWithContentsOfURL:url];
-//    UIPasteboard *pasteBoard=[UIPasteboard generalPasteboard];
-//    [pasteBoard setData:data forPasteboardType:(NSString *)kUTTypeGIF];
+    if (method == emkShareMethodCopy) {
+        
+        //
+        // Copy to clipboard
+        //
+        self.sharer = [EMShareCopy new];
+        
+    } else if (method == emkShareMethodSaveToCameraRoll) {
+        
+        //
+        // Save to camera roll
+        //
+        self.sharer = [EMShareSaveToCameraRoll new];
+        
+    } else if (method == emkShareMethodMail) {
+        
+        //
+        // Mail client
+        //
+        self.sharer = [EMShareMail new];
+        
+    } else if (method == emkShareMethodAppleMessages) {
+        
+        //
+        // Apple messages
+        //
+        self.sharer = [EMShareAppleMessage new];
+        
+    } else {
+        //
+        // Unimplemented.
+        //
+        UIAlertController *alert = [UIAlertController new];
+        alert.title = @"Unimplemented";
+        alert.message = @"This share method is not implemented yet.";
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Got it"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        HMLOG(TAG, ERR, @"Unimplemented share method.");
+    }
+    
+    // Share
+    self.sharer.objectToShare = emu;
+    self.sharer.delegate = self;
+    self.sharer.viewController = self;
+    self.sharer.view = self.view;
+    [self.sharer share];
+}
 
-    NSData *gifData = [[NSData alloc] initWithContentsOfFile:[[emu animatedGifURL] path]];
-    
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    
-    [pasteboard setData:gifData forPasteboardType:@"com.compuserve.gif"];
-    
-    // HMLOG(TAG, DBG, @"Will share emu %@", emuticonOID);
-     */
+#pragma mark - EMShareDelegate
+-(void)sharerDidShareObject:(id)sharedObject
+                   withInfo:(NSDictionary *)info
+{
+    self.sharer = nil;
+}
+
+-(void)sharerDidCancelWithInfo:(NSDictionary *)info
+{
+    self.sharer = nil;
+}
+
+-(void)sharerDidFailWithInfo:(NSDictionary *)info
+{
+    self.sharer = nil;
 }
 
 #pragma mark - IB Actions

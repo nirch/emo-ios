@@ -45,10 +45,23 @@
 
 -(NSURL *)animatedGifURL
 {
+    NSString *outputPath = [self animatedGifPath];
+    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
+    return url;
+}
+
+-(NSString *)animatedGifPath
+{
     NSString *gifName = [SF:@"%@.gif", self.oid];
     NSString *outputPath = [EMFiles outputPathForFileName:gifName];
-    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" ,outputPath]];
-    return url;
+    return outputPath;
+}
+
+-(NSData *)animatedGifData
+{
+    NSString *path = [self animatedGifPath];
+    NSData *gifData = [[NSData alloc] initWithContentsOfFile:path];
+    return gifData;
 }
 
 @end

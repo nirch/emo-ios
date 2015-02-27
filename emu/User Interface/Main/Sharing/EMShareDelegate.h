@@ -10,6 +10,14 @@
 
 @protocol EMShareDelegate <NSObject>
 
+@optional
 -(NSString *)shareObjectIdentifier;
+
+-(void)sharerDidShareObject:(id)sharedObject
+                   withInfo:(NSDictionary *)info;
+
+-(void)sharerDidCancelWithInfo:(NSDictionary *)info;
+
+-(void)sharerDidFailWithInfo:(NSDictionary *)info;
 
 @end

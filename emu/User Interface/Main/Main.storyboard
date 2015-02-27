@@ -274,14 +274,14 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Voh-xn-DcO">
-                                <rect key="frame" x="0.0" y="487" width="375" height="180"/>
+                                <rect key="frame" x="0.0" y="497" width="375" height="170"/>
                                 <connections>
                                     <segue destination="73x-p5-EXH" kind="embed" identifier="embed share" id="hG9-N0-4FM"/>
                                 </connections>
                             </containerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RfO-Jc-wDZ" customClass="EMLabel">
-                                <rect key="frame" x="149" y="459" width="77" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="133" y="459" width="109" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -323,11 +323,11 @@
                         <viewControllerLayoutGuide type="bottom" id="KAf-Tu-Ykt"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Sb0-zb-Crb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EGa-9a-b7E">
-                                <rect key="frame" x="0.0" y="50" width="375" height="80"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="900" horizontalCompressionResistancePriority="1000" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EGa-9a-b7E">
+                                <rect key="frame" x="0.0" y="45" width="375" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="TCm-m9-cow"/>
@@ -386,10 +386,16 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="EGa-9a-b7E" secondAttribute="centerX" id="HsU-2h-5dZ"/>
                             <constraint firstAttribute="centerY" secondItem="EGa-9a-b7E" secondAttribute="centerY" id="Q1m-pY-Ist"/>
                             <constraint firstItem="EGa-9a-b7E" firstAttribute="width" secondItem="Sb0-zb-Crb" secondAttribute="width" id="u01-4a-3rX"/>
                             <constraint firstItem="EGa-9a-b7E" firstAttribute="leading" secondItem="Sb0-zb-Crb" secondAttribute="leading" id="wJq-bW-eWa"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="wJq-bW-eWa"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <connections>
