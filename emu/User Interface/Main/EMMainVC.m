@@ -46,7 +46,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    return;
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.onboardingPassed.boolValue) {
         [self showSplash];
@@ -62,7 +62,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    return;
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.onboardingPassed.boolValue) {
         [self openRecorderWithInfo:nil];
@@ -85,12 +85,15 @@
 #pragma mark - The data
 -(void)initData
 {
-    [EMBackend.sh refetchEmuticonsDefinitions];
-    [EMBackend.sh refetchAppCFG];
+    [EMBackend.sh refreshData];
     
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
-        HMLOG(TAG, ERR, @"Unresolved error %@, %@", error, [error localizedDescription]);
+        HMLOG(TAG,
+              ERR,
+              @"Unresolved error %@, %@",
+              error,
+              [error localizedDescription]);
     }
 }
 

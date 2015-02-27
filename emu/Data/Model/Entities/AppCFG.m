@@ -2,7 +2,7 @@
 //  AppCFG.m
 //  emu
 //
-//  Created by Aviv Wolf on 2/25/15.
+//  Created by Aviv Wolf on 2/27/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 @implementation AppCFG
 
 @dynamic animGifMaxFPS;
-@dynamic oid;
-@dynamic videoMaxFPS;
 @dynamic duration;
+@dynamic oid;
 @dynamic onboardingPassed;
+@dynamic videoMaxFPS;
 
 @end

@@ -8,6 +8,14 @@
 
 #import "HMParser.h"
 
+@class Package;
+
 @interface EMEmuticonsParser : HMParser
+
+/**
+ *  EmuticonDefs can only be parsed in a context of the package
+ *  they are related to. package must be set or parsing will fail.
+ */
+@property (nonatomic) Package *package;
 
 @end

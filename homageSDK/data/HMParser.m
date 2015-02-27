@@ -45,4 +45,21 @@
     return nil;
 }
 
+-(NSDate *)parseDateOfString:(NSString *)dateString
+{
+    //"created_at" = "2014-03-09 14:30:13 UTC" <-- deprecated on server side
+    //"created_at" = "2014-09-15T13:12:19.644Z" <-- changed to this on server side
+    NSDate *date;
+    
+    dateString = [dateString substringToIndex:19];
+    
+    // Prase the string to nsdate using the dateFormatter
+    date = [self.dateFormatter dateFromString:dateString];
+    if (date) return date;
+    
+    // Failed parsing date. Try again using the fallback dateformatter.
+    date = [self.dateFormatterFallback dateFromString:dateString];
+    return date;
+}
+
 @end

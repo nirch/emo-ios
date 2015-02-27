@@ -14,11 +14,16 @@
 
 -(void)parse
 {
-    NSArray *emuticonsDefinitions = self.objectToParse[@"emuticons"];
-    EMEmuticonParser *emParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
+    if (self.package == nil) return;
     
+    NSArray *emuticonsDefinitions = self.objectToParse[@"emuticons"];
+
+    NSInteger index = 0;
+    EMEmuticonParser *emParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
     for (NSDictionary *emuticonDefinition in emuticonsDefinitions) {
+        index++;
         emParser.objectToParse = emuticonDefinition;
+        emParser.incrementalOrder = @(index);
         [emParser parse];
     }
     [EMDB.sh save];

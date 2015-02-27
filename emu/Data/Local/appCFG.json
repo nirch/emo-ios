@@ -1,8 +1,4 @@
 {
-    {"defaults":{
-        "output_anim_gif_max_fps": 8,
-        "output_video_max_fps": 15,
-        "capture_max_fps": 15,
-        "duration":2
-    }
+    "default_output_video_max_fps": 15,
+    "default_capture_duration":2
 }

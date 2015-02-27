@@ -24,5 +24,8 @@
                                     withID:(NSString *)oid
                                  inContext:(NSManagedObjectContext *)context;
 
++(NSArray *)fetchEntityNamed:(NSString *)entityName
+               withPredicate:(NSPredicate *)predicate
+                   inContext:(NSManagedObjectContext *)context;
 
 @end

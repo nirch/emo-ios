@@ -25,6 +25,9 @@
 #import "AppCFG.h"
 #import "AppCFG+Logic.h"
 
+#import "Package.h"
+#import "Package+Logic.h"
+
 // Keys for passing info around
 #define emkOID              @"oid"
 #define emkEmuticonOID      @"emuticon oid"

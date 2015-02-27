@@ -2,7 +2,7 @@
 //  Emuticon.h
 //  emu
 //
-//  Created by Aviv Wolf on 2/25/15.
+//  Created by Aviv Wolf on 2/27/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 
 @interface Emuticon : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * isPreview;
 @property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSNumber * usageCount;
-@property (nonatomic, retain) NSNumber * isPreview;
 @property (nonatomic, retain) EmuticonDef *emuticonDef;
 @property (nonatomic, retain) UserFootage *userFootage;
 

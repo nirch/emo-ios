@@ -2,7 +2,7 @@
 //  EmuticonDef.m
 //  emu
 //
-//  Created by Aviv Wolf on 2/25/15.
+//  Created by Aviv Wolf on 2/27/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -13,6 +13,8 @@
 
 @implementation EmuticonDef
 
+@dynamic duration;
+@dynamic framesCount;
 @dynamic name;
 @dynamic oid;
 @dynamic order;
@@ -22,8 +24,6 @@
 @dynamic sourceFrontLayer;
 @dynamic sourceUserLayerMask;
 @dynamic useForPreview;
-@dynamic framesCount;
-@dynamic duration;
 @dynamic emus;
 @dynamic packageTag;
 @dynamic tags;

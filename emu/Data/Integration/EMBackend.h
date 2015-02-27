@@ -15,7 +15,6 @@
 +(EMBackend *)sh;
 
 #pragma mark - Fetching data
--(void)refetchEmuticonsDefinitions;
--(void)refetchAppCFG;
+-(void)refreshData;
 
 @end

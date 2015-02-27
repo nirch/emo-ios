@@ -11,6 +11,7 @@
 #import "EMDB.h"
 #import "EMEmuticonsParser.h"
 #import "EMAppCFGParser.h"
+#import "EMPackagesParser.h"
 
 @implementation EMBackend
 
@@ -41,7 +42,50 @@
     return self;
 }
 
-#pragma mark - Fetching data
+
+
+#pragma mark - Refreshing data
+-(void)refreshData
+{
+    // Parsing app data.
+    
+    // Parsing packages meta data.
+    [self parsePackagesMetaData];
+    
+    // Pasring packages.
+    [self parsePackages];
+    
+    // Save it all
+    [EMDB.sh save];
+}
+
+
+-(void)parsePackagesMetaData
+{
+    NSDictionary *json = [self jsonDataInLocalFile:@"packages"];
+    EMPackagesParser *packagesParser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
+    packagesParser.objectToParse = json;
+    [packagesParser parse];
+}
+
+-(void)parsePackages
+{
+    NSArray *packages = [Package allPackagesInContext:EMDB.sh.context];
+    for (Package *package in packages) {
+        // Load json related to package.
+        [self parseDataForPackage:package];
+    }
+}
+
+-(void)parseDataForPackage:(Package *)package
+{
+    NSDictionary *json = [self jsonDataInLocalFile:[package jsonFileName]];
+    EMEmuticonsParser *emuParser = [[EMEmuticonsParser alloc] initWithContext:EMDB.sh.context];
+    emuParser.objectToParse = json;
+    [emuParser parse];
+}
+
+#pragma mark - JSON Serialization
 -(NSDictionary *)jsonDataInLocalFile:(NSString *)fileName
 {
     // Read emuticons json file
@@ -50,12 +94,14 @@
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
     if (error) {
-        HMLOG(TAG, ERR, @"NSJSONSerialization failed for emuticonsDefinitions: %@", [error localizedDescription]);
+        HMLOG(TAG, ERR, @"NSJSONSerialization failed for %@: %@", fileName, [error localizedDescription]);
         return nil;
     }
     return json;
 }
 
+
+/*
 -(void)refetchEmuticonsDefinitions
 {
     NSDictionary *json = [self jsonDataInLocalFile:@"emuticonsDefinitions"];
@@ -79,5 +125,6 @@
     parser.objectToParse = json;
     [parser parse];
 }
+*/
 
 @end

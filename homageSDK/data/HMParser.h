@@ -44,4 +44,7 @@ typedef NS_ENUM(NSInteger, HMParserErrorCode) {
 
 -(void)parse;
 
+// Helper method for parsing dates
+-(NSDate *)parseDateOfString:(NSString *)dateString;
+
 @end

@@ -62,6 +62,22 @@
     return [self firstResult:results];
 }
 
+
++(NSArray *)fetchEntityNamed:(NSString *)entityName
+                       withPredicate:(NSPredicate *)predicate
+                           inContext:(NSManagedObjectContext *)context
+{
+    NSError *error;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    fetchRequest.predicate = predicate;
+    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+        HMLOG(TAG, ERR, @"Error while searching for entity. %@",[error localizedDescription]);
+        return nil;
+    }
+    return results;
+}
+
 +(NSManagedObject *)fetchSingleEntityNamed:(NSString *)entityName
                                     withID:(NSString *)oid
                                  inContext:(NSManagedObjectContext *)context

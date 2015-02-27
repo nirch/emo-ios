@@ -30,6 +30,12 @@
         <relationship name="packageTag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="packageEmus" inverseEntity="Tag" syncable="YES"/>
         <relationship name="tags" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="emuDefs" inverseEntity="Tag" syncable="YES"/>
     </entity>
+    <entity name="Package" representedClassName="Package" syncable="YES">
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="oid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="isPackage" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
@@ -51,5 +57,6 @@
         <element name="EmuticonDef" positionX="27" positionY="-414" width="333" height="255"/>
         <element name="Tag" positionX="-173" positionY="-297" width="128" height="120"/>
         <element name="UserFootage" positionX="-180" positionY="99" width="432" height="133"/>
+        <element name="Package" positionX="-416" positionY="-252" width="128" height="103"/>
     </elements>
 </model>
