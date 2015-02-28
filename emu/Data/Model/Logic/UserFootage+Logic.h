@@ -63,4 +63,10 @@
 -(NSString *)pathForUserImages;
 
 
+
+/**
+ *  Cleans up the footage related files and deletes the object of the footage.
+ */
+-(void)deleteAndCleanUp;
+
 @end

@@ -92,10 +92,10 @@
     CHomageRenderer *render = new CHomageRenderer();
     render->Process(bgSource, userSource, fgSource, outputs, 1);
 
-    gifOutput->Close();
-    userSource->Close();
-    bgSource->Close();
-    fgSource->Close();
+    if (gifOutput != NULL)  gifOutput->Close();
+    if (userSource != NULL) userSource->Close();
+    if (bgSource != NULL)   bgSource->Close();
+    if (fgSource != NULL)   fgSource->Close();
     
 //    videoOutput->Close();
     

@@ -24,6 +24,7 @@
         index++;
         emParser.objectToParse = emuticonDefinition;
         emParser.incrementalOrder = @(index);
+        emParser.package = self.package;
         [emParser parse];
     }
     [EMDB.sh save];

@@ -239,10 +239,8 @@
     if (m_original_image == NULL) return;
     
     // Get the background detection mark for this frame.
-    //HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(m_original_image, 1);
-    //HMLOG(TAG, DBG, @"Background mark: %@", @(bgMark));
-    
-    HMBGMark bgMark = HMBGMarkGood;
+    HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+    HMLOG(TAG, EM_DBG, @"Background mark: %@", @(bgMark));
     
     if (bgMark == HMBGMarkGood && _bgMarkWeight < 1) {
         // Good background (Still under threshold)
@@ -271,7 +269,7 @@
 
 -(void)_postBGMark
 {
-    HMLOG(TAG, VERBOSE, @"BGMark:%@ weight:%@", @(self.lastBGMark), @(self.bgMarkWeight));
+    HMLOG(TAG, EM_VERBOSE, @"BGMark:%@ weight:%@", @(self.lastBGMark), @(self.bgMarkWeight));
     
     // Gather some info.
     NSMutableDictionary *info = [NSMutableDictionary new];
@@ -292,11 +290,12 @@
                                                       userInfo:info];
 }
 
--(void)reset
+-(void)cleanUp
 {
     self.bgMarkWeight = 0;
     self.lastBGMark = HMBGMarkUnrecognized;
 }
+
 
 -(void *)latestOutputImage
 {

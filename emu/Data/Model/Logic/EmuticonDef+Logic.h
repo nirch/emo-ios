@@ -34,16 +34,12 @@
 +(EmuticonDef *)findWithID:(NSString *)oid
                    context:(NSManagedObjectContext *)context;
 
-
 /**
- *  Find an emuticon definition that is marked to be used in previews.
+ *  Create an emuticon for the emuticon definition.
  *
- *  @param context The managed object context.
- *
- *  @return EmuticonDef object or nil if none found.
+ *  @return Emuticon object.
  */
-+(EmuticonDef *)findEmuDefForPreviewInContext:(NSManagedObjectContext *)context;
-
+-(Emuticon *)spawn;
 
 -(NSString *)pathForUserLayerMask;
 -(NSString *)pathForBackLayer;

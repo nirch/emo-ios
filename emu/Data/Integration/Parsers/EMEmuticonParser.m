@@ -40,8 +40,9 @@
     NSString *oid = [info safeOIDStringForKey:@"oid"];
     EmuticonDef *emuDef = [EmuticonDef findOrCreateWithID:oid
                                              context:self.ctx];
+    emuDef.package = self.package;
     
-    // Use auto order or the one defined
+    // Use auto order or the one defined in json.
     NSNumber *orderSet = [info safeNumberForKey:@"order"];
     emuDef.order                       = orderSet? orderSet:self.incrementalOrder;
     
@@ -50,11 +51,10 @@
     emuDef.sourceBackLayer             = [info safeStringForKey:@"source_back_layer"];
     emuDef.sourceFrontLayer            = [info safeStringForKey:@"source_front_layer"];
     emuDef.sourceUserLayerMask         = [info safeStringForKey:@"source_user_layer_mask"];
-    emuDef.framesCount                 = [info safeNumberForKey:@"frames_count"];
-    emuDef.outputVideoMaxFPS           = [info safeNumberForKey:@"output_video_max_fps"];
-    emuDef.outputAnimGifMaxFPS         = [info safeNumberForKey:@"output_anim_gif_max_fps"];
     emuDef.useForPreview               = [info safeBoolNumberForKey:@"use_for_preview"];
-    emuDef.duration                    = @2.0;
+    emuDef.duration                    = [info safeDecimalNumberForKey:@"duration"];
+    emuDef.framesCount                 = [info safeNumberForKey:@"frames_count"];
+    emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index"];
 }
 
 @end

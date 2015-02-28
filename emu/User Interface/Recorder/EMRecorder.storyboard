@@ -326,6 +326,12 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleColor" value="colorText2"/>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000027" translatesAutoresizingMaskIntoConstraints="NO" id="PCM-od-sGY">
+                                <rect key="frame" x="16" y="33" width="343" height="85"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-hF-Rj2" userLabel="Continue Button" customClass="EMFlowButton">
                                 <rect key="frame" x="16" y="131" width="343" height="65"/>
                                 <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326981544494629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -392,7 +398,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a8q-xO-kJt" customClass="EMLabel">
-                                <rect key="frame" x="180" y="127" width="15" height="32"/>
+                                <rect key="frame" x="180" y="126" width="15" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -402,6 +408,7 @@
                         <constraints>
                             <constraint firstItem="nxQ-lA-UXA" firstAttribute="bottom" secondItem="m2j-hF-Rj2" secondAttribute="bottom" id="3qg-Tg-8HD"/>
                             <constraint firstItem="fCV-z6-sBK" firstAttribute="leading" secondItem="vlO-Hy-q7l" secondAttribute="trailing" constant="15" id="4yL-xQ-bdB"/>
+                            <constraint firstAttribute="centerX" secondItem="PCM-od-sGY" secondAttribute="centerX" id="5eq-yU-HHK"/>
                             <constraint firstItem="fCV-z6-sBK" firstAttribute="width" secondItem="m2j-hF-Rj2" secondAttribute="width" multiplier="0.5" priority="900" id="5ij-9V-De6"/>
                             <constraint firstItem="fCV-z6-sBK" firstAttribute="centerY" secondItem="m2j-hF-Rj2" secondAttribute="centerY" id="79I-04-97V"/>
                             <constraint firstItem="fCV-z6-sBK" firstAttribute="trailing" secondItem="m2j-hF-Rj2" secondAttribute="trailing" id="8tq-Sf-2SL"/>
@@ -413,6 +420,7 @@
                             <constraint firstItem="m2j-hF-Rj2" firstAttribute="centerY" secondItem="vlO-Hy-q7l" secondAttribute="centerY" id="Mh0-Gt-ihS"/>
                             <constraint firstItem="m2j-hF-Rj2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="D2O-VH-kqH" secondAttribute="bottom" constant="10" id="PV4-S8-K2A"/>
                             <constraint firstItem="a8q-xO-kJt" firstAttribute="centerY" secondItem="nxQ-lA-UXA" secondAttribute="centerY" id="Pii-t4-gaZ"/>
+                            <constraint firstItem="m2j-hF-Rj2" firstAttribute="top" secondItem="PCM-od-sGY" secondAttribute="bottom" constant="13" id="QoN-qC-Rud"/>
                             <constraint firstAttribute="centerX" secondItem="nxQ-lA-UXA" secondAttribute="centerX" constant="0.5" id="Tgc-eG-pnL"/>
                             <constraint firstItem="OhG-fw-x04" firstAttribute="height" secondItem="D2O-VH-kqH" secondAttribute="height" id="U5L-hi-6io"/>
                             <constraint firstAttribute="centerX" secondItem="OhG-fw-x04" secondAttribute="centerX" id="Wrq-iD-9vy"/>
@@ -422,9 +430,11 @@
                             <constraint firstItem="fCV-z6-sBK" firstAttribute="leading" secondItem="vlO-Hy-q7l" secondAttribute="trailing" constant="10" id="fp0-WK-Laj"/>
                             <constraint firstItem="fCV-z6-sBK" firstAttribute="width" secondItem="vlO-Hy-q7l" secondAttribute="width" id="gZl-iA-vIk"/>
                             <constraint firstItem="OhG-fw-x04" firstAttribute="centerY" secondItem="D2O-VH-kqH" secondAttribute="centerY" id="jzB-bX-DT0"/>
+                            <constraint firstItem="PCM-od-sGY" firstAttribute="top" secondItem="OhG-fw-x04" secondAttribute="bottom" constant="8" id="lV2-kI-fKw"/>
                             <constraint firstItem="m2j-hF-Rj2" firstAttribute="height" secondItem="vlO-Hy-q7l" secondAttribute="height" id="mZN-7X-Xgh"/>
                             <constraint firstAttribute="centerX" secondItem="OhG-fw-x04" secondAttribute="centerX" id="o4J-ev-1G5"/>
                             <constraint firstItem="m2j-hF-Rj2" firstAttribute="trailing" secondItem="Ssc-ej-ngw" secondAttribute="trailingMargin" id="qlm-WK-efj"/>
+                            <constraint firstItem="PCM-od-sGY" firstAttribute="width" secondItem="m2j-hF-Rj2" secondAttribute="width" id="rBU-nQ-G5a"/>
                             <constraint firstItem="OhG-fw-x04" firstAttribute="leading" secondItem="Ssc-ej-ngw" secondAttribute="leadingMargin" id="tO2-A1-WXs"/>
                             <constraint firstItem="a8q-xO-kJt" firstAttribute="centerX" secondItem="nxQ-lA-UXA" secondAttribute="centerX" id="vhh-zn-hc3"/>
                             <constraint firstItem="m2j-hF-Rj2" firstAttribute="leading" secondItem="vlO-Hy-q7l" secondAttribute="leading" id="x2X-FB-7oC"/>
@@ -445,6 +455,7 @@
                         <outlet property="guiContinueButton" destination="m2j-hF-Rj2" id="Xqw-xf-5FF"/>
                         <outlet property="guiCountdownLabel" destination="a8q-xO-kJt" id="wRw-bT-wzL"/>
                         <outlet property="guiGoodMessageButton" destination="D2O-VH-kqH" id="rwY-eW-CIJ"/>
+                        <outlet property="guiLongMessage" destination="PCM-od-sGY" id="VnK-Pf-bkr"/>
                         <outlet property="guiNegativeButton" destination="vlO-Hy-q7l" id="tqP-na-aG6"/>
                         <outlet property="guiPositiveButton" destination="fCV-z6-sBK" id="51H-YW-vHI"/>
                         <outlet property="guiRecordButton" destination="nxQ-lA-UXA" id="bze-1Z-TDD"/>
@@ -595,6 +606,16 @@
                                     <action selector="onPressedEmuButton:" destination="Vj3-Kt-kX8" eventType="touchUpInside" id="YwY-CL-KUj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-Kq-iEm" userLabel="Retake Button2" customClass="EMButton">
+                                <rect key="frame" x="309" y="30" width="50" height="30"/>
+                                <state key="normal" title="Restart">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedRestartButton:" destination="Vj3-Kt-kX8" eventType="touchUpInside" id="F4C-uK-z2e"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -603,6 +624,8 @@
                             <constraint firstAttribute="trailing" secondItem="lE8-aT-vff" secondAttribute="trailing" id="RaH-qd-Bjc"/>
                             <constraint firstItem="fag-x1-a4e" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leading" constant="6" id="V4Y-f9-PjG"/>
                             <constraint firstItem="fag-x1-a4e" firstAttribute="top" secondItem="SEF-7w-TF2" secondAttribute="bottom" constant="14" id="bLV-YM-sRq"/>
+                            <constraint firstItem="Yyy-Kq-iEm" firstAttribute="centerY" secondItem="fag-x1-a4e" secondAttribute="centerY" id="dBG-ew-u55"/>
+                            <constraint firstItem="Yyy-Kq-iEm" firstAttribute="trailing" secondItem="CIy-Wa-cBv" secondAttribute="trailingMargin" id="dsI-0Z-gwY"/>
                             <constraint firstItem="lE8-aT-vff" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leading" id="eOM-2N-bUB"/>
                             <constraint firstItem="AnI-cf-O5H" firstAttribute="top" secondItem="SEF-7w-TF2" secondAttribute="bottom" id="i5d-0O-3xX"/>
                             <constraint firstItem="AnI-cf-O5H" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leading" id="wuQ-91-i5M"/>

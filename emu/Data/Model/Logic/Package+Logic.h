@@ -25,6 +25,17 @@
                        context:(NSManagedObjectContext *)context;
 
 /**
+ *  Finds an existing package object with the provided oid.
+ *
+ *  @param oid     The id of the object.
+ *  @param context The managed object context.
+ *
+ *  @return Package object.
+ */
++(Package *)findWithID:(NSString *)oid
+               context:(NSManagedObjectContext *)context;
+
+/**
  *  Fetches all the packages info found in local storage.
  *
  *  @param context The managed object context.
@@ -40,5 +51,31 @@
  *  @return NSString with he name of the file.
  */
 -(NSString *)jsonFileName;
+
+/**
+ *  Find an emuticon definition in this package
+ *  that is marked to be used in previews.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return EmuticonDef object or nil if none found.
+ */
+-(EmuticonDef *)findEmuDefForPreviewInContext:(NSManagedObjectContext *)context;
+
+/**
+ *  The default capture duration when capturing footage for this package.
+ *
+ *  @return NSTimeInterval of the duration.
+ */
+-(NSTimeInterval)defaultCaptureDuration;
+
+
+/**
+ *  Create one emuticon object for each emuticon definition in this package.
+ *  if emuticon object already exists for an emuticon definition, will skip it.
+ *
+ *  @return An array of the newly created objects.
+ */
+-(NSArray *)createMissingEmuticonObjects;
 
 @end

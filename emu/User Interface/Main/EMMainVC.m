@@ -13,6 +13,7 @@
 #import "EMBackend.h"
 #import "EmuCell.h"
 #import "EMEmuticonScreenVC.h"
+#import "EMRenderManager.h"
 
 
 @interface EMMainVC () <
@@ -40,14 +41,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Initialize the data
+    // Currently just reads local json files.
+    // TODO: implement integration with server side, when available.
     [self initData];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    return;
+
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+
+    // Show the splash screen if needs to open the recorder
+    // for the onboarding experience.
     if (!appCFG.onboardingPassed.boolValue) {
         [self showSplash];
     }
@@ -62,11 +70,24 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    return;
+
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.onboardingPassed.boolValue) {
-        [self openRecorderWithInfo:nil];
+        
+        /**
+         *  Open the recorder for the first time.
+         */
+        Package *package = [appCFG packageForOnboarding];
+        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
+                             info:@{emkPackage:package}];
+        
+        
     } else {
+        
+        /**
+         *  User finished onboarding in the past.
+         *  just show the main screen of the app.
+         */
         [self resetFetchedResultsController];
         [self.guiCollectionView reloadData];
     }
@@ -90,7 +111,7 @@
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         HMLOG(TAG,
-              ERR,
+              EM_ERR,
               @"Unresolved error %@, %@",
               error,
               [error localizedDescription]);
@@ -103,7 +124,7 @@
         return _fetchedResultsController;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@", @YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@", @NO];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
@@ -132,7 +153,7 @@
     UIImageView *splashView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     self.splashView = splashView;
     self.splashView.image = [UIImage imageNamed:@"splashImage"];
-    self.splashView.contentMode = UIViewContentModeScaleAspectFit;
+    self.splashView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:self.splashView];
 }
 
@@ -203,7 +224,15 @@
 -(void)configureCell:(EmuCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.animatedGifURL = [emu animatedGifURL];
+    
+    if (!emu.wasRendered.boolValue) {
+        [cell.guiActivity stopAnimating];
+        cell.animatedGifURL = [emu animatedGifURL];
+    } else {
+        [cell.guiActivity startAnimating];
+        [EMRenderManager.sh enqueueEmu:emu];
+    }
+    
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -215,19 +244,26 @@
 
 
 #pragma mark - EMRecorderDelegate
--(void)recorderWantsToBeDismissedWithInfo:(NSDictionary *)info
+-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
 {
+    // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [self hideSplashAnimated:YES];
     }];
+    
+    // Handle what to do next, depending on the flow of the dismissed recorder.
+    [self resetFetchedResultsController];
+    [self.guiCollectionView reloadData];
+    
+    if (flowType == EMRecorderFlowTypeOnboarding) {
+        
+    }
 }
 
--(void)openRecorderWithInfo:(NSDictionary *)info
+-(void)openRecorderForFlow:(EMRecorderFlowType)flowType
+                      info:(NSDictionary *)info
 {
-    //
-    // Open recorder for onboarding.
-    //
-    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithInfo:nil];
+    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:flowType info:info];
     recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     recorderVC.delegate = self;
     [self presentViewController:recorderVC animated:YES completion:^{
@@ -247,7 +283,7 @@
 // ===========
 - (IBAction)onPressedRetakeButton:(id)sender
 {
-    [self openRecorderWithInfo:nil];
+    //[self openRecorderWithInfo:nil];
 }
 
 

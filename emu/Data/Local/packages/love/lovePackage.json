@@ -8,7 +8,7 @@
                  "source_front_layer": "angel-fg.gif",
                  "source_user_layer_mask": "angel-mask.jpg",
                  "tags": ["love","angel","divine"],
-                 "use_for_preview":true
+                 "use_for_preview":true,
                  "duration": 2.0,
                  "frames_count": 24,
                  "thumbnail_frame_index": 23
@@ -24,7 +24,7 @@
                  "tags": ["love","green"],
                  "duration": 2.0,
                  "frames_count": 24,
-                 "thumbnail_frame_index": 23,
+                 "thumbnail_frame_index": 23
                  },
 
                  {
@@ -57,7 +57,7 @@
                  "name": "hot",
                  "source_back_layer": "hot-bg.gif",
                  "source_user_layer_mask": "hot-mask.jpg",
-                 "tags": ["love","hot"]
+                 "tags": ["love","hot"],
                  "duration": 2.0,
                  "frames_count": 24,
                  "thumbnail_frame_index": 23

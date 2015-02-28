@@ -46,11 +46,14 @@
     EMRecorderControlsDelegate
 >
 
+
+@property (nonatomic) Package *package;
+
+@property (nonatomic) Emuticon *latestEmuticon;
+
 //
 // Containers and sub view controllers
 //
-
-@property (nonatomic) Emuticon *latestEmuticon;
 
 // User controls: recorder flow, user interaction, record, etc.
 @property (weak, nonatomic) IBOutlet UIView *guiUserControlsContainer;
@@ -106,10 +109,14 @@
 
 @synthesize recorderState = _recorderState;
 
-+(EMRecorderVC *)recorderVCWithInfo:(NSDictionary *)info
++(EMRecorderVC *)recorderVCForFlow:(EMRecorderFlowType)flowType
+                              info:(NSDictionary *)info
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"EMRecorder" bundle:nil];
     EMRecorderVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"recorder vc"];
+    vc.flowType = flowType;
+    vc.package = info[emkPackage];
+    vc.info = info;
     return vc;
 }
 
@@ -165,7 +172,7 @@
 #pragma mark - Initializations
 -(void)initData
 {
-    self.recordingDuration = 3.0;
+    self.recordingDuration = self.package? [self.package defaultCaptureDuration]: 2.0;
 }
 
 -(void)initGUI
@@ -291,7 +298,8 @@
         return;
     }
     
-    [self handleStateWithInfo:info nextState:@(EMRecorderStateReviewPreview)];
+    [self handleStateWithInfo:info
+                    nextState:@(EMRecorderStateReviewPreview)];
 }
 
 #pragma mark - Good/Bad BG Icon
@@ -429,7 +437,7 @@
     self.captureSession.sessionDisplayDelegate = self.previewVC;
     
     // Initialized.
-    HMLOG(TAG, DBG, @"Initialized capture session");
+    HMLOG(TAG, EM_DBG, @"Initialized capture session");
 }
 
 #pragma mark - Video processing
@@ -444,7 +452,7 @@
                                                          contourFileName:@"1" // @"headAndChest480X480"
                                                                    error:&error];
     if (error) {
-        HMLOG(TAG, ERR, @"GM error: %@", [error localizedDescription]);
+        HMLOG(TAG, EM_ERR, @"GM error: %@", [error localizedDescription]);
         [self.captureSession stopAndTearDownCaptureSession];
         return;
     }
@@ -454,7 +462,7 @@
     // The capture session will use the green machine for
     // processing the feed of video frames.
     [self.captureSession initializeVideoProcessor:gm];
-    HMLOG(TAG, DBG, @"Initialized video processing.");
+    HMLOG(TAG, EM_DBG, @"Initialized video processing.");
 }
 
 
@@ -484,7 +492,7 @@
     [EMDB.sh save];
     
     // Get an emuticon definition to be used for the preview.
-    EmuticonDef *emuDefForPreview = [EmuticonDef findEmuDefForPreviewInContext:EMDB.sh.context];
+    EmuticonDef *emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
     
     // Send the footage to preview rendering.
     [EMRenderManager.sh renderPreviewForFootage:footage
@@ -670,8 +678,10 @@
     [self.controlsVC setState:EMRecorderControlsStateHidden
                      animated:YES];
     
+    self.feedBackVC.goodBackgroundWeight = 0;
     [self.feedBackVC showBGFeedbackAnimated:NO];
     [self.feedBackVC hideRecordingProgressAnimated:NO];
+    
     [self showCameraFeedUIAnimated:YES];
     self.guiPleaseWaitLabel.hidden = YES;
     [self hideResultUIAnimated:YES];
@@ -893,8 +903,43 @@
 
 -(void)_stateDone
 {
-    // Replace this view controller with the main view controller.
-    [self finishOnBoarding];
+//    // Mark that the user finished with the recorder,
+//    // with the onboarding flow.
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+
+    // NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithDictionary:self.info];
+    
+    if (self.flowType == EMRecorderFlowTypeOnboarding) {
+        
+        //
+        // Finished with onboarding!
+        //
+        
+        // Don't enter onboarding again.
+        appCFG.onboardingPassed = @YES;
+        
+        // Make the new footage, the master footage app wide.
+        UserFootage *newFootage = self.latestEmuticon.userFootage;
+        appCFG.prefferedFootageOID = newFootage.oid;
+        
+        // Delete the preview emuticon.
+        [self.latestEmuticon deleteAndCleanUp];
+        [EMDB.sh save];
+        
+        // Create and render all required emuticon objects in first package.
+        [self.package createMissingEmuticonObjects];
+        [EMDB.sh save];
+
+    } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
+    } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
+    }
+    
+    // Save
+    [EMDB.sh save];
+    
+    // Tell delegate to dismiss the recorder.
+    [self.delegate recorderWantsToBeDismissedAfterFlow:self.flowType
+                                                  info:self.info];
 }
 
 #pragma mark - Result Show/Hide
@@ -1027,9 +1072,8 @@
     } else if (action == EMRecorderControlsActionNo &&
                self.recorderState == EMRecorderStateReviewPreview) {
 
-// TODO: Delete the emuticon and the user's footage
-//        [self.latestEmuticon.userFootage deleteInContext:EMDB.sh.context];
-//        [self.latestEmuticon deleteInContext:EMDB.sh.context];
+        [self.latestEmuticon.userFootage deleteAndCleanUp];
+        [self.latestEmuticon deleteAndCleanUp];
         self.latestEmuticon = nil;
         [EMDB.sh save];
         [self stateRestart];
@@ -1046,14 +1090,6 @@
     }
 }
 
-#pragma mark - Exit recorder
--(void)finishOnBoarding
-{
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    appCFG.onboardingPassed = @YES;
-    [EMDB.sh save];
-    [self.delegate recorderWantsToBeDismissedWithInfo:nil];
-}
 
 #pragma mark - IB Actions
 // ===========
@@ -1061,24 +1097,6 @@
 // ===========
 - (IBAction)onPressedDebugButton:(id)sender
 {
-//    [self handleStateWithInfo:nil nextState:@(EMRecorderStateFinishingUp)];
-//    return;
-//    // User footage.
-//    NSString *oid = @"4D2275BF-D6AB-4D81-8AA8-48A8F2CF783F";
-//    UserFootage *userFootage = [UserFootage findWithID:oid context:EMDB.sh.context];
-//    
-//    // Emu Def for preview
-//    EmuticonDef *emuDef = [EmuticonDef findEmuDefForPreviewInContext:EMDB.sh.context];
-//    
-//    // Check we have what we need.
-//    if (userFootage == nil || emuDef == nil) {
-//        HMLOG(TAG, ERR, @":-(");
-//        return;
-//    }
-//    
-//    // Render
-//    [EMRenderManager.sh renderPreviewForFootage:userFootage
-//                                     withEmuDef:emuDef];
 }
 
 

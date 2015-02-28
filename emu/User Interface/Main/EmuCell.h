@@ -13,6 +13,7 @@
 @interface EmuCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimGifView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 @property (nonatomic) NSURL *animatedGifURL;
 

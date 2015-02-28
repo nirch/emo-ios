@@ -43,6 +43,18 @@
     return emu;
 }
 
++(Emuticon *)newForEmuticonDef:(EmuticonDef *)emuticonDef
+                       context:(NSManagedObjectContext *)context
+{
+    NSString *oid = [[NSUUID UUID] UUIDString];
+    Emuticon *emu = (Emuticon *)[NSManagedObject findOrCreateEntityNamed:E_EMU
+                                                                     oid:oid
+                                                                 context:context];
+    emu.emuticonDef = emuticonDef;
+    return emu;
+}
+
+
 -(NSURL *)animatedGifURL
 {
     NSString *outputPath = [self animatedGifPath];
@@ -62,6 +74,30 @@
     NSString *path = [self animatedGifPath];
     NSData *gifData = [[NSData alloc] initWithContentsOfFile:path];
     return gifData;
+}
+
+-(void)deleteAndCleanUp
+{
+    // Delete rendered output files
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *error;
+    [fm removeItemAtPath:[self animatedGifPath] error:&error];
+
+    // Delete the object
+    [self.managedObjectContext deleteObject:self];
+}
+
+
+-(UserFootage *)prefferedUserFootage
+{
+    NSString *footageOID = self.emuticonDef.package.prefferedFootageOID;
+    if (!footageOID) {
+        AppCFG *appCFG = [AppCFG cfgInContext:self.managedObjectContext];
+        footageOID = appCFG.prefferedFootageOID;
+    }
+    UserFootage *userFootage = [UserFootage findWithID:footageOID
+                                               context:self.managedObjectContext];
+    return userFootage;
 }
 
 @end

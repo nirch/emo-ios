@@ -7,10 +7,13 @@
 //
 #define E_APP_CFG @"AppCFG"
 
+@class Package;
+
 #import "AppCFG.h"
 
 @interface AppCFG (Logic)
 
 +(AppCFG *)cfgInContext:(NSManagedObjectContext *)context;
+-(Package *)packageForOnboarding;
 
 @end

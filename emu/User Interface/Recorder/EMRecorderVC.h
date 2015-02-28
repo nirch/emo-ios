@@ -26,12 +26,24 @@ typedef NS_ENUM(NSInteger, EMRecorderState) {
 
 @interface EMRecorderVC : UIViewController
 
-+(EMRecorderVC *)recorderVCWithInfo:(NSDictionary *)info;
+/**
+ *  Instanciate a new recorder for the provided flow.
+ *
+ *  @param flowType The flow type of the recorder (see EMRecorderFlowType)
+ *  @param info     Extra info provided to the recorder when presented.
+ *
+ *  @return A new EMRecorderVC instance.
+ */
++(EMRecorderVC *)recorderVCForFlow:(EMRecorderFlowType)flowType
+                              info:(NSDictionary *)info;
+
+@property (nonatomic) EMRecorderFlowType flowType;
+
+#define emkPackage @"package"
+#define emkEmuticon @"emuticon"
+@property (nonatomic) NSDictionary *info;
 
 @property (weak, nonatomic) id<EMRecorderDelegate>delegate;
-
-// TODO: remove this. Used for debugging.
-@property (weak, nonatomic) IBOutlet UIImageView *gaga;
 
 #pragma mark - Onboarding
 @property (nonatomic, readonly) BOOL shouldPresentOnBoarding;

@@ -54,4 +54,15 @@
     return path;
 }
 
+-(void)deleteAndCleanUp
+{
+    // Delete all footage files.
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:[self pathForUserImages] error:nil];
+    
+    // Delete the object.
+    [self.managedObjectContext deleteObject:self];
+}
+
+
 @end

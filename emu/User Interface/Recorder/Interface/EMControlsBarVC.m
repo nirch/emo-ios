@@ -23,6 +23,8 @@
 // Background detection messages
 @property (weak, nonatomic) IBOutlet EMMessageButton *guiBadMessageButton;
 @property (weak, nonatomic) IBOutlet EMMessageButton *guiGoodMessageButton;
+@property (weak, nonatomic) IBOutlet UILabel *guiLongMessage;
+@property (nonatomic) BOOL userPressedContinueAnyway;
 @property (nonatomic) HMBGMark latestBGMark;
 @property (nonatomic) HMBackgroundMarks *bgMarks;
 @property (nonatomic) NSTimeInterval latestBGMarkTime;
@@ -37,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet EMLabel *guiCountdownLabel;
 @property (nonatomic) NSInteger countDownNumber;
 
+
+
 @end
 
 @implementation EMControlsBarVC
@@ -47,8 +51,15 @@
     [self initGUI];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self layoutFixesIfRequired];
+}
+
 -(void)initState
 {
+    self.userPressedContinueAnyway = NO;
     self.latestBGMark = HMBGMarkUnrecognized;
     self.latestBGMarkTime = 0;
     self.latestBGMarkTime = [[NSProcessInfo processInfo] systemUptime];
@@ -67,6 +78,17 @@
     [self.guiGoodMessageButton updateShowingIcon:YES
                                        positive:YES];
 }
+
+-(void)layoutFixesIfRequired
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenHeight = screenRect.size.height;
+    if (screenHeight > 480.0) return;
+    
+    // Fu@#$%ing iPhone 4s needs special treatment of the layout.
+    self.guiLongMessage.hidden = YES;
+}
+
 
 
 #pragma mark - States
@@ -135,6 +157,7 @@
     self.guiContinueButton.alpha = 0;
     self.guiRecordButton.alpha = 0;
     self.guiCountdownLabel.alpha = 0;
+    self.guiLongMessage.alpha = 0;
 }
 
 -(void)stateHiddenAnimated:(BOOL)animated
@@ -144,7 +167,8 @@
 
 -(void)stateBGDetectionAnimated:(BOOL)animated
 {
-    [self hideAll];    
+    [self hideAll];
+    self.userPressedContinueAnyway = NO;
 }
 
 -(void)statePreparingWithInfo:(NSDictionary *)info
@@ -211,6 +235,11 @@
 
     [self.guiPositiveButton setTitle:LS(@"RECORDER_PREVIEW_CONFIRM")
                             forState:UIControlStateNormal];
+    
+    if (self.userPressedContinueAnyway) {
+        self.guiLongMessage.alpha = 1;
+        self.guiLongMessage.text = LS(@"RECORDER_PREVIEW_BAD_BACKGROUND_LONG_MESSAGE");
+    }
 
 }
 
@@ -234,7 +263,7 @@
     NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
     NSTimeInterval timePassed = now - self.latestBGMarkTime;
     
-    HMLOG(TAG, DBG, @"BG Mark: %@", @(bgMark));
+    HMLOG(TAG, EM_DBG, @"BG Mark: %@", @(bgMark));
 
     if (bgMark == HMBGMarkGood) {
         //
@@ -323,6 +352,7 @@
 {
     self.guiGoodMessageButton.alpha = 0;
     self.guiBadMessageButton.alpha = 0;
+    self.userPressedContinueAnyway = YES;
     [self.delegate controlSentAction:EMRecorderControlsActionContinueWithBadBackground
                                 info:nil];
 }

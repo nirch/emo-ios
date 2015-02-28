@@ -37,6 +37,16 @@
              emuticonDefOID:(NSString *)emuticonDefOID
                     context:(NSManagedObjectContext *)context;
 
+/**
+ *  Create a new emuticon object related to the given emuticon definition.
+ *
+ *  @param emuticonDef An emuticon definition
+ *  @param context     The managed object context.
+ *
+ *  @return An emuticon object.
+ */
++(Emuticon *)newForEmuticonDef:(EmuticonDef *)emuticonDef
+                       context:(NSManagedObjectContext *)context;
 
 /**
  *  The url to the animated gif rendered for this emuticon object.
@@ -58,5 +68,23 @@
  *  @return NSData of the raw data of the animated gif.
  */
 -(NSData *)animatedGifData;
+
+/**
+ *  Cleans up the emuticon related files and deletes the object.
+ */
+-(void)deleteAndCleanUp;
+
+
+/**
+ *  The preffered user footage for this emuticon.
+ *  
+ *  It follows the following logic:
+ *      - If exists, returns the footage selected as preffered for the package.
+ *          otherwise:
+ *      - Returns the master footage selected app wide.
+ *
+ *  @return UserFootage object.
+ */
+-(UserFootage *)prefferedUserFootage;
 
 @end

@@ -8,6 +8,7 @@
 
 @class UserFootage;
 @class EmuticonDef;
+@class Emuticon;
 
 @interface EMRenderManager : NSObject
 
@@ -18,5 +19,15 @@
 #pragma mark - Rendering
 -(void)renderPreviewForFootage:(UserFootage *)footage
                     withEmuDef:(EmuticonDef *)emuDef;
+
+-(void)enqueueEmu:(Emuticon *)emu;
+
+//-(void)renderAllEmuticonsWithFootage:(UserFootage *)footage;
+//
+//-(void)renderEmuticons:(NSArray *)emuArray
+//               footage:(UserFootage *)footage;
+//
+//-(void)renderEmuticonsInPackage:(Package *)package
+//                        footage:(UserFootage *)footage;
 
 @end

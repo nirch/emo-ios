@@ -56,10 +56,9 @@ typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
  */
 -(void *)latestOutputImage;
 
-//
-///**
-// *  @return latest processed sample buffer
-// */
-//-(CMSampleBufferRef)latestProcessedSampleBuffer;
+/**
+ *  Do some clean up operations.
+ */
+-(void)cleanUp;
 
 @end

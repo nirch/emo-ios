@@ -118,7 +118,7 @@
             // Done with configuring the cam.
             [device unlockForConfiguration];
         } else {
-            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
+            HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
         }
     });
 }
@@ -153,7 +153,7 @@
             // Done with configuring the cam.
             [device unlockForConfiguration];
         } else {
-            HMLOG(TAG, ERR, @"Failed preparing camera for video processing.");
+            HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
         }
     });
 }
@@ -400,7 +400,11 @@
 #pragma mark - Video Processing
 -(void)setVideoProcessingState:(HMVideoProcessingState)state info:(NSDictionary *)info
 {
+    // Set the state
     self.videoProcessingState = state;
+    
+    // Reset stuff
+    [self.videoProcessor cleanUp];
 }
 
 

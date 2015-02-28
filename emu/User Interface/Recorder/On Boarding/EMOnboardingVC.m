@@ -158,16 +158,26 @@
     }
 }
 
-#pragma mark - IB Actions
-// ===========
-// IB Actions.
-// ===========
-- (IBAction)onPressedEmuButton:(UIButton *)sender
+#pragma mark - Restarting
+-(void)restart
 {
     self.stage = 0;
     [self update];
     [self.delegate onboardingDidGoBackToStageNumber:0];
 }
 
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedEmuButton:(UIButton *)sender
+{
+    [self restart];
+}
+
+- (IBAction)onPressedRestartButton:(UIButton *)sender
+{
+    [self restart];
+}
 
 @end

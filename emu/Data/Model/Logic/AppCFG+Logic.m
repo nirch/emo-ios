@@ -8,6 +8,7 @@
 
 #import "AppCFG+Logic.h"
 #import "NSManagedObject+FindAndCreate.h"
+#import "EMDB.h"
 
 @implementation AppCFG (Logic)
 
@@ -17,6 +18,14 @@
                                                                    oid:@"default"
                                                                context:context];
     return (AppCFG *)object;
+}
+
+-(Package *)packageForOnboarding
+{
+    NSString *oid = self.onboardingUsingPackage;
+    Package *package = [Package findWithID:oid
+                                   context:self.managedObjectContext];
+    return package;
 }
 
 @end

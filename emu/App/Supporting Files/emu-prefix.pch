@@ -21,11 +21,11 @@
     // Logging
     #import <NSLogger/NSLogger.h>
 
-    #define ERR 0
-    #define APP 1
-    #define DBG 2
-    #define DATA 3
-    #define VERBOSE 4
+    #define EM_ERR 0
+    #define EM_APP 1
+    #define EM_DBG 2
+    #define EM_DATA 3
+    #define EM_VERBOSE 4
 
     #ifdef DEBUG
         #define HMLOG(tag, level, ...) LogMessage(tag,level,__VA_ARGS__)

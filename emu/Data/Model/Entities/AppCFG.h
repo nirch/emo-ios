@@ -2,7 +2,7 @@
 //  AppCFG.h
 //  emu
 //
-//  Created by Aviv Wolf on 2/27/15.
+//  Created by Aviv Wolf on 2/28/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -12,10 +12,10 @@
 
 @interface AppCFG : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * animGifMaxFPS;
-@property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSNumber * onboardingPassed;
-@property (nonatomic, retain) NSNumber * videoMaxFPS;
+@property (nonatomic, retain) NSNumber * defaultOutputVideoMaxFps;
+@property (nonatomic, retain) NSString * prefferedFootageOID;
+@property (nonatomic, retain) NSString * onboardingUsingPackage;
 
 @end

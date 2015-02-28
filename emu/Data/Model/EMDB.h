@@ -10,9 +10,6 @@
 
 #import "NSManagedObject+FindAndCreate.h"
 
-#import "Tag.h"
-//#import "Tag+Logic.h"
-
 #import "Emuticon.h"
 #import "Emuticon+Logic.h"
 

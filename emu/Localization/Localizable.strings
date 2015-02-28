@@ -32,13 +32,14 @@
 
 // Messages
 "RECORDER_MESSAGE_WHEN_READY" = "When ready, press record!";
-"RECORDER_MESSAGE_REVIEW_PREVIEW" = "Happy with the resualt?";
+"RECORDER_MESSAGE_REVIEW_PREVIEW" = "Happy with the resault?";
 
 // Recorder interface button
 "RECORDER_CONTINUE_ANYWAY_BUTTON" = "CONTINUE ANYWAY";
 "RECORDER_CONTINUE_BUTTON" = "CONTINUE";
 "RECORDER_PREVIEW_TRY_AGAIN_BUTTON" = "LETS TRY IT AGAIN";
 "RECORDER_PREVIEW_CONFIRM" = "I LOVE IT!";
+"RECORDER_PREVIEW_BAD_BACKGROUND_LONG_MESSAGE" = "You chose to start recording with a bad backround. For best results, Emu recommends that you try again with a uniform background. Try to avoid shadows and objects behind you.";
 
 
 // Share

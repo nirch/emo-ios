@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AppCFG" representedClassName="AppCFG" syncable="YES">
-        <attribute name="animGifMaxFPS" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="oid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="defaultOutputVideoMaxFps" attributeType="Integer 16" defaultValueString="15" syncable="YES"/>
+        <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="onboardingPassed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="videoMaxFPS" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="onboardingUsingPackage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefferedFootageOID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Emuticon" representedClassName="Emuticon" syncable="YES">
-        <attribute name="isPreview" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="oid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="usageCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="isPreview" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="usageCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="wasRendered" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="emuticonDef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EmuticonDef" inverseName="emus" inverseEntity="EmuticonDef" syncable="YES"/>
-        <relationship name="userFootage" maxCount="1" deletionRule="Nullify" destinationEntity="UserFootage" inverseName="emus" inverseEntity="UserFootage" syncable="YES"/>
+        <relationship name="userFootage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserFootage" inverseName="emus" inverseEntity="UserFootage" syncable="YES"/>
     </entity>
     <entity name="EmuticonDef" representedClassName="EmuticonDef" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -20,28 +21,21 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="order" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
-        <attribute name="outputAnimGifMaxFPS" attributeType="Integer 16" syncable="YES"/>
-        <attribute name="outputVideoMaxFPS" attributeType="Integer 16" syncable="YES"/>
         <attribute name="sourceBackLayer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sourceFrontLayer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sourceUserLayerMask" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailFrameIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="useForPreview" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
-        <relationship name="emus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Emuticon" inverseName="emuticonDef" inverseEntity="Emuticon" syncable="YES"/>
-        <relationship name="packageTag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="packageEmus" inverseEntity="Tag" syncable="YES"/>
-        <relationship name="tags" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="emuDefs" inverseEntity="Tag" syncable="YES"/>
+        <relationship name="emus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Emuticon" inverseName="emuticonDef" inverseEntity="Emuticon" syncable="YES"/>
+        <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="emuDefs" inverseEntity="Package" syncable="YES"/>
     </entity>
     <entity name="Package" representedClassName="Package" syncable="YES">
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="oid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefferedFootageOID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeUpdated" optional="YES" attributeType="Date" syncable="YES"/>
-    </entity>
-    <entity name="Tag" representedClassName="Tag" syncable="YES">
-        <attribute name="isPackage" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="defaultUserFootage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserFootage" inverseName="tags" inverseEntity="UserFootage" syncable="YES"/>
-        <relationship name="emuDefs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EmuticonDef" inverseName="tags" inverseEntity="EmuticonDef" syncable="YES"/>
-        <relationship name="packageEmus" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EmuticonDef" inverseName="packageTag" inverseEntity="EmuticonDef" syncable="YES"/>
+        <relationship name="emuDefs" toMany="YES" deletionRule="Cascade" destinationEntity="EmuticonDef" inverseName="package" inverseEntity="EmuticonDef" syncable="YES"/>
     </entity>
     <entity name="UserFootage" representedClassName="UserFootage" syncable="YES">
         <attribute name="duration" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -49,14 +43,12 @@
         <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="timeTaken" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <relationship name="emus" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Emuticon" inverseName="userFootage" inverseEntity="Emuticon" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="defaultUserFootage" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <elements>
         <element name="AppCFG" positionX="-171" positionY="-423" width="128" height="118"/>
-        <element name="Emuticon" positionX="72" positionY="-130" width="252" height="118"/>
-        <element name="EmuticonDef" positionX="27" positionY="-414" width="333" height="255"/>
-        <element name="Tag" positionX="-173" positionY="-297" width="128" height="120"/>
-        <element name="UserFootage" positionX="-180" positionY="99" width="432" height="133"/>
-        <element name="Package" positionX="-416" positionY="-252" width="128" height="103"/>
+        <element name="Emuticon" positionX="162" positionY="-144" width="252" height="133"/>
+        <element name="EmuticonDef" positionX="27" positionY="-414" width="333" height="223"/>
+        <element name="UserFootage" positionX="-45" positionY="36" width="432" height="118"/>
+        <element name="Package" positionX="-180" positionY="-279" width="128" height="133"/>
     </elements>
 </model>

@@ -175,7 +175,7 @@
                                                          handler:nil];
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:nil];
-        HMLOG(TAG, ERR, @"Unimplemented share method.");
+        HMLOG(TAG, EM_ERR, @"Unimplemented share method.");
     }
     
     // Share

@@ -56,7 +56,7 @@
     fetchRequest.fetchLimit = 1;
     NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        HMLOG(TAG, ERR, @"Error while searching for entity. %@",[error localizedDescription]);
+        HMLOG(TAG, EM_ERR, @"Error while searching for entity. %@",[error localizedDescription]);
         return nil;
     }
     return [self firstResult:results];
@@ -72,7 +72,7 @@
     fetchRequest.predicate = predicate;
     NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        HMLOG(TAG, ERR, @"Error while searching for entity. %@",[error localizedDescription]);
+        HMLOG(TAG, EM_ERR, @"Error while searching for entity. %@",[error localizedDescription]);
         return nil;
     }
     return results;

@@ -47,7 +47,8 @@
 #pragma mark - Refreshing data
 -(void)refreshData
 {
-    // Parsing app data.
+    // Parsing app cfg.
+    [self parseAppCFG];
     
     // Parsing packages meta data.
     [self parsePackagesMetaData];
@@ -59,31 +60,51 @@
     [EMDB.sh save];
 }
 
+-(void)parseAppCFG
+{
+    NSDictionary *json = [self jsonDataInLocalFile:@"appCFG"];
+    
+    // Parse the data
+    EMAppCFGParser *parser = [[EMAppCFGParser alloc] initWithContext:EMDB.sh.context];
+    parser.objectToParse = json;
+    [parser parse];
+}
+
 
 -(void)parsePackagesMetaData
 {
+    // Parse the meta data of all packages.
+    // This will be used later to look for the emuticons information
+    // for each package.
     NSDictionary *json = [self jsonDataInLocalFile:@"packages"];
     EMPackagesParser *packagesParser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
     packagesParser.objectToParse = json;
     [packagesParser parse];
 }
 
+
 -(void)parsePackages
 {
+    // Parse the emuticon definitions of all known packages.
     NSArray *packages = [Package allPackagesInContext:EMDB.sh.context];
     for (Package *package in packages) {
-        // Load json related to package.
+        // Load and parse json related to package.
         [self parseDataForPackage:package];
     }
 }
 
+
 -(void)parseDataForPackage:(Package *)package
 {
-    NSDictionary *json = [self jsonDataInLocalFile:[package jsonFileName]];
+    // Parse emuticon definitions of passed package.
+    NSString *jsonFileName = [package jsonFileName];
+    NSDictionary *json = [self jsonDataInLocalFile:jsonFileName];
     EMEmuticonsParser *emuParser = [[EMEmuticonsParser alloc] initWithContext:EMDB.sh.context];
     emuParser.objectToParse = json;
+    emuParser.package = package;
     [emuParser parse];
 }
+
 
 #pragma mark - JSON Serialization
 -(NSDictionary *)jsonDataInLocalFile:(NSString *)fileName
@@ -91,40 +112,20 @@
     // Read emuticons json file
     NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
     NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
+    
+    if (jsonData == nil) {
+        HMLOG(TAG, EM_ERR, @"JSON data not found for %@", fileName);
+        return nil;
+    }
+    
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
     if (error) {
-        HMLOG(TAG, ERR, @"NSJSONSerialization failed for %@: %@", fileName, [error localizedDescription]);
+        HMLOG(TAG, EM_ERR, @"NSJSONSerialization failed for %@: %@", fileName, [error localizedDescription]);
         return nil;
     }
     return json;
 }
 
-
-/*
--(void)refetchEmuticonsDefinitions
-{
-    NSDictionary *json = [self jsonDataInLocalFile:@"emuticonsDefinitions"];
-    if (json == nil)
-        return;
-    
-    // Parse the data
-    EMEmuticonsParser *parser = [[EMEmuticonsParser alloc] initWithContext:EMDB.sh.context];
-    parser.objectToParse = json;
-    [parser parse];
-}
-
--(void)refetchAppCFG
-{
-    NSDictionary *json = [self jsonDataInLocalFile:@"appCFG"];
-    if (json == nil)
-        return;
-    
-    // Parse the data
-    EMAppCFGParser *parser = [[EMAppCFGParser alloc] initWithContext:EMDB.sh.context];
-    parser.objectToParse = json;
-    [parser parse];
-}
-*/
 
 @end
