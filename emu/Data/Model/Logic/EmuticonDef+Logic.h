@@ -41,6 +41,16 @@
  */
 -(Emuticon *)spawn;
 
+/**
+ *  An array of all related emuticons
+ *  excluding preview emuticons.
+ *
+ *  @return An array of none preview emuticons
+ */
+-(NSArray *)nonPreviewEmuticons;
+
+
+
 -(NSString *)pathForUserLayerMask;
 -(NSString *)pathForBackLayer;
 -(NSString *)pathForFrontLayer;

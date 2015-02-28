@@ -13,11 +13,11 @@
 
 @interface Package : NSManagedObject
 
-@property (nonatomic, retain) NSString * oid;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * timeUpdated;
 @property (nonatomic, retain) NSString * label;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSString * prefferedFootageOID;
+@property (nonatomic, retain) NSDate * timeUpdated;
 @property (nonatomic, retain) NSSet *emuDefs;
 @end
 

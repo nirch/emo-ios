@@ -18,6 +18,8 @@
 
 
 @property (weak, nonatomic) IBOutlet UIButton *guiEmuButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiRestartButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiCancelButton;
 
 // A changing title depending on current stage of the flow
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
@@ -40,14 +42,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initContent];
-    [self initGUI];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-    //NSLayoutConstraint *c = self.guiPagerView.constraints.lastObject;
-    //c.constant = 80;
+    [self initGUI];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [UIView animateWithDuration:0.3 animations:^{
         self.guiPagerView.alpha = 1;
     }];
@@ -78,6 +84,19 @@
     self.guiPagerView.pagesCount = EMOB_STAGES-1;
     self.guiPagerView.alpha = 0;
     [self update];
+    
+    // Depending on flow type
+    if (self.flowType == EMRecorderFlowTypeOnboarding) {
+        self.guiEmuButton.hidden = NO;
+        self.guiRestartButton.hidden = NO;
+        self.guiCancelButton.hidden = YES;
+        self.guiPagerView.hidden = NO;
+    } else {
+        self.guiPagerView.hidden = YES;
+        self.guiEmuButton.hidden = YES;
+        self.guiRestartButton.hidden = YES;
+        self.guiCancelButton.hidden = NO;
+    }
 }
 
 #pragma mark - Update
@@ -166,6 +185,12 @@
     [self.delegate onboardingDidGoBackToStageNumber:0];
 }
 
+#pragma mark - Canceling
+-(void)cancel
+{
+    [self.delegate onboardingUserWantsToCancel];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -178,6 +203,11 @@
 - (IBAction)onPressedRestartButton:(UIButton *)sender
 {
     [self restart];
+}
+
+- (IBAction)onPressedCancelButton:(UIButton *)sender
+{
+    [self cancel];
 }
 
 @end

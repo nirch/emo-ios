@@ -38,6 +38,14 @@
 
 
 /**
+ *  The preffered footage used application wide.
+ *
+ *  @return UserFootage object used application wide as the preffered footage to
+ *          render emuticons with.
+ */
++(UserFootage *)masterFootage;
+
+/**
  *  Finds or creates a user footage object with the provided info.
  *
  *  @param info    A dictionary containing info about the footage.
@@ -68,5 +76,6 @@
  *  Cleans up the footage related files and deletes the object of the footage.
  */
 -(void)deleteAndCleanUp;
+
 
 @end

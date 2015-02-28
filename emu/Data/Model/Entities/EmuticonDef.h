@@ -21,8 +21,8 @@
 @property (nonatomic, retain) NSString * sourceBackLayer;
 @property (nonatomic, retain) NSString * sourceFrontLayer;
 @property (nonatomic, retain) NSString * sourceUserLayerMask;
-@property (nonatomic, retain) NSNumber * useForPreview;
 @property (nonatomic, retain) NSNumber * thumbnailFrameIndex;
+@property (nonatomic, retain) NSNumber * useForPreview;
 @property (nonatomic, retain) NSSet *emus;
 @property (nonatomic, retain) Package *package;
 @end

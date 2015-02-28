@@ -22,4 +22,4 @@
 
 // Rendering
 #define hmkRenderingFinishedPreview  @"hmk finished rendering preview"
-
+#define hmkRenderingFinished         @"hmk finished rendering"

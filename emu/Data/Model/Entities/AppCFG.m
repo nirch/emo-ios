@@ -11,10 +11,10 @@
 
 @implementation AppCFG
 
+@dynamic defaultOutputVideoMaxFps;
 @dynamic oid;
 @dynamic onboardingPassed;
-@dynamic defaultOutputVideoMaxFps;
-@dynamic prefferedFootageOID;
 @dynamic onboardingUsingPackage;
+@dynamic prefferedFootageOID;
 
 @end

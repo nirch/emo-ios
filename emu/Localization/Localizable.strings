@@ -41,6 +41,11 @@
 "RECORDER_PREVIEW_CONFIRM" = "I LOVE IT!";
 "RECORDER_PREVIEW_BAD_BACKGROUND_LONG_MESSAGE" = "You chose to start recording with a bad backround. For best results, Emu recommends that you try again with a uniform background. Try to avoid shadows and objects behind you.";
 
+// Retakes questions
+"RETAKE_CHOICE_TITLE" = "Retake";
+"RETAKE_CHOICE_QUESTION" = "would you like to retake all Emujis or just this pack?";
+"RETAKE_CHOICE_ALL" = "Retake them all!";
+"RETAKE_CHOICE_PACKAGE" = "Only Emujis in this pack, please.";
 
 // Share
 "SHARE_IT_TITLE" = "Share it:";

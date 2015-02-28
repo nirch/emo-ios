@@ -57,14 +57,14 @@
 }
 
 #pragma mark - Rendering
--(void)enqueueEmu:(Emuticon *)emu
+-(void)enqueueEmu:(Emuticon *)emu info:(NSDictionary *)info
 {
     // TODO: implement correctly. Need to support long queues.
     // Currently a stupid implementation that just throws the emu to
     // rendering in a background thread.
     
-    EmuticonDef *emuDef = emu.emuticonDef;
-    UserFootage *footage = [emu prefferedUserFootage];
+    EmuticonDef *emuDef = emu.emuDef;
+    UserFootage *footage = [emu mostPrefferedUserFootage];
     
     HMLOG(TAG,
           EM_DBG,
@@ -89,10 +89,18 @@
     dispatch_async(self.renderingQueue, ^(void){
         [renderer render];
         HMLOG(TAG, EM_DBG, @"Finished rendering emuticon %@", renderer.outputOID);
+        
+        // Update model in main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             emu.wasRendered = @YES;
             [EMDB.sh save];
+            
+            // Notify main thread about rendered emu.
+            [[NSNotificationCenter defaultCenter] postNotificationName:hmkRenderingFinished
+                                                                object:self
+                                                              userInfo:info];
         });
+        
     });
 }
 

@@ -36,12 +36,13 @@
     Emuticon *emu = (Emuticon *)[NSManagedObject findOrCreateEntityNamed:E_EMU
                                                                      oid:oid
                                                                  context:context];
-    emu.userFootage = userFootage;
-    emu.emuticonDef = emuDef;
+    emu.prefferedFootageOID = userFootage.oid;
+    emu.emuDef = emuDef;
     emu.usageCount = @0;
     emu.isPreview = @YES;
     return emu;
 }
+
 
 +(Emuticon *)newForEmuticonDef:(EmuticonDef *)emuticonDef
                        context:(NSManagedObjectContext *)context
@@ -50,7 +51,7 @@
     Emuticon *emu = (Emuticon *)[NSManagedObject findOrCreateEntityNamed:E_EMU
                                                                      oid:oid
                                                                  context:context];
-    emu.emuticonDef = emuticonDef;
+    emu.emuDef = emuticonDef;
     return emu;
 }
 
@@ -62,12 +63,14 @@
     return url;
 }
 
+
 -(NSString *)animatedGifPath
 {
     NSString *gifName = [SF:@"%@.gif", self.oid];
     NSString *outputPath = [EMFiles outputPathForFileName:gifName];
     return outputPath;
 }
+
 
 -(NSData *)animatedGifData
 {
@@ -76,28 +79,67 @@
     return gifData;
 }
 
+
 -(void)deleteAndCleanUp
+{
+    // Delete rendered files
+    [self cleanUp];
+    
+    // Delete the object
+    [self.managedObjectContext deleteObject:self];
+}
+
+
+-(void)cleanUp
 {
     // Delete rendered output files
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *error;
     [fm removeItemAtPath:[self animatedGifPath] error:&error];
 
-    // Delete the object
-    [self.managedObjectContext deleteObject:self];
+    // Mark it as not rendered.
+    self.wasRendered = @NO;
 }
 
 
--(UserFootage *)prefferedUserFootage
+-(NSString *)mostPrefferedUserFootageOID
 {
-    NSString *footageOID = self.emuticonDef.package.prefferedFootageOID;
-    if (!footageOID) {
-        AppCFG *appCFG = [AppCFG cfgInContext:self.managedObjectContext];
-        footageOID = appCFG.prefferedFootageOID;
+    // Will look up for the preffered user footage
+    // with the most specific with the highest priority.
+    
+    // Specific to this emuticon
+    NSString *oid = self.prefferedFootageOID;
+    
+    if (oid == nil) {
+        // Specific to the related package
+        oid = self.emuDef.package.prefferedFootageOID;
     }
+    
+    if (oid == nil) {
+        // Preffered application wide
+        AppCFG *appCFG = [AppCFG cfgInContext:self.managedObjectContext];
+        oid = appCFG.prefferedFootageOID;
+    }
+    
+    return oid;
+}
+
+
+-(UserFootage *)mostPrefferedUserFootage
+{
+    NSString *footageOID = [self mostPrefferedUserFootageOID];
     UserFootage *userFootage = [UserFootage findWithID:footageOID
                                                context:self.managedObjectContext];
     return userFootage;
+}
+
+
+-(UserFootage *)previewUserFootage
+{
+    if (!self.isPreview.boolValue) return nil;
+    if (self.prefferedFootageOID == nil) return nil;
+    return [UserFootage findWithID:self.prefferedFootageOID
+                           context:self.managedObjectContext];
 }
 
 @end

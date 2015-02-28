@@ -14,4 +14,6 @@
 
 -(void)stopAnimating;
 
+-(void)startActivity;
+
 @end

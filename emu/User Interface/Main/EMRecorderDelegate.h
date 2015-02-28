@@ -22,6 +22,25 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *      - Will start rendering all emuticons when done.
      */
     EMRecorderFlowTypeOnboarding                     = 1000,
+
+    
+    /**
+     *  Recorder opened to retake the master footage.
+     *
+     *  In this flow:
+     *
+     *  - If recorder dismissed before footage approved,
+     *    will delete the footage and will do nothing after
+     *    dismissing the recorder.
+     *
+     *  - If new footage approved, will set the new footage as
+     *    the master footage and clean all emuticons using the master footage.
+     *    (cleaned emuticons will be rendered again with the new footage)
+     *
+     *
+     */
+    EMRecorderFlowTypeRetakeAll                     = 2000,
+
     
     /**
      *  Recorder opened to retake a footage for a package.
@@ -33,12 +52,12 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *    dismissing the recorder.
      *
      *  - If new footage approved, will delete package specific
-     *    old footage and start rendering emuticons of package
-     *    with the new footage.
-     *
+     *    old footage and clean all emuticons using that old footage.
+     *    (cleans emuticons will be rendered again with the new footage)
      *
      */
-    EMRecorderFlowTypeRetakeForPackage               = 2000,
+    EMRecorderFlowTypeRetakeForPackage               = 3000,
+
     
     /**
      *  Recorder opened to retake a footage for a specific emuticon.
@@ -54,11 +73,27 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *    again anyway).
      *
      */
-    EMRecorderFlowTypeRetakeForSpecificEmuticons     = 3000
+    EMRecorderFlowTypeRetakeForSpecificEmuticons     = 4000
 };
 
 
+/**
+ *  The flow is completed and the recorder should be dismissed.
+ *
+ *  @param flowType The flow type of the recorder (see EMRecorderFlowType)
+ *  @param info     Extra info to pass
+ */
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType
                                       info:(NSDictionary *)info;
+
+/**
+ *  The user requested to dismiss the recorder in the middle of the flow.
+ *  the recorder shouldn't have any effect and all temp files will be cleaned.
+ *
+ *  @param flowType The flow type of the recorder (see EMRecorderFlowType)
+ *  @param info     Extra info to pass
+ */
+-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType
+                                  info:(NSDictionary *)info;
 
 @end

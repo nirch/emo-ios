@@ -9,15 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class EmuticonDef, UserFootage;
+@class EmuticonDef;
 
 @interface Emuticon : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * isPreview;
 @property (nonatomic, retain) NSString * oid;
+@property (nonatomic, retain) NSString * prefferedFootageOID;
 @property (nonatomic, retain) NSNumber * usageCount;
 @property (nonatomic, retain) NSNumber * wasRendered;
-@property (nonatomic, retain) EmuticonDef *emuticonDef;
-@property (nonatomic, retain) UserFootage *userFootage;
+@property (nonatomic, retain) EmuticonDef *emuDef;
 
 @end

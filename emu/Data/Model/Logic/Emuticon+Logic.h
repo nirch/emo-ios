@@ -8,6 +8,8 @@
 
 #define E_EMU @"Emuticon"
 
+@class UserFootage;
+
 #import "Emuticon.h"
 
 @interface Emuticon (Logic)
@@ -20,6 +22,7 @@
  */
 +(Emuticon *)findWithID:(NSString *)oid
                 context:(NSManagedObjectContext *)context;
+
 
 /**
  *  Create or update a preview emuticon object.
@@ -37,6 +40,7 @@
              emuticonDefOID:(NSString *)emuticonDefOID
                     context:(NSManagedObjectContext *)context;
 
+
 /**
  *  Create a new emuticon object related to the given emuticon definition.
  *
@@ -48,12 +52,14 @@
 +(Emuticon *)newForEmuticonDef:(EmuticonDef *)emuticonDef
                        context:(NSManagedObjectContext *)context;
 
+
 /**
  *  The url to the animated gif rendered for this emuticon object.
  *
  *  @return NSURL pointing to the rendered animated gif.
  */
 -(NSURL *)animatedGifURL;
+
 
 /**
  *  The path to the animated gif rendered for this emuticon object;
@@ -62,6 +68,7 @@
  */
 -(NSString *)animatedGifPath;
 
+
 /**
  *  The raw data of the animated gif rendered for this emuticon object.
  *
@@ -69,22 +76,51 @@
  */
 -(NSData *)animatedGifData;
 
+
 /**
- *  Cleans up the emuticon related files and deletes the object.
+ *  Cleans up the emuticon rendered files and deletes the object.
  */
 -(void)deleteAndCleanUp;
 
 
 /**
- *  The preffered user footage for this emuticon.
- *  
- *  It follows the following logic:
- *      - If exists, returns the footage selected as preffered for the package.
- *          otherwise:
- *      - Returns the master footage selected app wide.
- *
- *  @return UserFootage object.
+ *  Cleans up the emuticon rendered files and marks it as not rendered
+ *  (wasRendered = @NO)
  */
--(UserFootage *)prefferedUserFootage;
+-(void)cleanUp;
+
+
+/**
+ *  The preffered user footage oid for this emuticon.
+ *  
+ *  Will use the most preffered footage according to priority.
+ *  The priority is higher the more specific the preference is.
+ *  (will use emuticon specific preference first, package second and app wide last).
+ *
+ *  @return NSString oid of the most preffered user footage.
+ */
+-(NSString *)mostPrefferedUserFootageOID;
+
+
+/**
+ *  The preffered user footage for this emuticon.
+ *
+ *  Will use the most preffered footage according to priority.
+ *  The priority is higher the more specific the preference is.
+ *  (will use emuticon specific preference first, package second and app wide last).
+ *
+ *  @return UserFootage of the most preffered user footage.
+ */
+-(UserFootage *)mostPrefferedUserFootage;
+
+/**
+ *  Returns the related preview footage of an emuticon marked as preview.
+ *  If the footage doesn't exist or the emuticon is not marked as a preview
+ *  will return nil;
+ *
+ *  @return UserFootage object of the preview emuticon.
+ */
+-(UserFootage *)previewUserFootage;
+
 
 @end

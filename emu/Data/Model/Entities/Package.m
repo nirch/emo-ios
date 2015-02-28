@@ -12,11 +12,11 @@
 
 @implementation Package
 
-@dynamic oid;
-@dynamic name;
-@dynamic timeUpdated;
 @dynamic label;
+@dynamic name;
+@dynamic oid;
 @dynamic prefferedFootageOID;
+@dynamic timeUpdated;
 @dynamic emuDefs;
 
 @end

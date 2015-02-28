@@ -7,7 +7,6 @@
 //
 
 #import "UserFootage.h"
-#import "Emuticon.h"
 
 
 @implementation UserFootage
@@ -16,6 +15,5 @@
 @dynamic framesCount;
 @dynamic oid;
 @dynamic timeTaken;
-@dynamic emus;
 
 @end

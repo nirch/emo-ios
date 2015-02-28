@@ -13,6 +13,7 @@
 @interface EMAnimatedGifPlayer ()
 
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimGifView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 @end
 
@@ -33,11 +34,17 @@
     self.guiAnimGifView.contentMode = UIViewContentModeCenter;
     
     [self.guiAnimGifView startAnimating];
+    [self.guiActivity stopAnimating];
 }
 
 -(void)stopAnimating
 {
     [self.guiAnimGifView stopAnimating];
+}
+
+-(void)startActivity
+{
+    [self.guiActivity startAnimating];
 }
 
 @end

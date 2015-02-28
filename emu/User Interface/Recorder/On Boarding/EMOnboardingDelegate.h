@@ -9,5 +9,6 @@
 @protocol EMOnboardingDelegate <NSObject>
 
 -(void)onboardingDidGoBackToStageNumber:(NSInteger)stageNumber;
+-(void)onboardingUserWantsToCancel;
 
 @end

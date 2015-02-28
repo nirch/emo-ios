@@ -20,14 +20,8 @@
 -(void)renderPreviewForFootage:(UserFootage *)footage
                     withEmuDef:(EmuticonDef *)emuDef;
 
--(void)enqueueEmu:(Emuticon *)emu;
+-(void)enqueueEmu:(Emuticon *)emu
+             info:(NSDictionary *)info;
 
-//-(void)renderAllEmuticonsWithFootage:(UserFootage *)footage;
-//
-//-(void)renderEmuticons:(NSArray *)emuArray
-//               footage:(UserFootage *)footage;
-//
-//-(void)renderEmuticonsInPackage:(Package *)package
-//                        footage:(UserFootage *)footage;
 
 @end

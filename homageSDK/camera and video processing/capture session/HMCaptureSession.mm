@@ -43,6 +43,9 @@
 @property (nonatomic) id<HMWriterProtocol> writer;
 @property (nonatomic) NSTimeInterval duration;
 
+// UUID
+@property (nonatomic) NSString *uuid;
+
 @end
 
 @implementation HMCaptureSession
@@ -62,8 +65,16 @@
         backgroundDetectionEnabled = NO;
         extractCounter = 0;
         [self initObservers];
+        
+        self.uuid = [[NSUUID UUID] UUIDString];
+        HMLOG(TAG, EM_DBG, @"Started capture session %@", self.uuid);
     }
     return self;
+}
+
+-(void)dealloc
+{
+    HMLOG(TAG, EM_DBG, @"Dealloc capture session %@", self.uuid);    
 }
 
 #pragma mark - Observers
@@ -74,6 +85,8 @@
                  selector:@selector(onCaptureSessionRuntimeError:)
                      name:AVCaptureSessionRuntimeErrorNotification
                    object:nil];
+    
+    
 }
 
 -(void)removeObservers
@@ -337,22 +350,23 @@
 
     // If should be recording and a writer was set
     // pass the latest output frame to the writer, on the movie writing queue.
-    dispatch_async(movieWritingQueue, ^{
-        if (recording && self.writer) {
-            image_type *output =(image_type *)[self.videoProcessor latestOutputImage];
-            [self.writer writeImageTypeFrame:output];
-            
-            // If reached duration or max number of frames, stop recording
-            // and finish up.
-            if (self.writer.shouldFinish) {
-                [self _stopRecording];
+    if (movieWritingQueue) {
+        dispatch_async(movieWritingQueue, ^{
+            if (recording && self.writer) {
+                image_type *output =(image_type *)[self.videoProcessor latestOutputImage];
+                [self.writer writeImageTypeFrame:output];
                 
-                // Also stop video processing for this session.
-                [self setVideoProcessingState:HMVideoProcessingStateIdle];
+                // If reached duration or max number of frames, stop recording
+                // and finish up.
+                if (self.writer.shouldFinish) {
+                    [self _stopRecording];
+                    
+                    // Also stop video processing for this session.
+                    [self setVideoProcessingState:HMVideoProcessingStateIdle];
+                }
             }
-        }
-    });
-
+        });
+    }
 }
 
 
@@ -382,19 +396,39 @@
 #pragma mark - Capture session
 - (void)stopAndTearDownCaptureSession
 {
+    //
+    // Cleaning up!
+    //
+
+    // Stopping the capture session.
     if (captureSession) {
         [captureSession stopRunning];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureSessionDidStopRunningNotification object:captureSession];
         captureSession = nil;
     }
 
+    // releasing the camera preview buffer queue
     if (previewBufferQueue) {
         CFRelease(previewBufferQueue);
         previewBufferQueue = NULL;
     }
+    
+    // releasing the writing queue
     if (movieWritingQueue) {
         movieWritingQueue = NULL;
     }
+    
+    // releasing the video processor (if exists)
+    if (self.videoProcessor) {
+        self.videoProcessingState = HMVideoProcessingStateIdle;
+        self.videoProcessor = nil;
+    }
+    
+    videoConnection = nil;
+    audioConnection = nil;
+    
+    // Removing observers
+    [self removeObservers];
 }
 
 #pragma mark - Video Processing

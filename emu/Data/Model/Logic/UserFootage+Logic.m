@@ -31,6 +31,19 @@
     return (UserFootage *)object;
 }
 
++(UserFootage *)masterFootage
+{
+    // Get the oid of the master footage from app configuration.
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSString *masterFootageOID = appCFG.prefferedFootageOID;
+    if (masterFootageOID == nil) return nil;
+    
+    // Find and return the master footage object.
+    return [self findWithID:masterFootageOID
+                    context:EMDB.sh.context];
+}
+
+
 +(UserFootage *)userFootageWithInfo:(NSDictionary *)info
                             context:(NSManagedObjectContext *)context
 {
@@ -57,12 +70,17 @@
 -(void)deleteAndCleanUp
 {
     // Delete all footage files.
-    NSFileManager *fm = [NSFileManager defaultManager];
-    [fm removeItemAtPath:[self pathForUserImages] error:nil];
+    [self cleanUp];
     
     // Delete the object.
     [self.managedObjectContext deleteObject:self];
 }
 
+-(void)cleanUp
+{
+    // Delete all footage files.
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:[self pathForUserImages] error:nil];
+}
 
 @end

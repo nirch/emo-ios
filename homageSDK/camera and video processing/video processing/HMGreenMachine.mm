@@ -15,10 +15,7 @@
 #import "HMImageTools.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
-//#import "Image3/Image3Tool.h"
 #import "ImageType/ImageTool.h"
-//#import "ImageMark/ImageMark.h"
-//#import "Utime/GpTime.h"
 
 @interface HMGreenMachine() {
     
@@ -160,6 +157,12 @@
     self.bgMarks = [HMBackgroundMarks new];
 }
 
+-(void)dealloc
+{
+    HMLOG(TAG, EM_DBG, @"Dealloced green machine.");
+}
+
+#pragma mark - Processing
 -(void)prepareFrame:(CMSampleBufferRef)sampleBuffer
 {
     // Image buffer to the sample buffer.

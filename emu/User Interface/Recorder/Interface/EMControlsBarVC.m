@@ -284,6 +284,7 @@
     }
     
     if (bgMark == self.latestBGMark) {
+        self.guiContinueButton.alpha = 1;
         self.guiBadMessageButton.alpha += 0.1;
         self.guiGoodMessageButton.alpha -= 0.5;
         return;

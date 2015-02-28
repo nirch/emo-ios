@@ -48,8 +48,9 @@
 
 
 @property (nonatomic) Package *package;
+@property (nonatomic) Emuticon *emuticonToUpdate;
 
-@property (nonatomic) Emuticon *latestEmuticon;
+@property (nonatomic) Emuticon *previewEmuticon;
 
 //
 // Containers and sub view controllers
@@ -115,7 +116,13 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"EMRecorder" bundle:nil];
     EMRecorderVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"recorder vc"];
     vc.flowType = flowType;
-    vc.package = info[emkPackage];
+    vc.emuticonToUpdate = info[emkEmuticon];
+
+    if (vc.emuticonToUpdate) {
+        vc.package = vc.emuticonToUpdate.emuDef.package;
+    } else {
+        vc.package = info[emkPackage];
+    }
     vc.info = info;
     return vc;
 }
@@ -140,8 +147,6 @@
     // Initializations
     [self initData];
     [self initState];
-    [self initCaptureSession];
-    [self initVideoProcessing];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -160,13 +165,17 @@
     
     // Start the flow of the recorder.
     [self handleState];
+
+    // Start the capture session and video processing
+    [self initCaptureSession];
+    [self initVideoProcessing];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-
     [self removeObservers];
+    [self tearDownCaptureSession];
 }
 
 #pragma mark - Initializations
@@ -385,6 +394,7 @@
         // The onboarding view controller.
         if (self.shouldPresentOnBoarding) {
             self.onBoardingVC = segue.destinationViewController;
+            self.onBoardingVC.flowType = self.flowType;
             self.onBoardingVC.delegate = self;
         }
         
@@ -440,6 +450,12 @@
     HMLOG(TAG, EM_DBG, @"Initialized capture session");
 }
 
+-(void)tearDownCaptureSession
+{
+    [self.captureSession stopAndTearDownCaptureSession];
+    self.captureSession = nil;
+}
+
 #pragma mark - Video processing
 -(void)initVideoProcessing
 {
@@ -492,7 +508,12 @@
     [EMDB.sh save];
     
     // Get an emuticon definition to be used for the preview.
-    EmuticonDef *emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
+    EmuticonDef *emuDefForPreview;
+    if (self.emuticonToUpdate) {
+        emuDefForPreview = self.emuticonToUpdate.emuDef;
+    } else {
+        emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
+    }
     
     // Send the footage to preview rendering.
     [EMRenderManager.sh renderPreviewForFootage:footage
@@ -529,6 +550,16 @@
         default:
             break;
     }
+}
+
+-(void)onboardingUserWantsToCancel
+{
+    if (self.previewEmuticon)
+        [self.previewEmuticon deleteAndCleanUp];
+    
+    // Just dismiss the recorder, doing nothing.
+    [self.delegate recorderCanceledByTheUserInFlow:self.flowType
+                                              info:self.info];
 }
 
 #pragma mark - Updating States
@@ -687,7 +718,7 @@
     [self hideResultUIAnimated:YES];
     
     // Wait a bit before going to the next state.
-    dispatch_after(DTIME(1.5), dispatch_get_main_queue(), ^{
+    dispatch_after(DTIME(0.7), dispatch_get_main_queue(), ^{
         // Change to the BG Detection should start state.
         [self handleStateWithInfo:nil nextState:@(EMRecorderStateBGDetectionShouldStart)];
     });
@@ -884,8 +915,8 @@
     
     NSString *emuOID = info[emkEmuticonOID];
     
-    self.latestEmuticon = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-    self.gifPlayerVC.animatedGifURL = [self.latestEmuticon animatedGifURL];
+    self.previewEmuticon = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    self.gifPlayerVC.animatedGifURL = [self.previewEmuticon animatedGifURL];
     
     //self.gifPlayerVC.animatedGifURL
     [self showResultUIAnimated:YES];
@@ -903,12 +934,8 @@
 
 -(void)_stateDone
 {
-//    // Mark that the user finished with the recorder,
-//    // with the onboarding flow.
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
 
-    // NSMutableDictionary *extraInfo = [NSMutableDictionary dictionaryWithDictionary:self.info];
-    
     if (self.flowType == EMRecorderFlowTypeOnboarding) {
         
         //
@@ -919,22 +946,50 @@
         appCFG.onboardingPassed = @YES;
         
         // Make the new footage, the master footage app wide.
-        UserFootage *newFootage = self.latestEmuticon.userFootage;
-        appCFG.prefferedFootageOID = newFootage.oid;
+        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
+        if (newFootage) {
+            appCFG.prefferedFootageOID = newFootage.oid;
+        }
         
-        // Delete the preview emuticon.
-        [self.latestEmuticon deleteAndCleanUp];
-        [EMDB.sh save];
+        // Delete the rendered preview emuticon
+        [self.previewEmuticon deleteAndCleanUp];
         
         // Create and render all required emuticon objects in first package.
+        // TODO: support and test with multiple packages.
         [self.package createMissingEmuticonObjects];
-        [EMDB.sh save];
 
+    } else if (self.flowType == EMRecorderFlowTypeRetakeAll) {
+
+        // Make the new footage, the master footage app wide
+        // and delete the old master footage.
+        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
+        UserFootage *oldFootage = [UserFootage masterFootage];
+        [oldFootage deleteAndCleanUp];
+        appCFG.prefferedFootageOID = newFootage.oid;
+        
+        // Clean up all emuticons that don't have their own specific footage.
+        // TODO: support and test with multiple packages.
+        [self.package createMissingEmuticonObjects];
+        [self.package cleanUpEmuticonsWithNoSpecificFootage];
+        
     } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
+        
+        // TODO: finish implementation.
+        
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
+        
+        // Cleanup the specific emuticon related to this flow.
+        Emuticon *emu = self.emuticonToUpdate;
+        [emu cleanUp];
+        
+        // Set the new footage as the emuticon preffered footage.
+        emu.prefferedFootageOID = self.previewEmuticon.prefferedFootageOID;
+        
+        
     }
     
-    // Save
+    // Delete the preview emuticon.
+    [self.previewEmuticon deleteAndCleanUp];
     [EMDB.sh save];
     
     // Tell delegate to dismiss the recorder.
@@ -1072,16 +1127,24 @@
     } else if (action == EMRecorderControlsActionNo &&
                self.recorderState == EMRecorderStateReviewPreview) {
 
-        [self.latestEmuticon.userFootage deleteAndCleanUp];
-        [self.latestEmuticon deleteAndCleanUp];
-        self.latestEmuticon = nil;
+        // User wasn't happy with the result.
+        // Remove the footage and the rendered emuticon
+        // and start over.
+        [self.previewEmuticon.previewUserFootage deleteAndCleanUp];
+        [self.previewEmuticon deleteAndCleanUp];
+        self.previewEmuticon = nil;
         [EMDB.sh save];
         [self stateRestart];
         
     } else if (action == EMRecorderControlsActionYes &&
                self.recorderState == EMRecorderStateReviewPreview) {
         
-        [self handleStateWithInfo:nil nextState:@(EMRecorderStateDone)];
+        //
+        // The user is a Happy Pappi
+        // 
+        //
+        [self handleStateWithInfo:nil
+                        nextState:@(EMRecorderStateDone)];
         
     } else {
         @throw [NSException exceptionWithName:NSInternalInconsistencyException

@@ -22,6 +22,12 @@
 {
     _animatedGifURL = animatedGifURL;
     
+    if (animatedGifURL == nil) {
+        [self.guiAnimGifView stopAnimating];
+        self.guiAnimGifView.animatedImage = nil;
+        return;
+    }
+    
     NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
     FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
     self.guiAnimGifView.animatedImage = animGif;

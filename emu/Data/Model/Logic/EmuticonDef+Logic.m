@@ -58,4 +58,15 @@
     return emu;
 }
 
+
+-(NSArray *)nonPreviewEmuticons
+{
+    NSMutableArray *emus = [NSMutableArray new];
+    for (Emuticon *emu in self.emus) {
+        if (emu.isPreview.boolValue) continue;
+        [emus addObject:emu];
+    }
+    return emus;
+}
+
 @end

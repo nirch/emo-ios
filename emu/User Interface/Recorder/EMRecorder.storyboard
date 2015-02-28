@@ -606,7 +606,7 @@
                                     <action selector="onPressedEmuButton:" destination="Vj3-Kt-kX8" eventType="touchUpInside" id="YwY-CL-KUj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-Kq-iEm" userLabel="Retake Button2" customClass="EMButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-Kq-iEm" userLabel="Restart button" customClass="EMButton">
                                 <rect key="frame" x="309" y="30" width="50" height="30"/>
                                 <state key="normal" title="Restart">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -616,6 +616,16 @@
                                     <action selector="onPressedRestartButton:" destination="Vj3-Kt-kX8" eventType="touchUpInside" id="F4C-uK-z2e"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kul-fo-Lbw" userLabel="Cancel button" customClass="EMButton">
+                                <rect key="frame" x="16" y="30" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedCancelButton:" destination="Vj3-Kt-kX8" eventType="touchUpInside" id="uJp-Ue-ZJm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -623,19 +633,23 @@
                             <constraint firstAttribute="trailing" secondItem="AnI-cf-O5H" secondAttribute="trailing" id="7hc-4i-KFp"/>
                             <constraint firstAttribute="trailing" secondItem="lE8-aT-vff" secondAttribute="trailing" id="RaH-qd-Bjc"/>
                             <constraint firstItem="fag-x1-a4e" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leading" constant="6" id="V4Y-f9-PjG"/>
+                            <constraint firstItem="kul-fo-Lbw" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leadingMargin" id="ao8-6w-mQR"/>
                             <constraint firstItem="fag-x1-a4e" firstAttribute="top" secondItem="SEF-7w-TF2" secondAttribute="bottom" constant="14" id="bLV-YM-sRq"/>
                             <constraint firstItem="Yyy-Kq-iEm" firstAttribute="centerY" secondItem="fag-x1-a4e" secondAttribute="centerY" id="dBG-ew-u55"/>
                             <constraint firstItem="Yyy-Kq-iEm" firstAttribute="trailing" secondItem="CIy-Wa-cBv" secondAttribute="trailingMargin" id="dsI-0Z-gwY"/>
                             <constraint firstItem="lE8-aT-vff" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leading" id="eOM-2N-bUB"/>
                             <constraint firstItem="AnI-cf-O5H" firstAttribute="top" secondItem="SEF-7w-TF2" secondAttribute="bottom" id="i5d-0O-3xX"/>
+                            <constraint firstItem="kul-fo-Lbw" firstAttribute="centerY" secondItem="fag-x1-a4e" secondAttribute="centerY" id="wRP-ge-c9E"/>
                             <constraint firstItem="AnI-cf-O5H" firstAttribute="leading" secondItem="CIy-Wa-cBv" secondAttribute="leading" id="wuQ-91-i5M"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="guiCancelButton" destination="kul-fo-Lbw" id="Ebj-Ch-veA"/>
                         <outlet property="guiCollectionView" destination="RBR-3J-rd6" id="af7-OB-JBG"/>
                         <outlet property="guiEmuButton" destination="fag-x1-a4e" id="YMd-7v-wCE"/>
                         <outlet property="guiPagerView" destination="zQV-0c-xvW" id="RTd-7Z-VlY"/>
+                        <outlet property="guiRestartButton" destination="Yyy-Kq-iEm" id="5BZ-0V-0jt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qfW-5A-pth" userLabel="First Responder" sceneMemberID="firstResponder"/>

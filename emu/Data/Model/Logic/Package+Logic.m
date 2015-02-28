@@ -83,11 +83,17 @@
     // Get all emuticons defs in package that have no emuticon yet.
     NSMutableArray *emuDefsWithNoEmuticon = [NSMutableArray new];
     NSArray *emuDefs = [self.emuDefs allObjects];
+    
+    // Iterate and add to the list
+    // any emuticon definition that doesn't have
+    // any associated emuticon objects
+    // (this will ignore the existance of preview emuticons)
     for (EmuticonDef *emuDef in emuDefs) {
-        if (emuDef.emus.count < 1) {
+        if ([[emuDef nonPreviewEmuticons] count] < 1) {
             [emuDefsWithNoEmuticon addObject:emuDef];
         }
     }
+    
     return emuDefsWithNoEmuticon;
 }
 
@@ -101,6 +107,23 @@
     }
     HMLOG(TAG, EM_DBG, @"Spawned %@ new emuticons in package %@", @(emus.count), self.name);
     return emus;
+}
+
+-(NSArray *)emuticonsWithNoSpecificFootage
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"prefferedFootageOID=nil"];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:self.managedObjectContext];
+    return emus;
+}
+
+-(void)cleanUpEmuticonsWithNoSpecificFootage
+{
+    NSArray *emus = [self emuticonsWithNoSpecificFootage];
+    for (Emuticon *emu in emus) {
+        [emu cleanUp];
+    }
 }
 
 @end

@@ -12,10 +12,10 @@
 
 @interface AppCFG : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * defaultOutputVideoMaxFps;
 @property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSNumber * onboardingPassed;
-@property (nonatomic, retain) NSNumber * defaultOutputVideoMaxFps;
-@property (nonatomic, retain) NSString * prefferedFootageOID;
 @property (nonatomic, retain) NSString * onboardingUsingPackage;
+@property (nonatomic, retain) NSString * prefferedFootageOID;
 
 @end

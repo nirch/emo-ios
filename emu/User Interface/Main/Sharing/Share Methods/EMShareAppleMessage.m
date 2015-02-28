@@ -42,7 +42,7 @@
     
     [self.picker addAttachmentData:gifData
                     typeIdentifier:@"com.compuserve.gif"
-                          filename:[SF:@"%@.gif", emu.emuticonDef.name]];
+                          filename:[SF:@"%@.gif", emu.emuDef.name]];
     
     [self.viewController presentViewController:self.picker
                                       animated:YES

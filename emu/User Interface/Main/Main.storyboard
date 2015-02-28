@@ -68,7 +68,7 @@
                                     <constraint firstItem="qWl-1a-ucc" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="WzL-a6-SL8"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
                                 <rect key="frame" x="5" y="64" width="365" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6e8-IW-4Yd">
@@ -95,7 +95,7 @@
                                                             <rect key="frame" x="16" y="16" width="150" height="150"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eCw-gP-EQE">
+                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eCw-gP-EQE">
                                                             <rect key="frame" x="81" y="81" width="20" height="20"/>
                                                         </activityIndicatorView>
                                                     </subviews>
@@ -244,7 +244,7 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                                         <state key="normal" image="retakeIcon"/>
                                         <connections>
-                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="UAJ-5F-me6"/>
+                                            <action selector="onPressedRetakeButton:" destination="rnG-vP-eU5" eventType="touchUpInside" id="tT9-Ie-u3H"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-zw-juA" userLabel="Retake Button2" customClass="EMButton">
@@ -254,7 +254,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="ksX-6P-dzn"/>
+                                            <action selector="onPressedRetakeButton:" destination="rnG-vP-eU5" eventType="touchUpInside" id="vur-uc-gmO"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -431,21 +431,27 @@
                                 <rect key="frame" x="40" y="40" width="263" height="263"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6Yd-Pg-gW0">
+                                <rect key="frame" x="161" y="162" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CYP-nE-gH7" firstAttribute="top" secondItem="pCV-G3-Tl8" secondAttribute="bottom" constant="40" id="4L7-eb-htI"/>
                             <constraint firstItem="PlJ-aM-PiO" firstAttribute="top" secondItem="CYP-nE-gH7" secondAttribute="bottom" constant="40" id="FC6-KC-VMt"/>
+                            <constraint firstAttribute="centerX" secondItem="6Yd-Pg-gW0" secondAttribute="centerX" constant="0.5" id="L6r-yp-46r"/>
                             <constraint firstItem="f7K-jX-6pv" firstAttribute="height" secondItem="vv9-CM-Joo" secondAttribute="height" id="N3O-xB-WwJ"/>
                             <constraint firstItem="CYP-nE-gH7" firstAttribute="trailing" secondItem="vv9-CM-Joo" secondAttribute="trailing" constant="-40" id="YRO-Un-l7C"/>
                             <constraint firstItem="f7K-jX-6pv" firstAttribute="width" secondItem="vv9-CM-Joo" secondAttribute="width" id="dE6-Vk-4ol"/>
                             <constraint firstAttribute="centerX" secondItem="f7K-jX-6pv" secondAttribute="centerX" id="dl0-yb-Wh8"/>
                             <constraint firstAttribute="centerY" secondItem="f7K-jX-6pv" secondAttribute="centerY" id="krB-F6-i4c"/>
                             <constraint firstItem="CYP-nE-gH7" firstAttribute="leading" secondItem="vv9-CM-Joo" secondAttribute="leading" constant="40" id="mCf-Mg-Vll"/>
+                            <constraint firstAttribute="centerY" secondItem="6Yd-Pg-gW0" secondAttribute="centerY" constant="-0.5" id="uOu-qR-GDU"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="guiActivity" destination="6Yd-Pg-gW0" id="Dkg-84-Afq"/>
                         <outlet property="guiAnimGifView" destination="CYP-nE-gH7" id="Cow-7Z-O5l"/>
                     </connections>
                 </viewController>

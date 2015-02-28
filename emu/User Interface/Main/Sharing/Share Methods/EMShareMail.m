@@ -43,7 +43,7 @@
     self.picker.mailComposeDelegate = self;
     [self.picker addAttachmentData:gifData
                           mimeType:@"image/gif"
-                          fileName:[SF:@"%@.gif", emu.emuticonDef.name]];
+                          fileName:[SF:@"%@.gif", emu.emuDef.name]];
     
     [self.viewController presentViewController:self.picker
                                       animated:YES

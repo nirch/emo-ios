@@ -78,4 +78,10 @@
  */
 -(NSArray *)createMissingEmuticonObjects;
 
+
+/**
+ *  <#Description#>
+ */
+-(void)cleanUpEmuticonsWithNoSpecificFootage;
+
 @end

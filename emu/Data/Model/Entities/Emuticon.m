@@ -8,16 +8,15 @@
 
 #import "Emuticon.h"
 #import "EmuticonDef.h"
-#import "UserFootage.h"
 
 
 @implementation Emuticon
 
 @dynamic isPreview;
 @dynamic oid;
+@dynamic prefferedFootageOID;
 @dynamic usageCount;
 @dynamic wasRendered;
-@dynamic emuticonDef;
-@dynamic userFootage;
+@dynamic emuDef;
 
 @end

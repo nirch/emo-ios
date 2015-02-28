@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "EMOnboardingDelegate.h"
+#import "EMRecorderDelegate.h"
 
 #define EMOB_STAGES 6
 
@@ -24,8 +25,8 @@ typedef NS_ENUM(NSInteger, EMOnBoardingStage) {
 };
 
 @property (nonatomic) id<EMOnboardingDelegate> delegate;
-
 @property (nonatomic, readonly) EMOnBoardingStage stage;
+@property (nonatomic) EMRecorderFlowType flowType;
 
 -(void)setOnBoardingStage:(EMOnBoardingStage)stage
                  animated:(BOOL)animated;

@@ -21,8 +21,8 @@
 @dynamic sourceBackLayer;
 @dynamic sourceFrontLayer;
 @dynamic sourceUserLayerMask;
-@dynamic useForPreview;
 @dynamic thumbnailFrameIndex;
+@dynamic useForPreview;
 @dynamic emus;
 @dynamic package;
 

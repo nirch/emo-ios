@@ -5,6 +5,8 @@
 //  Created by Aviv Wolf on 2/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+
+
 #define TAG @"EMMainVC"
 
 #import "EMMainVC.h"
@@ -64,7 +66,10 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    }    
+    }
+    
+    // Init observers
+    [self initObservers];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -93,6 +98,12 @@
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self removeObservers];
+}
 
 #pragma mark - initializations
 +(EMMainVC *)mainVCWithInfo:(NSDictionary *)info
@@ -102,14 +113,49 @@
     return vc;
 }
 
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On background detection information received.
+    [nc addUniqueObserver:self
+                 selector:@selector(onRenderingFinished:)
+                     name:hmkRenderingFinished
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:hmkRenderingFinished];
+}
+
+#pragma mark - Observers handlers
+-(void)onRenderingFinished:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSIndexPath *indexPath = info[@"indexPath"];
+    NSString *oid = info[@"emuticonOID"];
+    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    // ignore notifications not relating to emus on screen
+    if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
+    if (![emu.oid isEqualToString:oid]) return;
+    
+    // The cell is on screen, refresh it
+    [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+}
 
 #pragma mark - The data
 -(void)initData
 {
     [EMBackend.sh refreshData];
     
+    // Perform the fetch
     NSError *error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
+    [[self fetchedResultsController] performFetch:&error];
+    if (error) {
         HMLOG(TAG,
               EM_ERR,
               @"Unresolved error %@, %@",
@@ -128,7 +174,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -221,16 +267,21 @@
 
 
 #pragma mark - Cell
--(void)configureCell:(EmuCell *)cell forIndexPath:(NSIndexPath *)indexPath
+-(void)configureCell:(EmuCell *)cell
+        forIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    if (!emu.wasRendered.boolValue) {
+    if (emu.wasRendered.boolValue) {
         [cell.guiActivity stopAnimating];
         cell.animatedGifURL = [emu animatedGifURL];
     } else {
         [cell.guiActivity startAnimating];
-        [EMRenderManager.sh enqueueEmu:emu];
+        cell.animatedGifURL = nil;
+        [EMRenderManager.sh enqueueEmu:emu info:@{
+                                                  @"indexPath":indexPath,
+                                                  @"emuticonOID":emu.oid
+                                                  }];
     }
     
 }
@@ -254,12 +305,21 @@
     // Handle what to do next, depending on the flow of the dismissed recorder.
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
-    
-    if (flowType == EMRecorderFlowTypeOnboarding) {
-        
-    }
 }
 
+-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    // Dismiss the recorder
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self hideSplashAnimated:YES];
+    }];
+
+    [self resetFetchedResultsController];
+    [self.guiCollectionView reloadData];
+}
+
+
+#pragma mark - Opening recorder
 -(void)openRecorderForFlow:(EMRecorderFlowType)flowType
                       info:(NSDictionary *)info
 {
@@ -277,13 +337,67 @@
     return YES;
 }
 
+#pragma mark - Opening the recorder
+-(void)askUserToChooseWhatToRetake
+{
+    UIAlertController *alert = [UIAlertController new];
+    alert.title = nil;
+    alert.message = LS(@"RETAKE_CHOICE_QUESTION");
+    
+    // Retake them all!
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_ALL")
+                                              style:UIAlertActionStyleDestructive
+                                            handler:^(UIAlertAction *action) {
+                                                [self retakeAll];
+                                            }]];
+
+    // Retake current package.
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_PACKAGE")
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self retakeCurrentPackage];
+                                            }]];
+    
+    // Cancel
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
+                                              style:UIAlertActionStyleCancel
+                                            handler:nil]];
+
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)retakeAll
+{
+    /**
+     *  Open the recording for retaking all emuticons.
+     */
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    Package *package = [appCFG packageForOnboarding];
+    [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+                         info:@{emkPackage:package}];
+
+}
+
+-(void)retakeCurrentPackage
+{
+    // TODO: finish implementation.
+    
+    /**
+     *  Open the recording for retaking all emuticons.
+     */
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    Package *package = [appCFG packageForOnboarding];
+    [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+                         info:@{emkPackage:package}];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
 - (IBAction)onPressedRetakeButton:(id)sender
 {
-    //[self openRecorderWithInfo:nil];
+    [self askUserToChooseWhatToRetake];
 }
 
 

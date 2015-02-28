@@ -10,9 +10,12 @@
 #import "EMDB.h"
 #import "EMAnimatedGifPlayer.h"
 #import "EMShareVC.h"
+#import "EMRecorderVC.h"
+#import "EMRenderManager.h"
 
 @interface EMEmuticonScreenVC () <
-    EMShareDelegate
+    EMShareDelegate,
+    EMRecorderDelegate
 >
 
 @property (nonatomic) Emuticon *emuticon;
@@ -45,6 +48,17 @@
     
     // Only iPhone4s needs special treatment of the layout
     [self layoutFixesIfRequired];
+    
+    // Init observers
+    [self initObservers];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // Remove observers
+    [self removeObservers];
 }
 
 -(void)initData
@@ -52,6 +66,38 @@
     self.emuticon = [Emuticon findWithID:self.emuticonOID
                                  context:EMDB.sh.context];
 }
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On background detection information received.
+    [nc addUniqueObserver:self
+                 selector:@selector(onRenderingFinished:)
+                     name:hmkRenderingFinished
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:hmkRenderingFinished];
+}
+
+#pragma mark - Observers handlers
+-(void)onRenderingFinished:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *oid = info[@"emuticonOID"];
+    
+    // ignore notifications not relating to emus on screen
+    if (![self.emuticon.oid isEqualToString:oid]) return;
+    
+    // Show the animated gif
+    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
+}
+
 
 #pragma mark - Segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -96,6 +142,43 @@
     return self.emuticonOID;
 }
 
+#pragma mark - EMRecorderDelegate
+-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    // Dismiss the recorder
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // Stop animating the gif
+    [self.gifPlayerVC stopAnimating];
+    [self.gifPlayerVC startActivity];
+    
+    // Will need to send the emuticon to rendering
+    [EMRenderManager.sh enqueueEmu:self.emuticon
+                              info:@{@"emuticonOID":self.emuticon.oid}];
+
+}
+
+-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    // Dismiss the recorder
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    // Recorder canceled. Nothing to do here.
+}
+
+
+#pragma mark - Retake
+-(void)retake
+{
+    NSDictionary *info = @{emkEmuticon:self.emuticon};
+    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:EMRecorderFlowTypeRetakeForSpecificEmuticons
+                                                          info:info];
+    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    recorderVC.delegate = self;
+    [self presentViewController:recorderVC animated:YES completion:nil];
+
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -105,5 +188,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)onPressedRetakeButton:(id)sender
+{
+    [self retake];
+}
 
 @end
