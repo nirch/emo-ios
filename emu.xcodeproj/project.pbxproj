@@ -1604,7 +1604,6 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"/Users/aviv/DEV/workspaces/xcode/homage-cv-app/Homage/Lib/Release-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1707,7 +1706,6 @@
 					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"/Users/aviv/DEV/workspaces/xcode/homage-cv-app/Homage/Lib/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
