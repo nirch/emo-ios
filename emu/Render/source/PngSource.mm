@@ -23,9 +23,7 @@ int	PngSource::ReadFrame( int iFrame, image_type **im )
     {
         NSString *imagePath = [m_pngFiles objectAtIndex:iFrame];
         UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
-        //if (m_lastImage) image_destroy(m_lastImage, 1);
-        m_lastImage = CVtool::DecomposeUIimage(image);
-        *im = m_lastImage;
+        *im = CVtool::UIimage_to_image(image, *im);
         MergeAlpha(*im);
         return 1;
     }
@@ -38,6 +36,5 @@ int	PngSource::ReadFrame( int iFrame, image_type **im )
 
 int PngSource::Close()
 {
-    if (m_lastImage) image_destroy(m_lastImage, 1);    
     return 1;
 }
