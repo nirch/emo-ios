@@ -71,6 +71,7 @@
 		0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
+		0894E2A01AA340FA0084C740 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0894E29F1AA340FA0084C740 /* Crashlytics.framework */; };
 		089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
@@ -271,6 +272,7 @@
 		087F20901A8F5A03002B1678 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
 		087F20921A8F5A28002B1678 /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
 		087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
+		0894E29F1AA340FA0084C740 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		089E78AD1A77FD8600BC3479 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
 		089E78AE1A77FD8600BC3479 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
 		089E78B21A780DEB00BC3479 /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */,
+				0894E2A01AA340FA0084C740 /* Crashlytics.framework in Frameworks */,
 				08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */,
 				08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */,
 				08D929EF1A77E0BC00B6A68F /* CoreMedia.framework in Frameworks */,
@@ -1029,6 +1032,7 @@
 		08D929861A77A36D00B6A68F /* emu */ = {
 			isa = PBXGroup;
 			children = (
+				0894E29F1AA340FA0084C740 /* Crashlytics.framework */,
 				085C66DD1A937EC9007BC910 /* App */,
 				085C67251A937EC9007BC910 /* User Interface */,
 				08CB895C1A9A8F0900224A38 /* Localization */,
@@ -1174,6 +1178,7 @@
 				08D929811A77A36D00B6A68F /* Frameworks */,
 				08D929821A77A36D00B6A68F /* Resources */,
 				909D6BAB3E0BBAD333A69231 /* Copy Pods Resources */,
+				0894E29E1AA340940084C740 /* Crashlytics Run Script */,
 			);
 			buildRules = (
 			);
@@ -1289,6 +1294,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0894E29E1AA340940084C740 /* Crashlytics Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Crashlytics Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
+		};
 		8FBC813E5FFEBB73F078542C /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1501,6 +1520,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/emu",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1603,6 +1623,7 @@
 					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/emu",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (

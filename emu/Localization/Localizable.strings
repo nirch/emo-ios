@@ -39,7 +39,7 @@
 "RECORDER_CONTINUE_BUTTON" = "CONTINUE";
 "RECORDER_PREVIEW_TRY_AGAIN_BUTTON" = "LETS TRY IT AGAIN";
 "RECORDER_PREVIEW_CONFIRM" = "I LOVE IT!";
-"RECORDER_PREVIEW_BAD_BACKGROUND_LONG_MESSAGE" = "You chose to start recording with a bad backround. For best results, Emu recommends that you try again with a uniform background. Try to avoid shadows and objects behind you.";
+"RECORDER_PREVIEW_BAD_BACKGROUND_LONG_MESSAGE" = "You chose to start recording with a bad backround. Emu recommends that you try again with a uniform background. Avoid having shadows or objects behind you.";
 
 // Retakes questions
 "RETAKE_CHOICE_TITLE" = "Retake footage for:";

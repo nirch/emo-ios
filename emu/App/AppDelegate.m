@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Crashlytics/Crashlytics.h>
 #import "EMDB.h"
 
 @interface AppDelegate ()
@@ -27,12 +28,17 @@
                      );
 }
 
+-(void)initCrashlytics
+{
+    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+}
+
 #pragma mark - App Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialize Logging
     [self initLogging];
-    
+    [self initCrashlytics];
     return YES;
 }
 
