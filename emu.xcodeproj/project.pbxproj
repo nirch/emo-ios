@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0806BD5B1AA364E80078F14B /* angel-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD4A1AA364E80078F14B /* angel-bg.gif */; };
+		0806BD5C1AA364E80078F14B /* angel-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD4B1AA364E80078F14B /* angel-fg.gif */; };
+		0806BD5D1AA364E80078F14B /* angel-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD4C1AA364E80078F14B /* angel-mask.jpg */; };
+		0806BD5E1AA364E80078F14B /* green-love-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD4E1AA364E80078F14B /* green-love-bg.gif */; };
+		0806BD5F1AA364E80078F14B /* green-love-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD4F1AA364E80078F14B /* green-love-fg.gif */; };
+		0806BD601AA364E80078F14B /* green-love-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD501AA364E80078F14B /* green-love-mask.jpg */; };
+		0806BD611AA364E80078F14B /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD521AA364E80078F14B /* hearts-bg.gif */; };
+		0806BD621AA364E80078F14B /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD531AA364E80078F14B /* hearts-fg.gif */; };
+		0806BD631AA364E80078F14B /* hearts-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD541AA364E80078F14B /* hearts-mask.jpg */; };
+		0806BD641AA364E80078F14B /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD561AA364E80078F14B /* hot-bg.gif */; };
+		0806BD651AA364E80078F14B /* hot-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD571AA364E80078F14B /* hot-mask.jpg */; };
+		0806BD661AA364E80078F14B /* kiss-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD591AA364E80078F14B /* kiss-bg.gif */; };
+		0806BD671AA364E80078F14B /* kiss-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0806BD5A1AA364E80078F14B /* kiss-mask.jpg */; };
 		0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0827C6D81A8608E200B14294 /* uniformBGParams.xml */; };
 		083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083334841A827D79008AC771 /* HMCaptureSession.mm */; };
 		0833348C1A827D81008AC771 /* HMGMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 083334881A827D81008AC771 /* HMGMError.m */; };
@@ -139,23 +152,23 @@
 		08D9B3CA1AA26F6E003DEA67 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9B3C91AA26F6E003DEA67 /* Emuticon.m */; };
 		08D9B3CD1AA26F6E003DEA67 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9B3CC1AA26F6E003DEA67 /* EmuticonDef.m */; };
 		08D9B3D01AA26F6E003DEA67 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9B3CF1AA26F6E003DEA67 /* Package.m */; };
-		08E5F7511A9DF1E500136D29 /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7401A9DF1E500136D29 /* hot-bg.gif */; };
-		08E5F7521A9DF1E500136D29 /* hot-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7411A9DF1E500136D29 /* hot-mask.jpg */; };
-		08E5F7531A9DF1E500136D29 /* kiss-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7431A9DF1E500136D29 /* kiss-bg.gif */; };
-		08E5F7541A9DF1E500136D29 /* kiss-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7441A9DF1E500136D29 /* kiss-mask.jpg */; };
-		08E5F7551A9DF1E500136D29 /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7461A9DF1E500136D29 /* hearts-bg.gif */; };
-		08E5F7561A9DF1E500136D29 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7471A9DF1E500136D29 /* hearts-fg.gif */; };
-		08E5F7571A9DF1E500136D29 /* hearts-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7481A9DF1E500136D29 /* hearts-mask.jpg */; };
-		08E5F7581A9DF1E500136D29 /* green-love-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F74A1A9DF1E500136D29 /* green-love-bg.gif */; };
-		08E5F7591A9DF1E500136D29 /* green-love-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F74B1A9DF1E500136D29 /* green-love-fg.gif */; };
-		08E5F75A1A9DF1E500136D29 /* green-love-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F74C1A9DF1E500136D29 /* green-love-mask.jpg */; };
-		08E5F75B1A9DF1E500136D29 /* angel-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F74E1A9DF1E500136D29 /* angel-bg.gif */; };
-		08E5F75C1A9DF1E500136D29 /* angel-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F74F1A9DF1E500136D29 /* angel-fg.gif */; };
-		08E5F75D1A9DF1E500136D29 /* angel-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08E5F7501A9DF1E500136D29 /* angel-mask.jpg */; };
 		A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0806BD4A1AA364E80078F14B /* angel-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-bg.gif"; sourceTree = "<group>"; };
+		0806BD4B1AA364E80078F14B /* angel-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-fg.gif"; sourceTree = "<group>"; };
+		0806BD4C1AA364E80078F14B /* angel-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "angel-mask.jpg"; sourceTree = "<group>"; };
+		0806BD4E1AA364E80078F14B /* green-love-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "green-love-bg.gif"; sourceTree = "<group>"; };
+		0806BD4F1AA364E80078F14B /* green-love-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "green-love-fg.gif"; sourceTree = "<group>"; };
+		0806BD501AA364E80078F14B /* green-love-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "green-love-mask.jpg"; sourceTree = "<group>"; };
+		0806BD521AA364E80078F14B /* hearts-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hearts-bg.gif"; sourceTree = "<group>"; };
+		0806BD531AA364E80078F14B /* hearts-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hearts-fg.gif"; sourceTree = "<group>"; };
+		0806BD541AA364E80078F14B /* hearts-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "hearts-mask.jpg"; sourceTree = "<group>"; };
+		0806BD561AA364E80078F14B /* hot-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hot-bg.gif"; sourceTree = "<group>"; };
+		0806BD571AA364E80078F14B /* hot-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "hot-mask.jpg"; sourceTree = "<group>"; };
+		0806BD591AA364E80078F14B /* kiss-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "kiss-bg.gif"; sourceTree = "<group>"; };
+		0806BD5A1AA364E80078F14B /* kiss-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "kiss-mask.jpg"; sourceTree = "<group>"; };
 		0827C6D81A8608E200B14294 /* uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = uniformBGParams.xml; sourceTree = "<group>"; };
 		083334761A822E4D008AC771 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		083334831A827D79008AC771 /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
@@ -421,6 +434,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0806BD491AA364E80078F14B /* angel */ = {
+			isa = PBXGroup;
+			children = (
+				0806BD4A1AA364E80078F14B /* angel-bg.gif */,
+				0806BD4B1AA364E80078F14B /* angel-fg.gif */,
+				0806BD4C1AA364E80078F14B /* angel-mask.jpg */,
+			);
+			path = angel;
+			sourceTree = "<group>";
+		};
+		0806BD4D1AA364E80078F14B /* green-love */ = {
+			isa = PBXGroup;
+			children = (
+				0806BD4E1AA364E80078F14B /* green-love-bg.gif */,
+				0806BD4F1AA364E80078F14B /* green-love-fg.gif */,
+				0806BD501AA364E80078F14B /* green-love-mask.jpg */,
+			);
+			path = "green-love";
+			sourceTree = "<group>";
+		};
+		0806BD511AA364E80078F14B /* hearts */ = {
+			isa = PBXGroup;
+			children = (
+				0806BD521AA364E80078F14B /* hearts-bg.gif */,
+				0806BD531AA364E80078F14B /* hearts-fg.gif */,
+				0806BD541AA364E80078F14B /* hearts-mask.jpg */,
+			);
+			path = hearts;
+			sourceTree = "<group>";
+		};
+		0806BD551AA364E80078F14B /* hot */ = {
+			isa = PBXGroup;
+			children = (
+				0806BD561AA364E80078F14B /* hot-bg.gif */,
+				0806BD571AA364E80078F14B /* hot-mask.jpg */,
+			);
+			path = hot;
+			sourceTree = "<group>";
+		};
+		0806BD581AA364E80078F14B /* kiss */ = {
+			isa = PBXGroup;
+			children = (
+				0806BD591AA364E80078F14B /* kiss-bg.gif */,
+				0806BD5A1AA364E80078F14B /* kiss-mask.jpg */,
+			);
+			path = kiss;
+			sourceTree = "<group>";
+		};
 		083334731A822344008AC771 /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -861,6 +922,11 @@
 			isa = PBXGroup;
 			children = (
 				08C5EC8E1AA12276007246EC /* lovePackage.json */,
+				0806BD491AA364E80078F14B /* angel */,
+				0806BD4D1AA364E80078F14B /* green-love */,
+				0806BD511AA364E80078F14B /* hearts */,
+				0806BD551AA364E80078F14B /* hot */,
+				0806BD581AA364E80078F14B /* kiss */,
 			);
 			name = love;
 			path = packages/love;
@@ -1228,24 +1294,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				085C67951A937EC9007BC910 /* recordingEnd.wav in Resources */,
-				08E5F7521A9DF1E500136D29 /* hot-mask.jpg in Resources */,
 				08CAEAD71A9757BF008A3E0A /* SourceSansPro-Regular.ttf in Resources */,
-				08E5F7531A9DF1E500136D29 /* kiss-bg.gif in Resources */,
 				08C5EC8F1AA12276007246EC /* lovePackage.json in Resources */,
 				08CB897A1A9AA12A00224A38 /* 2.gif in Resources */,
+				0806BD641AA364E80078F14B /* hot-bg.gif in Resources */,
 				085C67801A937EC9007BC910 /* test480x480b.png in Resources */,
 				085C67851A937EC9007BC910 /* test_front.gif in Resources */,
-				08E5F7551A9DF1E500136D29 /* hearts-bg.gif in Resources */,
+				0806BD661AA364E80078F14B /* kiss-bg.gif in Resources */,
 				086005551A98A839008CD7DE /* startRecording.wav in Resources */,
 				08CB89F31A9D5D2F00224A38 /* Main.storyboard in Resources */,
 				08CB895E1A9A8F0900224A38 /* Localizable.strings in Resources */,
 				08CAEAD81A9757BF008A3E0A /* SourceSansPro-Semibold.ttf in Resources */,
+				0806BD5F1AA364E80078F14B /* green-love-fg.gif in Resources */,
+				0806BD621AA364E80078F14B /* hearts-fg.gif in Resources */,
 				08C5EC551AA103FE007246EC /* appCFG.json in Resources */,
-				08E5F75C1A9DF1E500136D29 /* angel-fg.gif in Resources */,
 				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
-				08E5F75A1A9DF1E500136D29 /* green-love-mask.jpg in Resources */,
+				0806BD671AA364E80078F14B /* kiss-mask.jpg in Resources */,
 				08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */,
-				08E5F7591A9DF1E500136D29 /* green-love-fg.gif in Resources */,
+				0806BD5E1AA364E80078F14B /* green-love-bg.gif in Resources */,
 				085C67931A937EC9007BC910 /* goodBG.wav in Resources */,
 				085C677F1A937EC9007BC910 /* test480x480.png in Resources */,
 				085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */,
@@ -1256,35 +1322,35 @@
 				085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */,
 				08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */,
 				085C677D1A937EC9007BC910 /* test240x240.png in Resources */,
+				0806BD601AA364E80078F14B /* green-love-mask.jpg in Resources */,
+				0806BD5D1AA364E80078F14B /* angel-mask.jpg in Resources */,
 				08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */,
+				0806BD611AA364E80078F14B /* hearts-bg.gif in Resources */,
 				08CB89791A9AA12A00224A38 /* 1.gif in Resources */,
 				085C677C1A937EC9007BC910 /* silCloseup720p.png in Resources */,
 				08CB897E1A9AA12A00224A38 /* 6.gif in Resources */,
 				085C67841A937EC9007BC910 /* test_back.gif in Resources */,
 				08CB897F1A9AA12A00224A38 /* 7.gif in Resources */,
 				085C67771A937EC9007BC910 /* contourCloseupGreen.png in Resources */,
+				0806BD5C1AA364E80078F14B /* angel-fg.gif in Resources */,
 				0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */,
-				08E5F75D1A9DF1E500136D29 /* angel-mask.jpg in Resources */,
 				086005531A98A839008CD7DE /* cancel.wav in Resources */,
 				085C67821A937EC9007BC910 /* test640x360.ctr in Resources */,
-				08E5F7571A9DF1E500136D29 /* hearts-mask.jpg in Resources */,
 				085C67781A937EC9007BC910 /* contourCloseupRed.png in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
 				08CAEAC71A9600E1008A3E0A /* headAndChest480X480.ctr in Resources */,
-				08E5F7561A9DF1E500136D29 /* hearts-fg.gif in Resources */,
-				08E5F75B1A9DF1E500136D29 /* angel-bg.gif in Resources */,
-				08E5F7581A9DF1E500136D29 /* green-love-bg.gif in Resources */,
-				08E5F7541A9DF1E500136D29 /* kiss-mask.jpg in Resources */,
+				0806BD651AA364E80078F14B /* hot-mask.jpg in Resources */,
 				085C67941A937EC9007BC910 /* recordingCountDown.wav in Resources */,
+				0806BD5B1AA364E80078F14B /* angel-bg.gif in Resources */,
 				08C5EC571AA103FE007246EC /* packages.json in Resources */,
 				085C677E1A937EC9007BC910 /* test240x240Green.png in Resources */,
 				086005541A98A839008CD7DE /* pressedButton.wav in Resources */,
 				0860055E1A98E2FE008CD7DE /* endRecording.wav in Resources */,
 				08CB89831A9AA12A00224A38 /* Experimental.storyboard in Resources */,
-				08E5F7511A9DF1E500136D29 /* hot-bg.gif in Resources */,
 				085C67811A937EC9007BC910 /* test480x480Green.png in Resources */,
 				08CB897D1A9AA12A00224A38 /* 5.gif in Resources */,
 				08CB89801A9AA12A00224A38 /* 8.gif in Resources */,
+				0806BD631AA364E80078F14B /* hearts-mask.jpg in Resources */,
 				08B589CF1A9F13EE004F6FA1 /* 1.ctr in Resources */,
 				089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */,
 				08CB897C1A9AA12A00224A38 /* 4.gif in Resources */,
