@@ -462,9 +462,20 @@
                                     <constraint firstAttribute="height" constant="10" id="czU-ot-y3D"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C24-U4-oRr">
+                                <rect key="frame" x="307" y="303" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="7oV-gb-6z4"/>
+                                    <constraint firstAttribute="height" constant="30" id="MqL-Us-bRP"/>
+                                </constraints>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gmd-fp-WVQ" firstAttribute="centerX" secondItem="C24-U4-oRr" secondAttribute="centerX" id="0l7-NY-7u5"/>
                             <constraint firstItem="CYP-nE-gH7" firstAttribute="top" secondItem="pCV-G3-Tl8" secondAttribute="bottom" constant="40" id="4L7-eb-htI"/>
                             <constraint firstItem="f7K-jX-6pv" firstAttribute="trailing" secondItem="gmd-fp-WVQ" secondAttribute="trailing" constant="16" id="70f-ff-KP7"/>
                             <constraint firstItem="f7K-jX-6pv" firstAttribute="bottom" secondItem="gmd-fp-WVQ" secondAttribute="bottom" constant="20" id="8bv-Ke-f1h"/>
@@ -477,6 +488,7 @@
                             <constraint firstAttribute="centerY" secondItem="f7K-jX-6pv" secondAttribute="centerY" id="krB-F6-i4c"/>
                             <constraint firstItem="CYP-nE-gH7" firstAttribute="leading" secondItem="vv9-CM-Joo" secondAttribute="leading" constant="40" id="mCf-Mg-Vll"/>
                             <constraint firstAttribute="centerY" secondItem="6Yd-Pg-gW0" secondAttribute="centerY" constant="-0.5" id="uOu-qR-GDU"/>
+                            <constraint firstItem="gmd-fp-WVQ" firstAttribute="centerY" secondItem="C24-U4-oRr" secondAttribute="centerY" id="wea-G0-20N"/>
                         </constraints>
                     </view>
                     <toolbarItems/>

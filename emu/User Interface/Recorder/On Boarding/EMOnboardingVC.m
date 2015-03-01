@@ -145,6 +145,16 @@
     self.stage = stage;
     [self.guiCollectionView reloadData];
     [self scrollToStage:stage animated:animated];
+    [self handleStage];
+}
+
+-(void)handleStage
+{
+    if (self.stage >= EMOnBoardingStageRecording) {
+        self.guiCancelButton.alpha = 0;
+    } else {
+        self.guiCancelButton.alpha = 1;
+    }
 }
 
 -(void)scrollToStage:(EMOnBoardingStage)stage animated:(BOOL)animated

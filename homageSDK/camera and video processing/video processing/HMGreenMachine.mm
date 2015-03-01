@@ -191,21 +191,23 @@
 
     // Taking care of the output image.
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-    dispatch_async(self.outputQueue, ^{
-//        static int i = 0;
-//        i++;
-//        [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Original-%@",@(i)]];
-        
-        // Using the mask we got from UB->Process()
-        // Set everything that is not the extracted background as alpha with maximum transparency.
-        m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
-                                                        255,                 // The alpha amount to add to the pixels marked in the mask.
-                                                        m_mask,              // The mask calculated by the algorithm ->Process method.
-                                                        m_output_image);     // The output image.
-        m_output_image->timeStamp = output_t.value;
-        // Destroying the temp image
-        image_destroy(original_bgr_image, 1);
-    });
+    if (self.outputQueue) {
+        dispatch_async(self.outputQueue, ^{
+    //        static int i = 0;
+    //        i++;
+    //        [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Original-%@",@(i)]];
+            
+            // Using the mask we got from UB->Process()
+            // Set everything that is not the extracted background as alpha with maximum transparency.
+            m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
+                                                            255,                 // The alpha amount to add to the pixels marked in the mask.
+                                                            m_mask,              // The mask calculated by the algorithm ->Process method.
+                                                            m_output_image);     // The output image.
+            m_output_image->timeStamp = output_t.value;
+            // Destroying the temp image
+            image_destroy(original_bgr_image, 1);
+        });
+    }
 
     // Converting the result of the algo into CVPixelBuffer
     CVImageBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_display_image);
