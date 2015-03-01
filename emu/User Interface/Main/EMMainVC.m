@@ -284,6 +284,7 @@
                                                   }];
     }
     
+    cell.guiLock.alpha = emu.prefferedFootageOID? 0.2 : 0.0;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -341,8 +342,8 @@
 -(void)askUserToChooseWhatToRetake
 {
     UIAlertController *alert = [UIAlertController new];
-    alert.title = nil;
-    alert.message = LS(@"RETAKE_CHOICE_QUESTION");
+    alert.title = LS(@"RETAKE_CHOICE_TITLE");
+    alert.message = LS(@"RETAKE_CHOICE_MESSAGE");
     
     // Retake them all!
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_ALL")
@@ -358,12 +359,12 @@
                                                 [self retakeCurrentPackage];
                                             }]];
 
-    // Reset emuticons to use the same footage.
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_RESET_PACK")
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction *action) {
-                                                [self resetPack];
-                                            }]];
+//    // Reset emuticons to use the same footage.
+//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_RESET_PACK")
+//                                              style:UIAlertActionStyleDefault
+//                                            handler:^(UIAlertAction *action) {
+//                                                [self resetPack];
+//                                            }]];
 
     
     
@@ -419,6 +420,44 @@
     [self.guiCollectionView reloadData];
 }
 
+#pragma mark - More user choices
+-(void)userChoices
+{
+    UIAlertController *alert = [UIAlertController new];
+    alert.title = LS(@"USER_CHOICE_TITLE");
+    
+    // Reset emuticons to use the same footage.
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"USER_CHOICE_RESET_PACK")
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self resetPack];
+                                            }]];
+    
+    // Cancel
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
+                                              style:UIAlertActionStyleCancel
+                                            handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+#pragma mark - About message
+-(void)aboutMessage
+{
+    NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    
+    UIAlertController *alert = [[UIAlertController alloc] init];
+    
+    alert.title = [SF:@"About Emu - V%@", build];
+    
+    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+
+    [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -428,6 +467,14 @@
     [self askUserToChooseWhatToRetake];
 }
 
+- (IBAction)onPressedNavButton:(id)sender
+{
+    [self aboutMessage];
+}
 
+- (IBAction)onPressedEmuButton:(id)sender
+{
+    [self userChoices];
+}
 
 @end

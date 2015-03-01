@@ -30,6 +30,9 @@
                                         <state key="normal" image="burger">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onPressedNavButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="tbk-fM-BsG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpK-cJ-Ijf" userLabel="Retake Button">
                                         <rect key="frame" x="321" y="20" width="44" height="44"/>
@@ -98,6 +101,13 @@
                                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eCw-gP-EQE">
                                                             <rect key="frame" x="81" y="81" width="20" height="20"/>
                                                         </activityIndicatorView>
+                                                        <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="h2L-nW-vHa">
+                                                            <rect key="frame" x="164" y="164" width="10" height="10"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="10" id="MhD-Ur-4TT"/>
+                                                                <constraint firstAttribute="width" constant="10" id="MjW-eb-gDv"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -111,8 +121,10 @@
                                                         <constraint firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="TnV-Ef-GZd"/>
                                                         <constraint firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="VfL-M2-bBt"/>
                                                         <constraint firstAttribute="bottom" secondItem="Ghz-B2-vH6" secondAttribute="bottom" constant="16" id="Zxd-C8-nhM"/>
+                                                        <constraint firstAttribute="trailing" secondItem="h2L-nW-vHa" secondAttribute="trailing" constant="8" id="pF0-q8-nZk"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="top" secondItem="QKm-Wq-5ON" secondAttribute="top" constant="16" id="ssq-Co-OFD"/>
                                                         <constraint firstItem="Jqd-nH-4Zq" firstAttribute="height" secondItem="QKm-Wq-5ON" secondAttribute="height" id="vj5-Qf-55L"/>
+                                                        <constraint firstAttribute="bottom" secondItem="h2L-nW-vHa" secondAttribute="bottom" constant="8" id="yio-t9-zDg"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -137,6 +149,7 @@
                                         <connections>
                                             <outlet property="guiActivity" destination="eCw-gP-EQE" id="I5W-4K-Keb"/>
                                             <outlet property="guiAnimGifView" destination="Ghz-B2-vH6" id="sq3-zl-H6g"/>
+                                            <outlet property="guiLock" destination="h2L-nW-vHa" id="XHp-gh-SuK"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -154,6 +167,9 @@
                                 <state key="normal" image="emuNavLogo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onPressedEmuButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="8p8-jX-GFX"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -303,11 +319,11 @@
                             <constraint firstAttribute="centerX" secondItem="RfO-Jc-wDZ" secondAttribute="centerX" constant="0.5" id="NcX-8w-Eza"/>
                             <constraint firstAttribute="centerX" secondItem="fTt-oM-iaE" secondAttribute="centerX" id="U1H-Ek-Rld"/>
                             <constraint firstItem="6OK-A8-yVv" firstAttribute="top" secondItem="Voh-xn-DcO" secondAttribute="bottom" id="WFY-9h-N6i"/>
-                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="trailing" secondItem="Ppi-hu-ZiR" secondAttribute="trailingMargin" id="cjp-4H-5hy"/>
-                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="top" secondItem="fTt-oM-iaE" secondAttribute="bottom" constant="44" id="gUb-sE-OAE"/>
+                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="trailing" secondItem="Ppi-hu-ZiR" secondAttribute="trailingMargin" id="cjp-4H-5hy" userLabel="Gif player right margin"/>
+                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="top" secondItem="fTt-oM-iaE" secondAttribute="bottom" constant="44" id="gUb-sE-OAE" userLabel="Gif player top margin"/>
                             <constraint firstItem="fTt-oM-iaE" firstAttribute="width" secondItem="Ppi-hu-ZiR" secondAttribute="width" id="p1n-Du-wlr"/>
                             <constraint firstItem="Voh-xn-DcO" firstAttribute="leading" secondItem="Ppi-hu-ZiR" secondAttribute="leading" id="p6M-Y0-FGo"/>
-                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="leading" secondItem="Ppi-hu-ZiR" secondAttribute="leadingMargin" id="rqX-hJ-8Kt"/>
+                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="leading" secondItem="Ppi-hu-ZiR" secondAttribute="leadingMargin" id="rqX-hJ-8Kt" userLabel="Gif player left margin"/>
                             <constraint firstAttribute="trailing" secondItem="Voh-xn-DcO" secondAttribute="trailing" id="y75-ng-tCA"/>
                             <constraint firstItem="fTt-oM-iaE" firstAttribute="top" secondItem="2jC-9S-6vE" secondAttribute="bottom" id="yTA-FF-Ltj"/>
                         </constraints>
@@ -315,6 +331,11 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="constraintPlayerLeft" destination="rqX-hJ-8Kt" id="9tf-pa-Hbb"/>
+                        <outlet property="constraintPlayerRight" destination="cjp-4H-5hy" id="RXL-3K-nWF"/>
+                        <outlet property="guiConstraintPlayerTop" destination="gUb-sE-OAE" id="Llj-47-rAe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KsB-Oz-cKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -434,10 +455,19 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6Yd-Pg-gW0">
                                 <rect key="frame" x="161" y="162" width="20" height="20"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" alpha="0.10000000298023225" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="gmd-fp-WVQ">
+                                <rect key="frame" x="317" y="313" width="10" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="8AY-1t-hfz"/>
+                                    <constraint firstAttribute="height" constant="10" id="czU-ot-y3D"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CYP-nE-gH7" firstAttribute="top" secondItem="pCV-G3-Tl8" secondAttribute="bottom" constant="40" id="4L7-eb-htI"/>
+                            <constraint firstItem="f7K-jX-6pv" firstAttribute="trailing" secondItem="gmd-fp-WVQ" secondAttribute="trailing" constant="16" id="70f-ff-KP7"/>
+                            <constraint firstItem="f7K-jX-6pv" firstAttribute="bottom" secondItem="gmd-fp-WVQ" secondAttribute="bottom" constant="20" id="8bv-Ke-f1h"/>
                             <constraint firstItem="PlJ-aM-PiO" firstAttribute="top" secondItem="CYP-nE-gH7" secondAttribute="bottom" constant="40" id="FC6-KC-VMt"/>
                             <constraint firstAttribute="centerX" secondItem="6Yd-Pg-gW0" secondAttribute="centerX" constant="0.5" id="L6r-yp-46r"/>
                             <constraint firstItem="f7K-jX-6pv" firstAttribute="height" secondItem="vv9-CM-Joo" secondAttribute="height" id="N3O-xB-WwJ"/>
@@ -453,6 +483,7 @@
                     <connections>
                         <outlet property="guiActivity" destination="6Yd-Pg-gW0" id="Dkg-84-Afq"/>
                         <outlet property="guiAnimGifView" destination="CYP-nE-gH7" id="Cow-7Z-O5l"/>
+                        <outlet property="guiLock" destination="gmd-fp-WVQ" id="v8v-yE-v5w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="raQ-Vj-IMy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -467,6 +498,7 @@
         <image name="cellBG" width="179" height="178"/>
         <image name="emuNavLogo" width="60" height="59"/>
         <image name="facebook" width="57" height="56"/>
+        <image name="lock" width="10" height="14"/>
         <image name="retakeIcon" width="25" height="24"/>
     </resources>
 </document>

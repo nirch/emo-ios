@@ -45,6 +45,7 @@
 
     // Show the animated gif
     self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
+    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
     
     // Only iPhone4s needs special treatment of the layout
     [self layoutFixesIfRequired];

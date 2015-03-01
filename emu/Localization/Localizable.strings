@@ -42,12 +42,16 @@
 "RECORDER_PREVIEW_BAD_BACKGROUND_LONG_MESSAGE" = "You chose to start recording with a bad backround. For best results, Emu recommends that you try again with a uniform background. Try to avoid shadows and objects behind you.";
 
 // Retakes questions
-"RETAKE_CHOICE_TITLE" = "Retake";
-"RETAKE_CHOICE_QUESTION" = "What do you want to retake?";
-"RETAKE_CHOICE_ALL" = "Retake all emujis";
-"RETAKE_CHOICE_PACKAGE" = "Retake emujis in this pack";
+"RETAKE_CHOICE_TITLE" = "Retake footage for:";
+"RETAKE_CHOICE_MESSAGE" = "(Locked emujis will not be changed)";
+"RETAKE_CHOICE_ALL" = "All packages";
+"RETAKE_CHOICE_PACKAGE" = "Current package only";
+
 "RETAKE_CHOICE_RESET_PACK" = "Reset pack to a single footage";
 
+// User choices
+"USER_CHOICE_TITLE" = "Reset footage:";
+"USER_CHOICE_RESET_PACK" = "Reset all emujis to original footage";
 
 // Share
 "SHARE_IT_TITLE" = "Share it:";

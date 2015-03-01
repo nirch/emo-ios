@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimGifView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+@property (weak, nonatomic) IBOutlet UIImageView *guiLock;
 
 @property (nonatomic) NSURL *animatedGifURL;
 

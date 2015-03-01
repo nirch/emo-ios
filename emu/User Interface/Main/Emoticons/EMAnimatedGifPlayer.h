@@ -11,6 +11,7 @@
 @interface EMAnimatedGifPlayer : UIViewController
 
 @property (nonatomic) NSURL *animatedGifURL;
+@property (nonatomic) BOOL locked;
 
 -(void)stopAnimating;
 

@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimGifView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+@property (weak, nonatomic) IBOutlet UIImageView *guiLock;
 
 @end
 
@@ -21,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.locked = NO;
 }
 
 -(void)setAnimatedGifURL:(NSURL *)animatedGifURL
@@ -31,7 +33,7 @@
     FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
     
     self.guiAnimGifView.animatedImage = animGif;
-    self.guiAnimGifView.contentMode = UIViewContentModeCenter;
+    self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
     
     [self.guiAnimGifView startAnimating];
     [self.guiActivity stopAnimating];
@@ -45,6 +47,11 @@
 -(void)startActivity
 {
     [self.guiActivity startAnimating];
+}
+
+-(void)setLocked:(BOOL)locked
+{
+    self.guiLock.alpha = locked? 0.2:0.0;
 }
 
 @end

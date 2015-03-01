@@ -669,16 +669,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="RaS-XL-568" userLabel="animated gif view" customClass="FLAnimatedImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="343" height="343"/>
+                                <rect key="frame" x="40" y="40" width="263" height="263"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RaS-XL-568" firstAttribute="width" secondItem="PFo-K3-KWU" secondAttribute="width" id="QCh-il-7GG"/>
-                            <constraint firstAttribute="centerX" secondItem="RaS-XL-568" secondAttribute="centerX" id="Ulf-WO-Krx"/>
-                            <constraint firstAttribute="centerY" secondItem="RaS-XL-568" secondAttribute="centerY" id="gfN-jt-Jx5"/>
-                            <constraint firstItem="RaS-XL-568" firstAttribute="height" secondItem="PFo-K3-KWU" secondAttribute="height" id="vcV-SP-eDG"/>
+                            <constraint firstItem="RaS-XL-568" firstAttribute="top" secondItem="eiR-Yf-iyR" secondAttribute="bottom" constant="40" id="0f0-ay-plj"/>
+                            <constraint firstItem="8OX-k9-YeK" firstAttribute="top" secondItem="RaS-XL-568" secondAttribute="bottom" constant="40" id="TKx-aS-YTg"/>
+                            <constraint firstItem="RaS-XL-568" firstAttribute="leading" secondItem="PFo-K3-KWU" secondAttribute="leading" constant="40" id="kWW-IB-1Gm"/>
+                            <constraint firstAttribute="trailing" secondItem="RaS-XL-568" secondAttribute="trailing" constant="40" id="x0S-3L-mKy"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
