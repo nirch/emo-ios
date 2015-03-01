@@ -9,6 +9,7 @@
 #define E_EMU @"Emuticon"
 
 @class UserFootage;
+@class Package;
 
 #import "Emuticon.h"
 
@@ -51,6 +52,15 @@
  */
 +(Emuticon *)newForEmuticonDef:(EmuticonDef *)emuticonDef
                        context:(NSManagedObjectContext *)context;
+
+/**
+ *  Fetches all emuticons in a given package (ignores emuticons marked as preview)
+ *
+ *  @param package The related Package object.
+ *
+ *  @return An array of emuticons related to the given package.
+ */
++(NSArray *)allEmuticonsInPackage:(Package *)package;
 
 
 /**

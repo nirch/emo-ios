@@ -43,9 +43,11 @@
 
 // Retakes questions
 "RETAKE_CHOICE_TITLE" = "Retake";
-"RETAKE_CHOICE_QUESTION" = "would you like to retake all Emujis or just this pack?";
-"RETAKE_CHOICE_ALL" = "Retake them all!";
-"RETAKE_CHOICE_PACKAGE" = "Only Emujis in this pack, please.";
+"RETAKE_CHOICE_QUESTION" = "What do you want to retake?";
+"RETAKE_CHOICE_ALL" = "Retake all emujis";
+"RETAKE_CHOICE_PACKAGE" = "Retake emujis in this pack";
+"RETAKE_CHOICE_RESET_PACK" = "Reset pack to a single footage";
+
 
 // Share
 "SHARE_IT_TITLE" = "Share it:";

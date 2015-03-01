@@ -56,6 +56,16 @@
 }
 
 
++(NSArray *)allEmuticonsInPackage:(Package *)package
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, package];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:EMDB.sh.context];
+    return emus;
+}
+
+
 -(NSURL *)animatedGifURL
 {
     NSString *outputPath = [self animatedGifPath];

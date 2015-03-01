@@ -357,6 +357,15 @@
                                             handler:^(UIAlertAction *action) {
                                                 [self retakeCurrentPackage];
                                             }]];
+
+    // Reset emuticons to use the same footage.
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_RESET_PACK")
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self resetPack];
+                                            }]];
+
+    
     
     // Cancel
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
@@ -389,6 +398,25 @@
     Package *package = [appCFG packageForOnboarding];
     [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
                          info:@{emkPackage:package}];
+}
+
+-(void)resetPack
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    Package *package = [appCFG packageForOnboarding];
+
+    NSArray *emus = [Emuticon allEmuticonsInPackage:package];
+    for (Emuticon *emu in emus) {
+        if (emu.prefferedFootageOID) {
+            [emu cleanUp];
+            emu.prefferedFootageOID = nil;
+        }
+    }
+    [EMDB.sh save];
+
+    // Reload (and resend some emus to rendering)
+    [self resetFetchedResultsController];
+    [self.guiCollectionView reloadData];
 }
 
 #pragma mark - IB Actions
