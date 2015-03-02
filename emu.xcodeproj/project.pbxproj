@@ -153,6 +153,7 @@
 		08D9B3CA1AA26F6E003DEA67 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9B3C91AA26F6E003DEA67 /* Emuticon.m */; };
 		08D9B3CD1AA26F6E003DEA67 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9B3CC1AA26F6E003DEA67 /* EmuticonDef.m */; };
 		08D9B3D01AA26F6E003DEA67 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9B3CF1AA26F6E003DEA67 /* Package.m */; };
+		54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
 		A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1424,6 +1425,7 @@
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
 				0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */,
 				085C679D1A937EC9007BC910 /* EMPreviewVC.m in Sources */,
+				54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */,
 				083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */,
 				087F20911A8F5A03002B1678 /* HMParser.m in Sources */,
 				083D54751A8CB0A10048604A /* HMImageTools.mm in Sources */,

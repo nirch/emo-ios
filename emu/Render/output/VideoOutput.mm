@@ -8,7 +8,6 @@
 
 #import "VideoOutput.h"
 #import "Gpw/Vtool/Vtool.h"
-#import "Render.h"
 
 VideoOutput::VideoOutput(CMVideoDimensions dimensions, float bitsPerPixel, NSURL *videoOutputUrl, int framesPerSec)
 {
@@ -59,9 +58,9 @@ int	VideoOutput::WriteFrame( image_type *im , int iFrame)
     // TODO: Add background color to image
     
     // Converting the result of the algo into CVPixelBuffer
-    image3_from(im, im);
-    image3_bgr2rgb(im);
-    CVPixelBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(im);
+    m_image = image3_from(im, m_image);
+    image3_bgr2rgb(m_image);
+    CVPixelBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_image);
     
     NSError *error;    
     if ( m_assetWriter.status == AVAssetWriterStatusUnknown ) {
@@ -104,42 +103,7 @@ int VideoOutput::Close()
         NSLog(@"Trying to close a video while not writing");
     }
     
+    if (m_image) image_destroy(m_image, 1);
+    
     return 1;
-}
-
-int VideoOutput::Init( char *outFile, int width, int height )
-{
-    return -1;
-}
-
-CVPixelBufferRef VideoOutput::pixelBufferFromCGImage(CGImageRef image)
-{
-    
-    CGSize frameSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:NO], kCVPixelBufferCGImageCompatibilityKey,
-                             [NSNumber numberWithBool:NO], kCVPixelBufferCGBitmapContextCompatibilityKey,
-                             nil];
-    CVPixelBufferRef pxbuffer = NULL;
-    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, frameSize.width,
-                                          frameSize.height,  kCVPixelFormatType_32ARGB, (CFDictionaryRef) CFBridgingRetain(options),
-                                          &pxbuffer);
-    
-    CVPixelBufferLockBaseAddress(pxbuffer, 0);
-    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
-    
-    
-    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(pxdata, frameSize.width,
-                                                 frameSize.height, 8, CVPixelBufferGetBytesPerRow(pxbuffer), rgbColorSpace,
-                                                 kCGImageAlphaNoneSkipLast);
-    
-    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image),
-                                           CGImageGetHeight(image)), image);
-    CGColorSpaceRelease(rgbColorSpace);
-    CGContextRelease(context);
-    
-    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
-    
-    return pxbuffer;
 }

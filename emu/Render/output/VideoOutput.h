@@ -20,8 +20,6 @@ public:
     
 	virtual int Close();
     
-    virtual int Init( char *outFile, int width, int height );
-
 private:
     // Background Color
     AVAssetWriter *m_assetWriter;
@@ -29,7 +27,6 @@ private:
     AVAssetWriterInputPixelBufferAdaptor *m_assetWriterPixelBufferInput;
     CMTime m_currFrameTime;
     CMTime m_timePerFrame;
-    
-    CVPixelBufferRef pixelBufferFromCGImage(CGImageRef image);
+    image_type* m_image = NULL;
 };
 
