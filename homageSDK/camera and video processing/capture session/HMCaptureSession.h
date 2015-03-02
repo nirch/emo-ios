@@ -33,7 +33,6 @@
 {
     // Session and connections
     AVCaptureSession *captureSession;
-    AVCaptureConnection *audioConnection;
     AVCaptureConnection *videoConnection;
 
     // Video feed

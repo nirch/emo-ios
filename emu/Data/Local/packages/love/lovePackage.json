@@ -61,7 +61,27 @@
                  "duration": 2.0,
                  "frames_count": 24,
                  "thumbnail_frame_index": 23
-                 }
+                 },
                  
+                 {"oid": {"$oid": "54919516454c61f408000001"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000002"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000003"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000004"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000005"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000006"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000007"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000008"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000009"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000010"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000011"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000012"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000013"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000014"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000015"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000016"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000017"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000018"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000019"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23},
+                 {"oid": {"$oid": "54919516454c61f408000020"},"name": "kiss","source_back_layer": "kiss-bg.gif","source_user_layer_mask": "kiss-mask.jpg","tags": ["love","kiss"],"duration": 2.0,"frames_count": 24,"thumbnail_frame_index": 23}
                  ]
 }

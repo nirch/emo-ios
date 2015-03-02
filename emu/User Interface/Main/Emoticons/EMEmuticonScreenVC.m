@@ -146,9 +146,6 @@
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
 {
-    // Dismiss the recorder
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
     // Stop animating the gif
     [self.gifPlayerVC stopAnimating];
     [self.gifPlayerVC startActivity];
@@ -157,6 +154,8 @@
     [EMRenderManager.sh enqueueEmu:self.emuticon
                               info:@{@"emuticonOID":self.emuticon.oid}];
 
+    // Dismiss the recorder
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info

@@ -6,7 +6,10 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#define akLowMemoryWarning @"low memory warning"
+
+// Application lifecycle
+#define akApplicationLaunched @"application launched"
 
 @interface HMAnalyticsEvents : NSObject
 

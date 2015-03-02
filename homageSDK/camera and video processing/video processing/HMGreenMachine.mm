@@ -193,12 +193,11 @@
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
-    //        static int i = 0;
-    //        i++;
-    //        [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Original-%@",@(i)]];
+            // static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Original-%@",@(i)]];
             
+            //
             // Using the mask we got from UB->Process()
-            // Set everything that is not the extracted background as alpha with maximum transparency.
+            // Set pixels recognized as background as alpha with maximum transparency.
             m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
                                                             255,                 // The alpha amount to add to the pixels marked in the mask.
                                                             m_mask,              // The mask calculated by the algorithm ->Process method.
@@ -245,7 +244,7 @@
     
     // Get the background detection mark for this frame.
     HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(m_original_image, 1);
-    HMLOG(TAG, EM_DBG, @"Background mark: %@", @(bgMark));
+    HMLOG(TAG, EM_VERBOSE, @"Background mark: %@", @(bgMark));
     
     if (bgMark == HMBGMarkGood && _bgMarkWeight < 1) {
         // Good background (Still under threshold)

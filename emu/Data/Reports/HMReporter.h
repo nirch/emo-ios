@@ -1,21 +1,25 @@
 //
-//  HMAnalytics.h
-//  emu
-//
-//  Created by Aviv Wolf on 2/4/15.
-//  Copyright (c) 2015 Homage. All rights reserved.
+//  HMReporter.h
 //
 
+// Currently, remote logging implementation uses crashlytics.
+#import <Crashlytics/Crashlytics.h>
 
-@interface HMAnalytics : NSObject
+#import "HMAnalyticsEvents.h"
+#import "HMReporterKeys.h"
 
-#
+#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
+
+@interface HMReporter : NSObject
 
 #pragma mark - Initialization
-+(HMAnalytics *)sharedInstance;
-+(HMAnalytics *)sh;
++(HMReporter *)sharedInstance;
++(HMReporter *)sh;
 
 #pragma mark - Tracking
--(void)track
+-(void)analyticsEvent:(NSString *)event;
+-(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info;
+-(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info;
+
 
 @end

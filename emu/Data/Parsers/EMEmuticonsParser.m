@@ -27,7 +27,6 @@
         emParser.package = self.package;
         [emParser parse];
     }
-    [EMDB.sh save];
 }
 
 @end
