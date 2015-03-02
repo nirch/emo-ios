@@ -251,11 +251,11 @@
                                     <action selector="onWeightSliderValueChanged:" destination="QwO-lL-lLe" eventType="valueChanged" id="dkv-mf-ZZE"/>
                                 </connections>
                             </slider>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ls4-u9-Odz" userLabel="recording progress view" customClass="EMTickingProgressView">
-                                <rect key="frame" x="0.0" y="0.0" width="343" height="36"/>
+                            <view alpha="0.49999999999999961" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ls4-u9-Odz" userLabel="recording progress view" customClass="EMTickingProgressView">
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="22"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="bCQ-JX-R9y"/>
+                                    <constraint firstAttribute="height" constant="22" id="bCQ-JX-R9y"/>
                                 </constraints>
                             </view>
                         </subviews>

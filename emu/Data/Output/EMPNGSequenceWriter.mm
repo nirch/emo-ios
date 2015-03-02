@@ -15,10 +15,11 @@
 #define MAX_NUMBER_OF_FRAMES 150
 
 #import "EMPNGSequenceWriter.h"
-#import "EMFiles.h"
 #import "EMDB.h"
+#import "EMDB+Files.h"
 
 #import "HMImageTools.h"
+#import "HMImages.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
 
@@ -26,6 +27,7 @@
     image_type *resampled_image;
     
     vTime_type firstFrameTimeStamp;
+    vTime_type previousFrameTimeStamp;
     vTime_type totalTime;
     
     vTime_type duration;
@@ -70,7 +72,7 @@
 -(NSDictionary *)finishReturningInfo
 {
     NSString *oid = [[NSUUID UUID] UUIDString];
-    [EMFiles savePNGSequence:self.pngs toFolderNamed:oid];
+    [EMPNGSequenceWriter savePNGSequence:self.pngs toFolderNamed:oid];
     [self clean];
     return @{
              emkOID:oid,
@@ -80,6 +82,40 @@
              };
 }
 
+
++(void)savePNGSequence:(NSArray *)pngs toFolderNamed:(NSString *)folderName
+{
+    // Get the path
+    NSString *path = [EMDB pathForFootageWithOID:folderName];
+    
+    // Ensure the path exists
+    BOOL exist = [EMDB ensureDirPathExists:path];
+    assert(exist);
+    
+    NSInteger frameCount = 0;
+    for (UIImage *png in pngs) {
+        frameCount++;
+        [HMImages savePNGOfUIImage:png
+                     directoryPath:path
+                          withName:[SF:@"img-%@", @(frameCount)]];
+    }
+}
+
+//+(NSString *)createFootageDirectoryNamed:(NSString *)directoryName
+//{
+//    // Get the paths
+//    NSString *footagesPath = [EMDB footagesPath];
+//    NSString *dirPath = [footagesPath stringByAppendingPathComponent:[SF:@"/%@", directoryName]];
+//    
+//    // Create the directory.
+//    NSFileManager *fm = [NSFileManager defaultManager];
+//    if (![fm fileExistsAtPath:dirPath])
+//        [fm createDirectoryAtPath:dirPath
+//      withIntermediateDirectories:NO
+//                       attributes:nil error:nil];
+//    
+//    return dirPath;
+//}
 
 -(void)cancel
 {
@@ -110,7 +146,10 @@
     
     // If first frame, store the time stamp of the first frame.
     if (self.framesCount == 0) {
+    
+        // The first frame
         firstFrameTimeStamp = currentFrameTimeStamp;
+
     } else {
         totalTime = currentFrameTimeStamp - firstFrameTimeStamp;
 
@@ -122,9 +161,10 @@
             done = YES;
             return;
         }
+
+        // NSLog(@">>>> XXX %@ %@ %@", @(self.framesCount), @(totalTime), @(currentFrameTimeStamp-previousFrameTimeStamp));
     }
     
-    NSLog(@">>>> XXX %@ %@", @(self.framesCount), @(totalTime));
     
     // Counting frames
     self.framesCount++;
@@ -132,6 +172,7 @@
     // Convert the image passed as image_type to UIImage.
     UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image withAlpha:YES];
     [self.pngs addObject:png];
+    previousFrameTimeStamp = currentFrameTimeStamp;
 }
 
 

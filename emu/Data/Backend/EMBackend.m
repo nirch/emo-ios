@@ -9,6 +9,7 @@
 
 #import "EMBackend.h"
 #import "EMDB.h"
+#import "EMDB+Files.h"
 #import "EMEmuticonsParser.h"
 #import "EMAppCFGParser.h"
 #import "EMPackagesParser.h"
@@ -47,6 +48,9 @@
 #pragma mark - Refreshing data
 -(void)refreshData
 {
+    // Making sure required paths exist.
+    [EMDB ensureRequiredDirectoriesExist];
+    
     // Parsing app cfg.
     [self parseAppCFG];
     

@@ -8,8 +8,8 @@
 
 #import "EmuticonDef+Logic.h"
 #import "NSManagedObject+FindAndCreate.h"
-#import "EMFiles.h"
 #import "EMDB.h"
+#import "EMDB+Files.h"
 
 @implementation EmuticonDef (Logic)
 
@@ -36,19 +36,19 @@
 
 -(NSString *)pathForUserLayerMask
 {
-    return [EMFiles pathForResourceNamed:self.sourceUserLayerMask];
+    return [EMDB pathForResourceNamed:self.sourceUserLayerMask];
 }
 
 
 -(NSString *)pathForBackLayer
 {
-    return [EMFiles pathForResourceNamed:self.sourceBackLayer];
+    return [EMDB pathForResourceNamed:self.sourceBackLayer];
 }
 
 
 -(NSString *)pathForFrontLayer
 {
-    return [EMFiles pathForResourceNamed:self.sourceFrontLayer];
+    return [EMDB pathForResourceNamed:self.sourceFrontLayer];
 }
 
 -(Emuticon *)spawn

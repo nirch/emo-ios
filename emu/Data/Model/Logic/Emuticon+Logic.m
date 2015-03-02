@@ -8,7 +8,7 @@
 
 #import "Emuticon+Logic.h"
 #import "EMDB.h"
-#import "EMFiles.h"
+#import "EMDB+Files.h"
 
 @implementation Emuticon (Logic)
 
@@ -77,7 +77,7 @@
 -(NSString *)animatedGifPath
 {
     NSString *gifName = [SF:@"%@.gif", self.oid];
-    NSString *outputPath = [EMFiles outputPathForFileName:gifName];
+    NSString *outputPath = [EMDB outputPathForFileName:gifName];
     return outputPath;
 }
 

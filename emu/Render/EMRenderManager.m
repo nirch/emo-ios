@@ -10,8 +10,8 @@
 
 #import "EMRenderManager.h"
 #import "EMDB.h"
+#import "EMDB+Files.h"
 #import "EMRenderer.h"
-#import "EMFiles.h"
 
 @interface EMRenderManager()
 
@@ -44,7 +44,6 @@
 {
     self = [super init];
     if (self) {
-        [EMFiles ensureOutputPathExists];
         [self initRenderingQueue];
     }
     return self;
@@ -59,10 +58,6 @@
 #pragma mark - Rendering
 -(void)enqueueEmu:(Emuticon *)emu info:(NSDictionary *)info
 {
-    // TODO: implement correctly. Need to support long queues.
-    // Currently a stupid implementation that just throws the emu to
-    // rendering in a background thread.
-    
     EmuticonDef *emuDef = emu.emuDef;
     UserFootage *footage = [emu mostPrefferedUserFootage];
     
@@ -84,11 +79,15 @@
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
     renderer.outputOID = emu.oid;
+    renderer.outputPath = [EMDB outputPath];
 
-    // Render in a background thread.
+    // Dispatch the renderer on the rendering queue
     dispatch_async(self.renderingQueue, ^(void){
+        //
+        // Render in a background thread.
+        //
         [renderer render];
-        HMLOG(TAG, EM_DBG, @"Finished rendering emuticon %@", renderer.outputOID);
+        HMLOG(TAG, EM_VERBOSE, @"Finished rendering emuticon %@", renderer.outputOID);
         
         // Update model in main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -139,6 +138,7 @@
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
     renderer.outputOID = [[NSUUID UUID] UUIDString];
+    renderer.outputPath = [EMDB outputPath];
     
     // Execute the rendering.
     [renderer render];

@@ -11,8 +11,6 @@
 
 #import "EMRenderer.h"
 
-#import "EMFiles.h"
-
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "PngSource.h"
 #import "VideoOutput.h"
@@ -22,6 +20,8 @@
 #import "Gpw/Vtool/Vtool.h"
 
 @implementation EMRenderer
+
+
 
 
 -(void)render
@@ -74,7 +74,7 @@
     //
     // Output gif
     //
-    NSString *outputGifPath = [EMFiles outputPathForFileName:[SF:@"%@.gif", self.outputOID]];
+    NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];;
     CHrOutputGif *gifOutput = new CHrOutputGif();
     gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
     
@@ -136,8 +136,6 @@
         
         // Just to be safe, Keep index in bounds.
         sourceIndex = MIN(storedImagesCount,sourceIndex);
-        
-        // HMLOG(@"xxx", DBG, @"Index:%@", @(sourceIndex));
         
         // Populate the list with the paths to frames.
         pngs[(int)i] = [SF:@"%@/img-%ld.png", path, (long)sourceIndex];

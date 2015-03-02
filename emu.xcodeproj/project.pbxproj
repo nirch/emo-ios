@@ -28,6 +28,7 @@
 		0806BD821AA37DC80078F14B /* HMReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMReporter.m */; };
 		0806BD871AA392230078F14B /* EMBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD861AA392230078F14B /* EMBackend.m */; };
 		0806BD8A1AA395EF0078F14B /* HMAnalyticsEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */; };
+		080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
 		0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0827C6D81A8608E200B14294 /* uniformBGParams.xml */; };
 		083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083334841A827D79008AC771 /* HMCaptureSession.mm */; };
 		0833348C1A827D81008AC771 /* HMGMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 083334881A827D81008AC771 /* HMGMError.m */; };
@@ -186,6 +187,8 @@
 		0806BD881AA395EF0078F14B /* HMAnalyticsEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnalyticsEvents.h; sourceTree = "<group>"; };
 		0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnalyticsEvents.m; sourceTree = "<group>"; };
 		0806BD8B1AA397850078F14B /* HMReporterKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMReporterKeys.h; sourceTree = "<group>"; };
+		080C9F4E1AA478C00066FB30 /* EMDB+Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMDB+Files.h"; sourceTree = "<group>"; };
+		080C9F4F1AA478C00066FB30 /* EMDB+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMDB+Files.m"; sourceTree = "<group>"; };
 		0827C6D81A8608E200B14294 /* uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = uniformBGParams.xml; sourceTree = "<group>"; };
 		083334761A822E4D008AC771 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		083334831A827D79008AC771 /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
@@ -689,6 +692,8 @@
 		085C67091A937EC9007BC910 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				080C9F4E1AA478C00066FB30 /* EMDB+Files.h */,
+				080C9F4F1AA478C00066FB30 /* EMDB+Files.m */,
 				08C5EC6A1AA10522007246EC /* Package+Logic.h */,
 				08C5EC6B1AA10522007246EC /* Package+Logic.m */,
 				08B589841A9391B3008D9068 /* Emuticon+Logic.h */,
@@ -1443,6 +1448,7 @@
 				08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */,
 				0806BD8A1AA395EF0078F14B /* HMAnalyticsEvents.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
+				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */,
 				083E52621A9E1E6B00A66FC8 /* EMMainVC.m in Sources */,
 				08D9B3C41AA26F6D003DEA67 /* UserFootage.m in Sources */,

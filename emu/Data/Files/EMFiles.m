@@ -52,20 +52,6 @@
 }
 
 
-
-+(void)savePNGSequence:(NSArray *)pngs toFolderNamed:(NSString *)folderName
-{
-    NSString *path = [EMFiles createDirectoryNamed:folderName];
-    
-    NSInteger i = 0;
-    for (UIImage *png in pngs) {
-        i++;
-        [HMImages savePNGOfUIImage:png
-                     directoryPath:path
-                          withName:[SF:@"img-%@", @(i)]];
-    }
-}
-
 +(NSURL *)urlForBundledResourceNamed:(NSString *)resourceName
                        withExtension:(NSString *)extension
 {

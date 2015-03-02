@@ -8,7 +8,7 @@
 
 #import "UserFootage+Logic.h"
 #import "EMDB.h"
-#import "EMFiles.h"
+#import "EMDB+Files.h"
 
 @implementation UserFootage (Logic)
 
@@ -62,8 +62,8 @@
 
 -(NSString *)pathForUserImages
 {
-    NSString *docsPath = [EMFiles docsPath];
-    NSString *path = [docsPath stringByAppendingPathComponent:[SF:@"/%@", self.oid]];
+    NSString *footagesPath = [EMDB footagesPath];
+    NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@", self.oid]];
     return path;
 }
 

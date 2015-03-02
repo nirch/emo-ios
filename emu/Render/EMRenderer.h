@@ -13,7 +13,7 @@
 @property (nonatomic) NSString *emuticonDefOID;
 @property (nonatomic) NSString *footageOID;
 @property (nonatomic) NSString *outputOID;
-
+@property (nonatomic) NSString *outputPath;
 @property (nonatomic) NSString *userMaskPath;
 @property (nonatomic) NSString *userImagesPath;
 @property (nonatomic) NSString *backLayerPath;
