@@ -86,7 +86,6 @@
 		086005551A98A839008CD7DE /* startRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 086005521A98A839008CD7DE /* startRecording.wav */; };
 		086005581A98B153008CD7DE /* EMUISound.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005571A98B153008CD7DE /* EMUISound.m */; };
 		0860055E1A98E2FE008CD7DE /* endRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0860055D1A98E2FE008CD7DE /* endRecording.wav */; };
-		086005621A993FE5008CD7DE /* EMFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005611A993FE5008CD7DE /* EMFiles.m */; };
 		086005651A99483E008CD7DE /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005641A99483E008CD7DE /* HMImages.m */; };
 		0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
@@ -290,8 +289,6 @@
 		086005561A98B153008CD7DE /* EMUISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUISound.h; sourceTree = "<group>"; };
 		086005571A98B153008CD7DE /* EMUISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUISound.m; sourceTree = "<group>"; };
 		0860055D1A98E2FE008CD7DE /* endRecording.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = endRecording.wav; sourceTree = "<group>"; };
-		086005601A993FE5008CD7DE /* EMFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFiles.h; sourceTree = "<group>"; };
-		086005611A993FE5008CD7DE /* EMFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFiles.m; sourceTree = "<group>"; };
 		086005631A99483E008CD7DE /* HMImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMImages.h; sourceTree = "<group>"; };
 		086005641A99483E008CD7DE /* HMImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMImages.m; sourceTree = "<group>"; };
 		0864F7081A9A195500F5EAF7 /* EMTickingProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTickingProgressView.h; sourceTree = "<group>"; };
@@ -628,7 +625,6 @@
 				0806BD841AA392230078F14B /* Backend */,
 				0806BD7F1AA37DC80078F14B /* Reports */,
 				0806BD6F1AA37DC20078F14B /* Parsers */,
-				0860055F1A993F87008CD7DE /* Files */,
 				085C66E71A937EC9007BC910 /* Contours */,
 				085C66F81A937EC9007BC910 /* Local */,
 				085C66FB1A937EC9007BC910 /* Model */,
@@ -866,15 +862,6 @@
 			name = Progress;
 			path = "emu/User Interface/Custom Views/Progress";
 			sourceTree = SOURCE_ROOT;
-		};
-		0860055F1A993F87008CD7DE /* Files */ = {
-			isa = PBXGroup;
-			children = (
-				086005601A993FE5008CD7DE /* EMFiles.h */,
-				086005611A993FE5008CD7DE /* EMFiles.m */,
-			);
-			path = Files;
-			sourceTree = "<group>";
 		};
 		087F208E1A8F5A03002B1678 /* data */ = {
 			isa = PBXGroup;
@@ -1437,7 +1424,6 @@
 				08D9B3C71AA26F6E003DEA67 /* AppCFG.m in Sources */,
 				0833348D1A827D81008AC771 /* HMGreenMachine.mm in Sources */,
 				087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */,
-				086005621A993FE5008CD7DE /* EMFiles.m in Sources */,
 				08B5899F1A93B9F7008D9068 /* EMButton.m in Sources */,
 				0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */,
 				08D9B3CA1AA26F6E003DEA67 /* Emuticon.m in Sources */,

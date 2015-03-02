@@ -447,6 +447,19 @@
     [self.guiCollectionView reloadData];
 }
 
+-(void)debugCleanAndRender
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    Package *package = [appCFG packageForOnboarding];
+
+    NSArray *emus = [Emuticon allEmuticonsInPackage:package];
+    for (Emuticon *emu in emus) {
+        [emu cleanUp];
+    }
+    [self.guiCollectionView reloadData];
+    [EMDB.sh save];
+}
+
 #pragma mark - More user choices
 -(void)userChoices
 {
@@ -458,6 +471,13 @@
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
                                                 [self resetPack];
+                                            }]];
+    
+    // Debugging stuff
+    [alert addAction:[UIAlertAction actionWithTitle:@"Clean and render"
+                                              style:UIAlertActionStyleDestructive
+                                            handler:^(UIAlertAction *action) {
+                                                [self debugCleanAndRender];
                                             }]];
     
     // Cancel
@@ -478,7 +498,7 @@
     
     alert.title = [SF:@"About Emu - V%@", build];
     
-    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emujis.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
 
     [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
     

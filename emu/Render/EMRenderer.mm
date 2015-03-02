@@ -78,30 +78,24 @@
     CHrOutputGif *gifOutput = new CHrOutputGif();
     gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
     
-    
-//    //
-//    // Output video
-//    //
-//    NSString *outputVideoPath = [EMFiles outputPathForFileName:[SF:@"%@.mp4", self.outputOID]];
-//    NSURL *videoOutputUrl = [[NSURL alloc] initFileURLWithPath:outputVideoPath];
-//    VideoOutput *videoOutput = new VideoOutput(dimensions, 11.4, videoOutputUrl, [self fps]);
+    //
+    // Output video
+    //
+    NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
+    NSURL *videoOutputUrl = [[NSURL alloc] initFileURLWithPath:outputVideoPath];
+    VideoOutput *videoOutput = new VideoOutput(dimensions, 11.4, videoOutputUrl, [self fps]);
 
-    //CHrOutputI *outputs[2] = { gifOutput, videoOutput };
-
-    CHrOutputI *outputs[1] = { gifOutput };
+    // Render the outputs
+    CHrOutputI *outputs[2] = { gifOutput, videoOutput };
     CHomageRenderer *render = new CHomageRenderer();
-    render->Process(bgSource, userSource, fgSource, outputs, 1);
+    render->Process(bgSource, userSource, fgSource, outputs, 2);
 
+    // Finishing up.
     if (gifOutput != NULL)  gifOutput->Close();
     if (userSource != NULL) userSource->Close();
     if (bgSource != NULL)   bgSource->Close();
     if (fgSource != NULL)   fgSource->Close();
-    
-//    videoOutput->Close();
-    
-
-    // Releasing memory.
-    //CFRelease(maskImageType);
+    if (videoOutput != NULL) videoOutput->Close();
 }
 
 

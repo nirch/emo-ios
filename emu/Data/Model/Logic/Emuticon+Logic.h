@@ -88,6 +88,22 @@
 
 
 /**
+ *  The url to the video rendered for this emuticon object.
+ *
+ *  @return NSURL pointing to the rendered video.
+ */
+-(NSURL *)videoURL;
+
+
+/**
+ *  The path to the video rendered for this emuticon object;
+ *
+ *  @return NSString of the path to the rendered animated gif.
+ */
+-(NSString *)videoPath;
+
+
+/**
  *  Cleans up the emuticon rendered files and deletes the object.
  */
 -(void)deleteAndCleanUp;

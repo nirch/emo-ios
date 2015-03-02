@@ -90,6 +90,22 @@
 }
 
 
+-(NSURL *)videoURL
+{
+    NSString *outputPath = [self videoPath];
+    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
+    return url;
+}
+
+
+-(NSString *)videoPath
+{
+    NSString *videoName = [SF:@"%@.mp4", self.oid];
+    NSString *outputPath = [EMDB outputPathForFileName:videoName];
+    return outputPath;
+}
+
+
 -(void)deleteAndCleanUp
 {
     // Delete rendered files
@@ -106,6 +122,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *error;
     [fm removeItemAtPath:[self animatedGifPath] error:&error];
+    [fm removeItemAtPath:[self videoPath] error:&error];
 
     // Mark it as not rendered.
     self.wasRendered = @NO;

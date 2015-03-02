@@ -45,8 +45,22 @@
 
 -(void)shareVideo
 {
-    [NSException raise:NSInvalidArgumentException
-                format:@"Unimplemented %@", NSStringFromSelector(_cmd)];
+    // Get the url to the video
+    Emuticon *emu = self.objectToShare;
+    NSURL *url = [emu videoURL];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeVideoAtPathToSavedPhotosAlbum:url
+                                completionBlock:^(NSURL *assetURL, NSError *error) {
+                                    if (error) {
+                                        [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+                                        [self.delegate sharerDidFailWithInfo:self.info];
+                                        return;
+                                    }
+                                    // Notify the user.
+                                    [self.view makeToast:LS(@"SHARE_TOAST_SAVED")];
+                                    [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
+    }];
 }
 
 -(void)cancel
