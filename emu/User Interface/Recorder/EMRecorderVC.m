@@ -143,6 +143,7 @@
 #pragma mark - VC life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    HMLOG(TAG, EM_DBG, @"Recorder did load");
     
     // Initializations
     [self initData];
@@ -152,6 +153,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    HMLOG(TAG, EM_DBG, @"Recorder will appear");
+    
     [self initGUI];
     [self.view setNeedsDisplay];
 }
@@ -159,7 +162,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    HMLOG(TAG, EM_DBG, @"Recorder did appear");
+    
     // Observers
     [self initObservers];
     
@@ -174,9 +178,37 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    HMLOG(TAG, EM_DBG, @"Recorder will disappear");
+
     [self removeObservers];
     [self tearDownCaptureSession];
 }
+
+-(void)dealloc
+{
+    HMLOG(TAG, EM_DBG, @"Recorder dealloc");
+}
+
+#pragma mark - Memory warnings
+-(void)didReceiveMemoryWarning
+{
+    // Some info
+    NSDictionary *info = @{
+                           rkDescription:@"memory warning",
+                           rkWhere:@"EMMainVC"
+                           };
+    
+    // Log remotely
+    HMLOG(TAG, EM_ERR, @"Memory warning in recorder");
+    REMOTE_LOG(@"EMMainVC Memory warning");
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:akLowMemoryWarning info:info];
+    
+    // Go boom on a test application.
+    [HMReporter.sh explodeOnTestApplicationsWithInfo:info];
+}
+
 
 #pragma mark - Initializations
 -(void)initData

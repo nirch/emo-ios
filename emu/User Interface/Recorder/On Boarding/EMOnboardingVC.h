@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, EMOnBoardingStage) {
     EMOnBoardingStageReview                        = 5
 };
 
-@property (nonatomic) id<EMOnboardingDelegate> delegate;
+@property (nonatomic, weak) id<EMOnboardingDelegate> delegate;
 @property (nonatomic, readonly) EMOnBoardingStage stage;
 @property (nonatomic) EMRecorderFlowType flowType;
 

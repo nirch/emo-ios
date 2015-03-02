@@ -26,9 +26,12 @@
 
 @interface HMCaptureSession ()
 
+@property (nonatomic) NSString *captureSessionUUID;
+
 @property (nonatomic) NSInteger extractCounter;
 
 // Video feed
+@property (nonatomic) BOOL shouldDropAllFrames;
 @property (readwrite) Float64 videoFrameRate;
 @property (readwrite) CMVideoDimensions videoDimensions;
 @property (readwrite) CMVideoCodecType videoType;
@@ -64,8 +67,7 @@
         referenceOrientation = AVCaptureVideoOrientationPortrait;
         backgroundDetectionEnabled = NO;
         extractCounter = 0;
-        [self initObservers];
-        
+        self.shouldDropAllFrames = NO;
         self.uuid = [[NSUUID UUID] UUIDString];
         HMLOG(TAG, EM_DBG, @"Started capture session %@", self.uuid);
     }
@@ -75,24 +77,6 @@
 -(void)dealloc
 {
     HMLOG(TAG, EM_DBG, @"Dealloc capture session %@", self.uuid);    
-}
-
-#pragma mark - Observers
--(void)initObservers
-{
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addUniqueObserver:self
-                 selector:@selector(onCaptureSessionRuntimeError:)
-                     name:AVCaptureSessionRuntimeErrorNotification
-                   object:nil];
-    
-    
-}
-
--(void)removeObservers
-{
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:AVCaptureSessionRuntimeErrorNotification object:nil];
 }
 
 #pragma mark - Observers handlers
@@ -205,21 +189,6 @@
     captureSession = [AVCaptureSession new];
     captureSession.sessionPreset = self.prefferedSessionPreset;
     
-    /*
-	 * Create audio connection
-	 */
-    AVCaptureDeviceInput *audioIn = [[AVCaptureDeviceInput alloc] initWithDevice:[self audioDevice] error:nil];
-    if ([captureSession canAddInput:audioIn])
-        [captureSession addInput:audioIn];
-
-	AVCaptureAudioDataOutput *audioOut = [AVCaptureAudioDataOutput new];
-	dispatch_queue_t audioCaptureQueue = dispatch_queue_create("Audio Capture Queue", DISPATCH_QUEUE_SERIAL);
-	[audioOut setSampleBufferDelegate:self queue:audioCaptureQueue];
-
-    if ([captureSession canAddOutput:audioOut])
-		[captureSession addOutput:audioOut];
-	audioConnection = [audioOut connectionWithMediaType:AVMediaTypeAudio];
-
 	/*
 	 * Create video connection
 	 */
@@ -236,7 +205,7 @@
      Clients whose image processing is faster than real-time should consider setting AVCaptureVideoDataOutput's
      alwaysDiscardsLateVideoFrames property to NO.
 	 */
-	[videoOut setAlwaysDiscardsLateVideoFrames:NO];
+	[videoOut setAlwaysDiscardsLateVideoFrames:YES];
     NSDictionary *videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey:@(kCVPixelFormatType_32BGRA)};
 	[videoOut setVideoSettings:videoSettings];
 	dispatch_queue_t videoCaptureQueue = dispatch_queue_create("Video Capture Queue", DISPATCH_QUEUE_SERIAL);
@@ -282,6 +251,8 @@
  didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         fromConnection:(AVCaptureConnection *)connection
 {
+    if (self.shouldDropAllFrames) return;
+    
     CMSampleBufferRef processedSampleBuffer = nil;
     extractCounter++;
 
@@ -298,6 +269,7 @@
                                         state == HMVideoProcessingStateInspectAndProcessFrames;
 
     if ( connection == videoConnection ) {
+        
         if (self.videoProcessor) {
 
             // 1. Prepare the frame (crop / resize according to settings)
@@ -399,11 +371,11 @@
     //
     // Cleaning up!
     //
-
+    self.shouldDropAllFrames = YES;
+    
     // Stopping the capture session.
     if (captureSession) {
         [captureSession stopRunning];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureSessionDidStopRunningNotification object:captureSession];
         captureSession = nil;
     }
 
@@ -425,10 +397,6 @@
     }
     
     videoConnection = nil;
-    audioConnection = nil;
-    
-    // Removing observers
-    [self removeObservers];
 }
 
 #pragma mark - Video Processing

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"EMAppCFGParser"
+
 #import "EMAppCFGParser.h"
 #import "EMDB.h"
 
@@ -30,7 +32,9 @@
     // Parse the application configuration
     appCFG.defaultOutputVideoMaxFps = [info safeNumberForKey:@"default_output_video_max_fps"];
     appCFG.onboardingUsingPackage = [info safeOIDStringForKey:@"onboarding_using_package"];
-    [EMDB.sh save];
+    
+    HMLOG(TAG, EM_DBG, @"App cfg parsed:%@", [appCFG description]);
+    REMOTE_LOG(@"Parsed app cfg:%@", [appCFG description]);
 }
 
 @end

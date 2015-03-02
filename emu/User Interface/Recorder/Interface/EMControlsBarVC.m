@@ -263,8 +263,6 @@
     NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
     NSTimeInterval timePassed = now - self.latestBGMarkTime;
     
-    HMLOG(TAG, EM_DBG, @"BG Mark: %@", @(bgMark));
-
     if (bgMark == HMBGMarkGood) {
         //
         // notified about good background

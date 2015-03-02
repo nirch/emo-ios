@@ -96,7 +96,9 @@
 
 -(void)writeImageTypeFrame:(void *)image
 {
-    if (done || canceled) return;
+    if (done || canceled) {
+        return;
+    }
     
     image_type *output_image = (image_type *)image;
     resampled_image = image_sample2(output_image, resampled_image);
@@ -114,10 +116,15 @@
 
         if (totalTime > duration || self.framesCount > MAX_NUMBER_OF_FRAMES) {
             // Done! Skip future frames.
+            NSString *logString = [SF:@"Done writing png: %@ frames, time:%@ , expected duration:%@", @(self.framesCount), @(totalTime), @(duration)];
+            HMLOG(TAG, EM_DBG, @"%@", logString);
+            REMOTE_LOG(@"%@", logString);
             done = YES;
             return;
         }
     }
+    
+    NSLog(@">>>> XXX %@ %@", @(self.framesCount), @(totalTime));
     
     // Counting frames
     self.framesCount++;

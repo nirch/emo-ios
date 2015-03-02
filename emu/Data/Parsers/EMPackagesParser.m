@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"EMPackagesParser"
+
 #import "EMPackagesParser.h"
 #import "EMDB.h"
 #import "EMPackageParser.h"
@@ -19,11 +21,12 @@
     
     // Iterate and parse packages
     EMPackageParser *packageParser = [[EMPackageParser alloc] initWithContext:self.ctx];
-    for (NSDictionary *packageInfo in info[@"packages"]) {
+    NSArray *packages = info[@"packages"];
+    for (NSDictionary *packageInfo in packages) {
         packageParser.objectToParse = packageInfo;
         [packageParser parse];
     }
-    [EMDB.sh save];
+    HMLOG(TAG, EM_VERBOSE, @"Parsed %@ package/s", @(packages.count));
 }
 
 @end

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"EMEmuticonParser"
+
 #import "EMEmuticonParser.h"
 #import "EMDB.h"
 
@@ -55,6 +57,8 @@
     emuDef.duration                    = [info safeDecimalNumberForKey:@"duration"];
     emuDef.framesCount                 = [info safeNumberForKey:@"frames_count"];
     emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index"];
+    
+    HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }
 
 @end

@@ -83,9 +83,16 @@
          *  Open the recorder for the first time.
          */
         Package *package = [appCFG packageForOnboarding];
-        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-                             info:@{emkPackage:package}];
-        
+        if (package == nil) {
+            NSString *errorMessage = @"Critical error - no package for onboarding selected";
+            HMLOG(TAG, EM_ERR, @"%@", errorMessage);
+            REMOTE_LOG(@"%@", errorMessage);
+        }
+
+        if (package) {
+            [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
+                                 info:@{emkPackage:package}];
+        }
         
     } else {
         
@@ -104,6 +111,26 @@
     
     [self removeObservers];
 }
+
+#pragma mark - Memory warnings
+-(void)didReceiveMemoryWarning
+{
+    // Some info
+    NSDictionary *info = @{
+                           rkDescription:@"memory warning",
+                           rkWhere:@"EMMainVC"
+                           };
+    
+    // Log remotely
+    REMOTE_LOG(@"EMMainVC Memory warning");
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:akLowMemoryWarning info:info];
+    
+    // Go boom on a test application.
+    [HMReporter.sh explodeOnTestApplicationsWithInfo:info];
+}
+
 
 #pragma mark - initializations
 +(EMMainVC *)mainVCWithInfo:(NSDictionary *)info
