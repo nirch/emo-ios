@@ -36,7 +36,6 @@
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
-@property (nonatomic)NSFetchedResultsController *resultsController;
 @property (nonatomic)Package *selectedPackage;
 
 @end

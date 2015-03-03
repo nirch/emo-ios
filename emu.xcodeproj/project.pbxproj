@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080489E91AA5957A008CC885 /* EMKeyboardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080489E81AA5957A008CC885 /* EMKeyboardVC.m */; };
 		0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD711AA37DC20078F14B /* EMAppCFGParser.m */; };
 		0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD731AA37DC20078F14B /* EMEmuticonParser.m */; };
 		0806BD7C1AA37DC20078F14B /* EMEmuticonsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD751AA37DC20078F14B /* EMEmuticonsParser.m */; };
@@ -15,10 +16,10 @@
 		0806BD821AA37DC80078F14B /* HMReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMReporter.m */; };
 		0806BD871AA392230078F14B /* EMBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD861AA392230078F14B /* EMBackend.m */; };
 		0806BD8A1AA395EF0078F14B /* HMAnalyticsEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */; };
+		0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */; };
 		080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
-		080CB3201AA4A9DD00603E30 /* EMKeyboardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB31F1AA4A9DD00603E30 /* EMKeyboardVC.m */; };
+		080CB3201AA4A9DD00603E30 /* EMKeyboardContainerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */; };
 		080CB3231AA4A9DD00603E30 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 080CB31A1AA4A9DD00603E30 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		080CB3291AA4AF9D00603E30 /* EMKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080CB3281AA4AF9D00603E30 /* EMKeyboard.xib */; };
 		080CB32A1AA4AFCF00603E30 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		080CB32B1AA4B0F200603E30 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08B5896F1A938BCC008D9068 /* emu.xcdatamodeld */; };
 		080CB33F1AA4B59600603E30 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 080CB33E1AA4B59600603E30 /* libPods.a */; };
@@ -178,6 +179,13 @@
 		08CB89F31A9D5D2F00224A38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89F21A9D5D2F00224A38 /* Main.storyboard */; };
 		08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CE39CB1A912C5000B82DB9 /* HMError.m */; };
 		08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CE39CE1A91522700B82DB9 /* HMCaptureSessionError.m */; };
+		08CED0D51AA5B81400C50D0C /* EmuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E525B1A9E1E6200A66FC8 /* EmuCell.m */; };
+		08CED0D61AA5C7EF00C50D0C /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
+		08CED0D71AA5C7EF00C50D0C /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
+		08CED0D81AA5C7EF00C50D0C /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
+		08CED0D91AA5C7EF00C50D0C /* EMShareMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */; };
+		08CED0DA1AA5C7EF00C50D0C /* EMShareAppleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */; };
+		08CED0DB1AA5CAF000C50D0C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08CB895D1A9A8F0900224A38 /* Localizable.strings */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
 		08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */; };
 		08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EC1A77E0B000B6A68F /* AVFoundation.framework */; };
@@ -220,6 +228,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		080489E71AA5957A008CC885 /* EMKeyboardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeyboardVC.h; sourceTree = "<group>"; };
+		080489E81AA5957A008CC885 /* EMKeyboardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKeyboardVC.m; sourceTree = "<group>"; };
+		080489EA1AA59959008CC885 /* EMKeyboardContainerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeyboardContainerDelegate.h; sourceTree = "<group>"; };
 		0806BD701AA37DC20078F14B /* EMAppCFGParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAppCFGParser.h; sourceTree = "<group>"; };
 		0806BD711AA37DC20078F14B /* EMAppCFGParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAppCFGParser.m; sourceTree = "<group>"; };
 		0806BD721AA37DC20078F14B /* EMEmuticonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmuticonParser.h; sourceTree = "<group>"; };
@@ -237,12 +248,12 @@
 		0806BD881AA395EF0078F14B /* HMAnalyticsEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnalyticsEvents.h; sourceTree = "<group>"; };
 		0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnalyticsEvents.m; sourceTree = "<group>"; };
 		0806BD8B1AA397850078F14B /* HMReporterKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMReporterKeys.h; sourceTree = "<group>"; };
+		0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Keyboard.storyboard; sourceTree = "<group>"; };
 		080C9F4E1AA478C00066FB30 /* EMDB+Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMDB+Files.h"; sourceTree = "<group>"; };
 		080C9F4F1AA478C00066FB30 /* EMDB+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMDB+Files.m"; sourceTree = "<group>"; };
 		080CB31A1AA4A9DD00603E30 /* Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Keyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		080CB31E1AA4A9DD00603E30 /* EMKeyboardVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMKeyboardVC.h; sourceTree = "<group>"; };
-		080CB31F1AA4A9DD00603E30 /* EMKeyboardVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMKeyboardVC.m; sourceTree = "<group>"; };
-		080CB3281AA4AF9D00603E30 /* EMKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EMKeyboard.xib; sourceTree = "<group>"; };
+		080CB31E1AA4A9DD00603E30 /* EMKeyboardContainerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMKeyboardContainerVC.h; sourceTree = "<group>"; };
+		080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMKeyboardContainerVC.m; sourceTree = "<group>"; };
 		080CB33B1AA4B18800603E30 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		080CB33D1AA4B51700603E30 /* emu-kb-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "emu-kb-prefix.pch"; sourceTree = "<group>"; };
 		080CB33E1AA4B59600603E30 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -581,9 +592,12 @@
 			isa = PBXGroup;
 			children = (
 				080CB34F1AA4DC0300603E30 /* Keyboard.entitlements */,
-				080CB3281AA4AF9D00603E30 /* EMKeyboard.xib */,
-				080CB31E1AA4A9DD00603E30 /* EMKeyboardVC.h */,
-				080CB31F1AA4A9DD00603E30 /* EMKeyboardVC.m */,
+				080489EA1AA59959008CC885 /* EMKeyboardContainerDelegate.h */,
+				0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */,
+				080CB31E1AA4A9DD00603E30 /* EMKeyboardContainerVC.h */,
+				080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */,
+				080489E71AA5957A008CC885 /* EMKeyboardVC.h */,
+				080489E81AA5957A008CC885 /* EMKeyboardVC.m */,
 				080CB3391AA4B18800603E30 /* Supporting Files */,
 			);
 			path = Keyboard;
@@ -1537,7 +1551,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				080CB3291AA4AF9D00603E30 /* EMKeyboard.xib in Resources */,
+				0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */,
+				08CED0DB1AA5CAF000C50D0C /* Localizable.strings in Resources */,
 				080CB32A1AA4AFCF00603E30 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1683,18 +1698,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				080CB3411AA4C10B00603E30 /* EMDB.m in Sources */,
+				08CED0D61AA5C7EF00C50D0C /* EMShare.m in Sources */,
 				080CB3471AA4C11700603E30 /* UserFootage.m in Sources */,
-				080CB3201AA4A9DD00603E30 /* EMKeyboardVC.m in Sources */,
+				080CB3201AA4A9DD00603E30 /* EMKeyboardContainerVC.m in Sources */,
 				080CB3451AA4C11700603E30 /* Emuticon.m in Sources */,
 				080CB3461AA4C11700603E30 /* AppCFG.m in Sources */,
+				08CED0D71AA5C7EF00C50D0C /* EMShareCopy.m in Sources */,
+				080489E91AA5957A008CC885 /* EMKeyboardVC.m in Sources */,
 				080CB34C1AA4C11D00603E30 /* EmuticonDef+Logic.m in Sources */,
 				080CB3421AA4C10F00603E30 /* NSManagedObject+FindAndCreate.m in Sources */,
+				08CED0DA1AA5C7EF00C50D0C /* EMShareAppleMessage.m in Sources */,
 				080CB3481AA4C11D00603E30 /* EMDB+Files.m in Sources */,
+				08CED0D91AA5C7EF00C50D0C /* EMShareMail.m in Sources */,
+				08CED0D51AA5B81400C50D0C /* EmuCell.m in Sources */,
 				080CB34A1AA4C11D00603E30 /* Emuticon+Logic.m in Sources */,
 				080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */,
 				080CB3491AA4C11D00603E30 /* Package+Logic.m in Sources */,
 				080CB34B1AA4C11D00603E30 /* AppCFG+Logic.m in Sources */,
 				080CB3A71AA526E500603E30 /* Package.m in Sources */,
+				08CED0D81AA5C7EF00C50D0C /* EMShareSaveToCameraRoll.m in Sources */,
 				080CB32B1AA4B0F200603E30 /* emu.xcdatamodeld in Sources */,
 				080CB3441AA4C11700603E30 /* EmuticonDef.m in Sources */,
 			);
@@ -2141,6 +2163,7 @@
 				080CB3261AA4A9DD00603E30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08D9297F1A77A36D00B6A68F /* Build configuration list for PBXProject "emu" */ = {
 			isa = XCConfigurationList;
