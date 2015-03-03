@@ -71,6 +71,12 @@
                                     <constraint firstItem="qWl-1a-ucc" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="WzL-a6-SL8"/>
                                 </constraints>
                             </view>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ax-G4-sQU" userLabel="Keyboard Tutorial">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <connections>
+                                    <segue destination="mWY-Jt-XXr" kind="embed" identifier="tutorial segue" id="2Nz-xu-li1"/>
+                                </connections>
+                            </containerView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
                                 <rect key="frame" x="5" y="64" width="365" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -78,7 +84,7 @@
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="15" maxX="0.0" maxY="65"/>
+                                    <inset key="sectionInset" minX="0.0" minY="15" maxX="0.0" maxY="5"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu cell" id="ebO-hW-ziY" customClass="EmuCell">
@@ -191,9 +197,13 @@
                             <constraint firstAttribute="centerX" secondItem="nbE-le-gs5" secondAttribute="centerX" id="bKs-rM-XUn"/>
                             <constraint firstItem="nbE-le-gs5" firstAttribute="top" secondItem="mE0-st-E63" secondAttribute="bottom" id="bjb-Tc-b8S"/>
                             <constraint firstItem="2yt-61-8E0" firstAttribute="leading" secondItem="7k7-rZ-9LV" secondAttribute="leading" constant="5" id="d0m-Ce-KNS"/>
+                            <constraint firstAttribute="width" secondItem="3Ax-G4-sQU" secondAttribute="width" id="fWh-Ea-Uot"/>
                             <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="989-sh-hZS" secondAttribute="bottom" id="gyN-cG-0hV"/>
                             <constraint firstItem="989-sh-hZS" firstAttribute="leading" secondItem="7k7-rZ-9LV" secondAttribute="leading" id="jLr-Yr-7K8"/>
+                            <constraint firstAttribute="centerX" secondItem="3Ax-G4-sQU" secondAttribute="centerX" id="ptC-lG-yiu"/>
                             <constraint firstItem="nbE-le-gs5" firstAttribute="top" secondItem="XVB-YX-jx8" secondAttribute="top" constant="-14" id="r9p-xt-BQn"/>
+                            <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="3Ax-G4-sQU" secondAttribute="bottom" id="rry-i6-oBv"/>
+                            <constraint firstItem="3Ax-G4-sQU" firstAttribute="top" secondItem="nbE-le-gs5" secondAttribute="bottom" id="vdt-W2-IAm"/>
                             <constraint firstAttribute="trailing" secondItem="989-sh-hZS" secondAttribute="trailing" id="yO2-YZ-O0w"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -208,6 +218,7 @@
                         <outlet property="guiCollectionView" destination="2yt-61-8E0" id="2s9-9s-lNY"/>
                         <outlet property="guiNavView" destination="nbE-le-gs5" id="aQc-qo-3Ui"/>
                         <outlet property="guiPackagesSelectionContainer" destination="989-sh-hZS" id="C7s-MW-ivj"/>
+                        <outlet property="guiTutorialContainer" destination="3Ax-G4-sQU" id="PYf-zS-L9M"/>
                         <segue destination="rnG-vP-eU5" kind="show" identifier="emuticon screen segue" id="ohC-EV-QQy"/>
                     </connections>
                 </viewController>
@@ -631,8 +642,101 @@
             </objects>
             <point key="canvasLocation" x="-381.5" y="621.5"/>
         </scene>
+        <!--TutorialVC-->
+        <scene sceneID="wrE-wx-ocX">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="mWY-Jt-XXr" customClass="EMTutorialVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hUT-oi-pae"/>
+                        <viewControllerLayoutGuide type="bottom" id="e7c-Xs-j8E"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wYX-Vc-Kax">
+                        <rect key="frame" x="0.0" y="44" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTb-nj-Zrm" userLabel="Continue Button" customClass="EMFlowButton">
+                                <rect key="frame" x="16" y="523" width="343" height="65"/>
+                                <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="dhz-d3-oBr"/>
+                                    <constraint firstAttribute="height" constant="65" id="sNO-lm-syS"/>
+                                </constraints>
+                                <state key="normal" title="OK, GOT IT!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedContinueButton:" destination="mWY-Jt-XXr" eventType="touchUpInside" id="Bjo-12-GB7"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General &gt; Keyboard &gt; Keyboards &gt; Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T24-qE-57O" customClass="EMLabel">
+                                <rect key="frame" x="34" y="477" width="308" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.27479079365730286" green="0.5571715235710144" blue="0.89757764339447021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use your Emu from your keyboard. Add the keyboard from settings and allow full access:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TOF-MX-5Rm" customClass="EMLabel">
+                                <rect key="frame" x="37" y="387" width="302" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="302" id="U6t-Gw-PCn"/>
+                                    <constraint firstAttribute="height" constant="80" id="j60-HR-kQ0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.43916493654251099" green="0.43924486637115479" blue="0.43915989995002747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar1-OP-Ab2">
+                                <rect key="frame" x="31" y="20" width="313" height="313"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addKB" translatesAutoresizingMaskIntoConstraints="NO" id="XlS-n1-eQw">
+                                        <rect key="frame" x="0.0" y="0.0" width="313" height="313"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ar1-OP-Ab2" secondAttribute="height" multiplier="1:1" id="G7c-m0-5Di"/>
+                                    <constraint firstAttribute="height" secondItem="XlS-n1-eQw" secondAttribute="height" id="UDI-Ed-UdI"/>
+                                    <constraint firstAttribute="centerY" secondItem="XlS-n1-eQw" secondAttribute="centerY" id="gDx-4l-91Z"/>
+                                    <constraint firstAttribute="centerX" secondItem="XlS-n1-eQw" secondAttribute="centerX" id="kch-AQ-VfK"/>
+                                    <constraint firstAttribute="width" secondItem="XlS-n1-eQw" secondAttribute="width" id="qFQ-pM-XHV"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="ar1-OP-Ab2" secondAttribute="centerX" constant="-0.5" id="0VY-RN-vQs"/>
+                            <constraint firstItem="e7c-Xs-j8E" firstAttribute="top" secondItem="KTb-nj-Zrm" secondAttribute="bottom" constant="15" id="2AN-M8-qLl"/>
+                            <constraint firstItem="KTb-nj-Zrm" firstAttribute="trailing" secondItem="wYX-Vc-Kax" secondAttribute="trailingMargin" id="88D-Px-9nN"/>
+                            <constraint firstAttribute="centerX" secondItem="T24-qE-57O" secondAttribute="centerX" id="Ipx-lb-ZbN"/>
+                            <constraint firstItem="ar1-OP-Ab2" firstAttribute="trailing" secondItem="wYX-Vc-Kax" secondAttribute="trailingMargin" constant="-15" id="Lo0-AX-uzw" userLabel="right margin"/>
+                            <constraint firstItem="T24-qE-57O" firstAttribute="top" secondItem="TOF-MX-5Rm" secondAttribute="bottom" constant="9" id="hgz-Zj-Qti"/>
+                            <constraint firstItem="KTb-nj-Zrm" firstAttribute="top" secondItem="T24-qE-57O" secondAttribute="bottom" constant="26" id="hkU-PI-bOv"/>
+                            <constraint firstItem="ar1-OP-Ab2" firstAttribute="top" secondItem="hUT-oi-pae" secondAttribute="bottom" constant="20" id="ovn-o0-TMx"/>
+                            <constraint firstItem="ar1-OP-Ab2" firstAttribute="leading" secondItem="wYX-Vc-Kax" secondAttribute="leadingMargin" constant="15" id="oxE-VJ-E9G" userLabel="left margin"/>
+                            <constraint firstAttribute="centerX" secondItem="TOF-MX-5Rm" secondAttribute="centerX" constant="-0.5" id="sU2-RY-Z1E"/>
+                            <constraint firstItem="KTb-nj-Zrm" firstAttribute="leading" secondItem="wYX-Vc-Kax" secondAttribute="leadingMargin" id="viQ-NF-BRD"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0VY-RN-vQs"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="constraintLeftMargin" destination="oxE-VJ-E9G" id="KmS-Td-Cvf"/>
+                        <outlet property="constraintRightMargin" destination="Lo0-AX-uzw" id="R5p-eN-b21"/>
+                        <outlet property="guiTutorialPresentationContainer" destination="ar1-OP-Ab2" id="7aV-tm-ryx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ea9-Fh-vj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="156.5" y="-663.5"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="addKB" width="414" height="414"/>
         <image name="backButton" width="12" height="21"/>
         <image name="bigCellBG" width="350" height="350"/>
         <image name="burger" width="27" height="12"/>

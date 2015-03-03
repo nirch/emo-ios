@@ -17,6 +17,8 @@
 #import "EMEmuticonScreenVC.h"
 #import "EMRenderManager.h"
 #import "EMPackagesVC.h"
+#import "EMInterfaceDelegate.h"
+#import "EMTutorialVC.h"
 
 
 @interface EMMainVC () <
@@ -25,12 +27,14 @@
     UICollectionViewDelegateFlowLayout,
     EMRecorderDelegate,
     UIGestureRecognizerDelegate,
-    EMPackageSelectionDelegate
+    EMPackageSelectionDelegate,
+    EMInterfaceDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiNavView;
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesSelectionContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 
 @property (weak, nonatomic) UIImageView *splashView;
 
@@ -271,6 +275,9 @@
     } else if ([segue.identifier isEqualToString:@"packages bar segue"]) {
         EMPackagesVC *vc = segue.destinationViewController;
         vc.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"tutorial segue"]) {
+        EMTutorialVC *vc = segue.destinationViewController;
+        vc.delegate = self;
     }
 }
 
@@ -346,6 +353,23 @@
     // Handle what to do next, depending on the flow of the dismissed recorder.
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
+    
+    if (flowType == EMRecorderFlowTypeOnboarding) {
+        [self showTutorial];
+    }
+}
+
+-(void)showTutorial
+{
+    self.guiCollectionView.hidden = YES;
+    self.guiPackagesSelectionContainer.hidden = YES;
+    self.guiTutorialContainer.hidden = NO;
+    self.guiTutorialContainer.alpha = 0;
+    self.guiNavView.alpha = 0.3;
+    self.guiNavView.userInteractionEnabled = NO;
+    [UIView animateWithDuration:2.0 animations:^{
+        self.guiTutorialContainer.alpha = 1;
+    }];
 }
 
 -(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
@@ -462,12 +486,11 @@
 
 -(void)debugCleanAndRender
 {
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    Package *package = [appCFG packageForOnboarding];
-
-    NSArray *emus = [Emuticon allEmuticonsInPackage:package];
-    for (Emuticon *emu in emus) {
-        [emu cleanUp];
+    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+        NSArray *emus = [Emuticon allEmuticonsInPackage:package];
+        for (Emuticon *emu in emus) {
+            [emu cleanUp];
+        }
     }
     [self.guiCollectionView reloadData];
     [EMDB.sh save];
@@ -533,6 +556,23 @@
 -(void)packagesAvailableCount:(NSInteger)numberOfPackages
 {
     self.guiPackagesSelectionContainer.alpha = numberOfPackages>1? 1:0;
+}
+
+#pragma mark - EMInterfaceDelegate
+-(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
+{
+    if ([actionName isEqualToString:@"keyboard tutorial should be dismissed"]) {
+        self.guiPackagesSelectionContainer.hidden = NO;
+        self.guiNavView.userInteractionEnabled = YES;
+        self.guiCollectionView.hidden = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guiTutorialContainer.alpha = 0;
+            self.guiCollectionView.alpha = 1;
+            self.guiNavView.alpha = 1;
+        } completion:^(BOOL finished) {
+            self.guiTutorialContainer.hidden = YES;
+        }];
+    }
 }
 
 #pragma mark - IB Actions

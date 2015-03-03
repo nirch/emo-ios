@@ -11,5 +11,6 @@
 @protocol EMKeyboardContainerDelegate <NSObject>
 
 -(void)keyboardShouldAdadvanceToNextInputMode;
+-(void)keyboardShouldDeleteBackward;
 
 @end

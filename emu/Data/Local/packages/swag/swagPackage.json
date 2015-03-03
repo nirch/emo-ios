@@ -1,0 +1,80 @@
+{
+    "emuticons":[
+                 
+                 {
+                 "oid": {"$oid": "swag001"},
+                 "name": "nailed-it",
+                 "source_back_layer": "nailed-it-bg.gif",
+                 "source_front_layer": "nailed-it-fg.gif",
+                 "source_user_layer_mask": "swag-mask.jpg",
+                 "tags": ["swag","exactly","debate","rocked"],
+                 "use_for_preview":true,
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "swag002"},
+                 "name": "on-fire",
+                 "source_back_layer": "on-fire-bg.gif",
+                 "source_front_layer": "on-fire-fg.gif",
+                 "source_user_layer_mask": "swag-mask.jpg",
+                 "tags": ["fire","hot","hell","explosion"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+
+                 {
+                 "oid": {"$oid": "swag003"},
+                 "name": "shakalak",
+                 "source_back_layer": "shakalak-bg.gif",
+                 "source_front_layer": "shakalak-fg.gif",
+                 "source_user_layer_mask": "swag-mask.jpg",
+                 "tags": ["boom","explosion"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "swag004"},
+                 "name": "thumbs",
+                 "source_back_layer": "thumbs-up-bg.gif",
+                 "source_front_layer": "thumbs-up-fg.gif",
+                 "source_user_layer_mask": "swag-mask.jpg",
+                 "tags": ["ehhhh","yes","right","positive"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+                 
+                 {
+                 "oid": {"$oid": "swag005"},
+                 "name": "untouchable",
+                 "source_back_layer": "untouchable-bg.gif",
+                 "source_front_layer": "untouchable-fg.gif",
+                 "source_user_layer_mask": "swag-mask.jpg",
+                 "tags": ["movies","dangerous","cool"],
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "swag006"},
+                 "name": "victory",
+                 "source_back_layer": "victory-bg.gif",
+                 "source_front_layer": "victory-fg.gif",
+                 "source_user_layer_mask": "swag-mask.jpg",
+                 "tags": ["win","score","triumph"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 }
+                 ]
+}

@@ -12,7 +12,8 @@
 
 @interface EMPackagesVC() <
     UICollectionViewDataSource,
-    UICollectionViewDelegate
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
@@ -132,6 +133,20 @@
     cell.guiIcon.image = [UIImage imageNamed:package.iconName];
     cell.guiLabel.text = package.label;
     cell.isSelected = [package isEqual:self.selectedPackage];
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView
+                 layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat width;
+    CGFloat height = 58;
+    NSInteger count = self.fetchedResultsController.fetchedObjects.count;
+    if (count > 5) {
+        width = 98;
+    } else {
+        width = self.guiCollectionView.bounds.size.width / count;
+    }
+    return CGSizeMake(width, height);
 }
 
 #pragma mark - Collection View Delegate

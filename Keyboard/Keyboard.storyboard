@@ -56,15 +56,30 @@
                                                 </connections>
                                             </button>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debug label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38i-Vq-bpZ">
-                                                <rect key="frame" x="204" y="14" width="92" height="21"/>
+                                                <rect key="frame" x="204" y="14" width="92" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" alpha="0.74999999999999978" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbG-tw-7E2" userLabel="Back">
+                                                <rect key="frame" x="276" y="1" width="44" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="44" id="z2Y-Rr-GMh"/>
+                                                </constraints>
+                                                <state key="normal" image="kbBack">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onPressedBackButton:" destination="sle-Gl-c4f" eventType="touchUpInside" id="gZo-3B-fk3"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="M0e-mz-C6x" firstAttribute="top" secondItem="yNr-8w-li6" secondAttribute="top" id="BRy-wB-nge"/>
+                                            <constraint firstAttribute="trailing" secondItem="hbG-tw-7E2" secondAttribute="trailing" id="Ckf-sa-VTx"/>
+                                            <constraint firstAttribute="height" secondItem="hbG-tw-7E2" secondAttribute="height" id="Dma-E4-LUB"/>
+                                            <constraint firstAttribute="centerY" secondItem="hbG-tw-7E2" secondAttribute="centerY" constant="-1" id="Kiu-D8-Pls"/>
                                             <constraint firstItem="FML-ft-Qa9" firstAttribute="leading" secondItem="yNr-8w-li6" secondAttribute="leading" id="MxN-TL-ehJ"/>
                                             <constraint firstItem="M0e-mz-C6x" firstAttribute="width" secondItem="yNr-8w-li6" secondAttribute="width" id="RnE-Lm-bk5"/>
                                             <constraint firstItem="vbc-xi-w91" firstAttribute="centerY" secondItem="FML-ft-Qa9" secondAttribute="centerY" id="SLw-H5-rxL"/>
@@ -83,18 +98,6 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: Keyboard Full Access Is Disabled." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-vl-lAY">
-                                        <rect key="frame" x="40" y="59" width="242" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To enable, go to keyboard settings --&gt; &quot;Keyboard - Emu&quot; and allow full access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olV-CA-vK7">
-                                        <rect key="frame" x="33" y="85" width="255" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4i-6P-pJK" userLabel="Collection Container">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
                                         <subviews>
@@ -166,7 +169,7 @@
                                                 </connections>
                                             </collectionView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="centerX" secondItem="i6M-Vb-0dP" secondAttribute="centerX" id="3ep-Iv-6Jk"/>
                                             <constraint firstAttribute="centerY" secondItem="i6M-Vb-0dP" secondAttribute="centerY" id="8AY-h9-nbS"/>
@@ -174,6 +177,18 @@
                                             <constraint firstItem="i6M-Vb-0dP" firstAttribute="width" secondItem="w4i-6P-pJK" secondAttribute="width" id="pEz-7o-rQQ"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keyboard full access is currently disabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-vl-lAY">
+                                        <rect key="frame" x="35" y="59" width="250" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To enable, go to keyboard settings --&gt; &quot;Keyboard - Emu&quot; and allow full access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olV-CA-vK7">
+                                        <rect key="frame" x="33" y="84" width="255" height="51"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -223,10 +238,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wmu-TR-v2G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="224" y="430"/>
+            <point key="canvasLocation" x="224" y="430.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="globe" width="44" height="44"/>
+        <image name="kbBack" width="22" height="16"/>
     </resources>
 </document>

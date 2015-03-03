@@ -126,6 +126,8 @@
 -(void)resetFetchedResultsController
 {
     _fetchedResultsController = nil;
+    if (!self.isFullAccessGranted)
+        return;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
 }
@@ -139,6 +141,8 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
+    if (!self.isFullAccessGranted) return 0;
+    
     NSInteger count = self.fetchedResultsController.fetchedObjects.count;
     self.guiDebugLabel.text = [SF: @"E:%@", @(count)];
     return count;
@@ -227,6 +231,11 @@
 - (IBAction)onPressedNectKBButton:(id)sender
 {
     [self.delegate keyboardShouldAdadvanceToNextInputMode];
+}
+
+- (IBAction)onPressedBackButton:(id)sender
+{
+    [self.delegate keyboardShouldDeleteBackward];
 }
 
 @end

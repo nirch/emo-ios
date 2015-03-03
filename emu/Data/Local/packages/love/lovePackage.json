@@ -2,7 +2,7 @@
     "emuticons":[
                  
                  {
-                 "oid": {"$oid": "54919516454c61f4080000e5"},
+                 "oid": {"$oid": "love001"},
                  "name": "angel",
                  "source_back_layer": "angel-bg.gif",
                  "source_front_layer": "angel-fg.gif",
@@ -16,7 +16,7 @@
 
                  
                  {
-                 "oid": {"$oid": "54919516454c61f4080000e6"},
+                 "oid": {"$oid": "love002"},
                  "name": "green-love",
                  "source_back_layer": "green-love-bg.gif",
                  "source_front_layer": "green-love-fg.gif",
@@ -28,7 +28,7 @@
                  },
 
                  {
-                 "oid": {"$oid": "54919516454c61f4080000e7"},
+                 "oid": {"$oid": "love003"},
                  "name": "hearts",
                  "source_back_layer": "hearts-bg.gif",
                  "source_front_layer": "hearts-fg.gif",
@@ -41,7 +41,7 @@
 
                  
                  {
-                 "oid": {"$oid": "54919516454c61f4080000e8"},
+                 "oid": {"$oid": "love004"},
                  "name": "kiss",
                  "source_back_layer": "kiss-bg.gif",
                  "source_user_layer_mask": "kiss-mask.jpg",
@@ -50,10 +50,21 @@
                  "frames_count": 24,
                  "thumbnail_frame_index": 23
                  },
+                 
+                 {
+                 "oid": {"$oid": "love005"},
+                 "name": "teddies",
+                 "source_back_layer": "teddies-bg.gif",
+                 "source_user_layer_mask": "teddies-mask.jpg",
+                 "tags": ["love","teddy"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
 
                  
                  {
-                 "oid": {"$oid": "54919516454c61f4080000e9"},
+                 "oid": {"$oid": "love006"},
                  "name": "hot",
                  "source_back_layer": "hot-bg.gif",
                  "source_user_layer_mask": "hot-mask.jpg",

@@ -55,4 +55,9 @@
     [self advanceToNextInputMode];
 }
 
+-(void)keyboardShouldDeleteBackward
+{
+    [self.textDocumentProxy deleteBackward];
+}
+
 @end
