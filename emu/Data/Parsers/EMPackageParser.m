@@ -14,12 +14,25 @@
 
 -(void)parse
 {
+    /*
+     Example for a package meta data
+     {
+     "oid":{"$oid": "2"},
+     "icon_name":"hate_icon.png",
+     "name":"hate",
+     "label":"Hate!",
+     "time_updated":"2014-07-29T12:20:23"
+     }
+     */
+    
     NSDictionary *info = self.objectToParse;
     NSString *oid = [info safeOIDStringForKey:@"oid"];
 
     Package *pkg = [Package findOrCreateWithID:oid context:self.ctx];
     pkg.name = [info safeStringForKey:@"name"];
     pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"time_updated"]];
+    pkg.iconName = [info safeStringForKey:@"icon_name"];
+    pkg.label = [info safeStringForKey:@"label"];
 }
 
 @end

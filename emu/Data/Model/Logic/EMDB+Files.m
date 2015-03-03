@@ -19,10 +19,19 @@
 
 
 #pragma mark - general paths and files creation
++(NSURL *)rootURL
+{
+    // Now using a group container (so keyboard and app can share resources and data)
+    NSURL *groupURL = [[NSFileManager defaultManager]
+                       containerURLForSecurityApplicationGroupIdentifier:
+                       GROUP_CONTAINER_IDENTIFIER];
+    return groupURL;
+}
+
 +(NSString *)rootPath
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return paths[0];
+    NSURL *url = [self rootURL];
+    return [url path];
 }
 
 

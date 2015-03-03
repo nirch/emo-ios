@@ -1,0 +1,49 @@
+//
+//  emu-prefix.pch
+//  emu
+//
+//  Created by Aviv Wolf on 1/27/15.
+//  Copyright (c) 2015 Homage. All rights reserved.
+//
+
+#ifndef emu_emu_prefix_pch
+#define emu_emu_prefix_pch
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "HMNotificationCenter.h"
+    #import "EmuStyle.h"
+
+    // Localized strings
+    #define LS(STRING) NSLocalizedString(STRING,STRING)
+
+    // Logging
+    #import <NSLogger/NSLogger.h>
+    #define EM_ERR 0
+    #define EM_APP 1
+    #define EM_DBG 2
+    #define EM_DATA 3
+    #define EM_VERBOSE 4
+
+    #ifdef DEBUG
+        #define HMLOG(tag, level, ...) LogMessage(tag,level,__VA_ARGS__)
+    #else
+        #define HMLOG(...)   do{}while(0)
+    #endif
+
+    //
+    // Some macros
+    //
+
+    // String with format
+    #define SF NSString stringWithFormat
+
+    // Is NSNull ?
+    #define isNSNull(value) [value isKindOfClass:[NSNull class]]
+
+    // Distaptch time. Used mostly in dispatch_after(...)
+    #define DTIME(TIME_IN_SECONDS) dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIME_IN_SECONDS * NSEC_PER_SEC))
+#endif
+
+#endif

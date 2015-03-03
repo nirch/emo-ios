@@ -8,10 +8,16 @@
 
 #import "EMDB.h"
 
+#define GROUP_CONTAINER_IDENTIFIER @"group.it.homage.Emu"
+
 @interface EMDB (Files)
 
 +(void)ensureRequiredDirectoriesExist;
 +(BOOL)ensureDirPathExists:(NSString *)dirPath;
+
+#pragma mark - Root paths
++(NSURL *)rootURL;
++(NSString *)rootPath;
 
 #pragma mark - Footages
 +(NSString *)footagesPath;

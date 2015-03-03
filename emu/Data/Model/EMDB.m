@@ -9,6 +9,7 @@
 #define TAG @"EMDB"
 
 #import "EMDB.h"
+#import "EMDB+Files.h"
 
 @implementation EMDB
 
@@ -83,9 +84,19 @@
     // Create the coordinator and store
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"emu.sqlite"];
+    
+    // The group container url
+    NSURL *groupURL = [EMDB rootURL];
+
+    // The sqlite file
+    NSURL *storeURL = [groupURL URLByAppendingPathComponent:@"emu.sqlite"];
+
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+    
+    //
+    // Add the persistent store.
+    //
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];

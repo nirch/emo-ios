@@ -148,7 +148,7 @@
         // Save to camera roll
         //
         self.sharer = [EMShareSaveToCameraRoll new];
-        self.sharer.shareOption = emkShareOptionBoth;
+        // self.sharer.shareOption = emkShareOptionBoth;
         
     } else if (method == emkShareMethodMail) {
         

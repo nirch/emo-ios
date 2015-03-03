@@ -2,9 +2,17 @@
 	"packages":[
                 {
                 "oid":{"$oid": "1"},
+                "icon_name":"love_icon.png",
                 "name":"love",
                 "label":"Love",
                 "time_updated":"2014-07-29T12:20:23"
+                },
+                {
+                "oid":{"$oid": "2"},
+                "icon_name":"hate_icon.png",
+                "name":"hate",
+                "label":"Hate!",
+                "time_updated":"2014-07-29T12:20:23"
                 }
-                ]
+    ]
 }

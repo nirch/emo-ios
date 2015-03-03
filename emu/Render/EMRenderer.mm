@@ -81,21 +81,25 @@
     //
     // Output video
     //
-    NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
-    NSURL *videoOutputUrl = [[NSURL alloc] initFileURLWithPath:outputVideoPath];
-    VideoOutput *videoOutput = new VideoOutput(dimensions, 11.4, videoOutputUrl, [self fps]);
+//    NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
+//    NSURL *videoOutputUrl = [[NSURL alloc] initFileURLWithPath:outputVideoPath];
+//    VideoOutput *videoOutput = new VideoOutput(dimensions, 11.4, videoOutputUrl, [self fps]);
 
     // Render the outputs
-    CHrOutputI *outputs[2] = { gifOutput, videoOutput };
+    //CHrOutputI *outputs[2] = { gifOutput, videoOutput };
+    CHrOutputI *outputs[1] = { gifOutput };
     CHomageRenderer *render = new CHomageRenderer();
-    render->Process(bgSource, userSource, fgSource, outputs, 2);
+    render->Process(bgSource, userSource, fgSource, outputs, 1);
 
     // Finishing up.
     if (gifOutput != NULL)  gifOutput->Close();
     if (userSource != NULL) userSource->Close();
     if (bgSource != NULL)   bgSource->Close();
     if (fgSource != NULL)   fgSource->Close();
-    if (videoOutput != NULL) videoOutput->Close();
+    
+    // Disabled videoOutput for now
+    // TODO: fix memory leak in video rendering
+    //if (videoOutput != NULL) videoOutput->Close();
 }
 
 

@@ -1,0 +1,67 @@
+{
+    "emuticons":[
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000x7"},
+                 "name": "brokenhearts",
+                 "source_back_layer": "xhearts-bg.gif",
+                 "source_front_layer": "xhearts-fg.gif",
+                 "source_user_layer_mask": "xhearts-mask.jpg",
+                 "tags": ["love","hearts"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000x6"},
+                 "name": "envy",
+                 "source_back_layer": "xgreen-love-bg.gif",
+                 "source_front_layer": "xgreen-love-fg.gif",
+                 "source_user_layer_mask": "xgreen-love-mask.jpg",
+                 "tags": ["love","green"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000x5"},
+                 "name": "devil",
+                 "source_back_layer": "xangel-bg.gif",
+                 "source_front_layer": "xangel-fg.gif",
+                 "source_user_layer_mask": "xangel-mask.jpg",
+                 "tags": ["love","angel","divine"],
+                 "use_for_preview":true,
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000x8"},
+                 "name": "kissofdeath",
+                 "source_back_layer": "xkiss-bg.gif",
+                 "source_user_layer_mask": "xkiss-mask.jpg",
+                 "tags": ["love","kiss"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+
+                 
+                 {
+                 "oid": {"$oid": "54919516454c61f4080000x9"},
+                 "name": "cold",
+                 "source_back_layer": "xhot-bg.gif",
+                 "source_user_layer_mask": "xhot-mask.jpg",
+                 "tags": ["love","hot"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 }
+                 ]
+}

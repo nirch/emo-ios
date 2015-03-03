@@ -16,6 +16,7 @@
 #import "EmuCell.h"
 #import "EMEmuticonScreenVC.h"
 #import "EMRenderManager.h"
+#import "EMPackagesVC.h"
 
 
 @interface EMMainVC () <
@@ -23,17 +24,20 @@
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
     EMRecorderDelegate,
-    UIGestureRecognizerDelegate
+    UIGestureRecognizerDelegate,
+    EMPackageSelectionDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiNavView;
+@property (weak, nonatomic) IBOutlet UIView *guiPackagesSelectionContainer;
 
 @property (weak, nonatomic) UIImageView *splashView;
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic)NSFetchedResultsController *resultsController;
+@property (nonatomic)Package *selectedPackage;
 
 @end
 
@@ -182,6 +186,11 @@
     // Perform the fetch
     NSError *error;
     [[self fetchedResultsController] performFetch:&error];
+    
+    if (self.selectedPackage == nil)
+        self.selectedPackage = [Package findWithID:@"1"
+                                           context:EMDB.sh.context];
+    
     if (error) {
         HMLOG(TAG,
               EM_ERR,
@@ -197,7 +206,9 @@
         return _fetchedResultsController;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@", @NO];
+    HMLOG(TAG, EM_DBG, @"Showing emuticons for package named:%@", self.selectedPackage.name);
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, self.selectedPackage];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
@@ -258,6 +269,9 @@
         // Pass the emuticon oid to the destination view controller.
         EMEmuticonScreenVC *vc = segue.destinationViewController;
         vc.emuticonOID = emu.oid;
+    } else if ([segue.identifier isEqualToString:@"packages bar segue"]) {
+        EMPackagesVC *vc = segue.destinationViewController;
+        vc.delegate = self;
     }
 }
 
@@ -405,27 +419,27 @@
 
 -(void)retakeAll
 {
+    if (self.selectedPackage == nil)
+        return;
+
     /**
      *  Open the recording for retaking all emuticons.
      */
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    Package *package = [appCFG packageForOnboarding];
     [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
-                         info:@{emkPackage:package}];
+                         info:@{emkPackage:self.selectedPackage}];
 
 }
 
 -(void)retakeCurrentPackage
 {
-    // TODO: finish implementation.
+    if (self.selectedPackage == nil)
+        return;
     
     /**
-     *  Open the recording for retaking all emuticons.
+     *  Open the recording for retaking emuticons for current selected package.
      */
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    Package *package = [appCFG packageForOnboarding];
     [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
-                         info:@{emkPackage:package}];
+                         info:@{emkPackage:self.selectedPackage}];
 }
 
 -(void)resetPack
@@ -505,6 +519,23 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+#pragma mark - EMPackageSelectionDelegate
+-(void)packageWasSelected:(Package *)package
+{
+    // Make sure emuticons instances created for this package
+    [package createMissingEmuticonObjects];
+    
+    // Reload
+    self.selectedPackage = package;
+    [self resetFetchedResultsController];
+    [self.guiCollectionView reloadData];
+}
+
+-(void)packagesAvailableCount:(NSInteger)numberOfPackages
+{
+    self.guiPackagesSelectionContainer.alpha = numberOfPackages>1? 1:0;
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -516,12 +547,12 @@
 
 - (IBAction)onPressedNavButton:(id)sender
 {
-    [self aboutMessage];
+    [self userChoices];
 }
 
 - (IBAction)onPressedEmuButton:(id)sender
 {
-    [self userChoices];
+    [self aboutMessage];
 }
 
 @end

@@ -1000,14 +1000,27 @@
         appCFG.prefferedFootageOID = newFootage.oid;
         
         // Clean up all emuticons that don't have their own specific footage.
-        // TODO: support and test with multiple packages.
+        // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
         [self.package cleanUpEmuticonsWithNoSpecificFootage];
         
     } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
         
-        // TODO: finish implementation.
-        
+        // Make the new footage, the preffered footage for this package
+        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
+        if (self.package.prefferedFootageOID) {
+            UserFootage *oldFootage = [UserFootage findWithID:self.package.prefferedFootageOID context:EMDB.sh.context];
+            [oldFootage deleteAndCleanUp];
+        }
+        self.package.prefferedFootageOID = newFootage.oid;
+
+        // Clean up all emuticons that don't have their own specific footage.
+        // Create missing emuticons of current package.
+        [self.package createMissingEmuticonObjects];
+        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+            [package cleanUpEmuticonsWithNoSpecificFootage];
+        }
+
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
         
         // Cleanup the specific emuticon related to this flow.
