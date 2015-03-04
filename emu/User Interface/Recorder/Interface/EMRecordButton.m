@@ -38,6 +38,9 @@
     if (self.timer)
         return;
     
+    //
+    // Start the countdown
+    //
     self.counter = number;
     [self.delegate countDownWillStartFromNumber:number];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0

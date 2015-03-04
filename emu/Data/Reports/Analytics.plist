@@ -46,21 +46,29 @@ or
 	<dict>
 		<key>App:launched</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string>The application was launched by the user.</string>
 		</dict>
 		<key>App:enteredBackground</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string>The application entered the background (user pressed home screen, changed to another app, etc.)</string>
 		</dict>
 		<key>App:enteredForeground</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string>The user launched or returned to the application.</string>
 		</dict>
 		<key>App:versionUpdated</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string>The application was launched with a higher version than the version it was launched with previously.</string>
 			<key>params</key>
@@ -73,6 +81,8 @@ or
 		</dict>
 		<key>Rec:opened</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string>The recorder screen was opened and just appeared on screen. The event will also include info about the flow option the recorder was opened for.</string>
 			<key>params</key>
@@ -95,23 +105,445 @@ or
 		</dict>
 		<key>Rec:userPressedRestartButton</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
-			<string></string>
+			<string>The user pressed the restart button that causes the recorder to restart the flow of the recorder.</string>
 		</dict>
 		<key>Rec:userPressedAppButton</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
-			<string></string>
+			<string>user pressed (in recorder onboarding) the emu button (showing him an about emu message)</string>
+			<key>params</key>
+			<dict>
+				<key>stage</key>
+				<string>&lt;int&gt; - the stage this happened. Possible values:
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview</string>
+			</dict>
 		</dict>
 		<key>Rec:userPressedCancelButton</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string></string>
+			<key>params</key>
+			<dict>
+				<key>stage</key>
+				<string>&lt;int&gt; - the stage this happened. Possible values:
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview</string>
+			</dict>
 		</dict>
 		<key>Rec:stageAlignStarted</key>
 		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>The background detection feedback UI is presented to the user. User is asked to align to silhoutte and gets feedback about bad background.</string>
+		</dict>
+		<key>Rec:stageAlignUserPressedContinueWithBadBackground</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>The background detection feedback UI is presented to the user. User is asked to align to silhoutte and gets feedback about bad background.</string>
+			<key>params</key>
+			<dict>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageAlignGoodBackgroundSatisfied</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>A threshold of good background was reached and fg extraction should start</string>
+			<key>params</key>
+			<dict>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageExtStarted</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>The FG extraction stage has started. BG detection UI is dismissed. User can use a record button when ready.</string>
+			<key>params</key>
+			<dict>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageExtUserPressedRecord</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>User pressed the record button while in the real time extraction was in progress.</string>
+			<key>params</key>
+			<dict>
+				<key>latestBackgroundMark</key>
+				<string>&lt;int&gt; - The latest background detection mark before user pressed the record button.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageExtUserCanceledRecord</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>User canceled recording (by pressing the record button when it was counting down)</string>
+		</dict>
+		<key>Rec:stageRecordingDidStart</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>Recording did start.</string>
+			<key>params</key>
+			<dict>
+				<key>flowType</key>
+				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
+ &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
+ &apos;retakeAll&apos; - user wanted to retake and use the footage to all unlocked emoticons
+ &apos;retakePackage&apos; - user wanted to retake and use the footage to all unlocked emoticons in a package.
+ &apos;retakeEmoticon&apos; - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>latestBackgroundMark</key>
+				<string>&lt;int&gt; - The latest background detection mark before user pressed the record button.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageRecordingDidFinish</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>Recording did finish.</string>
+			<key>params</key>
+			<dict>
+				<key>flowType</key>
+				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
+ &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
+ &apos;retakeAll&apos; - user wanted to retake and use the footage to all unlocked emoticons
+ &apos;retakePackage&apos; - user wanted to retake and use the footage to all unlocked emoticons in a package.
+ &apos;retakeEmoticon&apos; - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>latestBackgroundMark</key>
+				<string>&lt;int&gt; - The latest background detection mark before user pressed the record button.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageReviewUserPressedRetakeButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>When user asked if he likes the result he chose to try again and retake. You just can&apos;t please some people. :-(</string>
+			<key>params</key>
+			<dict>
+				<key>flowType</key>
+				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
+ &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
+ &apos;retakeAll&apos; - user wanted to retake and use the footage to all unlocked emoticons
+ &apos;retakePackage&apos; - user wanted to retake and use the footage to all unlocked emoticons in a package.
+ &apos;retakeEmoticon&apos; - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>latestBackgroundMark</key>
+				<string>&lt;int&gt; - The latest background detection mark before user pressed the record button.</string>
+			</dict>
+		</dict>
+		<key>Rec:stageReviewUserPressedConfirmButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>When user asked if he likes the result he chose yes. Yeah! :-)</string>
+			<key>params</key>
+			<dict>
+				<key>flowType</key>
+				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
+ &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
+ &apos;retakeAll&apos; - user wanted to retake and use the footage to all unlocked emoticons
+ &apos;retakePackage&apos; - user wanted to retake and use the footage to all unlocked emoticons in a package.
+ &apos;retakeEmoticon&apos; - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>latestBackgroundMark</key>
+				<string>&lt;int&gt; - The latest background detection mark before user pressed the record button.</string>
+			</dict>
+		</dict>
+		<key>Rec:wasDismissed</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>Recorder was dismissed.</string>
+			<key>params</key>
+			<dict>
+				<key>finishedFlow</key>
+				<string>&lt;int&gt; - 0:user didn&apos;t finish the flow. 1:the user finished the flow.</string>
+				<key>flowType</key>
+				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
+ &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
+ &apos;retakeAll&apos; - user wanted to retake and use the footage to all unlocked emoticons
+ &apos;retakePackage&apos; - user wanted to retake and use the footage to all unlocked emoticons in a package.
+ &apos;retakeEmoticon&apos; - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>timePassedSinceRecorderOpened</key>
+				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>latestBackgroundMark</key>
+				<string>&lt;int&gt; - The latest background detection mark before user pressed the record button.</string>
+			</dict>
+		</dict>
+		<key>Items:userPressedAppButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user pressed the emu button at the top and an &apos;about message&apos; was shown.</string>
+		</dict>
+		<key>Items:userPressedNavButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user pressed the nav button and was given a list of options to choose from</string>
+		</dict>
+		<key>Items:userNavSelectionResetPack</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user chosen to reset a pack and use the master footage for rendring all emoticons in package</string>
+			<key>params</key>
+			<dict>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>Items:userNavSelectionCancel</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user pressed canceled when presented by choices (after pressing the nav button)</string>
+		</dict>
+		<key>Items:userPressedRetakeButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user pressed the retake button while in the emoticons screen</string>
+			<key>params</key>
+			<dict>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>Items:userRetakeOption</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user selected to retake with an option (for all emoticons or all in package)</string>
+			<key>params</key>
+			<dict>
+				<key>retakeOption</key>
+				<string>&lt;string&gt; - &apos;all&apos;:All emoticons in all packages. &apos;package&apos;:All emoticons in package.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (optional: </string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>Items:userRetakeCanceled</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user pressed the emu button at the top and an &apos;about message&apos; was shown.</string>
+		</dict>
+		<key>Items:userSelectedItem</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>user pressed the emu button at the top and an &apos;about message&apos; was shown.</string>
+		</dict>
+		<key>ItemDetails:userPressedBackButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
 			<key>description</key>
 			<string></string>
+			<key>params</key>
+			<dict>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>ItemDetails:userPressedRetakeButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string></string>
+			<key>params</key>
+			<dict>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>ItemDetails:userPressedShareButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string></string>
+			<key>params</key>
+			<dict>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>Share:success</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string></string>
+			<key>params</key>
+			<dict>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>Share:failed</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string></string>
+			<key>params</key>
+			<dict>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>Share:canceled</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string></string>
+			<key>params</key>
+			<dict>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>

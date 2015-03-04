@@ -263,6 +263,15 @@
         // Pass the emuticon oid to the destination view controller.
         EMEmuticonScreenVC *vc = segue.destinationViewController;
         vc.emuticonOID = emu.oid;
+        
+        // Analytics
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emu.emuDef.name];
+        [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
+        [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
+        [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
+        [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
+        
     } else if ([segue.identifier isEqualToString:@"packages bar segue"]) {
         EMPackagesVC *vc = segue.destinationViewController;
         vc.delegate = self;
@@ -339,6 +348,7 @@
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [self hideSplashAnimated:YES];
+        [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
     
     // Handle what to do next, depending on the flow of the dismissed recorder.
@@ -368,6 +378,7 @@
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [self hideSplashAnimated:YES];
+        [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
 
     [self resetFetchedResultsController];
@@ -404,6 +415,13 @@
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_ALL")
                                               style:UIAlertActionStyleDestructive
                                             handler:^(UIAlertAction *action) {
+                                                // Analytics
+                                                HMParams *params = [HMParams new];
+                                                [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"all"];
+                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
+                                                                         info:params.dictionary];
+                                                
+                                                // Retake
                                                 [self retakeAll];
                                             }]];
 
@@ -411,22 +429,28 @@
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_PACKAGE")
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
+                                                // Analytics
+                                                HMParams *params = [HMParams new];
+                                                [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"package"];
+                                                [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
+                                                [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
+                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
+                                                                         info:params.dictionary];
+                                                // Retake
                                                 [self retakeCurrentPackage];
                                             }]];
-
-//    // Reset emuticons to use the same footage.
-//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_RESET_PACK")
-//                                              style:UIAlertActionStyleDefault
-//                                            handler:^(UIAlertAction *action) {
-//                                                [self resetPack];
-//                                            }]];
-
-    
     
     // Cancel
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
                                               style:UIAlertActionStyleCancel
-                                            handler:nil]];
+                                            handler:^(UIAlertAction *action) {
+                                                // Analytics
+                                                HMParams *params = [HMParams new];
+                                                [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
+                                                [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
+                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_CANCELED
+                                                                         info:params.dictionary];
+                                            }]];
 
     [self presentViewController:alert animated:YES completion:nil];
 }
@@ -461,6 +485,12 @@
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     Package *package = [appCFG packageForOnboarding];
 
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:package.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:package.oid];
+    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_RESET_PACK info:params.dictionary];
+
+    // Reset
     NSArray *emus = [Emuticon allEmuticonsInPackage:package];
     for (Emuticon *emu in emus) {
         if (emu.prefferedFootageOID) {
@@ -512,7 +542,9 @@
     // Cancel
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
                                               style:UIAlertActionStyleCancel
-                                            handler:nil]];
+                                            handler:^(UIAlertAction *action) {
+                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_CANCEL];
+                                            }]];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
@@ -521,6 +553,7 @@
 #pragma mark - About message
 -(void)aboutMessage
 {
+    // TODO: Move this from here to somewhere else that can be used from other places in the app
     NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
     
     UIAlertController *alert = [[UIAlertController alloc] init];
@@ -575,16 +608,26 @@
 - (IBAction)onPressedRetakeButton:(id)sender
 {
     [self askUserToChooseWhatToRetake];
+    
+    //
+    // Analytics
+    //
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
+    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_RETAKE_BUTTON];
 }
 
 - (IBAction)onPressedNavButton:(id)sender
 {
     [self userChoices];
+    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_NAV_BUTTON];
 }
 
 - (IBAction)onPressedEmuButton:(id)sender
 {
     [self aboutMessage];
+    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_APP_BUTTON];
 }
 
 @end

@@ -53,6 +53,8 @@
 
 @property (nonatomic) Emuticon *previewEmuticon;
 
+@property (nonatomic) NSDate *dateTimeOpened;
+
 //
 // Containers and sub view controllers
 //
@@ -67,6 +69,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiGoodBGIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBadBGIcon;
 @property (weak, nonatomic) EMBGFeedBackVC *feedBackVC;
+@property (nonatomic) NSInteger latestBGMark;
 
 
 // The preview container and view controller
@@ -100,6 +103,11 @@
 //
 @property (readwrite) EMRecorderState recorderState;
 
+//
+// Analytics
+//
+@property (nonatomic) HMParams *recorderSessionAnalyticsParams;
+
 // Layout
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintCameraPreviewTrailing;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintCameraPreviewLeading;
@@ -131,6 +139,7 @@
 
 -(void)reportOpeningRecorder
 {
+    self.dateTimeOpened = [NSDate date];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticonToUpdate.emuDef.oid];
     [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticonToUpdate.emuDef.name];
@@ -138,6 +147,9 @@
     [params addKey:AK_EP_PACKAGE_NAME  value:self.package.name];
     [params addKey:AK_EP_FLOW_TYPE value:[self flowName]];
     [HMReporter.sh analyticsEvent:AK_E_REC_OPENED info:params.dictionary];
+    
+    // We can also store this info, so it will be available later in the session
+    self.recorderSessionAnalyticsParams = params;
 }
 
 -(NSString *)flowName
@@ -320,6 +332,7 @@
     
     NSDictionary *info = notification.userInfo;
     CGFloat weight = [info[hmkInfoBGMarkWeight] floatValue];
+    self.latestBGMark = [info[hmkInfoBGMark] integerValue];
 
     // Update indicator about the good/bad background weight.
     self.feedBackVC.goodBackgroundWeight = weight;
@@ -360,6 +373,12 @@
     
     [self handleStateWithInfo:info
                     nextState:@(EMRecorderStateReviewPreview)];
+}
+
+#pragma mark - Time
+-(NSTimeInterval)timePassedSinceRecorderOpened
+{
+    return [[NSDate date] timeIntervalSinceDate:self.dateTimeOpened];
 }
 
 #pragma mark - Good/Bad BG Icon
@@ -609,8 +628,9 @@
         [self.previewEmuticon deleteAndCleanUp];
     
     // Just dismiss the recorder, doing nothing.
+    [self.recorderSessionAnalyticsParams addKey:AK_EP_FINISHED_FLOW valueIfNotNil:@0];
     [self.delegate recorderCanceledByTheUserInFlow:self.flowType
-                                              info:self.info];
+                                              info:self.recorderSessionAnalyticsParams.dictionary];
 }
 
 #pragma mark - Updating States
@@ -723,6 +743,11 @@
  For all state handling methods, stick (as much as possible) to this format:
  
     //
+    // Analytics
+    //
+ 
+ 
+    //
     // Capture session and video processing.
     //
     .
@@ -785,6 +810,11 @@
 -(void)_stateStartBGDetection
 {
     //
+    // Analytics
+    //
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_STARTED];
+    
+    //
     // Capture session and video processing.
     //
 
@@ -826,12 +856,25 @@
     // Info provided indicates that a good background threshold was satisfied.
     // It is time to stop the background detection sampling and start
     // the foreground extraction algorithm.
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_GOOD_BACKGROUND_SATISFIED info:params.dictionary];
+    
     [self handleStateWithInfo:info
                     nextState:@(EMRecorderStateFGExtractionShouldStart)];
 }
 
 -(void)_stateShouldStartFGExtraction:(NSDictionary *)info
 {
+    //
+    // Analytics
+    //
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_EXT_STARTED
+                             info:params.dictionary];
+
+    
     //
     // Recorder and UI state.
     //
@@ -898,6 +941,15 @@
 -(void)_stateShouldStartRecording
 {
     //
+    // Analytics
+    //
+    HMParams *params = self.recorderSessionAnalyticsParams;
+    [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_START
+                             info:params.dictionary];
+
+    //
     // Capture session and video processing.
     //
     
@@ -933,6 +985,16 @@
 
 -(void)_stateUserShouldWaitWhileFinishingUp
 {
+    //
+    // Analytics
+    //
+    HMParams *params = self.recorderSessionAnalyticsParams;
+    [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
+                             info:params.dictionary];
+
+    
     //
     // Recorder and UI state.
     //
@@ -1057,8 +1119,9 @@
     [EMDB.sh save];
     
     // Tell delegate to dismiss the recorder.
+    [self.recorderSessionAnalyticsParams addKey:AK_EP_FINISHED_FLOW valueIfNotNil:@1];
     [self.delegate recorderWantsToBeDismissedAfterFlow:self.flowType
-                                                  info:self.info];
+                                                  info:self.recorderSessionAnalyticsParams.dictionary];
 }
 
 #pragma mark - Result Show/Hide
@@ -1156,6 +1219,14 @@
         self.recorderState == EMRecorderStateBGDetectionInProgress) {
 
         //
+        // Analytics
+        //
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_USER_PRESSED_CONTINUE_WITH_BAD_BACKGROUND
+                                 info:params.dictionary];
+        
+        //
         // User pressed to continue with bad background while bg detection is in progress
         // Should start FG extraction anyway.
         //
@@ -1199,6 +1270,16 @@
         self.previewEmuticon = nil;
         [EMDB.sh save];
         [self stateRestart];
+
+        //
+        // Analytics
+        //
+        HMParams *params = self.recorderSessionAnalyticsParams;
+        [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+        [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
+                                 info:params.dictionary];
+
         
     } else if (action == EMRecorderControlsActionYes &&
                self.recorderState == EMRecorderStateReviewPreview) {

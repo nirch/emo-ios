@@ -16,11 +16,26 @@
 
 @implementation HMParams
 
++(HMParams *)paramsWithDictionary:(NSDictionary *)dictionary
+{
+    HMParams *params = [[HMParams alloc] initWithDictionary:dictionary];
+    return params;
+}
+
 -(id)init
 {
     self = [super init];
     if (self) {
         self.storedParameters = [NSMutableDictionary new];
+    }
+    return self;
+}
+
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [self init];
+    if (self) {
+        [self.storedParameters addEntriesFromDictionary:dictionary];
     }
     return self;
 }

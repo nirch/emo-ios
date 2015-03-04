@@ -179,17 +179,38 @@
 
 }
 
+#pragma mark - Analytics
+-(HMParams *)paramsForCurrentEmuticon
+{
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticon.emuDef.name];
+    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticon.emuDef.oid];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.emuticon.emuDef.package.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.emuticon.emuDef.package.oid];
+    return params;
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
 - (IBAction)onPressedBackButton:(UIButton *)sender
 {
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
+                             info:[self paramsForCurrentEmuticon].dictionary];
+    
+    // Go back
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)onPressedRetakeButton:(id)sender
 {
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_RETAKE_BUTTON
+                             info:[self paramsForCurrentEmuticon].dictionary];
+
+    // Retake
     [self retake];
 }
 

@@ -83,18 +83,17 @@
 {
     self.guiPagerView.pagesCount = EMOB_STAGES-1;
     self.guiPagerView.alpha = 0;
+    self.guiRestartButton.alpha = 0;
     [self update];
     
     // Depending on flow type
     if (self.flowType == EMRecorderFlowTypeOnboarding) {
         self.guiEmuButton.hidden = NO;
-        self.guiRestartButton.hidden = NO;
         self.guiCancelButton.hidden = YES;
         self.guiPagerView.hidden = NO;
     } else {
         self.guiPagerView.hidden = YES;
         self.guiEmuButton.hidden = YES;
-        self.guiRestartButton.hidden = YES;
         self.guiCancelButton.hidden = NO;
     }
 }
@@ -155,6 +154,12 @@
     } else {
         self.guiCancelButton.alpha = 1;
     }
+
+    if (self.stage == EMOnBoardingStageExtractionPreview) {
+        self.guiRestartButton.alpha = 1;
+    } else {
+        self.guiRestartButton.alpha = 0;
+    }
 }
 
 -(void)scrollToStage:(EMOnBoardingStage)stage animated:(BOOL)animated
@@ -187,6 +192,24 @@
     }
 }
 
+#pragma mark - About message
+-(void)aboutMessage
+{
+    // TODO: Move this from here to somewhere else that can be used from other places in the app
+    NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    
+    UIAlertController *alert = [[UIAlertController alloc] init];
+    
+    alert.title = [SF:@"About Emu - V%@", build];
+    
+    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emujis.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 #pragma mark - Restarting
 -(void)restart
 {
@@ -207,16 +230,25 @@
 // ===========
 - (IBAction)onPressedEmuButton:(UIButton *)sender
 {
-    [self restart];
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_STAGE value:@(self.stage)];
+    [HMReporter.sh analyticsEvent:AK_E_REC_USER_PRESSED_APP_BUTTON
+                             info:params.dictionary];
+    [self aboutMessage];
 }
 
 - (IBAction)onPressedRestartButton:(UIButton *)sender
 {
+    [HMReporter.sh analyticsEvent:AK_E_REC_USER_PRESSED_RESTART_BUTTON];
     [self restart];
 }
 
 - (IBAction)onPressedCancelButton:(UIButton *)sender
 {
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_STAGE value:@(self.stage)];
+    [HMReporter.sh analyticsEvent:AK_E_REC_USER_PRESSED_CANCEL_BUTTON
+                             info:params.dictionary];
     [self cancel];
 }
 

@@ -324,6 +324,14 @@
 
 -(void)countDownWasCanceled
 {
+    //
+    // Analytics
+    //
+    HMParams *params = [HMParams new];
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_CANCELED_RECORD
+                             info:params.dictionary];
+    
+    // Cancel
     self.guiCountdownLabel.text = nil;
 }
 
@@ -332,6 +340,18 @@
     if (self.state != EMRecorderControlsStateReadyToRecord)
         return;
     
+    //
+    // Analytics
+    //
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD
+                             info:params.dictionary];
+
+    
+    //
+    // Counting down
+    //
     self.countDownNumber = number;
     [self setState:EMRecorderControlsStateCountingDownToRecording
           animated:YES];
@@ -339,6 +359,7 @@
 
 -(void)countDownDidFinish
 {
+    // Will start recording.
     [self setState:EMRecorderControlsStateRecording
           animated:YES];
 }

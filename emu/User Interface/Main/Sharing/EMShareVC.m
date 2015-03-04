@@ -31,7 +31,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 
 @property (nonatomic) NSArray *shareMethods;
-@property (nonatomic) NSDictionary *shareIcons;
+@property (nonatomic) NSDictionary *shareNames;
+@property (nonatomic) NSDictionary *shareMethodsNames;
 @property (nonatomic) EMShare *sharer;
 
 @end
@@ -62,7 +63,7 @@
                           @(emkShareMethodCopy)
                           ];
     
-    self.shareIcons = @{
+    self.shareNames = @{
                         @(emkShareMethodAppleMessages):      @"iMessage",
                         @(emkShareMethodWhatsapp):           @"whatsapp",
                         @(emkShareMethodFacebookMessanger):  @"facebookm",
@@ -71,6 +72,7 @@
                         @(emkShareMethodSaveToCameraRoll):   @"savetocm",
                         @(emkShareMethodCopy):               @"copy"
                         };
+    
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -101,7 +103,7 @@
        forIndexPath:(NSIndexPath *)indexPath
 {
     NSString *shareMethod = self.shareMethods[indexPath.item];
-    NSString *buttonImageName = self.shareIcons[shareMethod];
+    NSString *buttonImageName = self.shareNames[shareMethod];
     UIImage *shareIcon = [UIImage imageNamed:buttonImageName];
     [cell.guiButton setImage:shareIcon forState:UIControlStateNormal];
     cell.guiButton.tag = indexPath.item;
@@ -120,17 +122,38 @@
     return UIEdgeInsetsMake(0, edgeInsets, 0, edgeInsets);
 }
 
+#pragma mark - Analytics
+-(HMParams *)paramsForEmuticon:(Emuticon *)emuticon
+{
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emuticon.emuDef.name];
+    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emuticon.emuDef.oid];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emuticon.emuDef.package.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emuticon.emuDef.package.oid];
+    return params;
+}
+
 #pragma mark - Sharing
 -(void)shareEmuticonUsingMethodAtIndex:(NSInteger)index
 {
     NSString *emuticonOID = [self.delegate shareObjectIdentifier];
     Emuticon *emu = [Emuticon findWithID:emuticonOID context:EMDB.sh.context];
     
+    // Info about the share
     EMKShareMethod shareMethod = [self.shareMethods[index] integerValue];
-    [self shareEmuticon:emu usingMethod:shareMethod];
+    HMParams *params = [self paramsForEmuticon:emu];
+    [params addKey:AK_EP_SHARE_METHOD value:self.shareNames[@(shareMethod)]];
+
+    // Share
+    [self shareEmuticon:emu usingMethod:shareMethod info:params.dictionary];
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON
+                             info:params.dictionary];
+
 }
 
--(void)shareEmuticon:(Emuticon *)emu usingMethod:(EMKShareMethod)method
+-(void)shareEmuticon:(Emuticon *)emu usingMethod:(EMKShareMethod)method info:(NSDictionary *)info
 {
     // Only one share operation at a time.
     if (self.sharer) return;
@@ -184,6 +207,7 @@
     self.sharer.delegate = self;
     self.sharer.viewController = self;
     self.sharer.view = self.view;
+    self.sharer.info = info;
     [self.sharer share];
 }
 
@@ -192,16 +216,25 @@
                    withInfo:(NSDictionary *)info
 {
     self.sharer = nil;
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
 }
 
 -(void)sharerDidCancelWithInfo:(NSDictionary *)info
 {
     self.sharer = nil;
+
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_SHARE_CANCELED info:info];
 }
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info
 {
     self.sharer = nil;
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
 }
 
 #pragma mark - IB Actions
