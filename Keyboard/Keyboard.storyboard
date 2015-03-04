@@ -52,7 +52,7 @@
                                                     </mask>
                                                 </variation>
                                                 <connections>
-                                                    <action selector="onPressedNectKBButton:" destination="sle-Gl-c4f" eventType="touchUpInside" id="6Bf-dn-vXC"/>
+                                                    <action selector="onPressedNextKBButton:" destination="sle-Gl-c4f" eventType="touchUpInside" id="kIq-vk-ckX"/>
                                                 </connections>
                                             </button>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debug label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38i-Vq-bpZ">

@@ -10,6 +10,7 @@
 #import "EMDB.h"
 #import "EmuCell.h"
 #import "EMShareCopy.h"
+#import "HMReporter.h"
 
 @interface EMKeyboardVC()<
     UICollectionViewDataSource,
@@ -53,6 +54,7 @@
     [super viewDidAppear:animated];
     if (self.isFullAccessGranted) {
         [self initData];
+        [self initAnalytics];
     }
     [self updateGUI];
 }
@@ -60,6 +62,14 @@
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+}
+
+#pragma mark - Analytics
+-(void)initAnalytics
+{
+    [HMReporter.sh initializeAnalyticsWithLaunchOptions:nil];
+    [HMReporter.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
+    [HMReporter.sh analyticsForceSend];
 }
 
 #pragma mark - Initializations
@@ -195,47 +205,82 @@
     [self copyEmu:emu];
 }
 
+#pragma mark - Analytics
+-(HMParams *)paramsForEmuticon:(Emuticon *)emuticon
+{
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emuticon.emuDef.name];
+    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emuticon.emuDef.oid];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emuticon.emuDef.package.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emuticon.emuDef.package.oid];
+    return params;
+}
+
 #pragma mark - Sharing
 -(void)copyEmu:(Emuticon *)emu
 {
     if (emu == nil || self.sharer != nil) return;
+    
+    
+    // Info about the share
+    HMParams *params = [self paramsForEmuticon:emu];
+    [params addKey:AK_EP_SHARE_METHOD value:@"copy"];
+    [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"keyboard"];
+    [HMReporter.sh analyticsEvent:AK_E_KB_USER_PRESSED_ITEM info:params.dictionary];
     
     self.sharer = [EMShareCopy new];
     self.sharer.objectToShare = emu;
     self.sharer.viewController = self;
     self.sharer.view = self.view;
     self.sharer.delegate = self;
+    self.sharer.info = params.dictionary;
     [self.sharer share];
 }
 
 #pragma mark - EMShareDelegate
--(void)sharerDidCancelWithInfo:(NSDictionary *)info
+-(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
 {
     self.sharer = nil;
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
+    [HMReporter.sh analyticsForceSend];
 }
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info
 {
     self.sharer = nil;
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
+    [HMReporter.sh analyticsForceSend];
 }
 
--(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
+
+-(void)sharerDidCancelWithInfo:(NSDictionary *)info
 {
     self.sharer = nil;
+    
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_SHARE_CANCELED info:info];
+    [HMReporter.sh analyticsForceSend];
 }
+
 
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
-- (IBAction)onPressedNectKBButton:(id)sender
+- (IBAction)onPressedNextKBButton:(id)sender
 {
     [self.delegate keyboardShouldAdadvanceToNextInputMode];
+    [HMReporter.sh analyticsEvent:AK_E_KB_USER_PRESSED_NEXT_INPUT_BUTTON];
 }
 
 - (IBAction)onPressedBackButton:(id)sender
 {
     [self.delegate keyboardShouldDeleteBackward];
+    [HMReporter.sh analyticsEvent:AK_E_KB_USER_PRESSED_BACK_BUTTON];
 }
 
 @end

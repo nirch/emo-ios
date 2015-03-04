@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 21:32:31 03/04/15 IST
+//  Created by build script on 23:01:58 03/04/15 IST
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -99,11 +99,6 @@ The application was launched with a higher version than the version it
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 **/
-#define AK_E_ITEM_DETAILS_USER_PRESSED_LOCKED_BUTTON @"ItemDetails:userPressedLockedButton"
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-**/
 #define AK_E_ITEM_DETAILS_USER_PRESSED_RETAKE_BUTTON @"ItemDetails:userPressedRetakeButton"
 
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
@@ -120,7 +115,7 @@ The application was launched with a higher version than the version it
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+User pressed one of the share buttons in the emoticon screen.
 **/
 #define AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON @"ItemDetails:userPressedShareButton"
 
@@ -210,6 +205,53 @@ user pressed the emu button at the top and an 'about message' was
     shown.
 **/
 #define AK_E_ITEMS_USER_SELECTED_ITEM @"Items:userSelectedItem"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+The keyboard appeared (event sent only when user actually enabled
+    keyboard full access)
+**/
+#define AK_E_KB_DID_APPEAR @"KB:didAppear"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User pressed one of the emoticons for copying
+**/
+#define AK_E_KB_USER_PRESSED_BACK_BUTTON @"KB:userPressedBackButton"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User pressed one of the emoticons for copying
+**/
+#define AK_E_KB_USER_PRESSED_ITEM @"KB:userPressedItem"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User pressed the next input button (changed to another keyboard)
+**/
+#define AK_E_KB_USER_PRESSED_NEXT_INPUT_BUTTON @"KB:userPressedNextInputButton"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The recorder screen was opened and just appeared on screen. The event
@@ -489,10 +531,16 @@ Recorder was dismissed.
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+Sharing was canceled by the user.
 **/
 #define AK_E_SHARE_CANCELED @"Share:canceled"
 
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
+
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
 #define AK_EP_EMUTICON_OID @"emuticonOID"
 
@@ -502,18 +550,21 @@ Recorder was dismissed.
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
-/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
-#define AK_EP_SHARE_METHOD @"shareMethod"
-
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
+/** Param:senderUI --> <string> - The originating UI the share was initated from. ShareVC, keyboard, etc. **/
+#define AK_EP_SENDER_UI @"senderUI"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+Sharing failed. (Not related to any specific UI)
 **/
 #define AK_E_SHARE_FAILED @"Share:failed"
 
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
+
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
 #define AK_EP_EMUTICON_OID @"emuticonOID"
 
@@ -523,18 +574,21 @@ Recorder was dismissed.
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
-/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
-#define AK_EP_SHARE_METHOD @"shareMethod"
-
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
+/** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
+#define AK_EP_SENDER_UI @"senderUI"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+Sharing was successful. (Not related to any specific UI)
 **/
 #define AK_E_SHARE_SUCCESS @"Share:success"
 
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
+
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
 #define AK_EP_EMUTICON_OID @"emuticonOID"
 
@@ -544,21 +598,8 @@ Recorder was dismissed.
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
-/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
-#define AK_EP_SHARE_METHOD @"shareMethod"
+/** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
+#define AK_EP_SENDER_UI @"senderUI"
 
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-**/
-#define AK_EITEM_DETAILS_USER_LOCK_SELECTION_RESET @"itemDetails:userLockSelectionReset"
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-**/
-#define AK_EITEM_DETAILS_USER_LOCK_SELECTION_RETAKE @"itemDetails:userLockSelectionRetake"
 
 

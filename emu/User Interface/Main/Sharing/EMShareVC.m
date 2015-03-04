@@ -143,6 +143,7 @@
     EMKShareMethod shareMethod = [self.shareMethods[index] integerValue];
     HMParams *params = [self paramsForEmuticon:emu];
     [params addKey:AK_EP_SHARE_METHOD value:self.shareNames[@(shareMethod)]];
+    [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"shareVC"];
 
     // Share
     [self shareEmuticon:emu usingMethod:shareMethod info:params.dictionary];

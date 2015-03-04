@@ -470,7 +470,7 @@ or
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
-			<string></string>
+			<string>User pressed one of the share buttons in the emoticon screen.</string>
 			<key>params</key>
 			<dict>
 				<key>shareMethod</key>
@@ -490,9 +490,11 @@ or
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
-			<string></string>
+			<string>Sharing was successful. (Not related to any specific UI)</string>
 			<key>params</key>
 			<dict>
+				<key>senderUI</key>
+				<string>&lt;string&gt; - The originating UI the share was initated from. Emoticon screen, keyboard, etc.</string>
 				<key>shareMethod</key>
 				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
 				<key>emuticonName</key>
@@ -510,9 +512,11 @@ or
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
-			<string></string>
+			<string>Sharing failed. (Not related to any specific UI)</string>
 			<key>params</key>
 			<dict>
+				<key>senderUI</key>
+				<string>&lt;string&gt; - The originating UI the share was initated from. Emoticon screen, keyboard, etc.</string>
 				<key>shareMethod</key>
 				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
 				<key>emuticonName</key>
@@ -530,11 +534,63 @@ or
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
-			<string></string>
+			<string>Sharing was canceled by the user.</string>
 			<key>params</key>
 			<dict>
+				<key>senderUI</key>
+				<string>&lt;string&gt; - The originating UI the share was initated from. ShareVC, keyboard, etc.</string>
 				<key>shareMethod</key>
 				<string>&lt;string&gt; - the name of the method of sharing (application name, save to camera roll etc)</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>KB:didAppear</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>The keyboard appeared (event sent only when user actually enabled keyboard full access)</string>
+		</dict>
+		<key>KB:userPressedNextInputButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>User pressed the next input button (changed to another keyboard)</string>
+		</dict>
+		<key>KB:userPressedItem</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>User pressed one of the emoticons for copying</string>
+			<key>params</key>
+			<dict>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>KB:userPressedBackButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.0.8</string>
+			<key>description</key>
+			<string>User pressed one of the emoticons for copying</string>
+			<key>params</key>
+			<dict>
 				<key>emuticonName</key>
 				<string>&lt;string&gt; - the name of the related emoticon</string>
 				<key>emuticonOID</key>

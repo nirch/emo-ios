@@ -23,6 +23,7 @@
 #pragma mark - Tracking
 -(void)reportSuperParameters;
 -(void)checkAndReportIfAppUpdated;
+-(void)analyticsForceSend;
 -(void)analyticsEvent:(NSString *)event;
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info;
 -(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info;

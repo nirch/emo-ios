@@ -118,12 +118,15 @@
     return self.isBuildOfTestApplication;
 }
 
+-(void)analyticsForceSend
+{
+    [self.mixPanel flush];
+}
 
 -(void)analyticsEvent:(NSString *)event
 {
     [self analyticsEvent:event info:nil];
 }
-
 
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info
 {
