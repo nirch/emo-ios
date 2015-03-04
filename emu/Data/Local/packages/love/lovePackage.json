@@ -2,20 +2,6 @@
     "emuticons":[
                  
                  {
-                 "oid": {"$oid": "love001"},
-                 "name": "angel",
-                 "source_back_layer": "angel-bg.gif",
-                 "source_front_layer": "angel-fg.gif",
-                 "source_user_layer_mask": "angel-mask.jpg",
-                 "tags": ["love","angel","divine"],
-                 "use_for_preview":true,
-                 "duration": 2.0,
-                 "frames_count": 24,
-                 "thumbnail_frame_index": 23
-                 },
-
-                 
-                 {
                  "oid": {"$oid": "love002"},
                  "name": "green-love",
                  "source_back_layer": "green-love-bg.gif",
@@ -41,6 +27,7 @@
 
                  
                  {
+                 "use_for_preview":true,
                  "oid": {"$oid": "love004"},
                  "name": "kiss",
                  "source_back_layer": "kiss-bg.gif",
@@ -55,6 +42,7 @@
                  "oid": {"$oid": "love005"},
                  "name": "teddies",
                  "source_back_layer": "teddies-bg.gif",
+                 "source_front_layer": "teddies-fg.gif",
                  "source_user_layer_mask": "teddies-mask.jpg",
                  "tags": ["love","teddy"],
                  "duration": 2.0,
@@ -72,6 +60,19 @@
                  "duration": 2.0,
                  "frames_count": 24,
                  "thumbnail_frame_index": 23
+                 },
+                 
+                 {
+                 "oid": {"$oid": "love001"},
+                 "name": "angel",
+                 "source_back_layer": "angel-bg.gif",
+                 "source_front_layer": "angel-fg.gif",
+                 "source_user_layer_mask": "angel-mask.jpg",
+                 "tags": ["love","angel","divine"],
+                 "duration": 2.0,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
                  }
+                 
                  ]
 }

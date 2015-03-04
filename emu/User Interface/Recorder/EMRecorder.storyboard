@@ -481,14 +481,21 @@
                                 <rect key="frame" x="4" y="4" width="335" height="335"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fakeFootage" translatesAutoresizingMaskIntoConstraints="NO" id="WLO-ak-nEH">
+                                <rect key="frame" x="3" y="5" width="335" height="335"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7s6-wJ-Pir" firstAttribute="width" secondItem="WLO-ak-nEH" secondAttribute="width" id="A6R-B0-eth"/>
                             <constraint firstItem="7s6-wJ-Pir" firstAttribute="leading" secondItem="jaF-l1-Yz8" secondAttribute="leading" constant="4" id="FhP-Hi-7hn"/>
                             <constraint firstItem="7s6-wJ-Pir" firstAttribute="top" secondItem="wFo-zL-OkK" secondAttribute="bottom" constant="3" id="QSl-pa-eVT"/>
+                            <constraint firstItem="7s6-wJ-Pir" firstAttribute="centerX" secondItem="WLO-ak-nEH" secondAttribute="centerX" constant="1" id="VPF-yd-baI"/>
+                            <constraint firstItem="7s6-wJ-Pir" firstAttribute="centerY" secondItem="WLO-ak-nEH" secondAttribute="centerY" constant="-1" id="bnB-7k-r9d"/>
                             <constraint firstItem="7s6-wJ-Pir" firstAttribute="top" secondItem="wFo-zL-OkK" secondAttribute="bottom" constant="4" id="k1A-s4-D4l"/>
                             <constraint firstAttribute="trailing" secondItem="7s6-wJ-Pir" secondAttribute="trailing" constant="4" id="p5s-Nd-7UL"/>
                             <constraint firstItem="qlu-V1-Eoh" firstAttribute="top" secondItem="7s6-wJ-Pir" secondAttribute="bottom" constant="4" id="tra-Pu-Uoe"/>
+                            <constraint firstItem="7s6-wJ-Pir" firstAttribute="height" secondItem="WLO-ak-nEH" secondAttribute="height" id="zoQ-jg-LHy"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -498,6 +505,7 @@
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="guiFakeFootage" destination="WLO-ak-nEH" id="pAi-0B-08w"/>
                         <outlet property="guiGLPreviewView" destination="7s6-wJ-Pir" id="ZBh-6X-XUd"/>
                     </connections>
                 </viewController>
@@ -542,7 +550,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="37" id="mo7-Oo-j6e"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -607,7 +615,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-Kq-iEm" userLabel="Restart button" customClass="EMButton">
-                                <rect key="frame" x="309" y="30" width="50" height="30"/>
+                                <rect key="frame" x="312" y="31" width="47" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Restart">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -697,6 +706,7 @@
         <image name="contourBad" width="693" height="693"/>
         <image name="contourGood" width="693" height="693"/>
         <image name="emuNavLogo" width="60" height="59"/>
+        <image name="fakeFootage" width="375" height="375"/>
         <image name="goodBGIcon" width="41" height="41"/>
         <image name="goodBGSmallIcon" width="20" height="20"/>
         <image name="recordButton" width="108" height="108"/>

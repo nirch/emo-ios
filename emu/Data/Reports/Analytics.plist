@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>clientName</key>
+	<string>Emu iOS</string>
+	<key>token</key>
+	<dict>
+		<key>testToken</key>
+		<string>090553b00ef0bbe21ba634c651dc272f</string>
+		<key>productionToken</key>
+		<string>25847b0e1fc41bc665d204be1a2c96ee</string>
+	</dict>
+	<key>superParams</key>
+	<dict>
+		<key>deviceModel</key>
+		<dict>
+			<key>description</key>
+			<string>The model of the user&apos;s device</string>
+		</dict>
+		<key>clientName</key>
+		<dict>
+			<key>description</key>
+			<string>A mnemonic name of the application. Currently: &quot;Emu iOS&quot;. Used in case we will create white labels of the Emu app in the future.</string>
+		</dict>
+		<key>localizationPreference</key>
+		<dict>
+			<key>description</key>
+			<string>The localized language preference on the user&apos;s device (good to know for the time we will want to localize the app).</string>
+		</dict>
+		<key>buildVersion</key>
+		<dict>
+			<key>description</key>
+			<string>The long build version string in the following format:
+&lt;big&gt;.&lt;small&gt;.&lt;build#&gt; for production application.
+or
+&lt;big&gt;.&lt;small&gt;.&lt;build#&gt;.t for test application.</string>
+		</dict>
+		<key>launchesCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user launched the application.</string>
+		</dict>
+	</dict>
+	<key>events</key>
+	<dict>
+		<key>App:launched</key>
+		<dict>
+			<key>description</key>
+			<string>The application was launched by the user.</string>
+		</dict>
+		<key>App:enteredBackground</key>
+		<dict>
+			<key>description</key>
+			<string>The application entered the background (user pressed home screen, changed to another app, etc.)</string>
+		</dict>
+		<key>App:enteredForeground</key>
+		<dict>
+			<key>description</key>
+			<string>The user launched or returned to the application.</string>
+		</dict>
+		<key>App:versionUpdated</key>
+		<dict>
+			<key>description</key>
+			<string>The application was launched with a higher version than the version it was launched with previously.</string>
+			<key>params</key>
+			<dict>
+				<key>previousVersion</key>
+				<string>&lt;string&gt; - the previous version the app was launched with</string>
+				<key>currentVersion</key>
+				<string>&lt;string&gt; - the current version the app was launched with</string>
+			</dict>
+		</dict>
+		<key>Rec:opened</key>
+		<dict>
+			<key>description</key>
+			<string>The recorder screen was opened and just appeared on screen. The event will also include info about the flow option the recorder was opened for.</string>
+			<key>params</key>
+			<dict>
+				<key>flowType</key>
+				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
+ &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
+ &apos;retakeAll&apos; - user wanted to retake and use the footage to all unlocked emoticons
+ &apos;retakePackage&apos; - user wanted to retake and use the footage to all unlocked emoticons in a package.
+ &apos;retakeEmoticon&apos; - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow)</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package (sent even in onboarding according to the used package set in AppCFG)</string>
+			</dict>
+		</dict>
+		<key>Rec:userPressedRestartButton</key>
+		<dict>
+			<key>description</key>
+			<string></string>
+		</dict>
+		<key>Rec:userPressedAppButton</key>
+		<dict>
+			<key>description</key>
+			<string></string>
+		</dict>
+		<key>Rec:userPressedCancelButton</key>
+		<dict>
+			<key>description</key>
+			<string></string>
+		</dict>
+		<key>Rec:stageAlignStarted</key>
+		<dict>
+			<key>description</key>
+			<string></string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -5,6 +5,9 @@
       location = "group:emu.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:buildTools/buildTools.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

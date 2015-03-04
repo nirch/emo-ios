@@ -122,20 +122,11 @@
 #pragma mark - Memory warnings
 -(void)didReceiveMemoryWarning
 {
-    // Some info
-    NSDictionary *info = @{
-                           rkDescription:@"memory warning",
-                           rkWhere:@"EMMainVC"
-                           };
-    
     // Log remotely
     REMOTE_LOG(@"EMMainVC Memory warning");
     
-    // Analytics
-    [HMReporter.sh analyticsEvent:akLowMemoryWarning info:info];
-    
     // Go boom on a test application.
-    [HMReporter.sh explodeOnTestApplicationsWithInfo:info];
+    [HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -510,11 +501,13 @@
                                             }]];
     
     // Debugging stuff
-    [alert addAction:[UIAlertAction actionWithTitle:@"Clean and render"
-                                              style:UIAlertActionStyleDestructive
-                                            handler:^(UIAlertAction *action) {
-                                                [self debugCleanAndRender];
-                                            }]];
+    if (IS_TEST_APP) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"Clean and render"
+                                                  style:UIAlertActionStyleDestructive
+                                                handler:^(UIAlertAction *action) {
+                                                    [self debugCleanAndRender];
+                                                }]];
+    }
     
     // Cancel
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")

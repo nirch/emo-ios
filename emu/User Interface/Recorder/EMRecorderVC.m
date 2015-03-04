@@ -39,6 +39,7 @@
 #import "EMLabel.h"
 #import "EMAnimatedGifPlayer.h"
 #import "EMMainVC.h"
+#import "HMBackgroundMarks.h"
 
 @interface EMRecorderVC () <
     HMCaptureSessionDelegate,
@@ -124,9 +125,36 @@
         vc.package = info[emkPackage];
     }
     vc.info = info;
+    [vc reportOpeningRecorder];
     return vc;
 }
 
+-(void)reportOpeningRecorder
+{
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticonToUpdate.emuDef.oid];
+    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticonToUpdate.emuDef.name];
+    [params addKey:AK_EP_PACKAGE_OID value:self.package.oid];
+    [params addKey:AK_EP_PACKAGE_NAME  value:self.package.name];
+    [params addKey:AK_EP_FLOW_TYPE value:[self flowName]];
+    [HMReporter.sh analyticsEvent:AK_E_REC_OPENED info:params.dictionary];
+}
+
+-(NSString *)flowName
+{
+    switch (self.flowType) {
+        case EMRecorderFlowTypeOnboarding:
+            return @"onboarding";
+        case EMRecorderFlowTypeRetakeAll:
+            return @"retakeAll";
+        case EMRecorderFlowTypeRetakeForPackage:
+            return @"retakePackage";
+        case EMRecorderFlowTypeRetakeForSpecificEmuticons:
+            return @"retakeEmoticon";
+        default:
+            return @"";
+    }
+}
 
 -(id)awakeAfterUsingCoder:(NSCoder *)aDecoder
 {
@@ -192,21 +220,12 @@
 #pragma mark - Memory warnings
 -(void)didReceiveMemoryWarning
 {
-    // Some info
-    NSDictionary *info = @{
-                           rkDescription:@"memory warning",
-                           rkWhere:@"EMMainVC"
-                           };
-    
     // Log remotely
     HMLOG(TAG, EM_ERR, @"Memory warning in recorder");
     REMOTE_LOG(@"EMMainVC Memory warning");
     
-    // Analytics
-    [HMReporter.sh analyticsEvent:akLowMemoryWarning info:info];
-    
     // Go boom on a test application.
-    [HMReporter.sh explodeOnTestApplicationsWithInfo:info];
+    [HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -1198,6 +1217,52 @@
     }
 }
 
+#pragma mark - Fake flow
+-(void)fakeFlow
+{
+    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self _fakeExtraction];
+    });
+}
+
+-(void)_fakeExtraction
+{
+    // Hide the background detection user interface.
+    [self.feedBackVC hideBGFeedbackAnimated:YES];
+    [self.controlsVC setState:EMRecorderControlsStateReadyToRecord
+                     animated:NO
+                         info:nil];
+    [self.onBoardingVC setOnBoardingStage:EMOnBoardingStageExtractionPreview animated:NO];
+    [self.previewVC fakeExtraction];
+}
+
+-(void)_fakePostBGMark:(NSTimer *)timer
+{
+    // Gather some info.
+    NSMutableDictionary *info = [NSMutableDictionary new];
+    
+    static HMBGMark lastBGMark = HMBGMarkGood;
+    static CGFloat weight = 0;
+    weight = weight + 0.1;
+    
+    // The current background mark.
+    info[hmkInfoBGMark] = @(lastBGMark);
+    
+    // The weight of a good background mark.
+    info[hmkInfoBGMarkWeight] = @(weight);
+    
+    // If weight is 1, we are satisfied with the background.
+    if (weight == 1) {
+        info[hmkInfoGoodBGSatisfied] = @YES;
+        [timer invalidate];
+    }
+    
+    // Post the notification with the info.
+    [[NSNotificationCenter defaultCenter] postNotificationName:hmkNotificationBGDetectionInfo
+                                                        object:self
+                                                      userInfo:info];
+}
 
 #pragma mark - IB Actions
 // ===========

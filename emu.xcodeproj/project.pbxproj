@@ -15,7 +15,6 @@
 		0806BD7E1AA37DC20078F14B /* EMPackagesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD791AA37DC20078F14B /* EMPackagesParser.m */; };
 		0806BD821AA37DC80078F14B /* HMReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMReporter.m */; };
 		0806BD871AA392230078F14B /* EMBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD861AA392230078F14B /* EMBackend.m */; };
-		0806BD8A1AA395EF0078F14B /* HMAnalyticsEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */; };
 		0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */; };
 		080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
 		080CB3201AA4A9DD00603E30 /* EMKeyboardContainerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */; };
@@ -176,6 +175,10 @@
 		08CED0E61AA5EB6000C50D0C /* EMTutorialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED0E51AA5EB6000C50D0C /* EMTutorialVC.m */; };
 		08CED1051AA5F8B800C50D0C /* thumbs-up-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CED0F51AA5F8B800C50D0C /* thumbs-up-bg.gif */; };
 		08CED1061AA5F8B800C50D0C /* thumbs-up-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CED0F61AA5F8B800C50D0C /* thumbs-up-fg.gif */; };
+		08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
+		08CED1111AA6F84500C50D0C /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
+		08CED1251AA7281B00C50D0C /* HMParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED1241AA7281B00C50D0C /* HMParams.m */; };
+		08CED1261AA7281B00C50D0C /* HMParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED1241AA7281B00C50D0C /* HMParams.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
 		08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */; };
 		08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EC1A77E0B000B6A68F /* AVFoundation.framework */; };
@@ -235,9 +238,6 @@
 		0806BD811AA37DC80078F14B /* HMReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMReporter.m; sourceTree = "<group>"; };
 		0806BD851AA392230078F14B /* EMBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMBackend.h; sourceTree = "<group>"; };
 		0806BD861AA392230078F14B /* EMBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMBackend.m; sourceTree = "<group>"; };
-		0806BD881AA395EF0078F14B /* HMAnalyticsEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnalyticsEvents.h; sourceTree = "<group>"; };
-		0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMAnalyticsEvents.m; sourceTree = "<group>"; };
-		0806BD8B1AA397850078F14B /* HMReporterKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMReporterKeys.h; sourceTree = "<group>"; };
 		0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Keyboard.storyboard; sourceTree = "<group>"; };
 		080C9F4E1AA478C00066FB30 /* EMDB+Files.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMDB+Files.h"; sourceTree = "<group>"; };
 		080C9F4F1AA478C00066FB30 /* EMDB+Files.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMDB+Files.m"; sourceTree = "<group>"; };
@@ -481,6 +481,10 @@
 		08CED0FC1AA5F8B800C50D0C /* victory-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "victory-fg.gif"; sourceTree = "<group>"; };
 		08CED10B1AA5FA9600C50D0C /* swag_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swag_icon@2x.png"; sourceTree = "<group>"; };
 		08CED10C1AA5FA9600C50D0C /* swag_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swag_icon@3x.png"; sourceTree = "<group>"; };
+		08CED10F1AA6DA8800C50D0C /* Analytics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Analytics.plist; sourceTree = "<group>"; };
+		08CED1221AA727BC00C50D0C /* HMAnalyticsEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMAnalyticsEvents.h; sourceTree = "<group>"; };
+		08CED1231AA7281B00C50D0C /* HMParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParams.h; sourceTree = "<group>"; };
+		08CED1241AA7281B00C50D0C /* HMParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParams.m; sourceTree = "<group>"; };
 		08D929841A77A36D00B6A68F /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D929E81A77E09200B6A68F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -566,11 +570,12 @@
 		0806BD7F1AA37DC80078F14B /* Reports */ = {
 			isa = PBXGroup;
 			children = (
-				0806BD881AA395EF0078F14B /* HMAnalyticsEvents.h */,
-				0806BD891AA395EF0078F14B /* HMAnalyticsEvents.m */,
-				0806BD8B1AA397850078F14B /* HMReporterKeys.h */,
+				08CED10F1AA6DA8800C50D0C /* Analytics.plist */,
+				08CED1221AA727BC00C50D0C /* HMAnalyticsEvents.h */,
 				0806BD801AA37DC80078F14B /* HMReporter.h */,
 				0806BD811AA37DC80078F14B /* HMReporter.m */,
+				08CED1231AA7281B00C50D0C /* HMParams.h */,
+				08CED1241AA7281B00C50D0C /* HMParams.m */,
 			);
 			path = Reports;
 			sourceTree = "<group>";
@@ -1578,6 +1583,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */,
+				08CED1111AA6F84500C50D0C /* Analytics.plist in Resources */,
 				08CED0DB1AA5CAF000C50D0C /* Localizable.strings in Resources */,
 				080CB32A1AA4AFCF00603E30 /* Images.xcassets in Resources */,
 			);
@@ -1610,6 +1616,7 @@
 				085C677F1A937EC9007BC910 /* test480x480.png in Resources */,
 				085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */,
 				085C677B1A937EC9007BC910 /* silCloseup480p.png in Resources */,
+				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
 				085C67911A937EC9007BC910 /* Images.xcassets in Resources */,
 				085C67831A937EC9007BC910 /* test640x360.png in Resources */,
 				08CB897B1A9AA12A00224A38 /* 3.gif in Resources */,
@@ -1730,6 +1737,7 @@
 				080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */,
 				080CB3491AA4C11D00603E30 /* Package+Logic.m in Sources */,
 				080CB34B1AA4C11D00603E30 /* AppCFG+Logic.m in Sources */,
+				08CED1261AA7281B00C50D0C /* HMParams.m in Sources */,
 				080CB3A71AA526E500603E30 /* Package.m in Sources */,
 				08CED0D81AA5C7EF00C50D0C /* EMShareSaveToCameraRoll.m in Sources */,
 				080CB32B1AA4B0F200603E30 /* emu.xcdatamodeld in Sources */,
@@ -1753,6 +1761,7 @@
 				0833348C1A827D81008AC771 /* HMGMError.m in Sources */,
 				083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */,
 				08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */,
+				08CED1251AA7281B00C50D0C /* HMParams.m in Sources */,
 				0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */,
 				08CB89781A9AA12A00224A38 /* EMAnimatedGifPlayer.m in Sources */,
 				08D9B3C71AA26F6E003DEA67 /* AppCFG.m in Sources */,
@@ -1768,7 +1777,6 @@
 				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
 				0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */,
 				08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */,
-				0806BD8A1AA395EF0078F14B /* HMAnalyticsEvents.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */,

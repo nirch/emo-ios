@@ -13,6 +13,7 @@
 @interface EMPreviewVC ()
 
 @property (strong, nonatomic) IBOutlet HMPreviewView *guiGLPreviewView;
+@property (weak, nonatomic) IBOutlet UIImageView *guiFakeFootage;
 
 @end
 
@@ -20,6 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    #if (TARGET_IPHONE_SIMULATOR)
+        self.guiFakeFootage.hidden = NO;
+    #endif
+}
+
+-(void)fakeExtraction
+{
+    self.guiFakeFootage.image = [UIImage imageNamed:@"fakeExtraction"];
 }
 
 #pragma mark - HMCaptureSessionDelegate
@@ -28,7 +38,6 @@
     // Don't make OpenGLES calls while in the background.
     if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground )
         [self.guiGLPreviewView displayPixelBuffer:pixelBuffer];
-    
 }
 
 @end

@@ -59,6 +59,7 @@
 
 "SHARE_TOAST_SHARED" = "Emuji shared";
 "SHARE_TOAST_COPIED" = "Emuji copied";
+"SHARE_TOAST_COPIED_KB" = "Emuji copied. You may paste it!";
 "SHARE_TOAST_SAVED" = "Emuji saved to camera roll";
 "SHARE_TOAST_FAILED" = "Failed";
 "SHARE_TOAST_CANCELED" = "Canceled";

@@ -12,4 +12,6 @@
     HMCaptureSessionDisplayDelegate
 >
 
+-(void)fakeExtraction;
+
 @end

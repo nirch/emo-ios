@@ -35,7 +35,13 @@
 {
     // Initialize Logging
     [self initLogging];
-    [HMReporter.sh analyticsEvent:akApplicationLaunched];
+    
+    // Initialize analytics, set super parameters and report application launch.
+    [HMReporter.sh initializeAnalyticsWithLaunchOptions:launchOptions];
+    [HMReporter.sh reportSuperParameters];
+    [HMReporter.sh analyticsEvent:AK_E_APP_LAUNCHED];
+    [HMReporter.sh checkAndReportIfAppUpdated];
+    
     HMLOG(TAG, EM_DBG, @"Application launched");
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     return YES;
@@ -50,12 +56,14 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [HMReporter.sh analyticsEvent:AK_E_APP_ENTERED_BACKGROUND];
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     [EMDB.sh save];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [HMReporter.sh analyticsEvent:AK_E_APP_ENTERED_FOREGROUND];
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
 }
 
