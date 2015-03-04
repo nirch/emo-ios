@@ -8,6 +8,7 @@
 
 #import "EMShareCopy.h"
 #import <Toast/UIView+Toast.h>
+#import "HMReporter.h"
 
 @implementation EMShareCopy
 
@@ -24,7 +25,11 @@
     [pasteboard setData:gifData forPasteboardType:@"com.compuserve.gif"];
     
     // Notify the user.
-    [self.view makeToast:LS(@"SHARE_TOAST_COPIED")];
+    if (self.selectionMessage) {
+        [self.view makeToast:self.selectionMessage];
+    } else {
+        [self.view makeToast:LS(@"SHARE_TOAST_COPIED")];
+    }
     
     // Done
     [self.delegate sharerDidShareObject:gifData withInfo:self.info];

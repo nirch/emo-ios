@@ -234,6 +234,7 @@
     self.sharer.view = self.view;
     self.sharer.delegate = self;
     self.sharer.info = params.dictionary;
+    self.sharer.selectionMessage = LS(@"SHARE_TOAST_COPIED_KB");
     [self.sharer share];
 }
 
