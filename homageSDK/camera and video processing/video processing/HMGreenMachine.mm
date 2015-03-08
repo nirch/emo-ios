@@ -24,6 +24,7 @@
 
     // The original captured image
     image_type *m_original_image;
+    image_type* image_to_inspect;
     
     // The mask is the result of the algorithm
     // (the result of CUniformBackground -> Process() )
@@ -125,12 +126,7 @@
 {
     // Initializing fg extraction algorithm.
     m_foregroundExtraction = new CUniformBackground();
-    
-    // Initialize the mask/silhouette using the contour file.
-//    int result = m_foregroundExtraction->ReadMask((char*)self.contourFileName.UTF8String,
-//                                                  self.size.height,
-//                                                  self.size.width);
-    
+        
     int result = m_foregroundExtraction->Init((char*)self.paramsXMLFileName.UTF8String,
                                               (char*)self.contourFileName.UTF8String,
                                               self.size.height,
@@ -159,6 +155,10 @@
 
 -(void)dealloc
 {
+    if (image_to_inspect) {
+        image_destroy(image_to_inspect, 1);
+        image_to_inspect = NULL;
+    }
     HMLOG(TAG, EM_DBG, @"Dealloced green machine.");
 }
 
@@ -193,7 +193,7 @@
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
-            // static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Original-%@",@(i)]];
+            // static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"OriginalBad-%@",@(i)]];
             
             //
             // Using the mask we got from UB->Process()
@@ -203,6 +203,7 @@
                                                             m_mask,              // The mask calculated by the algorithm ->Process method.
                                                             m_output_image);     // The output image.
             m_output_image->timeStamp = output_t.value;
+
             // Destroying the temp image
             image_destroy(original_bgr_image, 1);
         });
@@ -242,8 +243,10 @@
     // If we don't have a frame to inspect, skip.
     if (m_original_image == NULL) return;
     
+    image_to_inspect = image3_to_BGR(m_original_image, image_to_inspect);
+
     // Get the background detection mark for this frame.
-    HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(m_original_image, 1);
+    HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
     HMLOG(TAG, EM_VERBOSE, @"Background mark: %@", @(bgMark));
     
     if (bgMark == HMBGMarkGood && _bgMarkWeight < 1) {

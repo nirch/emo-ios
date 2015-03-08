@@ -125,6 +125,9 @@
  */
 @property(readonly, getter=isRecording) BOOL recording;
 
+#pragma mark - Camera params
+-(void)cameraLockedFocus;
+-(void)cameraUnlockedFocus;
 
 @end
 
@@ -180,5 +183,9 @@
  *  @param error The error causing the recording to fail.
  */
 -(void)recordingDidFailWithError:(NSError *)error;
+
+
+
+
 
 @end

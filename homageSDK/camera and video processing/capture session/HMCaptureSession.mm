@@ -87,72 +87,78 @@
 #pragma mark - Camera
 -(void)cameraLockedFocus
 {
-    dispatch_async(movieWritingQueue, ^{
-        CGPoint point = CGPointMake(0.5, 0.5);
-        AVCaptureDevice *device = [videoIn device];
-        NSError *error = nil;
-        if ([device lockForConfiguration:&error]) {
+    CGPoint point = CGPointMake(0.5, 0.5);
+    AVCaptureDevice *device = [videoIn device];
+    NSError *error = nil;
+    if ([device lockForConfiguration:&error]) {
+        
+        // Lock focus on point of interest.
+        if ([device isFocusPointOfInterestSupported] &&
+            [device isFocusModeSupported:AVCaptureFocusModeLocked]) {
             
-            // Lock focus on point of interest.
-            if ([device isFocusPointOfInterestSupported] &&
-                [device isFocusModeSupported:AVCaptureFocusModeLocked]) {
-                
-                device.focusPointOfInterest = point;
-                device.focusMode = AVCaptureFocusModeLocked;
-            }
-            
-            // Lock exposure point to the middle of the screen.
-            if ([device isExposurePointOfInterestSupported] &&
-                [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
-                
-                device.exposurePointOfInterest = point;
-                device.exposureMode = AVCaptureExposureModeLocked;
-            }
-            
-            // Disable monitoring of subject area changes.
-            [device setSubjectAreaChangeMonitoringEnabled:NO];
-            
-            // Done with configuring the cam.
-            [device unlockForConfiguration];
-        } else {
-            HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
+            device.focusPointOfInterest = point;
+            device.focusMode = AVCaptureFocusModeLocked;
         }
-    });
+        
+        // Lock exposure point to the middle of the screen.
+        if ([device isExposurePointOfInterestSupported] &&
+            [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
+            
+            device.exposurePointOfInterest = point;
+            device.exposureMode = AVCaptureExposureModeLocked;
+        }
+        
+        // Lock white balance
+        if ([device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeLocked]) {
+            device.whiteBalanceMode = AVCaptureWhiteBalanceModeLocked;
+        }
+        
+        // Disable monitoring of subject area changes.
+        [device setSubjectAreaChangeMonitoringEnabled:NO];
+        
+        // Done with configuring the cam.
+        [device unlockForConfiguration];
+    } else {
+        HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
+    }
 }
 
 -(void)cameraUnlockedFocus
 {
-    dispatch_async(movieWritingQueue, ^{
-        CGPoint point = CGPointMake(0.5, 0.5);
-        AVCaptureDevice *device = [videoIn device];
-        NSError *error = nil;
-        if ([device lockForConfiguration:&error]) {
+    CGPoint point = CGPointMake(0.5, 0.5);
+    AVCaptureDevice *device = [videoIn device];
+    NSError *error = nil;
+    if ([device lockForConfiguration:&error]) {
+        
+        // Auto focus on point of interest.
+        if ([device isFocusPointOfInterestSupported] &&
+            [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
             
-            // Auto focus on point of interest.
-            if ([device isFocusPointOfInterestSupported] &&
-                [device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
-                
-                device.focusPointOfInterest = point;
-                device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
-            }
-            
-            // Auto exposure on point of interest,
-            if ([device isExposurePointOfInterestSupported] &&
-                [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
-                
-                device.exposurePointOfInterest = point;
-                device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
-            }
-            
-            // Disable monitoring of subject area changes.
-            [device setSubjectAreaChangeMonitoringEnabled:YES];
-            
-            // Done with configuring the cam.
-            [device unlockForConfiguration];
-        } else {
-            HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
+            device.focusPointOfInterest = point;
+            device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
         }
-    });
+        
+        // Auto exposure on point of interest,
+        if ([device isExposurePointOfInterestSupported] &&
+            [device isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+            
+            device.exposurePointOfInterest = point;
+            device.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+        }
+        
+        // Auto white balance
+        if ([device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+            device.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+        }
+        
+        // Disable monitoring of subject area changes.
+        [device setSubjectAreaChangeMonitoringEnabled:YES];
+        
+        // Done with configuring the cam.
+        [device unlockForConfiguration];
+    } else {
+        HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
+    }
 }
 
 #pragma mark - capture session
@@ -254,7 +260,6 @@
     if (self.shouldDropAllFrames) return;
     
     CMSampleBufferRef processedSampleBuffer = nil;
-    extractCounter++;
 
     // The video processing state.
     HMVideoProcessingState state = self.videoProcessingState;
@@ -263,6 +268,9 @@
     BOOL thisFrameShouldBeInspected = (state == HMVideoProcessingStateInspectFrames ||
                                        state == HMVideoProcessingStateInspectAndProcessFrames) &&
                                         (extractCounter % 13 == 0);
+
+    // Count frames
+    extractCounter++;
     
     // Should process the frame?
     BOOL thisFrameShouldBeProcessed = state == HMVideoProcessingStateProcessFrames ||
@@ -406,6 +414,7 @@
     self.videoProcessingState = state;
     
     // Reset stuff
+    extractCounter = 0;
     [self.videoProcessor cleanUp];
 }
 

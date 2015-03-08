@@ -820,6 +820,7 @@
 
     // Don't process frames, but once in awhile check a frame
     // and give it a good/bad background mark.
+    [self.captureSession cameraUnlockedFocus];
     [self.captureSession setVideoProcessingState:HMVideoProcessingStateInspectFrames
                                             info:nil];
     
@@ -900,8 +901,9 @@
         [self hideBGIconsAnimated:YES];
     }
     
-    // Wait a bit and start extraction.
-    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+    // Lock focus, wait a bit and start extraction.
+    [self.captureSession cameraLockedFocus];
+    dispatch_after(DTIME(0.5), dispatch_get_main_queue(), ^{
         [self _stateStartFGExtraction];
     });
 }
