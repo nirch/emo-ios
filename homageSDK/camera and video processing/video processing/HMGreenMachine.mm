@@ -193,7 +193,8 @@
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
-            // static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"OriginalBad-%@",@(i)]];
+            //static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Process-%@",@(i)]];
+            //[HMImageTools saveImageType3:m_mask withName:[SF:@"Mask-%@",@(i)]];
             
             //
             // Using the mask we got from UB->Process()
@@ -244,6 +245,8 @@
     if (m_original_image == NULL) return;
     
     image_to_inspect = image3_to_BGR(m_original_image, image_to_inspect);
+
+    // [HMImageTools saveImageType3:image_to_inspect withName:@"ProcessBackground"];
 
     // Get the background detection mark for this frame.
     HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
