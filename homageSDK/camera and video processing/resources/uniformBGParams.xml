@@ -3,7 +3,8 @@
 	<Background-Av>8</Background-Av>
 	<thin>0</thin>
 	<fillBlob>1024</fillBlob>
-	<Enable-Edge>0</Enable-Edge>
+    <fillBlobAll>1</fillBlobAll>
+	<Enable-Edge>1</Enable-Edge>
 	<Contour-In-D>50</Contour-In-D>
-    <Contour>0</Contour>
+    <Contour>2</Contour>
 </UniformBackgroundPrm>
