@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		085AD3A51AAC7FF9002B804C /* produce_events_docs.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = produce_events_docs.py; sourceTree = "<group>"; };
 		08CED1201AA6FB2200C50D0C /* produce_events_resource_file.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = produce_events_resource_file.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -15,6 +16,7 @@
 			isa = PBXGroup;
 			children = (
 				08CED1201AA6FB2200C50D0C /* produce_events_resource_file.py */,
+				085AD3A51AAC7FF9002B804C /* produce_events_docs.py */,
 			);
 			sourceTree = "<group>";
 		};

@@ -65,8 +65,6 @@ def write_analytics_events(f, cfg):
     f.write("// Analytics events\n")
     f.write("//\n\n")
 
-    events = cfg["events"]
-
     ordered_events = collections.OrderedDict(sorted(events.items()))
     for key in ordered_events:
         # event
@@ -107,13 +105,15 @@ def main():
     script_name = os.path.basename(__file__)
     with codecs.open(OUTPUT_FILE, 'w', encoding='utf8') as f:
         f.write(HEADER % locals())
+        print "Recreating file...\n"
+        print HEADER % locals()
         f.write("\n\n")
         write_super_params(f, cfg)
         f.write("\n\n")
         write_analytics_events(f, cfg)
         f.write("\n\n")
         f.close()
-
+        print "Done."
 
 
 if __name__ == '__main__':

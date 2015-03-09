@@ -194,7 +194,7 @@ or
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
-			<string>User pressed the record button while in the real time extraction was in progress.</string>
+			<string>User pressed the record button while real time extraction was in progress.</string>
 			<key>params</key>
 			<dict>
 				<key>latestBackgroundMark</key>

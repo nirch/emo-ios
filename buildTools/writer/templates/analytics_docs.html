@@ -1,0 +1,30 @@
+{% extends "base_analytics_docs.html" %}
+{% block table_of_contents %}
+    <a name="top">&nbsp;</a>
+    <div class="table_of_contents">
+        <ul><li><strong>Super properties</strong></li></ul>
+        {% for k in super_params_keys %}
+            <ul><ul><li><a href="#{{ k }}">{{ k }}</a></li></ul></ul>
+        {% endfor %}
+        <ul><li><strong>Events</strong></li></ul>
+        {% for param_k in events_keys %}
+            <ul><ul><li><a href="#{{ param_k }}">{{ param_k }}</a></li></ul></ul>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block super_params %}
+    {% for k in super_params_keys %}
+        <h3><a name="{{ k }}">{{ k }}</a><a href="#top" class="back_to_top">&#8593;</a></h3>
+        <p><strong>Description :</strong><pre>{{ super_params[k].description|escape }}</pre></p>
+    {% endfor %}
+{% endblock %}
+{% block events %}
+    {% for k in events_keys %}
+        <h3><a name="{{ k }}">{{ k }}</a><a href="#top" class="back_to_top">&#8593;</a></h3>
+        <p><strong>Description :</strong>{{ events[k].description }}</p>
+        {% for param_k in events[k].params %}
+            <li>{{ param_k }}<br /><br /><pre>{{ events[k].params[param_k] }}</pre></li>
+        {% endfor %}
+        <p class="unimportant">Starting version: {{ events[k].v }}</p>
+    {% endfor %}
+{% endblock %}
