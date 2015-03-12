@@ -19,6 +19,7 @@
 #import "EMInterfaceDelegate.h"
 #import "EMTutorialVC.h"
 #import "EMNotificationCenter.h"
+#import "EMSplashVC.h"
 
 
 @interface EMMainVC () <
@@ -36,7 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesSelectionContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 
-@property (weak, nonatomic) UIImageView *splashView;
+//@property (weak, nonatomic) UIImageView *splashView;
+@property (weak, nonatomic) EMSplashVC *splashVC;
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
@@ -60,7 +62,7 @@
     // Show the splash screen if needs to open the recorder
     // for the onboarding experience.
     if (!appCFG.onboardingPassed.boolValue) {
-        [self showSplash];
+        [self showSplashAnimated:NO];
     }
     
     // enable slide-back
@@ -242,6 +244,7 @@
 
 -(void)epicFail:(NSString *)errorMessage
 {
+    return;
     UIAlertController *alert = [UIAlertController new];
     alert.title = @"Epic fail";
     alert.message = @"Something went wrong. Check your internet connectivity and try again.";
@@ -261,24 +264,14 @@
 }
 
 #pragma mark - splash
--(void)showSplash
+-(void)showSplashAnimated:(BOOL)animated
 {
-    UIImageView *splashView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    self.splashView = splashView;
-    self.splashView.image = [UIImage imageNamed:@"splashImage"];
-    self.splashView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.view addSubview:self.splashView];
-}
-
--(void)hideSplashAnimated:(BOOL)animated
-{
-    if (animated) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [self hideSplashAnimated:NO];
-        }];
-        return;
+    if (self.splashVC == nil) {
+        self.splashVC = [EMSplashVC splashVCInParentVC:self];
+        NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+        [self.splashVC setText:build];
     }
-    self.splashView.alpha = 0;
+    [self.splashVC showAnimated:animated];
 }
 
 #pragma mark - VC preferences
@@ -382,7 +375,7 @@
 {
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
-        [self hideSplashAnimated:YES];
+        [self.splashVC hideAnimated:YES];
         [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
     
@@ -412,7 +405,7 @@
 {
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
-        [self hideSplashAnimated:YES];
+        [self.splashVC hideAnimated:YES];
         [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
 
@@ -429,7 +422,7 @@
     recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     recorderVC.delegate = self;
     [self presentViewController:recorderVC animated:YES completion:^{
-        [self hideSplashAnimated:NO];
+        [self.splashVC hideAnimated:NO];
     }];
 }
 

@@ -39,7 +39,7 @@
     NSDictionary *info = self.objectToParse;
 
     // Find or create the object
-    NSString *oid = [info safeOIDStringForKey:@"oid"];
+    NSString *oid = [info safeOIDStringForKey:@"_id"];
     EmuticonDef *emuDef = [EmuticonDef findOrCreateWithID:oid
                                              context:self.ctx];
     emuDef.package = self.package;

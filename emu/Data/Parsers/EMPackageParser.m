@@ -27,7 +27,7 @@
      */
     
     NSDictionary *info = self.objectToParse;
-    NSString *oid = [info safeOIDStringForKey:@"oid"];
+    NSString *oid = [info safeOIDStringForKey:@"_id"];
 
     Package *pkg = [Package findOrCreateWithID:oid context:self.ctx];
     pkg.name = [info safeStringForKey:@"name"];
