@@ -14,6 +14,10 @@
 #import "EMAppCFGParser.h"
 #import "EMPackagesParser.h"
 
+#import "HMServer.h"
+#import "HMServer+Packages.h"
+#import "EMNotificationCenter.h"
+
 @implementation EMBackend
 
 #pragma mark - Initialization
@@ -39,31 +43,44 @@
 {
     self = [super init];
     if (self) {
+        _server = [HMServer new];
+        [self initObservers];
     }
     return self;
 }
 
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On background detection information received.
+    [nc addUniqueObserver:self
+                 selector:@selector(onPackagesDataRequired:)
+                     name:emkDataRequiredPackages
+                   object:nil];
+}
 
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:emkDataRequiredPackages];
+}
 
-#pragma mark - Refreshing data
--(void)refreshData
+#pragma mark - Observers handlers
+-(void)onPackagesDataRequired:(NSNotification *)notification
 {
     // Making sure required paths exist.
     [EMDB ensureRequiredDirectoriesExist];
     
-    // Parsing app cfg.
-    [self parseAppCFG];
-    
-    // Parsing packages meta data.
-    [self parsePackagesMetaData];
-    
-    // Pasring packages.
-    [self parsePackages];
+    // Fetching current info from server.
+    [self.server refreshPackagesInfo];
     
     // Save it all
     [EMDB.sh save];
 }
 
+/*
 -(void)parseAppCFG
 {
     NSDictionary *json = [self jsonDataInLocalFile:@"appCFG"];
@@ -130,6 +147,6 @@
     }
     return json;
 }
-
+*/
 
 @end

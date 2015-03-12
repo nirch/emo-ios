@@ -10,6 +10,7 @@
 
 #import "EMAppCFGParser.h"
 #import "EMDB.h"
+#import "HMReporter.h"
 
 @implementation EMAppCFGParser
 
@@ -17,14 +18,6 @@
 {
     NSDictionary *info = self.objectToParse;
     if (info == nil) return;
-    
-    // (yes, this is kind of empty now. will build on this in the future)
-    /*
-     {
-     "default_output_video_max_fps": 15
-     }
-     */
-    
     
     // Find or create the object
     AppCFG *appCFG = [AppCFG cfgInContext:self.ctx];

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+@class HMServer;
+
 #import <Foundation/Foundation.h>
 
 @interface EMBackend : NSObject
@@ -14,7 +16,7 @@
 +(EMBackend *)sharedInstance;
 +(EMBackend *)sh;
 
-#pragma mark - Fetching data
--(void)refreshData;
+#pragma mark - Web Service
+@property (nonatomic, readonly) HMServer *server;
 
 @end

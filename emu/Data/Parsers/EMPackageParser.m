@@ -8,6 +8,7 @@
 
 #import "EMPackageParser.h"
 #import "EMDB.h"
+#import "EMEmuticonParser.h"
 
 @implementation EMPackageParser
 
@@ -33,6 +34,17 @@
     pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"time_updated"]];
     pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
+    
+    // If package also include emuticon definitions, parse them all.
+    NSArray *emus = info[@"emuticons"];
+    if (emus) {
+        EMEmuticonParser *emuParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
+        for (NSDictionary *emuInfo in emus) {
+            emuParser.objectToParse = emuInfo;
+            emuParser.package = pkg;
+            [emuParser parse];
+        }
+    }
 }
 
 @end

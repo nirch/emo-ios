@@ -12,13 +12,13 @@
 #import "EMMainVC.h"
 #import "EMRecorderVC.h"
 #import "EMDB.h"
-#import "EMBackend.h"
 #import "EmuCell.h"
 #import "EMEmuticonScreenVC.h"
 #import "EMRenderManager.h"
 #import "EMPackagesVC.h"
 #import "EMInterfaceDelegate.h"
 #import "EMTutorialVC.h"
+#import "EMNotificationCenter.h"
 
 
 @interface EMMainVC () <
@@ -50,11 +50,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Initialize the data
-    // Currently just reads local json files.
-    // TODO: implement integration with server side, when available.
-    [self initData];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -62,7 +57,6 @@
     [super viewWillAppear:animated];
 
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-
     // Show the splash screen if needs to open the recorder
     // for the onboarding experience.
     if (!appCFG.onboardingPassed.boolValue) {
@@ -77,45 +71,21 @@
     
     // Init observers
     [self initObservers];
+    
+    // Refresh data if required
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (!appCFG.onboardingPassed.boolValue) {
-        
-        /**
-         *  Open the recorder for the first time.
-         */
-        Package *package = [appCFG packageForOnboarding];
-        if (package == nil) {
-            NSString *errorMessage = @"Critical error - no package for onboarding selected";
-            HMLOG(TAG, EM_ERR, @"%@", errorMessage);
-            REMOTE_LOG(@"%@", errorMessage);
-        }
-
-        if (package) {
-            [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-                                 info:@{emkPackage:package}];
-        }
-        
-    } else {
-        
-        /**
-         *  User finished onboarding in the past.
-         *  just show the main screen of the app.
-         */
-        [self resetFetchedResultsController];
-        [self.guiCollectionView reloadData];
-    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
     [self removeObservers];
 }
 
@@ -148,12 +118,22 @@
                  selector:@selector(onRenderingFinished:)
                      name:hmkRenderingFinished
                    object:nil];
+    
+    
+    // Backend refreshed information about packages
+    [nc addUniqueObserver:self
+                 selector:@selector(onPackagesDataUpdate:)
+                     name:emkDataUpdatePackages
+                   object:nil];
+
+    
 }
 
 -(void)removeObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
+    [nc removeObserver:emkDataUpdatePackages];
 }
 
 #pragma mark - Observers handlers
@@ -172,27 +152,33 @@
     [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
 }
 
-#pragma mark - The data
--(void)initData
+
+-(void)onPackagesDataUpdate:(NSNotification *)notification
 {
-    [EMBackend.sh refreshData];
-    
-    // Perform the fetch
-    NSError *error;
-    [[self fetchedResultsController] performFetch:&error];
-    
-    if (self.selectedPackage == nil)
-        self.selectedPackage = [Package findWithID:@"1"
-                                           context:EMDB.sh.context];
-    
-    if (error) {
-        HMLOG(TAG,
-              EM_ERR,
-              @"Unresolved error %@, %@",
-              error,
-              [error localizedDescription]);
-    }
+    [self handleFlow];
 }
+
+#pragma mark - The data
+//-(void)initData
+//{
+//    [
+//    
+////    // Perform the fetch
+////    NSError *error;
+////    [[self fetchedResultsController] performFetch:&error];
+////    
+////    if (self.selectedPackage == nil)
+////        self.selectedPackage = [Package findWithID:@"1"
+////                                           context:EMDB.sh.context];
+////    
+////    if (error) {
+////        HMLOG(TAG,
+////              EM_ERR,
+////              @"Unresolved error %@, %@",
+////              error,
+////              [error localizedDescription]);
+////    }
+//}
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
@@ -224,6 +210,55 @@
     [self.fetchedResultsController performFetch:&error];
 }
 
+#pragma mark - Flow
+-(void)handleFlow
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (!appCFG.onboardingPassed.boolValue) {
+
+        /**
+         *  Open the recorder for the first time.
+         */
+        Package *package = [appCFG packageForOnboarding];
+        if (package == nil) {
+            NSString *errorMessage = @"Critical error - no package for onboarding selected";
+            HMLOG(TAG, EM_ERR, @"%@", errorMessage);
+            REMOTE_LOG(@"%@", errorMessage);
+            [self epicFail:errorMessage];
+            return;
+        }
+        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
+                             info:@{emkPackage:package}];
+    } else {
+
+        /**
+         *  User finished onboarding in the past.
+         *  just show the main screen of the app.
+         */
+        [self resetFetchedResultsController];
+        [self.guiCollectionView reloadData];
+    }
+}
+
+-(void)epicFail:(NSString *)errorMessage
+{
+    UIAlertController *alert = [UIAlertController new];
+    alert.title = @"Epic fail";
+    alert.message = @"Something went wrong. Check your internet connectivity and try again.";
+    [alert addAction:[UIAlertAction actionWithTitle:@"Try again"
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction *action) {
+                                                // Refresh data if required
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                                                                    object:self
+                                                                                                  userInfo:nil];
+                                            }]];
+    
+    [self presentViewController:alert
+                       animated:YES
+                     completion:nil];
+
+}
 
 #pragma mark - splash
 -(void)showSplash

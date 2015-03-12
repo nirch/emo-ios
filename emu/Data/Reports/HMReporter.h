@@ -18,6 +18,7 @@
 +(HMReporter *)sharedInstance;
 +(HMReporter *)sh;
 -(BOOL)isTestApp;
+-(BOOL)isDevApp;
 -(void)initializeAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions;
 
 #pragma mark - Tracking

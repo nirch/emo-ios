@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>host</key>
+	<string>homage-server-app-dev.elasticbeanstalk.com</string>
+	<key>protocol</key>
+	<string>http</string>
+	<key>port</key>
+	<string>80</string>
+	<key>prod_host</key>
+	<string>homage-server-app-prod.elasticbeanstalk.com</string>
+	<key>prod_protocol</key>
+	<string>http</string>
+	<key>prod_port</key>
+	<string>80</string>
+	<key>dev_host</key>
+	<string>10.0.0.4</string>
+	<key>dev_protocol</key>
+	<string>http</string>
+	<key>dev_port</key>
+	<string>9292</string>
+	<key>urls</key>
+	<dict>
+		<key>packages full</key>
+		<string>emuapi/packages/full</string>
+		<key>packages meta</key>
+		<string>emuapi/packages/meta</string>
+		<key>bad request</key>
+		<string>dsflkghsldkfgjh</string>
+	</dict>
+</dict>
+</plist>

@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 #import "EMDB.h"
+#import "EMBackend.h"
 
 @interface AppDelegate ()
 
@@ -35,6 +36,9 @@
 {
     // Initialize Logging
     [self initLogging];
+    
+    // Initialize backend
+    [EMBackend sharedInstance];
     
     // Initialize analytics, set super parameters and report application launch.
     [HMReporter.sh initializeAnalyticsWithLaunchOptions:launchOptions];

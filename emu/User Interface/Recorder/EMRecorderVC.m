@@ -32,7 +32,6 @@
 #import "EMOnboardingVC.h"
 #import "EMControlsBarVC.h"
 #import "EMRecordButton.h"
-#import "EMBackend.h"
 #import "EMPNGSequenceWriter.h"
 #import "EMRenderManager.h"
 #import "EMunizingView.h"
