@@ -476,7 +476,7 @@
     /**
      *  Open the recording for retaking emuticons for current selected package.
      */
-    [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+    [self openRecorderForFlow:EMRecorderFlowTypeRetakeForPackage
                          info:@{emkPackage:self.selectedPackage}];
 }
 

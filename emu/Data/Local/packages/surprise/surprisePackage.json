@@ -1,0 +1,59 @@
+{
+    "emuticons":[                 
+                 {
+                 "oid": {"$oid": "surprise001"},
+                 "name": "noway",
+                 "source_back_layer": "surprise-noway-bg.gif",
+                 "source_front_layer": "surprise-noway-fg.gif",
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 {
+                 "oid": {"$oid": "surprise002"},
+                 "name": "please",
+                 "source_back_layer": "surprise-please-bg.gif",
+                 "source_front_layer": "surprise-please-fg.gif",
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 {
+                 "oid": {"$oid": "surprise003"},
+                 "name": "letstalk",
+                 "source_back_layer": "surprise-letstalk-bg.gif",
+                 "source_front_layer": "surprise-letstalk-fg.gif",
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 {
+                 "oid": {"$oid": "surprise004"},
+                 "name": "shutup",
+                 "source_back_layer": "surprise-shutup-bg.gif",
+                 "source_front_layer": "surprise-shutup-fg.gif",
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 {
+                 "oid": {"$oid": "surprise005"},
+                 "use_for_preview":true,
+                 "name": "what",
+                 "source_back_layer": "surprise-what-bg.gif",
+                 "source_front_layer": "surprise-what-fg.gif",
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 {
+                 "oid": {"$oid": "surprise006"},
+                 "name": "mindblown",
+                 "source_back_layer": "surprise-mindblown-bg.gif",
+                 "source_front_layer": "surprise-mindblown-fg.gif",
+                 "duration": 2.0,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 }
+    ]
+}

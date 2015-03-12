@@ -118,7 +118,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest

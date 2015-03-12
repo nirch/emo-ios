@@ -1100,9 +1100,7 @@
         // Clean up all emuticons that don't have their own specific footage.
         // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
-        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
-            [package cleanUpEmuticonsWithNoSpecificFootage];
-        }
+        [self.package cleanUpEmuticonsWithNoSpecificFootage];
 
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
         

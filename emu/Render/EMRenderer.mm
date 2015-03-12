@@ -26,10 +26,6 @@
 
 -(void)render
 {
-    // Load the mask
-    UIImage *maskImage = [UIImage imageNamed:self.userMaskPath];
-    image_type *maskImageType = CVtool::DecomposeUIimage(maskImage);
-
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
     // (skips frames or drops frames as required).
@@ -40,7 +36,13 @@
     // Get the source PNG images and set the user mask.
     //
     CHrSourceI *userSource = new PngSource(userImages);
-    userSource->SetAlpha(maskImageType);
+ 
+    // Load the mask
+    if (self.userMaskPath) {
+        UIImage *maskImage = [UIImage imageNamed:self.userMaskPath];
+        image_type *maskImageType = CVtool::DecomposeUIimage(maskImage);
+        userSource->SetAlpha(maskImageType);
+    }
     
     //
     // Background source.
