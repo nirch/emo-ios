@@ -111,6 +111,8 @@
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
 		089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
+		08B0E0AC1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */; };
+		08B0E0AD1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */; };
 		08B589711A938BCC008D9068 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08B5896F1A938BCC008D9068 /* emu.xcdatamodeld */; };
 		08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
 		08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
@@ -373,6 +375,7 @@
 		089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		089E78B51A780DEB00BC3479 /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
 		089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
+		08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_love_20150309_110610.zip; sourceTree = "<group>"; };
 		08B589701A938BCC008D9068 /* emu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu.xcdatamodel; sourceTree = "<group>"; };
 		08B589811A938C5A008D9068 /* EmuticonDef+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmuticonDef+Logic.h"; sourceTree = "<group>"; };
 		08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+Logic.m"; sourceTree = "<group>"; };
@@ -985,6 +988,14 @@
 			path = Gradients;
 			sourceTree = "<group>";
 		};
+		08C929E41AB976C7006A472D /* Local Resources */ = {
+			isa = PBXGroup;
+			children = (
+				08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */,
+			);
+			path = "Local Resources";
+			sourceTree = "<group>";
+		};
 		08CAEACE1A967906008A3E0A /* Pie Slice */ = {
 			isa = PBXGroup;
 			children = (
@@ -1156,6 +1167,7 @@
 				080CB34E1AA4DB7800603E30 /* emu.entitlements */,
 				085C66DD1A937EC9007BC910 /* App */,
 				085C67251A937EC9007BC910 /* User Interface */,
+				08C929E41AB976C7006A472D /* Local Resources */,
 				08CB895C1A9A8F0900224A38 /* Localization */,
 				085C66E61A937EC9007BC910 /* Data */,
 				08CB898C1A9B2F9200224A38 /* Render */,
@@ -1333,6 +1345,7 @@
 			files = (
 				080B05A51AB06E85003C19E7 /* ServerCFG.plist in Resources */,
 				0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */,
+				08B0E0AD1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */,
 				08CED1111AA6F84500C50D0C /* Analytics.plist in Resources */,
 				08CED0DB1AA5CAF000C50D0C /* Localizable.strings in Resources */,
 				080CB32A1AA4AFCF00603E30 /* Images.xcassets in Resources */,
@@ -1362,6 +1375,7 @@
 				085C67911A937EC9007BC910 /* Images.xcassets in Resources */,
 				085C67831A937EC9007BC910 /* test640x360.png in Resources */,
 				08CB897B1A9AA12A00224A38 /* 3.gif in Resources */,
+				08B0E0AC1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */,
 				085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */,
 				08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */,
 				085C677D1A937EC9007BC910 /* test240x240.png in Resources */,

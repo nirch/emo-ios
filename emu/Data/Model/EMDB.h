@@ -45,11 +45,14 @@
 
 // Persistance / saving
 -(void)save;
--(NSURL *)applicationDocumentsDirectory;
+//-(NSURL *)applicationDocumentsDirectory;
 
 #pragma mark - Initialization
 +(EMDB *)sharedInstance;
 +(EMDB *)sh;
 
+#pragma mark - Date formatters
+@property (nonatomic) NSDateFormatter *timeStringForFileFormatter;
+@property (nonatomic) NSDateFormatter *dateStringForFileFormatter;
 
 @end

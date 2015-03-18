@@ -9,7 +9,6 @@
 #import "HMParams.h"
 
 #define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
-#define ANALYTICS(EVT, PARAMS) [HMReporter.sh analyticsEvent:EVT info:PARAMS]
 #define IS_TEST_APP [HMReporter.sh isTestApp]
 
 @interface HMReporter : NSObject

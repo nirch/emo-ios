@@ -10,6 +10,7 @@
 
 #import "Package+Logic.h"
 #import "EMDB.h"
+#import "EMDB+Files.h"
 
 @implementation Package (Logic)
 
@@ -125,5 +126,69 @@
         [emu cleanUp];
     }
 }
+
+
+-(NSString *)resourcesPath
+{
+    return [EMDB pathForDirectoryNamed:[SF:@"resources/%@", self.name]];
+}
+
+
+-(BOOL)shouldDownloadZippedPackage
+{
+    if ([EMDB pathExists:[self resourcesPath]]) return NO;
+    if ([self zippedPackageAvailableLocally]) return NO;
+    return YES;
+}
+
+
+-(NSString *)zippedPackageResourcesFileName
+{
+    NSString *theDateString = [EMDB.sh.dateStringForFileFormatter stringFromDate:self.timeUpdated];
+    NSString *theTimeString = [EMDB.sh.timeStringForFileFormatter stringFromDate:self.timeUpdated];
+    theTimeString = [theTimeString stringByReplacingOccurrencesOfString:@":" withString:@""];
+    
+    NSString *fileName = [SF:@"package_%@_%@_%@.zip", self.name, theDateString, theTimeString];
+    return fileName;
+}
+
+-(NSString *)zippedPackageResourcesFilePath
+{
+    NSString *path;
+    NSString *fileName = [self zippedPackageResourcesFileName];
+    
+    // If available in bundle, return the path to the file in bundle.
+    path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+    if (path) return path;
+    
+    // IF not available in bundle, check if available in temp directory.
+    path = [SF:@"%@/%@", [EMDB pathForDirectoryNamed:@"temp"], fileName];
+    if ([EMDB pathExists:path])
+        return path;
+    
+    // Zip file unavailable locally.
+    return nil;
+}
+
+-(BOOL)zippedPackageAvailableLocally
+{
+    NSString *path = [self zippedPackageResourcesFilePath];
+    if (path) {
+        return [[NSFileManager defaultManager] fileExistsAtPath:path];
+    }
+    return NO;
+}
+
+-(BOOL)shouldUnzipZippedPackage
+{
+    return NO;
+}
+
+
+//-(NSURL *)urlForZippedResources
+//{
+//    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+//    
+//}
 
 @end

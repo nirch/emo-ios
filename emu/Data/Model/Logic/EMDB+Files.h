@@ -14,6 +14,9 @@
 
 +(void)ensureRequiredDirectoriesExist;
 +(BOOL)ensureDirPathExists:(NSString *)dirPath;
++(NSString *)createDirectoryNamed:(NSString *)directoryName;
++(NSString *)pathForDirectoryNamed:(NSString *)directoryName;
++(BOOL)pathExists:(NSString *)path;
 
 #pragma mark - Root paths
 +(NSURL *)rootURL;

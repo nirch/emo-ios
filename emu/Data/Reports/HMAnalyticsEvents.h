@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 15:01:50 03/08/15 IST
+//  Created by build script on 22:30:19 03/16/15 IST
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -325,8 +325,8 @@ User canceled recording (by pressing the record button when it was
 #define AK_E_REC_STAGE_EXT_USER_CANCELED_RECORD @"Rec:stageExtUserCanceledRecord"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-User pressed the record button while in the real time extraction was
-    in progress.
+User pressed the record button while real time extraction was in
+    progress.
 **/
 #define AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD @"Rec:stageExtUserPressedRecord"
 

@@ -37,6 +37,7 @@
      */
 
     NSDictionary *info = self.objectToParse;
+    NSDictionary *defaults = self.defaults;
 
     // Find or create the object
     NSString *oid = [info safeOIDStringForKey:@"_id"];
@@ -49,14 +50,14 @@
     emuDef.order                       = orderSet? orderSet:self.incrementalOrder;
     
     // Parse the emuticon definition info.
-    emuDef.name                        = [info safeStringForKey:@"name"];
-    emuDef.sourceBackLayer             = [info safeStringForKey:@"source_back_layer"];
-    emuDef.sourceFrontLayer            = [info safeStringForKey:@"source_front_layer"];
-    emuDef.sourceUserLayerMask         = [info safeStringForKey:@"source_user_layer_mask"];
-    emuDef.useForPreview               = [info safeBoolNumberForKey:@"use_for_preview"];
-    emuDef.duration                    = [info safeDecimalNumberForKey:@"duration"];
-    emuDef.framesCount                 = [info safeNumberForKey:@"frames_count"];
-    emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index"];
+    emuDef.name                        = [info safeStringForKey:@"name" defaultsDictionary:defaults];
+    emuDef.sourceBackLayer             = [info safeStringForKey:@"source_back_layer" defaultsDictionary:defaults];
+    emuDef.sourceFrontLayer            = [info safeStringForKey:@"source_front_layer" defaultsDictionary:defaults];
+    emuDef.sourceUserLayerMask         = [info safeStringForKey:@"source_user_layer_mask" defaultsDictionary:defaults];
+    emuDef.useForPreview               = [info safeBoolNumberForKey:@"use_for_preview" defaultsDictionary:defaults];
+    emuDef.duration                    = [info safeDecimalNumberForKey:@"duration" defaultsDictionary:defaults];
+    emuDef.framesCount                 = [info safeNumberForKey:@"frames_count" defaultsDictionary:defaults];
+    emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index" defaultsDictionary:defaults];
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

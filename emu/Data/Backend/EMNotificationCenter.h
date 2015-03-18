@@ -10,10 +10,11 @@
 #pragma mark - UI data requirements
 // UI data requirements
 
-// UI notified backend that it required upto date packages information.
+// Notified backend that packages data should be refetched.
 #define emkDataRequiredPackages @"emk data required packages"
 
 #pragma mark - Data updates
+#define emkDataUpdatedPackages @"emk data updated packages"
 
-// Server requests
-#define emkDataUpdatePackages @"emk data update packages"
+// Notification of the backend to the UI
+#define emkUIDataRefreshPackages @"emk backend data refreshed packages"

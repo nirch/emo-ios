@@ -8,6 +8,7 @@ import time
 import plistlib
 import re
 
+SCANNED_DIRECTORIES = ["../emu", "../Keyboard"]
 CFG_FILE = "../emu/Data/Reports/Analytics.plist"
 OUTPUT_FILE = "../emu/Data/Reports/HMAnalyticsEvents.h"
 
@@ -27,10 +28,8 @@ HEADER = """//
 
 INDENT = "    "
 
-
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
-
 
 def convert_to_constant_name(name):
     name = "AK_%s" % name
@@ -65,6 +64,8 @@ def write_analytics_events(f, cfg):
     f.write("// Analytics events\n")
     f.write("//\n\n")
 
+    events = cfg["events"]
+
     ordered_events = collections.OrderedDict(sorted(events.items()))
     for key in ordered_events:
         # event
@@ -96,9 +97,52 @@ def write_analytics_events(f, cfg):
         f.write("\n")
 
 
+EVENT_MATCHER = re.compile(".*\[HMReporter.sh.*?analyticsEvent:(.*?)( |]).*")
+
+
+def scan_for_all_events_in_file(dir_name, file_name):
+    full_path = os.path.join(dir_name, file_name)
+    events = {}
+    with open(full_path) as m_file:
+        for num, line in enumerate(m_file, 1):
+            if EVENT_MATCHER.match(line):
+                event_name = EVENT_MATCHER.match(line).group(1)
+                event = {"file_name":file_name, "line_number":num, "dir_name":dir_name, "event_name":event_name}
+                if event_name in events:
+                    events[event_name].append(event)
+                else:
+                    events[event_name] = [event]
+    return events
+
+
+def scan_for_all_events_call_in_directory(directory):
+    all_events = dict()
+    for dir_name, subdir_list, file_list in os.walk(directory):
+        for file_name in file_list:
+            extension = file_name.split(".")[-1]
+            if extension == "m" or extension == "mm":
+                events = scan_for_all_events_in_file(dir_name, file_name)
+                all_events.update(events)
+    return all_events
+
+
+def scan_for_all_events_calls():
+    d = dict()
+
+    for directory in SCANNED_DIRECTORIES:
+        d.update(scan_for_all_events_call_in_directory(directory))
+
+    return d
+
+
 def main():
     # read the plist file
     cfg = plistlib.readPlist(CFG_FILE)
+
+    # scan project implementation files
+    # and search for all calls to analytics events
+    events_calls = scan_for_all_events_calls()
+    print "Found %d events names in project" % len(events_calls.keys())
 
     # recreate the HMAnalyticsEvents.h file.
     creation_time = str(time.strftime('%X %x %Z'))

@@ -31,7 +31,7 @@
 
     Package *pkg = [Package findOrCreateWithID:oid context:self.ctx];
     pkg.name = [info safeStringForKey:@"name"];
-    pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"time_updated"]];
+    pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"last_update"]];
     pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
     
@@ -42,6 +42,7 @@
         for (NSDictionary *emuInfo in emus) {
             emuParser.objectToParse = emuInfo;
             emuParser.package = pkg;
+            emuParser.defaults = info[@"emuticons_defaults"];
             [emuParser parse];
         }
     }

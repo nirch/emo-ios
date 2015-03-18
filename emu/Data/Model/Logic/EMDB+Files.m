@@ -15,6 +15,8 @@
 {
     [self createDirectoryNamed:@"footages"];
     [self createDirectoryNamed:@"output"];
+    [self createDirectoryNamed:@"resources"];
+    [self createDirectoryNamed:@"temp"];
 }
 
 
@@ -38,8 +40,7 @@
 +(NSString *)createDirectoryNamed:(NSString *)directoryName
 {
     // Get the paths
-    NSString *rootPath = [EMDB rootPath];
-    NSString *dirPath = [rootPath stringByAppendingPathComponent:[SF:@"/%@", directoryName]];
+    NSString *dirPath = [self pathForDirectoryNamed:directoryName];
     
     // Create the directory if missing.
     [self ensureDirPathExists:dirPath];
@@ -47,15 +48,33 @@
     return dirPath;
 }
 
++(NSString *)pathForDirectoryNamed:(NSString *)directoryName
+{
+    NSString *rootPath = [EMDB rootPath];
+    NSString *dirPath = [rootPath stringByAppendingPathComponent:[SF:@"/%@", directoryName]];
+    return dirPath;
+}
+
+
 +(BOOL)ensureDirPathExists:(NSString *)dirPath
 {
     NSFileManager *fm = [NSFileManager defaultManager];
-    if (![fm fileExistsAtPath:dirPath])
+    if (![self pathExists:dirPath]) {
+        
+        // Create missing directory.
         [fm createDirectoryAtPath:dirPath
       withIntermediateDirectories:NO
                        attributes:nil
                             error:nil];
-    return [fm fileExistsAtPath:dirPath];
+        
+    }
+    return [self pathExists:dirPath];
+}
+
++(BOOL)pathExists:(NSString *)path
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    return [fm fileExistsAtPath:path];
 }
 
 #pragma mark - Footages

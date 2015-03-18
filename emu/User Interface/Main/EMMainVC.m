@@ -59,6 +59,7 @@
     [super viewWillAppear:animated];
 
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+
     // Show the splash screen if needs to open the recorder
     // for the onboarding experience.
     if (!appCFG.onboardingPassed.boolValue) {
@@ -78,11 +79,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
                                                         object:self
                                                       userInfo:nil];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -124,8 +120,8 @@
     
     // Backend refreshed information about packages
     [nc addUniqueObserver:self
-                 selector:@selector(onPackagesDataUpdate:)
-                     name:emkDataUpdatePackages
+                 selector:@selector(onPackagesDataRefresh:)
+                     name:emkUIDataRefreshPackages
                    object:nil];
 
     
@@ -135,7 +131,7 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
-    [nc removeObserver:emkDataUpdatePackages];
+    [nc removeObserver:emkUIDataRefreshPackages];
 }
 
 #pragma mark - Observers handlers
@@ -155,7 +151,7 @@
 }
 
 
--(void)onPackagesDataUpdate:(NSNotification *)notification
+-(void)onPackagesDataRefresh:(NSNotification *)notification
 {
     [self handleFlow];
 }
@@ -189,6 +185,7 @@
     }
     
     HMLOG(TAG, EM_DBG, @"Showing emuticons for package named:%@", self.selectedPackage.name);
+    REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, self.selectedPackage];
     
@@ -217,7 +214,6 @@
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.onboardingPassed.boolValue) {
-
         /**
          *  Open the recorder for the first time.
          */
@@ -244,10 +240,9 @@
 
 -(void)epicFail:(NSString *)errorMessage
 {
-    return;
     UIAlertController *alert = [UIAlertController new];
     alert.title = @"Epic fail";
-    alert.message = @"Something went wrong. Check your internet connectivity and try again.";
+    alert.message = @"Something went wrong.\nCheck your internet connectivity and try again.";
     [alert addAction:[UIAlertAction actionWithTitle:@"Try again"
                                               style:UIAlertActionStyleCancel
                                             handler:^(UIAlertAction *action) {
@@ -260,7 +255,6 @@
     [self presentViewController:alert
                        animated:YES
                      completion:nil];
-
 }
 
 #pragma mark - splash

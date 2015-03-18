@@ -1292,10 +1292,22 @@
         [self handleStateWithInfo:nil
                         nextState:@(EMRecorderStateDone)];
         
+        
+        
+        
     } else {
+        /*
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:[NSString stringWithFormat:@"Wrong state for action or action not implemented in %@", NSStringFromSelector(_cmd)]
                                      userInfo:nil];
+         */
+        // Explode on test application,
+        // ignore action silently on production app (after remote logging this)
+        REMOTE_LOG(@"Application on wrong state %@ for action %@", @(self.recorderState), @(action));
+        [HMReporter.sh explodeOnTestApplicationsWithInfo:@{
+                                                           @"action":@(action),
+                                                           @"state":@(self.recorderState)
+                                                           }];
     }
 }
 

@@ -18,7 +18,7 @@
     EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
     [self getRelativeURLNamed:@"packages full"
                    parameters:nil
-             notificationName:emkDataUpdatePackages
+             notificationName:emkDataUpdatedPackages
                          info:nil
                        parser:parser];
 }

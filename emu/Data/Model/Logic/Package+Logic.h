@@ -80,8 +80,41 @@
 
 
 /**
- *  <#Description#>
+ *
  */
 -(void)cleanUpEmuticonsWithNoSpecificFootage;
+
+
+/**
+ *  The directory the resources of the package are stored in.
+ *
+ *  @return
+ */
+-(NSString *)resourcesPath;
+
+
+/**
+ *  Is the zipped resources should be downloaded for this package?
+ *
+ *  @return YES if a zipped package should be downloaded.
+ */
+-(BOOL)shouldDownloadZippedPackage;
+
+
+/**
+ *  Is the zipped resources available locally and should be unzipped?
+ *
+ *  @return YES if a zipped package is available locally and should be unzipped.
+ */
+-(BOOL)shouldUnzipZippedPackage;
+
+
+/**
+ *  The url of the zip file containing all resources for the package.
+ *
+ *  @return NSURL pointing to the zip file on the web.
+ */
+-(NSURL *)urlForZippedResources;
+
 
 @end

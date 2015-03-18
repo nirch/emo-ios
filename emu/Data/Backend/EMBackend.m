@@ -54,10 +54,16 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    // On background detection information received.
+    // On packages data refresh required.
     [nc addUniqueObserver:self
                  selector:@selector(onPackagesDataRequired:)
                      name:emkDataRequiredPackages
+                   object:nil];
+    
+    // Getting an update from the server with packages data.
+    [nc addUniqueObserver:self
+                 selector:@selector(onPackagesDataUpdated:)
+                     name:emkDataUpdatedPackages
                    object:nil];
 }
 
@@ -65,6 +71,7 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataRequiredPackages];
+    [nc removeObserver:emkDataUpdatedPackages];
 }
 
 #pragma mark - Observers handlers
@@ -79,6 +86,46 @@
     // Save it all
     [EMDB.sh save];
 }
+
+
+-(void)onPackagesDataUpdated:(NSNotification *)notification
+{
+    if (notification.isReportingError) {
+        // Error on packages data request to web service
+        NSDictionary *info = @{@"error":notification.reportedError};
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
+        return;
+    }
+    
+    // Refreshed packages data.
+    // Iterate packages and download packages zip files.
+    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+//        if ([package shouldDownloadZippedPackage]) {
+//            [self downloadResourcesForPackage:package];
+//        } else if ([package shouldUnzipZippedPackage]) {
+//            // Create resource directory for package.
+//            
+//            // Unzip resources to the directory.
+//        }
+    }
+}
+
+
+-(void)downloadResourcesForPackage:(Package *)package
+{
+    NSURL *url = [package urlForZippedResources];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+}
+
+
+
+
+
+
+
+
+
+
 
 /*
 -(void)parseAppCFG
