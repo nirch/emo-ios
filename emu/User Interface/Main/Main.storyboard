@@ -435,11 +435,38 @@
                                     <outlet property="delegate" destination="73x-p5-EXH" id="703-ya-G12"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cS0-PY-VDO" userLabel="Messanger container">
+                                <rect key="frame" x="0.0" y="45" width="375" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQT-cL-zDF" userLabel="More share options">
+                                        <rect key="frame" x="303" y="18" width="44" height="44"/>
+                                        <state key="normal" image="threeDots">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedMoreShareOptionsButton:" destination="73x-p5-EXH" eventType="touchUpInside" id="wE9-ej-eBw"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="OQT-cL-zDF" secondAttribute="centerY" id="QNX-4d-q9W"/>
+                                    <constraint firstItem="OQT-cL-zDF" firstAttribute="trailing" secondItem="cS0-PY-VDO" secondAttribute="trailingMargin" constant="-20" id="zIh-gv-dmU"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="CiU-Lz-IfQ" appends="YES" id="qcC-ni-cKK"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="width" secondItem="EGa-9a-b7E" secondAttribute="width" id="Hiw-0o-afv"/>
                             <constraint firstAttribute="centerX" secondItem="EGa-9a-b7E" secondAttribute="centerX" id="HsU-2h-5dZ"/>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="height" secondItem="EGa-9a-b7E" secondAttribute="height" id="ONH-fx-jfE"/>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="centerY" secondItem="EGa-9a-b7E" secondAttribute="centerY" id="Ol1-fO-ipH"/>
                             <constraint firstAttribute="centerY" secondItem="EGa-9a-b7E" secondAttribute="centerY" id="Q1m-pY-Ist"/>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="centerX" secondItem="EGa-9a-b7E" secondAttribute="centerX" id="Yvc-cr-Bsv"/>
                             <constraint firstItem="EGa-9a-b7E" firstAttribute="width" secondItem="Sb0-zb-Crb" secondAttribute="width" id="u01-4a-3rX"/>
                             <constraint firstItem="EGa-9a-b7E" firstAttribute="leading" secondItem="Sb0-zb-Crb" secondAttribute="leading" id="wJq-bW-eWa"/>
                         </constraints>
@@ -452,9 +479,15 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="guiCollectionView" destination="EGa-9a-b7E" id="W8g-i4-GpS"/>
+                        <outlet property="guiFBMButtonContainer" destination="cS0-PY-VDO" id="RRz-yj-6F7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0nh-Ox-Ydi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="CiU-Lz-IfQ">
+                    <connections>
+                        <action selector="onSwipedLeftToShowMoreShareOptions:" destination="73x-p5-EXH" id="o1M-eU-Z6X"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="663.5" y="319"/>
         </scene>
@@ -747,5 +780,6 @@
         <image name="love_icon.png" width="30" height="30"/>
         <image name="retakeIcon" width="25" height="24"/>
         <image name="shadow" width="375" height="4"/>
+        <image name="threeDots" width="44" height="44"/>
     </resources>
 </document>

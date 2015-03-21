@@ -28,6 +28,9 @@
                        containerURLForSecurityApplicationGroupIdentifier:
                        GROUP_CONTAINER_IDENTIFIER];
     return groupURL;
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+//    return [NSURL URLWithString:basePath];
 }
 
 +(NSString *)rootPath
@@ -108,16 +111,28 @@
 #pragma mark - Resources
 +(NSString *)pathForResourceNamed:(NSString *)resourceName
 {
+    return [self pathForResourceNamed:resourceName path:nil];
+}
+
++(NSString *)pathForResourceNamed:(NSString *)resourceName path:(NSString *)path
+{
+    NSString *rp;
+    NSFileManager *fm = [NSFileManager defaultManager];
     NSString *extension = [resourceName pathExtension];
     NSInteger trimIndex = resourceName.length - extension.length - 1;
     NSString *name = [resourceName substringToIndex:trimIndex];
+
+    // Search for the resource in a given local path
+    if (path) {
+        rp = [SF:@"%@/%@", path, resourceName];
+        if ([fm fileExistsAtPath:rp]) return rp;
+    }
     
     // Search for the resource in the main bundle.
-    NSString *path = [[NSBundle mainBundle] pathForResource:name
-                                                     ofType:extension];
+    rp = [[NSBundle mainBundle] pathForResource:name ofType:extension];
     
     // Return the path of the resource (nil if not found).
-    return path;
+    return rp;
 }
 
 @end

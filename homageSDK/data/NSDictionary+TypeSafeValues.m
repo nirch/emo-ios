@@ -101,6 +101,10 @@
     if (value == nil) {
         value = [defaultsDictionary safeBoolNumberForKey:key];
     }
+    // If value is still nil, set as NO by default.
+    if (value == nil) {
+        value = @NO;
+    }
     return value;
 }
 

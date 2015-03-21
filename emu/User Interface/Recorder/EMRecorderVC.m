@@ -236,14 +236,29 @@
     REMOTE_LOG(@"EMMainVC Memory warning");
     
     // Go boom on a test application.
-    [HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
+    //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
 #pragma mark - Initializations
 -(void)initData
 {
-    self.recordingDuration = self.package? [self.package defaultCaptureDuration]: 2.0;
+    //
+    // Set duration required for this take.
+    //
+    
+    // If retaking a specific emuticon, will take duration specific to that emu.
+    if (self.emuticonToUpdate) {
+        self.recordingDuration = self.emuticonToUpdate.emuDef.duration.doubleValue;
+    } else {
+        // Take the default of the package.
+        self.recordingDuration = self.package? [self.package defaultCaptureDuration]: 2.0;
+    }
+    
+    // If duration is 0, use 2 seconds as default.
+    if (self.recordingDuration == 0) {
+        self.recordingDuration = 2;
+    }
 }
 
 -(void)initGUI
@@ -1314,10 +1329,10 @@
 #pragma mark - Fake flow
 -(void)fakeFlow
 {
-    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self _fakeExtraction];
-    });
+//    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self _fakeExtraction];
+//    });
 }
 
 -(void)_fakeExtraction

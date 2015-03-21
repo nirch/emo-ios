@@ -110,11 +110,25 @@
 
 
 /**
- *  The url of the zip file containing all resources for the package.
+ *  The remote (s3 or server) url of the zip file containing all resources for the package.
  *
  *  @return NSURL pointing to the zip file on the web.
  */
 -(NSURL *)urlForZippedResources;
 
+
+/**
+ *  The local (bundled or resources dir) url of the zip file containing all resources for the package.
+ *
+ *  @return NSURL pointing to the local zip file. if file doesn't exist, will return nil.
+ */
+-(NSURL *)localURLForZippedResources;
+
+/**
+ *  The local url for the temp zip file. Will return the url even if the file doesn't exist at that location.
+ *
+ *  @return The NSURL pointing to the position of where a zip may be found.
+ */
+-(NSString *)zippedPackageTempPath;
 
 @end

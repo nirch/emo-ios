@@ -41,7 +41,7 @@
     self = [super init];
     if (self) {
         self.timeStringForFileFormatter = [NSDateFormatter new];
-        self.timeStringForFileFormatter.dateFormat = @"hhmmss";
+        self.timeStringForFileFormatter.dateFormat = @"HHmmss";
         
         self.dateStringForFileFormatter = [NSDateFormatter new];
         self.dateStringForFileFormatter.dateFormat = @"yyyyMMdd";

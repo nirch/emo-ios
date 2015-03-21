@@ -10,13 +10,14 @@
 #import "EMBackend.h"
 #import "EMDB.h"
 #import "EMDB+Files.h"
-#import "EMEmuticonsParser.h"
 #import "EMAppCFGParser.h"
 #import "EMPackagesParser.h"
 
 #import "HMServer.h"
 #import "HMServer+Packages.h"
 #import "EMNotificationCenter.h"
+
+#import <zipzap.h>
 
 @implementation EMBackend
 
@@ -75,6 +76,10 @@
 }
 
 #pragma mark - Observers handlers
+
+/**
+ *  The user interface notified the backend that it needs the data to be refreshed.
+ */
 -(void)onPackagesDataRequired:(NSNotification *)notification
 {
     // Making sure required paths exist.
@@ -87,7 +92,9 @@
     [EMDB.sh save];
 }
 
-
+/**
+ *  The data about the packages was updated (or failed to update).
+ */
 -(void)onPackagesDataUpdated:(NSNotification *)notification
 {
     if (notification.isReportingError) {
@@ -100,100 +107,115 @@
     // Refreshed packages data.
     // Iterate packages and download packages zip files.
     for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
-//        if ([package shouldDownloadZippedPackage]) {
-//            [self downloadResourcesForPackage:package];
-//        } else if ([package shouldUnzipZippedPackage]) {
-//            // Create resource directory for package.
-//            
-//            // Unzip resources to the directory.
-//        }
+        if ([package shouldDownloadZippedPackage]) {
+            // Download resources of the package
+            [self downloadResourcesForPackage:package];
+        } else if ([package shouldUnzipZippedPackage]) {
+            // Unzip resources to a directory.
+            [self unzipResourcesForPackage:package];
+        }
     }
+    
+    // Notify the user interface about the updates.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil];
 }
 
 
 -(void)downloadResourcesForPackage:(Package *)package
 {
-    NSURL *url = [package urlForZippedResources];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-}
-
-
-
-
-
-
-
-
-
-
-
-/*
--(void)parseAppCFG
-{
-    NSDictionary *json = [self jsonDataInLocalFile:@"appCFG"];
+    NSURL *remoteURL = [package urlForZippedResources];
+    NSURL *localURL = [NSURL URLWithString:[package zippedPackageTempPath]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:remoteURL];
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    NSString *tempFilePath = [SF:@"%@/%@.zip", NSTemporaryDirectory(), package.oid];
+    NSURLSessionDownloadTask *downloadTask;
     
-    // Parse the data
-    EMAppCFGParser *parser = [[EMAppCFGParser alloc] initWithContext:EMDB.sh.context];
-    parser.objectToParse = json;
-    [parser parse];
+    // The download task.
+    downloadTask = [session downloadTaskWithRequest:request
+                                           progress:nil
+                                        destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+                                            return [NSURL fileURLWithPath:tempFilePath];
+                                        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+                                            //
+                                            // Download completion.
+                                            //
+                                            if (error) {
+                                                HMLOG(TAG, EM_ERR, @"Error while downloading resources file %@", filePath);
+                                            } else {
+                                                //
+                                                // The zipped file was downloaded to a temp file.
+                                                //
+                                                HMLOG(TAG, EM_DBG, @"Downloaded resources file: %@", filePath);
+                                                if ([[NSFileManager defaultManager] fileExistsAtPath:filePath.path]) {
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        NSFileManager *fm = [NSFileManager defaultManager];
+                                                        
+                                                        // Delete file if already exists at destination.
+                                                        [fm removeItemAtPath:localURL.path error:nil];
+                                                        
+                                                        // Copy the temp file to expected place.
+                                                        [fm copyItemAtPath:filePath.path toPath:localURL.path error:nil];
+                                                        
+                                                        // Delete temp file.
+                                                        [fm removeItemAtPath:filePath.path error:nil];
+                                                        
+                                                        // Unzip the resources
+                                                        [self unzipResourcesForPackage:package];
+                                                    });
+                                                } else {
+                                                    HMLOG(TAG, EM_ERR, @"Error (missing file) while downloading resources file %@", filePath);
+                                                }
+                                            }
+                                        }];
+    
+    [downloadTask resume];
 }
 
-
--(void)parsePackagesMetaData
+-(void)unzipResourcesForPackage:(Package *)package
 {
-    // Parse the meta data of all packages.
-    // This will be used later to look for the emuticons information
-    // for each package.
-    NSDictionary *json = [self jsonDataInLocalFile:@"packages"];
-    EMPackagesParser *packagesParser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
-    packagesParser.objectToParse = json;
-    [packagesParser parse];
-}
-
-
--(void)parsePackages
-{
-    // Parse the emuticon definitions of all known packages.
-    NSArray *packages = [Package allPackagesInContext:EMDB.sh.context];
-    for (Package *package in packages) {
-        // Load and parse json related to package.
-        [self parseDataForPackage:package];
+    NSURL *zipURL = [package localURLForZippedResources];
+    if (zipURL == nil) {
+        HMLOG(TAG, EM_ERR, @"Failed to find zipped resources for package %@ at %@", package.name, [package zippedPackageTempPath]);
+        return;
     }
+    NSURL *targetURL = [NSURL URLWithString:[package resourcesPath]];
+    
+    HMLOG(TAG, EM_VERBOSE, @"Extracting zipped resource files from %@", zipURL);
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSInteger unzippedFilesCount = [self unzipResourcesInZipFileAtURL:zipURL toTargetURL:targetURL];
+        if (unzippedFilesCount > 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                package.alreadyUnzipped = @YES;
+            });
+        }
+    });
 }
 
-
--(void)parseDataForPackage:(Package *)package
+-(NSInteger)unzipResourcesInZipFileAtURL:(NSURL *)zipURL toTargetURL:(NSURL *)targetURL
 {
-    // Parse emuticon definitions of passed package.
-    NSString *jsonFileName = [package jsonFileName];
-    NSDictionary *json = [self jsonDataInLocalFile:jsonFileName];
-    EMEmuticonsParser *emuParser = [[EMEmuticonsParser alloc] initWithContext:EMDB.sh.context];
-    emuParser.objectToParse = json;
-    emuParser.package = package;
-    [emuParser parse];
-}
-
-
-#pragma mark - JSON Serialization
--(NSDictionary *)jsonDataInLocalFile:(NSString *)fileName
-{
-    // Read emuticons json file
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"json"];
-    NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
+    NSInteger unzippedFilesCount = 0;
+    [EMDB ensureDirPathExists:targetURL.path];
+    NSFileManager *fm = [NSFileManager defaultManager];
     
-    if (jsonData == nil) {
-        HMLOG(TAG, EM_ERR, @"JSON data not found for %@", fileName);
-        return nil;
-    }
-    
+    // Extract.
     NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    if (error) {
-        HMLOG(TAG, EM_ERR, @"NSJSONSerialization failed for %@: %@", fileName, [error localizedDescription]);
-        return nil;
+    ZZArchive *zip = [ZZArchive archiveWithURL:zipURL error:&error];
+    for (ZZArchiveEntry *entry in zip.entries) {
+        NSString* targetPath = [targetURL URLByAppendingPathComponent:entry.fileName].path;
+        NSError *error;
+        NSData *data = [entry newDataWithError:&error];
+        BOOL wasWritten = [data writeToFile:targetPath atomically:YES];
+        HMLOG(TAG, EM_VERBOSE, @"Extracting file to %@ success:%@", targetPath, @(wasWritten));
+        if (wasWritten) {
+            unzippedFilesCount++;
+        }
     }
-    return json;
+    
+    // Delete zip files.
+    if (unzippedFilesCount > 0) {
+        [fm removeItemAtPath:zipURL.path error:nil];
+    }
+    return unzippedFilesCount;
 }
-*/
 
 @end

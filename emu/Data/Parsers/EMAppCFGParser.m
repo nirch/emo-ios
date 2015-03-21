@@ -25,6 +25,10 @@
     // Parse the application configuration
     appCFG.defaultOutputVideoMaxFps = [info safeNumberForKey:@"default_output_video_max_fps"];
     appCFG.onboardingUsingPackage = [info safeOIDStringForKey:@"onboarding_using_package"];
+    appCFG.baseResourceURL = [info safeStringForKey:@"base_resource_url"];
+    appCFG.bucketName = [info safeStringForKey:@"bucket_name"];
+    appCFG.clientName = [info safeStringForKey:@"client_name"];
+    appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
     
     HMLOG(TAG, EM_DBG, @"App cfg parsed:%@", [appCFG description]);
     REMOTE_LOG(@"Parsed app cfg:%@", [appCFG description]);

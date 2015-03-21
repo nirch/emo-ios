@@ -13,11 +13,16 @@
 @optional
 -(NSString *)shareObjectIdentifier;
 
--(void)sharerDidShareObject:(id)sharedObject
-                   withInfo:(NSDictionary *)info;
+// Sharing did happen.
+-(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info;
 
+// Sharing was cancelled.
 -(void)sharerDidCancelWithInfo:(NSDictionary *)info;
 
+// Sharing failed.
 -(void)sharerDidFailWithInfo:(NSDictionary *)info;
+
+// An optional call, just for finishing up when required.
+-(void)sharerDidFinishWithInfo:(NSDictionary *)info;
 
 @end

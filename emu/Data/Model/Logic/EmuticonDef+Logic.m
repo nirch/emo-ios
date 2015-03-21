@@ -36,25 +36,25 @@
 
 -(NSString *)pathForUserLayerMask
 {
-    return [EMDB pathForResourceNamed:self.sourceUserLayerMask];
+    return [EMDB pathForResourceNamed:self.sourceUserLayerMask path:[self.package resourcesPath]];
 }
 
 
 -(NSString *)pathForBackLayer
 {
-    return [EMDB pathForResourceNamed:self.sourceBackLayer];
+    return [EMDB pathForResourceNamed:self.sourceBackLayer path:[self.package resourcesPath]];
 }
 
 
 -(NSString *)pathForFrontLayer
 {
-    return [EMDB pathForResourceNamed:self.sourceFrontLayer];
+    return [EMDB pathForResourceNamed:self.sourceFrontLayer path:[self.package resourcesPath]];
 }
+
 
 -(Emuticon *)spawn
 {
-    Emuticon *emu = [Emuticon newForEmuticonDef:self
-                                        context:self.managedObjectContext];
+    Emuticon *emu = [Emuticon newForEmuticonDef:self context:self.managedObjectContext];
     return emu;
 }
 

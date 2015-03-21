@@ -32,6 +32,7 @@
 
 #pragma mark - Resources
 +(NSString *)pathForResourceNamed:(NSString *)resourceName;
++(NSString *)pathForResourceNamed:(NSString *)resourceName path:(NSString *)path;
 
 
 @end

@@ -11,8 +11,16 @@
 #import "AppDelegate.h"
 #import "EMDB.h"
 #import "EMBackend.h"
+#import "EMNotificationCenter.h"
+#import "EMShareFBMessanger.h"
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface AppDelegate ()
+@interface AppDelegate ()<
+    FBSDKMessengerURLHandlerDelegate
+>
+
+@property (nonatomic) FBSDKMessengerURLHandler *messengerUrlHandler;
 
 @end
 
@@ -46,6 +54,10 @@
     [HMReporter.sh analyticsEvent:AK_E_APP_LAUNCHED];
     [HMReporter.sh checkAndReportIfAppUpdated];
     
+    // FB Messanger optimized integration
+    self.messengerUrlHandler = [[FBSDKMessengerURLHandler alloc] init];
+    self.messengerUrlHandler.delegate = self;
+    
     HMLOG(TAG, EM_DBG, @"Application launched");
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     return YES;
@@ -74,6 +86,13 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
+    
+    // Logs 'install' and 'app activate' App Events.
+    [FBAppEvents activateApp];
+    
+    // If a current fb messanger sharer exists,
+    // Notify it that the application launched.
+    [self.currentFBMSharer onAppDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -81,6 +100,39 @@
     // Saves changes in the application's managed object context before the application terminates.
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     [EMDB.sh save];
+}
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    // Check if the handler knows what to do with this url
+    if ([_messengerUrlHandler canOpenURL:url sourceApplication:sourceApplication]) {
+        // Handle the url
+        [_messengerUrlHandler openURL:url sourceApplication:sourceApplication];
+    }
+    return YES;
+}
+
+#pragma mark - FBSDKMessengerURLHandlerDelegate
+// Cancel
+-(void)messengerURLHandler:(FBSDKMessengerURLHandler *)messengerURLHandler didHandleCancelWithContext:(FBSDKMessengerURLHandlerOpenFromComposerContext *)context
+{
+    self.fbContext = context;
+    [self.currentFBMSharer onFBMCancel];
+}
+
+// Open
+-(void)messengerURLHandler:(FBSDKMessengerURLHandler *)messengerURLHandler didHandleOpenFromComposerWithContext:(FBSDKMessengerURLHandlerOpenFromComposerContext *)context
+{
+    self.fbContext = context;
+    [self.currentFBMSharer onFBMOpen];
+}
+
+// Reply
+-(void)messengerURLHandler:(FBSDKMessengerURLHandler *)messengerURLHandler didHandleReplyWithContext:(FBSDKMessengerURLHandlerReplyContext *)context
+{
+    self.fbContext = context;
+    [self.currentFBMSharer onFBMReply];
 }
 
 

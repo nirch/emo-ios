@@ -71,3 +71,10 @@
 // Share options
 "ANIM_GIF" = "Animated Gif";
 "VIDEO" = "Video";
+
+// Facebook Messenger
+"FBM_MISSING_TITLE"     = "Facebook Messenger";
+"FBM_MISSING_MESSAGE"   = "The latest Messenger app isn't installed on your device.";
+"FBM_INSTALL_OPTION"    = "Install Messenger!";
+"FBM_MISSING_GOT_IT"    = "Got it.";
+

@@ -62,7 +62,10 @@
 
     // Show the splash screen if needs to open the recorder
     // for the onboarding experience.
-    if (!appCFG.onboardingPassed.boolValue) {
+    if (appCFG.onboardingPassed.boolValue) {
+        [self resetFetchedResultsController];
+        [self.guiCollectionView reloadData];
+    } else {
         [self showSplashAnimated:NO];
     }
     
@@ -94,7 +97,7 @@
     REMOTE_LOG(@"EMMainVC Memory warning");
     
     // Go boom on a test application.
-    [HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
+    //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -184,20 +187,21 @@
         return _fetchedResultsController;
     }
     
+    if (self.selectedPackage == nil) return nil;
+    
     HMLOG(TAG, EM_DBG, @"Showing emuticons for package named:%@", self.selectedPackage.name);
     REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, self.selectedPackage];
-    
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
-    
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
                                                                                      cacheName:@"Root"];
+
     _fetchedResultsController = frc;
     return frc;
 }

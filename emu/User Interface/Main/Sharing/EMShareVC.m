@@ -19,6 +19,9 @@
 #import "EMShareSaveToCameraRoll.h"
 #import "EMShareMail.h"
 #import "EMShareAppleMessage.h"
+#import "EMShareFBMessanger.h"
+
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
 #define TAG @"EMShareVC"
 
@@ -29,7 +32,9 @@
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
+@property (weak, nonatomic) IBOutlet UIView *guiFBMButtonContainer;
 
+@property (nonatomic, weak) UIButton *fbmButton;
 @property (nonatomic) NSArray *shareMethods;
 @property (nonatomic) NSDictionary *shareNames;
 @property (nonatomic) NSDictionary *shareMethodsNames;
@@ -47,27 +52,97 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self initGUI];
+    [self hideExtraShareOptionsAnimated:NO];
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+-(void)initGUI
+{
+    // The big messenger button.
+    CGFloat buttonWidth = 90;
+    UIButton *button = [FBSDKMessengerShareButton circularButtonWithStyle:FBSDKMessengerShareButtonStyleBlue
+                                                                    width:buttonWidth];
+    button.tag = 0;
+    [button addTarget:self action:@selector(onPressedShareButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.guiFBMButtonContainer addSubview:button];
+    self.fbmButton = button;
+    
+    // Collection view scrolling
+    self.guiCollectionView.delegate = self;
+}
+
+-(void)viewDidLayoutSubviews
+{
+    CGFloat x = self.guiFBMButtonContainer.bounds.size.width / 2.0;
+    CGFloat y = self.guiFBMButtonContainer.bounds.size.height / 2.0;
+    self.fbmButton.center = CGPointMake(x, y);
+}
+
+#pragma mark - Show/Hide all share options
+-(void)showExtraShareOptionsAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self showExtraShareOptionsAnimated:NO];
+        }];
+        return;
+    }
+
+    self.guiCollectionView.alpha = 1;
+    CGFloat x = self.view.bounds.size.width;
+    self.guiCollectionView.transform = CGAffineTransformIdentity;
+
+    self.guiFBMButtonContainer.transform = CGAffineTransformMakeTranslation(-x, 0);
+    self.guiFBMButtonContainer.alpha = 0;
+}
+
+-(void)hideExtraShareOptionsAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self hideExtraShareOptionsAnimated:NO];
+        }];
+        return;
+    }
+    
+    self.guiCollectionView.alpha = 0;
+    CGFloat x = self.view.bounds.size.width;
+    self.guiCollectionView.transform = CGAffineTransformMakeTranslation(x, 0);
+
+    self.guiFBMButtonContainer.alpha = 1;
+    self.guiFBMButtonContainer.transform = CGAffineTransformIdentity;
+}
+
 
 #pragma mark - Data
 -(void)initData
 {
     // A priorized list of share methods.
     self.shareMethods = @[
+                          @(emkShareMethodFacebookMessanger),
+                          //@(emkShareMethodFacebook),
                           @(emkShareMethodAppleMessages),
                           //@(emkShareMethodWhatsapp),
-                          //@(emkShareMethodFacebookMessanger),
-                          //@(emkShareMethodFacebook),
                           @(emkShareMethodMail),
                           @(emkShareMethodSaveToCameraRoll),
                           @(emkShareMethodCopy)
                           ];
     
     self.shareNames = @{
-                        @(emkShareMethodAppleMessages):      @"iMessage",
-                        @(emkShareMethodWhatsapp):           @"whatsapp",
                         @(emkShareMethodFacebookMessanger):  @"facebookm",
                         @(emkShareMethodFacebook):           @"facebook",
+                        @(emkShareMethodAppleMessages):      @"iMessage",
+                        @(emkShareMethodWhatsapp):           @"whatsapp",
                         @(emkShareMethodMail):               @"mail",
                         @(emkShareMethodSaveToCameraRoll):   @"savetocm",
                         @(emkShareMethodCopy):               @"copy"
@@ -188,6 +263,13 @@
         //
         self.sharer = [EMShareAppleMessage new];
         
+    } else if (method == emkShareMethodFacebookMessanger) {
+        
+        //
+        // Facebook messagenger
+        //
+        self.sharer = [EMShareFBMessanger new];
+        
     } else {
         //
         // Unimplemented.
@@ -213,8 +295,7 @@
 }
 
 #pragma mark - EMShareDelegate
--(void)sharerDidShareObject:(id)sharedObject
-                   withInfo:(NSDictionary *)info
+-(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
 {
     self.sharer = nil;
     
@@ -238,11 +319,22 @@
     [HMReporter.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
 }
 
+-(void)sharerDidFinishWithInfo:(NSDictionary *)info
+{
+    self.sharer = nil;
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat x = scrollView.contentOffset.x;
+    if (x<-30) [self hideExtraShareOptionsAnimated:YES];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
-- (IBAction)onPressedShareButton:(UIButton *)sender
+-(IBAction)onPressedShareButton:(UIButton *)sender
 {
     [self shareEmuticonUsingMethodAtIndex:sender.tag];
     [UIView animateWithDuration:0.3 animations:^{
@@ -255,6 +347,16 @@
                              sender.transform = CGAffineTransformIdentity;
                          } completion:nil];
     }];
+}
+
+-(IBAction)onPressedMoreShareOptionsButton:(id)sender
+{
+    [self showExtraShareOptionsAnimated:YES];
+}
+
+- (IBAction)onSwipedLeftToShowMoreShareOptions:(id)sender
+{
+    [self showExtraShareOptionsAnimated:YES];
 }
 
 

@@ -136,8 +136,22 @@
 
 -(BOOL)shouldDownloadZippedPackage
 {
-    if ([EMDB pathExists:[self resourcesPath]]) return NO;
-    if ([self zippedPackageAvailableLocally]) return NO;
+    // If already unzipped files for the package, don't download it.
+    // (missing resources will be downloaded individually as needed)
+    if (self.alreadyUnzipped.boolValue)
+        return NO;
+    
+    NSString *resourcesPath = [self resourcesPath];
+    
+    BOOL pathExists = [EMDB pathExists:[self resourcesPath]];
+    BOOL zippedPackageAvailableLocally = [self zippedPackageAvailableLocally];
+    NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcesPath error:nil];
+    
+    HMLOG(TAG, EM_VERBOSE, @"Checking resources path:%@ exists:%@ availableLocally:%@ filesCount:%@",
+          resourcesPath, @(pathExists), @(zippedPackageAvailableLocally), @(dirContents.count));
+    
+    if (pathExists) return NO;
+    if (zippedPackageAvailableLocally) return NO;
     return YES;
 }
 
@@ -162,13 +176,20 @@
     if (path) return path;
     
     // IF not available in bundle, check if available in temp directory.
-    path = [SF:@"%@/%@", [EMDB pathForDirectoryNamed:@"temp"], fileName];
-    if ([EMDB pathExists:path])
-        return path;
+    path = [self zippedPackageTempPath];
+    if ([EMDB pathExists:path]) return path;
     
     // Zip file unavailable locally.
     return nil;
 }
+
+
+-(NSString *)zippedPackageTempPath
+{
+    NSString *fileName = [self zippedPackageResourcesFileName];
+    return [SF:@"%@/%@", [EMDB pathForDirectoryNamed:@"temp"], fileName];
+}
+
 
 -(BOOL)zippedPackageAvailableLocally
 {
@@ -181,14 +202,34 @@
 
 -(BOOL)shouldUnzipZippedPackage
 {
+    // If already unzipped files for the package, don't do it again.
+    // (missing resources will be downloaded individually as needed)
+    if (self.alreadyUnzipped.boolValue)
+        return NO;
+    
+    if ([self zippedPackageAvailableLocally]) return YES;
     return NO;
 }
 
+-(NSURL *)urlForZippedResources
+{
+    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+    NSString *urlString = [SF:@"%@/%@/zipped_packages/%@",
+                           cfg.baseResourceURL,
+                           cfg.bucketName,
+                           [self zippedPackageResourcesFileName]];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
 
-//-(NSURL *)urlForZippedResources
-//{
-//    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
-//    
-//}
+
+-(NSURL *)localURLForZippedResources
+{
+    NSString *path = [self zippedPackageResourcesFilePath];
+    if (path == nil) return nil;
+    NSURL *url = [NSURL URLWithString:[SF:@"file://%@", path]];
+    return url;
+}
 
 @end

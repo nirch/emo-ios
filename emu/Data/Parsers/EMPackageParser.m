@@ -36,13 +36,16 @@
     pkg.label = [info safeStringForKey:@"label"];
     
     // If package also include emuticon definitions, parse them all.
+    NSInteger index = 0;
     NSArray *emus = info[@"emuticons"];
     if (emus) {
+        index++;
         EMEmuticonParser *emuParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
         for (NSDictionary *emuInfo in emus) {
             emuParser.objectToParse = emuInfo;
             emuParser.package = pkg;
             emuParser.defaults = info[@"emuticons_defaults"];
+            emuParser.incrementalOrder = @(index);
             [emuParser parse];
         }
     }
