@@ -5,6 +5,7 @@
 //  Created by Aviv Wolf on 2/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+#define TAG @"EMEmuticonScreen"
 
 #import "EMEmuticonScreenVC.h"
 #import "EMDB.h"
@@ -99,6 +100,10 @@
     self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
 }
 
+-(void)dealloc
+{
+    HMLOG(TAG, EM_VERBOSE, @"dealloc");
+}
 
 #pragma mark - Segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

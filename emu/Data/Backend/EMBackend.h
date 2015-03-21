@@ -7,6 +7,7 @@
 //
 
 @class HMServer;
+@class Emuticon;
 
 #import <Foundation/Foundation.h>
 
@@ -18,5 +19,8 @@
 
 #pragma mark - Web Service
 @property (nonatomic, readonly) HMServer *server;
+
+#pragma mark - Downloading resources
+-(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info;
 
 @end

@@ -267,7 +267,7 @@ or
 		<key>Rec:stageReviewUserPressedRetakeButton</key>
 		<dict>
 			<key>v</key>
-			<string>1.0.8</string>
+			<string>1.1.0</string>
 			<key>description</key>
 			<string>When user asked if he likes the result he chose to try again and retake. You just can&apos;t please some people. :-(</string>
 			<key>params</key>
@@ -295,7 +295,7 @@ or
 		<key>Rec:stageReviewUserPressedConfirmButton</key>
 		<dict>
 			<key>v</key>
-			<string>1.0.8</string>
+			<string>1.1.0</string>
 			<key>description</key>
 			<string>When user asked if he likes the result he chose yes. Yeah! :-)</string>
 			<key>params</key>
@@ -599,6 +599,66 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>BE:zippedPackageDownloadSuccess</key>
+		<dict>
+			<key>v</key>
+			<string>1.1.0</string>
+			<key>description</key>
+			<string>A zip file with resources for a package (that wasn&apos;t bundled with the app) downloaded to the device successfully</string>
+			<key>params</key>
+			<dict>
+				<key>remoteURL</key>
+				<string>&lt;string&gt; - the web url the file was downloaded from.</string>
+				<key>localFileName</key>
+				<string>&lt;string&gt; - the local file name.</string>
+			</dict>
+		</dict>
+		<key>BE:zippedPackageDownloadFailed</key>
+		<dict>
+			<key>v</key>
+			<string>1.1.0</string>
+			<key>description</key>
+			<string>A zip file with resources for a package (that wasn&apos;t bundled with the app) failed to download to the device</string>
+			<key>params</key>
+			<dict>
+				<key>remoteURL</key>
+				<string>&lt;string&gt; - the web url the file was downloaded from.</string>
+				<key>localFileName</key>
+				<string>&lt;string&gt; - the local file name.</string>
+				<key>error</key>
+				<string>&lt;string&gt; - description of the error</string>
+			</dict>
+		</dict>
+		<key>BE:zippedPackageUnzipSuccess</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.0</string>
+			<key>description</key>
+			<string>A zip file with resources for a package was unzipped successfully</string>
+			<key>params</key>
+			<dict>
+				<key>localFileName</key>
+				<string>&lt;string&gt; - the local file name.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the package</string>
+			</dict>
+		</dict>
+		<key>BE:zippedPackageUnzipFailed</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.0</string>
+			<key>description</key>
+			<string>A zip file with resources for a package failed to unzip</string>
+			<key>params</key>
+			<dict>
+				<key>localFileName</key>
+				<string>&lt;string&gt; - the local file name.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the package</string>
+				<key>error</key>
+				<string>&lt;string&gt; - description of the error</string>
 			</dict>
 		</dict>
 	</dict>

@@ -19,6 +19,14 @@
 
 #import <zipzap.h>
 
+@interface EMBackend()
+
+@property (nonatomic) NSMutableDictionary *currentlyDownloadingFromURLS;
+@property (nonatomic) NSMutableDictionary *requiredResourcesForEmuOID;
+@property (nonatomic) AFHTTPSessionManager *session;
+
+@end
+
 @implementation EMBackend
 
 #pragma mark - Initialization
@@ -30,7 +38,6 @@
     dispatch_once(&onceToken, ^{
         sharedInstance = [[EMBackend alloc] init];
     });
-    
     return sharedInstance;
 }
 
@@ -45,6 +52,9 @@
     self = [super init];
     if (self) {
         _server = [HMServer new];
+        self.currentlyDownloadingFromURLS = [NSMutableDictionary new];
+        self.requiredResourcesForEmuOID = [NSMutableDictionary new];
+        self.session = [AFHTTPSessionManager manager];
         [self initObservers];
     }
     return self;
@@ -126,12 +136,11 @@
     NSURL *remoteURL = [package urlForZippedResources];
     NSURL *localURL = [NSURL URLWithString:[package zippedPackageTempPath]];
     NSURLRequest *request = [NSURLRequest requestWithURL:remoteURL];
-    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
     NSString *tempFilePath = [SF:@"%@/%@.zip", NSTemporaryDirectory(), package.oid];
     NSURLSessionDownloadTask *downloadTask;
     
     // The download task.
-    downloadTask = [session downloadTaskWithRequest:request
+    downloadTask = [self.session downloadTaskWithRequest:request
                                            progress:nil
                                         destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
                                             return [NSURL fileURLWithPath:tempFilePath];
@@ -139,25 +148,41 @@
                                             //
                                             // Download completion.
                                             //
+                                            HMParams *params = [HMParams new];
+                                            [params addKey:AK_EP_REMOTE_URL value:remoteURL.path];
+                                            [params addKey:AK_EP_LOCAL_FILE_NAME value:filePath];
+
                                             if (error) {
-                                                HMLOG(TAG, EM_ERR, @"Error while downloading resources file %@", filePath);
+                                                HMLOG(TAG, EM_ERR, @"Error while downloading zipped resources file from %@", remoteURL.path);
+                                                [params addKey:AK_EP_ERROR value:[error description]];
+                                                [HMReporter.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED info:params.dictionary];
                                             } else {
                                                 //
                                                 // The zipped file was downloaded to a temp file.
                                                 //
                                                 HMLOG(TAG, EM_DBG, @"Downloaded resources file: %@", filePath);
+                                                
+                                                //
+                                                // Analytics
+                                                //
+                                                [HMReporter.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS info:params.dictionary];
+
                                                 if ([[NSFileManager defaultManager] fileExistsAtPath:filePath.path]) {
                                                     dispatch_async(dispatch_get_main_queue(), ^{
                                                         NSFileManager *fm = [NSFileManager defaultManager];
                                                         
+                                                        NSError *error;
+                                                        
                                                         // Delete file if already exists at destination.
-                                                        [fm removeItemAtPath:localURL.path error:nil];
+                                                        [fm removeItemAtPath:localURL.path error:&error];
                                                         
                                                         // Copy the temp file to expected place.
-                                                        [fm copyItemAtPath:filePath.path toPath:localURL.path error:nil];
+                                                        if (error == nil)
+                                                            [fm copyItemAtPath:filePath.path toPath:localURL.path error:&error];
                                                         
                                                         // Delete temp file.
-                                                        [fm removeItemAtPath:filePath.path error:nil];
+                                                        if (error == nil)
+                                                            [fm removeItemAtPath:filePath.path error:&error];
                                                         
                                                         // Unzip the resources
                                                         [self unzipResourcesForPackage:package];
@@ -216,6 +241,108 @@
         [fm removeItemAtPath:zipURL.path error:nil];
     }
     return unzippedFilesCount;
+}
+
+-(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info
+{
+    NSString *identifier = emu.emuDef.oid;
+    
+    // If already downloading resources for emu, skip for now.
+    if (self.requiredResourcesForEmuOID[identifier]) {
+        return;
+    }
+    
+    EmuticonDef *emuDef = emu.emuDef;
+    NSMutableDictionary *requiredResources = [NSMutableDictionary new];
+    
+    // Front layer
+    if (emuDef.sourceFrontLayer &&
+        [emuDef isMissingResourceNamed:emuDef.sourceFrontLayer])
+        requiredResources[emuDef.sourceFrontLayer] = info;
+    
+    // Back layer
+    if (emuDef.sourceBackLayer &&
+        [emuDef isMissingResourceNamed:emuDef.sourceBackLayer])
+        requiredResources[emuDef.sourceBackLayer] = info;
+    
+    // User mask layer
+    if (emuDef.sourceUserLayerMask &&
+        [emuDef isMissingResourceNamed:emuDef.sourceUserLayerMask])
+        requiredResources[emuDef.sourceUserLayerMask] = info;
+    
+    // Download the required resources.
+    if (requiredResources.count > 0) {
+        self.requiredResourcesForEmuOID[identifier] = requiredResources;
+        for (NSString *requiredResource in requiredResources) {
+            [self downloadResourceNamed:requiredResource
+                             forPackage:emuDef.package
+                             identifier:identifier];
+        }
+    }
+}
+
+
+-(void)downloadResourceNamed:(NSString *)resourceName
+                  forPackage:(Package *)package
+                  identifier:(NSString *)identifier
+{
+    NSURL *remoteURL = [package urlForResourceNamed:resourceName];
+    
+    if (self.currentlyDownloadingFromURLS[remoteURL])
+        return;
+
+    // Finale destination of the resource in the package's resource path.
+    NSString *targetPath = [SF:@"%@/%@", [package resourcesPath], resourceName];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:remoteURL];
+    
+
+    NSString *tempFilePath = [SF:@"%@/%@", NSTemporaryDirectory(), resourceName];
+    NSURLSessionDownloadTask *downloadTask;
+    
+    // The download task.
+    __weak EMBackend *weakSelf = self;
+    downloadTask = [self.session downloadTaskWithRequest:request
+                                           progress:nil
+                                        destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+                                            return [NSURL fileURLWithPath:tempFilePath];
+                                        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+                                            if (error) {
+                                                HMLOG(TAG, EM_ERR, @"Failed downloading resource from: %@", remoteURL.path);
+                                            } else {
+                                                HMLOG(TAG, EM_ERR, @"Downloaded resource from: %@", remoteURL.path);
+                                                
+                                                // Copy it to the resources folder of the package
+                                                NSFileManager *fm = [NSFileManager defaultManager];
+                                                [fm copyItemAtPath:filePath.path toPath:targetPath error:&error];
+                                                
+                                                // Delete temp file
+                                                [fm removeItemAtPath:filePath.path error:&error];
+                                            }
+                                            [weakSelf.currentlyDownloadingFromURLS removeObjectForKey:remoteURL];
+                                            
+                                            
+                                            
+                                            // Remaining required resources.
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                NSMutableDictionary *requiredResources = weakSelf.requiredResourcesForEmuOID[identifier];
+                                                NSDictionary *info = requiredResources[resourceName];
+                                                [requiredResources removeObjectForKey:resourceName];
+                                                if (requiredResources.count == 0) {
+                                                    // Tried to download all required resources.
+                                                    [weakSelf.requiredResourcesForEmuOID removeObjectForKey:identifier];
+                                                    
+                                                    // Post a notification to the UI
+                                                    // Indicating that backend tried to download all resources for that emu.
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDownloadedResourcesForEmuticon
+                                                                                                        object:nil
+                                                                                                      userInfo:info];
+
+                                                }
+                                            });
+                                        }];
+    self.currentlyDownloadingFromURLS[remoteURL] = downloadTask;
+    [downloadTask resume];
 }
 
 @end

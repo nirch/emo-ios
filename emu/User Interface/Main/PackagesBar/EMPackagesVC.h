@@ -13,4 +13,7 @@
 
 @property (nonatomic, weak) id<EMPackageSelectionDelegate> delegate;
 
+-(void)selectThisPackage:(Package *)package;
+-(void)selectPackageAtIndex:(NSInteger)index;
+
 @end

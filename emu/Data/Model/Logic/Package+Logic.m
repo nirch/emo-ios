@@ -112,7 +112,7 @@
 
 -(NSArray *)emuticonsWithNoSpecificFootage
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"prefferedFootageOID=nil"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"prefferedFootageOID=nil AND emuDef.package=%@", self];
     NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
                                         withPredicate:predicate
                                             inContext:self.managedObjectContext];
@@ -219,6 +219,18 @@
                            cfg.bucketName,
                            [self zippedPackageResourcesFileName]];
     
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
+
+-(NSURL *)urlForResourceNamed:(NSString *)resourceName
+{
+    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+    NSString *urlString = [SF:@"%@/%@/packages/%@/%@",
+                           cfg.baseResourceURL,
+                           cfg.bucketName,
+                           self.name,
+                           resourceName];
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }

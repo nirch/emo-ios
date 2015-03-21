@@ -116,7 +116,6 @@
  */
 -(NSURL *)urlForZippedResources;
 
-
 /**
  *  The local (bundled or resources dir) url of the zip file containing all resources for the package.
  *
@@ -130,5 +129,15 @@
  *  @return The NSURL pointing to the position of where a zip may be found.
  */
 -(NSString *)zippedPackageTempPath;
+
+/**
+ *  A remote url for resource with the given name.
+ *
+ *  @param resourceName The file name of the resource.
+ *
+ *  @return NSURL pointing to where the resource is on the web.
+ */
+-(NSURL *)urlForResourceNamed:(NSString *)resourceName;
+
 
 @end

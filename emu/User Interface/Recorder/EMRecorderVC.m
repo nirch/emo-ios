@@ -1096,10 +1096,13 @@
         [oldFootage deleteAndCleanUp];
         appCFG.prefferedFootageOID = newFootage.oid;
         
-        // Clean up all emuticons that don't have their own specific footage.
+        // Clean up all emuticons that don't have their own specific footage
+        // In all packages.
         // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
-        [self.package cleanUpEmuticonsWithNoSpecificFootage];
+        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+            [package cleanUpEmuticonsWithNoSpecificFootage];
+        }
         
     } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
         
@@ -1114,9 +1117,8 @@
         // Clean up all emuticons that don't have their own specific footage.
         // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
-        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
-            [package cleanUpEmuticonsWithNoSpecificFootage];
-        }
+        [self.package cleanUpEmuticonsWithNoSpecificFootage];
+
 
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
         
@@ -1293,7 +1295,7 @@
         HMParams *params = self.recorderSessionAnalyticsParams;
         [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
         [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
+        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_RETAKE_BUTTON
                                  info:params.dictionary];
 
         
@@ -1307,8 +1309,14 @@
         [self handleStateWithInfo:nil
                         nextState:@(EMRecorderStateDone)];
         
-        
-        
+        //
+        // Analytics
+        //
+        HMParams *params = self.recorderSessionAnalyticsParams;
+        [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+        [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_CONFIRM_BUTTON
+                                 info:params.dictionary];
         
     } else {
         /*

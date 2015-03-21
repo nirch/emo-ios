@@ -69,4 +69,31 @@
     return emus;
 }
 
+-(BOOL)allResourcesAvailable
+{
+    // If should have a back layer, check if available.
+    if (self.sourceBackLayer &&
+        [self isMissingResourceNamed:self.sourceBackLayer])
+        return NO;
+    
+    // If should have a front layer, check if available.
+    if (self.sourceFrontLayer &&
+        [self isMissingResourceNamed:self.sourceFrontLayer])
+        return NO;
+    
+    // If should have a user mask, check if available.
+    if (self.sourceUserLayerMask &&
+        [self isMissingResourceNamed:self.sourceUserLayerMask])
+        return NO;
+    
+    return YES;
+}
+
+-(BOOL)isMissingResourceNamed:(NSString *)resourceName
+{
+    NSString *resourcesPath = [self.package resourcesPath];
+    NSString *resourcePath = [EMDB pathForResourceNamed:resourceName path:resourcesPath];
+    return resourcePath == nil;
+}
+
 @end

@@ -181,7 +181,7 @@
 		08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
 		08E1728D1ABDBBA7002FE477 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
 		08E172901ABDCA6A002FE477 /* package_phrases_20150317_224121.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08E1728E1ABDCA6A002FE477 /* package_phrases_20150317_224121.zip */; };
-		08E172911ABDCA6A002FE477 /* package_surprise_20150317_213938.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08E1728F1ABDCA6A002FE477 /* package_surprise_20150317_213938.zip */; };
+		08E172931ABE39BF002FE477 /* package_surprise_20150317_213938.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08E172921ABE39BF002FE477 /* package_surprise_20150317_213938.zip */; };
 		08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */; };
 		54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
 		A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
@@ -473,7 +473,7 @@
 		08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
 		08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
 		08E1728E1ABDCA6A002FE477 /* package_phrases_20150317_224121.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_phrases_20150317_224121.zip; sourceTree = "<group>"; };
-		08E1728F1ABDCA6A002FE477 /* package_surprise_20150317_213938.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_surprise_20150317_213938.zip; sourceTree = "<group>"; };
+		08E172921ABE39BF002FE477 /* package_surprise_20150317_213938.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_surprise_20150317_213938.zip; sourceTree = "<group>"; };
 		08EBB4151ABC8E7800A91E71 /* EMShareFBMessanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFBMessanger.h; sourceTree = "<group>"; };
 		08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareFBMessanger.m; sourceTree = "<group>"; };
 		63EBC61D3F02128F78B223F3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -999,7 +999,7 @@
 			children = (
 				08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */,
 				08E1728E1ABDCA6A002FE477 /* package_phrases_20150317_224121.zip */,
-				08E1728F1ABDCA6A002FE477 /* package_surprise_20150317_213938.zip */,
+				08E172921ABE39BF002FE477 /* package_surprise_20150317_213938.zip */,
 			);
 			path = "Local Resources";
 			sourceTree = "<group>";
@@ -1385,7 +1385,7 @@
 				08B0E0AC1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */,
 				085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */,
 				08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */,
-				08E172911ABDCA6A002FE477 /* package_surprise_20150317_213938.zip in Resources */,
+				08E172931ABE39BF002FE477 /* package_surprise_20150317_213938.zip in Resources */,
 				085C677D1A937EC9007BC910 /* test240x240.png in Resources */,
 				08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */,
 				08CB89791A9AA12A00224A38 /* 1.gif in Resources */,

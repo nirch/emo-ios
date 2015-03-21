@@ -114,16 +114,29 @@
                                                                 <constraint firstAttribute="width" constant="10" id="MjW-eb-gDv"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999966" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emuNavLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Af4-Mu-Clg">
+                                                            <rect key="frame" x="61" y="62" width="60" height="59"/>
+                                                        </imageView>
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999994" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="failed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BF-Mr-rwB">
+                                                            <rect key="frame" x="77" y="129" width="28" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="0dd-vr-JnE"/>
+                                                        <constraint firstAttribute="centerX" secondItem="Af4-Mu-Clg" secondAttribute="centerX" id="1lb-PD-8dD"/>
                                                         <constraint firstAttribute="centerX" secondItem="eCw-gP-EQE" secondAttribute="centerX" id="4Ul-BA-fwp"/>
+                                                        <constraint firstAttribute="centerY" secondItem="Af4-Mu-Clg" secondAttribute="centerY" id="9Q7-yl-LYU"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="9QU-Gc-Ae5"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="leading" secondItem="QKm-Wq-5ON" secondAttribute="leading" constant="16" id="DOH-SG-wYa"/>
                                                         <constraint firstItem="Jqd-nH-4Zq" firstAttribute="width" secondItem="QKm-Wq-5ON" secondAttribute="width" id="KPO-xA-pNv"/>
                                                         <constraint firstAttribute="centerY" secondItem="eCw-gP-EQE" secondAttribute="centerY" id="KPz-8f-K5u"/>
+                                                        <constraint firstItem="2BF-Mr-rwB" firstAttribute="centerX" secondItem="Af4-Mu-Clg" secondAttribute="centerX" id="Kcf-5K-Zl0"/>
                                                         <constraint firstAttribute="trailing" secondItem="Ghz-B2-vH6" secondAttribute="trailing" constant="16" id="NnA-VH-H85"/>
+                                                        <constraint firstItem="2BF-Mr-rwB" firstAttribute="top" secondItem="Af4-Mu-Clg" secondAttribute="bottom" constant="8" id="Pfq-PG-5V9"/>
                                                         <constraint firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="TnV-Ef-GZd"/>
                                                         <constraint firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="VfL-M2-bBt"/>
                                                         <constraint firstAttribute="bottom" secondItem="Ghz-B2-vH6" secondAttribute="bottom" constant="16" id="Zxd-C8-nhM"/>
@@ -155,6 +168,8 @@
                                         <connections>
                                             <outlet property="guiActivity" destination="eCw-gP-EQE" id="I5W-4K-Keb"/>
                                             <outlet property="guiAnimGifView" destination="Ghz-B2-vH6" id="sq3-zl-H6g"/>
+                                            <outlet property="guiFailedImage" destination="Af4-Mu-Clg" id="lsg-dV-Kad"/>
+                                            <outlet property="guiFailedLabel" destination="2BF-Mr-rwB" id="eFy-sf-c70"/>
                                             <outlet property="guiLock" destination="h2L-nW-vHa" id="XHp-gh-SuK"/>
                                         </connections>
                                     </collectionViewCell>

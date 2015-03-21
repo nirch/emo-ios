@@ -153,10 +153,25 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self selectThisPackage:package];
+}
+
+-(void)selectThisPackage:(Package *)package
+{
+    if (package == nil) return;
+    
     self.selectedPackage = package;
     [self.guiCollectionView reloadData];
     [self.delegate packageWasSelected:package];
 }
 
+-(void)selectPackageAtIndex:(NSInteger)index
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (package == nil) return;
+    
+    [self selectThisPackage:package];
+}
 
 @end
