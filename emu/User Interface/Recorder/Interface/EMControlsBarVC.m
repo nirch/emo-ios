@@ -364,6 +364,14 @@
           animated:YES];
 }
 
+-(void)cancelCountdown
+{
+    [self setState:EMRecorderControlsStateReadyToRecord animated:YES];
+    [self.guiRecordButton cancelCountDown];
+    [EMUISound.sh playSoundNamed:SND_CANCEL];
+    self.guiGoodMessageButton.alpha = 1;
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -380,10 +388,7 @@
 - (IBAction)onPressedRecordButton:(EMRecordButton *)recordButton
 {
     if (recordButton.isCounting) {
-        [self setState:EMRecorderControlsStateReadyToRecord animated:YES];
-        [recordButton cancelCountDown];
-        [EMUISound.sh playSoundNamed:SND_CANCEL];
-        self.guiGoodMessageButton.alpha = 1;
+        [self cancelCountdown];
     } else {
         [recordButton startCountDownFromNumber:3];
         [EMUISound.sh playSoundNamed:SND_PRESSED_BUTTON];

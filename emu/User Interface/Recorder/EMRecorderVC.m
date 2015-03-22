@@ -628,6 +628,10 @@
     switch (stage) {
             
         case EMOnBoardingStageWelcome:
+            // If counting down to recording, cancel.
+            [self.controlsVC cancelCountdown];
+
+            // Restart.
             [self stateRestart];
             break;
             

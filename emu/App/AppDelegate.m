@@ -133,6 +133,12 @@
 {
     self.fbContext = context;
     [self.currentFBMSharer onFBMReply];
+    
+    // If not on first screen, pop back to the main screen (with no animation).
+    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
+        [nc popToRootViewControllerAnimated:NO];
+    }
 }
 
 

@@ -23,7 +23,6 @@
 		080B05A51AB06E85003C19E7 /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 080B05A31AB06E85003C19E7 /* ServerCFG.plist */; };
 		080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
 		080CB3201AA4A9DD00603E30 /* EMKeyboardContainerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */; };
-		080CB3231AA4A9DD00603E30 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 080CB31A1AA4A9DD00603E30 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		080CB32A1AA4AFCF00603E30 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		080CB32B1AA4B0F200603E30 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08B5896F1A938BCC008D9068 /* emu.xcdatamodeld */; };
 		080CB3411AA4C10B00603E30 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89CC1A9B92AD00224A38 /* EMDB.m */; };
@@ -205,7 +204,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				080CB3231AA4A9DD00603E30 /* Keyboard.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
