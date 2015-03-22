@@ -140,4 +140,6 @@
 -(NSURL *)urlForResourceNamed:(NSString *)resourceName;
 
 
+-(NSURL *)urlForPackageIcon;
+
 @end

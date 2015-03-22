@@ -50,6 +50,8 @@
 
 @property (nonatomic, weak) EMPackagesVC *packagesBarVC;
 
+@property (nonatomic) BOOL refetchDataAttempted;
+
 @end
 
 @implementation EMMainVC
@@ -58,6 +60,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.refetchDataAttempted = NO;
     self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
     
     // enable slide-back
@@ -75,10 +79,7 @@
 
     // Show the splash screen if needs to open the recorder
     // for the onboarding experience.
-    if (appCFG.onboardingPassed.boolValue) {
-        [self resetFetchedResultsController];
-        [self.guiCollectionView reloadData];
-    } else {
+    if (!appCFG.onboardingPassed.boolValue) {
         [self showSplashAnimated:NO];
     }
     
@@ -89,6 +90,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
                                                         object:self
                                                       userInfo:nil];
+    
+    [self handleFlow];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -146,6 +149,7 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
     [nc removeObserver:emkUIDataRefreshPackages];
+    [nc removeObserver:emkUIDownloadedResourcesForEmuticon];
 }
 
 #pragma mark - Observers handlers
@@ -167,6 +171,8 @@
 
 -(void)onPackagesDataRefresh:(NSNotification *)notification
 {
+    self.refetchDataAttempted = YES;
+    [self.packagesBarVC refresh];
     [self handleFlow];
 }
 
@@ -222,6 +228,10 @@
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.onboardingPassed.boolValue) {
+        if (!self.refetchDataAttempted) {
+            return;
+        }
+        
         /**
          *  Open the recorder for the first time.
          */

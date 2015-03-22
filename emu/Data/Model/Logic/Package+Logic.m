@@ -244,4 +244,18 @@
     return url;
 }
 
+-(NSURL *)urlForPackageIcon
+{
+    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+    NSString *urlString = [SF:@"%@/%@/packages/%@/%@%@.png",
+                           cfg.baseResourceURL,
+                           cfg.bucketName,
+                           self.name,
+                           self.iconName,
+                           @"@2x"
+                           ];
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
+
 @end

@@ -24,6 +24,7 @@
 @property (nonatomic) NSMutableDictionary *currentlyDownloadingFromURLS;
 @property (nonatomic) NSMutableDictionary *requiredResourcesForEmuOID;
 @property (nonatomic) AFHTTPSessionManager *session;
+@property (nonatomic) NSDate *latestRefresh;
 
 @end
 
@@ -96,7 +97,20 @@
     [EMDB ensureRequiredDirectoriesExist];
     
     // Fetching current info from server.
-    [self.server refreshPackagesInfo];
+    BOOL shouldRefresh = NO;
+    if (self.latestRefresh) {
+        NSDate *now = [NSDate date];
+        NSTimeInterval timePassedSincePreviousFetch = [now timeIntervalSinceDate:self.latestRefresh];
+        if (timePassedSincePreviousFetch > 600) {
+            shouldRefresh = YES;
+        }
+    } else {
+        shouldRefresh = YES;
+    }
+    
+    if (shouldRefresh) {
+        [self.server refreshPackagesInfo];
+    }
     
     // Save it all
     [EMDB.sh save];
@@ -113,6 +127,9 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
         return;
     }
+    
+    // No errors
+    self.latestRefresh = [NSDate date];
     
     // Refreshed packages data.
     // Iterate packages and download packages zip files.
