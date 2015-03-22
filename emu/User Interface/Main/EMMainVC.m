@@ -472,11 +472,12 @@
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
     
-    if (flowType == EMRecorderFlowTypeOnboarding) {
-        [self showTutorial];
-    } else {
-        [self handleFlow];
-    }
+//    if (flowType == EMRecorderFlowTypeOnboarding) {
+//        [self showTutorial];
+//    } else {
+//        [self handleFlow];
+//    }
+    [self handleFlow];
 }
 
 -(void)showTutorial
