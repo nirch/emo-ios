@@ -202,7 +202,7 @@
     
     alert.title = [SF:@"About Emu - V%@", build];
     
-    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emujis.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emus.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
     

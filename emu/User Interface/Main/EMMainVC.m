@@ -22,6 +22,7 @@
 #import "EMTutorialVC.h"
 #import "EMNotificationCenter.h"
 #import "EMSplashVC.h"
+#import "EMUISound.h"
 
 
 @interface EMMainVC () <
@@ -92,6 +93,12 @@
                                                       userInfo:nil];
     
     [self handleFlow];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.guiCollectionView.userInteractionEnabled = YES;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -422,14 +429,32 @@
 #pragma mark - UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (self.triedToReloadResourcesForEmuOID[emu.oid]) {
-        [self.triedToReloadResourcesForEmuOID removeObjectForKey:emu.oid];
-        [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
-        return;
-    }
-
-    [self performSegueWithIdentifier:@"emuticon screen segue" sender:indexPath];
+    [EMUISound.sh playSoundNamed:SND_SOFT_CLICK];
+    
+    EmuCell *cell = (EmuCell *)[self.guiCollectionView cellForItemAtIndexPath:indexPath];
+    
+    self.guiCollectionView.userInteractionEnabled = NO;
+    [UIView animateWithDuration:0.1 animations:^{
+        cell.alpha = 0.6;
+        cell.transform = CGAffineTransformMakeScale(0.95, 0.95);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            cell.alpha = 1;
+            cell.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            if (self.triedToReloadResourcesForEmuOID[emu.oid]) {
+                [self.triedToReloadResourcesForEmuOID removeObjectForKey:emu.oid];
+                [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+                self.guiCollectionView.userInteractionEnabled = YES;
+                return;
+            }
+            [self performSegueWithIdentifier:@"emuticon screen segue" sender:indexPath];
+            dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+                self.guiCollectionView.userInteractionEnabled = YES;
+            });
+        }];
+    }];
 }
 
 
@@ -654,7 +679,7 @@
     
     alert.title = [SF:@"About Emu - V%@", build];
     
-    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emujis.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emus.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
 
     [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
     

@@ -35,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet UIView *guiFBMButtonContainer;
 
 @property (nonatomic, weak) UIButton *fbmButton;
+@property (nonatomic, weak) UIButton *fbmSmallerButton;
+
 @property (nonatomic) NSArray *shareMethods;
 @property (nonatomic) NSDictionary *shareNames;
 @property (nonatomic) NSDictionary *shareMethodsNames;
@@ -69,7 +71,13 @@
 -(void)initGUI
 {
     // The big messenger button.
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenHeight = screenRect.size.height;
     CGFloat buttonWidth = 90;
+    if (screenHeight <= 480.0) {
+        buttonWidth = 70;
+    }
+
     UIButton *button = [FBSDKMessengerShareButton circularButtonWithStyle:FBSDKMessengerShareButtonStyleBlue
                                                                     width:buttonWidth];
     button.tag = 0;
@@ -177,11 +185,29 @@
 -(void)configureCell:(EMShareCell *)cell
        forIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *shareMethod = self.shareMethods[indexPath.item];
+    NSNumber *shareMethod = self.shareMethods[indexPath.item];
     NSString *buttonImageName = self.shareNames[shareMethod];
     UIImage *shareIcon = [UIImage imageNamed:buttonImageName];
     [cell.guiButton setImage:shareIcon forState:UIControlStateNormal];
     cell.guiButton.tag = indexPath.item;
+    
+    // Change how the share button of fb messenger looks
+    // to whatever style defined by the FB Messenger SDK
+    // (instead of the hardcoded image)
+    if ([shareMethod isEqualToNumber:@(emkShareMethodFacebookMessanger)]) {
+        if (self.fbmSmallerButton == nil) {
+            UIButton *button = [FBSDKMessengerShareButton circularButtonWithStyle:FBSDKMessengerShareButtonStyleWhite
+                                                                            width:58];
+            button.layer.cornerRadius = 30;
+            [cell addSubview:button];
+            button.center = cell.guiButton.center;
+            button.hidden = NO;
+            button.tag = 0;
+            cell.guiButton.hidden = YES;
+            [button addTarget:self action:@selector(onPressedShareButton:) forControlEvents:UIControlEventTouchUpInside];
+            self.fbmSmallerButton = button;
+        }
+    }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
