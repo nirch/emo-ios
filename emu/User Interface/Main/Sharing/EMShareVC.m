@@ -139,7 +139,7 @@
     self.shareMethods = @[
                           @(emkShareMethodFacebookMessanger),
                           //@(emkShareMethodFacebook),
-                          @(emkShareMethodAppleMessages),
+                          //@(emkShareMethodAppleMessages),
                           //@(emkShareMethodWhatsapp),
                           @(emkShareMethodMail),
                           @(emkShareMethodSaveToCameraRoll),

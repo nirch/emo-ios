@@ -38,21 +38,26 @@
 {
     [super viewDidLoad];
     [self initData];
+    // Show the animated gif
+    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
+    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-    // Show the animated gif
-    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
-    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
-    
     // Only iPhone4s needs special treatment of the layout
     [self layoutFixesIfRequired];
     
     // Init observers
     [self initObservers];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -62,6 +67,7 @@
     // Remove observers
     [self removeObservers];
 }
+
 
 -(void)initData
 {

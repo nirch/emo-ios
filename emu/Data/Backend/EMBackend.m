@@ -131,6 +131,9 @@
     // No errors
     self.latestRefresh = [NSDate date];
     
+    // Migration from old local packages
+    [self handleMigrationIfRequired];
+    
     // Refreshed packages data.
     // Iterate packages and download packages zip files.
     for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
@@ -360,6 +363,50 @@
                                         }];
     self.currentlyDownloadingFromURLS[remoteURL] = downloadTask;
     [downloadTask resume];
+}
+
+
+#pragma mark - Data migration
+-(void)handleMigrationIfRequired
+{
+    // Get old love package
+    Package *oldPackage = [Package findWithID:@"1" context:EMDB.sh.context];
+    if (oldPackage == nil) return;
+    NSArray *oldEmuticons = [Emuticon allEmuticonsInPackage:oldPackage];
+    if (oldEmuticons.count != 6) return;
+    
+    // Get new love package.
+    Package *newPackage = [Package findWithID:@"54f826de64617400ae140000" context:EMDB.sh.context];
+    if (newPackage == nil) return;
+    NSArray *newEmuticons = [Emuticon allEmuticonsInPackage:newPackage];
+    if (newEmuticons.count == 0) {
+        [newPackage createMissingEmuticonObjects];
+    }
+    
+    //
+    // Migration
+    //
+    if (oldPackage.prefferedFootageOID) {
+        newPackage.prefferedFootageOID = oldPackage.prefferedFootageOID;
+    }
+    
+    // Iterate emus of old package
+    for (Emuticon *oldEmu in [Emuticon allEmuticonsInPackage:oldPackage]) {
+        [oldEmu cleanUp];
+        NSString *name = oldEmu.emuDef.name;
+        HMLOG(TAG, EM_VERBOSE, @"Migrating: %@", name);
+
+        Emuticon *newEmu = [Emuticon findWithName:name
+                                          package:newPackage
+                                          context:EMDB.sh.context];
+        [newEmu cleanUp];
+        if (oldEmu.prefferedFootageOID != nil) {
+            newEmu.prefferedFootageOID = oldEmu.prefferedFootageOID;
+        }
+    }
+    
+    // Delete old package
+    [EMDB.sh.context deleteObject:oldPackage];
 }
 
 @end

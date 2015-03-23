@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>host</key>
-	<string>homage-server-app-dev.elasticbeanstalk.com</string>
+	<string>app-test.emu.im</string>
 	<key>protocol</key>
 	<string>http</string>
 	<key>port</key>
 	<string>80</string>
 	<key>prod_host</key>
-	<string>homage-server-app-prod.elasticbeanstalk.com</string>
+	<string>app.emu.im</string>
 	<key>prod_protocol</key>
 	<string>http</string>
 	<key>prod_port</key>

@@ -21,6 +21,17 @@
     return (Emuticon *)object;
 }
 
++(Emuticon *)findWithName:(NSString *)name
+                  package:(Package *)package
+                  context:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"emuDef.name=%@ AND emuDef.package=%@", name, package];
+    NSManagedObject *object = [NSManagedObject fetchSingleEntityNamed:E_EMU
+                                                        withPredicate:predicate
+                                                            inContext:context];
+    return (Emuticon *)object;
+}
+
 
 +(Emuticon *)previewWithOID:(NSString *)oid
                  footageOID:(NSString *)footageOID
