@@ -65,11 +65,11 @@
     self.refetchDataAttempted = NO;
     self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
     
-    // enable slide-back
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-        self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    }
+//    // enable slide-back
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+//        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated

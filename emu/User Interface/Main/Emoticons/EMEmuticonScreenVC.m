@@ -225,4 +225,14 @@
     [self retake];
 }
 
+- (IBAction)onSwipedRight:(id)sender
+{
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
+                             info:[self paramsForCurrentEmuticon].dictionary];
+    
+    // Go back
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 @end

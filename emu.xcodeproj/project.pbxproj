@@ -35,6 +35,7 @@
 		080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670F1A937EC9007BC910 /* UserFootage+Logic.m */; };
 		080CB3531AA50D5300603E30 /* EMPackagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB3521AA50D5300603E30 /* EMPackagesVC.m */; };
 		080CB39B1AA51B6100603E30 /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; };
+		0815A9121AC03AB7006B5ED2 /* package_love_20150309_110610.zip in Resources */ = {isa = PBXBuildFile; fileRef = 0815A9111AC03AB7006B5ED2 /* package_love_20150309_110610.zip */; };
 		0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0827C6D81A8608E200B14294 /* uniformBGParams.xml */; };
 		083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083334841A827D79008AC771 /* HMCaptureSession.mm */; };
 		0833348C1A827D81008AC771 /* HMGMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 083334881A827D81008AC771 /* HMGMError.m */; };
@@ -103,8 +104,6 @@
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
 		089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
-		08B0E0AC1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */; };
-		08B0E0AD1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */; };
 		08B589711A938BCC008D9068 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08B5896F1A938BCC008D9068 /* emu.xcdatamodeld */; };
 		08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
 		08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
@@ -179,8 +178,6 @@
 		08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */; };
 		08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
 		08E1728D1ABDBBA7002FE477 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
-		08E172901ABDCA6A002FE477 /* package_phrases_20150317_224121.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08E1728E1ABDCA6A002FE477 /* package_phrases_20150317_224121.zip */; };
-		08E172931ABE39BF002FE477 /* package_surprise_20150317_213938.zip in Resources */ = {isa = PBXBuildFile; fileRef = 08E172921ABE39BF002FE477 /* package_surprise_20150317_213938.zip */; };
 		08E172951ABECF23002FE477 /* plasticClickSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08E172941ABECF23002FE477 /* plasticClickSound.wav */; };
 		08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */; };
 		54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
@@ -251,6 +248,7 @@
 		080CB3991AA51B6100603E30 /* EMPackageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPackageCell.h; sourceTree = "<group>"; };
 		080CB39A1AA51B6100603E30 /* EMPackageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPackageCell.m; sourceTree = "<group>"; };
 		080CB3A81AA52C7300603E30 /* EMPackageSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPackageSelectionDelegate.h; sourceTree = "<group>"; };
+		0815A9111AC03AB7006B5ED2 /* package_love_20150309_110610.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_love_20150309_110610.zip; sourceTree = "<group>"; };
 		0827C6D81A8608E200B14294 /* uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = uniformBGParams.xml; sourceTree = "<group>"; };
 		083334761A822E4D008AC771 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		083334831A827D79008AC771 /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
@@ -372,7 +370,6 @@
 		089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		089E78B51A780DEB00BC3479 /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
 		089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
-		08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_love_20150309_110610.zip; sourceTree = "<group>"; };
 		08B0E0AE1AB9B31F00725C2D /* emu1_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_1.xcdatamodel; sourceTree = "<group>"; };
 		08B589701A938BCC008D9068 /* emu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu.xcdatamodel; sourceTree = "<group>"; };
 		08B589811A938C5A008D9068 /* EmuticonDef+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmuticonDef+Logic.h"; sourceTree = "<group>"; };
@@ -471,8 +468,6 @@
 		08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPreviewView.m; sourceTree = "<group>"; };
 		08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
 		08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
-		08E1728E1ABDCA6A002FE477 /* package_phrases_20150317_224121.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_phrases_20150317_224121.zip; sourceTree = "<group>"; };
-		08E172921ABE39BF002FE477 /* package_surprise_20150317_213938.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = package_surprise_20150317_213938.zip; sourceTree = "<group>"; };
 		08E172941ABECF23002FE477 /* plasticClickSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = plasticClickSound.wav; sourceTree = "<group>"; };
 		08EBB4151ABC8E7800A91E71 /* EMShareFBMessanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFBMessanger.h; sourceTree = "<group>"; };
 		08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareFBMessanger.m; sourceTree = "<group>"; };
@@ -998,9 +993,7 @@
 		08C929E41AB976C7006A472D /* Local Resources */ = {
 			isa = PBXGroup;
 			children = (
-				08B0E0AB1AB9A04700725C2D /* package_love_20150309_110610.zip */,
-				08E1728E1ABDCA6A002FE477 /* package_phrases_20150317_224121.zip */,
-				08E172921ABE39BF002FE477 /* package_surprise_20150317_213938.zip */,
+				0815A9111AC03AB7006B5ED2 /* package_love_20150309_110610.zip */,
 			);
 			path = "Local Resources";
 			sourceTree = "<group>";
@@ -1353,7 +1346,6 @@
 			files = (
 				080B05A51AB06E85003C19E7 /* ServerCFG.plist in Resources */,
 				0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */,
-				08B0E0AD1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */,
 				08CED1111AA6F84500C50D0C /* Analytics.plist in Resources */,
 				08CED0DB1AA5CAF000C50D0C /* Localizable.strings in Resources */,
 				080CB32A1AA4AFCF00603E30 /* Images.xcassets in Resources */,
@@ -1384,10 +1376,8 @@
 				085C67911A937EC9007BC910 /* Images.xcassets in Resources */,
 				085C67831A937EC9007BC910 /* test640x360.png in Resources */,
 				08CB897B1A9AA12A00224A38 /* 3.gif in Resources */,
-				08B0E0AC1AB9A04700725C2D /* package_love_20150309_110610.zip in Resources */,
 				085C67631A937EC9007BC910 /* silHeadAndChest.ctr in Resources */,
 				08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */,
-				08E172931ABE39BF002FE477 /* package_surprise_20150317_213938.zip in Resources */,
 				085C677D1A937EC9007BC910 /* test240x240.png in Resources */,
 				08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */,
 				08CB89791A9AA12A00224A38 /* 1.gif in Resources */,
@@ -1400,6 +1390,7 @@
 				0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */,
 				086005531A98A839008CD7DE /* cancel.wav in Resources */,
 				085C67821A937EC9007BC910 /* test640x360.ctr in Resources */,
+				0815A9121AC03AB7006B5ED2 /* package_love_20150309_110610.zip in Resources */,
 				085C67781A937EC9007BC910 /* contourCloseupRed.png in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
 				08CAEAC71A9600E1008A3E0A /* headAndChest480X480.ctr in Resources */,
@@ -1408,7 +1399,6 @@
 				085C677E1A937EC9007BC910 /* test240x240Green.png in Resources */,
 				086005541A98A839008CD7DE /* pressedButton.wav in Resources */,
 				0860055E1A98E2FE008CD7DE /* endRecording.wav in Resources */,
-				08E172901ABDCA6A002FE477 /* package_phrases_20150317_224121.zip in Resources */,
 				08CB89831A9AA12A00224A38 /* Experimental.storyboard in Resources */,
 				085C67811A937EC9007BC910 /* test480x480Green.png in Resources */,
 				08CB897D1A9AA12A00224A38 /* 5.gif in Resources */,

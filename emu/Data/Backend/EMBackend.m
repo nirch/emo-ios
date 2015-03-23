@@ -191,14 +191,14 @@
                                                     dispatch_async(dispatch_get_main_queue(), ^{
                                                         NSFileManager *fm = [NSFileManager defaultManager];
                                                         
-                                                        NSError *error;
                                                         
                                                         // Delete file if already exists at destination.
-                                                        [fm removeItemAtPath:localURL.path error:&error];
+                                                        [fm removeItemAtPath:localURL.path error:nil];
                                                         
+                                                        NSError *error;
+
                                                         // Copy the temp file to expected place.
-                                                        if (error == nil)
-                                                            [fm copyItemAtPath:filePath.path toPath:localURL.path error:&error];
+                                                        [fm copyItemAtPath:filePath.path toPath:localURL.path error:&error];
                                                         
                                                         // Delete temp file.
                                                         if (error == nil)

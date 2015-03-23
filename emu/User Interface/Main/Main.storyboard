@@ -353,6 +353,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="RfO-Jc-wDZ" firstAttribute="top" secondItem="DTt-Hy-ZEY" secondAttribute="bottom" constant="8" id="H9U-Fr-uR0"/>
                             <constraint firstItem="Voh-xn-DcO" firstAttribute="top" secondItem="RfO-Jc-wDZ" secondAttribute="bottom" constant="8" id="IJE-1Z-bDw"/>
@@ -370,6 +371,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="LoY-QT-WpU" appends="YES" id="TcM-Jd-TEI"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="constraintPlayerLeft" destination="rqX-hJ-8Kt" id="9tf-pa-Hbb"/>
@@ -378,6 +382,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KsB-Oz-cKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="LoY-QT-WpU">
+                    <connections>
+                        <action selector="onSwipedRight:" destination="rnG-vP-eU5" id="ymX-mi-xDY"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="156.5" y="76"/>
         </scene>
