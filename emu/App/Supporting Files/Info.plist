@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.1.11.t</string>
+	<string>1.1.12.t</string>
 	<key>FacebookAppID</key>
 	<string>410672082391445</string>
 	<key>FacebookDisplayName</key>
@@ -47,7 +47,7 @@
 		<string>SourceSansPro-Semibold.ttf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
-	<true/>
+	<false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
