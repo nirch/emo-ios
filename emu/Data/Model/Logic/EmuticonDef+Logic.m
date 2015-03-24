@@ -36,25 +36,25 @@
 
 -(NSString *)pathForUserLayerMask
 {
-    return [EMDB pathForResourceNamed:self.sourceUserLayerMask];
+    return [EMDB pathForResourceNamed:self.sourceUserLayerMask path:[self.package resourcesPath]];
 }
 
 
 -(NSString *)pathForBackLayer
 {
-    return [EMDB pathForResourceNamed:self.sourceBackLayer];
+    return [EMDB pathForResourceNamed:self.sourceBackLayer path:[self.package resourcesPath]];
 }
 
 
 -(NSString *)pathForFrontLayer
 {
-    return [EMDB pathForResourceNamed:self.sourceFrontLayer];
+    return [EMDB pathForResourceNamed:self.sourceFrontLayer path:[self.package resourcesPath]];
 }
+
 
 -(Emuticon *)spawn
 {
-    Emuticon *emu = [Emuticon newForEmuticonDef:self
-                                        context:self.managedObjectContext];
+    Emuticon *emu = [Emuticon newForEmuticonDef:self context:self.managedObjectContext];
     return emu;
 }
 
@@ -67,6 +67,33 @@
         [emus addObject:emu];
     }
     return emus;
+}
+
+-(BOOL)allResourcesAvailable
+{
+    // If should have a back layer, check if available.
+    if (self.sourceBackLayer &&
+        [self isMissingResourceNamed:self.sourceBackLayer])
+        return NO;
+    
+    // If should have a front layer, check if available.
+    if (self.sourceFrontLayer &&
+        [self isMissingResourceNamed:self.sourceFrontLayer])
+        return NO;
+    
+    // If should have a user mask, check if available.
+    if (self.sourceUserLayerMask &&
+        [self isMissingResourceNamed:self.sourceUserLayerMask])
+        return NO;
+    
+    return YES;
+}
+
+-(BOOL)isMissingResourceNamed:(NSString *)resourceName
+{
+    NSString *resourcesPath = [self.package resourcesPath];
+    NSString *resourcePath = [EMDB pathForResourceNamed:resourceName path:resourcesPath];
+    return resourcePath == nil;
 }
 
 @end

@@ -43,7 +43,7 @@
 
 // Retakes questions
 "RETAKE_CHOICE_TITLE" = "Retake footage for:";
-"RETAKE_CHOICE_MESSAGE" = "(Locked emujis will not be changed)";
+"RETAKE_CHOICE_MESSAGE" = "(Locked emus will not be changed)";
 "RETAKE_CHOICE_ALL" = "All packages";
 "RETAKE_CHOICE_PACKAGE" = "Current package only";
 
@@ -51,23 +51,30 @@
 
 // User choices
 "USER_CHOICE_TITLE" = "Reset footage:";
-"USER_CHOICE_RESET_PACK" = "Reset all emujis to original footage";
+"USER_CHOICE_RESET_PACK" = "Reset all emus to original footage";
 
 // Share
 "SHARE_IT_TITLE" = "Share it:";
 "SHARE_SAVE_EMU_CHOICE_TITLE" = "Save as:";
 
-"SHARE_TOAST_SHARED" = "Emuji shared";
-"SHARE_TOAST_COPIED" = "Emuji copied";
-"SHARE_TOAST_COPIED_KB" = "Emuji copied. You may paste it!";
-"SHARE_TOAST_SAVED" = "Emuji saved to camera roll";
+"SHARE_TOAST_SHARED" = "Emu shared";
+"SHARE_TOAST_COPIED" = "Emu copied";
+"SHARE_TOAST_COPIED_KB" = "Emu copied. You may paste it!";
+"SHARE_TOAST_SAVED" = "Emu saved to camera roll";
 "SHARE_TOAST_FAILED" = "Failed";
 "SHARE_TOAST_CANCELED" = "Canceled";
 
 "SHARE_TOAST_MAIL_CLIENT_NOT_CONFIGURED" = "Oops: an email client is not set on your device. Set it up and try again.";
-"SHARE_TOAST_MAIL_SENT" = "Emuji sent by mail";
+"SHARE_TOAST_MAIL_SENT" = "Emu sent by mail";
 "SHARE_TOAST_MAIL_SAVED" = "Saved draft mail";
 
 // Share options
 "ANIM_GIF" = "Animated Gif";
 "VIDEO" = "Video";
+
+// Facebook Messenger
+"FBM_MISSING_TITLE"     = "Facebook Messenger";
+"FBM_MISSING_MESSAGE"   = "The latest Messenger app isn't installed on your device.";
+"FBM_INSTALL_OPTION"    = "Install Messenger!";
+"FBM_MISSING_GOT_IT"    = "Got it.";
+

@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+@class HMServer;
+@class Emuticon;
+
 #import <Foundation/Foundation.h>
 
 @interface EMBackend : NSObject
@@ -14,7 +17,10 @@
 +(EMBackend *)sharedInstance;
 +(EMBackend *)sh;
 
-#pragma mark - Fetching data
--(void)refreshData;
+#pragma mark - Web Service
+@property (nonatomic, readonly) HMServer *server;
+
+#pragma mark - Downloading resources
+-(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info;
 
 @end

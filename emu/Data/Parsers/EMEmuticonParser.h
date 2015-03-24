@@ -24,4 +24,10 @@
 @property (nonatomic) NSNumber *incrementalOrder;
 
 
+/**
+ *  A dictionary containing default values for missing key-value pairs.
+ */
+@property (nonatomic) NSDictionary *defaults;
+
+
 @end

@@ -54,7 +54,8 @@
                         SND_PRESSED_BUTTON:@"pressedButton.wav",
                         SND_CANCEL:@"cancel.wav",
                         SND_START_RECORDING:@"startRecording.wav",
-                        SND_RECORDING_ENDED:@"endRecording.wav"
+                        SND_RECORDING_ENDED:@"endRecording.wav",
+                        SND_SOFT_CLICK:@"plasticClickSound.wav"
                         };
     
     // Load audio files from bundle.

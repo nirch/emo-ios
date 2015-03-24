@@ -40,6 +40,11 @@
 {
     self = [super init];
     if (self) {
+        self.timeStringForFileFormatter = [NSDateFormatter new];
+        self.timeStringForFileFormatter.dateFormat = @"HHmmss";
+        
+        self.dateStringForFileFormatter = [NSDateFormatter new];
+        self.dateStringForFileFormatter.dateFormat = @"yyyyMMdd";
     }
     return self;
 }
@@ -60,10 +65,10 @@
 }
 
 #pragma mark - Core Data stack
--(NSURL *)applicationDocumentsDirectory {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "it.homage.ios.emu" in the application's documents directory.
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
+//-(NSURL *)applicationDocumentsDirectory {
+//    // The directory the application uses to store the Core Data store file. This code uses a directory named "it.homage.ios.emu" in the application's documents directory.
+//    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+//}
 
 - (NSManagedObjectModel *)managedObjectModel {
     // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
@@ -94,10 +99,20 @@
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
     
+    // Auto light migration.
+    NSDictionary *options = @{
+                              NSMigratePersistentStoresAutomaticallyOption:@YES,
+                              NSInferMappingModelAutomaticallyOption:@YES
+                              };
+    
     //
     // Add the persistent store.
     //
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                                   configuration:nil
+                                                             URL:storeURL
+                                                         options:options
+                                                           error:&error]) {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";

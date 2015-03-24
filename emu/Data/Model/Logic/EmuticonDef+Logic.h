@@ -54,6 +54,7 @@
 -(NSString *)pathForUserLayerMask;
 -(NSString *)pathForBackLayer;
 -(NSString *)pathForFrontLayer;
-
+-(BOOL)allResourcesAvailable;
+-(BOOL)isMissingResourceNamed:(NSString *)resourceName;
 
 @end

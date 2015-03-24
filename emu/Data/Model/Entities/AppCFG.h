@@ -2,7 +2,7 @@
 //  AppCFG.h
 //  emu
 //
-//  Created by Aviv Wolf on 2/28/15.
+//  Created by Aviv Wolf on 3/19/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -12,6 +12,10 @@
 
 @interface AppCFG : NSManagedObject
 
+@property (nonatomic, retain) NSString * baseResourceURL;
+@property (nonatomic, retain) NSString * bucketName;
+@property (nonatomic, retain) NSString * clientName;
+@property (nonatomic, retain) NSDate * configUpdatedOn;
 @property (nonatomic, retain) NSNumber * defaultOutputVideoMaxFps;
 @property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSNumber * onboardingPassed;

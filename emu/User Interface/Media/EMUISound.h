@@ -11,6 +11,7 @@
 #define SND_RECORDING_ENDED @"end recording"
 #define SND_PRESSED_BUTTON  @"pressed button"
 #define SND_CANCEL          @"cancel"
+#define SND_SOFT_CLICK      @"soft click"
 
 
 @interface EMUISound : NSObject

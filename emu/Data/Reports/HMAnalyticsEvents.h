@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 15:01:50 03/08/15 IST
+//  Created by build script on 20:31:26 03/21/15 IST
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -76,6 +76,62 @@ The application was launched with a higher version than the version it
 
 /** Param:currentVersion --> <string> - the current version the app was launched with **/
 #define AK_EP_CURRENT_VERSION @"currentVersion"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+A zip file with resources for a package (that wasn't bundled with the
+    app) failed to download to the device
+**/
+#define AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED @"BE:zippedPackageDownloadFailed"
+
+/** Param:error --> <string> - description of the error **/
+#define AK_EP_ERROR @"error"
+
+/** Param:remoteURL --> <string> - the web url the file was downloaded from. **/
+#define AK_EP_REMOTE_URL @"remoteURL"
+
+/** Param:localFileName --> <string> - the local file name. **/
+#define AK_EP_LOCAL_FILE_NAME @"localFileName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+A zip file with resources for a package (that wasn't bundled with the
+    app) downloaded to the device successfully
+**/
+#define AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS @"BE:zippedPackageDownloadSuccess"
+
+/** Param:remoteURL --> <string> - the web url the file was downloaded from. **/
+#define AK_EP_REMOTE_URL @"remoteURL"
+
+/** Param:localFileName --> <string> - the local file name. **/
+#define AK_EP_LOCAL_FILE_NAME @"localFileName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+A zip file with resources for a package failed to unzip
+**/
+#define AK_E_BE_ZIPPED_PACKAGE_UNZIP_FAILED @"BE:zippedPackageUnzipFailed"
+
+/** Param:packageName --> <string> - the name of the package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:error --> <string> - description of the error **/
+#define AK_EP_ERROR @"error"
+
+/** Param:localFileName --> <string> - the local file name. **/
+#define AK_EP_LOCAL_FILE_NAME @"localFileName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+A zip file with resources for a package was unzipped successfully
+**/
+#define AK_E_BE_ZIPPED_PACKAGE_UNZIP_SUCCESS @"BE:zippedPackageUnzipSuccess"
+
+/** Param:packageName --> <string> - the name of the package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:localFileName --> <string> - the local file name. **/
+#define AK_EP_LOCAL_FILE_NAME @"localFileName"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -325,8 +381,8 @@ User canceled recording (by pressing the record button when it was
 #define AK_E_REC_STAGE_EXT_USER_CANCELED_RECORD @"Rec:stageExtUserCanceledRecord"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-User pressed the record button while in the real time extraction was
-    in progress.
+User pressed the record button while real time extraction was in
+    progress.
 **/
 #define AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD @"Rec:stageExtUserPressedRecord"
 

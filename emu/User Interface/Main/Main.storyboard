@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CKz-4p-446">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CKz-4p-446">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -84,7 +84,7 @@
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="15" maxX="0.0" maxY="5"/>
+                                    <inset key="sectionInset" minX="0.0" minY="15" maxX="0.0" maxY="60"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu cell" id="ebO-hW-ziY" customClass="EmuCell">
@@ -114,16 +114,29 @@
                                                                 <constraint firstAttribute="width" constant="10" id="MjW-eb-gDv"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999966" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emuNavLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Af4-Mu-Clg">
+                                                            <rect key="frame" x="61" y="62" width="60" height="59"/>
+                                                        </imageView>
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999994" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="failed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BF-Mr-rwB">
+                                                            <rect key="frame" x="77" y="129" width="28" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="0dd-vr-JnE"/>
+                                                        <constraint firstAttribute="centerX" secondItem="Af4-Mu-Clg" secondAttribute="centerX" id="1lb-PD-8dD"/>
                                                         <constraint firstAttribute="centerX" secondItem="eCw-gP-EQE" secondAttribute="centerX" id="4Ul-BA-fwp"/>
+                                                        <constraint firstAttribute="centerY" secondItem="Af4-Mu-Clg" secondAttribute="centerY" id="9Q7-yl-LYU"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="9QU-Gc-Ae5"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="leading" secondItem="QKm-Wq-5ON" secondAttribute="leading" constant="16" id="DOH-SG-wYa"/>
                                                         <constraint firstItem="Jqd-nH-4Zq" firstAttribute="width" secondItem="QKm-Wq-5ON" secondAttribute="width" id="KPO-xA-pNv"/>
                                                         <constraint firstAttribute="centerY" secondItem="eCw-gP-EQE" secondAttribute="centerY" id="KPz-8f-K5u"/>
+                                                        <constraint firstItem="2BF-Mr-rwB" firstAttribute="centerX" secondItem="Af4-Mu-Clg" secondAttribute="centerX" id="Kcf-5K-Zl0"/>
                                                         <constraint firstAttribute="trailing" secondItem="Ghz-B2-vH6" secondAttribute="trailing" constant="16" id="NnA-VH-H85"/>
+                                                        <constraint firstItem="2BF-Mr-rwB" firstAttribute="top" secondItem="Af4-Mu-Clg" secondAttribute="bottom" constant="8" id="Pfq-PG-5V9"/>
                                                         <constraint firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="TnV-Ef-GZd"/>
                                                         <constraint firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="VfL-M2-bBt"/>
                                                         <constraint firstAttribute="bottom" secondItem="Ghz-B2-vH6" secondAttribute="bottom" constant="16" id="Zxd-C8-nhM"/>
@@ -155,6 +168,8 @@
                                         <connections>
                                             <outlet property="guiActivity" destination="eCw-gP-EQE" id="I5W-4K-Keb"/>
                                             <outlet property="guiAnimGifView" destination="Ghz-B2-vH6" id="sq3-zl-H6g"/>
+                                            <outlet property="guiFailedImage" destination="Af4-Mu-Clg" id="lsg-dV-Kad"/>
+                                            <outlet property="guiFailedLabel" destination="2BF-Mr-rwB" id="eFy-sf-c70"/>
                                             <outlet property="guiLock" destination="h2L-nW-vHa" id="XHp-gh-SuK"/>
                                         </connections>
                                     </collectionViewCell>
@@ -329,7 +344,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RfO-Jc-wDZ" customClass="EMLabel">
                                 <rect key="frame" x="133" y="459" width="109" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="SHARE_IT_TITLE"/>
@@ -338,6 +353,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="RfO-Jc-wDZ" firstAttribute="top" secondItem="DTt-Hy-ZEY" secondAttribute="bottom" constant="8" id="H9U-Fr-uR0"/>
                             <constraint firstItem="Voh-xn-DcO" firstAttribute="top" secondItem="RfO-Jc-wDZ" secondAttribute="bottom" constant="8" id="IJE-1Z-bDw"/>
@@ -355,6 +371,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="LoY-QT-WpU" appends="YES" id="TcM-Jd-TEI"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="constraintPlayerLeft" destination="rqX-hJ-8Kt" id="9tf-pa-Hbb"/>
@@ -363,6 +382,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KsB-Oz-cKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="LoY-QT-WpU">
+                    <connections>
+                        <action selector="onSwipedRight:" destination="rnG-vP-eU5" id="ymX-mi-xDY"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="156.5" y="76"/>
         </scene>
@@ -435,11 +459,38 @@
                                     <outlet property="delegate" destination="73x-p5-EXH" id="703-ya-G12"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cS0-PY-VDO" userLabel="Messanger container">
+                                <rect key="frame" x="0.0" y="45" width="375" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQT-cL-zDF" userLabel="More share options">
+                                        <rect key="frame" x="303" y="18" width="44" height="44"/>
+                                        <state key="normal" image="threeDots">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedMoreShareOptionsButton:" destination="73x-p5-EXH" eventType="touchUpInside" id="wE9-ej-eBw"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="OQT-cL-zDF" secondAttribute="centerY" id="QNX-4d-q9W"/>
+                                    <constraint firstItem="OQT-cL-zDF" firstAttribute="trailing" secondItem="cS0-PY-VDO" secondAttribute="trailingMargin" constant="-20" id="zIh-gv-dmU"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="CiU-Lz-IfQ" appends="YES" id="qcC-ni-cKK"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="width" secondItem="EGa-9a-b7E" secondAttribute="width" id="Hiw-0o-afv"/>
                             <constraint firstAttribute="centerX" secondItem="EGa-9a-b7E" secondAttribute="centerX" id="HsU-2h-5dZ"/>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="height" secondItem="EGa-9a-b7E" secondAttribute="height" id="ONH-fx-jfE"/>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="centerY" secondItem="EGa-9a-b7E" secondAttribute="centerY" id="Ol1-fO-ipH"/>
                             <constraint firstAttribute="centerY" secondItem="EGa-9a-b7E" secondAttribute="centerY" id="Q1m-pY-Ist"/>
+                            <constraint firstItem="cS0-PY-VDO" firstAttribute="centerX" secondItem="EGa-9a-b7E" secondAttribute="centerX" id="Yvc-cr-Bsv"/>
                             <constraint firstItem="EGa-9a-b7E" firstAttribute="width" secondItem="Sb0-zb-Crb" secondAttribute="width" id="u01-4a-3rX"/>
                             <constraint firstItem="EGa-9a-b7E" firstAttribute="leading" secondItem="Sb0-zb-Crb" secondAttribute="leading" id="wJq-bW-eWa"/>
                         </constraints>
@@ -452,9 +503,15 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="guiCollectionView" destination="EGa-9a-b7E" id="W8g-i4-GpS"/>
+                        <outlet property="guiFBMButtonContainer" destination="cS0-PY-VDO" id="RRz-yj-6F7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0nh-Ox-Ydi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="CiU-Lz-IfQ">
+                    <connections>
+                        <action selector="onSwipedLeftToShowMoreShareOptions:" destination="73x-p5-EXH" id="o1M-eU-Z6X"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="663.5" y="319"/>
         </scene>
@@ -747,5 +804,6 @@
         <image name="love_icon.png" width="30" height="30"/>
         <image name="retakeIcon" width="25" height="24"/>
         <image name="shadow" width="375" height="4"/>
+        <image name="threeDots" width="44" height="44"/>
     </resources>
 </document>

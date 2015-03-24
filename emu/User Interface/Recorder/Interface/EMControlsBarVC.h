@@ -88,4 +88,6 @@ typedef NS_ENUM(NSInteger, EMRecorderControlsState){
  */
 -(void)updateBackgroundInfo:(NSDictionary *)info;
 
+-(void)cancelCountdown;
+
 @end

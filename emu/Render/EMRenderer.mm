@@ -33,16 +33,23 @@
                                  numberOfFrames:self.numberOfFrames];
     
     //
-    // Get the source PNG images and set the user mask.
+    // Get the source PNG images.
     //
     CHrSourceI *userSource = new PngSource(userImages);
- 
+    
+    //
+    // Set mask if provided.
+    //
     // Load the mask
-    if (self.userMaskPath) {
-        UIImage *maskImage = [UIImage imageNamed:self.userMaskPath];
-        image_type *maskImageType = CVtool::DecomposeUIimage(maskImage);
+    UIImage *maskImage = [UIImage imageNamed:self.userMaskPath];
+    image_type *maskImageType;
+    if (maskImage) {
+        maskImageType = CVtool::DecomposeUIimage(maskImage);
         userSource->SetAlpha(maskImageType);
+    } else {
+        maskImageType = NULL;
     }
+
     
     //
     // Background source.

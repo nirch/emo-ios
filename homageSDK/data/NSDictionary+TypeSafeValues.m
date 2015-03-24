@@ -54,7 +54,58 @@
 {
     id value = self[key];
     if ([value isKindOfClass:[NSNumber class]]) return @([value boolValue]);
-    return @NO;
+    return nil;
+}
+
+
+#pragma mark - With defaults
+-(NSString *)safeStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary
+{
+    NSString *value = [self safeStringForKey:key];
+    if (value == nil) {
+        value = [defaultsDictionary safeStringForKey:key];
+    }
+    return value;
+}
+
+-(NSString *)safeOIDStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary
+{
+    NSString *value = [self safeOIDStringForKey:key];
+    if (value == nil) {
+        value = [defaultsDictionary safeOIDStringForKey:key];
+    }
+    return value;
+}
+
+-(NSNumber *)safeNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary
+{
+    NSNumber *value = [self safeNumberForKey:key];
+    if (value == nil) {
+        value = [defaultsDictionary safeNumberForKey:key];
+    }
+    return value;
+}
+
+-(NSDecimalNumber *)safeDecimalNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary
+{
+    NSDecimalNumber *value = [self safeDecimalNumberForKey:key];
+    if (value == nil) {
+        value = [defaultsDictionary safeDecimalNumberForKey:key];
+    }
+    return value;
+}
+
+-(NSNumber *)safeBoolNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary
+{
+    NSNumber *value = [self safeBoolNumberForKey:key];
+    if (value == nil) {
+        value = [defaultsDictionary safeBoolNumberForKey:key];
+    }
+    // If value is still nil, set as NO by default.
+    if (value == nil) {
+        value = @NO;
+    }
+    return value;
 }
 
 

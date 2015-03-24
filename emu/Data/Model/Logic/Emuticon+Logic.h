@@ -19,10 +19,23 @@
  *  Finds emuticon object with the provided oid.
  *
  *  @param oid     The id of the object
- *  @param context The managed object context if exists. nil if doesn't exist.
+ *  @param context The managed object context.
  */
 +(Emuticon *)findWithID:(NSString *)oid
                 context:(NSManagedObjectContext *)context;
+
+/**
+ *  Finds emuticon object with the provided name in a package.
+ *
+ *  @param name    The name of the emuticon
+ *  @param package The package of the emuticon
+ *  @param context The managed object context.
+ *
+ *  @return The emuticon object if found. nil otherwise.
+ */
++(Emuticon *)findWithName:(NSString *)name
+                  package:(Package *)package
+                  context:(NSManagedObjectContext *)context;
 
 
 /**

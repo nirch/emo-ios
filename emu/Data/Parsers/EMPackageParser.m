@@ -8,6 +8,7 @@
 
 #import "EMPackageParser.h"
 #import "EMDB.h"
+#import "EMEmuticonParser.h"
 
 @implementation EMPackageParser
 
@@ -26,13 +27,28 @@
      */
     
     NSDictionary *info = self.objectToParse;
-    NSString *oid = [info safeOIDStringForKey:@"oid"];
+    NSString *oid = [info safeOIDStringForKey:@"_id"];
 
     Package *pkg = [Package findOrCreateWithID:oid context:self.ctx];
     pkg.name = [info safeStringForKey:@"name"];
-    pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"time_updated"]];
+    pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"last_update"]];
     pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
+    
+    // If package also include emuticon definitions, parse them all.
+    NSInteger index = 0;
+    NSArray *emus = info[@"emuticons"];
+    if (emus) {
+        index++;
+        EMEmuticonParser *emuParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
+        for (NSDictionary *emuInfo in emus) {
+            emuParser.objectToParse = emuInfo;
+            emuParser.package = pkg;
+            emuParser.defaults = info[@"emuticons_defaults"];
+            emuParser.incrementalOrder = @(index);
+            [emuParser parse];
+        }
+    }
 }
 
 @end

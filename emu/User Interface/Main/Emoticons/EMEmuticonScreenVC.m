@@ -5,6 +5,7 @@
 //  Created by Aviv Wolf on 2/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+#define TAG @"EMEmuticonScreen"
 
 #import "EMEmuticonScreenVC.h"
 #import "EMDB.h"
@@ -37,21 +38,26 @@
 {
     [super viewDidLoad];
     [self initData];
+    // Show the animated gif
+    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
+    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-    // Show the animated gif
-    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
-    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
-    
     // Only iPhone4s needs special treatment of the layout
     [self layoutFixesIfRequired];
     
     // Init observers
     [self initObservers];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -61,6 +67,7 @@
     // Remove observers
     [self removeObservers];
 }
+
 
 -(void)initData
 {
@@ -99,6 +106,10 @@
     self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
 }
 
+-(void)dealloc
+{
+    HMLOG(TAG, EM_VERBOSE, @"dealloc");
+}
 
 #pragma mark - Segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -212,6 +223,16 @@
 
     // Retake
     [self retake];
+}
+
+- (IBAction)onSwipedRight:(id)sender
+{
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
+                             info:[self paramsForCurrentEmuticon].dictionary];
+    
+    // Go back
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

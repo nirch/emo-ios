@@ -11,6 +11,7 @@
 #import "EMPackagesParser.h"
 #import "EMDB.h"
 #import "EMPackageParser.h"
+#import "EMAppCFGParser.h"
 
 @implementation EMPackagesParser
 
@@ -19,6 +20,11 @@
     NSDictionary *info = self.objectToParse;
     if (info == nil) return;
     
+    // Parse general application configurations
+    EMAppCFGParser *cfgParser = [[EMAppCFGParser alloc] initWithContext:self.ctx];
+    cfgParser.objectToParse = info;
+    [cfgParser parse];
+    
     // Iterate and parse packages
     EMPackageParser *packageParser = [[EMPackageParser alloc] initWithContext:self.ctx];
     NSArray *packages = info[@"packages"];
@@ -26,7 +32,9 @@
         packageParser.objectToParse = packageInfo;
         [packageParser parse];
     }
+    
     HMLOG(TAG, EM_VERBOSE, @"Parsed %@ package/s", @(packages.count));
+    [EMDB.sh save];
 }
 
 @end

@@ -32,7 +32,6 @@
 #import "EMOnboardingVC.h"
 #import "EMControlsBarVC.h"
 #import "EMRecordButton.h"
-#import "EMBackend.h"
 #import "EMPNGSequenceWriter.h"
 #import "EMRenderManager.h"
 #import "EMunizingView.h"
@@ -237,14 +236,29 @@
     REMOTE_LOG(@"EMMainVC Memory warning");
     
     // Go boom on a test application.
-    [HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
+    //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
 #pragma mark - Initializations
 -(void)initData
 {
-    self.recordingDuration = self.package? [self.package defaultCaptureDuration]: 2.0;
+    //
+    // Set duration required for this take.
+    //
+    
+    // If retaking a specific emuticon, will take duration specific to that emu.
+    if (self.emuticonToUpdate) {
+        self.recordingDuration = self.emuticonToUpdate.emuDef.duration.doubleValue;
+    } else {
+        // Take the default of the package.
+        self.recordingDuration = self.package? [self.package defaultCaptureDuration]: 2.0;
+    }
+    
+    // If duration is 0, use 2 seconds as default.
+    if (self.recordingDuration == 0) {
+        self.recordingDuration = 2;
+    }
 }
 
 -(void)initGUI
@@ -614,6 +628,10 @@
     switch (stage) {
             
         case EMOnBoardingStageWelcome:
+            // If counting down to recording, cancel.
+            [self.controlsVC cancelCountdown];
+
+            // Restart.
             [self stateRestart];
             break;
             
@@ -1082,10 +1100,13 @@
         [oldFootage deleteAndCleanUp];
         appCFG.prefferedFootageOID = newFootage.oid;
         
-        // Clean up all emuticons that don't have their own specific footage.
+        // Clean up all emuticons that don't have their own specific footage
+        // In all packages.
         // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
-        [self.package cleanUpEmuticonsWithNoSpecificFootage];
+        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+            [package cleanUpEmuticonsWithNoSpecificFootage];
+        }
         
     } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
         
@@ -1101,6 +1122,7 @@
         // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
         [self.package cleanUpEmuticonsWithNoSpecificFootage];
+
 
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
         
@@ -1277,7 +1299,7 @@
         HMParams *params = self.recorderSessionAnalyticsParams;
         [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
         [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
+        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_RETAKE_BUTTON
                                  info:params.dictionary];
 
         
@@ -1291,20 +1313,38 @@
         [self handleStateWithInfo:nil
                         nextState:@(EMRecorderStateDone)];
         
+        //
+        // Analytics
+        //
+        HMParams *params = self.recorderSessionAnalyticsParams;
+        [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+        [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_CONFIRM_BUTTON
+                                 info:params.dictionary];
+        
     } else {
+        /*
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:[NSString stringWithFormat:@"Wrong state for action or action not implemented in %@", NSStringFromSelector(_cmd)]
                                      userInfo:nil];
+         */
+        // Explode on test application,
+        // ignore action silently on production app (after remote logging this)
+        REMOTE_LOG(@"Application on wrong state %@ for action %@", @(self.recorderState), @(action));
+        [HMReporter.sh explodeOnTestApplicationsWithInfo:@{
+                                                           @"action":@(action),
+                                                           @"state":@(self.recorderState)
+                                                           }];
     }
 }
 
 #pragma mark - Fake flow
 -(void)fakeFlow
 {
-    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self _fakeExtraction];
-    });
+//    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self _fakeExtraction];
+//    });
 }
 
 -(void)_fakeExtraction

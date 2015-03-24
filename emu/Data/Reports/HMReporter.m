@@ -13,7 +13,17 @@
 
 @property (nonatomic) NSMutableDictionary *cfg;
 @property (nonatomic) NSString *applicationBuild;
+
+/*
+ Build:
+ 
+    with .d suffix - considered a test application and a dev application.
+    with .t suffix - considered a test application.
+    without suffix - considered a production application.
+ 
+ */
 @property (nonatomic) BOOL isBuildOfTestApplication;
+@property (nonatomic) BOOL isBuildOfDevelopmentApplication;
 
 @property (nonatomic) NSString *mixPanelToken;
 @property (nonatomic) Mixpanel *mixPanel;
@@ -71,6 +81,7 @@
     NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
     self.applicationBuild = [[self trimmedString:build] uppercaseString];
     self.isBuildOfTestApplication = [self.applicationBuild hasSuffix:@"T"] || [self.applicationBuild hasSuffix:@"D"];
+    self.isBuildOfDevelopmentApplication = [self.applicationBuild hasSuffix:@"D"];
 }
 
 -(void)initCFG
@@ -116,6 +127,11 @@
 -(BOOL)isTestApp
 {
     return self.isBuildOfTestApplication;
+}
+
+-(BOOL)isDevApp
+{
+    return self.isBuildOfDevelopmentApplication;
 }
 
 -(void)analyticsForceSend

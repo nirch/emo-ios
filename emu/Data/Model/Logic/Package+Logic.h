@@ -80,8 +80,66 @@
 
 
 /**
- *  <#Description#>
+ *
  */
 -(void)cleanUpEmuticonsWithNoSpecificFootage;
+
+
+/**
+ *  The directory the resources of the package are stored in.
+ *
+ *  @return
+ */
+-(NSString *)resourcesPath;
+
+
+/**
+ *  Is the zipped resources should be downloaded for this package?
+ *
+ *  @return YES if a zipped package should be downloaded.
+ */
+-(BOOL)shouldDownloadZippedPackage;
+
+
+/**
+ *  Is the zipped resources available locally and should be unzipped?
+ *
+ *  @return YES if a zipped package is available locally and should be unzipped.
+ */
+-(BOOL)shouldUnzipZippedPackage;
+
+
+/**
+ *  The remote (s3 or server) url of the zip file containing all resources for the package.
+ *
+ *  @return NSURL pointing to the zip file on the web.
+ */
+-(NSURL *)urlForZippedResources;
+
+/**
+ *  The local (bundled or resources dir) url of the zip file containing all resources for the package.
+ *
+ *  @return NSURL pointing to the local zip file. if file doesn't exist, will return nil.
+ */
+-(NSURL *)localURLForZippedResources;
+
+/**
+ *  The local url for the temp zip file. Will return the url even if the file doesn't exist at that location.
+ *
+ *  @return The NSURL pointing to the position of where a zip may be found.
+ */
+-(NSString *)zippedPackageTempPath;
+
+/**
+ *  A remote url for resource with the given name.
+ *
+ *  @param resourceName The file name of the resource.
+ *
+ *  @return NSURL pointing to where the resource is on the web.
+ */
+-(NSURL *)urlForResourceNamed:(NSString *)resourceName;
+
+
+-(NSURL *)urlForPackageIcon;
 
 @end

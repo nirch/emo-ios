@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EMSplashVC">
+            <connections>
+                <outlet property="guiActivity" destination="uua-1x-cBD" id="Npd-aT-rsX"/>
+                <outlet property="guiLabel" destination="o8i-sk-yoY" id="rAq-Ab-ucq"/>
+                <outlet property="view" destination="iN0-l3-epB" id="b9e-xb-I83"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashImage" translatesAutoresizingMaskIntoConstraints="NO" id="UUD-zR-fWW">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uua-1x-cBD">
+                    <rect key="frame" x="290" y="533" width="20" height="20"/>
+                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V1.X.X" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8i-sk-yoY" customClass="EMLabel">
+                    <rect key="frame" x="257" y="561" width="86" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="BlJ-pN-KKl"/>
+                        <constraint firstAttribute="width" constant="86" id="nzC-zB-Ntq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="o8i-sk-yoY" firstAttribute="centerX" secondItem="uua-1x-cBD" secondAttribute="centerX" id="7lc-mt-NOX"/>
+                <constraint firstItem="o8i-sk-yoY" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottomMargin" constant="-10" id="NpR-cV-yMh"/>
+                <constraint firstAttribute="trailing" secondItem="UUD-zR-fWW" secondAttribute="trailing" id="YF7-bR-wGB"/>
+                <constraint firstItem="uua-1x-cBD" firstAttribute="centerX" secondItem="UUD-zR-fWW" secondAttribute="centerX" id="Yy3-Of-ubT"/>
+                <constraint firstItem="UUD-zR-fWW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aHT-Ss-dkX"/>
+                <constraint firstItem="o8i-sk-yoY" firstAttribute="top" secondItem="uua-1x-cBD" secondAttribute="bottom" constant="8" symbolic="YES" id="cF8-Ll-Ze3"/>
+                <constraint firstItem="UUD-zR-fWW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="j7b-Dg-ODP"/>
+                <constraint firstAttribute="bottom" secondItem="UUD-zR-fWW" secondAttribute="bottom" id="nXs-Qr-lAG"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="splashImage" width="375" height="667"/>
+    </resources>
+</document>

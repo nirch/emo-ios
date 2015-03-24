@@ -12,6 +12,7 @@
 #import "EMMainVC.h"
 #import "EMRecorderVC.h"
 #import "EMDB.h"
+#import "EMDB+Files.h"
 #import "EMBackend.h"
 #import "EmuCell.h"
 #import "EMEmuticonScreenVC.h"
@@ -19,6 +20,9 @@
 #import "EMPackagesVC.h"
 #import "EMInterfaceDelegate.h"
 #import "EMTutorialVC.h"
+#import "EMNotificationCenter.h"
+#import "EMSplashVC.h"
+#import "EMUISound.h"
 
 
 @interface EMMainVC () <
@@ -36,11 +40,18 @@
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesSelectionContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 
-@property (weak, nonatomic) UIImageView *splashView;
+//@property (weak, nonatomic) UIImageView *splashView;
+@property (weak, nonatomic) EMSplashVC *splashVC;
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic)Package *selectedPackage;
+
+@property (nonatomic) NSMutableDictionary *triedToReloadResourcesForEmuOID;
+
+@property (nonatomic, weak) EMPackagesVC *packagesBarVC;
+
+@property (nonatomic) BOOL refetchDataAttempted;
 
 @end
 
@@ -51,10 +62,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Initialize the data
-    // Currently just reads local json files.
-    // TODO: implement integration with server side, when available.
-    [self initData];
+    self.refetchDataAttempted = NO;
+    self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
+    
+//    // enable slide-back
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+//        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -66,56 +81,29 @@
     // Show the splash screen if needs to open the recorder
     // for the onboarding experience.
     if (!appCFG.onboardingPassed.boolValue) {
-        [self showSplash];
-    }
-    
-    // enable slide-back
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        [self showSplashAnimated:NO];
     }
     
     // Init observers
     [self initObservers];
+    
+    // Refresh data if required
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                        object:self
+                                                      userInfo:nil];
+    
+    [self handleFlow];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (!appCFG.onboardingPassed.boolValue) {
-        
-        /**
-         *  Open the recorder for the first time.
-         */
-        Package *package = [appCFG packageForOnboarding];
-        if (package == nil) {
-            NSString *errorMessage = @"Critical error - no package for onboarding selected";
-            HMLOG(TAG, EM_ERR, @"%@", errorMessage);
-            REMOTE_LOG(@"%@", errorMessage);
-        }
-
-        if (package) {
-            [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-                                 info:@{emkPackage:package}];
-        }
-        
-    } else {
-        
-        /**
-         *  User finished onboarding in the past.
-         *  just show the main screen of the app.
-         */
-        [self resetFetchedResultsController];
-        [self.guiCollectionView reloadData];
-    }
+    self.guiCollectionView.userInteractionEnabled = YES;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
     [self removeObservers];
 }
 
@@ -126,7 +114,7 @@
     REMOTE_LOG(@"EMMainVC Memory warning");
     
     // Go boom on a test application.
-    [HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
+    //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -148,12 +136,27 @@
                  selector:@selector(onRenderingFinished:)
                      name:hmkRenderingFinished
                    object:nil];
+    
+    
+    // Backend refreshed information about packages
+    [nc addUniqueObserver:self
+                 selector:@selector(onPackagesDataRefresh:)
+                     name:emkUIDataRefreshPackages
+                   object:nil];
+    
+    // Backend downloaded (or failed to download) missing resources for emuticon.
+    [nc addUniqueObserver:self
+                 selector:@selector(onDownloadedResourcesForEmuticon:)
+                     name:emkUIDownloadedResourcesForEmuticon
+                   object:nil];
 }
 
 -(void)removeObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
+    [nc removeObserver:emkUIDataRefreshPackages];
+    [nc removeObserver:emkUIDownloadedResourcesForEmuticon];
 }
 
 #pragma mark - Observers handlers
@@ -172,47 +175,50 @@
     [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
 }
 
-#pragma mark - The data
--(void)initData
+
+-(void)onPackagesDataRefresh:(NSNotification *)notification
 {
-    [EMBackend.sh refreshData];
-    
-    // Perform the fetch
-    NSError *error;
-    [[self fetchedResultsController] performFetch:&error];
-    
-    if (self.selectedPackage == nil)
-        self.selectedPackage = [Package findWithID:@"1"
-                                           context:EMDB.sh.context];
-    
-    if (error) {
-        HMLOG(TAG,
-              EM_ERR,
-              @"Unresolved error %@, %@",
-              error,
-              [error localizedDescription]);
-    }
+    self.refetchDataAttempted = YES;
+    [self.packagesBarVC refresh];
+    [self handleFlow];
 }
 
+-(void)onDownloadedResourcesForEmuticon:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if (info == nil) return;
+    
+    NSIndexPath *indexPath = info[@"indexPath"];
+    NSString *emuOID = info[@"emuticonOID"];
+
+    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (emu == nil || ![emu.oid isEqualToString:emuOID]) return;
+    
+    [self.guiCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+}
+
+#pragma mark - The data
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
     
+    if (self.selectedPackage == nil) return nil;
+    
     HMLOG(TAG, EM_DBG, @"Showing emuticons for package named:%@", self.selectedPackage.name);
+    REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, self.selectedPackage];
-    
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
-    
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
                                                                                      cacheName:@"Root"];
+
     _fetchedResultsController = frc;
     return frc;
 }
@@ -224,26 +230,74 @@
     [self.fetchedResultsController performFetch:&error];
 }
 
-
-#pragma mark - splash
--(void)showSplash
+#pragma mark - Flow
+-(void)handleFlow
 {
-    UIImageView *splashView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    self.splashView = splashView;
-    self.splashView.image = [UIImage imageNamed:@"splashImage"];
-    self.splashView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.view addSubview:self.splashView];
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (!appCFG.onboardingPassed.boolValue) {
+        if (!self.refetchDataAttempted) {
+            return;
+        }
+        
+        /**
+         *  Open the recorder for the first time.
+         */
+        Package *package = [appCFG packageForOnboarding];
+        if (package == nil) {
+            NSString *errorMessage = @"Critical error - no package for onboarding selected";
+            HMLOG(TAG, EM_ERR, @"%@", errorMessage);
+            REMOTE_LOG(@"%@", errorMessage);
+            [self epicFail:errorMessage];
+            return;
+        }
+        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
+                             info:@{emkPackage:package}];
+    } else {
+
+        /**
+         *  User finished onboarding in the past.
+         *  just show the main screen of the app.
+         */
+        
+        // If no package selected, choose first.
+        if (self.selectedPackage == nil) {
+            [self.packagesBarVC selectPackageAtIndex:0];
+        }
+        
+        // Refresh
+        [self resetFetchedResultsController];
+        [self.guiCollectionView reloadData];
+    }
 }
 
--(void)hideSplashAnimated:(BOOL)animated
+-(void)epicFail:(NSString *)errorMessage
 {
-    if (animated) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [self hideSplashAnimated:NO];
-        }];
-        return;
+    UIAlertController *alert = [UIAlertController new];
+    alert.title = @"Refreshing info";
+    alert.message = @"Something went wrong.\nCheck your internet connectivity and try again.";
+    [alert addAction:[UIAlertAction actionWithTitle:@"Try again"
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction *action) {
+                                                // Refresh data if required
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                                                                    object:self
+                                                                                                  userInfo:nil];
+                                            }]];
+    
+    [self presentViewController:alert
+                       animated:YES
+                     completion:nil];
+}
+
+#pragma mark - splash
+-(void)showSplashAnimated:(BOOL)animated
+{
+    if (self.splashVC == nil) {
+        self.splashVC = [EMSplashVC splashVCInParentVC:self];
+        NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+        [self.splashVC setText:build];
     }
-    self.splashView.alpha = 0;
+    [self.splashVC showAnimated:animated];
 }
 
 #pragma mark - VC preferences
@@ -274,6 +328,7 @@
         
     } else if ([segue.identifier isEqualToString:@"packages bar segue"]) {
         EMPackagesVC *vc = segue.destinationViewController;
+        self.packagesBarVC = vc;
         vc.delegate = self;
     } else if ([segue.identifier isEqualToString:@"tutorial segue"]) {
         EMTutorialVC *vc = segue.destinationViewController;
@@ -318,17 +373,54 @@
         forIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSDictionary *info = @{
+                           @"indexPath":indexPath,
+                           @"emuticonOID":emu.oid
+                           };
+    
+    cell.guiFailedImage.hidden = YES;
+    cell.guiFailedLabel.hidden = YES;
     
     if (emu.wasRendered.boolValue) {
+        
+        //
+        // Emu already rendered. Just display it.
+        //
         [cell.guiActivity stopAnimating];
         cell.animatedGifURL = [emu animatedGifURL];
-    } else {
+        
+    } else if ([emu.emuDef allResourcesAvailable]) {
+        
+        //
+        // Need to render and we have all required resources to do so.
+        //
         [cell.guiActivity startAnimating];
         cell.animatedGifURL = nil;
-        [EMRenderManager.sh enqueueEmu:emu info:@{
-                                                  @"indexPath":indexPath,
-                                                  @"emuticonOID":emu.oid
-                                                  }];
+        [EMRenderManager.sh enqueueEmu:emu
+                                  info:info];
+        
+    } else if (self.triedToReloadResourcesForEmuOID[emu.oid] == nil) {
+
+        //
+        // Missing resources for this emu.
+        //
+        [cell.guiActivity startAnimating];
+        cell.animatedGifURL = nil;
+        
+        // Download missing resources for emuticon
+        self.triedToReloadResourcesForEmuOID[emu.oid] = @YES;
+        [EMBackend.sh downloadResourcesForEmu:emu
+                                         info:info];
+        
+    } else {
+        
+        //
+        // Missing resources and failed downloading resources for this emu.
+        //
+        [cell.guiActivity stopAnimating];
+        cell.animatedGifURL = nil;
+        cell.guiFailedImage.hidden = NO;
+        cell.guiFailedLabel.hidden = NO;
     }
     
     cell.guiLock.alpha = emu.prefferedFootageOID? 0.2 : 0.0;
@@ -337,7 +429,32 @@
 #pragma mark - UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"emuticon screen segue" sender:indexPath];
+    [EMUISound.sh playSoundNamed:SND_SOFT_CLICK];
+    
+    EmuCell *cell = (EmuCell *)[self.guiCollectionView cellForItemAtIndexPath:indexPath];
+    
+    self.guiCollectionView.userInteractionEnabled = NO;
+    [UIView animateWithDuration:0.1 animations:^{
+        cell.alpha = 0.6;
+        cell.transform = CGAffineTransformMakeScale(0.95, 0.95);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            cell.alpha = 1;
+            cell.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            if (self.triedToReloadResourcesForEmuOID[emu.oid]) {
+                [self.triedToReloadResourcesForEmuOID removeObjectForKey:emu.oid];
+                [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+                self.guiCollectionView.userInteractionEnabled = YES;
+                return;
+            }
+            [self performSegueWithIdentifier:@"emuticon screen segue" sender:indexPath];
+            dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+                self.guiCollectionView.userInteractionEnabled = YES;
+            });
+        }];
+    }];
 }
 
 
@@ -347,7 +464,7 @@
 {
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
-        [self hideSplashAnimated:YES];
+        [self.splashVC hideAnimated:YES];
         [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
     
@@ -355,9 +472,12 @@
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
     
-    if (flowType == EMRecorderFlowTypeOnboarding) {
-        [self showTutorial];
-    }
+//    if (flowType == EMRecorderFlowTypeOnboarding) {
+//        [self showTutorial];
+//    } else {
+//        [self handleFlow];
+//    }
+    [self handleFlow];
 }
 
 -(void)showTutorial
@@ -377,7 +497,7 @@
 {
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
-        [self hideSplashAnimated:YES];
+        [self.splashVC hideAnimated:YES];
         [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
 
@@ -394,7 +514,7 @@
     recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     recorderVC.delegate = self;
     [self presentViewController:recorderVC animated:YES completion:^{
-        [self hideSplashAnimated:NO];
+        [self.splashVC hideAnimated:NO];
     }];
 }
 
@@ -560,7 +680,7 @@
     
     alert.title = [SF:@"About Emu - V%@", build];
     
-    alert.message = [SF:@"Emu is a fun free keyboard app for iOS, where in just seconds you can create your own personal video stickers we call Emujis.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+    alert.message = [SF:@"Emu is a fun free app for iOS, where in just seconds you can create your own personal video stickers we call Emus.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
 
     [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
     
@@ -570,6 +690,8 @@
 #pragma mark - EMPackageSelectionDelegate
 -(void)packageWasSelected:(Package *)package
 {
+    [EMDB ensureDirPathExists:package.resourcesPath];
+    
     // Make sure emuticons instances created for this package
     [package createMissingEmuticonObjects];
     

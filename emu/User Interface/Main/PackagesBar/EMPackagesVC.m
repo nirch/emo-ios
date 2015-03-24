@@ -9,6 +9,7 @@
 #import "EMPackagesVC.h"
 #import "EMDB.h"
 #import "EMPackageCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface EMPackagesVC() <
     UICollectionViewDataSource,
@@ -50,6 +51,12 @@
 -(void)initGUI
 {
 
+}
+
+-(void)refresh
+{
+    [self resetFetchedResultsController];
+    [self.guiCollectionView reloadData];
 }
 
 -(void)setupEffects
@@ -130,9 +137,14 @@
 -(void)configureCell:(EMPackageCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.guiIcon.image = [UIImage imageNamed:package.iconName];
     cell.guiLabel.text = package.label;
     cell.isSelected = [package isEqual:self.selectedPackage];
+
+    NSURL *url = [package urlForPackageIcon];
+    [cell.guiIcon sd_setImageWithURL:url
+                    placeholderImage:nil
+                             options:SDWebImageRetryFailed|SDWebImageHighPriority
+                           completed:nil];
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView
@@ -153,10 +165,25 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self selectThisPackage:package];
+}
+
+-(void)selectThisPackage:(Package *)package
+{
+    if (package == nil) return;
+    
     self.selectedPackage = package;
     [self.guiCollectionView reloadData];
     [self.delegate packageWasSelected:package];
 }
 
+-(void)selectPackageAtIndex:(NSInteger)index
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (package == nil) return;
+    
+    [self selectThisPackage:package];
+}
 
 @end

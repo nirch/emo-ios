@@ -15,6 +15,8 @@
 {
     [self createDirectoryNamed:@"footages"];
     [self createDirectoryNamed:@"output"];
+    [self createDirectoryNamed:@"resources"];
+    [self createDirectoryNamed:@"temp"];
 }
 
 
@@ -26,6 +28,9 @@
                        containerURLForSecurityApplicationGroupIdentifier:
                        GROUP_CONTAINER_IDENTIFIER];
     return groupURL;
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+//    return [NSURL URLWithString:basePath];
 }
 
 +(NSString *)rootPath
@@ -38,8 +43,7 @@
 +(NSString *)createDirectoryNamed:(NSString *)directoryName
 {
     // Get the paths
-    NSString *rootPath = [EMDB rootPath];
-    NSString *dirPath = [rootPath stringByAppendingPathComponent:[SF:@"/%@", directoryName]];
+    NSString *dirPath = [self pathForDirectoryNamed:directoryName];
     
     // Create the directory if missing.
     [self ensureDirPathExists:dirPath];
@@ -47,15 +51,33 @@
     return dirPath;
 }
 
++(NSString *)pathForDirectoryNamed:(NSString *)directoryName
+{
+    NSString *rootPath = [EMDB rootPath];
+    NSString *dirPath = [rootPath stringByAppendingPathComponent:[SF:@"/%@", directoryName]];
+    return dirPath;
+}
+
+
 +(BOOL)ensureDirPathExists:(NSString *)dirPath
 {
     NSFileManager *fm = [NSFileManager defaultManager];
-    if (![fm fileExistsAtPath:dirPath])
+    if (![self pathExists:dirPath]) {
+        
+        // Create missing directory.
         [fm createDirectoryAtPath:dirPath
       withIntermediateDirectories:NO
                        attributes:nil
                             error:nil];
-    return [fm fileExistsAtPath:dirPath];
+        
+    }
+    return [self pathExists:dirPath];
+}
+
++(BOOL)pathExists:(NSString *)path
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    return [fm fileExistsAtPath:path];
 }
 
 #pragma mark - Footages
@@ -89,16 +111,28 @@
 #pragma mark - Resources
 +(NSString *)pathForResourceNamed:(NSString *)resourceName
 {
+    return [self pathForResourceNamed:resourceName path:nil];
+}
+
++(NSString *)pathForResourceNamed:(NSString *)resourceName path:(NSString *)path
+{
+    NSString *rp;
+    NSFileManager *fm = [NSFileManager defaultManager];
     NSString *extension = [resourceName pathExtension];
     NSInteger trimIndex = resourceName.length - extension.length - 1;
     NSString *name = [resourceName substringToIndex:trimIndex];
+
+    // Search for the resource in a given local path
+    if (path) {
+        rp = [SF:@"%@/%@", path, resourceName];
+        if ([fm fileExistsAtPath:rp]) return rp;
+    }
     
     // Search for the resource in the main bundle.
-    NSString *path = [[NSBundle mainBundle] pathForResource:name
-                                                     ofType:extension];
+    rp = [[NSBundle mainBundle] pathForResource:name ofType:extension];
     
     // Return the path of the resource (nil if not found).
-    return path;
+    return rp;
 }
 
 @end
