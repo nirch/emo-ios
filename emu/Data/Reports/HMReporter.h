@@ -9,15 +9,12 @@
 #import "HMParams.h"
 
 #define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
-#define IS_TEST_APP [HMReporter.sh isTestApp]
 
 @interface HMReporter : NSObject
 
 #pragma mark - Initialization
 +(HMReporter *)sharedInstance;
 +(HMReporter *)sh;
--(BOOL)isTestApp;
--(BOOL)isDevApp;
 -(void)initializeAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions;
 
 #pragma mark - Tracking

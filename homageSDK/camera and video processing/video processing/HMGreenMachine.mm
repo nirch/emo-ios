@@ -11,6 +11,7 @@
 #import "HMGreenMachine.h"
 #import "HMBackgroundMarks.h"
 #import "HMGMError.h"
+#import "HMGreenMachineDebugger.h"
 
 #import "HMImageTools.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
@@ -48,6 +49,7 @@
 @property (nonatomic) CGSize size;
 @property (nonatomic) HMBackgroundMarks *bgMarks;
 @property (nonatomic) HMBGMark lastBGMark;
+@property (nonatomic) HMGreenMachineDebugger *gmDebug;
 
 // The weight is a value between 0 (bad backgrounds) and 1 (good background)
 @property (nonatomic) CGFloat bgMarkWeight;
@@ -59,6 +61,7 @@
 
 @implementation HMGreenMachine
 
+@synthesize debugMode = _debugMode;
 @synthesize backgroundImage = _backgroundImage;
 @synthesize contourFileName = _contourFileName;
 @synthesize processCounter = _processCounter;
@@ -74,11 +77,20 @@
     return gm;
 }
 
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        _debugMode = NO;
+    }
+    return self;
+}
+
 -(id)initWithBGImageFileName:(NSString *)bgImageFilename
              contourFileName:(NSString *)contourFileName
                        error:(HMGMError **)error
 {
-    self = [super init];
+    self = [self init];
     if (self) {
         
         //
@@ -117,7 +129,7 @@
         self.bgMarkWeight = BG_MARK_WEIGHT_DELTA;
         
         // Finish up the initialization.
-        [self initializeForVideoProcessing:error];
+        [self initializeForVideoProcessing:error];        
     }
     return self;
 }
@@ -162,6 +174,14 @@
     HMLOG(TAG, EM_DBG, @"Dealloced green machine.");
 }
 
+#pragma mark - debugging
+-(HMGreenMachineDebugger *)gmDebug
+{
+    if (_gmDebug) return _gmDebug;
+    _gmDebug = [HMGreenMachineDebugger new];
+    return _gmDebug;
+}
+
 #pragma mark - Processing
 -(void)prepareFrame:(CMSampleBufferRef)sampleBuffer
 {
@@ -174,6 +194,11 @@
     m_original_image = CVtool::CVPixelBufferRef_to_image_crop(pixelBuffer,
                                                               0, 80, 480, 480,
                                                               m_original_image);
+    
+    // Debugging
+    if (self.debugMode && self.gmDebug) {
+        [self.gmDebug originalImage:m_original_image];
+    }
 }
 
 -(CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer
@@ -193,9 +218,6 @@
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
-            //static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Process-%@",@(i)]];
-            //[HMImageTools saveImageType3:m_mask withName:[SF:@"Mask-%@",@(i)]];
-            
             //
             // Using the mask we got from UB->Process()
             // Set pixels recognized as background as alpha with maximum transparency.

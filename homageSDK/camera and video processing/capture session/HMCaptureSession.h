@@ -66,6 +66,7 @@
 }
 
 #pragma mark - session
+@property (nonatomic) BOOL debugMode;
 @property (nonatomic) NSString *prefferedSessionPreset;
 @property (nonatomic) CGSize prefferedSize;
 

@@ -8,22 +8,12 @@
 #import <Crashlytics/Crashlytics.h>
 #import <Mixpanel.h>
 #import <sys/utsname.h>
+#import "AppInfo.h"
 
 @interface HMReporter()
 
 @property (nonatomic) NSMutableDictionary *cfg;
-@property (nonatomic) NSString *applicationBuild;
 
-/*
- Build:
- 
-    with .d suffix - considered a test application and a dev application.
-    with .t suffix - considered a test application.
-    without suffix - considered a production application.
- 
- */
-@property (nonatomic) BOOL isBuildOfTestApplication;
-@property (nonatomic) BOOL isBuildOfDevelopmentApplication;
 
 @property (nonatomic) NSString *mixPanelToken;
 @property (nonatomic) Mixpanel *mixPanel;
@@ -54,9 +44,6 @@
 {
     self = [super init];
     if (self) {
-        // Build number
-        [self initBuildInfo];
-        
         // Read configuration
         [self initCFG];
         
@@ -69,19 +56,6 @@
 -(void)initializeAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions
 {
     [self initMixPanelWithOptions:launchOptions];
-}
-
--(NSString *)trimmedString:(NSString *)str
-{
-    return [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-}
-
--(void)initBuildInfo
-{
-    NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
-    self.applicationBuild = [[self trimmedString:build] uppercaseString];
-    self.isBuildOfTestApplication = [self.applicationBuild hasSuffix:@"T"] || [self.applicationBuild hasSuffix:@"D"];
-    self.isBuildOfDevelopmentApplication = [self.applicationBuild hasSuffix:@"D"];
 }
 
 -(void)initCFG
@@ -98,7 +72,7 @@
 
 -(void)initMixPanelWithOptions:(NSDictionary *)launchOptions
 {
-    self.mixPanelToken = self.cfg[@"token"][self.isTestApp?@"testToken":@"productionToken"];
+    self.mixPanelToken = self.cfg[@"token"][AppInfo.sh.isTestApp?@"testToken":@"productionToken"];
     self.mixPanel = [Mixpanel sharedInstance];
 
     // Init mixpanel using the token
@@ -114,24 +88,13 @@
 -(void)reportSuperParameters
 {
     HMParams *params = [HMParams new];
-    [params addKey:AK_S_BUILD_VERSION value:self.applicationBuild];
+    [params addKey:AK_S_BUILD_VERSION value:AppInfo.sh.applicationBuild];
     [params addKey:AK_S_LOCALIZATION_PREFERENCE value:[self localizationPreference]];
     [params addKey:AK_S_DEVICE_MODEL value:[HMReporter deviceModelName]];
     [params addKey:AK_S_LAUNCHES_COUNT value:[self launchesCount]];
     [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]];
     NSDictionary *info = params.dictionary;
     [self.mixPanel registerSuperProperties:info];
-}
-
-#pragma mark - HMReporterProtocol
--(BOOL)isTestApp
-{
-    return self.isBuildOfTestApplication;
-}
-
--(BOOL)isDevApp
-{
-    return self.isBuildOfDevelopmentApplication;
 }
 
 -(void)analyticsForceSend
@@ -166,7 +129,7 @@
 
 -(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info
 {
-    if ([self isTestApp]) {
+    if (AppInfo.sh.isTestApp) {
         REMOTE_LOG(@"TEST APP GOES BOOM! %@", [info description]);
         [[Crashlytics sharedInstance] crash];
     }
@@ -181,19 +144,19 @@
     // Production app should track update events.
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *previousBuildLaunched = [prefs stringForKey:@"previousBuildLaunched"];
-    if (previousBuildLaunched && ![previousBuildLaunched isEqualToString:self.applicationBuild]) {
+    if (previousBuildLaunched && ![previousBuildLaunched isEqualToString:AppInfo.sh.applicationBuild]) {
         // Check if it was an upgrade
-        if ([self.applicationBuild compare:previousBuildLaunched options:NSNumericSearch] == NSOrderedDescending) {
+        if ([AppInfo.sh.applicationBuild compare:previousBuildLaunched options:NSNumericSearch] == NSOrderedDescending) {
             // A newer app build was installed. Track this event.
             HMParams *params = [HMParams new];
-            [params addKey:AK_EP_CURRENT_VERSION value:self.applicationBuild];
+            [params addKey:AK_EP_CURRENT_VERSION value:AppInfo.sh.applicationBuild];
             [params addKey:AK_EP_PREVIOUS_VERSION value:previousBuildLaunched];
             [self analyticsEvent:AK_E_APP_VERSION_UPDATED info:params.dictionary];
         }
     }
     
     // Store current build as the the previousBuildLaunched
-    [prefs setObject:self.applicationBuild forKey:@"previousBuildLaunched"];
+    [prefs setObject:AppInfo.sh.applicationBuild forKey:@"previousBuildLaunched"];
     [prefs synchronize];
 }
 

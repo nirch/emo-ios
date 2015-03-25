@@ -23,6 +23,7 @@
 #import "EMNotificationCenter.h"
 #import "EMSplashVC.h"
 #import "EMUISound.h"
+#import "AppInfo.h"
 
 
 @interface EMMainVC () <
@@ -651,7 +652,7 @@
                                             }]];
     
     // Debugging stuff
-    if (IS_TEST_APP) {
+    if (AppInfo.sh.isTestApp) {
         [alert addAction:[UIAlertAction actionWithTitle:@"Clean and render"
                                                   style:UIAlertActionStyleDestructive
                                                 handler:^(UIAlertAction *action) {

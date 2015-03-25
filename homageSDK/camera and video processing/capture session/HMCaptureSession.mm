@@ -63,6 +63,7 @@
 -(id)init
 {
     if (self = [super init]) {
+        _debugMode = NO;
         previousSecondTimestamps = [[NSMutableArray alloc] init];
         referenceOrientation = AVCaptureVideoOrientationPortrait;
         backgroundDetectionEnabled = NO;

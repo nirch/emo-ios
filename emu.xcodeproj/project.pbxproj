@@ -177,6 +177,9 @@
 		08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */; };
 		08D92A011A77EFBD00B6A68F /* HMPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */; };
 		08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
+		08D9D44E1AC2B0E4004A83F3 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D44D1AC2B0E4004A83F3 /* AppInfo.m */; };
+		08D9D44F1AC2B3F1004A83F3 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D44D1AC2B0E4004A83F3 /* AppInfo.m */; };
+		08D9D4541AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D4531AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm */; };
 		08E1728D1ABDBBA7002FE477 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
 		08E172951ABECF23002FE477 /* plasticClickSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08E172941ABECF23002FE477 /* plasticClickSound.wav */; };
 		08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */; };
@@ -468,6 +471,10 @@
 		08D929FD1A77EFBD00B6A68F /* HMPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPreviewView.m; sourceTree = "<group>"; };
 		08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
 		08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
+		08D9D44C1AC2B0E4004A83F3 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
+		08D9D44D1AC2B0E4004A83F3 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInfo.m; sourceTree = "<group>"; };
+		08D9D4501AC2C150004A83F3 /* HMGreenMachineDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGreenMachineDebugger.h; sourceTree = "<group>"; };
+		08D9D4531AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMGreenMachineDebugger.mm; sourceTree = "<group>"; };
 		08E172941ABECF23002FE477 /* plasticClickSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = plasticClickSound.wav; sourceTree = "<group>"; };
 		08EBB4151ABC8E7800A91E71 /* EMShareFBMessanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFBMessanger.h; sourceTree = "<group>"; };
 		08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareFBMessanger.m; sourceTree = "<group>"; };
@@ -625,6 +632,8 @@
 				0833348A1A827D81008AC771 /* HMGreenMachine.mm */,
 				083334D41A83EC98008AC771 /* HMBackgroundMarks.h */,
 				083334D51A83EC98008AC771 /* HMBackgroundMarks.m */,
+				08D9D4501AC2C150004A83F3 /* HMGreenMachineDebugger.h */,
+				08D9D4531AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm */,
 			);
 			path = "video processing";
 			sourceTree = "<group>";
@@ -684,6 +693,8 @@
 			children = (
 				085C66DE1A937EC9007BC910 /* AppDelegate.h */,
 				085C66DF1A937EC9007BC910 /* AppDelegate.m */,
+				08D9D44C1AC2B0E4004A83F3 /* AppInfo.h */,
+				08D9D44D1AC2B0E4004A83F3 /* AppInfo.m */,
 				085C66E01A937EC9007BC910 /* Supporting Files */,
 			);
 			path = App;
@@ -1473,6 +1484,7 @@
 				080CB3421AA4C10F00603E30 /* NSManagedObject+FindAndCreate.m in Sources */,
 				08CED0DA1AA5C7EF00C50D0C /* EMShareAppleMessage.m in Sources */,
 				080CB3481AA4C11D00603E30 /* EMDB+Files.m in Sources */,
+				08D9D44F1AC2B3F1004A83F3 /* AppInfo.m in Sources */,
 				08CED0D91AA5C7EF00C50D0C /* EMShareMail.m in Sources */,
 				08C7383A1ABB1140009330AF /* EmuticonDef.m in Sources */,
 				08CED0D51AA5B81400C50D0C /* EmuCell.m in Sources */,
@@ -1495,6 +1507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0806BD821AA37DC80078F14B /* HMReporter.m in Sources */,
+				08D9D4541AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
 				0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */,
@@ -1572,6 +1585,7 @@
 				083E52611A9E1E6B00A66FC8 /* EMMainNavigationVC.m in Sources */,
 				085C67751A937EC9007BC910 /* NSManagedObject+FindAndCreate.m in Sources */,
 				08B5899C1A93B9E5008D9068 /* EMLabel.m in Sources */,
+				08D9D44E1AC2B0E4004A83F3 /* AppInfo.m in Sources */,
 				0806BD871AA392230078F14B /* EMBackend.m in Sources */,
 				08C5EC6C1AA10522007246EC /* Package+Logic.m in Sources */,
 				08CB89CD1A9B92AD00224A38 /* EMDB.m in Sources */,
