@@ -53,7 +53,6 @@
 
 -(void)onFBMReply
 {
-    
 }
 
 -(void)onFBMOpen
@@ -76,7 +75,10 @@
     if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityAnimatedGIF)
     {
         self.wasCanceled = NO;
-        [FBSDKMessengerSharer shareAnimatedGIF:gifData withMetadata:nil withContext:context];
+        FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
+        options.context = context;
+        
+        [FBSDKMessengerSharer shareAnimatedGIF:gifData withOptions:options];
         [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
     } else {
         [self.delegate sharerDidFailWithInfo:self.info];

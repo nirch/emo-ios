@@ -1,6 +1,6 @@
 //  Copyright 2004-present Facebook. All Rights Reserved.
 
-#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+#import "FBSDKMessengerShareKit.h"
 
 /*!
  @class FBSDKMessengerURLHandlerReplyContext

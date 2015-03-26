@@ -51,7 +51,7 @@
 
 // User choices
 "USER_CHOICE_TITLE" = "Reset footage:";
-"USER_CHOICE_RESET_PACK" = "Reset all emus to original footage";
+"USER_CHOICE_RESET_PACK" = "Reset all emus in this pack to original footage";
 
 // Share
 "SHARE_IT_TITLE" = "Share it:";

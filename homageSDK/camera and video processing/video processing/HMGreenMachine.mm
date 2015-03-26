@@ -193,9 +193,6 @@
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
-            //static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Process-%@",@(i)]];
-            //[HMImageTools saveImageType3:m_mask withName:[SF:@"Mask-%@",@(i)]];
-            
             //
             // Using the mask we got from UB->Process()
             // Set pixels recognized as background as alpha with maximum transparency.
@@ -205,6 +202,10 @@
                                                             m_output_image);     // The output image.
             m_output_image->timeStamp = output_t.value;
 
+//            static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Process-%@",@(i)]];
+//            [HMImageTools saveImageType3:m_output_image withName:[SF:@"Me-%@",@(i)]];
+
+            
             // Destroying the temp image
             image_destroy(original_bgr_image, 1);
         });
