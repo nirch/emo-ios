@@ -333,6 +333,7 @@
     // pass the latest output frame to the writer, on the movie writing queue.
     if (movieWritingQueue) {
         dispatch_async(movieWritingQueue, ^{
+            
             if (recording && self.writer) {
                 image_type *output =(image_type *)[self.videoProcessor latestOutputImage];
                 [self.writer writeImageTypeFrame:output];
@@ -342,7 +343,7 @@
                 if (self.writer.shouldFinish) {
                     [self _stopRecording];
                     
-                    // Also stop video processing for this session.
+                    // Stop video processing for this session.
                     [self setVideoProcessingState:HMVideoProcessingStateIdle];
                 }
             }

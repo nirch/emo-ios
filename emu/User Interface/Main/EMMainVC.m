@@ -96,6 +96,7 @@
     [self handleFlow];
 }
 
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -603,9 +604,10 @@
 
 -(void)resetPack
 {
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    Package *package = [appCFG packageForOnboarding];
-
+    if (self.selectedPackage == nil) return;
+    
+    Package *package = self.selectedPackage;
+    
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:package.name];
     [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:package.oid];
