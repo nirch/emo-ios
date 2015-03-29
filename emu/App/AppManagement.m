@@ -1,14 +1,14 @@
 //
-//  AppInfo.m
+//  AppManagement
 //  emu
 //
 //  Created by Aviv Wolf on 3/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import "AppInfo.h"
+#import "AppManagement.h"
 
-@interface AppInfo()
+@interface AppManagement()
 
 /*
  Build:
@@ -24,24 +24,27 @@
 
 @end
 
-@implementation AppInfo
+@implementation AppManagement
+
+@synthesize ioQueue = _ioQueue;
+
 
 #pragma mark - Initialization
 // A singleton
-+(AppInfo *)sharedInstance
++(AppManagement *)sharedInstance
 {
-    static AppInfo *sharedInstance = nil;
+    static AppManagement *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[AppInfo alloc] init];
+        sharedInstance = [[AppManagement alloc] init];
     });
     return sharedInstance;
 }
 
 // Just an alias for sharedInstance for shorter writing.
-+(AppInfo *)sh
++(AppManagement *)sh
 {
-    return [AppInfo sharedInstance];
+    return [AppManagement sharedInstance];
 }
 
 -(id)init
@@ -79,5 +82,12 @@
 }
 
 
+#pragma mark - Queues
+-(dispatch_queue_t)ioQueue
+{
+    if (_ioQueue) return _ioQueue;
+    _ioQueue = dispatch_queue_create("io Queue", DISPATCH_QUEUE_SERIAL);
+    return _ioQueue;
+}
 
 @end

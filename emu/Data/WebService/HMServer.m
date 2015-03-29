@@ -11,7 +11,7 @@
 #import "HMParser.h"
 #import "HMJSONResponseSerializerWithData.h"
 #import "HMReporter.h"
-#import "AppInfo.h"
+#import "AppManagement.h"
 
 @interface HMServer()
 
@@ -174,14 +174,14 @@
     NSString *protocol;
     NSString *host;
 
-    if (AppInfo.sh.isDevApp) {
+    if (AppManagement.sh.isDevApp) {
         //
         // In development application. Use local developer machine, etc.
         //
         port = self.cfg[@"dev_port"];
         protocol = self.cfg[@"dev_protocol"];
         host = self.cfg[@"dev_host"];
-    } else if (AppInfo.sh.isTestApp) {
+    } else if (AppManagement.sh.isTestApp) {
         //
         // Test application. Use test server.
         //

@@ -12,6 +12,7 @@
 #import "EMDB.h"
 #import "EMDB+Files.h"
 #import "EMRenderer.h"
+#import "AppManagement.h"
 
 @interface EMRenderManager()
 
@@ -51,8 +52,9 @@
 
 -(void)initRenderingQueue
 {
-    self.renderingQueue = dispatch_queue_create("Rendering Queue",
-                                                DISPATCH_QUEUE_SERIAL);
+    self.renderingQueue = AppManagement.sh.ioQueue;
+//    self.renderingQueue = dispatch_queue_create("Rendering Queue",
+//                                                DISPATCH_QUEUE_SERIAL);
 }
 
 #pragma mark - Rendering

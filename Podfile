@@ -11,3 +11,4 @@ pod 'AFSoundManager'
 pod 'Toast', '~> 2.4'
 pod 'zipzap', '~> 8.0'
 pod 'Facebook-iOS-SDK', '~> 3.23', :inhibit_warnings => true
+pod 'NYXImagesKit', '~> 2.3'

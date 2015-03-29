@@ -39,7 +39,7 @@
 #import "EMAnimatedGifPlayer.h"
 #import "EMMainVC.h"
 #import "HMBackgroundMarks.h"
-#import "AppInfo.h"
+#import "AppManagement.h"
 
 @interface EMRecorderVC () <
     HMCaptureSessionDelegate,
@@ -521,7 +521,7 @@
     // Initialize the video processor.
     // Set the recorderVC as the session delegate.
     self.captureSession = [[HMCaptureSession alloc] init];
-    self.captureSession.debugMode = AppInfo.sh.isTestApp;
+    self.captureSession.debugMode = AppManagement.sh.isTestApp;
     self.captureSession.prefferedSessionPreset = AVCaptureSessionPreset640x480;
     self.captureSession.prefferedSize = CGSizeMake(480, 480);
     self.captureSession.sessionDelegate = self;
@@ -571,7 +571,7 @@
     HMLOG(TAG, EM_DBG, @"Initialized video processing.");
     
     // TODO: DAN, remove this from here when you implement the UI for start/stop debugging
-    self.greenMachine.debugMode = AppInfo.sh.isTestApp;
+    self.greenMachine.debugMode = AppManagement.sh.isTestApp;
 }
 
 

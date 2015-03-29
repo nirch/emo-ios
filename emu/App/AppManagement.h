@@ -1,5 +1,5 @@
 //
-//  AppInfo.h
+//  AppManagement
 //  emu
 //
 //  Created by Aviv Wolf on 3/25/15.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AppInfo : NSObject
+@interface AppManagement : NSObject
 
 #pragma mark - Initialization
-+(AppInfo *)sharedInstance;
-+(AppInfo *)sh;
++(AppManagement *)sharedInstance;
++(AppManagement *)sh;
 
 #pragma mark - App information
 
@@ -24,5 +24,8 @@
 
 // Is it a dev applications? (app with the .d build string suffix)
 -(BOOL)isDevApp;
+
+#pragma mark - Queues
+@property (nonatomic, readonly) dispatch_queue_t ioQueue;
 
 @end

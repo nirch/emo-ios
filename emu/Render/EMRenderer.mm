@@ -13,6 +13,7 @@
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "PngSource.h"
+#import "PngSourceWithFX.h"
 #import "VideoOutput.h"
 #import "MattingLib/HomageRenderer/HomageRenderer.h"
 #import "MattingLib/HomageRenderer/HrSourceGif.h"
@@ -35,6 +36,7 @@
     //
     // Get the source PNG images.
     //
+    //CHrSourceI *userSource = new PngSource(userImages);
     CHrSourceI *userSource = new PngSource(userImages);
     
     //

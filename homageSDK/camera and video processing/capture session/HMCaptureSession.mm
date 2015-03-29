@@ -14,6 +14,7 @@
 #import "HMCaptureSession.h"
 #import "HMVideoProcessingProtocol.h"
 #import "HMCaptureSessionError.h"
+#import "AppManagement.h"
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
@@ -176,8 +177,9 @@
     }
     
     // Create serial queue for movie writing
-    movieWritingQueue = dispatch_queue_create("Movie Writing Queue",
-                                              DISPATCH_QUEUE_SERIAL);
+    movieWritingQueue = AppManagement.sh.ioQueue;
+//    movieWritingQueue = dispatch_queue_create("Movie Writing Queue",
+//                                              DISPATCH_QUEUE_SERIAL);
     
     // If capture session not set up yet, set it up.
     if ( !captureSession )
