@@ -233,9 +233,9 @@
 #pragma mark - Memory warnings
 -(void)didReceiveMemoryWarning
 {
-    // Log remotely
+    [super didReceiveMemoryWarning];
     HMLOG(TAG, EM_ERR, @"Memory warning in recorder");
-    REMOTE_LOG(@"EMMainVC Memory warning");
+    REMOTE_LOG(@"RecorderVC Memory warning");
     
     // Go boom on a test application.
     //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
@@ -382,8 +382,6 @@
                                  context:EMDB.sh.context];
     
     if (emu == nil) {
-        // Epic fail :-(
-        [self epicFail];
         return;
     }
     

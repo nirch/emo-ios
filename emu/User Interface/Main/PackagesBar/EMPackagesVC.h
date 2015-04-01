@@ -17,4 +17,9 @@
 -(void)selectThisPackage:(Package *)package;
 -(void)selectPackageAtIndex:(NSInteger)index;
 
+-(BOOL)canSelectPrevious;
+-(BOOL)canSelectNext;
+-(void)selectPrevious;
+-(void)selectNext;
+
 @end

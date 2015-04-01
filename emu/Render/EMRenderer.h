@@ -18,6 +18,7 @@
 @property (nonatomic) NSString *userImagesPath;
 @property (nonatomic) NSString *backLayerPath;
 @property (nonatomic) NSString *frontLayerPath;
+@property (nonatomic) NSString *paletteString;
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSInteger numberOfFrames;

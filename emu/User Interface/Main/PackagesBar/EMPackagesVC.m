@@ -5,6 +5,7 @@
 //  Created by Aviv Wolf on 3/2/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+#define TAG @"EMPackagesVC"
 
 #import "EMPackagesVC.h"
 #import "EMDB.h"
@@ -19,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredBG;
+@property (weak, nonatomic) IBOutlet UIView *guiMoreContainer;
 @property (nonatomic) Package *selectedPackage;
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
@@ -39,8 +41,12 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
+    
     [self resetFetchedResultsController];
+    
+    if (self.selectedPackage == nil)
+        [self selectPackageAtIndex:0];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -161,6 +167,58 @@
     return CGSizeMake(width, height);
 }
 
+#pragma mark - Scrolling
+//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    [self updateMoreButtonAnimated:YES];
+//}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self updateMoreButtonAnimated:YES];
+}
+
+#pragma mark - More button
+-(void)updateMoreButtonAnimated:(BOOL)animated
+{
+    if ([self moreToShow]) {
+        [self showMoreButtonAnimated:animated];
+    } else {
+        [self hideMoreButtonAnimated:animated];
+    }
+}
+
+-(BOOL)moreToShow
+{
+    CGFloat width = self.guiCollectionView.contentSize.width;
+    CGFloat x = self.guiCollectionView.contentOffset.x + self.guiCollectionView.bounds.size.width;
+    return x < width - 10;
+}
+
+-(void)showMoreButtonAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self showMoreButtonAnimated:NO];
+        }];
+        return;
+    }
+    
+    self.guiMoreContainer.alpha = 1;
+}
+
+-(void)hideMoreButtonAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self hideMoreButtonAnimated:NO];
+        }];
+        return;
+    }
+    
+    self.guiMoreContainer.alpha = 0;
+}
+
 #pragma mark - Collection View Delegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -175,15 +233,84 @@
     self.selectedPackage = package;
     [self.guiCollectionView reloadData];
     [self.delegate packageWasSelected:package];
+    
+    // Check if selcted package tab is on screen. If not, scroll it into view.
+    NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:package];
+    if (indexPath == nil) return;
+    if (![self.guiCollectionView.indexPathsForVisibleItems containsObject:indexPath]) {
+        [self.guiCollectionView scrollToItemAtIndexPath:indexPath
+                                       atScrollPosition:UICollectionViewScrollPositionNone
+                                               animated:NO];
+    }
 }
 
 -(void)selectPackageAtIndex:(NSInteger)index
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    if (self.fetchedResultsController.fetchedObjects.count<1) return;
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (package == nil) return;
     
     [self selectThisPackage:package];
 }
+
+-(NSInteger)selectedIndex
+{
+    if (self.selectedPackage) {
+        NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:self.selectedPackage];
+        if (indexPath == nil) return -1;
+        return indexPath.item;
+    }
+    return -1;
+}
+
+-(BOOL)canSelectPrevious
+{
+    NSInteger index = [self selectedIndex];
+    return index > 0;
+}
+
+-(BOOL)canSelectNext
+{
+    NSInteger index = [self selectedIndex];
+    return index < (self.fetchedResultsController.fetchedObjects.count - 1);
+}
+
+
+-(void)selectPrevious
+{
+    NSInteger index = [self selectedIndex];
+    if ([self canSelectPrevious]) {
+        index--;
+        [self selectPackageAtIndex:index];
+    }
+}
+
+-(void)selectNext
+{
+    NSInteger index = [self selectedIndex];
+    if ([self canSelectNext]) {
+        index++;
+        [self selectPackageAtIndex:index];
+    }
+}
+
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedMoreButton:(UIButton *)sender
+{
+    CGFloat width = self.guiCollectionView.contentSize.width;
+    CGFloat height = self.guiCollectionView.contentSize.height;
+
+    CGFloat x = self.guiCollectionView.contentOffset.x;
+    x += 1;
+    
+    CGRect rect = CGRectMake(x, 0, width, height);
+    [self.guiCollectionView scrollRectToVisible:rect animated:YES];
+}
+
 
 @end

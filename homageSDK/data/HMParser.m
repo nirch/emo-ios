@@ -13,9 +13,17 @@
 
 -(id)initWithContext:(NSManagedObjectContext *)ctx
 {
-    self = [super init];
+    self = [self init];
     if (self) {
         _ctx = ctx;
+    }
+    return self;
+}
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
         _parseInfo = [NSMutableDictionary new];
         [self initDateFormatters];
     }
@@ -25,10 +33,16 @@
 -(void)initDateFormatters
 {
     _dateFormatter = [[NSDateFormatter alloc] init];
+    _dateFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    _dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    _dateFormatter.locale =  [NSLocale localeWithLocaleIdentifier:@"en_US"];
     [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
     
     _dateFormatterFallback = [[NSDateFormatter alloc] init];
-    [_dateFormatterFallback setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss ' UTC'"];
+    _dateFormatterFallback.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    _dateFormatterFallback.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    _dateFormatterFallback.locale =  [NSLocale localeWithLocaleIdentifier:@"en_US"];
+    [_dateFormatterFallback setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 }
 
 -(void)parse

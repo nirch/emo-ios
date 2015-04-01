@@ -45,7 +45,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
 
     // Only iPhone4s needs special treatment of the layout
     [self layoutFixesIfRequired];

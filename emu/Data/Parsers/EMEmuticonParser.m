@@ -51,6 +51,21 @@
     
     // Parse the emuticon definition info.
     emuDef.name                        = [info safeStringForKey:@"name" defaultsDictionary:defaults];
+
+    // If emu def patched (one of the resources or definitions updated)
+    // Will need to rerender the emu for the user.
+    NSDate *patchedOn = [self parseDateOfString:[info safeStringForKey:@"patchedOn" defaultsDictionary:defaults]];
+    if (patchedOn != nil) {
+        if (![patchedOn isEqualToDate:emuDef.patchedOn]) {
+            for (Emuticon *emu in emuDef.emus) {
+                [emu cleanUp];
+                [emu.emuDef removeAllResources];
+            }
+        }
+        emuDef.patchedOn = patchedOn;
+    }
+
+    // Emu definitions and resources
     emuDef.sourceBackLayer             = [info safeStringForKey:@"source_back_layer" defaultsDictionary:defaults];
     emuDef.sourceFrontLayer            = [info safeStringForKey:@"source_front_layer" defaultsDictionary:defaults];
     emuDef.sourceUserLayerMask         = [info safeStringForKey:@"source_user_layer_mask" defaultsDictionary:defaults];
@@ -58,6 +73,7 @@
     emuDef.duration                    = [info safeDecimalNumberForKey:@"duration" defaultsDictionary:defaults];
     emuDef.framesCount                 = [info safeNumberForKey:@"frames_count" defaultsDictionary:defaults];
     emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index" defaultsDictionary:defaults];
+    emuDef.palette                     = [info safeStringForKey:@"palette" defaultsDictionary:defaults];
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

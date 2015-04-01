@@ -14,7 +14,6 @@
 PngSource::PngSource(NSArray *pngFiles)
 {
     m_pngFiles = pngFiles;
-
 }
 
 int	PngSource::ReadFrame( int iFrame, image_type **im )

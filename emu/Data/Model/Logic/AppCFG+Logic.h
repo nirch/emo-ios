@@ -14,6 +14,7 @@
 @interface AppCFG (Logic)
 
 +(AppCFG *)cfgInContext:(NSManagedObjectContext *)context;
+-(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;
 
 @end

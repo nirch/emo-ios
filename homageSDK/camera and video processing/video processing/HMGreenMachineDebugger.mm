@@ -13,7 +13,7 @@
 
 -(void)originalImage:(image_type *)m_original_image
 {
-    HMLOG(TAG, EM_DBG, @"debug, original image...");
+    //HMLOG(TAG, EM_DBG, @"debug, original image...");
 }
 
 //[HMImageTools saveImageType3:<some image> withName:[SF:@"SomeImage-%@",@(i)]];

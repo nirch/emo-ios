@@ -63,6 +63,26 @@
     EmuticonDef *emuDef = (EmuticonDef *)[NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
                                                                    withPredicate:predicate
                                                                        inContext:context];
+    
+    // Not found?
+    // Use any emuDef from this package.
+    if (emuDef == nil) {
+        predicate = [NSPredicate predicateWithFormat:@"package=%@", self];
+        emuDef = (EmuticonDef *)[NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
+                                                          withPredicate:predicate
+                                                              inContext:context];
+    }
+    
+    // Still not found?!
+    // Use any emuDef set for preview
+    if (emuDef == nil) {
+        predicate = [NSPredicate predicateWithFormat:@"useForPreview=%@", @YES];
+        emuDef = (EmuticonDef *)[NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
+                                                          withPredicate:predicate
+                                                              inContext:context];
+    }
+    
+    
     return emuDef;
 }
 
@@ -256,6 +276,13 @@
                            ];
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
+}
+
+
+
++(Package *)newlyAvailablePackage
+{
+    return nil;
 }
 
 @end

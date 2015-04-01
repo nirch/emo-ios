@@ -18,6 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#PakaPaka" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcV-HC-46K" customClass="EMLabel">
+                                <rect key="frame" x="116" y="348" width="143" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbE-le-gs5" userLabel="Nav bar">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
@@ -80,6 +86,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
                                 <rect key="frame" x="5" y="64" width="365" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6e8-IW-4Yd">
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -177,6 +184,8 @@
                                 <connections>
                                     <outlet property="dataSource" destination="hdW-YC-ZoO" id="Acq-0y-zGp"/>
                                     <outlet property="delegate" destination="hdW-YC-ZoO" id="SmD-9k-9dx"/>
+                                    <outletCollection property="gestureRecognizers" destination="hbc-uG-LpM" appends="YES" id="b12-NC-sUz"/>
+                                    <outletCollection property="gestureRecognizers" destination="s4l-CM-CKZ" appends="YES" id="hiO-Lj-3YE"/>
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVB-YX-jx8" userLabel="emu logo button">
@@ -208,6 +217,7 @@
                             <constraint firstItem="2yt-61-8E0" firstAttribute="top" secondItem="mE0-st-E63" secondAttribute="bottom" constant="64" id="EHe-AY-tQe"/>
                             <constraint firstAttribute="trailing" secondItem="2yt-61-8E0" secondAttribute="trailing" constant="5" id="FHE-vL-QUX"/>
                             <constraint firstAttribute="width" secondItem="nbE-le-gs5" secondAttribute="width" id="GmY-Vh-8pa"/>
+                            <constraint firstAttribute="centerX" secondItem="qcV-HC-46K" secondAttribute="centerX" constant="0.5" id="M8v-fu-rlg"/>
                             <constraint firstItem="nbE-le-gs5" firstAttribute="centerX" secondItem="XVB-YX-jx8" secondAttribute="centerX" constant="0.5" id="Tud-eL-JLe"/>
                             <constraint firstAttribute="centerX" secondItem="nbE-le-gs5" secondAttribute="centerX" id="bKs-rM-XUn"/>
                             <constraint firstItem="nbE-le-gs5" firstAttribute="top" secondItem="mE0-st-E63" secondAttribute="bottom" id="bjb-Tc-b8S"/>
@@ -216,6 +226,7 @@
                             <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="989-sh-hZS" secondAttribute="bottom" id="gyN-cG-0hV"/>
                             <constraint firstItem="989-sh-hZS" firstAttribute="leading" secondItem="7k7-rZ-9LV" secondAttribute="leading" id="jLr-Yr-7K8"/>
                             <constraint firstAttribute="centerX" secondItem="3Ax-G4-sQU" secondAttribute="centerX" id="ptC-lG-yiu"/>
+                            <constraint firstAttribute="centerY" secondItem="qcV-HC-46K" secondAttribute="centerY" constant="-32" id="r8t-xB-dal"/>
                             <constraint firstItem="nbE-le-gs5" firstAttribute="top" secondItem="XVB-YX-jx8" secondAttribute="top" constant="-14" id="r9p-xt-BQn"/>
                             <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="3Ax-G4-sQU" secondAttribute="bottom" id="rry-i6-oBv"/>
                             <constraint firstItem="3Ax-G4-sQU" firstAttribute="top" secondItem="nbE-le-gs5" secondAttribute="bottom" id="vdt-W2-IAm"/>
@@ -233,11 +244,22 @@
                         <outlet property="guiCollectionView" destination="2yt-61-8E0" id="2s9-9s-lNY"/>
                         <outlet property="guiNavView" destination="nbE-le-gs5" id="aQc-qo-3Ui"/>
                         <outlet property="guiPackagesSelectionContainer" destination="989-sh-hZS" id="C7s-MW-ivj"/>
+                        <outlet property="guiTagLabel" destination="qcV-HC-46K" id="Iuh-NC-vop"/>
                         <outlet property="guiTutorialContainer" destination="3Ax-G4-sQU" id="PYf-zS-L9M"/>
                         <segue destination="rnG-vP-eU5" kind="show" identifier="emuticon screen segue" id="ohC-EV-QQy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qls-hV-6VN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="left" id="hbc-uG-LpM" userLabel="Swipe Left Gesture Recognizer">
+                    <connections>
+                        <action selector="onSwipedLeftCollectionView:" destination="hdW-YC-ZoO" id="YKc-rr-xhZ"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="s4l-CM-CKZ" userLabel="Swipe Right Gesture Recognizer">
+                    <connections>
+                        <action selector="onSwipedRightCollectionView:" destination="hdW-YC-ZoO" id="JAN-0W-PIv"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-381.5" y="75.5"/>
         </scene>
@@ -600,7 +622,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LtP-Ai-aCy">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LtP-Ai-aCy">
                                 <rect key="frame" x="0.0" y="1" width="375" height="59"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -629,7 +651,7 @@
                                                     <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="love_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="kTK-2e-84y">
+                                                <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kTK-2e-84y">
                                                     <rect key="frame" x="34" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="HMM-XK-MfM"/>
@@ -665,6 +687,29 @@
                                     <constraint firstAttribute="height" constant="1" id="t2A-Mc-nTq"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Edx-Sk-aPY" userLabel="More container">
+                                <rect key="frame" x="355" y="1" width="20" height="59"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMe-we-pB5">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="59"/>
+                                        <state key="normal" title="&gt;">
+                                            <color key="titleColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedMoreButton:" destination="jAm-lM-9cu" eventType="touchUpInside" id="lcw-8v-tbQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.75" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="9ZW-iy-19X"/>
+                                    <constraint firstItem="DMe-we-pB5" firstAttribute="width" secondItem="Edx-Sk-aPY" secondAttribute="width" id="FJ4-Cb-cda"/>
+                                    <constraint firstAttribute="centerX" secondItem="DMe-we-pB5" secondAttribute="centerX" id="FW5-0F-ji0"/>
+                                    <constraint firstAttribute="centerY" secondItem="DMe-we-pB5" secondAttribute="centerY" id="Sqn-Bd-5wT"/>
+                                    <constraint firstItem="DMe-we-pB5" firstAttribute="height" secondItem="Edx-Sk-aPY" secondAttribute="height" id="UNf-W5-6t5"/>
+                                </constraints>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="XvE-ux-tNh" userLabel="TopSep Shadow">
                                 <rect key="frame" x="0.0" y="1" width="375" height="6"/>
                                 <constraints>
@@ -676,9 +721,12 @@
                         <constraints>
                             <constraint firstItem="lSI-3k-gF9" firstAttribute="top" secondItem="LtP-Ai-aCy" secondAttribute="bottom" id="47v-nP-GSN"/>
                             <constraint firstItem="Llw-By-Ztg" firstAttribute="height" secondItem="eBn-R7-r9o" secondAttribute="height" id="600-Rt-075"/>
+                            <constraint firstItem="Edx-Sk-aPY" firstAttribute="top" secondItem="YN5-Xk-u7f" secondAttribute="bottom" constant="1" id="C1b-ol-32M"/>
+                            <constraint firstAttribute="trailing" secondItem="Edx-Sk-aPY" secondAttribute="trailing" id="IzL-IL-5LW"/>
                             <constraint firstAttribute="trailing" secondItem="LtP-Ai-aCy" secondAttribute="trailing" id="NSC-ZU-Otu"/>
                             <constraint firstItem="TaW-Nj-7At" firstAttribute="top" secondItem="YN5-Xk-u7f" secondAttribute="bottom" id="Zrz-3G-F1a"/>
                             <constraint firstItem="TaW-Nj-7At" firstAttribute="width" secondItem="XvE-ux-tNh" secondAttribute="width" id="a30-XD-Gy9"/>
+                            <constraint firstItem="lSI-3k-gF9" firstAttribute="top" secondItem="Edx-Sk-aPY" secondAttribute="bottom" id="biR-zF-MY4"/>
                             <constraint firstAttribute="centerX" secondItem="TaW-Nj-7At" secondAttribute="centerX" id="edz-3H-5X9"/>
                             <constraint firstItem="TaW-Nj-7At" firstAttribute="width" secondItem="eBn-R7-r9o" secondAttribute="width" id="hRc-d0-ENl"/>
                             <constraint firstItem="Llw-By-Ztg" firstAttribute="width" secondItem="eBn-R7-r9o" secondAttribute="width" id="nbc-ua-Tfe"/>
@@ -693,11 +741,12 @@
                     <connections>
                         <outlet property="guiBlurredBG" destination="Llw-By-Ztg" id="WOC-xU-FN5"/>
                         <outlet property="guiCollectionView" destination="LtP-Ai-aCy" id="DoG-bl-aJc"/>
+                        <outlet property="guiMoreContainer" destination="Edx-Sk-aPY" id="Uir-5o-L7S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="caQ-HF-2Li" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-381.5" y="621.5"/>
+            <point key="canvasLocation" x="-381.5" y="621"/>
         </scene>
         <!--TutorialVC-->
         <scene sceneID="wrE-wx-ocX">
@@ -801,7 +850,6 @@
         <image name="emuNavLogo" width="60" height="59"/>
         <image name="facebook" width="57" height="56"/>
         <image name="lock" width="10" height="14"/>
-        <image name="love_icon.png" width="30" height="30"/>
         <image name="retakeIcon" width="25" height="24"/>
         <image name="shadow" width="375" height="4"/>
         <image name="threeDots" width="44" height="44"/>

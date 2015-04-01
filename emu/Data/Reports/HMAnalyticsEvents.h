@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 21:19:58 03/28/15 IDT
+//  Created by build script on 17:09:56 03/31/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -132,6 +132,30 @@ A zip file with resources for a package was unzipped successfully
 
 /** Param:localFileName --> <string> - the local file name. **/
 #define AK_EP_LOCAL_FILE_NAME @"localFileName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User without facebook messenger got a "Install messenger" alert, but
+    chosen not to install.
+**/
+#define AK_E_FBM_DISMISSED_INSTALL @"FBM:dismissedInstall"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User without facebook messenger pressed the INSTALL FB Messenger
+    option from our app.
+**/
+#define AK_E_FBM_INSTALL @"FBM:install"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Facebook messenger integration opened the app using a deep link.
+**/
+#define AK_E_FBM_INTEGRATION @"FBM:integration"
+
+/** Param:linkType --> <string> - the type of link fb integration opened the app with. Possible value:
+ cancel - user pressed cancel in fbm, after fbm was opened from Emu
+ opened - user pressed Emu in the composer / discovery bar
+ reply  - user pressed the reply button in fbm **/
+#define AK_EP_LINK_TYPE @"linkType"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

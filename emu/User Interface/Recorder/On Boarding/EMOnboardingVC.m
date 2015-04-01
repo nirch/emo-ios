@@ -200,9 +200,8 @@
     
     UIAlertController *alert = [[UIAlertController alloc] init];
     
-    alert.title = [SF:@"About Emu - V%@", build];
-    
-    alert.message = [SF:@"Emu is a fun free app for iOS, where in just seconds you can create your own personal video stickers we call Emus.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015"];
+    alert.title = [SF:LS(@"ABOUT_EMU_TITLE"), build];
+    alert.message = LS(@"ABOUT_EMU_MESSAGE");
     
     [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
     

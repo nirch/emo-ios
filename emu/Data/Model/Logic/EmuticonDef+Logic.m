@@ -96,4 +96,22 @@
     return resourcePath == nil;
 }
 
+-(void)removeAllResources
+{
+    if (self.sourceBackLayer)
+        [self removeResourceNamed:self.sourceBackLayer];
+    
+    if (self.sourceFrontLayer)
+        [self removeResourceNamed:self.sourceFrontLayer];
+    
+    if (self.sourceUserLayerMask)
+        [self removeResourceNamed:self.sourceUserLayerMask];
+}
+
+-(void)removeResourceNamed:(NSString *)resourceName
+{
+    NSString *resourcesPath = [self.package resourcesPath];
+    [EMDB removeResourceNamed:resourceName path:resourcesPath];
+}
+
 @end

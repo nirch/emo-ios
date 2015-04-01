@@ -116,6 +116,7 @@
     [EMDB.sh save];
 }
 
+
 /**
  *  The data about the packages was updated (or failed to update).
  */
@@ -408,5 +409,90 @@
     // Delete old package
     [EMDB.sh.context deleteObject:oldPackage];
 }
+
+
+#pragma mark - Background fetch
+-(void)reloadPackagesInTheBackgroundWithNewDataHandler:(void (^)())newDataHandler
+                                      noNewDataHandler:(void (^)())noNewDataHandler
+                                    failedFetchHandler:(void (^)())failedFetchHandler
+{
+    NSString *relativeURL = @"emuapi/packages/full";
+    HMLOG(TAG, EM_DBG, @"GET request:%@/%@", self.server.session.baseURL, relativeURL);
+ 
+    EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
+    [self.server.session GET:relativeURL
+                  parameters:nil
+                     success:^(NSURLSessionDataTask *task, id responseObject) {
+
+                         //
+                         // Successful response from server.
+                         //
+
+                         //
+                         // Parse response.
+                         //
+                         parser.objectToParse = responseObject;
+                         [parser parse];
+
+                         //
+                         // Parse error.
+                         //
+                         if (parser.error) {
+                             //
+                             // Parser error.
+                             //
+                             HMLOG(TAG, EM_DBG, @"Parsing failed with error.\t%@\t%@", relativeURL, [parser.error localizedDescription]);
+                             failedFetchHandler();
+                             return;
+                         }
+
+                         //
+                         // Parse successful
+                         //
+                         Package *newlyAvailablePackage = [Package newlyAvailablePackage];
+                         if (newlyAvailablePackage) {
+                             newDataHandler();
+                         } else {
+                             noNewDataHandler();
+                         }
+
+                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                         failedFetchHandler();
+                     }];
+    
+}
+
+
+-(void)notifyUserAboutUpdateForPackage:(Package *)package
+{
+//    NSString *alertBody = package.lastUpdateText;
+    NSString *alertBody = @"xxxxxxxxx";
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    localNotification.alertBody = alertBody;
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+//    [[NSUserDefaults standardUserDefaults] setObject:package.lastUpdateDateAvailableOnServer forKey:@"userNotifiedAboutUpdatesUptoDate"];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+#pragma mark - Local data
+-(void)parseOnboardingPackages:(NSDictionary *)json
+{
+    EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
+    parser.objectToParse = json;
+    [parser parse];
+    
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    Package *onboardingPackage = [appCFG packageForOnboarding];
+    if ([onboardingPackage shouldUnzipZippedPackage]) {
+        // Unzip resources to a directory.
+        [self unzipResourcesForPackage:onboardingPackage];
+    }
+    
+    // Notify the user interface about the updates.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil];
+}
+
 
 @end

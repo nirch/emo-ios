@@ -33,11 +33,17 @@
     NSArray *userImages = [self imagesPathsInPath:self.userImagesPath
                                  numberOfFrames:self.numberOfFrames];
     
+    if (userImages.count > 0) {
+        REMOTE_LOG(@"user images count:%@ firstImageName: %@", @(userImages.count), userImages[0]);
+    } else {
+        REMOTE_LOG(@"user images empty?!");
+    }
+    
     //
     // Get the source PNG images.
     //
-    //CHrSourceI *userSource = new PngSource(userImages);
-    CHrSourceI *userSource = new PngSource(userImages);
+    PngSource *userSource = new PngSource(userImages);
+    //CHrSourceI *userSource = new PngSourceWithFX(userImages);
     
     //
     // Set mask if provided.
@@ -88,6 +94,15 @@
     NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];;
     CHrOutputGif *gifOutput = new CHrOutputGif();
     gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
+
+    if (self.paletteString != nil) {
+        NSString *paletteNSString = self.paletteString;
+        const char *paletteConstString = [paletteNSString cStringUsingEncoding:NSASCIIStringEncoding];
+        size_t len = strlen(paletteConstString);
+        char palette[len];
+        memcpy(palette, paletteConstString, len);
+        gifOutput->SetPalette(palette);
+    }
     
     //
     // Output video
@@ -103,10 +118,25 @@
     render->Process(bgSource, userSource, fgSource, outputs, 1);
 
     // Finishing up.
-    if (gifOutput != NULL)  gifOutput->Close();
-    if (userSource != NULL) userSource->Close();
-    if (bgSource != NULL)   bgSource->Close();
-    if (fgSource != NULL)   fgSource->Close();
+    if (gifOutput != NULL)  {
+        gifOutput->Close();
+        delete gifOutput;
+    }
+
+    if (userSource != NULL) {
+        userSource->Close();
+        delete userSource;
+    }
+    
+    if (bgSource != NULL) {
+        bgSource->Close();
+        delete bgSource;
+    }
+    
+    if (fgSource != NULL) {
+        fgSource->Close();
+        delete fgSource;
+    }
     
     // Disabled videoOutput for now
     // TODO: fix memory leak in video rendering

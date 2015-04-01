@@ -56,5 +56,6 @@
 -(NSString *)pathForFrontLayer;
 -(BOOL)allResourcesAvailable;
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName;
+-(void)removeAllResources;
 
 @end

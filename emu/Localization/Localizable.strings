@@ -78,3 +78,12 @@
 "FBM_INSTALL_OPTION"    = "Install Messenger!";
 "FBM_MISSING_GOT_IT"    = "Got it.";
 
+// Alerts
+"ALERT_REFRESHING_INFO_TITLE" = "Refreshing info";
+"ALERT_CHECK_INTERNET_MESSAGE" = "Something went wrong.\nCheck your internet connectivity and try again.";
+"ALERT_TRY_AGAIN_ACTION" = "Try again";
+"ALERT_OK_ACTION" = "ok";
+
+// About message
+"ABOUT_EMU_TITLE" = "About Emu - V%@";
+"ABOUT_EMU_MESSAGE" = "Emu is a fun free app for iOS, where in just seconds you can create your own personal video stickers we call Emus.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015";

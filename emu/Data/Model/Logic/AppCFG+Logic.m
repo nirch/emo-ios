@@ -28,4 +28,10 @@
     return package;
 }
 
+-(BOOL)isPackageUsedForOnboarding:(Package *)package
+{
+    if (package == nil) return NO;
+    return [package.oid isEqualToString:self.onboardingUsingPackage];
+}
+
 @end

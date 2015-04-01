@@ -15,6 +15,7 @@
 #import "EMShareFBMessanger.h"
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "HMServer.h"
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -91,6 +92,10 @@
     // Logs 'install' and 'app activate' App Events.
     [FBAppEvents activateApp];
     
+    //
+    [HMReporter.sh analyticsEvent:AK_E_APP_ENTERED_FOREGROUND];
+
+    
     // If a current fb messanger sharer exists,
     // Notify it that the application launched.
     [self.currentFBMSharer onAppDidBecomeActive];
@@ -120,6 +125,11 @@
 {
     self.fbContext = nil;
     [self.currentFBMSharer onFBMCancel];
+    
+    // Analytics
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_LINK_TYPE value:@"cancel"];
+    [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
 // Open
@@ -127,6 +137,11 @@
 {
     self.fbContext = context;
     [self.currentFBMSharer onFBMOpen];
+    
+    // Analytics
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_LINK_TYPE value:@"open"];
+    [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
 // Reply
@@ -140,6 +155,49 @@
         UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
         [nc popToRootViewControllerAnimated:NO];
     }
+    
+    // Analytics
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_LINK_TYPE value:@"reply"];
+    [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
+}
+
+#pragma mark - Background fetches
+//
+// performFetchWithCompletionHandler
+// Called by iOS, when it feels like it :-) when the app is in the background.
+//
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSString *msg = [SF:@"Application will try to perform bg fetch %@", [NSDate date]];
+    HMLOG(TAG, EM_DBG, @"%@", msg);
+    REMOTE_LOG(@"%@", msg);
+    
+    [EMBackend.sh reloadPackagesInTheBackgroundWithNewDataHandler:^{
+        
+        
+        
+    } noNewDataHandler:^{
+        
+        //
+        // Fetch successful, but no new data.
+        //
+        HMLOG(TAG, EM_DBG, @"BG Fetch: no new data available.");
+        REMOTE_LOG(@"Background Fetch: no new data");
+        completionHandler(UIBackgroundFetchResultNoData);
+        
+        [EMBackend.sh notifyUserAboutUpdateForPackage:nil];
+
+    } failedFetchHandler:^{
+
+        //
+        // Fetch failed.
+        //
+        HMLOG(TAG, EM_DBG, @"BG Fetch: Failed fetch new data in the background.");
+        REMOTE_LOG(@"Background Fetch: failed");
+        completionHandler(UIBackgroundFetchResultFailed);
+        
+    }];
 }
 
 

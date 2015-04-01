@@ -142,4 +142,7 @@
 
 -(NSURL *)urlForPackageIcon;
 
+
++(Package *)newlyAvailablePackage;
+
 @end

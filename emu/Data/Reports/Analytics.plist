@@ -79,6 +79,35 @@ or
 				<string>&lt;string&gt; - the current version the app was launched with</string>
 			</dict>
 		</dict>
+		<key>FBM:integration</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.2</string>
+			<key>description</key>
+			<string>Facebook messenger integration opened the app using a deep link.</string>
+			<key>params</key>
+			<dict>
+				<key>linkType</key>
+				<string>&lt;string&gt; - the type of link fb integration opened the app with. Possible value:
+ cancel - user pressed cancel in fbm, after fbm was opened from Emu
+ opened - user pressed Emu in the composer / discovery bar
+ reply  - user pressed the reply button in fbm</string>
+			</dict>
+		</dict>
+		<key>FBM:install</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.5</string>
+			<key>description</key>
+			<string>User without facebook messenger pressed the INSTALL FB Messenger option from our app.</string>
+		</dict>
+		<key>FBM:dismissedInstall</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.5</string>
+			<key>description</key>
+			<string>User without facebook messenger got a &quot;Install messenger&quot; alert, but chosen not to install.</string>
+		</dict>
 		<key>Rec:opened</key>
 		<dict>
 			<key>v</key>

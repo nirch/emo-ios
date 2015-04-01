@@ -135,4 +135,13 @@
     return rp;
 }
 
++(void)removeResourceNamed:(NSString *)resourceName path:(NSString *)path
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *resourcePath = [self pathForResourceNamed:resourceName path:path];
+    if ([fm fileExistsAtPath:resourcePath]) {
+        [fm removeItemAtPath:resourcePath error:nil];
+    }
+}
+
 @end

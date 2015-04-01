@@ -170,6 +170,17 @@
     return @(counter);
 }
 
+-(NSNumber *)sharesCount
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSInteger counter = [prefs integerForKey:@"sharesCounter"];
+    counter++;
+    [prefs setValue:@(counter) forKey:@"sharesCounter"];
+    [prefs synchronize];
+    return @(counter);
+}
+
+
 -(NSString *)localizationPreference
 {
     NSArray *languages = [NSLocale preferredLanguages];
