@@ -32,19 +32,22 @@
     Package *pkg = [Package findOrCreateWithID:oid context:self.ctx];
     pkg.name = [info safeStringForKey:@"name"];
     pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"last_update"]];
+    pkg.firstPublishedOn = [self parseDateOfString:[info safeStringForKey:@"first_published_on"]];
     pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
+    pkg.priority = self.incrementalOrder? self.incrementalOrder:@(9999);
+    pkg.notificationText = [info safeStringForKey:@"notification_text"];
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;
     NSArray *emus = info[@"emuticons"];
     if (emus) {
-        index++;
         EMEmuticonParser *emuParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
         for (NSDictionary *emuInfo in emus) {
             emuParser.objectToParse = emuInfo;
             emuParser.package = pkg;
             emuParser.defaults = info[@"emuticons_defaults"];
+            index++;
             emuParser.incrementalOrder = @(index);
             [emuParser parse];
         }

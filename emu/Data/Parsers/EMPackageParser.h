@@ -10,4 +10,6 @@
 
 @interface EMPackageParser : HMParser
 
+@property (nonatomic) NSNumber *incrementalOrder;
+
 @end

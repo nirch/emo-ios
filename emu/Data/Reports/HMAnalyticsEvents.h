@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 17:09:56 03/31/15 IDT
+//  Created by build script on 05:03:32 04/02/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -18,10 +18,23 @@
 //
 
 
+/** <number> - Number indicating the user's current
+    UIUserNotificationSettings **/
+#define AK_S_NOTIFICATIONS_SETTINGS @"notificationsSettings"
+
+
+/** The model of the user's device **/
+#define AK_S_DEVICE_MODEL @"deviceModel"
+
+
 /** The long build version string in the following format:
     <big>.<small>.<build#> for production application. or
     <big>.<small>.<build#>.t for test application. **/
 #define AK_S_BUILD_VERSION @"buildVersion"
+
+
+/** The number of times the user launched the application. **/
+#define AK_S_LAUNCHES_COUNT @"launchesCount"
 
 
 /** The localized language preference on the user's device (good to know
@@ -29,17 +42,9 @@
 #define AK_S_LOCALIZATION_PREFERENCE @"localizationPreference"
 
 
-/** The number of times the user launched the application. **/
-#define AK_S_LAUNCHES_COUNT @"launchesCount"
-
-
 /** A mnemonic name of the application. Currently: "Emu iOS". Used in case
     we will create white labels of the Emu app in the future. **/
 #define AK_S_CLIENT_NAME @"clientName"
-
-
-/** The model of the user's device **/
-#define AK_S_DEVICE_MODEL @"deviceModel"
 
 
 
@@ -48,6 +53,11 @@
 // Analytics events
 //
 
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+The application did become active
+**/
+#define AK_E_APP_DID_BECOME_ACTIVE @"App:didBecomeActive"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The application entered the background (user pressed home screen,
@@ -76,6 +86,24 @@ The application was launched with a higher version than the version it
 
 /** Param:currentVersion --> <string> - the current version the app was launched with **/
 #define AK_EP_CURRENT_VERSION @"currentVersion"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Background fetch
+**/
+#define AK_E_BE_BACKGROUND_FETCH @"BE:backgroundFetch"
+
+/** Param:resultType --> <string> - the result type of the fetch. Possible values:
+ failed - the fetch failed
+ newData - fetch success and new packages available
+ noNewData - fetch success but no new packages available **/
+#define AK_EP_RESULT_TYPE @"resultType"
+
+/** Param:packageOID --> <string> - (optional) oid of a package, if user notified about that newly available package. **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:packageName --> <string> - (optional) name of a package, if user notified about that newly available package. **/
+#define AK_EP_PACKAGE_NAME @"packageName"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -332,6 +360,42 @@ User pressed one of the emoticons for copying
 User pressed the next input button (changed to another keyboard)
 **/
 #define AK_E_KB_USER_PRESSED_NEXT_INPUT_BUTTON @"KB:userPressedNextInputButton"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+App delegate notifications registration change
+**/
+#define AK_E_NOTIFICATIONS_REGISTRATION_SETTINGS @"Notifications:registrationSettings"
+
+/** Param:notificationsSettings --> <number> - Number indicating the user's current UIUserNotificationSettings **/
+#define AK_EP_NOTIFICATIONS_SETTINGS @"notificationsSettings"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User asked if want to receive notifications and the user declined by
+    pressing the "Not Now" button.
+**/
+#define AK_E_NOTIFICATIONS_USER_NOT_NOW @"Notifications:userNotNow"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User asked if want to receive notifications and the user pressed OK.
+**/
+#define AK_E_NOTIFICATIONS_USER_OKAY @"Notifications:userOkay"
+
+/** Param:afterConfirmation --> <string> - Indicates what happened after the user pressed the OK button. Possible values: **/
+#define AK_EP_AFTER_CONFIRMATION @"afterConfirmation"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User opened a notification in notification center and laucnhed the app
+**/
+#define AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION @"Notifications:userOpenedNotification"
+
+/** Param:packageOID --> <string> - The oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:packageName --> <string> - The name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The recorder screen was opened and just appeared on screen. The event
@@ -608,6 +672,15 @@ Recorder was dismissed.
  'retakePackage' - user wanted to retake and use the footage to all unlocked emoticons in a package.
  'retakeEmoticon' - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon. **/
 #define AK_EP_FLOW_TYPE @"flowType"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User opened iOS settings application.
+**/
+#define AK_E_SETTINGS_USER_OPENED_SETTINGS_APP @"Settings:userOpenedSettingsApp"
+
+/** Param:reason --> <string> - The reason the user asked to open the settings app. **/
+#define AK_EP_REASON @"reason"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

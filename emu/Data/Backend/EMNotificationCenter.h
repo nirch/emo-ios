@@ -19,3 +19,4 @@
 // Notification of the backend to the UI
 #define emkUIDataRefreshPackages @"emk backend data refreshed packages"
 #define emkUIDownloadedResourcesForEmuticon @"emk backend downloaded resources for emuticon"
+#define emkUIMainShouldShowPackage @"emk ui main should show package"

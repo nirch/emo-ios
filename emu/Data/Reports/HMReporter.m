@@ -97,6 +97,15 @@
     [self.mixPanel registerSuperProperties:info];
 }
 
+-(void)reportSuperParameters:(NSDictionary *)parameters
+{
+    HMParams *superParams = [HMParams new];
+    for (NSString *key in parameters.allKeys) {
+        [superParams addKey:key valueIfNotNil:parameters[key]];
+    }
+    [self.mixPanel registerSuperProperties:superParams.dictionary];
+}
+
 -(void)analyticsForceSend
 {
     [self.mixPanel flush];

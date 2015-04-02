@@ -13,6 +13,11 @@
 	</dict>
 	<key>superParams</key>
 	<dict>
+		<key>notificationsSettings</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;number&gt; - Number indicating the user&apos;s current UIUserNotificationSettings</string>
+		</dict>
 		<key>deviceModel</key>
 		<dict>
 			<key>description</key>
@@ -79,6 +84,13 @@ or
 				<string>&lt;string&gt; - the current version the app was launched with</string>
 			</dict>
 		</dict>
+		<key>App:didBecomeActive</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>The application did become active</string>
+		</dict>
 		<key>FBM:integration</key>
 		<dict>
 			<key>v</key>
@@ -107,6 +119,63 @@ or
 			<string>1.2.5</string>
 			<key>description</key>
 			<string>User without facebook messenger got a &quot;Install messenger&quot; alert, but chosen not to install.</string>
+		</dict>
+		<key>Notifications:userNotNow</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>User asked if want to receive notifications and the user declined by pressing the &quot;Not Now&quot; button.</string>
+		</dict>
+		<key>Notifications:userOkay</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>User asked if want to receive notifications and the user pressed OK.</string>
+			<key>params</key>
+			<dict>
+				<key>afterConfirmation</key>
+				<string>&lt;string&gt; - Indicates what happened after the user pressed the OK button. Possible values:</string>
+			</dict>
+		</dict>
+		<key>Notifications:registrationSettings</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>App delegate notifications registration change</string>
+			<key>params</key>
+			<dict>
+				<key>notificationsSettings</key>
+				<string>&lt;number&gt; - Number indicating the user&apos;s current UIUserNotificationSettings</string>
+			</dict>
+		</dict>
+		<key>Notifications:userOpenedNotification</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>User opened a notification in notification center and laucnhed the app</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - The oid of the related package</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - The name of the related package</string>
+			</dict>
+		</dict>
+		<key>Settings:userOpenedSettingsApp</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>User opened iOS settings application.</string>
+			<key>params</key>
+			<dict>
+				<key>reason</key>
+				<string>&lt;string&gt; - The reason the user asked to open the settings app.</string>
+			</dict>
 		</dict>
 		<key>Rec:opened</key>
 		<dict>
@@ -688,6 +757,25 @@ or
 				<string>&lt;string&gt; - the name of the package</string>
 				<key>error</key>
 				<string>&lt;string&gt; - description of the error</string>
+			</dict>
+		</dict>
+		<key>BE:backgroundFetch</key>
+		<dict>
+			<key>v</key>
+			<string>1.2.7</string>
+			<key>description</key>
+			<string>Background fetch</string>
+			<key>params</key>
+			<dict>
+				<key>resultType</key>
+				<string>&lt;string&gt; - the result type of the fetch. Possible values:
+ failed - the fetch failed
+ newData - fetch success and new packages available
+ noNewData - fetch success but no new packages available</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - (optional) oid of a package, if user notified about that newly available package.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - (optional) name of a package, if user notified about that newly available package.</string>
 			</dict>
 		</dict>
 	</dict>

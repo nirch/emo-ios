@@ -280,8 +280,34 @@
 
 
 
-+(Package *)newlyAvailablePackage
++(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context
 {
+    // Get latest published package.
+    Package *latestPackage = [Package latestPublishedPackageInContext:context];
+
+    // Get the latest presented package.
+    AppCFG *appCFG = [AppCFG cfgInContext:context];
+    NSDate *previouslyPublishedLatestPackage = [appCFG latestPackagePublishedOn];
+    
+    if ([latestPackage.firstPublishedOn compare:previouslyPublishedLatestPackage] == NSOrderedDescending) {
+        return latestPackage;
+    }
+    return nil;
+}
+
+
++(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+    NSError *error;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
+    fetchRequest.predicate = predicate;
+    fetchRequest.fetchLimit = 1;
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"firstPublishedOn" ascending:NO] ];
+    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    if (!error && results.count>0) {
+        return results[0];
+    }
     return nil;
 }
 

@@ -25,6 +25,7 @@
 #import "EMUISound.h"
 #import "AppManagement.h"
 #import "EMAlertsPermissionVC.h"
+#import "AppDelegate.h"
 
 @interface EMMainVC () <
     UICollectionViewDataSource,
@@ -159,6 +160,11 @@
                    object:nil];
     
 
+    // Need to choose another package
+    [nc addUniqueObserver:self
+                 selector:@selector(onShouldShowPackage:)
+                     name:emkUIMainShouldShowPackage
+                   object:nil];
 
 }
 
@@ -168,6 +174,7 @@
     [nc removeObserver:hmkRenderingFinished];
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIDownloadedResourcesForEmuticon];
+    [nc removeObserver:emkUIMainShouldShowPackage];
 }
 
 #pragma mark - Observers handlers
@@ -205,6 +212,14 @@
 {
     self.refetchDataAttempted = YES;
     [self.packagesBarVC refresh];
+
+    // Update latest published package
+    Package *latestPublishedPackage = [Package latestPublishedPackageInContext:EMDB.sh.context];
+    if (latestPublishedPackage == nil) return;
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
+    
+    // Handle the flow
     [self handleFlow];
 }
 
@@ -220,6 +235,17 @@
     if (emu == nil || ![emu.oid isEqualToString:emuOID]) return;
     
     [self.guiCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+}
+
+-(void)onShouldShowPackage:(NSNotification *)notification
+{
+    NSString *packageOID = notification.userInfo[@"packageOID"];
+    if (packageOID == nil) return;
+    
+    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
+    if (package == nil) return;
+    
+    [self.packagesBarVC selectThisPackage:package];
 }
 
 #pragma mark - The data
@@ -243,7 +269,6 @@
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
                                                                                      cacheName:@"Root"];
-
     _fetchedResultsController = frc;
     return frc;
 }
@@ -346,7 +371,7 @@
     if (self.alertsPermissionVC == nil) {
         self.alertsPermissionVC = [EMAlertsPermissionVC alertsPermissionVCInParentVC:self];
     }
-    [self.splashVC showAnimated:animated];
+    [self.alertsPermissionVC showAnimated:animated];
 }
 
 #pragma mark - VC preferences
@@ -708,11 +733,29 @@
     [EMDB.sh save];
 }
 
+#pragma mark - Registering to notifications
+-(void)openAppSettingsWithReason:(NSString *)reason
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_REASON value:reason];
+}
+
 #pragma mark - More user choices
 -(void)userChoices
 {
     UIAlertController *alert = [UIAlertController new];
     alert.title = LS(@"USER_CHOICE_TITLE");
+    
+    // Enable notifications
+    UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+    if (notificationSettings.types == UIUserNotificationTypeNone) {
+        [alert addAction:[UIAlertAction actionWithTitle:LS(@"NOTIFICATIONS_ENABLE")
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action) {
+                                                    [self openAppSettingsWithReason:@"enable notifications"];
+                                                }]];
+    }
     
     // Reset emuticons to use the same footage.
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"USER_CHOICE_RESET_PACK")
@@ -819,6 +862,8 @@
     REMOTE_LOG(@"Did select package: %@", self.selectedPackage.name);
     
     // If not the onboarding package
+
+    
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue && ![appCFG isPackageUsedForOnboarding:package]) {
         // Ask user about receiving alerts.
@@ -831,7 +876,10 @@
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     appCFG.userAskedInMainScreenAboutAlerts = @YES;
     [EMDB.sh save];
-
+    
+    dispatch_after(DTIME(2), dispatch_get_main_queue(), ^{
+        [self showAlertsPermissionScreenAnimated:YES];
+    });
 }
 
 -(void)packagesAvailableCount:(NSInteger)numberOfPackages

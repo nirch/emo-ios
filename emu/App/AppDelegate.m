@@ -92,13 +92,19 @@
     // Logs 'install' and 'app activate' App Events.
     [FBAppEvents activateApp];
     
-    //
-    [HMReporter.sh analyticsEvent:AK_E_APP_ENTERED_FOREGROUND];
-
+    // Analytics
+    [HMReporter.sh analyticsEvent:AK_E_APP_DID_BECOME_ACTIVE];
+    application.applicationIconBadgeNumber = 0;
     
     // If a current fb messanger sharer exists,
     // Notify it that the application launched.
     [self.currentFBMSharer onAppDidBecomeActive];
+    
+    // Update latest published package
+    Package *latestPublishedPackage = [Package latestPublishedPackageInContext:EMDB.sh.context];
+    if (latestPublishedPackage == nil) return;
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -162,6 +168,46 @@
     [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
+-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    HMParams *params = [HMParams new];
+    [params addKey:AK_S_NOTIFICATIONS_SETTINGS value:@(notificationSettings.types)];
+    [HMReporter.sh reportSuperParameters:params.dictionary];
+    [HMReporter.sh analyticsEvent:AK_E_NOTIFICATIONS_REGISTRATION_SETTINGS info:params.dictionary];
+}
+
+#pragma mark - Opened notifications
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if (info == nil) return;
+    
+    NSString *packageOID = info[@"packageOID"];
+    if (packageOID == nil) return;
+    
+    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
+    if (package == nil) return;
+    
+    // If not on first screen, pop back to the main screen (with no animation).
+    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
+        [nc popToRootViewControllerAnimated:NO];
+        if (nc.presentedViewController) {
+            [nc dismissViewControllerAnimated:NO completion:nil];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIMainShouldShowPackage
+                                                            object:self
+                                                          userInfo:@{@"packageOID":package.oid}];
+    }
+    
+    // Cool. We should preffer this package.
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_PACKAGE_OID value:package.oid];
+    [params addKey:AK_EP_PACKAGE_NAME value:package.name];
+    [HMReporter.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
+}
+
+
 #pragma mark - Background fetches
 //
 // performFetchWithCompletionHandler
@@ -173,11 +219,24 @@
     HMLOG(TAG, EM_DBG, @"%@", msg);
     REMOTE_LOG(@"%@", msg);
     
+    HMParams *params = [HMParams new];
+    [HMReporter.sh initializeAnalyticsWithLaunchOptions:nil];
+    
     [EMBackend.sh reloadPackagesInTheBackgroundWithNewDataHandler:^{
         
-        
-        
+        Package *newlyAvailablePackage = [Package newlyAvailablePackageInContext:EMDB.sh.context];
+        if (newlyAvailablePackage) {
+            [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"newData"];
+            [params addKey:AK_EP_PACKAGE_OID value:newlyAvailablePackage.oid];
+            [params addKey:AK_EP_PACKAGE_NAME value:newlyAvailablePackage.name];
+            [HMReporter.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
+            [EMBackend.sh notifyUserAboutUpdateForPackage:newlyAvailablePackage];
+        }
+
     } noNewDataHandler:^{
+        
+        [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"noNewData"];
+        [HMReporter.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
         
         //
         // Fetch successful, but no new data.
@@ -186,9 +245,10 @@
         REMOTE_LOG(@"Background Fetch: no new data");
         completionHandler(UIBackgroundFetchResultNoData);
         
-        [EMBackend.sh notifyUserAboutUpdateForPackage:nil];
-
     } failedFetchHandler:^{
+
+        [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"failed"];
+        [HMReporter.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
 
         //
         // Fetch failed.

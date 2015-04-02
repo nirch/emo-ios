@@ -33,5 +33,9 @@
     }
 }
 
+-(void)setStringKey:(NSString *)stringKey
+{
+    [self setTitle:LS(stringKey) forState:UIControlStateNormal];
+}
 
 @end

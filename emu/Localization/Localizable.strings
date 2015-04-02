@@ -50,7 +50,7 @@
 "RETAKE_CHOICE_RESET_PACK" = "Reset pack to a single footage";
 
 // User choices
-"USER_CHOICE_TITLE" = "Reset footage:";
+"USER_CHOICE_TITLE" = "User options:";
 "USER_CHOICE_RESET_PACK" = "Reset all emus in this pack to original footage";
 
 // Share
@@ -82,8 +82,17 @@
 "ALERT_REFRESHING_INFO_TITLE" = "Refreshing info";
 "ALERT_CHECK_INTERNET_MESSAGE" = "Something went wrong.\nCheck your internet connectivity and try again.";
 "ALERT_TRY_AGAIN_ACTION" = "Try again";
-"ALERT_OK_ACTION" = "ok";
+"ALERT_OK_ACTION" = "OK";
 
 // About message
 "ABOUT_EMU_TITLE" = "About Emu - V%@";
 "ABOUT_EMU_MESSAGE" = "Emu is a fun free app for iOS, where in just seconds you can create your own personal video stickers we call Emus.\n\nEmu - because you are what you send. \n\n© Homage Technology Ltd. 2015";
+
+
+// Notifications
+"NOTIFICATIONS_CONFIRMATION_TITLE" = "Auto updates!";
+"NOTIFICATIONS_CONFIRMATION_MESSAGE" = "Emu will be happy to alert you when new content is rendered for you automatically.";
+"NOTIFICATIONS_CONFIRMATION_OK_BUTTON" = "OK";
+"NOTIFICATIONS_CONFIRMATION_NO_BUTTON" = "Not Now";
+"NOTIFICATIONS_ENABLE" = "Enable notifications";
+"GENERAL_NEW_CONTENT_MESSAGE" = "New emus available! Check out the %@ pack.";

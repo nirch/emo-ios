@@ -100,7 +100,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -160,7 +160,7 @@
     CGFloat height = 58;
     NSInteger count = self.fetchedResultsController.fetchedObjects.count;
     if (count > 5) {
-        width = 98;
+        width = 70;
     } else {
         width = self.guiCollectionView.bounds.size.width / count;
     }

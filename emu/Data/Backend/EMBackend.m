@@ -449,7 +449,7 @@
                          //
                          // Parse successful
                          //
-                         Package *newlyAvailablePackage = [Package newlyAvailablePackage];
+                         Package *newlyAvailablePackage = [Package newlyAvailablePackageInContext:EMDB.sh.context];
                          if (newlyAvailablePackage) {
                              newDataHandler();
                          } else {
@@ -465,15 +465,30 @@
 
 -(void)notifyUserAboutUpdateForPackage:(Package *)package
 {
-//    NSString *alertBody = package.lastUpdateText;
-    NSString *alertBody = @"xxxxxxxxx";
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
-    localNotification.alertBody = alertBody;
-    localNotification.timeZone = [NSTimeZone defaultTimeZone];
-    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-//    [[NSUserDefaults standardUserDefaults] setObject:package.lastUpdateDateAvailableOnServer forKey:@"userNotifiedAboutUpdatesUptoDate"];
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    NSString *alertBody;
+    if (package.notificationText) {
+        alertBody = package.notificationText;
+    } else {
+        alertBody = [SF:LS(@"GENERAL_NEW_CONTENT_MESSAGE"), package.label];
+    }
+
+    UIUserNotificationSettings *settings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+    if (settings.types & UIUserNotificationTypeAlert) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+        localNotification.alertBody = alertBody;
+        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+
+        // Badge
+        if (settings.types & UIUserNotificationTypeBadge) {
+            localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+        }
+        
+        // Add info to the notification
+        localNotification.userInfo = @{@"packageOID":package.oid};
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 #pragma mark - Local data

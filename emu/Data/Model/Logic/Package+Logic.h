@@ -142,7 +142,7 @@
 
 -(NSURL *)urlForPackageIcon;
 
-
-+(Package *)newlyAvailablePackage;
++(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
++(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 
 @end

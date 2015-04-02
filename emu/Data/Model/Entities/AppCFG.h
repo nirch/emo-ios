@@ -2,7 +2,7 @@
 //  AppCFG.h
 //  emu
 //
-//  Created by Aviv Wolf on 3/31/15.
+//  Created by Aviv Wolf on 4/2/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSString * onboardingUsingPackage;
 @property (nonatomic, retain) NSString * prefferedFootageOID;
 @property (nonatomic, retain) NSNumber * userAskedInMainScreenAboutAlerts;
+@property (nonatomic, retain) NSDate * latestPackagePublishedOn;
 
 @end

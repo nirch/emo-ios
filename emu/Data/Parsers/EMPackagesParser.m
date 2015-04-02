@@ -25,11 +25,24 @@
     cfgParser.objectToParse = info;
     [cfgParser parse];
     
+    // Get list of prioritized packages
+    NSArray *prioritizedPackages = info[@"prioritized_packages"];
+    NSMutableDictionary *priorities = [NSMutableDictionary new];
+    NSInteger index = 0;
+    for (NSDictionary *p in prioritizedPackages) {
+        index++;
+        NSString *oid = [p safeOIDStringForKey:@"$oid"];
+        priorities[oid] = @(index);
+    }
+    
+    
     // Iterate and parse packages
     EMPackageParser *packageParser = [[EMPackageParser alloc] initWithContext:self.ctx];
     NSArray *packages = info[@"packages"];
     for (NSDictionary *packageInfo in packages) {
+        NSString *oid = [packageInfo safeOIDStringForKey:@"_id"];
         packageParser.objectToParse = packageInfo;
+        packageParser.incrementalOrder = priorities[oid];
         [packageParser parse];
     }
     

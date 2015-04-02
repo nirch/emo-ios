@@ -2,25 +2,131 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EMAlertsPermissionVC">
+            <connections>
+                <outlet property="blurryView" destination="bMQ-me-mch" id="IHJ-0e-x6m"/>
+                <outlet property="guiAlertView" destination="Whd-yy-2vk" id="JqS-5B-BPy"/>
+                <outlet property="guiEmuBird" destination="WQf-td-AAW" id="8w5-RT-Vwm"/>
+                <outlet property="guiNotNowButton" destination="1CY-d7-uws" id="iRS-Gm-zIX"/>
+                <outlet property="guiOKButton" destination="RaO-ei-xUq" id="tYj-DH-FFl"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Hh2-kZ-iQs"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hof-DN-RDE">
-                    <rect key="frame" x="165" y="319" width="46" height="30"/>
-                    <state key="normal" title="Button">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bMQ-me-mch" userLabel="blurry">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQf-td-AAW" userLabel="Emu bird" customClass="FLAnimatedImageView">
+                    <rect key="frame" x="143" y="164" width="88" height="88"/>
+                    <color key="backgroundColor" red="1" green="0.46274510029999999" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="88" id="kix-nd-ek3"/>
+                        <constraint firstAttribute="width" constant="88" id="sxg-d4-cKh"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Whd-yy-2vk" userLabel="AlertView">
+                    <rect key="frame" x="62" y="260" width="250" height="148"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1CY-d7-uws" customClass="EMButton">
+                            <rect key="frame" x="0.0" y="104" width="125" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="125" id="P9y-Cp-BNE"/>
+                                <constraint firstAttribute="height" constant="44" id="zMV-jy-MXc"/>
+                            </constraints>
+                            <state key="normal" title="Nope">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="NOTIFICATIONS_CONFIRMATION_NO_BUTTON"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="onPressedNoButton:" destination="-1" eventType="touchUpInside" id="j7C-4d-SNN"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RaO-ei-xUq" customClass="EMButton">
+                            <rect key="frame" x="125" y="104" width="125" height="44"/>
+                            <state key="normal" title="YES">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="NOTIFICATIONS_CONFIRMATION_OK_BUTTON"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="onPressedOKButton:" destination="-1" eventType="touchUpInside" id="GY5-sZ-KmN"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsu-fF-4Oh" userLabel="Title" customClass="EMLabel">
+                            <rect key="frame" x="109" y="8" width="33" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="NOTIFICATIONS_CONFIRMATION_TITLE"/>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badger badger badger badger badger badger badger. Mushroom mushroom!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ng-UN-6vm" customClass="EMLabel">
+                            <rect key="frame" x="14" y="36" width="221" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="NOTIFICATIONS_CONFIRMATION_MESSAGE"/>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerX" secondItem="Bsu-fF-4Oh" secondAttribute="centerX" id="3Wj-w5-pd9"/>
+                        <constraint firstItem="9ng-UN-6vm" firstAttribute="leading" secondItem="Whd-yy-2vk" secondAttribute="leading" constant="14" id="7bL-h1-0zq"/>
+                        <constraint firstItem="1CY-d7-uws" firstAttribute="top" secondItem="RaO-ei-xUq" secondAttribute="top" id="HeU-85-3TX"/>
+                        <constraint firstItem="1CY-d7-uws" firstAttribute="leading" secondItem="Whd-yy-2vk" secondAttribute="leading" id="Mot-FS-XXn"/>
+                        <constraint firstAttribute="trailing" secondItem="RaO-ei-xUq" secondAttribute="trailing" id="Q6V-ZQ-blk"/>
+                        <constraint firstItem="RaO-ei-xUq" firstAttribute="top" secondItem="9ng-UN-6vm" secondAttribute="bottom" constant="17" id="USV-7c-93L"/>
+                        <constraint firstAttribute="height" constant="148" id="Wf0-Aa-RaA"/>
+                        <constraint firstItem="1CY-d7-uws" firstAttribute="baseline" secondItem="RaO-ei-xUq" secondAttribute="firstBaseline" id="Wvd-LK-vIL"/>
+                        <constraint firstItem="RaO-ei-xUq" firstAttribute="leading" secondItem="1CY-d7-uws" secondAttribute="trailing" id="aco-YP-NHz"/>
+                        <constraint firstAttribute="trailing" secondItem="9ng-UN-6vm" secondAttribute="trailing" constant="15" id="cgN-Ew-xTy"/>
+                        <constraint firstItem="RaO-ei-xUq" firstAttribute="leading" secondItem="1CY-d7-uws" secondAttribute="trailing" id="jxY-hj-gbo"/>
+                        <constraint firstAttribute="bottom" secondItem="RaO-ei-xUq" secondAttribute="bottom" id="mqf-Hf-tOq"/>
+                        <constraint firstItem="RaO-ei-xUq" firstAttribute="baseline" secondItem="1CY-d7-uws" secondAttribute="firstBaseline" id="ro4-FR-JIb"/>
+                        <constraint firstAttribute="width" constant="250" id="wX7-DN-Ahu"/>
+                        <constraint firstItem="Bsu-fF-4Oh" firstAttribute="top" secondItem="Whd-yy-2vk" secondAttribute="top" constant="8" id="zKr-Zp-8ID"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="jxY-hj-gbo"/>
+                        </mask>
+                    </variation>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5R-6D-ICM">
+                    <rect key="frame" x="235" y="410" width="30" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="▲">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="Hof-DN-RDE" secondAttribute="centerX" id="8s9-bl-eP2"/>
-                <constraint firstAttribute="centerY" secondItem="Hof-DN-RDE" secondAttribute="centerY" constant="-0.5" id="d2c-L7-CCr"/>
+                <constraint firstItem="Whd-yy-2vk" firstAttribute="top" secondItem="WQf-td-AAW" secondAttribute="bottom" constant="8" id="3au-dL-PBA"/>
+                <constraint firstItem="bMQ-me-mch" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AgJ-IQ-7Ve"/>
+                <constraint firstAttribute="trailing" secondItem="bMQ-me-mch" secondAttribute="trailing" id="JJD-gK-m2m"/>
+                <constraint firstItem="b5R-6D-ICM" firstAttribute="centerX" secondItem="RaO-ei-xUq" secondAttribute="centerX" id="Ypc-pp-QVg"/>
+                <constraint firstAttribute="centerX" secondItem="WQf-td-AAW" secondAttribute="centerX" constant="0.5" id="bLK-zY-mB8"/>
+                <constraint firstItem="b5R-6D-ICM" firstAttribute="top" secondItem="Whd-yy-2vk" secondAttribute="bottom" constant="2" id="eBJ-eo-8ml"/>
+                <constraint firstAttribute="centerY" secondItem="Whd-yy-2vk" secondAttribute="centerY" constant="-0.5" id="fjm-C7-SCI"/>
+                <constraint firstAttribute="centerX" secondItem="Whd-yy-2vk" secondAttribute="centerX" constant="0.5" id="iia-FD-kGl"/>
+                <constraint firstItem="bMQ-me-mch" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jRV-hG-jJT"/>
+                <constraint firstAttribute="bottom" secondItem="bMQ-me-mch" secondAttribute="bottom" id="rRE-7j-ztV"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="496.5" y="423.5"/>
