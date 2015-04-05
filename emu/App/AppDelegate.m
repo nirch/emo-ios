@@ -58,7 +58,11 @@
     // FB Messanger optimized integration
     self.messengerUrlHandler = [[FBSDKMessengerURLHandler alloc] init];
     self.messengerUrlHandler.delegate = self;
-    
+
+    // Background fetches interval.
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+
+    // Launched.
     HMLOG(TAG, EM_DBG, @"Application launched");
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     return YES;
