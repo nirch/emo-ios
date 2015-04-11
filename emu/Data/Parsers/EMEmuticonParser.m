@@ -54,7 +54,7 @@
 
     // If emu def patched (one of the resources or definitions updated)
     // Will need to rerender the emu for the user.
-    NSDate *patchedOn = [self parseDateOfString:[info safeStringForKey:@"patchedOn" defaultsDictionary:defaults]];
+    NSDate *patchedOn = [self parseDateOfString:[info safeStringForKey:@"patched_on" defaultsDictionary:defaults]];
     if (patchedOn != nil) {
         if (![patchedOn isEqualToDate:emuDef.patchedOn]) {
             for (Emuticon *emu in emuDef.emus) {

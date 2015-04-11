@@ -145,4 +145,7 @@
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 
+
+-(NSString *)tagLabel;
+
 @end

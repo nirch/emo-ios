@@ -13,6 +13,9 @@
 
 @property (nonatomic, weak) id<EMPackageSelectionDelegate> delegate;
 
+@property (nonatomic) BOOL cellSizeByHeight;
+@property (nonatomic) BOOL onlyRenderedPackages;
+
 -(void)refresh;
 -(void)selectThisPackage:(Package *)package;
 -(void)selectPackageAtIndex:(NSInteger)index;

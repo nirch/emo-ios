@@ -231,6 +231,7 @@
     NSIndexPath *indexPath = info[@"indexPath"];
     NSString *emuOID = info[@"emuticonOID"];
 
+    if (indexPath.item >= self.fetchedResultsController.fetchedObjects.count) return;
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (emu == nil || ![emu.oid isEqualToString:emuOID]) return;
     
@@ -564,12 +565,11 @@
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
     
-//    if (flowType == EMRecorderFlowTypeOnboarding) {
-//        [self showTutorial];
-//    } else {
-//        [self handleFlow];
-//    }
-    [self handleFlow];
+    if (flowType == EMRecorderFlowTypeOnboarding) {
+        [self showTutorial];
+    } else {
+        [self handleFlow];
+    }
 }
 
 -(void)showTutorial
@@ -829,7 +829,7 @@
     if (shouldAnimate) {
         __weak EMMainVC *weakSelf = self;
 
-        self.guiTagLabel.text = [SF:@"#%@", package.label];
+        self.guiTagLabel.text = [package tagLabel];
         self.guiTagLabel.alpha = 1.0;
         self.guiTagLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
         [UIView animateWithDuration:0.7 animations:^{

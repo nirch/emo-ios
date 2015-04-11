@@ -161,6 +161,9 @@
         // Update model in main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             emu.wasRendered = @YES;
+            NSInteger count = emu.emuDef.package.rendersCount.integerValue;
+            emu.emuDef.package.rendersCount = @(count+1);
+            
             [weakSelf doneWithEmu:emu];
             self.isRendering = NO;
             [EMDB.sh save];

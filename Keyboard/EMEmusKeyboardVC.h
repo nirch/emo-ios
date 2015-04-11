@@ -8,11 +8,10 @@
 
 #import "EMKeyboardContainerDelegate.h"
 
-@interface EMKeyboardVC : UIViewController
+@interface EMEmusKeyboardVC : UIViewController
 
 @property (nonatomic, weak) id<EMKeyboardContainerDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *guiDebugLabel;
-
 
 @end

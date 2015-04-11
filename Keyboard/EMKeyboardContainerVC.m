@@ -9,13 +9,15 @@
 #define TAG @"EMKeyboardVC"
 
 #import "EMKeyboardContainerVC.h"
-#import "EMKeyboardVC.h"
+#import "EMEmusKeyboardVC.h"
 
 @interface EMKeyboardContainerVC () <
     EMKeyboardContainerDelegate
 >
 
-@property (nonatomic, weak) EMKeyboardVC *keyboardVC;
+@property (nonatomic, weak) EMEmusKeyboardVC *emuKeyboardVC;
+
+@property (nonatomic) NSLayoutConstraint *heightConstraint;
 
 @end
 
@@ -24,6 +26,17 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    CGFloat expandedHeight = 240;
+    self.heightConstraint = [NSLayoutConstraint constraintWithItem: self.view
+                                                         attribute: NSLayoutAttributeHeight
+                                                         relatedBy: NSLayoutRelationEqual
+                                                            toItem: nil
+                                                         attribute: NSLayoutAttributeNotAnAttribute
+                                                        multiplier: 0.0
+                                                          constant: expandedHeight];
+    self.heightConstraint.priority = 998;
+    [self.view.inputView addConstraint: self.heightConstraint];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -35,18 +48,19 @@
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    self.keyboardVC.view.frame = self.view.bounds;
-    [self.keyboardVC.view layoutIfNeeded];
+
+    self.emuKeyboardVC.view.frame = self.view.bounds;
+    [self.emuKeyboardVC.view layoutIfNeeded];
 }
 
 -(void)embedKeyboardVC
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Keyboard" bundle:nil];
-    EMKeyboardVC *keyboardVC = [storyboard instantiateInitialViewController];
-    keyboardVC.view.frame = self.view.bounds;
-    keyboardVC.delegate = self;
-    [self addChildViewController:keyboardVC];
-    [self.view addSubview:keyboardVC.view];
+    EMEmusKeyboardVC *emusKeyboardVC = [storyboard instantiateInitialViewController];
+    emusKeyboardVC.view.frame = self.view.bounds;
+    emusKeyboardVC.delegate = self;
+    [self addChildViewController:emusKeyboardVC];
+    [self.view addSubview:emusKeyboardVC.view];
 }
 
 #pragma mark - EMKeyboardContainerDelegate
@@ -58,6 +72,11 @@
 -(void)keyboardShouldDeleteBackward
 {
     [self.textDocumentProxy deleteBackward];
+}
+
+-(void)keyboardTypedString:(NSString *)typedString
+{
+    [self.textDocumentProxy insertText:typedString];
 }
 
 @end

@@ -2,7 +2,7 @@
 //  Package.m
 //  emu
 //
-//  Created by Aviv Wolf on 4/2/15.
+//  Created by Aviv Wolf on 4/11/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -13,15 +13,16 @@
 @implementation Package
 
 @dynamic alreadyUnzipped;
+@dynamic firstPublishedOn;
 @dynamic iconName;
 @dynamic label;
 @dynamic name;
+@dynamic notificationText;
 @dynamic oid;
 @dynamic prefferedFootageOID;
 @dynamic priority;
 @dynamic timeUpdated;
-@dynamic notificationText;
-@dynamic firstPublishedOn;
+@dynamic rendersCount;
 @dynamic emuDefs;
 
 @end

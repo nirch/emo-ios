@@ -311,4 +311,10 @@
     return nil;
 }
 
+
+-(NSString *)tagLabel
+{
+    return [SF:@"#%@", [self.label lowercaseString]];
+}
+
 @end

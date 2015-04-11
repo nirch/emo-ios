@@ -63,6 +63,7 @@
 {
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
+    [self updateMoreButtonAnimated:YES];
 }
 
 -(void)setupEffects
@@ -95,8 +96,13 @@
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
+    NSPredicate *predicate;
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+    if (self.onlyRenderedPackages) {
+        predicate = [NSPredicate predicateWithFormat:@"rendersCount>%@", @0];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+    }
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;
@@ -156,15 +162,21 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView
                  layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat width;
-    CGFloat height = 58;
-    NSInteger count = self.fetchedResultsController.fetchedObjects.count;
-    if (count > 5) {
-        width = 70;
+    if (self.cellSizeByHeight) {
+        CGFloat height = collectionView.bounds.size.height;
+        CGFloat width = height;
+        return CGSizeMake(width, height);
     } else {
-        width = self.guiCollectionView.bounds.size.width / count;
+        CGFloat width;
+        CGFloat height = 58;
+        NSInteger count = self.fetchedResultsController.fetchedObjects.count;
+        if (count > 5) {
+            width = 70;
+        } else {
+            width = self.guiCollectionView.bounds.size.width / count;
+        }
+        return CGSizeMake(width, height);
     }
-    return CGSizeMake(width, height);
 }
 
 #pragma mark - Scrolling

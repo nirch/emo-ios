@@ -12,5 +12,11 @@
 
 -(void)keyboardShouldAdadvanceToNextInputMode;
 -(void)keyboardShouldDeleteBackward;
+-(void)keyboardTypedString:(NSString *)typedString;
+
+@optional
+-(BOOL)keyboardFullAccessWasGranted;
+-(void)keyboardShouldDismissAlphaNumeric;
+-(void)keyboardShouldDismissAlphaNumericWithInfo:(NSDictionary *)info;
 
 @end

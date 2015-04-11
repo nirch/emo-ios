@@ -38,6 +38,7 @@
                      kLoggerOption_BrowseOnlyLocalDomain |
                      kLoggerOption_UseSSL
                      );
+    LoggerSetupBonjour(logger, NULL, (CFStringRef)@"AvivLogger");
 }
 
 #pragma mark - App Delegate
