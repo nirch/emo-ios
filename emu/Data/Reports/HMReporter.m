@@ -93,8 +93,16 @@
     [params addKey:AK_S_DEVICE_MODEL value:[HMReporter deviceModelName]];
     [params addKey:AK_S_LAUNCHES_COUNT value:[self launchesCount]];
     [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]];
+    
+    // More flags as super parameters
+    [params addKey:AK_S_DID_EVER_SHARE_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+    [params addKey:AK_S_DID_EVER_FINISH_A_RETAKE value:[self didEverCountedKey:AK_S_NUMBER_OF_APPROVED_RETAKES]];
+    [params addKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:[self didEverCountedKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED]];
+    
     NSDictionary *info = params.dictionary;
     [self.mixPanel registerSuperProperties:info];
+    
+
 }
 
 -(void)reportSuperParameters:(NSDictionary *)parameters
@@ -104,6 +112,28 @@
         [superParams addKey:key valueIfNotNil:parameters[key]];
     }
     [self.mixPanel registerSuperProperties:superParams.dictionary];
+}
+
+
+-(void)reportSuperParameterKey:(NSString *)key value:(id)value
+{
+    HMParams *superParams = [HMParams new];
+    [superParams addKey:key valueIfNotNil:value];
+    [self.mixPanel registerSuperProperties:superParams.dictionary];
+}
+
+-(void)reportCountedSuperParameterForKey:(NSString *)key
+{
+    NSNumber *counterValue = [self advanceCounterNamed:key];
+    [self reportSuperParameterKey:key value:counterValue];
+}
+
+-(NSNumber *)didEverCountedKey:(NSString *)counterKey
+{
+    if ([self counterExistsNamed:counterKey]) {
+        return @YES;
+    }
+    return @NO;
 }
 
 -(void)analyticsForceSend
@@ -171,24 +201,31 @@
 
 -(NSNumber *)launchesCount
 {
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSInteger counter = [prefs integerForKey:@"launchesCounter"];
-    counter++;
-    [prefs setValue:@(counter) forKey:@"launchesCounter"];
-    [prefs synchronize];
-    return @(counter);
+    return [self advanceCounterNamed:@"launchesCounter"];
 }
 
 -(NSNumber *)sharesCount
 {
+    return [self advanceCounterNamed:@"sharesCounter"];
+}
+
+-(NSNumber *)advanceCounterNamed:(NSString *)counterName
+{
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSInteger counter = [prefs integerForKey:@"sharesCounter"];
+    NSInteger counter = [prefs integerForKey:counterName];
     counter++;
-    [prefs setValue:@(counter) forKey:@"sharesCounter"];
+    [prefs setValue:@(counter) forKey:counterName];
     [prefs synchronize];
     return @(counter);
 }
 
+
+-(BOOL)counterExistsNamed:(NSString *)counterName
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSInteger counter = [prefs integerForKey:counterName];
+    return counter > 0;
+}
 
 -(NSString *)localizationPreference
 {

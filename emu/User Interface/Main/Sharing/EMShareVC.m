@@ -326,6 +326,8 @@
     self.sharer = nil;
     
     // Analytics
+    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT];
+    [HMReporter.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_USING_APP value:@YES];
     [HMReporter.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
 }
 

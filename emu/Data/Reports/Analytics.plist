@@ -46,6 +46,71 @@ or
 			<key>description</key>
 			<string>The number of times the user launched the application.</string>
 		</dict>
+		<key>didBecomeActiveCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the app did become active</string>
+		</dict>
+		<key>numberOfSharesUsingAppCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user shared an emu from within the app.</string>
+		</dict>
+		<key>didEverShareUsingApp</key>
+		<dict>
+			<key>description</key>
+			<string>true if numberOfSharesUsingAppCount &gt; 0</string>
+		</dict>
+		<key>numberOfApprovedRetakes</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user pressed &quot;I love it&quot; and confirmed the take in the recorder.</string>
+		</dict>
+		<key>didEverFinishARetake</key>
+		<dict>
+			<key>description</key>
+			<string>Did the user ever finished a second retake. Opened the recorder and finished the recorder flow (disregarding oboarding)</string>
+		</dict>
+		<key>numberOfPackagesNavigated</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user navigated to a different package in the app.</string>
+		</dict>
+		<key>didEverNavigateToAnotherPackage</key>
+		<dict>
+			<key>description</key>
+			<string>True if the user ever navigated to another package in the app.</string>
+		</dict>
+		<key>inMessangerContext</key>
+		<dict>
+			<key>description</key>
+			<string>True if in the context of a messanger conversation.</string>
+		</dict>
+		<key>numberOfKBAppearancesCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times keyboard did appear.</string>
+		</dict>
+		<key>didKeyboardEverAppear</key>
+		<dict>
+			<key>description</key>
+			<string>True if the keyboard ever appeared.</string>
+		</dict>
+		<key>numberOfAlphaNumericKBAppearancesCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the alpha numeric keyboard was shown.</string>
+		</dict>
+		<key>didAlphaNumericKBEverAppear</key>
+		<dict>
+			<key>description</key>
+			<string>True if numberOfAlphaNumericKBAppearancesCount&gt;0</string>
+		</dict>
+		<key>numberOfKBCopyEmuCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard</string>
+		</dict>
 	</dict>
 	<key>events</key>
 	<dict>

@@ -1147,6 +1147,12 @@
     [self.previewEmuticon deleteAndCleanUp];
     [EMDB.sh save];
     
+    // Analytics super parameters
+    if (self.flowType != EMRecorderFlowTypeOnboarding) {
+        [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_APPROVED_RETAKES];
+        [HMReporter.sh reportSuperParameterKey:AK_S_DID_EVER_FINISH_A_RETAKE value:@YES];
+    }
+    
     // Tell delegate to dismiss the recorder.
     [self.recorderSessionAnalyticsParams addKey:AK_EP_FINISHED_FLOW valueIfNotNil:@1];
     [self.delegate recorderWantsToBeDismissedAfterFlow:self.flowType

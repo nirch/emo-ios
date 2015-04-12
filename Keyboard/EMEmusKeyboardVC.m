@@ -97,6 +97,7 @@
 {
     [HMReporter.sh initializeAnalyticsWithLaunchOptions:nil];
     [HMReporter.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
+    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
     [HMReporter.sh analyticsForceSend];
 }
 
@@ -330,6 +331,7 @@
     
     // Analytics
     [HMReporter.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
+    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT];
     [HMReporter.sh analyticsForceSend];
 }
 
@@ -401,6 +403,7 @@
     
     self.guiAlphaNumericKBContainer.transform = CGAffineTransformIdentity;
     self.guiAlphaNumericKBContainer.alpha = 1;
+    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT];
 }
 
 -(void)hideAlphaNumericKBAnimated:(BOOL)animated

@@ -74,6 +74,7 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     self.fbContext = nil;
+    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -98,6 +99,7 @@
     [FBAppEvents activateApp];
     
     // Analytics
+    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_DID_BECOME_ACTIVE_COUNT];
     [HMReporter.sh analyticsEvent:AK_E_APP_DID_BECOME_ACTIVE];
     application.applicationIconBadgeNumber = 0;
     
@@ -138,6 +140,7 @@
     [self.currentFBMSharer onFBMCancel];
     
     // Analytics
+    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LINK_TYPE value:@"cancel"];
     [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
@@ -150,6 +153,7 @@
     [self.currentFBMSharer onFBMOpen];
     
     // Analytics
+    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LINK_TYPE value:@"open"];
     [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
@@ -168,6 +172,7 @@
     }
     
     // Analytics
+    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LINK_TYPE value:@"reply"];
     [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];

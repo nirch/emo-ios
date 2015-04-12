@@ -20,11 +20,17 @@
 #pragma mark - Tracking
 -(void)reportSuperParameters;
 -(void)reportSuperParameters:(NSDictionary *)parameters;
+-(void)reportSuperParameterKey:(NSString *)key value:(id)value;
+-(void)reportCountedSuperParameterForKey:(NSString *)key;
+-(NSNumber *)didEverCountedKey:(NSString *)counterKey;
 -(void)checkAndReportIfAppUpdated;
 -(void)analyticsForceSend;
 -(void)analyticsEvent:(NSString *)event;
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info;
 -(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info;
 
+#pragma mark - Counting stuff
+-(BOOL)counterExistsNamed:(NSString *)counterName;
+-(NSNumber *)advanceCounterNamed:(NSString *)counterName;
 
 @end
