@@ -1113,6 +1113,7 @@
         [self.package createMissingEmuticonObjects];
         for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
             [package cleanUpEmuticonsWithNoSpecificFootage];
+            [package recountRenders];
         }
         
     } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
@@ -1129,7 +1130,7 @@
         // Create missing emuticons of current package.
         [self.package createMissingEmuticonObjects];
         [self.package cleanUpEmuticonsWithNoSpecificFootage];
-
+        [self.package recountRenders];
 
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
         

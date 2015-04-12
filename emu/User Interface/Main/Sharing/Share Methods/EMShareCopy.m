@@ -26,7 +26,8 @@
     
     // Notify the user.
     if (self.selectionMessage) {
-        [self.view makeToast:self.selectionMessage];
+//        [self.view makeToast:self.selectionMessage];
+        [self.view makeToast:self.selectionMessage duration:1.0 position:CSToastPositionTop title:nil];
     } else {
         [self.view makeToast:LS(@"SHARE_TOAST_COPIED")];
     }

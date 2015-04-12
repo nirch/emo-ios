@@ -2,7 +2,7 @@
 //  Package.h
 //  emu
 //
-//  Created by Aviv Wolf on 4/11/15.
+//  Created by Aviv Wolf on 4/12/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSNumber * priority;
 @property (nonatomic, retain) NSDate * timeUpdated;
 @property (nonatomic, retain) NSNumber * rendersCount;
+@property (nonatomic, retain) NSNumber * viewedByUser;
 @property (nonatomic, retain) NSSet *emuDefs;
 @end
 

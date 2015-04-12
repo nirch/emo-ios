@@ -141,11 +141,9 @@
 
 
 -(NSURL *)urlForPackageIcon;
-
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
-
-
 -(NSString *)tagLabel;
+-(void)recountRenders;
 
 @end

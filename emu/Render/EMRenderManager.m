@@ -215,6 +215,7 @@
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
     renderer.outputOID = [[NSUUID UUID] UUIDString];
+    renderer.paletteString = emuDef.palette;
     renderer.outputPath = [EMDB outputPath];
     
     // Execute the rendering.

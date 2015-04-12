@@ -317,4 +317,15 @@
     return [SF:@"#%@", [self.label lowercaseString]];
 }
 
+
+-(void)recountRenders
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"emuDef.package=%@ AND wasRendered=%@", self, @YES];
+    NSArray *arr = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    if (arr) {
+        self.rendersCount = @(arr.count);
+    }
+}
+
 @end

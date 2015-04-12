@@ -15,4 +15,7 @@
 -(void)packageWasSelected:(Package *)package;
 -(void)packagesAvailableCount:(NSInteger)numberOfPackages;
 
+@optional
+-(BOOL)packagesDataIsNotAvailable;
+
 @end

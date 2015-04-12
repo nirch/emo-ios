@@ -93,11 +93,20 @@
 #pragma mark - Fetched results controller
 -(NSFetchedResultsController *)fetchedResultsController
 {
+    if ([self.delegate respondsToSelector:@selector(packagesDataIsNotAvailable)]) {
+        // Some delegates can decide to lock reading the data for awhile.
+        if ([self.delegate packagesDataIsNotAvailable]) {
+            return nil;
+        }
+    }
+    
+    // Return the fetched results controller
+    // (create it if instance not available yet)
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
-    NSPredicate *predicate;
     
+    NSPredicate *predicate;
     if (self.onlyRenderedPackages) {
         predicate = [NSPredicate predicateWithFormat:@"rendersCount>%@", @0];
     } else {
@@ -240,11 +249,19 @@
 
 -(void)selectThisPackage:(Package *)package
 {
+    [self selectThisPackage:package highlightOnly:NO];
+}
+
+-(void)selectThisPackage:(Package *)package highlightOnly:(BOOL)highlightOnly
+{
     if (package == nil) return;
     
     self.selectedPackage = package;
     [self.guiCollectionView reloadData];
-    [self.delegate packageWasSelected:package];
+    
+    if (!highlightOnly) {
+        [self.delegate packageWasSelected:package];
+    }
     
     // Check if selcted package tab is on screen. If not, scroll it into view.
     NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:package];
@@ -258,12 +275,18 @@
 
 -(void)selectPackageAtIndex:(NSInteger)index
 {
+    [self selectPackageAtIndex:index highlightOnly:NO];
+}
+
+-(void)selectPackageAtIndex:(NSInteger)index highlightOnly:(BOOL)highlightOnly
+{
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
     if (self.fetchedResultsController.fetchedObjects.count<1) return;
+    
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (package == nil) return;
     
-    [self selectThisPackage:package];
+    [self selectThisPackage:package highlightOnly:highlightOnly];
 }
 
 -(NSInteger)selectedIndex

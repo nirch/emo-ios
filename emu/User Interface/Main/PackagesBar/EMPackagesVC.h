@@ -17,8 +17,12 @@
 @property (nonatomic) BOOL onlyRenderedPackages;
 
 -(void)refresh;
+
 -(void)selectThisPackage:(Package *)package;
+-(void)selectThisPackage:(Package *)package highlightOnly:(BOOL)highlightOnly;
+
 -(void)selectPackageAtIndex:(NSInteger)index;
+-(void)selectPackageAtIndex:(NSInteger)index highlightOnly:(BOOL)highlightOnly;
 
 -(BOOL)canSelectPrevious;
 -(BOOL)canSelectNext;

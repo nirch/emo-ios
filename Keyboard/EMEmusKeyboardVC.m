@@ -16,6 +16,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "EMPackagesVC.h"
 
+#define TAG @"EMEmusKeyboardVC"
+
 @interface EMEmusKeyboardVC()<
     UICollectionViewDataSource,
     UICollectionViewDelegate,
@@ -35,6 +37,7 @@
 @property (nonatomic) Package *selectedPackage;
 @property (nonatomic) BOOL initializedData;
 @property (nonatomic) EMShareCopy *sharer;
+@property (nonatomic) NSInteger focusedOnIndex;
 
 @property (nonatomic) BOOL isFullAccessGranted;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
@@ -50,7 +53,7 @@
 {
     [super viewDidLoad];
     self.initializedData = NO;
-    
+
     // Not hidden but alpha = 0
     self.guiAlphaNumericKBContainer.hidden = NO;
     [self hideAlphaNumericKBAnimated:NO];
@@ -60,6 +63,7 @@
 {
     [super viewWillAppear:animated];
     [self checkForFullAccess];
+    [self updateGUI];
 }
 
 
@@ -151,7 +155,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.priority" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -441,6 +445,26 @@
 
 -(void)packagesAvailableCount:(NSInteger)numberOfPackages
 {
+}
+
+-(BOOL)packagesDataIsNotAvailable
+{
+    if (!self.isFullAccessGranted) return YES;
+    return NO;
+}
+
+#pragma mark - Scroll
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGSize size = self.guiCollectionView.bounds.size;
+    CGPoint center = CGPointMake(size.width/2+self.guiCollectionView.contentOffset.x, size.height/2);
+    NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:center];
+    if (indexPath == nil) return;
+    NSInteger sectionIndex = indexPath.section;
+    if (sectionIndex != self.focusedOnIndex) {
+        [self.packagesVC selectPackageAtIndex:sectionIndex highlightOnly:YES];
+        self.focusedOnIndex = sectionIndex;
+    }
 }
 
 #pragma mark - IB Actions

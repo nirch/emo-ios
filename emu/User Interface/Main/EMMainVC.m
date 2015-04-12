@@ -712,6 +712,7 @@
             emu.prefferedFootageOID = nil;
         }
     }
+    [package recountRenders];
     [EMDB.sh save];
 
     // Reload (and resend some emus to rendering)
@@ -728,6 +729,7 @@
         for (Emuticon *emu in emus) {
             [emu cleanUp];
         }
+        [package recountRenders];
     }
     [self.guiCollectionView reloadData];
     [EMDB.sh save];
@@ -811,6 +813,27 @@
     
     // Make sure emuticons instances created for this package
     [package createMissingEmuticonObjects];
+    
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (![appCFG isPackageUsedForOnboarding:package]) {
+        // Not an onboarding package.
+        
+        // Check if user was asked about auto updates/background fetches.
+        if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
+            // Never asked.
+            // Ask the user if interested in background fetches / auto updates.
+            [self askUserAboutAlerts];
+        }
+        
+        // If package never viewed before by the user, count the event.
+        if (!package.viewedByUser.boolValue) {
+            [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED];
+            [HMReporter.sh reportSuperParameterKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:@YES];
+        }
+    }
+    
+    // Mark package as viewed.
+    package.viewedByUser = @YES;
     [EMDB.sh save];
     
     // Reload if selected another package.
@@ -860,15 +883,6 @@
     }
     
     REMOTE_LOG(@"Did select package: %@", self.selectedPackage.name);
-    
-    // If not the onboarding package
-
-    
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue && ![appCFG isPackageUsedForOnboarding:package]) {
-        // Ask user about receiving alerts.
-        [self askUserAboutAlerts];
-    }
 }
 
 -(void)askUserAboutAlerts
@@ -876,7 +890,6 @@
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     appCFG.userAskedInMainScreenAboutAlerts = @YES;
     [EMDB.sh save];
-    
     dispatch_after(DTIME(2), dispatch_get_main_queue(), ^{
         [self showAlertsPermissionScreenAnimated:YES];
     });
