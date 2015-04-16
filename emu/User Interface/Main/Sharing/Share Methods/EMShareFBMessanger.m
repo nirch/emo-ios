@@ -98,7 +98,7 @@
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action) {
                                                 // Messenger isn't installed. Redirect the person to the App Store.
-                                                [HMReporter.sh analyticsEvent:AK_E_FBM_INSTALL];
+                                                [HMPanel.sh analyticsEvent:AK_E_FBM_INSTALL];
                                                 NSString *iTunesLink = @"itms://itunes.apple.com/us/app/facebook-messenger/id454638411?mt=8";
                                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
                                             }]];
@@ -107,7 +107,7 @@
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"FBM_MISSING_GOT_IT")
                                               style:UIAlertActionStyleCancel
                                             handler:^(UIAlertAction *action) {
-                                                [HMReporter.sh analyticsEvent:AK_E_FBM_DISMISSED_INSTALL];
+                                                [HMPanel.sh analyticsEvent:AK_E_FBM_DISMISSED_INSTALL];
                                             }]];
     
     [self.viewController presentViewController:alert animated:YES completion:nil];

@@ -1,16 +1,16 @@
 //
-//  HMReporter.m
+//  HMPanel.m
 //
-#define TAG @"HMReporter"
+#define TAG @"HMPanel"
 
 
-#import "HMReporter.h"
+#import "HMPanel.h"
 #import <Crashlytics/Crashlytics.h>
 #import <Mixpanel.h>
 #import <sys/utsname.h>
 #import "AppManagement.h"
 
-@interface HMReporter()
+@interface HMPanel()
 
 @property (nonatomic) NSMutableDictionary *cfg;
 
@@ -20,24 +20,24 @@
 
 @end
 
-@implementation HMReporter
+@implementation HMPanel
 
 #pragma mark - Initialization
 // A singleton
-+(HMReporter *)sharedInstance
++(HMPanel *)sharedInstance
 {
-    static HMReporter *sharedInstance = nil;
+    static HMPanel *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[HMReporter alloc] init];
+        sharedInstance = [[HMPanel alloc] init];
     });
     return sharedInstance;
 }
 
 // Just an alias for sharedInstance for shorter writing.
-+(HMReporter *)sh
++(HMPanel *)sh
 {
-    return [HMReporter sharedInstance];
+    return [HMPanel sharedInstance];
 }
 
 -(id)init
@@ -90,7 +90,7 @@
     HMParams *params = [HMParams new];
     [params addKey:AK_S_BUILD_VERSION value:AppManagement.sh.applicationBuild];
     [params addKey:AK_S_LOCALIZATION_PREFERENCE value:[self localizationPreference]];
-    [params addKey:AK_S_DEVICE_MODEL value:[HMReporter deviceModelName]];
+    [params addKey:AK_S_DEVICE_MODEL value:[HMPanel deviceModelName]];
     [params addKey:AK_S_LAUNCHES_COUNT value:[self launchesCount]];
     [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]];
     
@@ -175,8 +175,9 @@
 }
 
 #pragma mark - App Info
--(void)checkAndReportIfAppUpdated
+-(BOOL)checkAndReportIfAppUpdated
 {
+    BOOL wasUpdated = NO;
     // We don't care about this for test applications
     //if (self.isTestApp) return;
     
@@ -191,12 +192,14 @@
             [params addKey:AK_EP_CURRENT_VERSION value:AppManagement.sh.applicationBuild];
             [params addKey:AK_EP_PREVIOUS_VERSION value:previousBuildLaunched];
             [self analyticsEvent:AK_E_APP_VERSION_UPDATED info:params.dictionary];
+            wasUpdated = YES;
         }
     }
     
     // Store current build as the the previousBuildLaunched
     [prefs setObject:AppManagement.sh.applicationBuild forKey:@"previousBuildLaunched"];
     [prefs synchronize];
+    return wasUpdated;
 }
 
 -(NSNumber *)launchesCount
@@ -338,5 +341,30 @@ NSString* machineName()
                                          encoding:NSUTF8StringEncoding];
     return model;
 }
+
+
+#pragma mark - People
+-(void)personIdentify
+{
+    NSString *identifier = UIDevice.currentDevice.identifierForVendor.UUIDString;
+    [self personIdentifyWithIdentifier:identifier];
+}
+
+-(void)personIdentifyWithIdentifier:(NSString *)identifier
+{
+    [self.mixPanel identify:identifier];
+}
+
+-(void)personDetails:(NSDictionary *)details
+{
+    [self.mixPanel.people set:details];
+}
+
+//-(void)a
+//{
+//    [self.mixPanel.people set]
+//}
+
+
 
 @end

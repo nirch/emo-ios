@@ -145,5 +145,6 @@
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 -(NSString *)tagLabel;
 -(void)recountRenders;
++(NSInteger)countNumberOfViewedPackagesInContext:(NSManagedObjectContext *)context;
 
 @end

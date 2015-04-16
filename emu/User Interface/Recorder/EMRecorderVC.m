@@ -147,7 +147,7 @@
     [params addKey:AK_EP_PACKAGE_OID value:self.package.oid];
     [params addKey:AK_EP_PACKAGE_NAME  value:self.package.name];
     [params addKey:AK_EP_FLOW_TYPE value:[self flowName]];
-    [HMReporter.sh analyticsEvent:AK_E_REC_OPENED info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_REC_OPENED info:params.dictionary];
     
     // We can also store this info, so it will be available later in the session
     self.recorderSessionAnalyticsParams = params;
@@ -238,7 +238,7 @@
     REMOTE_LOG(@"RecorderVC Memory warning");
     
     // Go boom on a test application.
-    //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
+    //[HMPanel.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -837,7 +837,7 @@
     //
     // Analytics
     //
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_STARTED];
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_STARTED];
     
     //
     // Capture session and video processing.
@@ -884,7 +884,7 @@
     // the foreground extraction algorithm.
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_GOOD_BACKGROUND_SATISFIED info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_GOOD_BACKGROUND_SATISFIED info:params.dictionary];
     
     [self handleStateWithInfo:info
                     nextState:@(EMRecorderStateFGExtractionShouldStart)];
@@ -897,7 +897,7 @@
     //
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_EXT_STARTED
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_EXT_STARTED
                              info:params.dictionary];
 
     
@@ -973,7 +973,7 @@
     HMParams *params = self.recorderSessionAnalyticsParams;
     [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
     [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_START
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_START
                              info:params.dictionary];
 
     //
@@ -1018,7 +1018,7 @@
     HMParams *params = self.recorderSessionAnalyticsParams;
     [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
     [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
                              info:params.dictionary];
 
     
@@ -1150,8 +1150,8 @@
     
     // Analytics super parameters
     if (self.flowType != EMRecorderFlowTypeOnboarding) {
-        [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_APPROVED_RETAKES];
-        [HMReporter.sh reportSuperParameterKey:AK_S_DID_EVER_FINISH_A_RETAKE value:@YES];
+        [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_APPROVED_RETAKES];
+        [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_FINISH_A_RETAKE value:@YES];
     }
     
     // Tell delegate to dismiss the recorder.
@@ -1259,7 +1259,7 @@
         //
         HMParams *params = [HMParams new];
         [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_USER_PRESSED_CONTINUE_WITH_BAD_BACKGROUND
+        [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_USER_PRESSED_CONTINUE_WITH_BAD_BACKGROUND
                                  info:params.dictionary];
         
         //
@@ -1313,7 +1313,7 @@
         HMParams *params = self.recorderSessionAnalyticsParams;
         [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
         [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_RETAKE_BUTTON
+        [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_RETAKE_BUTTON
                                  info:params.dictionary];
 
         
@@ -1333,7 +1333,7 @@
         HMParams *params = self.recorderSessionAnalyticsParams;
         [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
         [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-        [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_CONFIRM_BUTTON
+        [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_CONFIRM_BUTTON
                                  info:params.dictionary];
         
     } else {
@@ -1345,7 +1345,7 @@
         // Explode on test application,
         // ignore action silently on production app (after remote logging this)
         REMOTE_LOG(@"Application on wrong state %@ for action %@", @(self.recorderState), @(action));
-        [HMReporter.sh explodeOnTestApplicationsWithInfo:@{
+        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{
                                                            @"action":@(action),
                                                            @"state":@(self.recorderState)
                                                            }];

@@ -24,11 +24,11 @@
 // Background marks
 "RECORDER_BGM_NOISY" = "Use a solid color wall!";
 "RECORDER_BGM_DARK" = "Use well lit areas!";
-"RECORDER_BGM_SILHOUETTE" = "Reposition to fit in silhouette.";
-"RECORDER_BGM_SHADOW" = "Shadows! step a bit forward.";
-"RECORDER_BGM_CLOTH" = "Clothes should differ from background.";
+"RECORDER_BGM_SILHOUETTE" = "Reposition to fit in silhouette";
+"RECORDER_BGM_SHADOW" = "Shadows! step a bit forward";
+"RECORDER_BGM_CLOTH" = "Clothes should differ from background";
 "RECORDER_BGM_GENERAL_MESSAGE" = "Use a solid color wall!";
-"RECORDER_BGM_GOOD" = "Looking good.";
+"RECORDER_BGM_GOOD" = "Looking good";
 
 // Messages
 "RECORDER_MESSAGE_WHEN_READY" = "When ready, press record!";
@@ -53,6 +53,8 @@
 "USER_CHOICE_TITLE" = "User options:";
 "USER_CHOICE_RESET_PACK" = "Reset all emus in this pack to original footage";
 
+
+
 // Share
 "SHARE_IT_TITLE" = "Share it:";
 "SHARE_SAVE_EMU_CHOICE_TITLE" = "Save as:";
@@ -74,13 +76,13 @@
 
 // Facebook Messenger
 "FBM_MISSING_TITLE"     = "Facebook Messenger";
-"FBM_MISSING_MESSAGE"   = "The latest Messenger app isn't installed on your device.";
+"FBM_MISSING_MESSAGE"   = "The latest Messenger app isn't installed on your device";
 "FBM_INSTALL_OPTION"    = "Install Messenger!";
-"FBM_MISSING_GOT_IT"    = "Got it.";
+"FBM_MISSING_GOT_IT"    = "Got it";
 
 // Alerts
 "ALERT_REFRESHING_INFO_TITLE" = "Refreshing info";
-"ALERT_CHECK_INTERNET_MESSAGE" = "Something went wrong.\nCheck your internet connectivity and try again.";
+"ALERT_CHECK_INTERNET_MESSAGE" = "Something went wrong.\nCheck your internet connectivity and try again";
 "ALERT_TRY_AGAIN_ACTION" = "Try again";
 "ALERT_OK_ACTION" = "OK";
 
@@ -91,8 +93,18 @@
 
 // Notifications
 "NOTIFICATIONS_CONFIRMATION_TITLE" = "Auto updates!";
-"NOTIFICATIONS_CONFIRMATION_MESSAGE" = "Emu will be happy to alert you when new content is rendered for you automatically.";
+"NOTIFICATIONS_CONFIRMATION_MESSAGE" = "Emu will be happy to alert you when new content is rendered for you automatically";
 "NOTIFICATIONS_CONFIRMATION_OK_BUTTON" = "OK";
 "NOTIFICATIONS_CONFIRMATION_NO_BUTTON" = "Not Now";
 "NOTIFICATIONS_ENABLE" = "Enable notifications";
-"GENERAL_NEW_CONTENT_MESSAGE" = "New emus available! Check out the %@ pack.";
+"GENERAL_NEW_CONTENT_MESSAGE" = "New Emus available! Check out the %@ pack";
+
+// Emu screen
+"EMU_SCREEN_CHOICE_RETAKE_EMU" = "Retake";
+"EMU_SCREEN_CHOICE_RESET_EMU" = "Reset to original footage";
+
+
+// Tooltips
+"TIP_EMU_SCREEN_RETAKE_BUTTON" = "Tap to change selfie specifically for this Emu";
+"TIP_EMU_SCREEN_EMU_BUTTON" = "Tap for options";
+"TIP_EMU_SCREEN_MESSAGE_BUTTON" = "Have fun messaging!";

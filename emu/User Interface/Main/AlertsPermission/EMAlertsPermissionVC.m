@@ -131,9 +131,15 @@
 #pragma mark - Confirm alerts
 -(void)confirmAlerts
 {
-    UIUserNotificationType notificationTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+    UIUserNotificationType notificationTypes =
+        UIUserNotificationTypeAlert |
+        UIUserNotificationTypeBadge |
+        UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    
+    // TODO: implement register to remote notifications
+    // [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 #pragma mark - IB Actions
@@ -144,13 +150,13 @@
 {
     [self confirmAlerts];
     [self hideAnimated:YES];
-    [HMReporter.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OKAY];
+    [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OKAY];
 }
 
 - (IBAction)onPressedNoButton:(id)sender
 {
     [self hideAnimated:YES];
-    [HMReporter.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_NOT_NOW];
+    [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_NOT_NOW];
 }
 
 

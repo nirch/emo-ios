@@ -10,8 +10,9 @@
 
 #import "EMDB.h"
 #import "EMDB+Files.h"
-#import "HMReporter.h"
+#import "HMPanel.h"
 #import "HMParser.h"
+#import "AppManagement.h"
 
 @implementation EMDB
 
@@ -148,9 +149,12 @@
         error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
         // Replace this with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-    
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        REMOTE_LOG(@"DB ERROR: %@", dict);
+        if (AppManagement.sh.isTestApp) {
+            abort();
+        } else {
+            // TODO: Handle error
+        }
     }
     
     return _persistentStoreCoordinator;

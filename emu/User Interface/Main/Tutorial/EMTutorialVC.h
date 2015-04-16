@@ -12,4 +12,7 @@
 
 @property (nonatomic, weak) id<EMInterfaceDelegate> delegate;
 
+-(void)start;
+-(void)finish;
+
 @end

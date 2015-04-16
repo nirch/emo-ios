@@ -16,6 +16,7 @@
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "HMServer.h"
+#import <MPTweakInline.h>
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -51,10 +52,18 @@
     [EMBackend sharedInstance];
     
     // Initialize analytics, set super parameters and report application launch.
-    [HMReporter.sh initializeAnalyticsWithLaunchOptions:launchOptions];
-    [HMReporter.sh reportSuperParameters];
-    [HMReporter.sh analyticsEvent:AK_E_APP_LAUNCHED];
-    [HMReporter.sh checkAndReportIfAppUpdated];
+    [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];
+    [HMPanel.sh reportSuperParameters];
+    [HMPanel.sh analyticsEvent:AK_E_APP_LAUNCHED];
+    BOOL wasUpdated = [HMPanel.sh checkAndReportIfAppUpdated];
+    [HMPanel.sh personIdentify];
+    [HMPanel.sh personDetails:@{@"lastAppLaunchTime":[[NSDate date] description]}];
+    
+    // Version specific data migrations
+    if (wasUpdated) {
+        [self handleVersionsDataMigration];
+    }
+    
     
     // FB Messanger optimized integration
     self.messengerUrlHandler = [[FBSDKMessengerURLHandler alloc] init];
@@ -74,20 +83,20 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     self.fbContext = nil;
-    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
+    [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [HMReporter.sh analyticsEvent:AK_E_APP_ENTERED_BACKGROUND];
+    [HMPanel.sh analyticsEvent:AK_E_APP_ENTERED_BACKGROUND];
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     [EMDB.sh save];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [HMReporter.sh analyticsEvent:AK_E_APP_ENTERED_FOREGROUND];
+    [HMPanel.sh analyticsEvent:AK_E_APP_ENTERED_FOREGROUND];
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
 }
 
@@ -99,8 +108,12 @@
     [FBAppEvents activateApp];
     
     // Analytics
-    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_DID_BECOME_ACTIVE_COUNT];
-    [HMReporter.sh analyticsEvent:AK_E_APP_DID_BECOME_ACTIVE];
+    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_DID_BECOME_ACTIVE_COUNT];
+    [HMPanel.sh analyticsEvent:AK_E_APP_DID_BECOME_ACTIVE];
+    [HMPanel.sh personDetails:@{
+                                @"lastAppBecameActiveTime":[[NSDate date] description],
+                                @"$name":[[UIDevice currentDevice] name]
+                                }];
     application.applicationIconBadgeNumber = 0;
     
     // If a current fb messanger sharer exists,
@@ -140,10 +153,10 @@
     [self.currentFBMSharer onFBMCancel];
     
     // Analytics
-    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
+    [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LINK_TYPE value:@"cancel"];
-    [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
 // Open
@@ -153,10 +166,10 @@
     [self.currentFBMSharer onFBMOpen];
     
     // Analytics
-    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
+    [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LINK_TYPE value:@"open"];
-    [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
 // Reply
@@ -172,18 +185,30 @@
     }
     
     // Analytics
-    [HMReporter.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
+    [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LINK_TYPE value:@"reply"];
-    [HMReporter.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
 -(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
     HMParams *params = [HMParams new];
     [params addKey:AK_S_NOTIFICATIONS_SETTINGS value:@(notificationSettings.types)];
-    [HMReporter.sh reportSuperParameters:params.dictionary];
-    [HMReporter.sh analyticsEvent:AK_E_NOTIFICATIONS_REGISTRATION_SETTINGS info:params.dictionary];
+    [HMPanel.sh reportSuperParameters:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_REGISTRATION_SETTINGS info:params.dictionary];
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    // TODO: finish implementation
+    HMLOG(TAG, EM_DBG, @"Failed to register to remote notifications with error:%@", [error localizedDescription]);
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // TODO: finish implementation
+    HMLOG(TAG, EM_DBG, @"Registered to remote notifications with token:%@", [deviceToken description]);
 }
 
 #pragma mark - Opened notifications
@@ -214,7 +239,7 @@
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_PACKAGE_OID value:package.oid];
     [params addKey:AK_EP_PACKAGE_NAME value:package.name];
-    [HMReporter.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
 }
 
 
@@ -225,13 +250,21 @@
 //
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    // Tweak: allow/disable background fetches.
+    BOOL allowBackgroundFetches = [AppCFG tweakedBool:@"allow_background_fetches" defaultValue:NO];
+    if (!allowBackgroundFetches) {
+        HMLOG(TAG, EM_DBG, @"skipping background fetch.");
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+    
+    // Background fetches allowed.
     NSString *msg = [SF:@"Application will try to perform bg fetch %@", [NSDate date]];
     HMLOG(TAG, EM_DBG, @"%@", msg);
     REMOTE_LOG(@"%@", msg);
     
     HMParams *params = [HMParams new];
-    [HMReporter.sh initializeAnalyticsWithLaunchOptions:nil];
-    
+    [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
     [EMBackend.sh reloadPackagesInTheBackgroundWithNewDataHandler:^{
         
         Package *newlyAvailablePackage = [Package newlyAvailablePackageInContext:EMDB.sh.context];
@@ -239,14 +272,19 @@
             [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"newData"];
             [params addKey:AK_EP_PACKAGE_OID value:newlyAvailablePackage.oid];
             [params addKey:AK_EP_PACKAGE_NAME value:newlyAvailablePackage.name];
-            [HMReporter.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
+            [HMPanel.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
             [EMBackend.sh notifyUserAboutUpdateForPackage:newlyAvailablePackage];
+            completionHandler(UIBackgroundFetchResultNewData);
+        } else {
+            [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"noNewData"];
+            [HMPanel.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
+            completionHandler(UIBackgroundFetchResultNoData);
         }
 
     } noNewDataHandler:^{
         
         [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"noNewData"];
-        [HMReporter.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
+        [HMPanel.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
         
         //
         // Fetch successful, but no new data.
@@ -258,7 +296,7 @@
     } failedFetchHandler:^{
 
         [params addKey:AK_EP_RESULT_TYPE valueIfNotNil:@"failed"];
-        [HMReporter.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
+        [HMPanel.sh analyticsEvent:AK_E_BE_BACKGROUND_FETCH info:params.dictionary];
 
         //
         // Fetch failed.
@@ -270,5 +308,17 @@
     }];
 }
 
+
+#pragma mark - Migrations
+-(void)handleVersionsDataMigration
+{
+    NSInteger maxToCheck = 30;
+    NSInteger c = 0;
+    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+        c++; // Hah! :-)
+        [package recountRenders];
+        if (c>maxToCheck) break;
+    }
+}
 
 @end

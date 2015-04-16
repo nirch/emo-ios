@@ -97,7 +97,7 @@ def write_analytics_events(f, cfg):
         f.write("\n")
 
 
-EVENT_MATCHER = re.compile(".*\[HMReporter.sh.*?analyticsEvent:(.*?)( |]).*")
+EVENT_MATCHER = re.compile(".*\[HMPanel.sh.*?analyticsEvent:(.*?)( |]).*")
 
 
 def scan_for_all_events_in_file(dir_name, file_name):

@@ -26,6 +26,7 @@
 #import "AppManagement.h"
 #import "EMAlertsPermissionVC.h"
 #import "AppDelegate.h"
+#import "HMPanel.h"
 
 @interface EMMainVC () <
     UICollectionViewDataSource,
@@ -43,8 +44,9 @@
 @property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 @property (weak, nonatomic) IBOutlet UILabel *guiTagLabel;
 
-//@property (weak, nonatomic) UIImageView *splashView;
 @property (weak, nonatomic) EMSplashVC *splashVC;
+
+@property (weak, nonatomic) EMTutorialVC *kbTutorialVC;
 
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
@@ -123,7 +125,7 @@
     REMOTE_LOG(@"EMMainVC Memory warning");
     
     // Go boom on a test application.
-    //[HMReporter.sh explodeOnTestApplicationsWithInfo:nil];
+    //[HMPanel.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -317,6 +319,12 @@
         // Refresh
         [self resetFetchedResultsController];
         [self.guiCollectionView reloadData];
+        
+        // Never viewed the kb tutorial?
+        // It is time to show it.
+        if (!appCFG.userViewedKBTutorial.boolValue) {
+            [self showKBTutorial];
+        }
     }
 }
 
@@ -399,7 +407,7 @@
         [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
         [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
         [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
-        [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
+        [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
         
     } else if ([segue.identifier isEqualToString:@"packages bar segue"]) {
         EMPackagesVC *vc = segue.destinationViewController;
@@ -407,10 +415,21 @@
         vc.delegate = self;
     } else if ([segue.identifier isEqualToString:@"tutorial segue"]) {
         EMTutorialVC *vc = segue.destinationViewController;
+        self.kbTutorialVC = vc;
         vc.delegate = self;
     }
 }
 
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"tutorial segue"]) {
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        if (appCFG.userViewedKBTutorial.boolValue) {
+            return NO;
+        }
+    }
+    return YES;
+}
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -558,31 +577,39 @@
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [self.splashVC hideAnimated:YES];
-        [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
     
     // Handle what to do next, depending on the flow of the dismissed recorder.
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
     
-    if (flowType == EMRecorderFlowTypeOnboarding) {
-        [self showTutorial];
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
+        [self showKBTutorial];
     } else {
         [self handleFlow];
     }
 }
 
--(void)showTutorial
+-(void)showKBTutorial
 {
-    self.guiCollectionView.hidden = YES;
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
+    appCFG.userViewedKBTutorial = @YES;
+    [EMDB.sh save];
+    
     self.guiPackagesSelectionContainer.hidden = YES;
     self.guiTutorialContainer.hidden = NO;
     self.guiTutorialContainer.alpha = 0;
     self.guiNavView.alpha = 0.3;
     self.guiNavView.userInteractionEnabled = NO;
-    [UIView animateWithDuration:2.0 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.guiTutorialContainer.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self.kbTutorialVC start];
     }];
+    
 }
 
 -(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
@@ -590,7 +617,7 @@
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [self.splashVC hideAnimated:YES];
-        [HMReporter.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
 
     [self resetFetchedResultsController];
@@ -630,7 +657,7 @@
                                                 // Analytics
                                                 HMParams *params = [HMParams new];
                                                 [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"all"];
-                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
+                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
                                                                          info:params.dictionary];
                                                 
                                                 // Retake
@@ -646,7 +673,7 @@
                                                 [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"package"];
                                                 [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
                                                 [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
-                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
+                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
                                                                          info:params.dictionary];
                                                 // Retake
                                                 [self retakeCurrentPackage];
@@ -660,7 +687,7 @@
                                                 HMParams *params = [HMParams new];
                                                 [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
                                                 [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
-                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_CANCELED
+                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_CANCELED
                                                                          info:params.dictionary];
                                             }]];
 
@@ -702,7 +729,7 @@
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:package.name];
     [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:package.oid];
-    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_RESET_PACK info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_RESET_PACK info:params.dictionary];
 
     // Reset
     NSArray *emus = [Emuticon allEmuticonsInPackage:package];
@@ -779,7 +806,7 @@
     [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
                                               style:UIAlertActionStyleCancel
                                             handler:^(UIAlertAction *action) {
-                                                [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_CANCEL];
+                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_CANCEL];
                                             }]];
     
     [self presentViewController:alert animated:YES completion:nil];
@@ -819,16 +846,21 @@
         // Not an onboarding package.
         
         // Check if user was asked about auto updates/background fetches.
+        // (tweak: counts the number of packages the user viewed and show question
+        // after tweaked threshold reached)
+        NSInteger numberOfViewedPackagesBeforeAlertsQuestion = HMPanelTweakValue(@"number of viewed packages before alerts question", 1);
+        NSInteger numberOfViewedPackages = [Package countNumberOfViewedPackagesInContext:EMDB.sh.context];
         if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
             // Never asked.
             // Ask the user if interested in background fetches / auto updates.
-            [self askUserAboutAlerts];
+            if (numberOfViewedPackages > numberOfViewedPackagesBeforeAlertsQuestion)
+                [self askUserAboutAlerts];
         }
         
         // If package never viewed before by the user, count the event.
         if (!package.viewedByUser.boolValue) {
-            [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED];
-            [HMReporter.sh reportSuperParameterKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:@YES];
+            [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED];
+            [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:@YES];
         }
     }
     
@@ -907,12 +939,16 @@
         self.guiPackagesSelectionContainer.hidden = NO;
         self.guiNavView.userInteractionEnabled = YES;
         self.guiCollectionView.hidden = NO;
+        [self.kbTutorialVC finish];
         [UIView animateWithDuration:0.3 animations:^{
             self.guiTutorialContainer.alpha = 0;
             self.guiCollectionView.alpha = 1;
             self.guiNavView.alpha = 1;
         } completion:^(BOOL finished) {
             self.guiTutorialContainer.hidden = YES;
+            [self.guiTutorialContainer removeFromSuperview];
+            [self.kbTutorialVC removeFromParentViewController];
+            self.kbTutorialVC = nil;
         }];
     }
 }
@@ -931,19 +967,19 @@
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
     [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
-    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_RETAKE_BUTTON];
+    [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_RETAKE_BUTTON];
 }
 
 - (IBAction)onPressedNavButton:(id)sender
 {
     [self userChoices];
-    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_NAV_BUTTON];
+    [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_NAV_BUTTON];
 }
 
 - (IBAction)onPressedEmuButton:(id)sender
 {
     [self aboutMessage];
-    [HMReporter.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_APP_BUTTON];
+    [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_APP_BUTTON];
 }
 
 - (IBAction)onSwipedLeftCollectionView:(id)sender

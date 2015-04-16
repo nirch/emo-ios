@@ -328,7 +328,7 @@
     // Analytics
     //
     HMParams *params = [HMParams new];
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_CANCELED_RECORD
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_CANCELED_RECORD
                              info:params.dictionary];
     
     // Cancel
@@ -345,7 +345,7 @@
     //
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
-    [HMReporter.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD
+    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD
                              info:params.dictionary];
 
     

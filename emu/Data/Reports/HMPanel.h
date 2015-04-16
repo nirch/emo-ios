@@ -1,5 +1,5 @@
 //
-//  HMReporter.h
+//  HMPanel.h
 //
 
 // Currently, remote logging implementation uses crashlytics.
@@ -7,14 +7,15 @@
 
 #import "HMAnalyticsEvents.h"
 #import "HMParams.h"
+#import <MPTweakInline.h>
 
 #define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
 
-@interface HMReporter : NSObject
+@interface HMPanel : NSObject
 
 #pragma mark - Initialization
-+(HMReporter *)sharedInstance;
-+(HMReporter *)sh;
++(HMPanel *)sharedInstance;
++(HMPanel *)sh;
 -(void)initializeAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions;
 
 #pragma mark - Tracking
@@ -23,7 +24,7 @@
 -(void)reportSuperParameterKey:(NSString *)key value:(id)value;
 -(void)reportCountedSuperParameterForKey:(NSString *)key;
 -(NSNumber *)didEverCountedKey:(NSString *)counterKey;
--(void)checkAndReportIfAppUpdated;
+-(BOOL)checkAndReportIfAppUpdated;
 -(void)analyticsForceSend;
 -(void)analyticsEvent:(NSString *)event;
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info;
@@ -32,5 +33,16 @@
 #pragma mark - Counting stuff
 -(BOOL)counterExistsNamed:(NSString *)counterName;
 -(NSNumber *)advanceCounterNamed:(NSString *)counterName;
+
+#pragma mark - People
+-(void)personIdentify;
+-(void)personIdentifyWithIdentifier:(NSString *)identifier;
+-(void)personDetails:(NSDictionary *)details;
+
+
+#pragma mark - Tweaking
+// Wrapper of mixpanel tweak inline macros
+#define HMPanelTweakValue(name_, ...) MPTweakValue(name_, __VA_ARGS__)
+
 
 @end

@@ -12,7 +12,7 @@
 		0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD731AA37DC20078F14B /* EMEmuticonParser.m */; };
 		0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD771AA37DC20078F14B /* EMPackageParser.m */; };
 		0806BD7E1AA37DC20078F14B /* EMPackagesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD791AA37DC20078F14B /* EMPackagesParser.m */; };
-		0806BD821AA37DC80078F14B /* HMReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMReporter.m */; };
+		0806BD821AA37DC80078F14B /* HMPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMPanel.m */; };
 		0806BD871AA392230078F14B /* EMBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD861AA392230078F14B /* EMBackend.m */; };
 		0808E32D1AA591CE008B47E2 /* Keyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */; };
 		080B05991AB064E2003C19E7 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 080B05941AB064E2003C19E7 /* BSONIdGenerator.m */; };
@@ -111,6 +111,8 @@
 		0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
+		088E39031ADEA02A00450F71 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 088E39021ADEA02A00450F71 /* AppCFG.m */; };
+		088E39041ADEA02A00450F71 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 088E39021ADEA02A00450F71 /* AppCFG.m */; };
 		089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
@@ -138,14 +140,14 @@
 		08BBBC741AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
 		08BBBC7C1ADA702E00D4AD1D /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC7B1ADA702E00D4AD1D /* Package.m */; };
 		08BBBC7D1ADA702E00D4AD1D /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC7B1ADA702E00D4AD1D /* Package.m */; };
-		08BBBC801ADA702F00D4AD1D /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC7F1ADA702F00D4AD1D /* AppCFG.m */; };
-		08BBBC811ADA702F00D4AD1D /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC7F1ADA702F00D4AD1D /* AppCFG.m */; };
 		08BBBC841ADA702F00D4AD1D /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC831ADA702F00D4AD1D /* EmuticonDef.m */; };
 		08BBBC851ADA702F00D4AD1D /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC831ADA702F00D4AD1D /* EmuticonDef.m */; };
 		08BBBC881ADA702F00D4AD1D /* UserFootage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC871ADA702F00D4AD1D /* UserFootage.m */; };
 		08BBBC891ADA702F00D4AD1D /* UserFootage.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC871ADA702F00D4AD1D /* UserFootage.m */; };
 		08BBBC8C1ADA702F00D4AD1D /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC8B1ADA702F00D4AD1D /* Emuticon.m */; };
 		08BBBC8D1ADA702F00D4AD1D /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC8B1ADA702F00D4AD1D /* Emuticon.m */; };
+		08BBBC961ADBD4D400D4AD1D /* kbAllowAccessTutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08BBBC951ADBD4D400D4AD1D /* kbAllowAccessTutorial.mp4 */; };
+		08BBBC971ADBEFC200D4AD1D /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */; };
 		08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */; };
 		08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAC41A9600E1008A3E0A /* headAndChest240X240.ctr */; };
 		08CAEAC71A9600E1008A3E0A /* headAndChest480X480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAC51A9600E1008A3E0A /* headAndChest480X480.ctr */; };
@@ -189,7 +191,7 @@
 		08CED1111AA6F84500C50D0C /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
 		08CED1251AA7281B00C50D0C /* HMParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED1241AA7281B00C50D0C /* HMParams.m */; };
 		08CED1261AA7281B00C50D0C /* HMParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED1241AA7281B00C50D0C /* HMParams.m */; };
-		08CED1271AA79B7900C50D0C /* HMReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMReporter.m */; };
+		08CED1271AA79B7900C50D0C /* HMPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMPanel.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
 		08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */; };
 		08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EC1A77E0B000B6A68F /* AVFoundation.framework */; };
@@ -246,8 +248,8 @@
 		0806BD771AA37DC20078F14B /* EMPackageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPackageParser.m; sourceTree = "<group>"; };
 		0806BD781AA37DC20078F14B /* EMPackagesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPackagesParser.h; sourceTree = "<group>"; };
 		0806BD791AA37DC20078F14B /* EMPackagesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPackagesParser.m; sourceTree = "<group>"; };
-		0806BD801AA37DC80078F14B /* HMReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMReporter.h; sourceTree = "<group>"; };
-		0806BD811AA37DC80078F14B /* HMReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMReporter.m; sourceTree = "<group>"; };
+		0806BD801AA37DC80078F14B /* HMPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMPanel.h; sourceTree = "<group>"; };
+		0806BD811AA37DC80078F14B /* HMPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPanel.m; sourceTree = "<group>"; };
 		0806BD851AA392230078F14B /* EMBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMBackend.h; sourceTree = "<group>"; };
 		0806BD861AA392230078F14B /* EMBackend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMBackend.m; sourceTree = "<group>"; };
 		0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Keyboard.storyboard; sourceTree = "<group>"; };
@@ -395,6 +397,8 @@
 		087F20901A8F5A03002B1678 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
 		087F20921A8F5A28002B1678 /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
 		087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
+		088E39011ADEA02A00450F71 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
+		088E39021ADEA02A00450F71 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
 		089E78AD1A77FD8600BC3479 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
 		089E78AE1A77FD8600BC3479 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
 		089E78B21A780DEB00BC3479 /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
@@ -433,14 +437,14 @@
 		08BBBC791ADA6E9E00D4AD1D /* emu1_ 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 3.xcdatamodel"; sourceTree = "<group>"; };
 		08BBBC7A1ADA702E00D4AD1D /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
 		08BBBC7B1ADA702E00D4AD1D /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
-		08BBBC7E1ADA702F00D4AD1D /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
-		08BBBC7F1ADA702F00D4AD1D /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
 		08BBBC821ADA702F00D4AD1D /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
 		08BBBC831ADA702F00D4AD1D /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
 		08BBBC861ADA702F00D4AD1D /* UserFootage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFootage.h; sourceTree = "<group>"; };
 		08BBBC871ADA702F00D4AD1D /* UserFootage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFootage.m; sourceTree = "<group>"; };
 		08BBBC8A1ADA702F00D4AD1D /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
 		08BBBC8B1ADA702F00D4AD1D /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
+		08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		08BBBC951ADBD4D400D4AD1D /* kbAllowAccessTutorial.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = kbAllowAccessTutorial.mp4; sourceTree = "<group>"; };
 		08CAEAC11A95E202008A3E0A /* EMSilhouetteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSilhouetteView.h; sourceTree = "<group>"; };
 		08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSilhouetteView.m; sourceTree = "<group>"; };
 		08CAEAC41A9600E1008A3E0A /* headAndChest240X240.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = headAndChest240X240.ctr; sourceTree = "<group>"; };
@@ -537,6 +541,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08BBBC971ADBEFC200D4AD1D /* AVKit.framework in Frameworks */,
 				08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */,
 				08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */,
 				08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */,
@@ -572,8 +577,8 @@
 			children = (
 				08CED10F1AA6DA8800C50D0C /* Analytics.plist */,
 				08CED1221AA727BC00C50D0C /* HMAnalyticsEvents.h */,
-				0806BD801AA37DC80078F14B /* HMReporter.h */,
-				0806BD811AA37DC80078F14B /* HMReporter.m */,
+				0806BD801AA37DC80078F14B /* HMPanel.h */,
+				0806BD811AA37DC80078F14B /* HMPanel.m */,
 				08CED1231AA7281B00C50D0C /* HMParams.h */,
 				08CED1241AA7281B00C50D0C /* HMParams.m */,
 			);
@@ -808,14 +813,14 @@
 		085C66FE1A937EC9007BC910 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				088E39011ADEA02A00450F71 /* AppCFG.h */,
+				088E39021ADEA02A00450F71 /* AppCFG.m */,
 				08BBBC8A1ADA702F00D4AD1D /* Emuticon.h */,
 				08BBBC8B1ADA702F00D4AD1D /* Emuticon.m */,
 				08BBBC861ADA702F00D4AD1D /* UserFootage.h */,
 				08BBBC871ADA702F00D4AD1D /* UserFootage.m */,
 				08BBBC821ADA702F00D4AD1D /* EmuticonDef.h */,
 				08BBBC831ADA702F00D4AD1D /* EmuticonDef.m */,
-				08BBBC7E1ADA702F00D4AD1D /* AppCFG.h */,
-				08BBBC7F1ADA702F00D4AD1D /* AppCFG.m */,
 				08BBBC7A1ADA702E00D4AD1D /* Package.h */,
 				08BBBC7B1ADA702E00D4AD1D /* Package.m */,
 			);
@@ -1213,6 +1218,7 @@
 			children = (
 				08CED0E41AA5EB6000C50D0C /* EMTutorialVC.h */,
 				08CED0E51AA5EB6000C50D0C /* EMTutorialVC.m */,
+				08BBBC951ADBD4D400D4AD1D /* kbAllowAccessTutorial.mp4 */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -1319,6 +1325,7 @@
 		F818AC31536FB92317D788B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */,
 				A9E28DB442779D1DF1167B33 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -1474,6 +1481,7 @@
 				0815A9121AC03AB7006B5ED2 /* package_love_20150309_110610.zip in Resources */,
 				085C67781A937EC9007BC910 /* contourCloseupRed.png in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
+				08BBBC961ADBD4D400D4AD1D /* kbAllowAccessTutorial.mp4 in Resources */,
 				08CAEAC71A9600E1008A3E0A /* headAndChest480X480.ctr in Resources */,
 				085C67941A937EC9007BC910 /* recordingCountDown.wav in Resources */,
 				08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */,
@@ -1549,13 +1557,13 @@
 				08AB68071AD5629C0092B62B /* TagCell.m in Sources */,
 				08BBBC891ADA702F00D4AD1D /* UserFootage.m in Sources */,
 				080CB3411AA4C10B00603E30 /* EMDB.m in Sources */,
-				08BBBC811ADA702F00D4AD1D /* AppCFG.m in Sources */,
 				08CED0D61AA5C7EF00C50D0C /* EMShare.m in Sources */,
+				088E39041ADEA02A00450F71 /* AppCFG.m in Sources */,
 				080CB3201AA4A9DD00603E30 /* EMKeyboardContainerVC.m in Sources */,
 				08CED0D71AA5C7EF00C50D0C /* EMShareCopy.m in Sources */,
 				081EFF2D1AD89CE4001E0BA1 /* EMPackagesVC.m in Sources */,
 				08213B411ACC150500BE77E4 /* HMParser.m in Sources */,
-				08CED1271AA79B7900C50D0C /* HMReporter.m in Sources */,
+				08CED1271AA79B7900C50D0C /* HMPanel.m in Sources */,
 				080489E91AA5957A008CC885 /* EMEmusKeyboardVC.m in Sources */,
 				08AB68081AD567990092B62B /* EMLabel.m in Sources */,
 				080CB34C1AA4C11D00603E30 /* EmuticonDef+Logic.m in Sources */,
@@ -1593,7 +1601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0806BD821AA37DC80078F14B /* HMReporter.m in Sources */,
+				0806BD821AA37DC80078F14B /* HMPanel.m in Sources */,
 				08D9D4541AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
@@ -1627,6 +1635,7 @@
 				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
 				0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */,
 				08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */,
+				088E39031ADEA02A00450F71 /* AppCFG.m in Sources */,
 				08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */,
 				08BBBC8C1ADA702F00D4AD1D /* Emuticon.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
@@ -1668,7 +1677,6 @@
 				08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */,
 				0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */,
 				085C67741A937EC9007BC910 /* UserFootage+Logic.m in Sources */,
-				08BBBC801ADA702F00D4AD1D /* AppCFG.m in Sources */,
 				08A9071C1ACABB9E008534F7 /* EMAlertsPermissionVC.m in Sources */,
 				08B589A91A93CF12008D9068 /* EMGradientView.m in Sources */,
 				083E52611A9E1E6B00A66FC8 /* EMMainNavigationVC.m in Sources */,

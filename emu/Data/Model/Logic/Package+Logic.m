@@ -63,7 +63,7 @@
     EmuticonDef *emuDef = (EmuticonDef *)[NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
                                                                    withPredicate:predicate
                                                                        inContext:context];
-    
+
     // Not found?
     // Use any emuDef from this package.
     if (emuDef == nil) {
@@ -322,10 +322,20 @@
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"emuDef.package=%@ AND wasRendered=%@", self, @YES];
-    NSArray *arr = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    if (arr) {
-        self.rendersCount = @(arr.count);
-    }
+    NSError *error;
+    NSInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    if (error) return;
+    self.rendersCount = @(count);
+}
+
++(NSInteger)countNumberOfViewedPackagesInContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"viewedByUser=%@", @YES];
+    NSError *error;
+    NSInteger count = [context countForFetchRequest:fetchRequest error:&error];
+    if (error) return 0;
+    return count;
 }
 
 @end

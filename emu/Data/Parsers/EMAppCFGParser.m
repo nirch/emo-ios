@@ -10,7 +10,7 @@
 
 #import "EMAppCFGParser.h"
 #import "EMDB.h"
-#import "HMReporter.h"
+#import "HMPanel.h"
 
 @implementation EMAppCFGParser
 
@@ -29,6 +29,11 @@
     appCFG.bucketName = [info safeStringForKey:@"bucket_name"];
     appCFG.clientName = [info safeStringForKey:@"client_name"];
     appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
+    
+    NSDictionary *tweakedValues = info[@"tweaks"];
+    if ([tweakedValues isKindOfClass:[NSDictionary class]]) {
+        appCFG.tweaks = tweakedValues;
+    }
     
     HMLOG(TAG, EM_DBG, @"App cfg parsed:%@", [appCFG description]);
     REMOTE_LOG(@"Parsed app cfg:%@", [appCFG description]);

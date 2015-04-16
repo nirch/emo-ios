@@ -34,4 +34,24 @@
     return [package.oid isEqualToString:self.onboardingUsingPackage];
 }
 
+#pragma mark - tweaked values
++(NSDictionary *)tweakedValues
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSDictionary *tweaks = appCFG.tweaks;
+    if ([tweaks isKindOfClass:[NSDictionary class]]) return tweaks;
+    return nil;
+}
+
++(BOOL)tweakedBool:(NSString *)name defaultValue:(BOOL)defaultValue
+{
+    NSDictionary *tweaks = [self tweakedValues];
+    if (tweaks == nil) return defaultValue;
+
+    id value = tweaks[name];
+    if ([value isKindOfClass:[NSNumber class]]) return [value boolValue];
+    return defaultValue;
+}
+
+
 @end

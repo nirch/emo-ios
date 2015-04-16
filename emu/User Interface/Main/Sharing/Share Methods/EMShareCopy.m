@@ -8,7 +8,7 @@
 
 #import "EMShareCopy.h"
 #import <Toast/UIView+Toast.h>
-#import "HMReporter.h"
+#import "HMPanel.h"
 
 @implementation EMShareCopy
 

@@ -15,7 +15,7 @@
     #import <Foundation/Foundation.h>
     #import "HMNotificationCenter.h"
     #import "EmuStyle.h"
-    #import "HMReporter.h"
+    #import "HMPanel.h"
 
     // Localized strings
     #define LS(STRING) NSLocalizedString(STRING,STRING)

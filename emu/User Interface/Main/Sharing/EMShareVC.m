@@ -250,7 +250,7 @@
     [self shareEmuticon:emu usingMethod:shareMethod info:params.dictionary];
     
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON
+    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON
                              info:params.dictionary];
 
 }
@@ -326,9 +326,9 @@
     self.sharer = nil;
     
     // Analytics
-    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT];
-    [HMReporter.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_USING_APP value:@YES];
-    [HMReporter.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
+    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT];
+    [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_USING_APP value:@YES];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
 }
 
 -(void)sharerDidCancelWithInfo:(NSDictionary *)info
@@ -336,7 +336,7 @@
     self.sharer = nil;
 
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_SHARE_CANCELED info:info];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_CANCELED info:info];
 }
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info
@@ -344,7 +344,7 @@
     self.sharer = nil;
     
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
 }
 
 -(void)sharerDidFinishWithInfo:(NSDictionary *)info

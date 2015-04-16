@@ -176,7 +176,7 @@
                                             if (error) {
                                                 HMLOG(TAG, EM_ERR, @"Error while downloading zipped resources file from %@", remoteURL.path);
                                                 [params addKey:AK_EP_ERROR value:[error description]];
-                                                [HMReporter.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED info:params.dictionary];
+                                                [HMPanel.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED info:params.dictionary];
                                             } else {
                                                 //
                                                 // The zipped file was downloaded to a temp file.
@@ -186,7 +186,7 @@
                                                 //
                                                 // Analytics
                                                 //
-                                                [HMReporter.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS info:params.dictionary];
+                                                [HMPanel.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS info:params.dictionary];
 
                                                 if ([[NSFileManager defaultManager] fileExistsAtPath:filePath.path]) {
                                                     dispatch_async(dispatch_get_main_queue(), ^{

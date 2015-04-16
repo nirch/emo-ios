@@ -13,6 +13,9 @@
 #import "EMShareVC.h"
 #import "EMRecorderVC.h"
 #import "EMRenderManager.h"
+#import "EMUISound.h"
+#import <JDFTooltips.h>
+#import "EMRenderManager.h"
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
@@ -22,6 +25,7 @@
 @property (nonatomic) Emuticon *emuticon;
 
 // Emu player
+@property (weak, nonatomic) IBOutlet UIView *guiEmuContainer;
 @property (weak, nonatomic) EMAnimatedGifPlayer *gifPlayerVC;
 @property (weak, nonatomic) EMShareVC *shareVC;
 
@@ -29,6 +33,14 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintPlayerLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintPlayerRight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *guiConstraintPlayerTop;
+
+@property (weak, nonatomic) IBOutlet UIButton *guiRetakeButton;
+@property (weak, nonatomic) IBOutlet UIView *guiShareContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiShareMainIconPosition;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+
+// Tutorial
+@property (strong, nonatomic) JDFSequentialTooltipManager *tooltipManager;
 
 @end
 
@@ -38,9 +50,8 @@
 {
     [super viewDidLoad];
     [self initData];
-    // Show the animated gif
-    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
-    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
+    [self refreshEmu];
+    [self initStyle];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -58,6 +69,11 @@
 {
     [super viewDidAppear:animated];
     
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (!appCFG.userViewedEmuScreenTutorial.boolValue) {
+        [self showEmuTutorial];
+        appCFG.userViewedEmuScreenTutorial = @YES;
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -68,12 +84,55 @@
     [self removeObservers];
 }
 
+-(void)initStyle
+{
+    // set appearance style
+}
 
 -(void)initData
 {
     self.emuticon = [Emuticon findWithID:self.emuticonOID
                                  context:EMDB.sh.context];
 }
+
+
+-(void)refreshEmu
+{
+    NSURL *url = [self.emuticon animatedGifURL];
+    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
+
+    if (url) {
+        // Show the animated gif
+        self.gifPlayerVC.animatedGifURL = url;
+    } else {
+        self.gifPlayerVC.animatedGifURL = nil;
+    }
+}
+
+#pragma mark - Tutorial
+-(void)showEmuTutorial
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (appCFG.userViewedEmuScreenTutorial.boolValue) return;
+
+    JDFSequentialTooltipManager *tooltipManager = [[JDFSequentialTooltipManager alloc] initWithHostView:self.view];
+    self.tooltipManager = tooltipManager;
+    tooltipManager.showsBackdropView = YES;
+    
+    [tooltipManager addTooltipWithTargetView:self.guiRetakeButton hostView:self.view tooltipText:LS(@"TIP_EMU_SCREEN_RETAKE_BUTTON") arrowDirection:JDFTooltipViewArrowDirectionUp width:200.0f];
+    [tooltipManager addTooltipWithTargetView:self.guiEmuContainer hostView:self.view tooltipText:LS(@"TIP_EMU_SCREEN_EMU_BUTTON") arrowDirection:JDFTooltipViewArrowDirectionUp width:200.0f];
+    [tooltipManager addTooltipWithTargetView:self.guiShareMainIconPosition hostView:self.view tooltipText:LS(@"TIP_EMU_SCREEN_MESSAGE_BUTTON") arrowDirection:JDFTooltipViewArrowDirectionDown width:200.0f];
+
+    [tooltipManager setBackgroundColourForAllTooltips:[EmuStyle colorKBKeyBG]];
+    tooltipManager.backdropColour = [UIColor blackColor];
+    tooltipManager.backdropAlpha = 0.3;
+    tooltipManager.backdropTapActionEnabled = YES;
+    [tooltipManager setFontForAllTooltips:[UIFont fontWithName:[EmuStyle.sh fontNameForStyle:@"regular"] size:16]];
+    
+    [tooltipManager showNextTooltip];
+}
+
+
 
 #pragma mark - Observers
 -(void)initObservers
@@ -103,7 +162,7 @@
     if (![self.emuticon.oid isEqualToString:oid]) return;
     
     // Show the animated gif
-    self.gifPlayerVC.animatedGifURL = [self.emuticon animatedGifURL];
+    [self refreshEmu];
 }
 
 -(void)dealloc
@@ -190,6 +249,18 @@
 
 }
 
+#pragma mark - Render
+-(void)resetEmu
+{
+    NSDictionary *info = @{
+                           @"emuticonOID":self.emuticon.oid,
+                           @"packageOID":self.emuticon.emuDef.package.oid
+                           };
+    self.emuticon.prefferedFootageOID = nil;
+    [EMRenderManager.sh renderingRequiredForEmu:self.emuticon info:info];
+    [self refreshEmu];
+}
+
 #pragma mark - Analytics
 -(HMParams *)paramsForCurrentEmuticon
 {
@@ -201,6 +272,48 @@
     return params;
 }
 
+-(void)showEmuOptions
+{
+    UIAlertController *alert = [UIAlertController new];
+    HMParams *params = [self paramsForCurrentEmuticon];
+    
+    // Retake footage.
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU")
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                // Retake
+                                                [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
+                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
+                                                                      info:params.dictionary];
+                                                [self retake];
+                                            }]];
+
+    // Retake footage.
+    if (self.emuticon.prefferedFootageOID) {
+        [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RESET_EMU")
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action) {
+                                                    // Reset
+                                                    [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
+                                                    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
+                                                                          info:params.dictionary];
+                                                    [self resetEmu];
+                                                }]];
+    }
+
+    // Cancel
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction *action) {
+                                                // Cancel
+                                                [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
+                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
+                                                                      info:params.dictionary];
+                                            }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -208,7 +321,7 @@
 - (IBAction)onPressedBackButton:(UIButton *)sender
 {
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
+    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
                              info:[self paramsForCurrentEmuticon].dictionary];
     
     // Go back
@@ -218,7 +331,7 @@
 - (IBAction)onPressedRetakeButton:(id)sender
 {
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_RETAKE_BUTTON
+    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_RETAKE_BUTTON
                              info:[self paramsForCurrentEmuticon].dictionary];
 
     // Retake
@@ -228,11 +341,34 @@
 - (IBAction)onSwipedRight:(id)sender
 {
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
+    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
                              info:[self paramsForCurrentEmuticon].dictionary];
     
     // Go back
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (IBAction)onPressedEmuButton:(id)sender
+{
+    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_EMU info:[[self paramsForCurrentEmuticon] dictionary]];
+    
+    [EMUISound.sh playSoundNamed:SND_SOFT_CLICK];
+    [self showEmuOptions];
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        self.guiEmuContainer.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3
+                              delay:0
+             usingSpringWithDamping:0.2
+              initialSpringVelocity:3.0f
+                            options:UIViewAnimationOptionAllowUserInteraction
+                         animations:^{
+                             self.guiEmuContainer.transform = CGAffineTransformIdentity;
+                            } completion:nil];
+    }];
+}
+
 
 @end

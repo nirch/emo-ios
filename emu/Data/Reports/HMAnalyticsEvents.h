@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 02:40:45 04/12/15 IDT
+//  Created by build script on 18:51:26 04/15/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -243,9 +243,48 @@ Facebook messenger integration opened the app using a deep link.
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User selected an option
+**/
+#define AK_E_ITEM_DETAILS_USER_CHOICE @"ItemDetails:userChoice"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:choiceType --> <string> - the choice type the user selected **/
+#define AK_EP_CHOICE_TYPE @"choiceType"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 **/
 #define AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON @"ItemDetails:userPressedBackButton"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User tapped the Emu
+**/
+#define AK_E_ITEM_DETAILS_USER_PRESSED_EMU @"ItemDetails:userPressedEmu"
 
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
 #define AK_EP_EMUTICON_OID @"emuticonOID"

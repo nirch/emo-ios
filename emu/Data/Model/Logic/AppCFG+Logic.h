@@ -17,4 +17,7 @@
 -(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;
 
+#pragma mark - tweaked values
++(BOOL)tweakedBool:(NSString *)name defaultValue:(BOOL)defaultValue;
+
 @end

@@ -231,14 +231,14 @@
 {
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_STAGE value:@(self.stage)];
-    [HMReporter.sh analyticsEvent:AK_E_REC_USER_PRESSED_APP_BUTTON
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_APP_BUTTON
                              info:params.dictionary];
     [self aboutMessage];
 }
 
 - (IBAction)onPressedRestartButton:(UIButton *)sender
 {
-    [HMReporter.sh analyticsEvent:AK_E_REC_USER_PRESSED_RESTART_BUTTON];
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_RESTART_BUTTON];
     [self restart];
 }
 
@@ -246,7 +246,7 @@
 {
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_STAGE value:@(self.stage)];
-    [HMReporter.sh analyticsEvent:AK_E_REC_USER_PRESSED_CANCEL_BUTTON
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_CANCEL_BUTTON
                              info:params.dictionary];
     [self cancel];
 }

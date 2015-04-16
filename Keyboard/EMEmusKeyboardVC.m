@@ -10,7 +10,7 @@
 #import "EMDB.h"
 #import "EmuCell.h"
 #import "EMShareCopy.h"
-#import "HMReporter.h"
+#import "HMPanel.h"
 #import "EMAlphaNumericKeyboard.h"
 #import "EmuSectionReusableView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -99,10 +99,10 @@
 #pragma mark - Analytics
 -(void)initAnalytics
 {
-    [HMReporter.sh initializeAnalyticsWithLaunchOptions:nil];
-    [HMReporter.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
-    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
-    [HMReporter.sh analyticsForceSend];
+    [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
+    [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
+    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
+    [HMPanel.sh analyticsForceSend];
 }
 
 #pragma mark - Initializations
@@ -316,7 +316,7 @@
     HMParams *params = [self paramsForEmuticon:emu];
     [params addKey:AK_EP_SHARE_METHOD value:@"copy"];
     [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"keyboard"];
-    [HMReporter.sh analyticsEvent:AK_E_KB_USER_PRESSED_ITEM info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_KB_USER_PRESSED_ITEM info:params.dictionary];
     
     self.sharer = [EMShareCopy new];
     self.sharer.objectToShare = emu;
@@ -334,9 +334,9 @@
     self.sharer = nil;
     
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
-    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT];
-    [HMReporter.sh analyticsForceSend];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
+    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT];
+    [HMPanel.sh analyticsForceSend];
 }
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info
@@ -344,8 +344,8 @@
     self.sharer = nil;
     
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
-    [HMReporter.sh analyticsForceSend];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_FAILED info:info];
+    [HMPanel.sh analyticsForceSend];
 }
 
 
@@ -354,8 +354,8 @@
     self.sharer = nil;
     
     // Analytics
-    [HMReporter.sh analyticsEvent:AK_E_SHARE_CANCELED info:info];
-    [HMReporter.sh analyticsForceSend];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_CANCELED info:info];
+    [HMPanel.sh analyticsForceSend];
 }
 
 
@@ -407,7 +407,7 @@
     
     self.guiAlphaNumericKBContainer.transform = CGAffineTransformIdentity;
     self.guiAlphaNumericKBContainer.alpha = 1;
-    [HMReporter.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT];
+    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT];
 }
 
 -(void)hideAlphaNumericKBAnimated:(BOOL)animated
@@ -474,7 +474,7 @@
 - (IBAction)onPressedNextKBButton:(id)sender
 {
     [self.delegate keyboardShouldAdadvanceToNextInputMode];
-    [HMReporter.sh analyticsEvent:AK_E_KB_USER_PRESSED_NEXT_INPUT_BUTTON];
+    [HMPanel.sh analyticsEvent:AK_E_KB_USER_PRESSED_NEXT_INPUT_BUTTON];
 }
 
 - (IBAction)onPressedAlphaNumericButton:(id)sender
@@ -486,7 +486,7 @@
 - (IBAction)onPressedBackButton:(id)sender
 {
     [self.delegate keyboardShouldDeleteBackward];
-    [HMReporter.sh analyticsEvent:AK_E_KB_USER_PRESSED_BACK_BUTTON];
+    [HMPanel.sh analyticsEvent:AK_E_KB_USER_PRESSED_BACK_BUTTON];
 }
 
 @end

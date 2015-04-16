@@ -10,7 +10,7 @@
 #import "HMServer.h"
 #import "HMParser.h"
 #import "HMJSONResponseSerializerWithData.h"
-#import "HMReporter.h"
+#import "HMPanel.h"
 #import "AppManagement.h"
 
 @interface HMServer()
@@ -176,25 +176,24 @@
 
     if (AppManagement.sh.isDevApp) {
         //
-        // In development application. Use local developer machine, etc.
+        // In development application.
+        // Use only the test servers.
+        // Allows from UI to choose PUBLIC or SCRATCHPAD data.
         //
         port = self.cfg[@"dev_port"];
         protocol = self.cfg[@"dev_protocol"];
         host = self.cfg[@"dev_host"];
-    } else if (AppManagement.sh.isTestApp) {
-        //
-        // Test application. Use test server.
-        //
-        port = self.cfg[@"port"];
-        protocol = self.cfg[@"protocol"];
-        host = self.cfg[@"host"];
+        
     } else {
+
         //
-        // Production application. Use production server.
+        // Production or test application.
+        // Use production server.
         //
         port = self.cfg[@"prod_port"];
         protocol = self.cfg[@"prod_protocol"];
         host = self.cfg[@"prod_host"];
+        
     }
     
     if (port) {
