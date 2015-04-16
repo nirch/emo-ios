@@ -24,14 +24,19 @@
     EMAppCFGParser *cfgParser = [[EMAppCFGParser alloc] initWithContext:self.ctx];
     cfgParser.objectToParse = info;
     [cfgParser parse];
+    HMLOG(TAG, EM_DBG, @"Server response:%@", info);
     
     // Get list of prioritized packages
     NSArray *prioritizedPackages = info[@"prioritized_packages"];
     NSMutableDictionary *priorities = [NSMutableDictionary new];
     NSInteger index = 0;
-    for (NSDictionary *p in prioritizedPackages) {
+    for (id p in prioritizedPackages) {
         index++;
-        NSString *oid = [p safeOIDStringForKey:@"$oid"];
+        NSString *oid;
+        if ([p isKindOfClass:[NSDictionary class]]) {
+            oid = [p safeOIDStringForKey:@"$oid"];
+        }
+        oid = p;
         priorities[oid] = @(index);
     }
     

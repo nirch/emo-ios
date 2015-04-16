@@ -27,6 +27,7 @@
 #import "EMAlertsPermissionVC.h"
 #import "AppDelegate.h"
 #import "HMPanel.h"
+#import "HMServer.h"
 
 @interface EMMainVC () <
     UICollectionViewDataSource,
@@ -220,6 +221,10 @@
     if (latestPublishedPackage == nil) return;
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
+    
+    if (notification.userInfo[@"forced_reload"]) {
+        [self debugCleanAndRender];
+    }
     
     // Handle the flow
     [self handleFlow];
@@ -795,10 +800,21 @@
     
     // Debugging stuff
     if (AppManagement.sh.isTestApp) {
+        alert.title = [SF:@"DEV APPLICATION - %@", EMBackend.sh.server.serverURL];
+        alert.message = [SF:@"Data: %@", EMBackend.sh.server.usingPublicDataBase? @"PUBLIC":@"SCRATCHPAD"];
         [alert addAction:[UIAlertAction actionWithTitle:@"Clean and render"
                                                   style:UIAlertActionStyleDestructive
                                                 handler:^(UIAlertAction *action) {
                                                     [self debugCleanAndRender];
+                                                }]];
+
+        [alert addAction:[UIAlertAction actionWithTitle:@"Reload all data & Render"
+                                                  style:UIAlertActionStyleDestructive
+                                                handler:^(UIAlertAction *action) {
+                                                    // Reload data
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                                                                        object:self
+                                                                                                      userInfo:@{@"forced_reload":@YES}];
                                                 }]];
     }
     

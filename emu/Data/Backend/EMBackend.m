@@ -95,10 +95,18 @@
 {
     // Making sure required paths exist.
     [EMDB ensureRequiredDirectoriesExist];
+
+    NSDictionary *info = notification.userInfo;
+    BOOL shouldForceRefresh = NO;
+    if (info) {
+        if ([info[@"forced_reload"] isEqualToNumber:@YES]) {
+            shouldForceRefresh = YES;
+        }
+    }
     
     // Fetching current info from server.
     BOOL shouldRefresh = NO;
-    if (self.latestRefresh) {
+    if (self.latestRefresh && !shouldForceRefresh) {
         NSDate *now = [NSDate date];
         NSTimeInterval timePassedSincePreviousFetch = [now timeIntervalSinceDate:self.latestRefresh];
         if (timePassedSincePreviousFetch > 600) {
@@ -108,8 +116,10 @@
         shouldRefresh = YES;
     }
     
+    //
+    
     if (shouldRefresh) {
-        [self.server refreshPackagesInfo];
+        [self.server refreshPackagesInfoWithInfo:notification.userInfo];
     }
     
     // Save it all
@@ -122,9 +132,16 @@
  */
 -(void)onPackagesDataUpdated:(NSNotification *)notification
 {
+    NSMutableDictionary *info;
+    if (notification.userInfo) {
+        info = [NSMutableDictionary dictionaryWithDictionary:notification.userInfo];
+    } else {
+        info = [NSMutableDictionary new];
+    }
+    
     if (notification.isReportingError) {
         // Error on packages data request to web service
-        NSDictionary *info = @{@"error":notification.reportedError};
+        info[@"error"] = notification.reportedError;
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
         return;
     }
@@ -148,7 +165,7 @@
     }
     
     // Notify the user interface about the updates.
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
 }
 
 

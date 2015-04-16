@@ -35,6 +35,10 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 // More info
 @property (strong,nonatomic, readonly) NSDictionary *configurationInfo;
 
+@property (strong, nonatomic, readonly) NSURL *serverURL;
+@property (nonatomic, readonly) BOOL usingPublicDataBase;
+
+
 #pragma mark - URL named
 -(NSString *)absoluteURLNamed:(NSString *)urlName;
 -(NSString *)relativeURLNamed:(NSString *)urlName;

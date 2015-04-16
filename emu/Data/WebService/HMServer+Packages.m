@@ -13,13 +13,13 @@
 
 @implementation HMServer (Packages)
 
--(void)refreshPackagesInfo
+-(void)refreshPackagesInfoWithInfo:(NSDictionary *)info
 {
     EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
     [self getRelativeURLNamed:@"packages full"
                    parameters:nil
              notificationName:emkDataUpdatedPackages
-                         info:nil
+                         info:info
                        parser:parser];
 }
 

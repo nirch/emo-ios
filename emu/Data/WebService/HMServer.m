@@ -17,11 +17,13 @@
 
 @property (strong, nonatomic) NSMutableDictionary *cfg;
 @property (strong, nonatomic) NSString *defaultsFileName;
-@property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (strong,nonatomic) NSDictionary *context;
 @property (strong,nonatomic) NSString *appVersionInfo;
 @property (strong,nonatomic) NSString *appBuildInfo;
 @property (strong,nonatomic) NSString *currentUserID;
+
+@property (strong, nonatomic, readwrite) NSURL *serverURL;
+@property (nonatomic) BOOL usingPublicDataBase;
 
 @end
 
@@ -34,6 +36,7 @@
 {
     self = [super init];
     if (self) {
+        self.usingPublicDataBase = YES;
         [self loadCFG];
         [self loadAppDetails];
         [self initSessionManager];
@@ -59,7 +62,10 @@
     // Add app information to the headers.
     [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
     [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
-
+    if (self.usingPublicDataBase == NO) {
+        [self.session.requestSerializer setValue:@"true" forHTTPHeaderField:@"SCRATCHPAD"];
+    }
+    
     // Add homage's internal application identifier
     NSString *applicationIdentifier = self.configurationInfo[@"application"];
     if (applicationIdentifier) {
@@ -175,25 +181,35 @@
     NSString *host;
 
     if (AppManagement.sh.isDevApp) {
+        
         //
         // In development application.
         // Use only the test servers.
         // Allows from UI to choose PUBLIC or SCRATCHPAD data.
+        // By default will use the scratchpad.
         //
-        port = self.cfg[@"dev_port"];
-        protocol = self.cfg[@"dev_protocol"];
-        host = self.cfg[@"dev_host"];
+        port =      self.cfg[@"dev_port"];
+        protocol =  self.cfg[@"dev_protocol"];
+        host =      self.cfg[@"dev_host"];
         
     } else {
 
         //
         // Production or test application.
         // Use production server.
+        // Test app builds will work with the SCRATCHPAD data.
         //
-        port = self.cfg[@"prod_port"];
-        protocol = self.cfg[@"prod_protocol"];
-        host = self.cfg[@"prod_host"];
-        
+        port =      self.cfg[@"prod_port"];
+        protocol =  self.cfg[@"prod_protocol"];
+        host =      self.cfg[@"prod_host"];
+    }
+
+    if (AppManagement.sh.isTestApp || AppManagement.sh.isDevApp) {
+        // Scratchpad by default. Used by developers and content managers.
+        self.usingPublicDataBase = NO;
+    } else {
+        // Public production data. This is what the end users see.
+        self.usingPublicDataBase = YES;
     }
     
     if (port) {
