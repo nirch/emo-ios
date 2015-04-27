@@ -34,6 +34,16 @@
     return [package.oid isEqualToString:self.onboardingUsingPackage];
 }
 
+
+#pragma mark - Sampled results
+-(BOOL)shouldUploadSampledResults
+{
+    NSDictionary *info = self.uploadUserContent;
+    if (info == nil || info[@"enabled"] == nil) return NO;
+    return [info[@"enabled"] boolValue];
+}
+
+
 #pragma mark - tweaked values
 +(NSDictionary *)tweakedValues
 {
@@ -50,6 +60,17 @@
 
     id value = tweaks[name];
     if ([value isKindOfClass:[NSNumber class]]) return [value boolValue];
+    return defaultValue;
+}
+
+
++(NSTimeInterval)tweakedInterval:(NSString *)name defaultValue:(NSTimeInterval)defaultValue
+{
+    NSDictionary *tweaks = [self tweakedValues];
+    if (tweaks == nil) return defaultValue;
+    
+    id value = tweaks[name];
+    if ([value isKindOfClass:[NSNumber class]]) return [value doubleValue];
     return defaultValue;
 }
 

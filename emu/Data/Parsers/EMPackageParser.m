@@ -37,6 +37,8 @@
     pkg.label = [info safeStringForKey:@"label"];
     pkg.priority = self.incrementalOrder? self.incrementalOrder:@(9999);
     pkg.notificationText = [info safeStringForKey:@"notification_text"];
+    pkg.isActive = [info safeBoolNumberForKey:@"is_active" defaultsValue:@YES];
+    pkg.requiredVersion = [info safeStringForKey:@"requiredVersion"];
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;

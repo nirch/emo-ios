@@ -224,10 +224,14 @@ or
 			<string>User opened a notification in notification center and laucnhed the app</string>
 			<key>params</key>
 			<dict>
+				<key>text</key>
+				<string>&lt;string&gt; - The text sent with the notification</string>
 				<key>packageOID</key>
-				<string>&lt;string&gt; - The oid of the related package</string>
+				<string>&lt;string&gt; - (optional) The oid of the related package</string>
 				<key>packageName</key>
-				<string>&lt;string&gt; - The name of the related package</string>
+				<string>&lt;string&gt; - (optional) The name of the related package</string>
+				<key>notificationType</key>
+				<string>&lt;string&gt; - The type of the notification: local,remote</string>
 			</dict>
 		</dict>
 		<key>Settings:userOpenedSettingsApp</key>

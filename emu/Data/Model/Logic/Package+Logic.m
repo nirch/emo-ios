@@ -338,4 +338,43 @@
     return count;
 }
 
+-(BOOL)doAllEmusHaveSpecificTakes
+{
+    if ([self emuticonsWithNoSpecificFootage].count == 0) return YES;
+    return NO;
+}
+
+-(BOOL)hasEmusWithSpecificTakes
+{
+    if ([self emuticonsWithNoSpecificFootage].count < self.emuDefs.count) return YES;
+    return NO;
+}
+
+
+#pragma mark - Sampled results
+-(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID
+{
+    // Is sampling enabled?
+    AppCFG *appCFG = [AppCFG cfgInContext:self.managedObjectContext];
+    NSDictionary *info = appCFG.uploadUserContent;
+    if (info == nil || info[@"enabled"] == nil || [info[@"enabled"] boolValue] == NO) return NO;
+    
+    // Does this package need to be sampled?
+    info = info[@"upload_user_rendered_results"];
+    NSDictionary *sampledPacks = info[@"sampled_packs"];
+    if (sampledPacks == nil || sampledPacks[self.oid] == nil || ![sampledPacks[self.oid] boolValue]) return NO;
+
+    // Sampling is enabled. Was an emu chosen in this pack?
+    // (if a different emu already chosen, we don't need to sample another one)
+    if (self.sampledEmuResultOID != nil && ![emuOID isEqualToString:self.sampledEmuResultOID]) return NO;
+
+    // Make sure number of samples didn't reach max allowed.
+    NSInteger maxUploads = info[@"max_uploads_per_user_per_pack"]?[info[@"max_uploads_per_user_per_pack"] integerValue]:3;
+    if (self.sampledEmuCount.integerValue >= maxUploads) return NO;
+    
+    // All is well, another sample should be uploaded for this emu;
+    self.sampledEmuResultOID = emuOID;
+    return YES;
+}
+
 @end

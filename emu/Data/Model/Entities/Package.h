@@ -2,7 +2,7 @@
 //  Package.h
 //  emu
 //
-//  Created by Aviv Wolf on 4/12/15.
+//  Created by Aviv Wolf on 4/27/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -22,9 +22,13 @@
 @property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSString * prefferedFootageOID;
 @property (nonatomic, retain) NSNumber * priority;
-@property (nonatomic, retain) NSDate * timeUpdated;
 @property (nonatomic, retain) NSNumber * rendersCount;
+@property (nonatomic, retain) NSNumber * sampledEmuCount;
+@property (nonatomic, retain) NSString * sampledEmuResultOID;
+@property (nonatomic, retain) NSDate * timeUpdated;
 @property (nonatomic, retain) NSNumber * viewedByUser;
+@property (nonatomic, retain) NSNumber * isActive;
+@property (nonatomic, retain) NSString * requiredVersion;
 @property (nonatomic, retain) NSSet *emuDefs;
 @end
 

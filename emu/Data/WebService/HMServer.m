@@ -62,8 +62,15 @@
     // Add app information to the headers.
     [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
     [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
+    
+    // Using public database or just the scratchpad?
     if (self.usingPublicDataBase == NO) {
         [self.session.requestSerializer setValue:@"true" forHTTPHeaderField:@"SCRATCHPAD"];
+    }
+    
+    // Is user sampled (or was sampled) by the server?
+    if ([AppManagement.sh userSampledByServer]) {
+        [self.session.requestSerializer setValue:@"true" forHTTPHeaderField:@"USER_SAMPLED_BY_SERVER"];
     }
     
     // Add homage's internal application identifier

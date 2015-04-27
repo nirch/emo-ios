@@ -2,7 +2,7 @@
 //  AppCFG.h
 //  emu
 //
-//  Created by Aviv Wolf on 4/15/15.
+//  Created by Aviv Wolf on 4/28/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -23,9 +23,10 @@
 @property (nonatomic, retain) NSString * onboardingUsingPackage;
 @property (nonatomic, retain) NSString * prefferedFootageOID;
 @property (nonatomic, retain) id tweaks;
+@property (nonatomic, retain) id uploadUserContent;
 @property (nonatomic, retain) NSNumber * userAskedInMainScreenAboutAlerts;
-@property (nonatomic, retain) NSNumber * userViewedKBTutorial;
 @property (nonatomic, retain) NSNumber * userViewedEmuScreenTutorial;
+@property (nonatomic, retain) NSNumber * userViewedKBTutorial;
 @property (nonatomic, retain) NSNumber * userViewedMainTutorial;
 
 @end

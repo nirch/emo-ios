@@ -65,6 +65,12 @@
     return name? name: self.fontsNamesByStyle[@"regular"];
 }
 
+-(UIFont *)fontForStyle:(NSString *)style sized:(NSInteger)size
+{
+    NSString *fontName = [self fontNameForStyle:style];
+    return [UIFont fontWithName:fontName size:size];
+}
+
 #pragma mark - Colors
 -(UIColor *)styleColorNamed:(NSString *)colorName
 {

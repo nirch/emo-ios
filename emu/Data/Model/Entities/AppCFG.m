@@ -2,7 +2,7 @@
 //  AppCFG.m
 //  emu
 //
-//  Created by Aviv Wolf on 4/15/15.
+//  Created by Aviv Wolf on 4/28/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -22,9 +22,10 @@
 @dynamic onboardingUsingPackage;
 @dynamic prefferedFootageOID;
 @dynamic tweaks;
+@dynamic uploadUserContent;
 @dynamic userAskedInMainScreenAboutAlerts;
-@dynamic userViewedKBTutorial;
 @dynamic userViewedEmuScreenTutorial;
+@dynamic userViewedKBTutorial;
 @dynamic userViewedMainTutorial;
 
 @end

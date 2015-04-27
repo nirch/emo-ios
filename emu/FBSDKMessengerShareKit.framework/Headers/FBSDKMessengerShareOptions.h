@@ -35,11 +35,6 @@
 @property (nonatomic, readwrite, copy) NSString *metadata;
 
 /*!
- @abstract Describes the way the content is to be shared in Messenger.
- */
-@property (nonatomic, readwrite, strong) FBSDKMessengerContext *context;
-
-/*!
 @abstract Optional property describing the www source URL of the content
 
 @discussion Setting this property improves performance by allowing Messenger to download
@@ -47,5 +42,16 @@
  This option is only used for animated GIFs and WebPs
 */
 @property (nonatomic, readwrite, copy) NSURL *sourceURL;
+
+/*!
+ @abstract Optional property that overrides the default way the content will be shared to messenger
+
+ @discussion By default, if a user enters your app via a replyable context in Messenger
+ (for instance, tapping Reply on a message or opening your app from composer), the next share
+ out of your app will trigger the reply flow in Messenger by default. If you'd prefer to not
+ trigger the reply flow, then overriding this with FBSDKMessengerBroadcastContext will trigger the
+ broadcast flow in messenger.
+ */
+@property (nonatomic, readwrite, strong) FBSDKMessengerContext *contextOverride;
 
 @end

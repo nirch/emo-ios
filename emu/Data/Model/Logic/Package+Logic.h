@@ -140,11 +140,19 @@
 -(NSURL *)urlForResourceNamed:(NSString *)resourceName;
 
 
+-(NSArray *)emuticonsWithNoSpecificFootage;
 -(NSURL *)urlForPackageIcon;
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 -(NSString *)tagLabel;
 -(void)recountRenders;
 +(NSInteger)countNumberOfViewedPackagesInContext:(NSManagedObjectContext *)context;
+-(BOOL)doAllEmusHaveSpecificTakes;
+-(BOOL)hasEmusWithSpecificTakes;
+
+#pragma mark - Sampled results
+-(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID;
+
+
 
 @end

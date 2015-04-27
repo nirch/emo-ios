@@ -9,6 +9,7 @@
 #import "Emuticon+Logic.h"
 #import "EMDB.h"
 #import "EMDB+Files.h"
+#import "HMParams.h"
 
 @implementation Emuticon (Logic)
 
@@ -137,6 +138,7 @@
 
     // Mark it as not rendered.
     self.wasRendered = @NO;
+    self.renderedSampleUploaded = @NO;
 }
 
 
@@ -179,6 +181,26 @@
     if (self.prefferedFootageOID == nil) return nil;
     return [UserFootage findWithID:self.prefferedFootageOID
                            context:self.managedObjectContext];
+}
+
+
+-(NSString *)s3KeyForSampledResult
+{
+    NSString *deviceIdentifier = UIDevice.currentDevice.identifierForVendor.UUIDString;
+    NSString *key = [SF:@"users_content/sampled_results/%@_%@_%@_%@.gif", deviceIdentifier, self.emuDef.package.name, self.emuDef.name, self.rendersCount];
+    key = [key stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    return key;
+}
+
+-(NSDictionary *)s3MetaDataForSampledResult
+{
+    HMParams *params = [HMParams new];
+    [params addKey:@"emuticonDefOID" value:self.emuDef.oid];
+    [params addKey:@"emuticonDefName" value:self.emuDef.name];
+    [params addKey:@"packageOID" value:self.emuDef.package.oid];
+    [params addKey:@"packageName" value:self.emuDef.package.name];
+    [params addKey:@"renderCount" value:[self.rendersCount description]];
+    return params.dictionary;
 }
 
 @end

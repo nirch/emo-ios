@@ -162,4 +162,7 @@
 -(UserFootage *)previewUserFootage;
 
 
+-(NSString *)s3KeyForSampledResult;
+-(NSDictionary *)s3MetaDataForSampledResult;
+
 @end

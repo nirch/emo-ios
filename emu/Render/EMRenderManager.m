@@ -57,8 +57,6 @@
 -(void)initRenderingQueue
 {
     self.renderingQueue = AppManagement.sh.ioQueue;
-//    self.renderingQueue = dispatch_queue_create("Rendering Queue",
-//                                                DISPATCH_QUEUE_SERIAL);
 }
 
 #pragma mark - Rendering management
@@ -161,8 +159,13 @@
         // Update model in main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             emu.wasRendered = @YES;
+            emu.renderedSampleUploaded = @NO;
+            
             NSInteger count = emu.emuDef.package.rendersCount.integerValue;
             emu.emuDef.package.rendersCount = @(count+1);
+            
+            count = emu.rendersCount.integerValue;
+            emu.rendersCount = @(count+1);
             
             [weakSelf doneWithEmu:emu];
             self.isRendering = NO;

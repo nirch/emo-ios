@@ -360,10 +360,10 @@ NSString* machineName()
     [self.mixPanel.people set:details];
 }
 
-//-(void)a
-//{
-//    [self.mixPanel.people set]
-//}
+-(void)personPushToken:(NSData *)pushToken
+{
+    [self.mixPanel.people addPushDeviceToken:pushToken];
+}
 
 
 

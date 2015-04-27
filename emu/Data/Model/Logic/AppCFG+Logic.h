@@ -17,7 +17,13 @@
 -(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;
 
+
+#pragma mark - Sampled results
+-(BOOL)shouldUploadSampledResults;
+
+
 #pragma mark - tweaked values
 +(BOOL)tweakedBool:(NSString *)name defaultValue:(BOOL)defaultValue;
++(NSTimeInterval)tweakedInterval:(NSString *)name defaultValue:(NSTimeInterval)defaultValue;
 
 @end

@@ -13,6 +13,8 @@
 -(NSNumber *)safeNumberForKey:(id)key;
 -(NSDecimalNumber *)safeDecimalNumberForKey:(id)key;
 -(NSNumber *)safeBoolNumberForKey:(id)key;
+-(NSNumber *)safeBoolNumberForKey:(id)key defaultsValue:(NSNumber *)defaultValue;
+
 
 #pragma mark - With defaults
 -(NSString *)safeStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;
@@ -20,5 +22,6 @@
 -(NSNumber *)safeNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
 -(NSDecimalNumber *)safeDecimalNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
 -(NSNumber *)safeBoolNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
+-(NSDictionary *)safeDictionaryForKey:(id)key defaultValue:(NSDictionary *)defaultValue;
 
 @end

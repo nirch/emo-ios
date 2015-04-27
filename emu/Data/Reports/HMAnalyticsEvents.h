@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 18:51:26 04/15/15 IDT
+//  Created by build script on 13:11:02 04/26/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -485,11 +485,17 @@ User opened a notification in notification center and laucnhed the app
 **/
 #define AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION @"Notifications:userOpenedNotification"
 
-/** Param:packageOID --> <string> - The oid of the related package **/
+/** Param:text --> <string> - The text sent with the notification **/
+#define AK_EP_TEXT @"text"
+
+/** Param:packageOID --> <string> - (optional) The oid of the related package **/
 #define AK_EP_PACKAGE_OID @"packageOID"
 
-/** Param:packageName --> <string> - The name of the related package **/
+/** Param:packageName --> <string> - (optional) The name of the related package **/
 #define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:notificationType --> <string> - The type of the notification: local,remote **/
+#define AK_EP_NOTIFICATION_TYPE @"notificationType"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

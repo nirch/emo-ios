@@ -17,6 +17,13 @@
     return nil;
 }
 
+-(NSDictionary *)safeDictionaryForKey:(id)key defaultValue:(NSDictionary *)defaultValue
+{
+    id value = self[key];
+    if ([value isKindOfClass:[NSDictionary class]]) return value;
+    return defaultValue;
+}
+
 -(NSString *)safeOIDStringForKey:(id)key
 {
     id value = self[key];
@@ -57,6 +64,12 @@
     return nil;
 }
 
+-(NSNumber *)safeBoolNumberForKey:(id)key defaultsValue:(NSNumber *)defaultValue
+{
+    id value = self[key];
+    if ([value isKindOfClass:[NSNumber class]]) return @([value boolValue]);
+    return defaultValue;
+}
 
 #pragma mark - With defaults
 -(NSString *)safeStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary

@@ -7,6 +7,7 @@
 //
 
 #import "AppManagement.h"
+#import "EMDB.h"
 
 @interface AppManagement()
 
@@ -66,6 +67,14 @@
 -(BOOL)isDevApp
 {
     return self.isBuildOfDevelopmentApplication;
+}
+
+-(BOOL)userSampledByServer
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSDictionary *info = appCFG.uploadUserContent;
+    if (info == nil || info[@"enabled"] == nil) return NO;
+    return [info[@"enabled"] boolValue];
 }
 
 -(void)initBuildInfo

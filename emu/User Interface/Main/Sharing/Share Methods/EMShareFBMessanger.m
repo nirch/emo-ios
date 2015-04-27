@@ -9,8 +9,8 @@
 
 #import "EMShareFBMessanger.h"
 #import <Toast/UIView+Toast.h>
-#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AppDelegate.h"
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
 @interface EMShareFBMessanger()
 
@@ -65,7 +65,7 @@
 -(void)share
 {
     [super share];
-    
+
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
     NSData *gifData = [emu animatedGifData];
@@ -76,7 +76,8 @@
     {
         self.wasCanceled = NO;
         FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
-        options.context = context;
+        options.contextOverride = context;
+//        options.context = context;
         
         [FBSDKMessengerSharer shareAnimatedGIF:gifData withOptions:options];
         [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];

@@ -16,6 +16,7 @@
 
 #pragma mark - Fonts
 -(NSString *)fontNameForStyle:(NSString *)style;
+-(UIFont *)fontForStyle:(NSString *)style sized:(NSInteger)size;
 
 #pragma mark - Colors
 +(UIImage *)imageWithColor:(UIColor *)color;

@@ -38,7 +38,7 @@
 -(void)personIdentify;
 -(void)personIdentifyWithIdentifier:(NSString *)identifier;
 -(void)personDetails:(NSDictionary *)details;
-
+-(void)personPushToken:(NSData *)pushToken;
 
 #pragma mark - Tweaking
 // Wrapper of mixpanel tweak inline macros

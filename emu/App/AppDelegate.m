@@ -13,10 +13,11 @@
 #import "EMBackend.h"
 #import "EMNotificationCenter.h"
 #import "EMShareFBMessanger.h"
-#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 #import "HMServer.h"
 #import <MPTweakInline.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -70,12 +71,20 @@
     self.messengerUrlHandler.delegate = self;
 
     // Background fetches interval.
-    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [application setMinimumBackgroundFetchInterval:[AppCFG tweakedInterval:@"background_fetches_minimum_interval" defaultValue:10800]];
 
     // Launched.
     HMLOG(TAG, EM_DBG, @"Application launched");
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
-    return YES;
+    
+    // Push notifications
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                    didFinishLaunchingWithOptions:launchOptions];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -105,7 +114,7 @@
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     
     // Logs 'install' and 'app activate' App Events.
-    [FBAppEvents activateApp];
+    [FBSDKAppEvents activateApp];
     
     // Analytics
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_DID_BECOME_ACTIVE_COUNT];
@@ -142,7 +151,11 @@
         // Handle the url
         [_messengerUrlHandler openURL:url sourceApplication:sourceApplication];
     }
-    return YES;
+
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 #pragma mark - FBSDKMessengerURLHandlerDelegate
@@ -171,6 +184,7 @@
     [params addKey:AK_EP_LINK_TYPE value:@"open"];
     [HMPanel.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
+
 
 // Reply
 -(void)messengerURLHandler:(FBSDKMessengerURLHandler *)messengerURLHandler didHandleReplyWithContext:(FBSDKMessengerURLHandlerReplyContext *)context
@@ -201,47 +215,66 @@
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    // TODO: finish implementation
     HMLOG(TAG, EM_DBG, @"Failed to register to remote notifications with error:%@", [error localizedDescription]);
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    // TODO: finish implementation
     HMLOG(TAG, EM_DBG, @"Registered to remote notifications with token:%@", [deviceToken description]);
+
+    // Foreward the push token to mixpanel.
+    [HMPanel.sh personPushToken:deviceToken];
 }
 
 #pragma mark - Opened notifications
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSDictionary *info = notification.userInfo;
-    if (info == nil) return;
-    
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_NOTIFICATION_TYPE value:@"local"];
+    [self handleNotificationWithInfo:notification.userInfo params:params];
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground  )
+    {
+        HMParams *params = [HMParams new];
+        [self handleNotificationWithInfo:userInfo params:params];
+    }
+}
+
+
+-(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
+{
     NSString *packageOID = info[@"packageOID"];
-    if (packageOID == nil) return;
-    
-    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
-    if (package == nil) return;
-    
-    // If not on first screen, pop back to the main screen (with no animation).
+    if (packageOID != nil) {
+        Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
+        if (package) {
+            [self handleNavigateToPackage:package];
+            [params addKey:AK_EP_PACKAGE_OID value:packageOID];
+            [params addKey:AK_EP_PACKAGE_NAME value:package.name];
+        }
+    }
+    [params addKey:AK_EP_TEXT valueIfNotNil:info[@"alert"]];
+    [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
+}
+
+
+-(void)handleNavigateToPackage:(Package *)package
+{
     if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+        // If not on first screen, pop back to the main screen (with no animation).
         UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
         [nc popToRootViewControllerAnimated:NO];
         if (nc.presentedViewController) {
             [nc dismissViewControllerAnimated:NO completion:nil];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIMainShouldShowPackage
-                                                            object:self
-                                                          userInfo:@{@"packageOID":package.oid}];
     }
-    
-    // Cool. We should preffer this package.
-    HMParams *params = [HMParams new];
-    [params addKey:AK_EP_PACKAGE_OID value:package.oid];
-    [params addKey:AK_EP_PACKAGE_NAME value:package.name];
-    [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIMainShouldShowPackage
+                                                        object:self
+                                                      userInfo:@{@"packageOID":package.oid}];
 }
-
 
 #pragma mark - Background fetches
 //

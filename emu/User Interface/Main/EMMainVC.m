@@ -28,6 +28,8 @@
 #import "AppDelegate.h"
 #import "HMPanel.h"
 #import "HMServer.h"
+#import "EMHolySheet.h"
+#import "EMActionsArray.h"
 
 @interface EMMainVC () <
     UICollectionViewDataSource,
@@ -44,6 +46,10 @@
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesSelectionContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 @property (weak, nonatomic) IBOutlet UILabel *guiTagLabel;
+
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *guiSwipeLeftRecognizer;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *guiSwipeRightRecognizer;
+
 
 @property (weak, nonatomic) EMSplashVC *splashVC;
 
@@ -72,6 +78,7 @@
     self.refetchDataAttempted = NO;
     self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
     self.guiTagLabel.alpha = 0;
+    [self initScrollGesturesFixes];
     REMOTE_LOG(@"MainVC view did load");
 }
 
@@ -136,6 +143,18 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     EMMainVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"main vc"];
     return vc;
+}
+
+-(void)initScrollGesturesFixes
+{
+    NSArray *recognizers = self.guiCollectionView.gestureRecognizers;
+    for (UIGestureRecognizer *recognizer in recognizers) {
+        if ([recognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+            UIPanGestureRecognizer *r = (UIPanGestureRecognizer *)recognizer;
+            [r requireGestureRecognizerToFail:self.guiSwipeLeftRecognizer];
+            [r requireGestureRecognizerToFail:self.guiSwipeRightRecognizer];
+        }
+    }
 }
 
 #pragma mark - Observers
@@ -362,7 +381,6 @@
                                                                                                     object:self
                                                                                                   userInfo:nil];
                                             }]];
-    
     [self presentViewController:alert
                        animated:YES
                      completion:nil];
@@ -418,6 +436,7 @@
         EMPackagesVC *vc = segue.destinationViewController;
         self.packagesBarVC = vc;
         vc.delegate = self;
+        
     } else if ([segue.identifier isEqualToString:@"tutorial segue"]) {
         EMTutorialVC *vc = segue.destinationViewController;
         self.kbTutorialVC = vc;
@@ -445,7 +464,8 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    return self.fetchedResultsController.fetchedObjects.count;
+    NSInteger count = self.fetchedResultsController.fetchedObjects.count;
+    return count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -771,6 +791,7 @@
 -(void)openAppSettingsWithReason:(NSString *)reason
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_REASON value:reason];
 }
@@ -778,54 +799,107 @@
 #pragma mark - More user choices
 -(void)userChoices
 {
-    UIAlertController *alert = [UIAlertController new];
-    alert.title = LS(@"USER_CHOICE_TITLE");
-    
-    // Enable notifications
+    EMActionsArray *actionsMapping = [EMActionsArray new];
+
+    //
+    // Pack options
+    //
+    NSString *title = [SF:@"%@ pack", self.selectedPackage.label];
+    if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
+        [actionsMapping addAction:@"USER_CHOICE_RETAKE_PACK" text:LS(@"USER_CHOICE_RETAKE_PACK") section:0];
+    }
+    if ([self.selectedPackage hasEmusWithSpecificTakes]) {
+        [actionsMapping addAction:@"USER_CHOICE_RESET_PACK" text:LS(@"USER_CHOICE_RESET_PACK") section:0];
+    }
+    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
+
+    //
+    // More options
+    //
     UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
     if (notificationSettings.types == UIUserNotificationTypeNone) {
-        [alert addAction:[UIAlertAction actionWithTitle:LS(@"NOTIFICATIONS_ENABLE")
-                                                  style:UIAlertActionStyleDefault
-                                                handler:^(UIAlertAction *action) {
-                                                    [self openAppSettingsWithReason:@"enable notifications"];
-                                                }]];
+        [actionsMapping addAction:@"NOTIFICATIONS_ENABLE" text:LS(@"NOTIFICATIONS_ENABLE") section:1];
     }
+    [actionsMapping addAction:@"USER_CHOICE_ABOUT" text:LS(@"USER_CHOICE_ABOUT") section:1];
+    EMHolySheetSection *section2 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:1] buttonStyle:JGActionSheetButtonStyleDefault];
     
-    // Reset emuticons to use the same footage.
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"USER_CHOICE_RESET_PACK")
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction *action) {
-                                                [self resetPack];
-                                            }]];
-    
-    // Debugging stuff
+    //
+    // Debugging options.
+    //
+    EMHolySheetSection *debugSection = nil;
     if (AppManagement.sh.isTestApp) {
-        alert.title = [SF:@"DEV APPLICATION - %@", EMBackend.sh.server.serverURL];
-        alert.message = [SF:@"Data: %@", EMBackend.sh.server.usingPublicDataBase? @"PUBLIC":@"SCRATCHPAD"];
-        [alert addAction:[UIAlertAction actionWithTitle:@"Clean and render"
-                                                  style:UIAlertActionStyleDestructive
-                                                handler:^(UIAlertAction *action) {
-                                                    [self debugCleanAndRender];
-                                                }]];
-
-        [alert addAction:[UIAlertAction actionWithTitle:@"Reload all data & Render"
-                                                  style:UIAlertActionStyleDestructive
-                                                handler:^(UIAlertAction *action) {
-                                                    // Reload data
-                                                    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
-                                                                                                        object:self
-                                                                                                      userInfo:@{@"forced_reload":@YES}];
-                                                }]];
+        NSString *title = [SF:@"DEV APPLICATION - %@", EMBackend.sh.server.serverURL];
+        NSString *message = [SF:@"Data: %@", EMBackend.sh.server.usingPublicDataBase? @"PUBLIC":@"SCRATCHPAD"];
+        [actionsMapping addAction:@"CLEAN_AND_RENDER" text:@"Clean and render" section:2];
+        [actionsMapping addAction:@"RELOAD_ALL" text:@"Reload all data & Render" section:2];
+        debugSection = [EMHolySheetSection sectionWithTitle:title
+                                                    message:message
+                                               buttonTitles:[actionsMapping textsForSection:2]
+                                                buttonStyle:JGActionSheetButtonStyleRed];
     }
     
-    // Cancel
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
-                                              style:UIAlertActionStyleCancel
-                                            handler:^(UIAlertAction *action) {
-                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_NAV_SELECTION_CANCEL];
-                                            }]];
+    //
+    // Extra sections
+    //
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"Cancel"] buttonStyle:JGActionSheetButtonStyleCancel];
+    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, section2]];
+    if (debugSection) [sections addObject:debugSection];
+    [sections addObject:cancelSection];
+
+    //
+    // Holy sheet
+    //
+    EMHolySheet *sheet = [EMHolySheet actionSheetWithSections:sections];
+    [sheet setButtonPressedBlock:^(JGActionSheet *sender, NSIndexPath *indexPath) {
+        [sender dismissAnimated:YES];
+        [self handleUserChoiceWithIndexPath:indexPath actionsMapping:actionsMapping];
+    }];
+    [sheet setOutsidePressBlock:^(JGActionSheet *sender) {
+        [sender dismissAnimated:YES];
+    }];
+    [sheet showInView:self.view animated:YES];
+}
+
+
+-(void)handleUserChoiceWithIndexPath:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping
+{
+    NSString *actionName = [actionsMapping actionNameForIndexPath:indexPath];
+    if (actionName == nil) return;
     
-    [self presentViewController:alert animated:YES completion:nil];
+    if ([actionName isEqualToString:@"USER_CHOICE_RETAKE_PACK"]) {
+        
+        // Retake the current package.
+        [self retakeCurrentPackage];
+        
+    } else if ([actionName isEqualToString:@"USER_CHOICE_RESET_PACK"]) {
+        
+        // Clears all emus in this package that have specific footage.
+        // Will rerender emus in the package using the footage defined for the package.
+        [self resetPack];
+
+    } else if ([actionName isEqualToString:@"CLEAN_AND_RENDER"]) {
+        
+        // Clean all and resend to rendering.
+        [self debugCleanAndRender];
+
+    } else if ([actionName isEqualToString:@"RELOAD_ALL"]) {
+
+        // Reload data
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                            object:self
+                                                          userInfo:@{@"forced_reload":@YES}];
+        
+    } else if ([actionName isEqualToString:@"USER_CHOICE_ABOUT"]) {
+        
+        // About message.
+        [self aboutMessage];
+        
+    } else if ([actionName isEqualToString:@"NOTIFICATIONS_ENABLE"]) {
+        
+        // Go to the application settings screen.
+        [self openAppSettingsWithReason:@"enable notifications"];
+        
+    }
 }
 
 
@@ -1001,35 +1075,37 @@
 - (IBAction)onSwipedLeftCollectionView:(id)sender
 {
     HMLOG(TAG, EM_DBG, @"Swipe left");
-    [UIView animateWithDuration:0.15 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         if ([self.packagesBarVC canSelectNext]) self.guiCollectionView.alpha = 0;
         self.guiCollectionView.transform = CGAffineTransformMakeTranslation(-40, 0);
     } completion:^(BOOL finished) {
         if (![self.packagesBarVC canSelectNext]) {
-            [UIView animateWithDuration:0.3 animations:^{
+            [UIView animateWithDuration:0.15 animations:^{
                 self.guiCollectionView.transform = CGAffineTransformIdentity;
             }];
         } else {
             [self.packagesBarVC selectNext];
         }
     }];
+    [EMUISound.sh playSoundNamed:SND_SWIPE];
 }
 
 - (IBAction)onSwipedRightCollectionView:(id)sender
 {
     HMLOG(TAG, EM_DBG, @"Swipe right");
-    [UIView animateWithDuration:0.15 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         if ([self.packagesBarVC canSelectPrevious]) self.guiCollectionView.alpha = 0;
         self.guiCollectionView.transform = CGAffineTransformMakeTranslation(40, 0);
     } completion:^(BOOL finished) {
         if (![self.packagesBarVC canSelectPrevious]) {
-            [UIView animateWithDuration:0.3 animations:^{
+            [UIView animateWithDuration:0.15 animations:^{
                 self.guiCollectionView.transform = CGAffineTransformIdentity;
             }];
         } else {
             [self.packagesBarVC selectPrevious];
         }
     }];
+    [EMUISound.sh playSoundNamed:SND_SWIPE];
 }
 
 

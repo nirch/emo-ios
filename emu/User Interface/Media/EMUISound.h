@@ -12,6 +12,8 @@
 #define SND_PRESSED_BUTTON  @"pressed button"
 #define SND_CANCEL          @"cancel"
 #define SND_SOFT_CLICK      @"soft click"
+#define SND_SWIPE           @"swipe"
+
 
 
 @interface EMUISound : NSObject

@@ -42,8 +42,7 @@
     //
     // Get the source PNG images.
     //
-    PngSource *userSource = new PngSource(userImages);
-    //CHrSourceI *userSource = new PngSourceWithFX(userImages);
+    PngSourceWithFX *userSource = new PngSourceWithFX(userImages);
     
     //
     // Set mask if provided.

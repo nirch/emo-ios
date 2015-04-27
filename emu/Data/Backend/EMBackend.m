@@ -18,6 +18,12 @@
 #import "EMNotificationCenter.h"
 
 #import <zipzap.h>
+#import <AWSS3.h>
+
+// S3 credentials (upload only)
+#define S3_ACCESS_KEY @"AKIAINLSJGFQCJUIWV3A"
+#define S3_SECRET_KEY @"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"
+
 
 @interface EMBackend()
 
@@ -25,6 +31,8 @@
 @property (nonatomic) NSMutableDictionary *requiredResourcesForEmuOID;
 @property (nonatomic) AFHTTPSessionManager *session;
 @property (nonatomic) NSDate *latestRefresh;
+
+@property (nonatomic) AWSS3TransferManager *transferManager;
 
 @end
 
@@ -56,9 +64,19 @@
         self.currentlyDownloadingFromURLS = [NSMutableDictionary new];
         self.requiredResourcesForEmuOID = [NSMutableDictionary new];
         self.session = [AFHTTPSessionManager manager];
+        [self initTransferManager];
         [self initObservers];
     }
     return self;
+}
+
+-(void)initTransferManager
+{
+    AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_ACCESS_KEY secretKey:S3_SECRET_KEY];
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+    self.transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    HMLOG(TAG, EM_DBG, @"Started s3 transfer manager");
 }
 
 #pragma mark - Observers
@@ -77,6 +95,12 @@
                  selector:@selector(onPackagesDataUpdated:)
                      name:emkDataUpdatedPackages
                    object:nil];
+    
+    // Notifications about newly rendered content
+    [nc addUniqueObserver:self
+                 selector:@selector(onRenderedEmu:)
+                     name:hmkRenderingFinished
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -87,6 +111,69 @@
 }
 
 #pragma mark - Observers handlers
+-(void)onRenderedEmu:(NSNotification *)notification
+{
+    // TODO: finish sampled results upload implementation
+
+    // Upload samples only if enabled.
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (![appCFG shouldUploadSampledResults]) return;
+    
+    // Get related package to sample.
+    NSDictionary *info = notification.userInfo;
+    NSString *packageOID = info[@"packageOID"];
+    NSString *emuOID = info[@"emuticonOID"];
+    if (packageOID == nil || emuOID == nil) return;
+    
+    // Check if package needs to be sampled.
+    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
+    if (![package resultNeedToBeSampledForEmuOID:emuOID]) return;
+    
+    // Get the sampled emu in this package.
+    Emuticon *emuToSample = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    if (emuToSample == nil) return;
+    
+    // Upload the animated gif generated for this emu.
+    // Increase the uploaded samples count by 1.
+    // Mark package as "already sampled" if max number of samples reached.
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = appCFG.bucketName;
+
+    NSString *key = [emuToSample s3KeyForSampledResult];
+    uploadRequest.key = key;
+    
+    NSURL *localURL = [emuToSample animatedGifURL];
+    uploadRequest.body = localURL;
+    
+    uploadRequest.contentType = @"image/gif";
+    uploadRequest.metadata = [emuToSample s3MetaDataForSampledResult];
+    
+    BFTask *uploadTask = [self.transferManager upload:uploadRequest];
+    [uploadTask continueWithExecutor:[BFExecutor defaultExecutor] withBlock:^id(BFTask *task) {
+        HMLOG(TAG, EM_DBG, @"upload task: %@", task);
+        if (task.completed && task.error == nil) {
+            NSInteger count = emuToSample.emuDef.package.sampledEmuCount.integerValue;
+            count++;
+            emuToSample.emuDef.package.sampledEmuCount = @(count);
+            emuToSample.renderedSampleUploaded = @YES;
+        }
+        
+        if (task.error) {
+            HMLOG(TAG, EM_DBG, @"Error while uploading sampled result.");
+        }
+        return nil;
+    }];
+    
+
+    
+//    [[self.transferManager upload:uploadRequest] continueWithSuccessBlock:^id(BFTask *task) {
+//        NSInteger count = emuToSample.emuDef.package.sampledEmuCount.integerValue;
+//        count++;
+//        emuToSample.emuDef.package.sampledEmuCount = @(count);
+//        emuToSample.renderedSampleUploaded = @YES;
+//        return nil;
+//    }];
+}
 
 /**
  *  The user interface notified the backend that it needs the data to be refreshed.

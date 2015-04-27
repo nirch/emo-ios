@@ -2,7 +2,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class FBSDKMessengerURLHandler, FBSDKMessengerURLHandlerReplyContext, FBSDKMessengerURLHandlerOpenFromComposerContext;
+@class FBSDKMessengerURLHandler,
+FBSDKMessengerURLHandlerReplyContext,
+FBSDKMessengerURLHandlerOpenFromComposerContext,
+FBSDKMessengerURLHandlerCancelContext;
 
 @protocol FBSDKMessengerURLHandlerDelegate <NSObject>
 
@@ -36,7 +39,7 @@
  @param context The data passed from Messenger
  */
 - (void)messengerURLHandler:(FBSDKMessengerURLHandler *)messengerURLHandler
- didHandleCancelWithContext:(FBSDKMessengerURLHandlerOpenFromComposerContext *)context;
+ didHandleCancelWithContext:(FBSDKMessengerURLHandlerCancelContext *)context;
 
 @end
 

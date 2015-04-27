@@ -30,6 +30,14 @@
     appCFG.clientName = [info safeStringForKey:@"client_name"];
     appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
     
+    NSDictionary *uploadUserContent = [info safeDictionaryForKey:@"upload_user_content" defaultValue:@{@"enabled":@NO}];
+    if (uploadUserContent[@"unchanged"] && [uploadUserContent[@"unchanged"] boolValue]) {
+        // No need to change the value.
+    } else {
+        appCFG.uploadUserContent = [info safeDictionaryForKey:@"upload_user_content" defaultValue:@{@"enabled":@NO}];
+    }
+    
+    
     NSDictionary *tweakedValues = info[@"tweaks"];
     if ([tweakedValues isKindOfClass:[NSDictionary class]]) {
         appCFG.tweaks = tweakedValues;

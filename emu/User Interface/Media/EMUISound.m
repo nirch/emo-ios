@@ -55,7 +55,8 @@
                         SND_CANCEL:@"cancel.wav",
                         SND_START_RECORDING:@"startRecording.wav",
                         SND_RECORDING_ENDED:@"endRecording.wav",
-                        SND_SOFT_CLICK:@"plasticClickSound.wav"
+                        SND_SOFT_CLICK:@"plasticClickSound.wav",
+                        SND_SWIPE:@"simpleSwipe.wav"
                         };
     
     // Load audio files from bundle.

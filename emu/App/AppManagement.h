@@ -25,6 +25,9 @@
 // Is it a dev applications? (app with the .d build string suffix)
 -(BOOL)isDevApp;
 
+// Is this user's results are (were) sampled by the server?
+-(BOOL)userSampledByServer;
+
 #pragma mark - Queues
 @property (nonatomic, readonly) dispatch_queue_t ioQueue;
 

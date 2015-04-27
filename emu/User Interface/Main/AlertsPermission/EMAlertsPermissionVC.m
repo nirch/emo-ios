@@ -131,6 +131,7 @@
 #pragma mark - Confirm alerts
 -(void)confirmAlerts
 {
+    // Local notifications
     UIUserNotificationType notificationTypes =
         UIUserNotificationTypeAlert |
         UIUserNotificationTypeBadge |
@@ -138,8 +139,8 @@
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     
-    // TODO: implement register to remote notifications
-    // [[UIApplication sharedApplication] registerForRemoteNotifications];
+    // Remote notifications.
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 #pragma mark - IB Actions

@@ -11,4 +11,5 @@
 #import "FBSDKMessengerURLHandlerOpenFromComposerContext.h"
 #import "FBSDKMessengerButton.h"
 #import "FBSDKMessengerURLHandlerCancelShareContext.h"
-#import "FBSDKMessengerShareOptions.H"
+#import "FBSDKMessengerShareOptions.h"
+#import "FBSDKMessengerBroadcastContext.h"
