@@ -358,7 +358,6 @@
         [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
         [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
     }];
-    sheet.targetAlpha = 0.75;
     [sheet showInView:self.view animated:YES];
     
 }

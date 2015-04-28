@@ -35,8 +35,9 @@
         NSString *oid;
         if ([p isKindOfClass:[NSDictionary class]]) {
             oid = [p safeOIDStringForKey:@"$oid"];
+        } else {
+            oid = p;
         }
-        oid = p;
         priorities[oid] = @(index);
     }
     
