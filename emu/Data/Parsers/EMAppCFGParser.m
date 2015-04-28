@@ -31,9 +31,8 @@
     appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
     
     NSDictionary *uploadUserContent = [info safeDictionaryForKey:@"upload_user_content" defaultValue:@{@"enabled":@NO}];
-    if (uploadUserContent[@"unchanged"] && [uploadUserContent[@"unchanged"] boolValue]) {
-        // No need to change the value.
-    } else {
+    if (!(uploadUserContent[@"unchanged"] && [uploadUserContent[@"unchanged"] boolValue])) {
+        // unchanged != YES so we need to change to the new values.
         appCFG.uploadUserContent = [info safeDictionaryForKey:@"upload_user_content" defaultValue:@{@"enabled":@NO}];
     }
     

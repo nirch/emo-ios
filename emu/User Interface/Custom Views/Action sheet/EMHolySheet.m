@@ -21,6 +21,25 @@
 
 @implementation EMHolySheet
 
+
+-(instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.targetAlpha = 1;
+    }
+    return self;
+}
+
+-(instancetype)initWithSections:(NSArray *)sections
+{
+    self = [super initWithSections:sections];
+    if (self) {
+        self.targetAlpha = 1;
+    }
+    return self;
+}
+
 -(void)initVisualEffectView
 {
     if (self.visualEffectView) return;
@@ -43,7 +62,7 @@
     
     self.visualEffectView.alpha = 0;
     [UIView animateWithDuration:0.3 animations:^{
-        self.visualEffectView.alpha = 1;
+        self.visualEffectView.alpha = self.targetAlpha;
     }];
 }
 

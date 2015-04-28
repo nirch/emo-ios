@@ -620,9 +620,16 @@
 -(void)showKBTutorial
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
+    //if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
     appCFG.userViewedKBTutorial = @YES;
     [EMDB.sh save];
+    
+    if (self.kbTutorialVC == nil) {
+        self.kbTutorialVC = [EMTutorialVC tutorialVCInParentVC:self];
+        [self addChildViewController:self.kbTutorialVC];
+        [self.guiTutorialContainer addSubview:self.kbTutorialVC.view];
+        self.kbTutorialVC.view.frame = self.guiTutorialContainer.bounds;
+    }
     
     self.guiPackagesSelectionContainer.hidden = YES;
     self.guiTutorialContainer.hidden = NO;
@@ -671,52 +678,78 @@
 #pragma mark - Opening the recorder
 -(void)askUserToChooseWhatToRetake
 {
-    UIAlertController *alert = [UIAlertController new];
-    alert.title = LS(@"RETAKE_CHOICE_TITLE");
-    alert.message = LS(@"RETAKE_CHOICE_MESSAGE");
+    EMActionsArray *actionsMapping = [EMActionsArray new];
     
-    // Retake them all!
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_ALL")
-                                              style:UIAlertActionStyleDestructive
-                                            handler:^(UIAlertAction *action) {
-                                                // Analytics
-                                                HMParams *params = [HMParams new];
-                                                [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"all"];
-                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
-                                                                         info:params.dictionary];
-                                                
-                                                // Retake
-                                                [self retakeAll];
-                                            }]];
-
-    // Retake current package.
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"RETAKE_CHOICE_PACKAGE")
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction *action) {
-                                                // Analytics
-                                                HMParams *params = [HMParams new];
-                                                [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"package"];
-                                                [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
-                                                [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
-                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
-                                                                         info:params.dictionary];
-                                                // Retake
-                                                [self retakeCurrentPackage];
-                                            }]];
+    //
+    // Retake options
+    //
+    NSString *title = LS(@"RETAKE_CHOICE_TITLE");
+    if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
+        [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:LS(@"RETAKE_CHOICE_PACKAGE") section:0];
+    }
+    [actionsMapping addAction:@"RETAKE_CHOICE_ALL" text:LS(@"RETAKE_CHOICE_ALL") section:0];
+    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
     
+    //
     // Cancel
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
-                                              style:UIAlertActionStyleCancel
-                                            handler:^(UIAlertAction *action) {
-                                                // Analytics
-                                                HMParams *params = [HMParams new];
-                                                [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
-                                                [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
-                                                [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_CANCELED
-                                                                         info:params.dictionary];
-                                            }]];
+    //
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
 
-    [self presentViewController:alert animated:YES completion:nil];
+    //
+    // Sections
+    //
+    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, cancelSection]];
+    
+    //
+    // Holy sheet
+    //
+    EMHolySheet *sheet = [EMHolySheet actionSheetWithSections:sections];
+    [sheet setButtonPressedBlock:^(JGActionSheet *sender, NSIndexPath *indexPath) {
+        [sender dismissAnimated:YES];
+        [self handleRetakeChoiceWithIndexPath:indexPath actionsMapping:actionsMapping];
+    }];
+    [sheet setOutsidePressBlock:^(JGActionSheet *sender) {
+        [sender dismissAnimated:YES];
+        [self cancelRetake];
+    }];
+    [sheet showInView:self.view animated:YES];
+
+}
+
+-(void)handleRetakeChoiceWithIndexPath:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping
+{
+    NSString *actionName = [actionsMapping actionNameForIndexPath:indexPath];
+    if (actionName == nil) return;
+    
+    if ([actionName isEqualToString:@"RETAKE_CHOICE_ALL"]) {
+        
+        // Analytics
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"all"];
+        [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
+                              info:params.dictionary];
+        
+        // Retake them all
+        [self retakeAll];
+
+    } else if ([actionName isEqualToString:@"RETAKE_CHOICE_PACKAGE"]) {
+        
+        // Analytics
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_RETAKE_OPTION valueIfNotNil:@"package"];
+        [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
+        [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
+        [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_OPTION
+                                 info:params.dictionary];
+        // Retake
+        [self retakeCurrentPackage];
+        
+    } else {
+        
+        // Cancel
+        [self cancelRetake];
+        
+    }
 }
 
 -(void)retakeAll
@@ -743,6 +776,16 @@
     [self openRecorderForFlow:EMRecorderFlowTypeRetakeForPackage
                          info:@{emkPackage:self.selectedPackage}];
     REMOTE_LOG(@"Retake current package. selected package: %@", self.selectedPackage.name);
+}
+
+-(void)cancelRetake
+{
+    // Analytics
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:self.selectedPackage.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:self.selectedPackage.oid];
+    [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_RETAKE_CANCELED
+                          info:params.dictionary];
 }
 
 -(void)resetPack
@@ -820,6 +863,7 @@
     if (notificationSettings.types == UIUserNotificationTypeNone) {
         [actionsMapping addAction:@"NOTIFICATIONS_ENABLE" text:LS(@"NOTIFICATIONS_ENABLE") section:1];
     }
+    [actionsMapping addAction:@"USER_CHOICE_ABOUT_KB" text:LS(@"USER_CHOICE_ABOUT_KB") section:1];
     [actionsMapping addAction:@"USER_CHOICE_ABOUT" text:LS(@"USER_CHOICE_ABOUT") section:1];
     EMHolySheetSection *section2 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:1] buttonStyle:JGActionSheetButtonStyleDefault];
     
@@ -841,7 +885,7 @@
     //
     // Extra sections
     //
-    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"Cancel"] buttonStyle:JGActionSheetButtonStyleCancel];
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"Cancel")] buttonStyle:JGActionSheetButtonStyleCancel];
     NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, section2]];
     if (debugSection) [sections addObject:debugSection];
     [sections addObject:cancelSection];
@@ -898,6 +942,11 @@
         
         // Go to the application settings screen.
         [self openAppSettingsWithReason:@"enable notifications"];
+        
+    } else if ([actionName isEqualToString:@"USER_CHOICE_ABOUT_KB"]) {
+        
+        // Show the keyboard tutorial again.
+        [self showKBTutorial];
         
     }
 }
@@ -1036,7 +1085,8 @@
             self.guiNavView.alpha = 1;
         } completion:^(BOOL finished) {
             self.guiTutorialContainer.hidden = YES;
-            [self.guiTutorialContainer removeFromSuperview];
+            //[self.guiTutorialContainer removeFromSuperview];
+            [self.kbTutorialVC.view removeFromSuperview];
             [self.kbTutorialVC removeFromParentViewController];
             self.kbTutorialVC = nil;
         }];

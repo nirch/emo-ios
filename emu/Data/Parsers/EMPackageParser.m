@@ -39,6 +39,8 @@
     pkg.notificationText = [info safeStringForKey:@"notification_text"];
     pkg.isActive = [info safeBoolNumberForKey:@"is_active" defaultsValue:@YES];
     pkg.requiredVersion = [info safeStringForKey:@"requiredVersion"];
+    pkg.zipppedPackageFileName = [info safeStringForKey:@"zipped_package_file_name"];
+    
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;

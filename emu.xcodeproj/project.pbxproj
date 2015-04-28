@@ -62,10 +62,10 @@
 		08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08409E991AB1C69700EC0930 /* SplashView.xib */; };
 		0843190A1AED1D680057BEA3 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319091AED1D680057BEA3 /* Emuticon.m */; };
 		0843190B1AED1D680057BEA3 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319091AED1D680057BEA3 /* Emuticon.m */; };
-		0843190E1AEE4FD10057BEA3 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 0843190D1AEE4FD10057BEA3 /* Package.m */; };
-		0843190F1AEE4FD10057BEA3 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 0843190D1AEE4FD10057BEA3 /* Package.m */; };
 		084319121AEEF1680057BEA3 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319111AEEF1680057BEA3 /* AppCFG.m */; };
 		084319131AEEF1680057BEA3 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319111AEEF1680057BEA3 /* AppCFG.m */; };
+		084319161AEF944E0057BEA3 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319151AEF944E0057BEA3 /* Package.m */; };
+		084319171AEF944E0057BEA3 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319151AEF944E0057BEA3 /* Package.m */; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
 		0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
 		0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
@@ -316,10 +316,10 @@
 		08409E991AB1C69700EC0930 /* SplashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashView.xib; sourceTree = "<group>"; };
 		084319081AED1D680057BEA3 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
 		084319091AED1D680057BEA3 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
-		0843190C1AEE4FD10057BEA3 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
-		0843190D1AEE4FD10057BEA3 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
 		084319101AEEF1680057BEA3 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
 		084319111AEEF1680057BEA3 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
+		084319141AEF944E0057BEA3 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
+		084319151AEF944E0057BEA3 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSDK.h; sourceTree = "<group>"; };
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
 		0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCell.m; sourceTree = "<group>"; };
@@ -825,10 +825,10 @@
 		085C66FE1A937EC9007BC910 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				084319141AEF944E0057BEA3 /* Package.h */,
+				084319151AEF944E0057BEA3 /* Package.m */,
 				084319101AEEF1680057BEA3 /* AppCFG.h */,
 				084319111AEEF1680057BEA3 /* AppCFG.m */,
-				0843190C1AEE4FD10057BEA3 /* Package.h */,
-				0843190D1AEE4FD10057BEA3 /* Package.m */,
 				084319081AED1D680057BEA3 /* Emuticon.h */,
 				084319091AED1D680057BEA3 /* Emuticon.m */,
 				085A78521AEC2364003E9F97 /* EmuticonDef.h */,
@@ -1617,7 +1617,7 @@
 				08213B3D1ACC14F000BE77E4 /* EMAppCFGParser.m in Sources */,
 				08213B3E1ACC14F400BE77E4 /* EMEmuticonParser.m in Sources */,
 				08AB68091AD5679D0092B62B /* EMButton.m in Sources */,
-				0843190F1AEE4FD10057BEA3 /* Package.m in Sources */,
+				084319171AEF944E0057BEA3 /* Package.m in Sources */,
 				080CB34A1AA4C11D00603E30 /* Emuticon+Logic.m in Sources */,
 				080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */,
 				085A78551AEC2364003E9F97 /* EmuticonDef.m in Sources */,
@@ -1674,7 +1674,7 @@
 				08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */,
 				083E52621A9E1E6B00A66FC8 /* EMMainVC.m in Sources */,
 				08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */,
-				0843190E1AEE4FD10057BEA3 /* Package.m in Sources */,
+				084319161AEF944E0057BEA3 /* Package.m in Sources */,
 				08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */,
 				083E525C1A9E1E6200A66FC8 /* EmuCell.m in Sources */,
 				08CAEAD31A967906008A3E0A /* AWFanOpeningLayer.m in Sources */,

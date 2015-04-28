@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak) id<EMInterfaceDelegate> delegate;
 
++(EMTutorialVC *)tutorialVCInParentVC:(UIViewController *)parentVC;
+
 -(void)start;
 -(void)finish;
 

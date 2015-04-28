@@ -16,6 +16,8 @@
 #import "EMUISound.h"
 #import <JDFTooltips.h>
 #import "EMRenderManager.h"
+#import "EMHolySheet.h"
+#import "EMActionsArray.h"
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
@@ -272,47 +274,125 @@
     return params;
 }
 
+//
+//-(void)showEmuOptions
+//{
+//    UIAlertController *alert = [UIAlertController new];
+//    HMParams *params = [self paramsForCurrentEmuticon];
+//    
+//    // Retake footage.
+//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU")
+//                                              style:UIAlertActionStyleDefault
+//                                            handler:^(UIAlertAction *action) {
+//                                                // Retake
+//                                                [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
+//                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
+//                                                                      info:params.dictionary];
+//                                                [self retake];
+//                                            }]];
+//
+//    // Retake footage.
+//    if (self.emuticon.prefferedFootageOID) {
+//        [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RESET_EMU")
+//                                                  style:UIAlertActionStyleDefault
+//                                                handler:^(UIAlertAction *action) {
+//                                                    // Reset
+//                                                    [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
+//                                                    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
+//                                                                          info:params.dictionary];
+//                                                    [self resetEmu];
+//                                                }]];
+//    }
+//
+//    // Cancel
+//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
+//                                              style:UIAlertActionStyleCancel
+//                                            handler:^(UIAlertAction *action) {
+//                                                // Cancel
+//                                                [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
+//                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
+//                                                                      info:params.dictionary];
+//                                            }]];
+//    
+//    [self presentViewController:alert animated:YES completion:nil];
+//}
+
+#pragma mark - Emu options
 -(void)showEmuOptions
 {
-    UIAlertController *alert = [UIAlertController new];
-    HMParams *params = [self paramsForCurrentEmuticon];
+    EMActionsArray *actionsMapping = [EMActionsArray new];
     
-    // Retake footage.
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU")
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction *action) {
-                                                // Retake
-                                                [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
-                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
-                                                                      info:params.dictionary];
-                                                [self retake];
-                                            }]];
-
+    //
+    // Emu options
+    //
+    [actionsMapping addAction:@"EMU_SCREEN_CHOICE_RETAKE_EMU" text:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU") section:0];
     // Retake footage.
     if (self.emuticon.prefferedFootageOID) {
-        [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RESET_EMU")
-                                                  style:UIAlertActionStyleDefault
-                                                handler:^(UIAlertAction *action) {
-                                                    // Reset
-                                                    [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
-                                                    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
-                                                                          info:params.dictionary];
-                                                    [self resetEmu];
-                                                }]];
+        [actionsMapping addAction:@"EMU_SCREEN_CHOICE_RESET_EMU" text:LS(@"EMU_SCREEN_CHOICE_RESET_EMU") section:0];
     }
-
-    // Cancel
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
-                                              style:UIAlertActionStyleCancel
-                                            handler:^(UIAlertAction *action) {
-                                                // Cancel
-                                                [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
-                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
-                                                                      info:params.dictionary];
-                                            }]];
+    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
     
-    [self presentViewController:alert animated:YES completion:nil];
+    
+    //
+    // Cancel
+    //
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
+    
+    //
+    // Sections
+    //
+    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, cancelSection]];
+    
+    //
+    // Holy sheet
+    //
+    EMHolySheet *sheet = [EMHolySheet actionSheetWithSections:sections];
+    [sheet setButtonPressedBlock:^(JGActionSheet *sender, NSIndexPath *indexPath) {
+        [sender dismissAnimated:YES];
+        [self handleEmuOptionsChoice:indexPath actionsMapping:actionsMapping];
+    }];
+    [sheet setOutsidePressBlock:^(JGActionSheet *sender) {
+        [sender dismissAnimated:YES];
+        // Cancel
+        HMParams *params = [self paramsForCurrentEmuticon];
+        [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
+        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+    }];
+    sheet.targetAlpha = 0.75;
+    [sheet showInView:self.view animated:YES];
+    
 }
+
+-(void)handleEmuOptionsChoice:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping
+{
+    HMParams *params = [self paramsForCurrentEmuticon];
+
+    NSString *actionName = [actionsMapping actionNameForIndexPath:indexPath];
+    if (actionName == nil) return;
+    
+    if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RETAKE_EMU"]) {
+
+        // Retake
+        [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
+        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+        [self retake];
+        
+    } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RESET_EMU"]) {
+        
+        // Reset
+        [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
+        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+        [self resetEmu];
+        
+    } else {
+        
+        // Cancel
+        [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
+        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+        
+    }
+}
+
 
 #pragma mark - IB Actions
 // ===========

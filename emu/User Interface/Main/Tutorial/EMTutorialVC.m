@@ -28,6 +28,15 @@
     [super viewDidLoad];
 }
 
++(EMTutorialVC *)tutorialVCInParentVC:(UIViewController<EMInterfaceDelegate>*)parentVC
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EMTutorialVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"keyboard tutorial"];
+    vc.view.frame = parentVC.view.bounds;
+    vc.delegate = parentVC;
+    return vc;
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

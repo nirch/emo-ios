@@ -11,4 +11,6 @@
 
 @interface EMHolySheet : JGActionSheet
 
+@property (nonatomic) CGFloat targetAlpha;
+
 @end

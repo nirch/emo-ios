@@ -111,6 +111,7 @@
 
 /**
  *  The remote (s3 or server) url of the zip file containing all resources for the package.
+ *  Starting V1.4 will use zipppedPackageFileName if provided by server (instead of creating file name on client side based on date).
  *
  *  @return NSURL pointing to the zip file on the web.
  */

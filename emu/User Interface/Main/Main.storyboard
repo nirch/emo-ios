@@ -801,7 +801,7 @@
         <!--TutorialVC-->
         <scene sceneID="wrE-wx-ocX">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="mWY-Jt-XXr" customClass="EMTutorialVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="keyboard tutorial" automaticallyAdjustsScrollViewInsets="NO" id="mWY-Jt-XXr" customClass="EMTutorialVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hUT-oi-pae"/>
                         <viewControllerLayoutGuide type="bottom" id="e7c-Xs-j8E"/>

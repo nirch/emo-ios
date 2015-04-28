@@ -178,11 +178,18 @@
 
 -(NSString *)zippedPackageResourcesFileName
 {
+    // Use the known file name provided by the server.
+    NSString *fileName;
+    fileName = self.zipppedPackageFileName;
+    if (fileName != nil) return fileName;
+    
+    // Fallback to the old unreliable way it was done.
+    // (Yes, the method of using dates on client side was stupid and unreliable).
     NSString *theDateString = [EMDB.sh.dateStringForFileFormatter stringFromDate:self.timeUpdated];
     NSString *theTimeString = [EMDB.sh.timeStringForFileFormatter stringFromDate:self.timeUpdated];
     theTimeString = [theTimeString stringByReplacingOccurrencesOfString:@":" withString:@""];
     
-    NSString *fileName = [SF:@"package_%@_%@_%@.zip", self.name, theDateString, theTimeString];
+    fileName = [SF:@"package_%@_%@_%@.zip", self.name, theDateString, theTimeString];
     return fileName;
 }
 
