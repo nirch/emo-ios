@@ -126,6 +126,7 @@
 		089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
 		089E943B1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089E943A1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework */; };
 		089EAB831AE674D90074AD09 /* EMActionsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 089EAB821AE674D90074AD09 /* EMActionsArray.m */; };
+		08A6ECE11AF651C1003982DB /* EMUniquenessTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A6ECE01AF651C1003982DB /* EMUniquenessTester.m */; };
 		08A907191ACABB82008534F7 /* EMAlertsPermissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */; };
 		08A9071C1ACABB9E008534F7 /* EMAlertsPermissionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A9071B1ACABB9E008534F7 /* EMAlertsPermissionVC.m */; };
 		08AB68071AD5629C0092B62B /* TagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AB68061AD5629C0092B62B /* TagCell.m */; };
@@ -207,6 +208,7 @@
 		08D9D4541AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D4531AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm */; };
 		08E1728D1ABDBBA7002FE477 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
 		08E172951ABECF23002FE477 /* plasticClickSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08E172941ABECF23002FE477 /* plasticClickSound.wav */; };
+		08E692291AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E692281AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m */; };
 		08E8F7561AE4F84500B27D2C /* simpleSwipe.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08E8F7551AE4F84500B27D2C /* simpleSwipe.wav */; };
 		08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E8F75B1AE5535000B27D2C /* EMHolySheet.m */; };
 		08E8F75F1AE5540D00B27D2C /* EMHolySheetSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E8F75E1AE5540D00B27D2C /* EMHolySheetSection.m */; };
@@ -223,6 +225,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 080CB3191AA4A9DD00603E30;
 			remoteInfo = Keyboard;
+		};
+		08E6922A1AF60FF900BD6949 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D9297C1A77A36D00B6A68F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08D929831A77A36D00B6A68F;
+			remoteInfo = emu;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -421,6 +430,8 @@
 		089E943C1AE3DFAB004BECAE /* emu1_ 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 4.xcdatamodel"; sourceTree = "<group>"; };
 		089EAB811AE674D90074AD09 /* EMActionsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMActionsArray.h; sourceTree = "<group>"; };
 		089EAB821AE674D90074AD09 /* EMActionsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMActionsArray.m; sourceTree = "<group>"; };
+		08A6ECDF1AF651C1003982DB /* EMUniquenessTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUniquenessTester.h; sourceTree = "<group>"; };
+		08A6ECE01AF651C1003982DB /* EMUniquenessTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUniquenessTester.m; sourceTree = "<group>"; };
 		08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EMAlertsPermissionVC.xib; sourceTree = "<group>"; };
 		08A9071A1ACABB9E008534F7 /* EMAlertsPermissionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAlertsPermissionVC.h; sourceTree = "<group>"; };
 		08A9071B1ACABB9E008534F7 /* EMAlertsPermissionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAlertsPermissionVC.m; sourceTree = "<group>"; };
@@ -526,6 +537,9 @@
 		08D9D4501AC2C150004A83F3 /* HMGreenMachineDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGreenMachineDebugger.h; sourceTree = "<group>"; };
 		08D9D4531AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMGreenMachineDebugger.mm; sourceTree = "<group>"; };
 		08E172941ABECF23002FE477 /* plasticClickSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = plasticClickSound.wav; sourceTree = "<group>"; };
+		08E692241AF60FF900BD6949 /* emutests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = emutests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08E692271AF60FF900BD6949 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08E692281AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmuWebserviceIntegrationTests.m; sourceTree = "<group>"; };
 		08E8F7551AE4F84500B27D2C /* simpleSwipe.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = simpleSwipe.wav; sourceTree = "<group>"; };
 		08E8F75A1AE5535000B27D2C /* EMHolySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMHolySheet.h; sourceTree = "<group>"; };
 		08E8F75B1AE5535000B27D2C /* EMHolySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMHolySheet.m; sourceTree = "<group>"; };
@@ -563,6 +577,13 @@
 				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
 				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
 				A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08E692211AF60FF900BD6949 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,6 +1072,15 @@
 			path = "notifications center";
 			sourceTree = "<group>";
 		};
+		08A6ECDE1AF6519C003982DB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				08A6ECDF1AF651C1003982DB /* EMUniquenessTester.h */,
+				08A6ECE01AF651C1003982DB /* EMUniquenessTester.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		08A907131ACAB2D2008534F7 /* AlertsPermission */ = {
 			isa = PBXGroup;
 			children = (
@@ -1243,6 +1273,7 @@
 				08D929861A77A36D00B6A68F /* emu */,
 				080CB31B1AA4A9DD00603E30 /* Keyboard */,
 				08D929F71A77EFBD00B6A68F /* homageSDK */,
+				08E692251AF60FF900BD6949 /* emutests */,
 				08D929851A77A36D00B6A68F /* Products */,
 				66A306109166C5AB9F6B2628 /* Pods */,
 				F818AC31536FB92317D788B6 /* Frameworks */,
@@ -1254,6 +1285,7 @@
 			children = (
 				08D929841A77A36D00B6A68F /* emu.app */,
 				080CB31A1AA4A9DD00603E30 /* Keyboard.appex */,
+				08E692241AF60FF900BD6949 /* emutests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1325,6 +1357,24 @@
 				08D929FF1A77EFBD00B6A68F /* ShaderUtilities.h */,
 			);
 			path = "user interface";
+			sourceTree = "<group>";
+		};
+		08E692251AF60FF900BD6949 /* emutests */ = {
+			isa = PBXGroup;
+			children = (
+				08E692281AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m */,
+				08A6ECDE1AF6519C003982DB /* Helpers */,
+				08E692261AF60FF900BD6949 /* Supporting Files */,
+			);
+			path = emutests;
+			sourceTree = "<group>";
+		};
+		08E692261AF60FF900BD6949 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				08E692271AF60FF900BD6949 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		08E8F7591AE5532700B27D2C /* Action sheet */ = {
@@ -1400,6 +1450,24 @@
 			productReference = 08D929841A77A36D00B6A68F /* emu.app */;
 			productType = "com.apple.product-type.application";
 		};
+		08E692231AF60FF900BD6949 /* emutests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08E6922C1AF60FF900BD6949 /* Build configuration list for PBXNativeTarget "emutests" */;
+			buildPhases = (
+				08E692201AF60FF900BD6949 /* Sources */,
+				08E692211AF60FF900BD6949 /* Frameworks */,
+				08E692221AF60FF900BD6949 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08E6922B1AF60FF900BD6949 /* PBXTargetDependency */,
+			);
+			name = emutests;
+			productName = emutests;
+			productReference = 08E692241AF60FF900BD6949 /* emutests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1433,6 +1501,10 @@
 							};
 						};
 					};
+					08E692231AF60FF900BD6949 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 08D929831A77A36D00B6A68F;
+					};
 				};
 			};
 			buildConfigurationList = 08D9297F1A77A36D00B6A68F /* Build configuration list for PBXProject "emu" */;
@@ -1450,6 +1522,7 @@
 			targets = (
 				08D929831A77A36D00B6A68F /* emu */,
 				080CB3191AA4A9DD00603E30 /* Keyboard */,
+				08E692231AF60FF900BD6949 /* emutests */,
 			);
 		};
 /* End PBXProject section */
@@ -1528,6 +1601,13 @@
 				08B589CF1A9F13EE004F6FA1 /* 1.ctr in Resources */,
 				089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */,
 				08CB897C1A9AA12A00224A38 /* 4.gif in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08E692221AF60FF900BD6949 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1728,6 +1808,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08E692201AF60FF900BD6949 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08A6ECE11AF651C1003982DB /* EMUniquenessTester.m in Sources */,
+				08E692291AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1735,6 +1824,11 @@
 			isa = PBXTargetDependency;
 			target = 080CB3191AA4A9DD00603E30 /* Keyboard */;
 			targetProxy = 080CB3211AA4A9DD00603E30 /* PBXContainerItemProxy */;
+		};
+		08E6922B1AF60FF900BD6949 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08D929831A77A36D00B6A68F /* emu */;
+			targetProxy = 08E6922A1AF60FF900BD6949 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2116,6 +2210,46 @@
 			};
 			name = Release;
 		};
+		08E6922D1AF60FF900BD6949 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = emutests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/emu.app/emu";
+			};
+			name = Debug;
+		};
+		08E6922E1AF60FF900BD6949 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = emutests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/emu.app/emu";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2142,6 +2276,15 @@
 			buildConfigurations = (
 				08D929AB1A77A36D00B6A68F /* Debug */,
 				08D929AC1A77A36D00B6A68F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08E6922C1AF60FF900BD6949 /* Build configuration list for PBXNativeTarget "emutests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08E6922D1AF60FF900BD6949 /* Debug */,
+				08E6922E1AF60FF900BD6949 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

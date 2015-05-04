@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EMUniquenessTester : NSMutableDictionary
+@interface EMUniquenessTester : NSObject
+
+-(NSString *)testIdentifier:(id)identifier;
 
 @end

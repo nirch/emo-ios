@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 13:11:02 04/26/15 IDT
+//  Created by build script on 11:08:42 05/03/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -62,7 +62,7 @@
 
 
 /** The number of times the user pressed "I love it" and confirmed the
-    take in the recorder. **/
+    take in the recorder (not counting oboarding recorder) **/
 #define AK_S_NUMBER_OF_APPROVED_RETAKES @"numberOfApprovedRetakes"
 
 

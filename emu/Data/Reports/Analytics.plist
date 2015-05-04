@@ -64,7 +64,7 @@ or
 		<key>numberOfApprovedRetakes</key>
 		<dict>
 			<key>description</key>
-			<string>The number of times the user pressed &quot;I love it&quot; and confirmed the take in the recorder.</string>
+			<string>The number of times the user pressed &quot;I love it&quot; and confirmed the take in the recorder (not counting oboarding recorder)</string>
 		</dict>
 		<key>didEverFinishARetake</key>
 		<dict>
