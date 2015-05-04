@@ -27,7 +27,7 @@ static BOOL _useScratchpad;
 +(void)setUp
 {
     [super setUp];
-    _url = @"http://www.emu.im/emuapi/packages/full";
+    _url = @"http://app.emu.im/emuapi/packages/full";
     _useScratchpad = NO;
 }
 
@@ -224,28 +224,28 @@ static BOOL _useScratchpad;
 }
 
 
-/**
- *  Test that exactly 1 emu is marked as use_for_preview per pack.
- */
--(void)testOnlyOneEmuPerPackWithUseForPreviewFlag
-{
-    [self ensureDataAvailable];
-    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
-        if(error) XCTFail(@"%s Failed with error: %@", __PRETTY_FUNCTION__, error);
-    }];
-    
-    NSArray *packs = _json[@"packages"];
-    for (NSDictionary *pack in packs) {
-        NSArray *emus = pack[@"emuticons"];
-        NSInteger useForPreviewInPackCount = 0;
-        for (NSDictionary *emu in emus) {
-            if (emu[@"use_for_preview"] && [emu[@"use_for_preview"] boolValue]) {
-                useForPreviewInPackCount++;
-            }
-        }
-        XCTAssert(useForPreviewInPackCount==1, @"Exactly 1 emu should be marked as use for preview per pack. %@ marked in pack: %@", @(useForPreviewInPackCount), pack[@"name"]);
-    }
-}
+///**
+// *  Test that exactly 1 emu is marked as use_for_preview per pack.
+// */
+//-(void)testOnlyOneEmuPerPackWithUseForPreviewFlag
+//{
+//    [self ensureDataAvailable];
+//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+//        if(error) XCTFail(@"%s Failed with error: %@", __PRETTY_FUNCTION__, error);
+//    }];
+//    
+//    NSArray *packs = _json[@"packages"];
+//    for (NSDictionary *pack in packs) {
+//        NSArray *emus = pack[@"emuticons"];
+//        NSInteger useForPreviewInPackCount = 0;
+//        for (NSDictionary *emu in emus) {
+//            if (emu[@"use_for_preview"] && [emu[@"use_for_preview"] boolValue]) {
+//                useForPreviewInPackCount++;
+//            }
+//        }
+//        XCTAssert(useForPreviewInPackCount==1, @"Exactly 1 emu should be marked as use for preview per pack. %@ marked in pack: %@", @(useForPreviewInPackCount), pack[@"name"]);
+//    }
+//}
 
 #pragma mark - Configuration
 /**
@@ -263,13 +263,6 @@ static BOOL _useScratchpad;
 
     // Expected config type: app config
     XCTAssert([_json[@"config_type"] isEqualToString:@"app config"], @"Wrong config type: %@", _json[@"config_type"]);
-    
-    // Expected bucket name
-    if (_useScratchpad) {
-        XCTAssert([_json[@"bucket_name"] isEqualToString:@"homage-emu-test"], @"Unexpected bucket name: %@", _json[@"bucket_name"]);
-    } else {
-        XCTAssert([_json[@"bucket_name"] isEqualToString:@"homage-emu-prod"], @"Unexpected bucket name: %@", _json[@"bucket_name"]);
-    }
     
     // Expected base resource url
     XCTAssert([_json[@"base_resource_url"] isEqualToString:@"http://s3.amazonaws.com"], @"Unexpected resource url: %@", _json[@"base_resource_url"]);
