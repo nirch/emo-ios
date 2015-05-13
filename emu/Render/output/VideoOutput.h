@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MattingLib/HomageRenderer/HrOutputI.h"
+#import "HrRendererLib/HrOutput/HrOutputI.h"
 #import <AVFoundation/AVFoundation.h>
 
 

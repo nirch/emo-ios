@@ -5,7 +5,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MattingLib/HomageRenderer/HrSourceI.h"
+#import "HrRendererLib/HrSource/HrSourceI.h"
 
 class PngSourceWithFX : public CHrSourceI
 {
@@ -15,6 +15,5 @@ public:
 	virtual int Close();
 private:
     NSArray *m_pngFiles;
-    UIImage *PickedImage( int iFrame );
-    UIImage *EffectOnImage( UIImage *image );
+    image_type *m_lastImage;
 };

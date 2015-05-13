@@ -302,7 +302,6 @@
 		08CB898F1A9B2FAE00224A38 /* EMRenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */; };
 		08CB89BF1A9B61FA00224A38 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89BE1A9B61FA00224A38 /* EMRenderer.mm */; };
 		08CB89CD1A9B92AD00224A38 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89CC1A9B92AD00224A38 /* EMDB.m */; };
-		08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D51A9B9EE400224A38 /* PngSource.mm */; };
 		08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D91A9CD18100224A38 /* EMunizingView.m */; };
 		08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89DF1A9D10D100224A38 /* clear480x480.png */; };
 		08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89F01A9D28BA00224A38 /* activityAnimation.gif */; };
@@ -664,8 +663,6 @@
 		08CB89C61A9B84F400224A38 /* VideoOutput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoOutput.mm; sourceTree = "<group>"; };
 		08CB89CB1A9B92AD00224A38 /* EMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDB.h; sourceTree = "<group>"; };
 		08CB89CC1A9B92AD00224A38 /* EMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDB.m; sourceTree = "<group>"; };
-		08CB89D41A9B9EE400224A38 /* PngSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PngSource.h; sourceTree = "<group>"; };
-		08CB89D51A9B9EE400224A38 /* PngSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PngSource.mm; sourceTree = "<group>"; };
 		08CB89D81A9CD18100224A38 /* EMunizingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMunizingView.h; sourceTree = "<group>"; };
 		08CB89D91A9CD18100224A38 /* EMunizingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMunizingView.m; sourceTree = "<group>"; };
 		08CB89DF1A9D10D100224A38 /* clear480x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clear480x480.png; sourceTree = "<group>"; };
@@ -1519,8 +1516,6 @@
 		08CB89C01A9B6CCF00224A38 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				08CB89D41A9B9EE400224A38 /* PngSource.h */,
-				08CB89D51A9B9EE400224A38 /* PngSource.mm */,
 				08EF7F4F1AC71B3800829825 /* PngSourceWithFX.h */,
 				08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */,
 			);
@@ -2185,7 +2180,6 @@
 				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
 				0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */,
 				085A78501AEC2364003E9F97 /* UserFootage.m in Sources */,
-				08CB89D61A9B9EE400224A38 /* PngSource.mm in Sources */,
 				08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
@@ -2490,6 +2484,7 @@
 					"-lPlnTracker",
 					"-lMattingLib",
 					"-lEdgeLib",
+					"-lHrRendererLib",
 					"-l\"MPCategoryHelpers\"",
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-Bolts\"",
@@ -2595,6 +2590,7 @@
 					"-lPlnTracker",
 					"-lMattingLib",
 					"-lEdgeLib",
+					"-lHrRendererLib",
 					"-l\"MPCategoryHelpers\"",
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-Bolts\"",

@@ -12,12 +12,11 @@
 #import "EMRenderer.h"
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
-#import "PngSource.h"
 #import "PngSourceWithFX.h"
-#import "VideoOutput.h"
-#import "MattingLib/HomageRenderer/HomageRenderer.h"
-#import "MattingLib/HomageRenderer/HrSourceGif.h"
-#import "MattingLib/HomageRenderer/HrOutputGif.h"
+#import "HrRendererLib/HomageRenderer.h"
+#import "HrRendererLib/HrSource/HrSourceGif.h"
+#import "HrRendererLib/HrOutput/HrOutputGif.h"
+#import "HrRendererLib/HrEffect/HrEffectMask.h"
 #import "Gpw/Vtool/Vtool.h"
 
 @implementation EMRenderer
@@ -32,18 +31,18 @@
     // (skips frames or drops frames as required).
     NSArray *userImages = [self imagesPathsInPath:self.userImagesPath
                                  numberOfFrames:self.numberOfFrames];
-    
+
     if (userImages.count > 0) {
         REMOTE_LOG(@"user images count:%@ firstImageName: %@", @(userImages.count), userImages[0]);
     } else {
         REMOTE_LOG(@"user images empty?!");
     }
-    
+
     //
     // Get the source PNG images.
     //
     PngSourceWithFX *userSource = new PngSourceWithFX(userImages);
-    
+
     //
     // Set mask if provided.
     //
@@ -52,7 +51,9 @@
     image_type *maskImageType;
     if (maskImage) {
         maskImageType = CVtool::DecomposeUIimage(maskImage);
-        userSource->SetAlpha(maskImageType);
+        CHrEffectMask *maskEffect = new CHrEffectMask();
+        maskEffect->Init(maskImageType);
+        userSource->AddEffect(maskEffect);
     } else {
         maskImageType = NULL;
     }
@@ -103,19 +104,15 @@
         gifOutput->SetPalette(palette);
     }
     
-    //
-    // Output video
-    //
-//    NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
-//    NSURL *videoOutputUrl = [[NSURL alloc] initFileURLWithPath:outputVideoPath];
-//    VideoOutput *videoOutput = new VideoOutput(dimensions, 11.4, videoOutputUrl, [self fps]);
 
-    // Render the outputs
-    //CHrOutputI *outputs[2] = { gifOutput, videoOutput };
-    CHrOutputI *outputs[1] = { gifOutput };
+    // Add sources and render to outputs.
     CHomageRenderer *render = new CHomageRenderer();
-    render->Process(bgSource, userSource, fgSource, outputs, 1);
-
+    render->AddSource(bgSource);
+    render->AddSource(userSource);
+    if (fgSource != NULL) render->AddSource(fgSource);
+    render->AddOutput(gifOutput);
+    render->Process();
+    
     // Finishing up.
     if (gifOutput != NULL)  {
         gifOutput->Close();
@@ -135,11 +132,7 @@
     if (fgSource != NULL) {
         fgSource->Close();
         delete fgSource;
-    }
-    
-    // Disabled videoOutput for now
-    // TODO: fix memory leak in video rendering
-    //if (videoOutput != NULL) videoOutput->Close();
+    }    
 }
 
 

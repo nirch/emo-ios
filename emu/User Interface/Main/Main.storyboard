@@ -347,8 +347,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-zw-juA" userLabel="Retake Button2" customClass="EMButton">
-                                        <rect key="frame" x="276" y="20" width="48" height="44"/>
-                                        <state key="normal" title="Retake">
+                                        <rect key="frame" x="294" y="20" width="30" height="44"/>
+                                        <state key="normal">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -533,8 +533,8 @@
                                 <rect key="frame" x="0.0" y="45" width="375" height="80"/>
                                 <subviews>
                                     <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQT-cL-zDF" userLabel="More share options">
-                                        <rect key="frame" x="303" y="18" width="44" height="44"/>
-                                        <state key="normal" image="threeDots">
+                                        <rect key="frame" x="317" y="19" width="30" height="42"/>
+                                        <state key="normal" image="sharingOptions">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -975,6 +975,6 @@
         <image name="optionsIcon" width="21" height="5"/>
         <image name="retakeIcon" width="25" height="24"/>
         <image name="shadow" width="375" height="4"/>
-        <image name="threeDots" width="44" height="44"/>
+        <image name="sharingOptions" width="30" height="42"/>
     </resources>
 </document>
