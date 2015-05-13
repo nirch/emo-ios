@@ -7,6 +7,9 @@
 //
 #import "HMNotificationCenter.h"
 
+#pragma mark - App lifecycle
+#define emkAppDidBecomeActive @"emu app did become active"
+
 #pragma mark - UI data requirements
 // UI data requirements
 

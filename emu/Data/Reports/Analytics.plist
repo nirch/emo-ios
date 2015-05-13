@@ -18,6 +18,11 @@
 			<key>description</key>
 			<string>&lt;number&gt; - Number indicating the user&apos;s current UIUserNotificationSettings</string>
 		</dict>
+		<key>firstLaunchDate</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;date&gt; - The date of the first time the app was launched by the user</string>
+		</dict>
 		<key>deviceModel</key>
 		<dict>
 			<key>description</key>
@@ -110,6 +115,59 @@ or
 		<dict>
 			<key>description</key>
 			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard</string>
+		</dict>
+	</dict>
+	<key>personDetails</key>
+	<dict>
+		<key>firstLaunchDate</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;date&gt; - The date of the first time the user launched from any device.</string>
+		</dict>
+		<key>lastLaunchDate</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;date&gt; - The date of the last time the user launched from any device.</string>
+		</dict>
+		<key>numberOfBecameActive</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times an app became active for the user from any device.</string>
+		</dict>
+		<key>numberOfSharesUsingAppCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user shared an emu from within the app from any device.</string>
+		</dict>
+		<key>didEverShareUsingApp</key>
+		<dict>
+			<key>description</key>
+			<string>true if numberOfSharesUsingAppCount &gt; 0</string>
+		</dict>
+		<key>numberOfApprovedRetakes</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user pressed &quot;I love it&quot; and confirmed the take in the recorder (not counting oboarding recorder) from any device.</string>
+		</dict>
+		<key>didEverFinishARetake</key>
+		<dict>
+			<key>description</key>
+			<string>Did the user ever finished a second retake. Opened the recorder and finished the recorder flow (disregarding oboarding) from any device.</string>
+		</dict>
+		<key>numberOfKBAppearancesCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times keyboard did appear for the user from any device.</string>
+		</dict>
+		<key>didKeyboardEverAppear</key>
+		<dict>
+			<key>description</key>
+			<string>True if the keyboard ever appeared for the user from any device.</string>
+		</dict>
+		<key>numberOfKBCopyEmuCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard from any device.</string>
 		</dict>
 	</dict>
 	<key>events</key>

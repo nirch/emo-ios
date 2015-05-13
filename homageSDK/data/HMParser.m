@@ -76,4 +76,28 @@
     return date;
 }
 
++(NSString *)parsedOID:(id)value
+{
+    NSString *oid = nil;
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        oid = value[@"$oid"];
+        if (oid == nil) oid = value[@"oid"];
+        if (oid == nil) oid = value[@"_id"][@"$oid"];
+    }
+    if ([oid isKindOfClass:[NSString class]]) return oid;
+    return nil;
+}
+
++(NSDictionary *)prioritiesByOID:(NSArray *)prioritizedObjects
+{
+    NSMutableDictionary *priorities = [NSMutableDictionary new];
+    NSInteger index = 0;
+    for (id p in prioritizedObjects) {
+        index++;
+        NSString *oid = [HMParser parsedOID:p];
+        if (oid) priorities[oid] = @(index);
+    }
+    return priorities;
+}
+
 @end

@@ -10,4 +10,6 @@
 
 @interface EMPackagesParser : HMParser
 
+@property BOOL parseForOnboarding;
+
 @end

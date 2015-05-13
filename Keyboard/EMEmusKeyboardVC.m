@@ -100,8 +100,14 @@
 -(void)initAnalytics
 {
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
+    
     [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
+    [HMPanel.sh reportSuperParameterKey:AK_S_DID_KEYBOARD_EVER_APPEAR value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
+    [HMPanel.sh personDetails:@{
+                                AK_PD_DID_KEYBOARD_EVER_APPEAR:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT],
+                                AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]
+                                }];
     [HMPanel.sh analyticsForceSend];
 }
 
@@ -337,6 +343,10 @@
     [HMPanel.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT];
     [HMPanel.sh analyticsForceSend];
+    
+    HMParams *params = [HMParams new];
+    [params addKey:AK_PD_NUMBER_OF_KB_COPY_EMU_COUNT value:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT]];
+    [HMPanel.sh personDetails:params.dictionary];
 }
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info

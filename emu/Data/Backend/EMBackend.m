@@ -241,7 +241,7 @@
     
     // Refreshed packages data.
     // Iterate packages and download packages zip files.
-    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+    for (Package *package in [Package allPackagesPrioritizedInContext:EMDB.sh.context]) {
         if ([package shouldDownloadZippedPackage]) {
             // Download resources of the package
             [self downloadResourcesForPackage:package];
@@ -599,14 +599,13 @@
 -(void)parseOnboardingPackages:(NSDictionary *)json
 {
     EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
+    parser.parseForOnboarding = YES;
     parser.objectToParse = json;
     [parser parse];
     
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    Package *onboardingPackage = [appCFG packageForOnboarding];
-    if ([onboardingPackage shouldUnzipZippedPackage]) {
-        // Unzip resources to a directory.
-        [self unzipResourcesForPackage:onboardingPackage];
+    // Create missing emus
+    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+        [package createMissingEmuticonObjects];
     }
     
     // Notify the user interface about the updates.

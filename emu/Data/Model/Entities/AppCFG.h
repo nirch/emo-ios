@@ -2,7 +2,7 @@
 //  AppCFG.h
 //  emu
 //
-//  Created by Aviv Wolf on 4/28/15.
+//  Created by Aviv Wolf on 5/10/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -28,5 +28,8 @@
 @property (nonatomic, retain) NSNumber * userViewedEmuScreenTutorial;
 @property (nonatomic, retain) NSNumber * userViewedKBTutorial;
 @property (nonatomic, retain) NSNumber * userViewedMainTutorial;
+@property (nonatomic, retain) id mixedScreenEmus;
+@property (nonatomic, retain) id mixedScreenPrioritizedEmus;
+@property (nonatomic, retain) NSNumber * mixedScreenEnabled;
 
 @end

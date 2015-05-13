@@ -35,12 +35,14 @@
     pkg.firstPublishedOn = [self parseDateOfString:[info safeStringForKey:@"first_published_on"]];
     pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
-    pkg.priority = self.incrementalOrder? self.incrementalOrder:@(9999);
     pkg.notificationText = [info safeStringForKey:@"notification_text"];
     pkg.isActive = [info safeBoolNumberForKey:@"is_active" defaultsValue:@YES];
     pkg.requiredVersion = [info safeStringForKey:@"requiredVersion"];
     pkg.zipppedPackageFileName = [info safeStringForKey:@"zipped_package_file_name"];
-    
+    pkg.showOnPacksBar = @(!self.parseForOnboarding);
+
+    NSNumber *priority = self.packagesPriorities[oid];
+    pkg.priority = priority? priority:@9999;
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;
@@ -48,11 +50,13 @@
     if (emus) {
         EMEmuticonParser *emuParser = [[EMEmuticonParser alloc] initWithContext:self.ctx];
         for (NSDictionary *emuInfo in emus) {
+            NSString *emuOID = [emuInfo safeOIDStringForKey:@"_id"];
             emuParser.objectToParse = emuInfo;
             emuParser.package = pkg;
             emuParser.defaults = info[@"emuticons_defaults"];
             index++;
             emuParser.incrementalOrder = @(index);
+            emuParser.mixedScreenOrder = self.mixedScreenPriorities[emuOID];
             [emuParser parse];
         }
     }

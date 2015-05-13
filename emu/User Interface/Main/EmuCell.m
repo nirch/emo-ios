@@ -27,12 +27,16 @@
         self.guiAnimGifView.animatedImage = nil;
         return;
     }
-    
-    NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
-    FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-    self.guiAnimGifView.animatedImage = animGif;
-    self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.guiAnimGifView startAnimating];
+
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
+        FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.guiAnimGifView.animatedImage = animGif;
+            self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
+            [self.guiAnimGifView startAnimating];
+        });
+    });
 }
 
 -(void)stopAnimating

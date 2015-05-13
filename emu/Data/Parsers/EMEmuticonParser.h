@@ -25,6 +25,12 @@
 
 
 /**
+ *  Order value in mixed screen passed from the parent parser (optional)
+ */
+@property (nonatomic) NSNumber *mixedScreenOrder;
+
+
+/**
  *  A dictionary containing default values for missing key-value pairs.
  */
 @property (nonatomic) NSDictionary *defaults;

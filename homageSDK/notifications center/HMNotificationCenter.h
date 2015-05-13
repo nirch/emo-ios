@@ -13,10 +13,6 @@
 // Notifications
 //
 
-// App
-#define hmkAppDidBecomeActive            @"hmk app did become active"
-
-
 // BG Detection
 #define hmkNotificationBGDetectionInfo @"hmsdk bg detection info"
 

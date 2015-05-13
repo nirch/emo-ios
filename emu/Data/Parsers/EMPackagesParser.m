@@ -12,6 +12,8 @@
 #import "EMDB.h"
 #import "EMPackageParser.h"
 #import "EMAppCFGParser.h"
+#import "NSDictionary+TypeSafeValues.h"
+
 
 @implementation EMPackagesParser
 
@@ -20,38 +22,38 @@
     NSDictionary *info = self.objectToParse;
     if (info == nil) return;
     
-    // Parse general application configurations
+    //
+    // Packages priorities
+    //
+    NSDictionary *packagesPriorities = [HMParser prioritiesByOID:info[@"prioritized_packages"]];
+    
+    //
+    // Mixed screen priorities
+    //
+    NSDictionary *mixedScreenPriorities = [HMParser prioritiesByOID:info[@"mixed_screen"][@"prioritized_emus"]];
+
+    //
+    // Parse application's configurations
+    //
     EMAppCFGParser *cfgParser = [[EMAppCFGParser alloc] initWithContext:self.ctx];
     cfgParser.objectToParse = info;
     [cfgParser parse];
     HMLOG(TAG, EM_DBG, @"Server response:%@", info);
     
-    // Get list of prioritized packages
-    NSArray *prioritizedPackages = info[@"prioritized_packages"];
-    NSMutableDictionary *priorities = [NSMutableDictionary new];
-    NSInteger index = 0;
-    for (id p in prioritizedPackages) {
-        index++;
-        NSString *oid;
-        if ([p isKindOfClass:[NSDictionary class]]) {
-            oid = [p safeOIDStringForKey:@"$oid"];
-        } else {
-            oid = p;
-        }
-        priorities[oid] = @(index);
-    }
-    
-    
+    //
     // Iterate and parse packages
+    //
     EMPackageParser *packageParser = [[EMPackageParser alloc] initWithContext:self.ctx];
     NSArray *packages = info[@"packages"];
     for (NSDictionary *packageInfo in packages) {
-        NSString *oid = [packageInfo safeOIDStringForKey:@"_id"];
         packageParser.objectToParse = packageInfo;
-        packageParser.incrementalOrder = priorities[oid];
+        packageParser.mixedScreenPriorities = mixedScreenPriorities;
+        packageParser.packagesPriorities = packagesPriorities;
+        packageParser.parseForOnboarding = self.parseForOnboarding;
         [packageParser parse];
     }
     
+    // And we're done.
     HMLOG(TAG, EM_VERBOSE, @"Parsed %@ package/s", @(packages.count));
     [EMDB.sh save];
 }

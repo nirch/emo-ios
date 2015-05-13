@@ -14,7 +14,7 @@
 -(NSDecimalNumber *)safeDecimalNumberForKey:(id)key;
 -(NSNumber *)safeBoolNumberForKey:(id)key;
 -(NSNumber *)safeBoolNumberForKey:(id)key defaultsValue:(NSNumber *)defaultValue;
-
+-(NSArray *)safeArrayOfIdsForKey:(id)key;
 
 #pragma mark - With defaults
 -(NSString *)safeStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;

@@ -14,6 +14,7 @@
 
 @property (nonatomic) NSDictionary *soundFiles;
 @property (nonatomic) NSMutableDictionary *sounds;
+@property (nonatomic) NSMutableDictionary *players;
 
 @end
 
@@ -60,23 +61,29 @@
                         };
     
     // Load audio files from bundle.
+    self.players = [NSMutableDictionary new];
     self.sounds = [NSMutableDictionary new];
     for (NSString *soundName in self.soundFiles.allKeys) {
         
         NSString *soundFile = self.soundFiles[soundName];
-        AFSoundItem *soundItem = [[AFSoundItem alloc] initWithLocalResource:soundFile
-                                                                     atPath:nil];
-        
-        self.sounds[soundName] = [[AFSoundPlayback alloc] initWithItem:soundItem];
+        AFSoundItem *soundItem = [[AFSoundItem alloc] initWithLocalResource:soundFile atPath:nil];
+        self.sounds[soundName] = soundItem;
     }
 }
 
 #pragma mark - playing
 -(void)playSoundNamed:(NSString *)soundName
 {
-    AFSoundPlayback *player = self.sounds[soundName];
-    [player restart];
-    [player play];
+    AFSoundPlayback *player;
+    if (self.players[soundName]) {
+        player = self.players[soundName];
+        [player restart];
+        [player play];
+    } else {
+        AFSoundItem *soundItem = self.sounds[soundName];
+        player = [[AFSoundPlayback alloc] initWithItem:soundItem];
+        self.players[soundName] = player;
+    }
 }
 
 @end

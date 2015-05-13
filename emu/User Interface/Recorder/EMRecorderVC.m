@@ -1152,6 +1152,10 @@
     if (self.flowType != EMRecorderFlowTypeOnboarding) {
         [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_APPROVED_RETAKES];
         [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_FINISH_A_RETAKE value:@YES];
+        [HMPanel.sh personDetails:@{
+                                    AK_PD_DID_EVER_FINISH_A_RETAKE:@YES,
+                                    AK_PD_NUMBER_OF_APPROVED_RETAKES:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_APPROVED_RETAKES]
+                                    }];
     }
     
     // Tell delegate to dismiss the recorder.

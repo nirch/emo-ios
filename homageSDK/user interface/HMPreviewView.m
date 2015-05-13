@@ -24,8 +24,8 @@ enum {
 {
     self = [super initWithFrame:frame];
     if (self != nil) {
-        BOOL glInitialized = [self initializeGL];
-        if (!glInitialized) self = nil;
+//        BOOL glInitialized = [self initializeGL];
+//        if (!glInitialized) self = nil;
         
     }
     return self;
@@ -35,8 +35,8 @@ enum {
 {
     self = [super initWithCoder:aDecoder];
     if (self != nil) {
-        BOOL glInitialized = [self initializeGL];
-        if (!glInitialized) self = nil;
+//        BOOL glInitialized = [self initializeGL];
+//        if (!glInitialized) self = nil;
     }
     return self;
 }

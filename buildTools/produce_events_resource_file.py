@@ -58,6 +58,26 @@ def write_super_params(f, cfg):
         f.write("\n\n")
 
 
+def write_person_details(f, cfg):
+    f.write("#pragma mark - Person details\n")
+    f.write("//\n")
+    f.write("// Person Details\n")
+    f.write("//\n\n")
+
+    person_details = cfg["personDetails"]
+    for key in person_details:
+        k = "pd_%s" % key
+        val = person_details[key]
+
+        text = "\n".join(textwrap.wrap(
+            val["description"],
+            subsequent_indent=INDENT)
+        )
+        f.write("\n/** %s **/\n" % text)
+        f.write("#define %s @\"%s\"" % (convert_to_constant_name(k), key))
+        f.write("\n\n")
+
+
 def write_analytics_events(f, cfg):
     f.write("#pragma mark - Analytics events\n")
     f.write("//\n")
@@ -153,6 +173,8 @@ def main():
         print HEADER % locals()
         f.write("\n\n")
         write_super_params(f, cfg)
+        f.write("\n\n")
+        write_person_details(f, cfg)
         f.write("\n\n")
         write_analytics_events(f, cfg)
         f.write("\n\n")

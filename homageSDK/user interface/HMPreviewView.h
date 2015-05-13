@@ -20,6 +20,7 @@
     GLuint passThroughProgram;
 }
 
+-(BOOL)initializeGL;
 - (void)displayPixelBuffer:(CVImageBufferRef)pixelBuffer;
 
 @end

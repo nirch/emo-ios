@@ -49,6 +49,9 @@
     NSNumber *orderSet = [info safeNumberForKey:@"order"];
     emuDef.order                       = orderSet? orderSet:self.incrementalOrder;
     
+    // Mixed screen ordering.
+    emuDef.mixedScreenOrder = self.mixedScreenOrder? self.mixedScreenOrder:@9999;
+    
     // Parse the emuticon definition info.
     emuDef.name                        = [info safeStringForKey:@"name" defaultsDictionary:defaults];
 

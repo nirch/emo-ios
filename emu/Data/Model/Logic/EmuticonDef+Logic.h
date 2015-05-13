@@ -34,6 +34,17 @@
 +(EmuticonDef *)findWithID:(NSString *)oid
                    context:(NSManagedObjectContext *)context;
 
+
+/**
+ *  Given a list of emu defs, spawns emuticon objects for those emu defs.
+ *
+ *  @param emuDefs An array of emu defs.
+ *
+ *  @return An array of spawned emuticons.
+ */
++(NSArray *)createMissingEmuticonsForEmuDefs:(NSArray *)emuDefs;
+
+
 /**
  *  Create an emuticon for the emuticon definition.
  *

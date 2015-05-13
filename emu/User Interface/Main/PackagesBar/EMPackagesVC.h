@@ -15,8 +15,11 @@
 
 @property (nonatomic) BOOL cellSizeByHeight;
 @property (nonatomic) BOOL onlyRenderedPackages;
+@property (nonatomic) BOOL showMixedPackage;
 
 -(void)refresh;
+
+-(BOOL)isEmpty;
 
 -(void)selectThisPackage:(Package *)package;
 -(void)selectThisPackage:(Package *)package highlightOnly:(BOOL)highlightOnly;
@@ -24,8 +27,6 @@
 -(void)selectPackageAtIndex:(NSInteger)index;
 -(void)selectPackageAtIndex:(NSInteger)index highlightOnly:(BOOL)highlightOnly;
 
--(BOOL)canSelectPrevious;
--(BOOL)canSelectNext;
 -(void)selectPrevious;
 -(void)selectNext;
 

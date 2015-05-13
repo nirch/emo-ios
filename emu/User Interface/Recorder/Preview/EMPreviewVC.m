@@ -27,6 +27,12 @@
     #endif
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.guiGLPreviewView initializeGL];
+}
+
 -(void)fakeExtraction
 {
     self.guiFakeFootage.image = [UIImage imageNamed:@"fakeExtraction"];

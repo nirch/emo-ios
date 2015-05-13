@@ -52,6 +52,17 @@
 }
 
 
++(NSArray *)createMissingEmuticonsForEmuDefs:(NSArray *)emuDefs
+{
+    NSMutableArray *emus = [NSMutableArray new];
+    for (EmuticonDef *emuDef in emuDefs) {
+        if ([[emuDef nonPreviewEmuticons] count] >= 1) continue;
+        Emuticon *emu = [emuDef spawn];
+        [emus addObject:emu];
+    }
+    return emus;
+}
+
 -(Emuticon *)spawn
 {
     Emuticon *emu = [Emuticon newForEmuticonDef:self context:self.managedObjectContext];

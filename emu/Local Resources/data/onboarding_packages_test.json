@@ -1,0 +1,491 @@
+{
+    "_id": {
+        "$oid": "55004ba2646174ef6e230000"
+    },
+    "base_resource_url": "http://s3.amazonaws.com",
+    "bucket_name": "homage-emu-test",
+    "client_name": "Emu iOS",
+    "config_type": "bundled local in app resources",
+    "config_updated_on": "2015-03-18T13:46:48.276Z",
+    "default_output_video_max_fps": 15,
+    "mixed_screen": {
+        "_id": {
+            "$oid": "554f6d8264617400b0000024"
+        },
+        "client_name": "Emu iOS",
+        "config_type": "mixed screen",
+        "emus": [
+                 {
+                 "name": "hearts",
+                 "oid": "54f8543e13ac4910154f6356"
+                 },
+                 {
+                 "name": "hot",
+                 "oid": "54f8545f13ac4910154f6359"
+                 },
+                 {
+                 "name": "twerk",
+                 "oid": "5517d52813ac49638a76ad61"
+                 },
+                 {
+                 "name": "party",
+                 "oid": "5517d51713ac49638a76ad5f"
+                 },
+                 {
+                 "name": "buzzzzzed",
+                 "oid": "554790d8eeb9090612000004"
+                 },
+                 {
+                 "name": "ubercool",
+                 "oid": "554792a1d1ff722fc4000005"
+                 },
+                 {
+                 "name": "peace",
+                 "oid": "5543bb9beeb90918b300000c"
+                 },
+                 {
+                 "name": "groovy",
+                 "oid": "5543ba8ed1ff72043d000004"
+                 },
+                 {
+                 "name": "coolstory",
+                 "oid": "5517e55213ac49638a76ad64"
+                 },
+                 {
+                 "name": "shit",
+                 "oid": "553e0f310a05f024b4000001"
+                 },
+                 {
+                 "name": "bitch",
+                 "oid": "553e0f310a05f024b4000003"
+                 },
+                 {
+                 "name": "lol",
+                 "oid": "5523ba4364617400981b0000"
+                 },
+                 {
+                 "name": "thanks",
+                 "oid": "5523ba7264617400ac200000"
+                 },
+                 {
+                 "name": "whatsup",
+                 "oid": "5523b9df64617400981a0000"
+                 },
+                 {
+                 "name": "baby",
+                 "oid": "551be46d13ac49206a6ee8cb"
+                 },
+                 {
+                 "name": "cage",
+                 "oid": "551be47a13ac49206a6ee8cd"
+                 },
+                 {
+                 "name": "goodmorning",
+                 "oid": "553dedfc0a05f01d28000002"
+                 },
+                 {
+                 "name": "chicken",
+                 "oid": "553dedfc0a05f01d28000006"
+                 }
+                 ],
+        "enabled": true,
+        "last_updated_on": "2015-05-10T14:40:19.767Z",
+        "prioritized_emus": [
+                             {
+                             "name": "lol",
+                             "oid": "5523ba4364617400981b0000"
+                             },
+                             {
+                             "name": "thanks",
+                             "oid": "5523ba7264617400ac200000"
+                             },
+                             {
+                             "name": "hearts",
+                             "oid": "54f8543e13ac4910154f6356"
+                             },
+                             {
+                             "name": "hot",
+                             "oid": "54f8545f13ac4910154f6359"
+                             },
+                             {
+                             "name": "whatsup",
+                             "oid": "5523b9df64617400981a0000"
+                             },
+                             {
+                             "name": "coolstory",
+                             "oid": "5517e55213ac49638a76ad64"
+                             },
+                             {
+                             "name": "party",
+                             "oid": "5517d51713ac49638a76ad5f"
+                             },
+                             {
+                             "name": "twerk",
+                             "oid": "5517d52813ac49638a76ad61"
+                             }
+                             ]
+    },
+    "onboarding_using_package": "54f826de64617400ae140000",
+    "packages": [
+                 {
+                 "_id": {
+                 "$oid": "54f826de64617400ae140000"
+                 },
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "54f8543e13ac4910154f6356"
+                               },
+                               "name": "hearts",
+                               "source_back_layer": "hearts-bg.gif",
+                               "source_front_layer": "hearts-fg.gif",
+                               "source_user_layer_mask": "hearts-mask.jpg"
+                               },
+                               {
+                               "_id": {
+                               "$oid": "54f8545f13ac4910154f6359"
+                               },
+                               "name": "hot",
+                               "source_back_layer": "hot-bg.gif",
+                               "source_user_layer_mask": "hot-mask.jpg"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+                 "icon_name": "love_icon",
+                 "label": "Love",
+                 "last_update": "2015-03-09T11:06:10.777Z",
+                 "name": "love"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "5517d4b413ac49638a76ad5b"
+                 },
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "5517d51713ac49638a76ad5f"
+                               },
+                               "name": "party",
+                               "source_back_layer": "party-party-bg.gif",
+                               "source_front_layer": "party-party-fg.gif",
+                               "use_for_preview": true
+                               },
+                               {
+                               "_id": {
+                               "$oid": "5517d52813ac49638a76ad61"
+                               },
+                               "name": "twerk",
+                               "source_back_layer": "party-twerk-bg.gif",
+                               "source_front_layer": "party-twerk-fg.gif"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 "icon_name": "party_icon",
+                 "label": "Party",
+                 "last_update": "2015-03-29T10:36:19.796Z",
+                 "name": "party"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "5517e52913ac49638a76ad62"
+                 },
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "5517e55213ac49638a76ad64"
+                               },
+                               "name": "coolstory",
+                               "source_back_layer": "attitude-coolstory-bg.gif",
+                               "source_front_layer": "attitude-coolstory-fg.gif",
+                               "source_user_layer_mask": "attitude-coolstory-mask.png"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 "first_published_on": "2015-04-02T12:52:41.127Z",
+                 "icon_name": "attitude_icon",
+                 "label": "Attitude",
+                 "last_update": "2015-03-29T11:46:43.535Z",
+                 "name": "attitude"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "551be1bb646174009a270000"
+                 },
+                 "disabled": true,
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "551be46d13ac49206a6ee8cb"
+                               },
+                               "name": "baby",
+                               "source_back_layer": "meme-baby-bg.gif",
+                               "source_front_layer": "meme-baby-fg.gif",
+                               "use_for_preview": true
+                               },
+                               {
+                               "_id": {
+                               "$oid": "551be47a13ac49206a6ee8cd"
+                               },
+                               "name": "cage",
+                               "palette": "PAL-X 10 00FCFCFC 00030202 00673716 00874925 00C77747 00371705 00474747 00767676 00999999 00D7D7D7",
+                               "source_back_layer": "meme-cage-bg.gif",
+                               "source_front_layer": "meme-cage-fg.gif"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 "first_published_on": "2015-04-02T03:04:42.256Z",
+                 "icon_name": "meme_icon",
+                 "label": "Meme",
+                 "last_update": "2015-04-01T12:31:02.741Z",
+                 "name": "meme"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "5523b8cf6461740098190000"
+                 },
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "5523b9df64617400981a0000"
+                               },
+                               "name": "whatsup",
+                               "source_back_layer": "casual-whats-bg.gif",
+                               "source_front_layer": "casual-whats-fg.gif",
+                               "source_user_layer_mask": "casual-whats-mask.jpg"
+                               },
+                               {
+                               "_id": {
+                               "$oid": "5523ba4364617400981b0000"
+                               },
+                               "name": "lol",
+                               "source_back_layer": "casual-lol-bg.gif",
+                               "source_front_layer": "casual-lol-fg.gif",
+                               "source_user_layer_mask": "casual-lol-mask.jpg"
+                               },
+                               {
+                               "_id": {
+                               "$oid": "5523ba7264617400ac200000"
+                               },
+                               "name": "thanks",
+                               "source_back_layer": "casual-thanks-bg.gif",
+                               "source_front_layer": "casual-thanks-fg.gif",
+                               "source_user_layer_mask": "casual-thanks-mask.jpg"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 "icon_name": "casual_icon",
+                 "label": "Casual",
+                 "last_update": "2015-04-07T13:06:34.774Z",
+                 "name": "casual"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "553debb164617400a900001d"
+                 },
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "553dedfc0a05f01d28000002"
+                               },
+                               "name": "goodmorning",
+                               "source_back_layer": "snack-morning-bg.gif",
+                               "source_front_layer": "snack-morning-fg.gif",
+                               "source_user_layer_mask": "snack-morning-mask.jpg"
+                               },
+                               {
+                               "_id": {
+                               "$oid": "553dedfc0a05f01d28000006"
+                               },
+                               "name": "chicken",
+                               "source_back_layer": "snack-chicken-bg.gif",
+                               "source_front_layer": "snack-chicken-fg.gif",
+                               "source_user_layer_mask": "snack-chicken-mask.jpg"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 24,
+                 "thumbnail_frame_index": 23
+                 },
+                 "icon_name": "snack_icon",
+                 "label": "Snack",
+                 "last_update": "2015-04-27T08:07:57.621Z",
+                 "name": "snack"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "553e0dd964617400b3000021"
+                 },
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "553e0f310a05f024b4000001"
+                               },
+                               "name": "shit",
+                               "source_back_layer": "crap-shit-bg.gif",
+                               "source_front_layer": "crap-shit-fg.gif",
+                               "source_user_layer_mask": "crap-shit-mask.jpg",
+                               "use_for_preview": true
+                               },
+                               {
+                               "_id": {
+                               "$oid": "553e0f310a05f024b4000003"
+                               },
+                               "name": "bitch",
+                               "source_back_layer": "crap-bitch-bg.gif",
+                               "source_front_layer": "crap-bitch-fg.gif",
+                               "source_user_layer_mask": "crap-bitch-mask.jpg"
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2,
+                 "frames_count": 25,
+                 "thumbnail_frame_index": 23
+                 },
+                 "icon_name": "crap_icon",
+                 "label": "Crap",
+                 "last_update": "2015-04-27T10:29:20.625Z",
+                 "name": "crap"
+                 },
+                 {
+                 "_id": {
+                 "$oid": "5543ba18eeb90918b3000007"
+                 },
+                 "active": true,
+                 "cms_first_published": "2015-05-04T16:11:04.000Z",
+                 "cms_icon_2x": "70s_icon@2x.png",
+                 "cms_icon_3x": "70s_icon@3x.png",
+                 "cms_last_published": "2015-05-06T09:55:04.000Z",
+                 "cms_proccessing": false,
+                 "cms_state": "save",
+                 "dev_only": false,
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "5543ba8ed1ff72043d000004"
+                               },
+                               "duration": 2,
+                               "frames_count": 25,
+                               "name": "groovy",
+                               "source_back_layer": "70s-groovy-bg.gif",
+                               "tags": "groovy",
+                               "use_for_preview": false
+                               },
+                               {
+                               "_id": {
+                               "$oid": "5543bb9beeb90918b300000c"
+                               },
+                               "duration": 2,
+                               "frames_count": 25,
+                               "name": "peace",
+                               "source_back_layer": "70s-peace-bg.gif",
+                               "tags": "peace",
+                               "use_for_preview": false
+                               }
+                               ],
+                 "emuticons_defaults": {
+                 "duration": 2, 
+                 "frames_count": 25, 
+                 "thumbnail_frame_index": 23
+                 }, 
+                 "icon_name": "70s_icon", 
+                 "label": "70s", 
+                 "last_update": "2015-05-01T18:32:25.000Z", 
+                 "meta_data_created_on": "2015-05-01T17:38:32.000Z", 
+                 "name": "70s", 
+                 "zipped_package_file_name": "package_70s_20150501_183225.zip"
+                 }, 
+                 {
+                 "_id": {
+                 "$oid": "5547907dd1ff722fc4000001"
+                 }, 
+                 "active": true, 
+                 "cms_first_published": "2015-05-05T08:45:09.000Z", 
+                 "cms_icon_2x": "wasted_icon@2x.png", 
+                 "cms_icon_3x": "wasted_icon@3x.png", 
+                 "cms_last_published": "2015-05-05T08:45:09.000Z", 
+                 "cms_proccessing": false, 
+                 "cms_state": "save", 
+                 "dev_only": false, 
+                 "emuticons": [
+                               {
+                               "_id": {
+                               "$oid": "554790d8eeb9090612000004"
+                               }, 
+                               "duration": 2, 
+                               "frames_count": 25, 
+                               "name": "buzzzzzed", 
+                               "source_back_layer": "wasted-buzzzzzed-bg.gif", 
+                               "source_front_layer": "wasted-buzzzzzed-fg.gif", 
+                               "source_user_layer_mask": "wasted-buzzzzzed-mask.jpg", 
+                               "tags": "buzzed,bees,drunk,wasted,happy", 
+                               "thumbnail_frame_index": 23, 
+                               "use_for_preview": false
+                               }, 
+                               {
+                               "_id": {
+                               "$oid": "554792a1d1ff722fc4000005"
+                               }, 
+                               "duration": 2, 
+                               "frames_count": 25, 
+                               "name": "ubercool", 
+                               "source_back_layer": "wasted-ubercool-bg.gif", 
+                               "source_front_layer": "wasted-ubercool-fg.gif", 
+                               "source_user_layer_mask": "wasted-ubercool-mask.jpg", 
+                               "tags": "cool,uber,wasted,nice", 
+                               "thumbnail_frame_index": 23, 
+                               "use_for_preview": false
+                               }
+                               ], 
+                 "emuticons_defaults": {
+                 "duration": 2, 
+                 "frames_count": 25, 
+                 "thumbnail_frame_index": 23
+                 }, 
+                 "icon_name": "wasted_icon", 
+                 "label": "Wasted", 
+                 "last_update": "2015-05-05T08:44:57.000Z", 
+                 "meta_data_created_on": "2015-05-04T15:30:05.000Z", 
+                 "name": "wasted", 
+                 "zipped_package_file_name": "package_wasted_20150505_084457.zip"
+                 }
+                 ], 
+    "packages_count": 9, 
+    "prioritized_packages": [
+                             {
+                             "$oid": "54f826de64617400ae140000"
+                             }, 
+                             {
+                             "$oid": "5517d4b413ac49638a76ad5b"
+                             }, 
+                             {
+                             "$oid": "5517e52913ac49638a76ad62"
+                             }, 
+                             {
+                             "$oid": "5525324a64617400ad4c0000"
+                             }, 
+                             {
+                             "$oid": "551be1bb646174009a270000"
+                             }
+                             ]
+}

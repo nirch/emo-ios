@@ -102,8 +102,11 @@
     NSDictionary *info = params.dictionary;
     [self.mixPanel registerSuperProperties:info];
     
-
+    if ([self isFirstLaunch]) {
+        [self reportOnceSuperParameterKey:AK_S_FIRST_LAUNCH_DATE value:[NSDate date]];
+    }
 }
+
 
 -(void)reportSuperParameters:(NSDictionary *)parameters
 {
@@ -112,6 +115,11 @@
         [superParams addKey:key valueIfNotNil:parameters[key]];
     }
     [self.mixPanel registerSuperProperties:superParams.dictionary];
+}
+
+-(void)reportOnceSuperParameterKey:(NSString *)key value:(id)value
+{
+    [self.mixPanel registerSuperPropertiesOnce:@{key:value}];
 }
 
 
@@ -165,6 +173,24 @@
     [self.mixPanel track:event properties:info];
 }
 
+-(void)reportBuildInfo
+{
+    // Read build info plist if exists.
+    NSDictionary *buildInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"latest_build_info" ofType:@"plist"]];
+    HMLOG(TAG, EM_DBG, @"latest build info: %@", buildInfo);
+    
+    // Super properties.
+    HMParams *params = [HMParams new];
+    [params addKey:@"build_counter" value:buildInfo[@"build_counter"]];
+    [params addKey:@"build_date" value:buildInfo[@"build_date"]];
+    [self reportSuperParameters:params.dictionary];
+    
+    // Person details.
+    params = [HMParams new];
+    [params addKey:@"latest_build_counter" value:buildInfo[@"build_counter"]];
+    [params addKey:@"latest_build_date" value:buildInfo[@"build_date"]];
+    [self personDetails:params.dictionary];
+}
 
 -(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info
 {
@@ -202,9 +228,31 @@
     return wasUpdated;
 }
 
+/**
+ *  Count the number of launches. Avances the count by 1 and returns the value.
+ *
+ *  @return NSNumber holding the number of times this method was called.
+ */
 -(NSNumber *)launchesCount
 {
     return [self advanceCounterNamed:@"launchesCounter"];
+}
+
+/**
+ *  The number of times "launchesCount" was called. (doesn't advance the count)
+ *
+ *  @return NSInteger holding the value of the counter.
+ */
+-(NSNumber *)countedLaunches
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSInteger counter = [prefs integerForKey:@"launchesCounter"];
+    return @(counter);
+}
+
+-(BOOL)isFirstLaunch
+{
+    return [[self countedLaunches] integerValue]<=1;
 }
 
 -(NSNumber *)sharesCount
@@ -219,6 +267,13 @@
     counter++;
     [prefs setValue:@(counter) forKey:counterName];
     [prefs synchronize];
+    return @(counter);
+}
+
+-(NSNumber *)counterValueNamed:(NSString *)counterName
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSInteger counter = [prefs integerForKey:counterName];
     return @(counter);
 }
 
@@ -353,6 +408,32 @@ NSString* machineName()
 -(void)personIdentifyWithIdentifier:(NSString *)identifier
 {
     [self.mixPanel identify:identifier];
+}
+
+-(void)reportPersonDetails
+{
+    NSDate *now = [NSDate date];
+    
+    HMParams *params = [HMParams new];
+    [params addKey:AK_PD_NUMBER_OF_BECAME_ACTIVE value:[self counterValueNamed:AK_S_DID_BECOME_ACTIVE_COUNT]];
+    [params addKey:AK_PD_LAST_LAUNCH_DATE value:now];
+    
+    [params addKey:AK_PD_DID_EVER_SHARE_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+    [params addKey:AK_PD_NUMBER_OF_SHARES_USING_APP_COUNT value:[self counterValueNamed:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+
+    [params addKey:AK_PD_DID_EVER_FINISH_A_RETAKE value:[self didEverCountedKey:AK_S_NUMBER_OF_APPROVED_RETAKES]];
+    [params addKey:AK_PD_NUMBER_OF_APPROVED_RETAKES value:[self counterValueNamed:AK_S_NUMBER_OF_APPROVED_RETAKES]];
+
+    [params addKey:AK_PD_DID_KEYBOARD_EVER_APPEAR value:[self didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
+    [params addKey:AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT value:[self counterValueNamed:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
+
+    [params addKey:AK_PD_NUMBER_OF_KB_COPY_EMU_COUNT value:[self counterValueNamed:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT]];
+    
+    [self personDetails:params.dictionary];
+
+    if ([self isFirstLaunch]) {
+        [self.mixPanel.people setOnce:@{AK_PD_FIRST_LAUNCH_DATE:now}];
+    }
 }
 
 -(void)personDetails:(NSDictionary *)details

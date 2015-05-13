@@ -56,7 +56,7 @@
 
 -(void)initRenderingQueue
 {
-    self.renderingQueue = AppManagement.sh.ioQueue;
+    self.renderingQueue = AppManagement.sh.renderingQueue;
 }
 
 #pragma mark - Rendering management

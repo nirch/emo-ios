@@ -28,7 +28,7 @@
 @implementation AppManagement
 
 @synthesize ioQueue = _ioQueue;
-
+@synthesize renderingQueue = _renderingQueue;
 
 #pragma mark - Initialization
 // A singleton
@@ -97,6 +97,13 @@
     if (_ioQueue) return _ioQueue;
     _ioQueue = dispatch_queue_create("io Queue", DISPATCH_QUEUE_SERIAL);
     return _ioQueue;
+}
+
+-(dispatch_queue_t)renderingQueue
+{
+    if (_renderingQueue) return _renderingQueue;
+    _renderingQueue = dispatch_queue_create("rendering Queue", DISPATCH_QUEUE_SERIAL);
+    return _renderingQueue;
 }
 
 @end

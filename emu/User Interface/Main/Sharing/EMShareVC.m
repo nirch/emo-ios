@@ -329,6 +329,11 @@
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT];
     [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_USING_APP value:@YES];
     [HMPanel.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];
+
+    HMParams *params = [HMParams new];
+    [params addKey:AK_PD_DID_EVER_SHARE_USING_APP value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+    [params addKey:AK_PD_NUMBER_OF_SHARES_USING_APP_COUNT value:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+    [HMPanel.sh personDetails:params.dictionary];
 }
 
 -(void)sharerDidCancelWithInfo:(NSDictionary *)info

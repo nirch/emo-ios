@@ -71,6 +71,26 @@
     return defaultValue;
 }
 
+-(NSArray *)safeArrayOfIdsForKey:(id)key
+{
+    NSMutableArray *idsArray = [NSMutableArray new];
+    NSArray *array = self[key];
+    if (![array isKindOfClass:[NSArray class]]) return @[];
+    for (id value in array) {
+        NSString *parsedID;
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            parsedID = value[@"oid"];
+            if (parsedID == nil) parsedID = value[@"$oid"];
+        } else {
+            parsedID = value;
+        }
+        if ([parsedID isKindOfClass:[NSString class]]) {
+            [idsArray addObject:parsedID];
+        }
+    }
+    return idsArray;
+}
+
 #pragma mark - With defaults
 -(NSString *)safeStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary
 {

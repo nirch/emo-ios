@@ -22,10 +22,23 @@
 
 -(Package *)packageForOnboarding
 {
-    NSString *oid = self.onboardingUsingPackage;
-    Package *package = [Package findWithID:oid
-                                   context:self.managedObjectContext];
-    return package;
+    // Choose a random package from the available ones.
+    NSArray *packages = [Package allPackagesInContext:self.managedObjectContext];
+    if (packages.count > 0) {
+        NSInteger rndIndex = arc4random() % packages.count;
+        return packages[rndIndex];
+    }
+    return nil;
+}
+
+-(void)createMissingEmuticonObjectsForMixedScreen
+{
+    NSArray *emus = self.mixedScreenEmus;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"oid in %@", emus];
+    NSArray *emuDefs = [NSManagedObject fetchEntityNamed:E_EMU_DEF
+                                           withPredicate:predicate
+                                               inContext:self.managedObjectContext];
+    [EmuticonDef createMissingEmuticonsForEmuDefs:emuDefs];
 }
 
 -(BOOL)isPackageUsedForOnboarding:(Package *)package

@@ -10,6 +10,9 @@
 
 @interface EMPackageParser : HMParser
 
-@property (nonatomic) NSNumber *incrementalOrder;
+//@property (nonatomic) NSNumber *incrementalOrder;
+@property (nonatomic) BOOL parseForOnboarding;
+@property (nonatomic) NSDictionary *mixedScreenPriorities;
+@property (nonatomic) NSDictionary *packagesPriorities;
 
 @end

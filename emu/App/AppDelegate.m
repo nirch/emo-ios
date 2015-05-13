@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+@import AVFoundation;
+
 #define TAG @"AppDelegate"
 
 #import "AppDelegate.h"
@@ -17,6 +19,7 @@
 #import <MPTweakInline.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+#import "EMUISound.h"
 
 
 @interface AppDelegate ()<
@@ -56,15 +59,8 @@
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];
     [HMPanel.sh reportSuperParameters];
     [HMPanel.sh analyticsEvent:AK_E_APP_LAUNCHED];
-    BOOL wasUpdated = [HMPanel.sh checkAndReportIfAppUpdated];
     [HMPanel.sh personIdentify];
-    [HMPanel.sh personDetails:@{@"lastAppLaunchTime":[[NSDate date] description]}];
-    
-    // Version specific data migrations
-    if (wasUpdated) {
-        [self handleVersionsDataMigration];
-    }
-    
+    [HMPanel.sh reportPersonDetails];
     
     // FB Messanger optimized integration
     self.messengerUrlHandler = [[FBSDKMessengerURLHandler alloc] init];
@@ -82,6 +78,10 @@
     if (appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
+    
+    // Preload sounds
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
+    [EMUISound sh];
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
@@ -125,6 +125,9 @@
                                 }];
     application.applicationIconBadgeNumber = 0;
     
+    // Report build info to analytics
+    [HMPanel.sh reportBuildInfo];
+    
     // If a current fb messanger sharer exists,
     // Notify it that the application launched.
     [self.currentFBMSharer onAppDidBecomeActive];
@@ -134,6 +137,9 @@
     if (latestPublishedPackage == nil) return;
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
+    
+    // Notify that app did become active.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkAppDidBecomeActive object:self userInfo:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -339,19 +345,6 @@
         completionHandler(UIBackgroundFetchResultFailed);
         
     }];
-}
-
-
-#pragma mark - Migrations
--(void)handleVersionsDataMigration
-{
-    NSInteger maxToCheck = 30;
-    NSInteger c = 0;
-    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
-        c++; // Hah! :-)
-        [package recountRenders];
-        if (c>maxToCheck) break;
-    }
 }
 
 @end

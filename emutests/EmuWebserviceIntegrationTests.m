@@ -1,6 +1,6 @@
 //
-//  emutests.m
-//  emutests
+//  EmuWebserviceIntegrationTests.m
+//  EmuWebserviceIntegrationTests
 //
 //  Created by Aviv Wolf on 5/3/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
@@ -28,7 +28,7 @@ static BOOL _useScratchpad;
 {
     [super setUp];
     _url = @"http://app.emu.im/emuapi/packages/full";
-    _useScratchpad = NO;
+    _useScratchpad = YES;
 }
 
 - (void)setUp
@@ -66,6 +66,19 @@ static BOOL _useScratchpad;
         XCTAssert([_json isKindOfClass:[NSDictionary class]], @"Data expected to be dictionary");
     }
     [expectation fulfill];
+}
+
+-(NSDictionary *)allEmusByOID
+{
+    NSMutableDictionary *emus = [NSMutableDictionary new];
+    for (NSDictionary *pack in _json[@"packages"]) {
+        for (NSDictionary *emu in pack[@"emuticons"]) {
+            NSString *oid = emu[@"_id"][@"$oid"];
+            emus[oid] = emu;
+        }
+    }
+    XCTAssert(emus.count >= 6, @"Strange number of emus: %@", @(emus.count));
+    return emus;
 }
 
 
@@ -266,6 +279,59 @@ static BOOL _useScratchpad;
     
     // Expected base resource url
     XCTAssert([_json[@"base_resource_url"] isEqualToString:@"http://s3.amazonaws.com"], @"Unexpected resource url: %@", _json[@"base_resource_url"]);
+}
+
+
+#pragma mark - Mixed screen
+-(void)testMixedScreen
+{
+    [self ensureDataAvailable];
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+        if(error) XCTFail(@"%s Failed with error: %@", __PRETTY_FUNCTION__, error);
+    }];
+
+    NSDictionary *mixedScreen = _json[@"mixed_screen"];
+    XCTAssertNotNil(mixedScreen, @"Mixed screen data missing.");
+    XCTAssert([mixedScreen isKindOfClass:[NSDictionary class]], @"Mixed screen data is invalid: %@", mixedScreen);
+
+    NSDictionary *emusByOID = [self allEmusByOID];
+    
+    NSArray *emus = mixedScreen[@"emus"];
+    XCTAssertNotNil(emus, @"No emus defined for mixed screen?");
+    XCTAssert([emus isKindOfClass:[NSArray class]], @"Emus data for mixed screen is invalid: %@", emus);
+    XCTAssert(emus.count>0 && emus.count%2==0, @"Wrong number of emus in mixed screen: %@", @(emus.count));
+    
+    // Check all emus in mixed screen.
+    for (NSDictionary *emu in emus) {
+        
+        // Ensure emu definition exists and with the correct oid.
+        NSString *oid = emu[@"oid"];
+        NSString *name = emu[@"name"];
+        NSDictionary *emuDef = emusByOID[oid];
+        XCTAssertNotNil(emuDef, @"Mixed screen contains unknown emu:%@ name:%@", oid, name);
+        
+        // Ensure name of the emu used is the correct one.
+        XCTAssert([name isEqualToString:emuDef[@"name"]], @"Mixed screen uses emu named: %@ but name should be: %@", name, emuDef[@"name"]);
+    }
+    
+    // Prioritized emus
+    emus = mixedScreen[@"prioritized_emus"];
+    XCTAssertNotNil(emus, @"No prioritized emus defined for mixed screen?");
+    XCTAssert([emus isKindOfClass:[NSArray class]], @"Prioritized emus data for mixed screen is invalid: %@", emus);
+
+    // Check all prioritized emus in mixed screen.
+    for (NSDictionary *emu in emus) {
+        
+        // Ensure emu definition exists and with the correct oid.
+        NSString *oid = emu[@"oid"];
+        NSString *name = emu[@"name"];
+        NSDictionary *emuDef = emusByOID[oid];
+        XCTAssertNotNil(emuDef, @"Mixed screen contains unknown prioritized emu:%@ name:%@", oid, name);
+        
+        // Ensure name of the emu used is the correct one.
+        XCTAssert([name isEqualToString:emuDef[@"name"]], @"Mixed screen uses emu named: %@ but name should be: %@", name, emuDef[@"name"]);
+    }
+
 }
 
 @end

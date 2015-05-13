@@ -18,6 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="O1N-Y7-AdJ">
+                                <rect key="frame" x="177" y="324" width="37" height="37"/>
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#PakaPaka" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcV-HC-46K" customClass="EMLabel">
                                 <rect key="frame" x="116" y="348" width="143" height="35"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="29"/>
@@ -27,21 +31,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbE-le-gs5" userLabel="Nav bar">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWl-1a-ucc" userLabel="Nav Button">
-                                        <rect key="frame" x="10" y="20" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWl-1a-ucc" userLabel="Options Button">
+                                        <rect key="frame" x="321" y="20" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="9fx-ry-VhH"/>
                                             <constraint firstAttribute="height" constant="44" id="p9A-Oh-7DL"/>
                                         </constraints>
-                                        <state key="normal" image="burger">
+                                        <state key="normal" image="optionsIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="onPressedNavButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="tbk-fM-BsG"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpK-cJ-Ijf" userLabel="Retake Button">
-                                        <rect key="frame" x="321" y="20" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpK-cJ-Ijf" userLabel="Recorder Button">
+                                        <rect key="frame" x="10" y="20" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="AVE-Ad-22F"/>
                                             <constraint firstAttribute="width" constant="44" id="Py2-ZW-Jkk"/>
@@ -51,17 +55,20 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                                         <state key="normal" image="retakeIcon"/>
                                         <connections>
-                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="MJd-EW-U8j"/>
+                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="MRm-5l-JLS"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbd-tK-eKv" userLabel="Retake Button2" customClass="EMButton">
-                                        <rect key="frame" x="276" y="20" width="48" height="44"/>
-                                        <state key="normal" title="Retake">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1I-qV-A17" userLabel="Back To Messenger">
+                                        <rect key="frame" x="10" y="20" width="70" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Quc-tC-Y4i"/>
+                                            <constraint firstAttribute="width" constant="70" id="ZLh-WN-7gn"/>
+                                        </constraints>
+                                        <state key="normal" image="back2FBMButton">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="9gD-uw-AUk"/>
+                                            <action selector="onPressedBackToFBMButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="Y7y-6h-aDe"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -69,13 +76,18 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="wpK-cJ-Ijf" secondAttribute="bottom" id="3zp-Zl-itR"/>
                                     <constraint firstAttribute="trailing" secondItem="wpK-cJ-Ijf" secondAttribute="trailing" constant="10" id="5UB-QD-NcF"/>
-                                    <constraint firstAttribute="bottom" secondItem="Qbd-tK-eKv" secondAttribute="bottom" id="9Bf-SC-QEk"/>
-                                    <constraint firstItem="wpK-cJ-Ijf" firstAttribute="leading" secondItem="Qbd-tK-eKv" secondAttribute="trailing" constant="-3" id="9mp-n5-HBd"/>
                                     <constraint firstAttribute="height" constant="64" id="Ado-2f-rnW"/>
-                                    <constraint firstItem="Qbd-tK-eKv" firstAttribute="height" secondItem="wpK-cJ-Ijf" secondAttribute="height" id="MiQ-T4-ERp"/>
+                                    <constraint firstItem="wpK-cJ-Ijf" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="KfG-Qd-mya"/>
+                                    <constraint firstAttribute="bottom" secondItem="k1I-qV-A17" secondAttribute="bottom" id="L0H-Kh-LNh"/>
                                     <constraint firstAttribute="bottom" secondItem="qWl-1a-ucc" secondAttribute="bottom" id="PgL-9v-ZVK"/>
-                                    <constraint firstItem="qWl-1a-ucc" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="WzL-a6-SL8"/>
+                                    <constraint firstAttribute="trailing" secondItem="qWl-1a-ucc" secondAttribute="trailing" constant="10" id="TpA-2n-oAY"/>
+                                    <constraint firstItem="k1I-qV-A17" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="rzB-i2-Y7S"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5UB-QD-NcF"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
@@ -215,7 +227,9 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="2yt-61-8E0" secondAttribute="bottom" id="3TE-hj-unx"/>
+                            <constraint firstAttribute="centerX" secondItem="O1N-Y7-AdJ" secondAttribute="centerX" constant="-8" id="AaW-aR-Va1"/>
                             <constraint firstItem="2yt-61-8E0" firstAttribute="top" secondItem="mE0-st-E63" secondAttribute="bottom" constant="64" id="EHe-AY-tQe"/>
+                            <constraint firstAttribute="centerY" secondItem="O1N-Y7-AdJ" secondAttribute="centerY" constant="-9" id="F8U-uY-Y5x"/>
                             <constraint firstAttribute="trailing" secondItem="2yt-61-8E0" secondAttribute="trailing" id="FHE-vL-QUX"/>
                             <constraint firstAttribute="width" secondItem="nbE-le-gs5" secondAttribute="width" id="GmY-Vh-8pa"/>
                             <constraint firstAttribute="centerX" secondItem="qcV-HC-46K" secondAttribute="centerX" constant="0.5" id="M8v-fu-rlg"/>
@@ -242,9 +256,13 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="guiActivity" destination="O1N-Y7-AdJ" id="rfi-f0-UiC"/>
+                        <outlet property="guiBackToFBMButton" destination="k1I-qV-A17" id="mmK-uv-wm9"/>
                         <outlet property="guiCollectionView" destination="2yt-61-8E0" id="2s9-9s-lNY"/>
                         <outlet property="guiNavView" destination="nbE-le-gs5" id="aQc-qo-3Ui"/>
+                        <outlet property="guiOptionsButton" destination="qWl-1a-ucc" id="6Xo-9p-ivu"/>
                         <outlet property="guiPackagesSelectionContainer" destination="989-sh-hZS" id="C7s-MW-ivj"/>
+                        <outlet property="guiRetakeButton" destination="wpK-cJ-Ijf" id="pNR-eW-PzX"/>
                         <outlet property="guiSwipeLeftRecognizer" destination="hbc-uG-LpM" id="TCH-Dq-BLJ"/>
                         <outlet property="guiSwipeRightRecognizer" destination="s4l-CM-CKZ" id="Kh6-cf-JGp"/>
                         <outlet property="guiTagLabel" destination="qcV-HC-46K" id="Iuh-NC-vop"/>
@@ -301,7 +319,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTt-oM-iaE" userLabel="Nav bar">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iyM-lb-cs0" userLabel="Nav Button">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iyM-lb-cs0" userLabel="Back Button">
                                         <rect key="frame" x="10" y="20" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="964-EY-UyS"/>
@@ -724,6 +742,46 @@
                                             <outlet property="guiLabel" destination="aXd-p2-rUU" id="dNB-ul-zgp"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="mixed package cell" id="vxF-Q5-xrN" userLabel="mixed package cell" customClass="EMPackageCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="98" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mixed_icon" translatesAutoresizingMaskIntoConstraints="NO" id="QZA-w8-0j6">
+                                                    <rect key="frame" x="28" y="8" width="42" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="QZA-w8-0j6" secondAttribute="height" multiplier="1:1" id="cCV-cn-uVS"/>
+                                                        <constraint firstAttribute="width" constant="25" id="cck-3H-iwv"/>
+                                                        <constraint firstAttribute="height" constant="25" id="xyH-PO-a94"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="cck-3H-iwv"/>
+                                                            <exclude reference="xyH-PO-a94"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="QZA-w8-0j6" secondAttribute="centerX" id="LDL-g6-Utu"/>
+                                            <constraint firstItem="QZA-w8-0j6" firstAttribute="bottom" secondItem="vxF-Q5-xrN" secondAttribute="bottomMargin" id="XGM-Y1-V8n"/>
+                                            <constraint firstItem="QZA-w8-0j6" firstAttribute="top" secondItem="vxF-Q5-xrN" secondAttribute="topMargin" id="hqX-uB-M8B"/>
+                                            <constraint firstItem="QZA-w8-0j6" firstAttribute="top" secondItem="vxF-Q5-xrN" secondAttribute="topMargin" id="qTw-sX-QBM"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="hqX-uB-M8B"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="guiIcon" destination="QZA-w8-0j6" id="mY9-Ke-VNz"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="jAm-lM-9cu" id="GZP-XD-fpk"/>
@@ -906,13 +964,15 @@
     </scenes>
     <resources>
         <image name="addKB" width="414" height="414"/>
+        <image name="back2FBMButton" width="40" height="21"/>
         <image name="backButton" width="12" height="21"/>
         <image name="bigCellBG" width="350" height="350"/>
-        <image name="burger" width="27" height="12"/>
         <image name="cellBG" width="179" height="178"/>
         <image name="emuNavLogo" width="60" height="59"/>
         <image name="facebook" width="57" height="56"/>
         <image name="lock" width="10" height="14"/>
+        <image name="mixed_icon" width="30" height="30"/>
+        <image name="optionsIcon" width="21" height="5"/>
         <image name="retakeIcon" width="25" height="24"/>
         <image name="shadow" width="375" height="4"/>
         <image name="threeDots" width="44" height="44"/>

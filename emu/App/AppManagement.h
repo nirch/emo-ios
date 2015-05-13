@@ -30,5 +30,6 @@
 
 #pragma mark - Queues
 @property (nonatomic, readonly) dispatch_queue_t ioQueue;
+@property (nonatomic, readonly) dispatch_queue_t renderingQueue;
 
 @end

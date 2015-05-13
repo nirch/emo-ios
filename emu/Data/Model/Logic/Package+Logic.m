@@ -44,10 +44,22 @@
 
 +(NSArray *)allPackagesInContext:(NSManagedObjectContext *)context
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
-    return [self fetchEntityNamed:E_PACKAGE
-             withPredicate:predicate
-                 inContext:context];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
+    return [self fetchEntityNamed:E_PACKAGE withPredicate:predicate inContext:context];
+}
+
++(NSArray *)allPackagesPrioritizedInContext:(NSManagedObjectContext *)context
+{
+    NSError *error;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
+    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES] ];
+    
+    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) return @[];
+    return results;
 }
 
 
@@ -92,12 +104,6 @@
     return emu.duration.doubleValue;
 }
 
-//-(NSArray *)allEmuticons
-//{
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ALL emuticonDef.package == %@", self];
-//    NSArray *result = [NSManagedObject fetchEntityNamed:E_EMU withPredicate:predicate inContext:self.managedObjectContext];
-//    return result;
-//}
 
 -(NSArray *)emuticonDefsWithNoEmuticons
 {
@@ -120,15 +126,12 @@
 
 -(NSArray *)createMissingEmuticonObjects
 {
-    NSMutableArray *emus = [NSMutableArray new];
     NSArray *emuDefs = [self emuticonDefsWithNoEmuticons];
-    for (EmuticonDef *emuDef in emuDefs) {
-        Emuticon *emu = [emuDef spawn];
-        [emus addObject:emu];
-    }
+    NSArray *emus = [EmuticonDef createMissingEmuticonsForEmuDefs:emuDefs];
     HMLOG(TAG, EM_DBG, @"Spawned %@ new emuticons in package %@", @(emus.count), self.name);
     return emus;
 }
+
 
 -(NSArray *)emuticonsWithNoSpecificFootage
 {

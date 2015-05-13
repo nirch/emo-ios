@@ -270,7 +270,7 @@
     // Should inpect the frame?
     BOOL thisFrameShouldBeInspected = (state == HMVideoProcessingStateInspectFrames ||
                                        state == HMVideoProcessingStateInspectAndProcessFrames) &&
-                                        (extractCounter % 13 == 0);
+                                        (extractCounter % 15 == 0);
 
     // Count frames
     extractCounter++;

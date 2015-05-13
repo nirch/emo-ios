@@ -30,6 +30,7 @@
 #import "HMServer.h"
 #import "EMHolySheet.h"
 #import "EMActionsArray.h"
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
 @interface EMMainVC () <
     UICollectionViewDataSource,
@@ -46,9 +47,15 @@
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesSelectionContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 @property (weak, nonatomic) IBOutlet UILabel *guiTagLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *guiSwipeLeftRecognizer;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *guiSwipeRightRecognizer;
+
+@property (weak, nonatomic) IBOutlet UIButton *guiOptionsButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiRetakeButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiBackToFBMButton;
+
 
 
 @property (weak, nonatomic) EMSplashVC *splashVC;
@@ -78,6 +85,10 @@
     self.refetchDataAttempted = NO;
     self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
     self.guiTagLabel.alpha = 0;
+    self.guiRetakeButton.alpha = 0;
+    self.guiBackToFBMButton.alpha = 0;
+    self.guiCollectionView.alpha = 0;
+    [self.guiActivity startAnimating];
     [self initScrollGesturesFixes];
     REMOTE_LOG(@"MainVC view did load");
 }
@@ -103,6 +114,7 @@
                                                       userInfo:nil];
     
     [self handleFlow];
+    [self updateBackToFBMButton];
 }
 
 
@@ -124,6 +136,12 @@
     [self removeObservers];
 }
 
+-(void)dealloc
+{
+    self.guiCollectionView.delegate = nil;
+    self.guiCollectionView.dataSource = nil;
+}
+
 #pragma mark - Memory warnings
 -(void)didReceiveMemoryWarning
 {
@@ -131,9 +149,6 @@
     
     // Log remotely
     REMOTE_LOG(@"EMMainVC Memory warning");
-    
-    // Go boom on a test application.
-    //[HMPanel.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -147,6 +162,7 @@
 
 -(void)initScrollGesturesFixes
 {
+    // Recognize horizontal swipes, even while the collection view is vertically scrolled.
     NSArray *recognizers = self.guiCollectionView.gestureRecognizers;
     for (UIGestureRecognizer *recognizer in recognizers) {
         if ([recognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
@@ -188,6 +204,12 @@
                      name:emkUIMainShouldShowPackage
                    object:nil];
 
+    // App did become active.
+    [nc addUniqueObserver:self
+                 selector:@selector(onAppDidBecomeActive:)
+                     name:emkAppDidBecomeActive
+                   object:nil];
+
 }
 
 -(void)removeObservers
@@ -202,13 +224,15 @@
 #pragma mark - Observers handlers
 -(void)onRenderingFinished:(NSNotification *)notification
 {
+    
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
     NSString *oid = info[@"emuticonOID"];
     NSString *packageOID = info[@"packageOID"];
     
     // Make sure this is related to the currently displayed package.
-    if (![packageOID isEqualToString:self.selectedPackage.oid]) {
+    // (skip check if in the mixed screen)s
+    if (self.selectedPackage != nil && ![packageOID isEqualToString:self.selectedPackage.oid]) {
         // Ignore notifications about emus related to packages not on screen.
         return;
     }
@@ -223,10 +247,16 @@
     
     // ignore notifications not relating to emus visible on screen.
     if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
+    
+    // ignore if the rendered emu isn't where expected.
     if (![emu.oid isEqualToString:oid]) return;
     
     // The cell is on screen, refresh it.
-    [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+    if ([self.guiCollectionView numberOfItemsInSection:0] == self.fetchedResultsController.fetchedObjects.count) {
+        [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+    } else {
+        [self.guiCollectionView reloadData];
+    }
 }
 
 
@@ -234,12 +264,21 @@
 {
     self.refetchDataAttempted = YES;
     [self.packagesBarVC refresh];
+    
+    if (self.guiCollectionView.alpha < 1) {
+        [self.guiActivity stopAnimating];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiCollectionView.alpha = 1;
+        }];
+    }
 
     // Update latest published package
     Package *latestPublishedPackage = [Package latestPublishedPackageInContext:EMDB.sh.context];
-    if (latestPublishedPackage == nil) return;
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
+
+    if (latestPublishedPackage != nil) {
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
+    }
     
     if (notification.userInfo[@"forced_reload"]) {
         [self debugCleanAndRender];
@@ -260,6 +299,7 @@
     if (indexPath.item >= self.fetchedResultsController.fetchedObjects.count) return;
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (emu == nil || ![emu.oid isEqualToString:emuOID]) return;
+    if (![emu.emuDef.package.oid isEqualToString:self.selectedPackage.oid]) return;
     
     [self.guiCollectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
@@ -275,6 +315,34 @@
     [self.packagesBarVC selectThisPackage:package];
 }
 
+
+-(void)onAppDidBecomeActive:(NSNotification *)notification
+{
+    [self updateBackToFBMButton];
+}
+
+
+#pragma mark - FB Messenger experience
+-(void)updateBackToFBMButton
+{
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    BOOL inFBContext = app.fbContext != nil;
+    self.guiBackToFBMButton.hidden = NO;
+    self.guiRetakeButton.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiBackToFBMButton.alpha = inFBContext? 1:0;
+        self.guiRetakeButton.alpha = inFBContext? 0:1;
+    }];
+}
+
+
+-(void)backToFBM
+{
+    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityOpen) {
+        [FBSDKMessengerSharer openMessenger];
+    }
+}
+
 #pragma mark - The data
 -(NSFetchedResultsController *)fetchedResultsController
 {
@@ -282,15 +350,33 @@
         return _fetchedResultsController;
     }
     
-    if (self.selectedPackage == nil) return nil;
+    NSPredicate *predicate;
+    NSArray *sortDescriptors;
     
-    HMLOG(TAG, EM_DBG, @"Showing emuticons for package named:%@", self.selectedPackage.name);
-    REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
+    if (self.selectedPackage) {
+        // A specific package.
+        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, self.selectedPackage];
+
+        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
+        
+        HMLOG(TAG, EM_DBG, @"Showing emuticons for package named:%@", self.selectedPackage.name);
+        REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
+    } else {
+        // The mixed screen.
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+       
+        NSArray *emus = appCFG.mixedScreenEmus;
+        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.oid in %@", @NO, emus];
+        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.mixedScreenOrder" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES] ];
+        
+        HMLOG(TAG, EM_DBG, @"Showing emuticons for mixed screen");
+        REMOTE_LOG(@"Showing emuticons for mixed screen");
+    }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package=%@", @NO, self.selectedPackage];
+    
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
+    fetchRequest.sortDescriptors = sortDescriptors;
     fetchRequest.fetchBatchSize = 20;
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
@@ -312,24 +398,28 @@
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (!appCFG.onboardingPassed.boolValue) {
-        if (!self.refetchDataAttempted) {
-            return;
-        }
+        // Try to fetch data from server at least once, before starting onboarding.
+        if (!self.refetchDataAttempted) return;
         
         /**
          *  Open the recorder for the first time.
          */
         Package *package = [appCFG packageForOnboarding];
         if (package == nil) {
-            NSString *errorMessage = @"Critical error - no package for onboarding selected";
-            HMLOG(TAG, EM_ERR, @"%@", errorMessage);
-            REMOTE_LOG(@"%@", errorMessage);
-            [self initPackageForOnboarding];
-            return;
+            // No info for onboarding.
+            // Fallback to the bundled data existing on the device.
+            REMOTE_LOG(@"No server side info. Using onboarding data bundled on device.");
+            [self initPackagesForOnboarding];
+
+            package = [appCFG packageForOnboarding];
+            if (package == nil) {
+                REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
+            }
         }
+        REMOTE_LOG(@"Opening recorder for the first time");
+        REMOTE_LOG(@"Using package named:%@ for onboarding.", package.name);
         [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
                              info:@{emkPackage:package}];
-        REMOTE_LOG(@"Opening recorder for the first time");
 
     } else {
 
@@ -353,9 +443,9 @@
 }
 
 
--(void)initPackageForOnboarding
+-(void)initPackagesForOnboarding
 {
-    NSString *onboardingLocalFileName = AppManagement.sh.isTestApp? @"onboarding_package_test":@"onboarding_package_prod";
+    NSString *onboardingLocalFileName = AppManagement.sh.isTestApp? @"onboarding_packages_test":@"onboarding_package_prod";
     NSString *path = [[NSBundle mainBundle] pathForResource:onboardingLocalFileName ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     
@@ -436,6 +526,7 @@
         EMPackagesVC *vc = segue.destinationViewController;
         self.packagesBarVC = vc;
         vc.delegate = self;
+        vc.showMixedPackage = YES;
         
     } else if ([segue.identifier isEqualToString:@"tutorial segue"]) {
         EMTutorialVC *vc = segue.destinationViewController;
@@ -497,7 +588,7 @@
     NSDictionary *info = @{
                            @"indexPath":indexPath,
                            @"emuticonOID":emu.oid,
-                           @"packageOID":emu.emuDef.package.oid
+                           @"packageOID":emu.emuDef.package.oid,
                            };
     
     cell.guiFailedImage.hidden = YES;
@@ -684,7 +775,7 @@
     // Retake options
     //
     NSString *title = LS(@"RETAKE_CHOICE_TITLE");
-    if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
+    if (self.selectedPackage && ![self.selectedPackage doAllEmusHaveSpecificTakes]) {
         [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:LS(@"RETAKE_CHOICE_PACKAGE") section:0];
     }
     [actionsMapping addAction:@"RETAKE_CHOICE_ALL" text:LS(@"RETAKE_CHOICE_ALL") section:0];
@@ -843,29 +934,35 @@
 -(void)userChoices
 {
     EMActionsArray *actionsMapping = [EMActionsArray new];
+    NSInteger sect = 0;
 
     //
     // Pack options
     //
-    NSString *title = [SF:@"%@ pack", self.selectedPackage.label];
-    if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
-        [actionsMapping addAction:@"USER_CHOICE_RETAKE_PACK" text:LS(@"USER_CHOICE_RETAKE_PACK") section:0];
+    EMHolySheetSection *section1 = nil;
+    if (self.selectedPackage) {
+        NSString *title = [SF:@"%@ pack", self.selectedPackage.label];
+        if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
+            [actionsMapping addAction:@"USER_CHOICE_RETAKE_PACK" text:LS(@"USER_CHOICE_RETAKE_PACK") section:sect];
+        }
+        if ([self.selectedPackage hasEmusWithSpecificTakes]) {
+            [actionsMapping addAction:@"USER_CHOICE_RESET_PACK" text:LS(@"USER_CHOICE_RESET_PACK") section:sect];
+        }
+        section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:sect] buttonStyle:JGActionSheetButtonStyleDefault];
+        sect++;
     }
-    if ([self.selectedPackage hasEmusWithSpecificTakes]) {
-        [actionsMapping addAction:@"USER_CHOICE_RESET_PACK" text:LS(@"USER_CHOICE_RESET_PACK") section:0];
-    }
-    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
-
+    
     //
     // More options
     //
     UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
     if (notificationSettings.types == UIUserNotificationTypeNone) {
-        [actionsMapping addAction:@"NOTIFICATIONS_ENABLE" text:LS(@"NOTIFICATIONS_ENABLE") section:1];
+        [actionsMapping addAction:@"NOTIFICATIONS_ENABLE" text:LS(@"NOTIFICATIONS_ENABLE") section:sect];
     }
-    [actionsMapping addAction:@"USER_CHOICE_ABOUT_KB" text:LS(@"USER_CHOICE_ABOUT_KB") section:1];
-    [actionsMapping addAction:@"USER_CHOICE_ABOUT" text:LS(@"USER_CHOICE_ABOUT") section:1];
-    EMHolySheetSection *section2 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:1] buttonStyle:JGActionSheetButtonStyleDefault];
+    [actionsMapping addAction:@"USER_CHOICE_ABOUT_KB" text:LS(@"USER_CHOICE_ABOUT_KB") section:sect];
+    [actionsMapping addAction:@"USER_CHOICE_ABOUT" text:LS(@"USER_CHOICE_ABOUT") section:sect];
+    EMHolySheetSection *section2 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:sect] buttonStyle:JGActionSheetButtonStyleDefault];
+    sect++;
     
     //
     // Debugging options.
@@ -874,19 +971,22 @@
     if (AppManagement.sh.isTestApp) {
         NSString *title = [SF:@"DEV APPLICATION - %@", EMBackend.sh.server.serverURL];
         NSString *message = [SF:@"Data: %@", EMBackend.sh.server.usingPublicDataBase? @"PUBLIC":@"SCRATCHPAD"];
-        [actionsMapping addAction:@"CLEAN_AND_RENDER" text:@"Clean and render" section:2];
-        [actionsMapping addAction:@"RELOAD_ALL" text:@"Reload all data & Render" section:2];
+        [actionsMapping addAction:@"CLEAN_AND_RENDER" text:@"Clean and render" section:sect];
+        [actionsMapping addAction:@"RELOAD_ALL" text:@"Reload all data & Render" section:sect];
         debugSection = [EMHolySheetSection sectionWithTitle:title
                                                     message:message
-                                               buttonTitles:[actionsMapping textsForSection:2]
+                                               buttonTitles:[actionsMapping textsForSection:sect]
                                                 buttonStyle:JGActionSheetButtonStyleRed];
+        sect++;
     }
     
     //
     // Extra sections
     //
     EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"Cancel")] buttonStyle:JGActionSheetButtonStyleCancel];
-    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, section2]];
+    NSMutableArray *sections = [NSMutableArray new];
+    if (section1) [sections addObject:section1];
+    if (section2) [sections addObject:section2];
     if (debugSection) [sections addObject:debugSection];
     [sections addObject:cancelSection];
 
@@ -975,6 +1075,44 @@
 {
     [self.triedToReloadResourcesForEmuOID removeAllObjects];
     
+    // If selected package is the same as current package, just reload.
+    if ((self.selectedPackage == nil && package == nil) || [self.selectedPackage.oid isEqualToString:package.oid]) {
+        [self.guiCollectionView reloadData];
+        return;
+    }
+
+    // A specific package or mixed screen?
+    if (package != nil) {
+        // A specific packge.
+        [self _handleChangeToPackage:package];
+    } else {
+        [self _handleChangeToMixScreen];
+    }
+    
+    // Store reference to selected package (nil if mixed screen)
+    self.selectedPackage = package;
+    
+    // And reset the fetched results controller so relevant data will be displayed.
+    [self resetFetchedResultsController];
+
+    // Tell manager to prioritize current selected package.
+    EMRenderManager.sh.prioritizedPackageOID = package.oid;
+    
+
+    // Reveal/Hide Transitions.
+    [self transitionToPackage:package];
+    
+    REMOTE_LOG(@"Did select package: %@", self.selectedPackage.name);
+}
+
+
+-(void)_handleChangeToMixScreen
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    [appCFG createMissingEmuticonObjectsForMixedScreen];
+}
+
+-(void)_handleChangeToPackage:(Package *)package {
     [EMDB ensureDirPathExists:package.resourcesPath];
     
     // Make sure emuticons instances created for this package
@@ -1006,55 +1144,41 @@
     // Mark package as viewed.
     package.viewedByUser = @YES;
     [EMDB.sh save];
-    
-    // Reload if selected another package.
-    if ([self.selectedPackage.oid isEqualToString:package.oid]) {
-        [self.guiCollectionView reloadData];
-        return;
-    }
-    
-    BOOL shouldAnimate = self.selectedPackage != nil;
-    self.selectedPackage = package;
-    [self resetFetchedResultsController];
-
-    // Tell manager to prioritize current selected package.
-    EMRenderManager.sh.prioritizedPackageOID = package.oid;
-    
-    if (shouldAnimate) {
-        __weak EMMainVC *weakSelf = self;
-
-        self.guiTagLabel.text = [package tagLabel];
-        self.guiTagLabel.alpha = 1.0;
-        self.guiTagLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
-        [UIView animateWithDuration:0.7 animations:^{
-            weakSelf.guiTagLabel.alpha = 0;
-            weakSelf.guiTagLabel.transform = CGAffineTransformIdentity;
-        }];
-
-        
-        [UIView animateWithDuration:0.15 animations:^{
-            weakSelf.guiCollectionView.alpha = 0;
-            weakSelf.guiCollectionView.transform = CGAffineTransformMakeScale(0.90, 0.90);
-        } completion:^(BOOL finished) {
-            [self.guiCollectionView performBatchUpdates:^{
-                [weakSelf.guiCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2 delay:0.0
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:^{
-                                     weakSelf.guiCollectionView.alpha = 1;
-                                     weakSelf.guiCollectionView.transform = CGAffineTransformIdentity;
-                                 } completion:^(BOOL finished) {
-                                     
-                                 }];
-            }];
-        }];
-    } else {
-        [self.guiCollectionView reloadData];
-    }
-    
-    REMOTE_LOG(@"Did select package: %@", self.selectedPackage.name);
 }
+
+
+-(void)transitionToPackage:(Package *)package
+{
+    __weak EMMainVC *weakSelf = self;
+    
+    self.guiTagLabel.text = [package tagLabel];
+    self.guiTagLabel.alpha = 1.0;
+    self.guiTagLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    [UIView animateWithDuration:0.7 animations:^{
+        weakSelf.guiTagLabel.alpha = 0;
+        weakSelf.guiTagLabel.transform = CGAffineTransformIdentity;
+    }];
+    
+    
+    [UIView animateWithDuration:0.08 animations:^{
+        weakSelf.guiCollectionView.alpha = 0;
+        weakSelf.guiCollectionView.transform = CGAffineTransformMakeScale(0.90, 0.90);
+    } completion:^(BOOL finished) {
+        [self.guiCollectionView performBatchUpdates:^{
+            [weakSelf.guiCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 delay:0.0
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
+                                 weakSelf.guiCollectionView.alpha = 1;
+                                 weakSelf.guiCollectionView.transform = CGAffineTransformIdentity;
+                             } completion:^(BOOL finished) {
+                                 
+                             }];
+        }];
+    }];
+}
+
 
 -(void)askUserAboutAlerts
 {
@@ -1122,20 +1246,21 @@
     [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_PRESSED_APP_BUTTON];
 }
 
+- (IBAction)onPressedBackToFBMButton:(id)sender
+{
+    [self backToFBM];
+}
+
+
 - (IBAction)onSwipedLeftCollectionView:(id)sender
 {
     HMLOG(TAG, EM_DBG, @"Swipe left");
+    if ([self.packagesBarVC isEmpty]) return;
     [UIView animateWithDuration:0.1 animations:^{
-        if ([self.packagesBarVC canSelectNext]) self.guiCollectionView.alpha = 0;
+        self.guiCollectionView.alpha = 0;
         self.guiCollectionView.transform = CGAffineTransformMakeTranslation(-40, 0);
     } completion:^(BOOL finished) {
-        if (![self.packagesBarVC canSelectNext]) {
-            [UIView animateWithDuration:0.15 animations:^{
-                self.guiCollectionView.transform = CGAffineTransformIdentity;
-            }];
-        } else {
-            [self.packagesBarVC selectNext];
-        }
+        [self.packagesBarVC selectNext];
     }];
     [EMUISound.sh playSoundNamed:SND_SWIPE];
 }
@@ -1143,17 +1268,12 @@
 - (IBAction)onSwipedRightCollectionView:(id)sender
 {
     HMLOG(TAG, EM_DBG, @"Swipe right");
+    if ([self.packagesBarVC isEmpty]) return;
     [UIView animateWithDuration:0.1 animations:^{
-        if ([self.packagesBarVC canSelectPrevious]) self.guiCollectionView.alpha = 0;
+        self.guiCollectionView.alpha = 0;
         self.guiCollectionView.transform = CGAffineTransformMakeTranslation(40, 0);
     } completion:^(BOOL finished) {
-        if (![self.packagesBarVC canSelectPrevious]) {
-            [UIView animateWithDuration:0.15 animations:^{
-                self.guiCollectionView.transform = CGAffineTransformIdentity;
-            }];
-        } else {
-            [self.packagesBarVC selectPrevious];
-        }
+        [self.packagesBarVC selectPrevious];
     }];
     [EMUISound.sh playSoundNamed:SND_SWIPE];
 }

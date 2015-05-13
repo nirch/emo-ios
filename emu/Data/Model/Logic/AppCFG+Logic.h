@@ -16,7 +16,7 @@
 +(AppCFG *)cfgInContext:(NSManagedObjectContext *)context;
 -(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;
-
+-(void)createMissingEmuticonObjectsForMixedScreen;
 
 #pragma mark - Sampled results
 -(BOOL)shouldUploadSampledResults;

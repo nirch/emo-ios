@@ -11,6 +11,7 @@
 #import "EMAppCFGParser.h"
 #import "EMDB.h"
 #import "HMPanel.h"
+#import "AppManagement.h"
 
 @implementation EMAppCFGParser
 
@@ -42,8 +43,40 @@
         appCFG.tweaks = tweakedValues;
     }
     
+    NSDictionary *mixedScreenInfo = info[@"mixed_screen"];
+    if (mixedScreenInfo == nil) {
+        // No info received from server. Use info stored locally.
+        mixedScreenInfo = [self localMixedScreenInfo];
+    }
+    if (mixedScreenInfo) {
+        appCFG.mixedScreenEnabled = [mixedScreenInfo safeBoolNumberForKey:@"enabled"];
+        appCFG.mixedScreenEmus = [mixedScreenInfo safeArrayOfIdsForKey:@"emus"];
+        appCFG.mixedScreenPrioritizedEmus = [mixedScreenInfo safeArrayOfIdsForKey:@"prioritized_emus"];
+    } else {
+        appCFG.mixedScreenEnabled = @NO;
+        appCFG.mixedScreenEmus = nil;
+        appCFG.mixedScreenPrioritizedEmus = nil;
+    }
+    
     HMLOG(TAG, EM_DBG, @"App cfg parsed:%@", [appCFG description]);
     REMOTE_LOG(@"Parsed app cfg:%@", [appCFG description]);
+}
+
+
+-(NSDictionary *)localMixedScreenInfo
+{
+    NSString *localInfoFile = AppManagement.sh.isTestApp? @"mixed_screen_test":@"mixed_screen_prod";
+    NSString *path = [[NSBundle mainBundle] pathForResource:localInfoFile ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    if (error || json==nil) {
+        REMOTE_LOG(@"Failed parsing mixed screen json %@", error);
+        HMLOG(TAG, EM_DBG, @"Failed parsing mixed screen json %@", error);
+        return nil;
+    }
+    return json;
 }
 
 @end

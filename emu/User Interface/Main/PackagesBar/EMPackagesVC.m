@@ -42,11 +42,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [self resetFetchedResultsController];
-    
-    if (self.selectedPackage == nil)
-        [self selectPackageAtIndex:0];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -54,6 +50,13 @@
     [super viewDidAppear:animated];
 }
 
+-(void)dealloc
+{
+    self.guiCollectionView.delegate = nil;
+    self.guiCollectionView.dataSource = nil;
+}
+
+#pragma mark - Initialization & refresh
 -(void)initGUI
 {
 
@@ -64,6 +67,11 @@
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
     [self updateMoreButtonAnimated:YES];
+}
+
+-(BOOL)isEmpty
+{
+    return self.fetchedResultsController.fetchedObjects.count < 1;
 }
 
 -(void)setupEffects
@@ -108,9 +116,9 @@
     
     NSPredicate *predicate;
     if (self.onlyRenderedPackages) {
-        predicate = [NSPredicate predicateWithFormat:@"rendersCount>%@ AND isActive=%@", @0, @YES];
+        predicate = [NSPredicate predicateWithFormat:@"showOnPacksBar=%@ AND rendersCount>%@ AND isActive=%@", @YES, @0, @YES];
     } else {
-        predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
+        predicate = [NSPredicate predicateWithFormat:@"showOnPacksBar=%@ AND isActive=%@", @YES, @YES];
     }
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
@@ -144,28 +152,62 @@
 {
     NSInteger count = self.fetchedResultsController.fetchedObjects.count;
     [self.delegate packagesAvailableCount:count];
-    return count;
+    if (count==0) return 0;
+    
+    if (self.showMixedPackage) {
+        return count+1;
+    } else {
+        return count;
+    }
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"package cell";
-    EMPackageCell *cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    static NSString *packCellIdentifier = @"package cell";
+    static NSString *mixedPackCellIdentifier = @"mixed package cell";
+    EMPackageCell *cell;
+    
+    if (self.showMixedPackage && indexPath.item == 0) {
+        cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:mixedPackCellIdentifier forIndexPath:indexPath];
+    } else {
+        cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:packCellIdentifier forIndexPath:indexPath];
+    }
     [self configureCell:cell forIndexPath:indexPath];
     return cell;
 }
 
 -(void)configureCell:(EMPackageCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.showMixedPackage) {
+        if (indexPath.item == 0) {
+            [self _configureCellForMixedPack:cell];
+        } else {
+            NSIndexPath *indexPathForPack = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:0];
+            [self _configureCell:cell forIndexPath:indexPathForPack];
+        }
+        return;
+    }
+    
+    [self _configureCell:cell forIndexPath:indexPath];
+}
+
+-(void)_configureCell:(EMPackageCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.guiLabel.text = package.label;
     cell.isSelected = [package isEqual:self.selectedPackage];
-
+    
     NSURL *url = [package urlForPackageIcon];
     [cell.guiIcon sd_setImageWithURL:url
                     placeholderImage:nil
                              options:SDWebImageRetryFailed|SDWebImageHighPriority
                            completed:nil];
+}
+
+-(void)_configureCellForMixedPack:(EMPackageCell *)cell
+{
+    cell.guiIcon.image = [UIImage imageNamed:@"mixed_icon"];
+    cell.isSelected = self.selectedPackage == nil;
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView
@@ -189,11 +231,6 @@
 }
 
 #pragma mark - Scrolling
-//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-//{
-//    [self updateMoreButtonAnimated:YES];
-//}
-
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self updateMoreButtonAnimated:YES];
@@ -243,6 +280,14 @@
 #pragma mark - Collection View Delegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.showMixedPackage) {
+        if (indexPath.item == 0) {
+            [self selectThisPackage:nil];
+            return;
+        } else {
+            indexPath = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:0];
+        }
+    }
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self selectThisPackage:package];
 }
@@ -254,8 +299,6 @@
 
 -(void)selectThisPackage:(Package *)package highlightOnly:(BOOL)highlightOnly
 {
-    if (package == nil) return;
-    
     self.selectedPackage = package;
     [self.guiCollectionView reloadData];
     
@@ -264,7 +307,13 @@
     }
     
     // Check if selcted package tab is on screen. If not, scroll it into view.
-    NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:package];
+    NSIndexPath *indexPath;
+    if (package) {
+        indexPath = [self.fetchedResultsController indexPathForObject:package];
+    } else {
+        indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    }
+    
     if (indexPath == nil) return;
     if (![self.guiCollectionView.indexPathsForVisibleItems containsObject:indexPath]) {
         [self.guiCollectionView scrollToItemAtIndexPath:indexPath
@@ -280,12 +329,13 @@
 
 -(void)selectPackageAtIndex:(NSInteger)index highlightOnly:(BOOL)highlightOnly
 {
+    if (self.fetchedResultsController.fetchedObjects.count<1 || index<0) {
+        [self selectThisPackage:nil highlightOnly:highlightOnly];
+        return;
+    }
+
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    if (self.fetchedResultsController.fetchedObjects.count<1) return;
-    
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (package == nil) return;
-    
     [self selectThisPackage:package highlightOnly:highlightOnly];
 }
 
@@ -299,35 +349,27 @@
     return -1;
 }
 
--(BOOL)canSelectPrevious
-{
-    NSInteger index = [self selectedIndex];
-    return index > 0;
-}
 
--(BOOL)canSelectNext
-{
-    NSInteger index = [self selectedIndex];
-    return index < (self.fetchedResultsController.fetchedObjects.count - 1);
-}
-
-
+/**
+ *  Select the previous pack (cyclical)
+ */
 -(void)selectPrevious
 {
     NSInteger index = [self selectedIndex];
-    if ([self canSelectPrevious]) {
-        index--;
-        [self selectPackageAtIndex:index];
-    }
+    index--;
+    if (index<-1) index=self.fetchedResultsController.fetchedObjects.count-1;
+    [self selectPackageAtIndex:index];
 }
 
+/**
+ *  Select the next pack (cyclical)
+ */
 -(void)selectNext
 {
     NSInteger index = [self selectedIndex];
-    if ([self canSelectNext]) {
-        index++;
-        [self selectPackageAtIndex:index];
-    }
+    index++;
+    if (index>=self.fetchedResultsController.fetchedObjects.count) index=-1;
+    [self selectPackageAtIndex:index];
 }
 
 

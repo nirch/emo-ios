@@ -59,6 +59,13 @@
     }];
 }
 
+-(void)dealloc
+{
+    self.guiCollectionView.dataSource = nil;
+    self.guiCollectionView.delegate = nil;
+}
+
+#pragma mark - Initialization
 -(void)initContent
 {
     self.shownIndex = 0;

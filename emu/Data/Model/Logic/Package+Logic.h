@@ -36,7 +36,7 @@
                context:(NSManagedObjectContext *)context;
 
 /**
- *  Fetches all the packages info found in local storage.
+ *  Fetches all the active packages info found in local storage.
  *
  *  @param context The managed object context.
  *
@@ -44,6 +44,15 @@
  */
 +(NSArray *)allPackagesInContext:(NSManagedObjectContext *)context;
 
+
+/**
+ *  Fetches all the active packages info found in local storage, ordered by priority.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return An array of packages objects.
+ */
++(NSArray *)allPackagesPrioritizedInContext:(NSManagedObjectContext *)context;
 
 /**
  *  The json file name holding the emuticons definitions for this package.

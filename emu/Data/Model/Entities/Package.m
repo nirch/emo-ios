@@ -2,7 +2,7 @@
 //  Package.m
 //  emu
 //
-//  Created by Aviv Wolf on 4/28/15.
+//  Created by Aviv Wolf on 5/12/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -26,6 +26,7 @@
 @dynamic requiredVersion;
 @dynamic sampledEmuCount;
 @dynamic sampledEmuResultOID;
+@dynamic showOnPacksBar;
 @dynamic timeUpdated;
 @dynamic viewedByUser;
 @dynamic zipppedPackageFileName;

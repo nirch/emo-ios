@@ -22,6 +22,7 @@
 -(void)reportSuperParameters;
 -(void)reportSuperParameters:(NSDictionary *)parameters;
 -(void)reportSuperParameterKey:(NSString *)key value:(id)value;
+-(void)reportOnceSuperParameterKey:(NSString *)key value:(id)value;
 -(void)reportCountedSuperParameterForKey:(NSString *)key;
 -(NSNumber *)didEverCountedKey:(NSString *)counterKey;
 -(BOOL)checkAndReportIfAppUpdated;
@@ -29,14 +30,17 @@
 -(void)analyticsEvent:(NSString *)event;
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info;
 -(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info;
+-(void)reportBuildInfo;
 
 #pragma mark - Counting stuff
 -(BOOL)counterExistsNamed:(NSString *)counterName;
 -(NSNumber *)advanceCounterNamed:(NSString *)counterName;
+-(NSNumber *)counterValueNamed:(NSString *)counterName;
 
 #pragma mark - People
 -(void)personIdentify;
 -(void)personIdentifyWithIdentifier:(NSString *)identifier;
+-(void)reportPersonDetails;
 -(void)personDetails:(NSDictionary *)details;
 -(void)personPushToken:(NSData *)pushToken;
 
