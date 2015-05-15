@@ -43,7 +43,6 @@
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, readonly) CGFloat screenWidth;
-@property (nonatomic, readonly) CGFloat screenHeight;
 
 @end
 
@@ -57,8 +56,7 @@
     self.initializedData = NO;
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    _screenWidth = screenRect.size.width;
-    _screenHeight = screenRect.size.height;
+    _screenWidth = MIN(screenRect.size.width, screenRect.size.height);
     
     // Not hidden but alpha = 0
     self.guiAlphaNumericKBContainer.hidden = NO;
@@ -220,7 +218,7 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView
                  layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat width = self.screenWidth/3.0 - 30;
+    CGFloat width = self.screenWidth/3.0 - 25;
     CGFloat height = self.guiCollectionView.bounds.size.height/2.0;
 
     return CGSizeMake(width, height);
@@ -252,10 +250,12 @@
     cell.transform = CGAffineTransformIdentity;
     cell.alpha = 1;
     cell.backgroundColor = [UIColor clearColor];
+    cell.shouldCacheGifData = NO;
     if (emu.wasRendered.boolValue) {
         [cell.guiActivity stopAnimating];
         cell.animatedGifURL = [emu animatedGifURL];
     } else {
+        // TODO: support rendering in keyboard.
         [cell.guiActivity startAnimating];
         cell.animatedGifURL = nil;
         //        [EMRenderManager.sh enqueueEmu:emu info:@{

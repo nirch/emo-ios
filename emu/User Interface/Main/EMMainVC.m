@@ -459,7 +459,7 @@
 
 -(void)initPackagesForOnboarding
 {
-    NSString *onboardingLocalFileName = AppManagement.sh.isTestApp? @"onboarding_packages_test":@"onboarding_package_prod";
+    NSString *onboardingLocalFileName = AppManagement.sh.isTestApp? @"onboarding_packages_test":@"onboarding_packages_prod";
     NSString *path = [[NSBundle mainBundle] pathForResource:onboardingLocalFileName ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     
@@ -541,6 +541,8 @@
         self.packagesBarVC = vc;
         vc.delegate = self;
         vc.showMixedPackage = YES;
+        vc.shouldAnimateScroll = YES;
+        vc.scrollSelectedToCenter = YES;
         
     } else if ([segue.identifier isEqualToString:@"tutorial segue"]) {
         EMTutorialVC *vc = segue.destinationViewController;
@@ -632,6 +634,7 @@
         // Emu already rendered. Just display it.
         //
         [cell.guiActivity stopAnimating];
+        cell.shouldCacheGifData = self.selectedPackage? NO:YES;
         cell.animatedGifURL = [emu animatedGifURL];
         
     } else if ([emu.emuDef allResourcesAvailable]) {

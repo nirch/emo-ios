@@ -319,9 +319,12 @@
     }
     if (indexPath == nil) return;
     
-    [self.guiCollectionView scrollToItemAtIndexPath:indexPath
-                                   atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                           animated:YES];
+    if (![self.guiCollectionView.indexPathsForVisibleItems containsObject:indexPath]) {
+        UICollectionViewScrollPosition toP = self.scrollSelectedToCenter? UICollectionViewScrollPositionCenteredHorizontally: UICollectionViewScrollPositionNone;
+        [self.guiCollectionView scrollToItemAtIndexPath:indexPath
+                                       atScrollPosition:toP
+                                               animated:self.shouldAnimateScroll];
+    }
 }
 
 -(void)selectPackageAtIndex:(NSInteger)index

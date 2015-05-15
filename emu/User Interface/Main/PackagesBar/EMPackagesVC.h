@@ -16,6 +16,8 @@
 @property (nonatomic) BOOL cellSizeByHeight;
 @property (nonatomic) BOOL onlyRenderedPackages;
 @property (nonatomic) BOOL showMixedPackage;
+@property (nonatomic) BOOL shouldAnimateScroll;
+@property (nonatomic) BOOL scrollSelectedToCenter;
 
 -(void)refresh;
 

@@ -21,5 +21,6 @@
 
 
 @property (nonatomic) NSURL *animatedGifURL;
+@property (nonatomic) BOOL shouldCacheGifData;
 
 @end
