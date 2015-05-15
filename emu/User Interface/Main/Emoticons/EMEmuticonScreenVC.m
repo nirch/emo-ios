@@ -18,6 +18,9 @@
 #import "EMRenderManager.h"
 #import "EMHolySheet.h"
 #import "EMActionsArray.h"
+#import "AppDelegate.h"
+#import "EMNotificationCenter.h"
+
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
@@ -65,6 +68,9 @@
     
     // Init observers
     [self initObservers];
+    
+    // The FMB experience
+    [self updateFBMessengerExperienceState];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -85,6 +91,12 @@
     // Remove observers
     [self removeObservers];
 }
+
+-(void)dealloc
+{
+    HMLOG(TAG, EM_VERBOSE, @"dealloc");
+}
+
 
 -(void)initStyle
 {
@@ -146,12 +158,19 @@
                  selector:@selector(onRenderingFinished:)
                      name:hmkRenderingFinished
                    object:nil];
+    
+    // App did become active.
+    [nc addUniqueObserver:self
+                 selector:@selector(onAppDidBecomeActive:)
+                     name:emkAppDidBecomeActive
+                   object:nil];
 }
 
 -(void)removeObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
+    [nc removeObserver:emkAppDidBecomeActive];
 }
 
 #pragma mark - Observers handlers
@@ -167,9 +186,18 @@
     [self refreshEmu];
 }
 
--(void)dealloc
+
+-(void)onAppDidBecomeActive:(NSNotification *)notification
 {
-    HMLOG(TAG, EM_VERBOSE, @"dealloc");
+    [self updateFBMessengerExperienceState];
+}
+
+#pragma mark - FB Messenger experience
+-(void)updateFBMessengerExperienceState
+{
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    BOOL inFBContext = app.fbContext != nil;
+    self.shareVC.allowFBExperience = inFBContext;
 }
 
 #pragma mark - Segues

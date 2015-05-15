@@ -13,5 +13,6 @@
 @interface EMShareVC : UIViewController
 
 @property (nonatomic, weak) id<EMShareDelegate> delegate;
+@property (nonatomic) BOOL allowFBExperience;
 
 @end

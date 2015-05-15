@@ -10,6 +10,9 @@
 #import "EMDB.h"
 #import "EMDB+Files.h"
 #import "HMParams.h"
+#import "HMPanel.h"
+#import "AppManagement.h"
+#import "EMCaches.h"
 
 @implementation Emuticon (Logic)
 
@@ -135,6 +138,7 @@
     NSError *error;
     [fm removeItemAtPath:[self animatedGifPath] error:&error];
     [fm removeItemAtPath:[self videoPath] error:&error];
+    [EMCaches.sh removeCachedGifForEmu:self];
 
     // Mark it as not rendered.
     self.wasRendered = @NO;
@@ -200,6 +204,9 @@
     [params addKey:@"packageOID" value:self.emuDef.package.oid];
     [params addKey:@"packageName" value:self.emuDef.package.name];
     [params addKey:@"renderCount" value:[self.rendersCount description]];
+    [params addKey:@"deviceModel" value:[AppManagement deviceModelName]];
+    [params addKey:@"deviceIdentifier" value:UIDevice.currentDevice.identifierForVendor.UUIDString];
+    [params addKey:@"deviceName" value:[[UIDevice currentDevice] name]];    
     return params.dictionary;
 }
 

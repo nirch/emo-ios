@@ -28,7 +28,7 @@ static BOOL _useScratchpad;
 {
     [super setUp];
     _url = @"http://app.emu.im/emuapi/packages/full";
-    _useScratchpad = YES;
+    _useScratchpad = NO;
 }
 
 - (void)setUp

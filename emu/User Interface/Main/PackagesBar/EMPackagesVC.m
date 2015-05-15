@@ -37,6 +37,7 @@
 {
     [super viewDidLoad];
     self.effectsAlreadySet = NO;
+    self.guiCollectionView.contentInset = UIEdgeInsetsZero;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -310,16 +311,17 @@
     NSIndexPath *indexPath;
     if (package) {
         indexPath = [self.fetchedResultsController indexPathForObject:package];
+        if (self.showMixedPackage && indexPath.item > 0) {
+            indexPath = [NSIndexPath indexPathForItem:indexPath.item+1 inSection:indexPath.section];
+        }
     } else {
         indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     }
-    
     if (indexPath == nil) return;
-    if (![self.guiCollectionView.indexPathsForVisibleItems containsObject:indexPath]) {
-        [self.guiCollectionView scrollToItemAtIndexPath:indexPath
-                                       atScrollPosition:UICollectionViewScrollPositionNone
-                                               animated:NO];
-    }
+    
+    [self.guiCollectionView scrollToItemAtIndexPath:indexPath
+                                   atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                           animated:YES];
 }
 
 -(void)selectPackageAtIndex:(NSInteger)index
@@ -331,6 +333,7 @@
 {
     if (self.fetchedResultsController.fetchedObjects.count<1 || index<0) {
         [self selectThisPackage:nil highlightOnly:highlightOnly];
+        [self.guiCollectionView setContentOffset:CGPointZero animated:NO];
         return;
     }
 

@@ -9,6 +9,7 @@
 #import "AppCFG+Logic.h"
 #import "NSManagedObject+FindAndCreate.h"
 #import "EMDB.h"
+#import "HMPanel.h"
 
 @implementation AppCFG (Logic)
 
@@ -29,6 +30,33 @@
         return packages[rndIndex];
     }
     return nil;
+}
+
+-(EmuticonDef *)emuticonDefForOnboarding
+{
+    NSArray *emus = self.mixedScreenEmus;
+    if (emus == nil) return nil;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"oid in %@ AND disallowedForOnboardingPreview=%@", emus, @NO];
+    NSArray *emuDefs = [NSManagedObject fetchEntityNamed:E_EMU_DEF
+                                           withPredicate:predicate
+                                               inContext:self.managedObjectContext];
+
+    NSMutableArray *emuDefsWithAvailableLocalResources = [NSMutableArray new];
+    
+    for (EmuticonDef *emuDef in emuDefs) {
+        if ([emuDef allResourcesAvailable]) {
+            [emuDefsWithAvailableLocalResources addObject:emuDef];
+        }
+    }
+    if (emuDefsWithAvailableLocalResources.count<1) {
+        REMOTE_LOG(@"CRITICAL ERROR!!! No available emu for onboarding?");
+    }
+    assert(emuDefsWithAvailableLocalResources.count>0);
+    
+    // Choose a random emu def from the list.
+    NSInteger randomIndex = arc4random() % emuDefsWithAvailableLocalResources.count;
+    return emuDefsWithAvailableLocalResources[randomIndex];
 }
 
 -(void)createMissingEmuticonObjectsForMixedScreen
@@ -73,6 +101,16 @@
 
     id value = tweaks[name];
     if ([value isKindOfClass:[NSNumber class]]) return [value boolValue];
+    return defaultValue;
+}
+
++(NSInteger)tweakedInteger:(NSString *)name defaultValue:(NSInteger)defaultValue
+{
+    NSDictionary *tweaks = [self tweakedValues];
+    if (tweaks == nil) return defaultValue;
+    
+    id value = tweaks[name];
+    if ([value isKindOfClass:[NSNumber class]]) return [value integerValue];
     return defaultValue;
 }
 

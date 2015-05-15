@@ -9,6 +9,9 @@
 #import "EmuCell.h"
 #import <FLAnimatedImageView.h>
 #import <FLAnimatedImage.h>
+#import "EMCaches.h"
+
+#define TAG @"EmuCell"
 
 @interface EmuCell()
 
@@ -28,15 +31,23 @@
         return;
     }
 
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    FLAnimatedImage *animGif = [EMCaches.sh.gifsDataCache objectForKey:[animatedGifURL description]];
+    if (animGif == nil) {
+        // If not cached, load it from url.
         NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
-        FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.guiAnimGifView.animatedImage = animGif;
-            self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
-            [self.guiAnimGifView startAnimating];
-        });
-    });
+        animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+
+        // Temp solution: Don't put it in the cache automatically (prefetch from somewhere else for now).
+        // TODO: finish implementation.
+        //[EMCaches.sh.gifsDataCache setObject:animGif forKey:[animatedGifURL description]];
+    } else {
+        // We have a cached animated gif.
+        // HMLOG(TAG, EM_DBG, @"Used cached animated gif");
+    }
+    
+    self.guiAnimGifView.animatedImage = animGif;
+    self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
+    //[self.guiAnimGifView startAnimating];
 }
 
 -(void)stopAnimating

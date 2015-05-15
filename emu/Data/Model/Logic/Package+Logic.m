@@ -75,6 +75,7 @@
     EmuticonDef *emuDef = (EmuticonDef *)[NSManagedObject fetchSingleEntityNamed:E_EMU_DEF
                                                                    withPredicate:predicate
                                                                        inContext:context];
+    
 
     // Not found?
     // Use any emuDef from this package.
@@ -93,7 +94,6 @@
                                                           withPredicate:predicate
                                                               inContext:context];
     }
-    
     
     return emuDef;
 }
@@ -170,8 +170,13 @@
     BOOL zippedPackageAvailableLocally = [self zippedPackageAvailableLocally];
     NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcesPath error:nil];
     
-    HMLOG(TAG, EM_VERBOSE, @"Checking resources path:%@ exists:%@ availableLocally:%@ filesCount:%@",
-          resourcesPath, @(pathExists), @(zippedPackageAvailableLocally), @(dirContents.count));
+    HMLOG(TAG,
+          EM_VERBOSE,
+          @"Checking resources path:%@ exists:%@ availableLocally:%@ filesCount:%@",
+          resourcesPath,
+          @(pathExists),
+          @(zippedPackageAvailableLocally),
+          @(dirContents.count));
     
     if (pathExists) return NO;
     if (zippedPackageAvailableLocally) return NO;

@@ -31,6 +31,7 @@
 #import "EMHolySheet.h"
 #import "EMActionsArray.h"
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+#import "EMCaches.h"
 
 @interface EMMainVC () <
     UICollectionViewDataSource,
@@ -88,6 +89,12 @@
     self.guiRetakeButton.alpha = 0;
     self.guiBackToFBMButton.alpha = 0;
     self.guiCollectionView.alpha = 0;
+    dispatch_after(DTIME(2.5), dispatch_get_main_queue(), ^{
+        [self.guiActivity stopAnimating];
+        if (self.guiCollectionView.alpha == 0) {
+            self.guiCollectionView.alpha = 1;
+        }
+    });
     [self.guiActivity startAnimating];
     [self initScrollGesturesFixes];
     REMOTE_LOG(@"MainVC view did load");
@@ -114,7 +121,7 @@
                                                       userInfo:nil];
     
     [self handleFlow];
-    [self updateBackToFBMButton];
+    [self updateFBMessengerExperienceState];
 }
 
 
@@ -219,6 +226,7 @@
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIDownloadedResourcesForEmuticon];
     [nc removeObserver:emkUIMainShouldShowPackage];
+    [nc removeObserver:emkAppDidBecomeActive];
 }
 
 #pragma mark - Observers handlers
@@ -318,12 +326,12 @@
 
 -(void)onAppDidBecomeActive:(NSNotification *)notification
 {
-    [self updateBackToFBMButton];
+    [self updateFBMessengerExperienceState];
 }
 
 
 #pragma mark - FB Messenger experience
--(void)updateBackToFBMButton
+-(void)updateFBMessengerExperienceState
 {
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     BOOL inFBContext = app.fbContext != nil;
@@ -378,16 +386,18 @@
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = sortDescriptors;
     fetchRequest.fetchBatchSize = 20;
+    fetchRequest.fetchLimit = 40;
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
-                                                                                     cacheName:@"Root"];
+                                                                                     cacheName:@"Main"];
     _fetchedResultsController = frc;
     return frc;
 }
 
 -(void)resetFetchedResultsController
 {
+    [NSFetchedResultsController deleteCacheWithName:@"Main"];
     _fetchedResultsController = nil;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
@@ -404,22 +414,26 @@
         /**
          *  Open the recorder for the first time.
          */
-        Package *package = [appCFG packageForOnboarding];
-        if (package == nil) {
+        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
+        if (emuticonDefForOnboarding == nil) {
             // No info for onboarding.
             // Fallback to the bundled data existing on the device.
             REMOTE_LOG(@"No server side info. Using onboarding data bundled on device.");
             [self initPackagesForOnboarding];
 
-            package = [appCFG packageForOnboarding];
-            if (package == nil) {
+            emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
+            if (emuticonDefForOnboarding == nil) {
                 REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
             }
         }
         REMOTE_LOG(@"Opening recorder for the first time");
-        REMOTE_LOG(@"Using package named:%@ for onboarding.", package.name);
+        REMOTE_LOG(@"Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
+        
         [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-                             info:@{emkPackage:package}];
+                             info:@{
+                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+                                    emkEmuticonDefName:emuticonDefForOnboarding.name
+                                    }];
 
     } else {
 
@@ -555,25 +569,41 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    NSInteger count = self.fetchedResultsController.fetchedObjects.count;
-    return count;
+    if (section == 0) {
+        NSInteger count = self.fetchedResultsController.fetchedObjects.count;
+        return count;
+    } else {
+        return 30;
+    }
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"emu cell";
-    EmuCell *cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
-                                                                      forIndexPath:indexPath];
-    [self configureCell:cell forIndexPath:indexPath];
+    static NSString *tagCellIdentifier = @"tag cell";
+    EmuCell *cell;
+    
+    if (indexPath.section == 0) {
+        cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+        [self configureCell:cell forIndexPath:indexPath];
+    } else {
+        cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:tagCellIdentifier forIndexPath:indexPath];
+        [self configureTagCell:cell forIndexPath:indexPath];
+    }
     return cell;
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView
                  layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat size = (self.view.bounds.size.width-10.0) / 2.0;
-    return CGSizeMake(size, size);
+    if (indexPath.section == 0) {
+        CGFloat size = (self.view.bounds.size.width-10.0) / 2.0;
+        return CGSizeMake(size, size);
+    } else {
+        CGFloat size = (self.view.bounds.size.width-10.0) / 2.0;
+        return CGSizeMake(size, size/2.0);
+    }
 }
 
 
@@ -586,6 +616,7 @@
     if (emu == nil) return;
     
     NSDictionary *info = @{
+                           @"for":@"emu",
                            @"indexPath":indexPath,
                            @"emuticonOID":emu.oid,
                            @"packageOID":emu.emuDef.package.oid,
@@ -650,6 +681,13 @@
     cell.guiFailedLabel.hidden = NO;
 }
 
+#pragma mark - Tag cells
+-(void)configureTagCell:(EmuCell *)cell
+        forIndexPath:(NSIndexPath *)indexPath
+{
+    cell.backgroundColor = [UIColor greenColor];
+}
+
 #pragma mark - UICollectionViewDelegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -696,12 +734,13 @@
         [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
     }];
     
-    // Handle what to do next, depending on the flow of the dismissed recorder.
-    [self resetFetchedResultsController];
-    [self.guiCollectionView reloadData];
+//    // Handle what to do next, depending on the flow of the dismissed recorder.
+//    [self resetFetchedResultsController];
+//    [self.guiCollectionView reloadData];
     
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
+        [self _handleChangeToMixScreen];
         [self showKBTutorial];
     } else {
         [self handleFlow];
@@ -845,15 +884,27 @@
 
 -(void)retakeAll
 {
-    if (self.selectedPackage == nil)
-        return;
-
     /**
      *  Open the recording for retaking all emuticons.
      */
-    [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
-                         info:@{emkPackage:self.selectedPackage}];
-    REMOTE_LOG(@"Retake all selected. selected package: %@", self.selectedPackage.name);
+    if (self.selectedPackage) {
+        [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+                             info:@{emkPackage:self.selectedPackage}];
+        REMOTE_LOG(@"Retake all selected. selected package: %@", self.selectedPackage.name);
+        
+    } else {
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
+        [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+                             info:@{
+                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+                                    emkEmuticonDefName:emuticonDefForOnboarding.name
+                                    }];
+        REMOTE_LOG(@"Retake all selected (mixed screen). Preview emu named: %@", emuticonDefForOnboarding.name);
+        
+    }
+    
+    
 }
 
 -(void)retakeCurrentPackage
@@ -1080,25 +1131,24 @@
         [self.guiCollectionView reloadData];
         return;
     }
-
+    
+    // Tell manager to prioritize current selected package.
+    EMRenderManager.sh.prioritizedPackageOID = package.oid;
+    
     // A specific package or mixed screen?
     if (package != nil) {
         // A specific packge.
         [self _handleChangeToPackage:package];
     } else {
+        // Mix screen
         [self _handleChangeToMixScreen];
     }
-    
+
     // Store reference to selected package (nil if mixed screen)
-    self.selectedPackage = package;
-    
     // And reset the fetched results controller so relevant data will be displayed.
+    self.selectedPackage = package;
     [self resetFetchedResultsController];
-
-    // Tell manager to prioritize current selected package.
-    EMRenderManager.sh.prioritizedPackageOID = package.oid;
     
-
     // Reveal/Hide Transitions.
     [self transitionToPackage:package];
     
@@ -1110,6 +1160,7 @@
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     [appCFG createMissingEmuticonObjectsForMixedScreen];
+    [EMCaches.sh cacheGifsForEmus:self.fetchedResultsController.fetchedObjects];
 }
 
 -(void)_handleChangeToPackage:(Package *)package {
@@ -1119,26 +1170,20 @@
     [package createMissingEmuticonObjects];
     
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (![appCFG isPackageUsedForOnboarding:package]) {
-        // Not an onboarding package.
-        
-        // Check if user was asked about auto updates/background fetches.
-        // (tweak: counts the number of packages the user viewed and show question
-        // after tweaked threshold reached)
-        NSInteger numberOfViewedPackagesBeforeAlertsQuestion = HMPanelTweakValue(@"number of viewed packages before alerts question", 1);
-        NSInteger numberOfViewedPackages = [Package countNumberOfViewedPackagesInContext:EMDB.sh.context];
-        if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
-            // Never asked.
-            // Ask the user if interested in background fetches / auto updates.
-            if (numberOfViewedPackages > numberOfViewedPackagesBeforeAlertsQuestion)
-                [self askUserAboutAlerts];
-        }
-        
-        // If package never viewed before by the user, count the event.
-        if (!package.viewedByUser.boolValue) {
-            [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED];
-            [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:@YES];
-        }
+
+    NSInteger numberOfViewedPackagesBeforeAlertsQuestion = [AppCFG tweakedInteger:@"number_of_viewed_packages_before_alerts_question" defaultValue:0];
+    NSInteger numberOfViewedPackages = [Package countNumberOfViewedPackagesInContext:EMDB.sh.context];
+    if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
+        // Never asked.
+        // Ask the user if interested in background fetches / auto updates.
+        if (numberOfViewedPackages >= numberOfViewedPackagesBeforeAlertsQuestion)
+            [self askUserAboutAlerts];
+    }
+    
+    // If package never viewed before by the user, count the event.
+    if (!package.viewedByUser.boolValue) {
+        [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED];
+        [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:@YES];
     }
     
     // Mark package as viewed.
@@ -1158,24 +1203,20 @@
         weakSelf.guiTagLabel.alpha = 0;
         weakSelf.guiTagLabel.transform = CGAffineTransformIdentity;
     }];
-    
-    
-    [UIView animateWithDuration:0.08 animations:^{
-        weakSelf.guiCollectionView.alpha = 0;
-        weakSelf.guiCollectionView.transform = CGAffineTransformMakeScale(0.90, 0.90);
+
+    weakSelf.guiCollectionView.alpha = 0;
+    weakSelf.guiCollectionView.transform = CGAffineTransformMakeScale(0.90, 0.90);
+    [self.guiCollectionView performBatchUpdates:^{
+        [weakSelf.guiCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     } completion:^(BOOL finished) {
-        [self.guiCollectionView performBatchUpdates:^{
-            [weakSelf.guiCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.1 delay:0.0
-                                options:UIViewAnimationOptionCurveEaseOut
-                             animations:^{
-                                 weakSelf.guiCollectionView.alpha = 1;
-                                 weakSelf.guiCollectionView.transform = CGAffineTransformIdentity;
-                             } completion:^(BOOL finished) {
-                                 
-                             }];
-        }];
+        [UIView animateWithDuration:0.2 delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             weakSelf.guiCollectionView.alpha = 1;
+                             weakSelf.guiCollectionView.transform = CGAffineTransformIdentity;
+                         } completion:^(BOOL finished) {
+                             
+                         }];
     }];
 }
 

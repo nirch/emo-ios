@@ -29,6 +29,7 @@
 #define emkOID              @"oid"
 #define emkEmuticonOID      @"emuticon oid"
 #define emkEmuticonDefOID   @"emuticon definition oid"
+#define emkEmuticonDefName   @"emuticon definition name"
 #define emkFootageOID       @"footage oid"
 #define emkOutputOID        @"output oid"
 #define emkNumberOfFrames   @"number of frames"

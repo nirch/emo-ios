@@ -13,6 +13,8 @@
 #import "EMDB+Files.h"
 #import "EMRenderer.h"
 #import "AppManagement.h"
+#import "EMBackend.h"
+#import "EMNotificationCenter.h"
 
 @interface EMRenderManager()
 
@@ -50,6 +52,7 @@
         self.isRendering = NO;
         self.requiredRendersPerPackageOID = [NSMutableDictionary new];
         [self initRenderingQueue];
+        [self initObservers];
     }
     return self;
 }
@@ -57,6 +60,34 @@
 -(void)initRenderingQueue
 {
     self.renderingQueue = AppManagement.sh.renderingQueue;
+}
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+
+    // Backend downloaded (or failed to download) missing resources for emuticon.
+    [nc addUniqueObserver:self
+                 selector:@selector(onDownloadedResourcesForEmuticon:)
+                     name:emkUIDownloadedResourcesForEmuticon
+                   object:nil];
+
+}
+
+#pragma mark - Observers handlers
+-(void)onDownloadedResourcesForEmuticon:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if ([info[@"for"] isEqualToString:@"preview"]) {
+        NSString *emuDefOID = info[@"emuDefOID"];
+        NSString *footageOID = info[@"footageOID"];
+        EmuticonDef *emuDef = [EmuticonDef findWithID:emuDefOID context:EMDB.sh.context];
+        if ([emuDef allResourcesAvailable]) {
+            UserFootage *footage = [UserFootage findWithID:footageOID context:EMDB.sh.context];
+            [self renderPreviewForFootage:footage withEmuDef:emuDef];
+        }
+    }
 }
 
 #pragma mark - Rendering management
@@ -194,13 +225,28 @@
           footage.framesCount
           );
     
+    NSDictionary *info = @{
+                           @"for":@"preview",
+                           @"emuDefOID":emuDef.oid,
+                           @"footageOID":footage.oid,
+                           @"packageOID":emuDef.package.oid,
+                           };
+
     
-    
-    // Render in a background thread.
-    dispatch_async(self.renderingQueue, ^(void){
-        [self _renderPreviewForFootage:(UserFootage *)footage
-                            withEmuDef:(EmuticonDef *)emuDef];
-    });
+    REMOTE_LOG(@"Starting to render emuticon named: %@ for preview", emuDef.name);
+    BOOL allResourcesAvailable = [emuDef allResourcesAvailable];
+    if (allResourcesAvailable) {
+        REMOTE_LOG(@"All resources available for: %@", emuDef.name);
+        // Render in a background thread.
+        dispatch_async(self.renderingQueue, ^(void){
+            [self _renderPreviewForFootage:(UserFootage *)footage
+                                withEmuDef:(EmuticonDef *)emuDef];
+        });
+    } else {
+        REMOTE_LOG(@"Some resources missing for: %@ will try to download", emuDef.name);
+        [EMBackend.sh downloadResourcesForEmuDef:emuDef info:info];
+        return;
+    }
 }
 
 

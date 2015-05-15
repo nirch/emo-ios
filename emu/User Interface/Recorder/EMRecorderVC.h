@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, EMRecorderState) {
 
 #define emkPackage @"package"
 #define emkEmuticon @"emuticon"
+#define emkEmuticonDef @"emuticonDef"
+
 @property (nonatomic) NSDictionary *info;
 
 @property (weak, nonatomic) id<EMRecorderDelegate>delegate;

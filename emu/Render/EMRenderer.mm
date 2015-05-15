@@ -19,10 +19,9 @@
 #import "HrRendererLib/HrEffect/HrEffectMask.h"
 #import "Gpw/Vtool/Vtool.h"
 
+//#import "Uigp/GpMemoryLeak.h"
+
 @implementation EMRenderer
-
-
-
 
 -(void)render
 {
@@ -113,26 +112,32 @@
     render->AddOutput(gifOutput);
     render->Process();
     
-    // Finishing up.
-    if (gifOutput != NULL)  {
-        gifOutput->Close();
-        delete gifOutput;
-    }
-
     if (userSource != NULL) {
         userSource->Close();
+        userSource->DeleteContents();
         delete userSource;
     }
     
     if (bgSource != NULL) {
         bgSource->Close();
+        bgSource->DeleteContents();
         delete bgSource;
     }
     
     if (fgSource != NULL) {
         fgSource->Close();
+        fgSource->DeleteContents();
         delete fgSource;
     }    
+
+    // Finishing up.
+    if (gifOutput != NULL)  {
+        gifOutput->Close();
+        gifOutput->DeleteContents();
+        delete gifOutput;
+    }
+    
+//    gpMemory_leak_print(NULL);
 }
 
 

@@ -8,6 +8,7 @@
 #define E_APP_CFG @"AppCFG"
 
 @class Package;
+@class EmuticonDef;
 
 #import "AppCFG.h"
 
@@ -16,6 +17,7 @@
 +(AppCFG *)cfgInContext:(NSManagedObjectContext *)context;
 -(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;
+-(EmuticonDef *)emuticonDefForOnboarding;
 -(void)createMissingEmuticonObjectsForMixedScreen;
 
 #pragma mark - Sampled results
@@ -24,6 +26,7 @@
 
 #pragma mark - tweaked values
 +(BOOL)tweakedBool:(NSString *)name defaultValue:(BOOL)defaultValue;
++(NSInteger)tweakedInteger:(NSString *)name defaultValue:(NSInteger)defaultValue;
 +(NSTimeInterval)tweakedInterval:(NSString *)name defaultValue:(NSTimeInterval)defaultValue;
 
 @end

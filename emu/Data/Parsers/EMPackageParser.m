@@ -41,6 +41,9 @@
     pkg.zipppedPackageFileName = [info safeStringForKey:@"zipped_package_file_name"];
     pkg.showOnPacksBar = @(!self.parseForOnboarding);
 
+    NSNumber *shouldAutoDownload = [info safeBoolNumberForKey:@"should_auto_download"];
+    pkg.shouldAutoDownload = shouldAutoDownload? shouldAutoDownload: @YES;
+
     NSNumber *priority = self.packagesPriorities[oid];
     pkg.priority = priority? priority:@9999;
     

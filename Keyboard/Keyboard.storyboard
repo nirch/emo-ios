@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sle-Gl-c4f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sle-Gl-c4f">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -126,12 +126,18 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="la8-wb-pv4" customClass="FLAnimatedImageView">
-                                                                    <rect key="frame" x="-15" y="-15" width="120" height="120"/>
+                                                                    <rect key="frame" x="2" y="2" width="86" height="86"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="120" id="gqF-FG-RZa"/>
                                                                         <constraint firstAttribute="width" constant="120" id="qXL-3R-Cy4"/>
                                                                     </constraints>
+                                                                    <variation key="default">
+                                                                        <mask key="constraints">
+                                                                            <exclude reference="gqF-FG-RZa"/>
+                                                                            <exclude reference="qXL-3R-Cy4"/>
+                                                                        </mask>
+                                                                    </variation>
                                                                 </view>
                                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="tnZ-UQ-Odo">
                                                                     <rect key="frame" x="35" y="35" width="20" height="20"/>
@@ -141,23 +147,13 @@
                                                         </view>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="centerY" secondItem="la8-wb-pv4" secondAttribute="centerY" id="Xv7-rK-RvP"/>
+                                                            <constraint firstItem="la8-wb-pv4" firstAttribute="leading" secondItem="NrH-gI-DET" secondAttribute="leading" constant="2" id="EBE-tu-aG0"/>
+                                                            <constraint firstAttribute="bottom" secondItem="la8-wb-pv4" secondAttribute="bottom" constant="2" id="Syq-LE-Ypv"/>
+                                                            <constraint firstItem="la8-wb-pv4" firstAttribute="top" secondItem="NrH-gI-DET" secondAttribute="top" constant="2" id="Szu-Dr-ySL"/>
                                                             <constraint firstAttribute="centerX" secondItem="tnZ-UQ-Odo" secondAttribute="centerX" id="cq7-ql-iIl"/>
-                                                            <constraint firstItem="la8-wb-pv4" firstAttribute="top" secondItem="NrH-gI-DET" secondAttribute="top" id="cz4-oD-Vru"/>
-                                                            <constraint firstAttribute="bottom" secondItem="la8-wb-pv4" secondAttribute="bottom" id="g54-m6-YkK"/>
                                                             <constraint firstAttribute="centerY" secondItem="tnZ-UQ-Odo" secondAttribute="centerY" id="na6-lE-Gha"/>
-                                                            <constraint firstAttribute="centerX" secondItem="la8-wb-pv4" secondAttribute="centerX" id="ojM-As-mum"/>
-                                                            <constraint firstAttribute="trailing" secondItem="la8-wb-pv4" secondAttribute="trailing" id="uCm-tn-kmd"/>
-                                                            <constraint firstItem="la8-wb-pv4" firstAttribute="leading" secondItem="NrH-gI-DET" secondAttribute="leading" id="wy6-oE-etn"/>
+                                                            <constraint firstAttribute="trailing" secondItem="la8-wb-pv4" secondAttribute="trailing" constant="2" id="w7c-C6-x3E"/>
                                                         </constraints>
-                                                        <variation key="default">
-                                                            <mask key="constraints">
-                                                                <exclude reference="cz4-oD-Vru"/>
-                                                                <exclude reference="g54-m6-YkK"/>
-                                                                <exclude reference="uCm-tn-kmd"/>
-                                                                <exclude reference="wy6-oE-etn"/>
-                                                            </mask>
-                                                        </variation>
                                                         <connections>
                                                             <outlet property="guiActivity" destination="tnZ-UQ-Odo" id="DY1-Zs-mmh"/>
                                                             <outlet property="guiAnimGifView" destination="la8-wb-pv4" id="LDB-UR-cKJ"/>
@@ -310,7 +306,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="xFh-aU-Vl3" secondAttribute="centerY" id="F2i-Ny-DLv"/>
                             <constraint firstAttribute="height" secondItem="xFh-aU-Vl3" secondAttribute="height" id="QGE-jJ-8xb"/>

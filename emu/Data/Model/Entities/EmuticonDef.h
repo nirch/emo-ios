@@ -2,7 +2,7 @@
 //  EmuticonDef.h
 //  emu
 //
-//  Created by Aviv Wolf on 5/12/15.
+//  Created by Aviv Wolf on 5/14/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSNumber * framesCount;
+@property (nonatomic, retain) NSNumber * mixedScreenOrder;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * oid;
 @property (nonatomic, retain) NSNumber * order;
@@ -25,7 +26,7 @@
 @property (nonatomic, retain) NSString * sourceUserLayerMask;
 @property (nonatomic, retain) NSNumber * thumbnailFrameIndex;
 @property (nonatomic, retain) NSNumber * useForPreview;
-@property (nonatomic, retain) NSNumber * mixedScreenOrder;
+@property (nonatomic, retain) NSNumber * disallowedForOnboardingPreview;
 @property (nonatomic, retain) NSSet *emus;
 @property (nonatomic, retain) Package *package;
 @end

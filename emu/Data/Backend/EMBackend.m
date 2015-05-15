@@ -15,6 +15,9 @@
 
 #import "HMServer.h"
 #import "HMServer+Packages.h"
+
+#import "HMParams.h"
+#import "HMPanel.h"
 #import "EMNotificationCenter.h"
 
 #import <zipzap.h>
@@ -243,8 +246,8 @@
     // Iterate packages and download packages zip files.
     for (Package *package in [Package allPackagesPrioritizedInContext:EMDB.sh.context]) {
         if ([package shouldDownloadZippedPackage]) {
-            // Download resources of the package
-            [self downloadResourcesForPackage:package];
+            // Download resources of the package (but only if marked for auto download)
+            if (package.shouldAutoDownload) [self downloadResourcesForPackage:package];
         } else if ([package shouldUnzipZippedPackage]) {
             // Unzip resources to a directory.
             [self unzipResourcesForPackage:package];
@@ -368,16 +371,15 @@
     return unzippedFilesCount;
 }
 
--(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info
+-(void)downloadResourcesForEmuDef:(EmuticonDef *)emuDef info:(NSDictionary *)info
 {
-    NSString *identifier = emu.emuDef.oid;
-    
+    NSString *identifier = emuDef.oid;
+
     // If already downloading resources for emu, skip for now.
     if (self.requiredResourcesForEmuOID[identifier]) {
         return;
     }
     
-    EmuticonDef *emuDef = emu.emuDef;
     NSMutableDictionary *requiredResources = [NSMutableDictionary new];
     
     // Front layer
@@ -404,6 +406,11 @@
                              identifier:identifier];
         }
     }
+}
+
+-(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info
+{
+    [self downloadResourcesForEmuDef:emu.emuDef info:info];
 }
 
 

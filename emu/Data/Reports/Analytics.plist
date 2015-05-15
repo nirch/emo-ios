@@ -13,6 +13,11 @@
 	</dict>
 	<key>superParams</key>
 	<dict>
+		<key>emuNameUsedForPreviewOnOnboarding</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;string&gt; - The name of the emu used on the preview stage in the recorder onboarding flow (when user opened app for the first time)</string>
+		</dict>
 		<key>notificationsSettings</key>
 		<dict>
 			<key>description</key>
@@ -119,6 +124,11 @@ or
 	</dict>
 	<key>personDetails</key>
 	<dict>
+		<key>emuNameUsedForPreviewOnOnboarding</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;string&gt; - The name of the emu used on the preview stage in the recorder onboarding flow (when user opened app for the first time)</string>
+		</dict>
 		<key>firstLaunchDate</key>
 		<dict>
 			<key>description</key>

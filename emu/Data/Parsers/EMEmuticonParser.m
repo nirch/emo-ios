@@ -50,7 +50,12 @@
     emuDef.order                       = orderSet? orderSet:self.incrementalOrder;
     
     // Mixed screen ordering.
-    emuDef.mixedScreenOrder = self.mixedScreenOrder? self.mixedScreenOrder:@9999;
+    // If no order provided, generate a high random order (but only if not already generated).
+    if (self.mixedScreenOrder) {
+        emuDef.mixedScreenOrder = self.mixedScreenOrder;
+    } else {
+        emuDef.mixedScreenOrder = @(arc4random() % 1000 + 1000);
+    }
     
     // Parse the emuticon definition info.
     emuDef.name                        = [info safeStringForKey:@"name" defaultsDictionary:defaults];
@@ -77,6 +82,7 @@
     emuDef.framesCount                 = [info safeNumberForKey:@"frames_count" defaultsDictionary:defaults];
     emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index" defaultsDictionary:defaults];
     emuDef.palette                     = [info safeStringForKey:@"palette" defaultsDictionary:defaults];
+    emuDef.disallowedForOnboardingPreview = [info safeBoolNumberForKey:@"disallowed_for_onboarding_preview" defaultsValue:@NO];
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

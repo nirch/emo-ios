@@ -22,9 +22,8 @@ int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
     {
         NSString *imagePath = [m_pngFiles objectAtIndex:iFrame];
         UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
-        //if (m_lastImage) image_destroy(m_lastImage, 1);
-        m_lastImage = CVtool::DecomposeUIimage(image);
-        ProcessEffect(m_lastImage, iFrame, im);
+        *im = CVtool::UIimage_to_image(image, *im);
+        ProcessEffect(*im, iFrame, im);
         return 1;
     }
     else
@@ -38,5 +37,3 @@ int PngSourceWithFX::Close()
 {
     return 1;
 }
-
-#pragma mark - Image pickers effects

@@ -272,8 +272,6 @@
     
     image_to_inspect = image3_to_BGR(m_original_image, image_to_inspect);
 
-    // [HMImageTools saveImageType3:image_to_inspect withName:@"ProcessBackground"];
-
     // Get the background detection mark for this frame.
     HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
     HMLOG(TAG, EM_VERBOSE, @"Background mark: %@", @(bgMark));

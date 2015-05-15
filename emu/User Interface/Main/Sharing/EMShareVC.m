@@ -55,7 +55,11 @@
 {
     [super viewWillAppear:animated];
     [self initGUI];
-    [self hideExtraShareOptionsAnimated:NO];
+    if (_allowFBExperience) {
+        [self hideExtraShareOptionsAnimated:NO];
+    } else {
+        [self showExtraShareOptionsAnimated:NO];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -129,6 +133,16 @@
 
     self.guiFBMButtonContainer.alpha = 1;
     self.guiFBMButtonContainer.transform = CGAffineTransformIdentity;
+}
+
+
+#pragma mark - Allow/Disallow facebook experience
+-(void)setAllowFBExperience:(BOOL)allowFBExperience
+{
+    _allowFBExperience = allowFBExperience;
+    if (!allowFBExperience && self.guiFBMButtonContainer.alpha !=0) {
+        [self showExtraShareOptionsAnimated:YES];
+    }
 }
 
 
@@ -360,7 +374,7 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat x = scrollView.contentOffset.x;
-    if (x<-30) [self hideExtraShareOptionsAnimated:YES];
+    if (x<-30 && _allowFBExperience) [self hideExtraShareOptionsAnimated:YES];
 }
 
 #pragma mark - IB Actions
@@ -384,11 +398,13 @@
 
 -(IBAction)onPressedMoreShareOptionsButton:(id)sender
 {
+    if (!_allowFBExperience) return;
     [self showExtraShareOptionsAnimated:YES];
 }
 
 - (IBAction)onSwipedLeftToShowMoreShareOptions:(id)sender
 {
+    if (!_allowFBExperience) return;
     [self showExtraShareOptionsAnimated:YES];
 }
 

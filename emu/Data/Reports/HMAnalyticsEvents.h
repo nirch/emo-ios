@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 14:45:23 05/06/15 IDT
+//  Created by build script on 17:59:07 05/14/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -64,6 +64,11 @@
 #define AK_S_NUMBER_OF_APPROVED_RETAKES @"numberOfApprovedRetakes"
 
 
+/** Did the user ever finished a second retake. Opened the recorder and
+    finished the recorder flow (disregarding oboarding) **/
+#define AK_S_DID_EVER_FINISH_A_RETAKE @"didEverFinishARetake"
+
+
 /** The long build version string in the following format:
     <big>.<small>.<build#> for production application. or
     <big>.<small>.<build#>.t for test application. **/
@@ -75,9 +80,9 @@
 #define AK_S_NUMBER_OF_PACKAGES_NAVIGATED @"numberOfPackagesNavigated"
 
 
-/** A mnemonic name of the application. Currently: "Emu iOS". Used in case
-    we will create white labels of the Emu app in the future. **/
-#define AK_S_CLIENT_NAME @"clientName"
+/** The localized language preference on the user's device (good to know
+    for the time we will want to localize the app). **/
+#define AK_S_LOCALIZATION_PREFERENCE @"localizationPreference"
 
 
 /** The number of times keyboard did appear. **/
@@ -97,14 +102,14 @@
 #define AK_S_NUMBER_OF_SHARES_USING_APP_COUNT @"numberOfSharesUsingAppCount"
 
 
-/** The localized language preference on the user's device (good to know
-    for the time we will want to localize the app). **/
-#define AK_S_LOCALIZATION_PREFERENCE @"localizationPreference"
+/** A mnemonic name of the application. Currently: "Emu iOS". Used in case
+    we will create white labels of the Emu app in the future. **/
+#define AK_S_CLIENT_NAME @"clientName"
 
 
-/** Did the user ever finished a second retake. Opened the recorder and
-    finished the recorder flow (disregarding oboarding) **/
-#define AK_S_DID_EVER_FINISH_A_RETAKE @"didEverFinishARetake"
+/** <string> - The name of the emu used on the preview stage in the
+    recorder onboarding flow (when user opened app for the first time) **/
+#define AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING @"emuNameUsedForPreviewOnOnboarding"
 
 
 
@@ -126,14 +131,14 @@
 #define AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT @"numberOfKBAppearancesCount"
 
 
+/** true if numberOfSharesUsingAppCount > 0 **/
+#define AK_PD_DID_EVER_SHARE_USING_APP @"didEverShareUsingApp"
+
+
 /** The number of times the user pressed "I love it" and confirmed the
     take in the recorder (not counting oboarding recorder) from any
     device. **/
 #define AK_PD_NUMBER_OF_APPROVED_RETAKES @"numberOfApprovedRetakes"
-
-
-/** true if numberOfSharesUsingAppCount > 0 **/
-#define AK_PD_DID_EVER_SHARE_USING_APP @"didEverShareUsingApp"
 
 
 /** The number of times an app became active for the user from any device. **/
@@ -149,6 +154,11 @@
 /** The number of times the user pressed an emu in the keyboard and copied
     to clipboard from any device. **/
 #define AK_PD_NUMBER_OF_KB_COPY_EMU_COUNT @"numberOfKBCopyEmuCount"
+
+
+/** <string> - The name of the emu used on the preview stage in the
+    recorder onboarding flow (when user opened app for the first time) **/
+#define AK_PD_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING @"emuNameUsedForPreviewOnOnboarding"
 
 
 /** The number of times the user shared an emu from within the app from

@@ -28,6 +28,9 @@
 // Is this user's results are (were) sampled by the server?
 -(BOOL)userSampledByServer;
 
+#pragma mark - info
++(NSString *)deviceModelName;
+
 #pragma mark - Queues
 @property (nonatomic, readonly) dispatch_queue_t ioQueue;
 @property (nonatomic, readonly) dispatch_queue_t renderingQueue;

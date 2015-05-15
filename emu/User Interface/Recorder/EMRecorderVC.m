@@ -49,8 +49,9 @@
 
 
 @property (nonatomic) Package *package;
+@property (nonatomic) NSString *emuticonDefOIDForPreview;
+@property (nonatomic) NSString *emuticonDefNameForPreview;
 @property (nonatomic) Emuticon *emuticonToUpdate;
-
 @property (nonatomic) Emuticon *previewEmuticon;
 
 @property (nonatomic) NSDate *dateTimeOpened;
@@ -126,10 +127,19 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"EMRecorder" bundle:nil];
     EMRecorderVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"recorder vc"];
     vc.flowType = flowType;
-    vc.emuticonToUpdate = info[emkEmuticon];
-
-    if (vc.emuticonToUpdate) {
+    
+    if (info[emkEmuticon]) {
+        vc.emuticonToUpdate = info[emkEmuticon];
         vc.package = vc.emuticonToUpdate.emuDef.package;
+    } else if (info[emkEmuticonDefOID]) {
+        vc.emuticonDefOIDForPreview = info[emkEmuticonDefOID];
+        vc.emuticonDefNameForPreview = info[emkEmuticonDefName];
+        if (flowType == EMRecorderFlowTypeOnboarding) {
+            [HMPanel.sh reportSuperParameterKey:AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING
+                                          value:info[emkEmuticonDefName]];
+            [HMPanel.sh personDetails:@{AK_PD_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING:info[emkEmuticonDefName]}];
+        }
+        
     } else {
         vc.package = info[emkPackage];
     }
@@ -142,8 +152,13 @@
 {
     self.dateTimeOpened = [NSDate date];
     HMParams *params = [HMParams new];
+
     [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticonToUpdate.emuDef.oid];
     [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticonToUpdate.emuDef.name];
+
+    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticonDefOIDForPreview];
+    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticonDefNameForPreview];
+    
     [params addKey:AK_EP_PACKAGE_OID value:self.package.oid];
     [params addKey:AK_EP_PACKAGE_NAME  value:self.package.name];
     [params addKey:AK_EP_FLOW_TYPE value:[self flowName]];
@@ -602,6 +617,8 @@
     EmuticonDef *emuDefForPreview;
     if (self.emuticonToUpdate) {
         emuDefForPreview = self.emuticonToUpdate.emuDef;
+    } else if (self.emuticonDefOIDForPreview) {
+        emuDefForPreview = [EmuticonDef findWithID:self.emuticonDefOIDForPreview context:EMDB.sh.context];
     } else {
         emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
     }

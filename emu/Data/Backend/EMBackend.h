@@ -8,6 +8,7 @@
 
 @class HMServer;
 @class Emuticon;
+@class EmuticonDef;
 @class Package;
 
 #import <Foundation/Foundation.h>
@@ -26,6 +27,7 @@
 
 #pragma mark - Downloading resources
 -(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info;
+-(void)downloadResourcesForEmuDef:(EmuticonDef *)emuDef info:(NSDictionary *)info;
 
 
 #pragma mark - Background fetch

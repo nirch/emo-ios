@@ -84,18 +84,21 @@
 {
     // If should have a back layer, check if available.
     if (self.sourceBackLayer &&
-        [self isMissingResourceNamed:self.sourceBackLayer])
+        [self isMissingResourceNamed:self.sourceBackLayer]) {
         return NO;
+    }
     
     // If should have a front layer, check if available.
     if (self.sourceFrontLayer &&
-        [self isMissingResourceNamed:self.sourceFrontLayer])
+        [self isMissingResourceNamed:self.sourceFrontLayer]) {
         return NO;
+    }
     
     // If should have a user mask, check if available.
     if (self.sourceUserLayerMask &&
-        [self isMissingResourceNamed:self.sourceUserLayerMask])
+        [self isMissingResourceNamed:self.sourceUserLayerMask]) {
         return NO;
+    }
     
     return YES;
 }

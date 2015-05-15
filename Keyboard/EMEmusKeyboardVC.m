@@ -42,6 +42,8 @@
 @property (nonatomic) BOOL isFullAccessGranted;
 @property (nonatomic, readonly) NSFetchedResultsController *fetchedResultsController;
 
+@property (nonatomic, readonly) CGFloat screenWidth;
+@property (nonatomic, readonly) CGFloat screenHeight;
 
 @end
 
@@ -54,6 +56,10 @@
     [super viewDidLoad];
     self.initializedData = NO;
 
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    _screenWidth = screenRect.size.width;
+    _screenHeight = screenRect.size.height;
+    
     // Not hidden but alpha = 0
     self.guiAlphaNumericKBContainer.hidden = NO;
     [self hideAlphaNumericKBAnimated:NO];
@@ -214,8 +220,9 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView
                  layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = self.guiCollectionView.bounds.size.height;
-    CGFloat width = MIN(130, height);
+    CGFloat width = self.screenWidth/3.0 - 30;
+    CGFloat height = self.guiCollectionView.bounds.size.height/2.0;
+
     return CGSizeMake(width, height);
 }
 
