@@ -44,6 +44,8 @@
 
 @property (nonatomic, readonly) CGFloat screenWidth;
 
+@property (nonatomic, weak) EMAlphaNumericKeyboard *abKBVC;
+
 @end
 
 @implementation EMEmusKeyboardVC
@@ -94,6 +96,8 @@
     {
         EMAlphaNumericKeyboard *alphaNumericKeyboard = segue.destinationViewController;
         alphaNumericKeyboard.delegate = self;
+        self.abKBVC = alphaNumericKeyboard;
+        [self.abKBVC refresh];
     } else if ([segue.identifier isEqualToString:@"embed packages bar segue"]) {
         self.packagesVC = segue.destinationViewController;
         self.packagesVC.delegate = self;
@@ -139,6 +143,10 @@
     }
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
+    
+    if (self.fetchedResultsController.fetchedObjects.count<1) {
+        [self showAlphaNumericKBAnimated:NO];
+    }
 }
 
 #pragma mark - KB helpers
@@ -400,7 +408,15 @@
 
 -(void)keyboardShouldDismissAlphaNumeric
 {
-    [self hideAlphaNumericKBAnimated:YES];
+    if (self.isUserContentAvailable) {
+      [self hideAlphaNumericKBAnimated:YES];
+    } 
+}
+
+-(BOOL)isUserContentAvailable
+{
+    if (self.fetchedResultsController == nil) return NO;
+    return self.fetchedResultsController.fetchedObjects.count>0;
 }
 
 -(void)keyboardShouldDismissAlphaNumericWithInfo:(NSDictionary *)info
@@ -422,6 +438,7 @@
         return;
     }
     
+    [self.abKBVC refresh];
     self.guiAlphaNumericKBContainer.transform = CGAffineTransformIdentity;
     self.guiAlphaNumericKBContainer.alpha = 1;
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT];

@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiShiftButton;
 
 @property (weak, nonatomic) IBOutlet KBKeyButton *guiDeleteBackKey;
+@property (weak, nonatomic) IBOutlet UILabel *guiNoContentMessage;
 
 
 @property (nonatomic) NSTimer *repeatingDeletingBackTimer;
@@ -57,6 +58,7 @@
     [super viewDidLoad];
     [self initKeys];
     [self updateKeyboardKeysForCurrentState];
+    [self refresh];
 }
 
 -(void)initKeys
@@ -94,6 +96,11 @@
 -(BOOL)isFullAccessGranted
 {
     return [self.delegate keyboardFullAccessWasGranted];
+}
+
+-(void)refresh
+{
+    self.guiNoContentMessage.hidden = [self.delegate isUserContentAvailable];
 }
 
 #pragma mark - Update keyboard keys
@@ -250,6 +257,8 @@
 -(void)resetFetchedResultsController
 {
     _fetchedResultsController = nil;
+    [self refresh];
+    
     if (!self.isFullAccessGranted)
         return;
     NSError *error;

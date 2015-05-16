@@ -15,6 +15,7 @@
 -(void)keyboardTypedString:(NSString *)typedString;
 
 @optional
+-(BOOL)isUserContentAvailable;
 -(BOOL)keyboardFullAccessWasGranted;
 -(void)keyboardShouldDismissAlphaNumeric;
 -(void)keyboardShouldDismissAlphaNumericWithInfo:(NSDictionary *)info;

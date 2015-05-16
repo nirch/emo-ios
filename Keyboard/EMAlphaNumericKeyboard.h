@@ -13,4 +13,6 @@
 
 @property (nonatomic, weak) id<EMKeyboardContainerDelegate>delegate;
 
+-(void)refresh;
+
 @end

@@ -320,8 +320,9 @@
                     "source_back_layer": "crap-shit-bg.gif", 
                     "source_front_layer": "crap-shit-fg.gif", 
                     "source_user_layer_mask": "crap-shit-mask.jpg", 
-                    "use_for_preview": false
-                }, 
+                    "use_for_preview": false,
+                    "disallowed_for_onboarding_preview": true
+                },
                 {
                     "_id": {
                         "$oid": "553e0f310a05f024b4000003"

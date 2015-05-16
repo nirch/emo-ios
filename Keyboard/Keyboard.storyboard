@@ -411,6 +411,15 @@
                                             <outlet property="delegate" destination="ZPF-8x-QHm" id="Cyy-EJ-kYc"/>
                                         </connections>
                                     </collectionView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create stickers using the Emu App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYH-24-m0I" customClass="EMLabel">
+                                        <rect key="frame" x="30" y="10" width="260" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="pRG-Jp-xtF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VQu-OG-Tmu" userLabel="sep">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
                                         <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -424,15 +433,24 @@
                                     <constraint firstAttribute="trailing" secondItem="14S-hS-zGR" secondAttribute="trailing" id="3ZM-qN-GN7"/>
                                     <constraint firstItem="mpi-fa-qqV" firstAttribute="leading" secondItem="wGg-8s-hmg" secondAttribute="leading" id="3wh-oR-sib"/>
                                     <constraint firstAttribute="height" constant="40" id="6Tw-i0-u3Y"/>
+                                    <constraint firstAttribute="trailing" secondItem="PYH-24-m0I" secondAttribute="trailing" constant="30" id="Dl0-hq-kqS"/>
                                     <constraint firstAttribute="centerY" secondItem="mpi-fa-qqV" secondAttribute="centerY" id="Nr7-7Q-2fS"/>
+                                    <constraint firstItem="PYH-24-m0I" firstAttribute="leading" secondItem="mpi-fa-qqV" secondAttribute="trailing" constant="8" id="SBS-3s-6Cl"/>
+                                    <constraint firstItem="PYH-24-m0I" firstAttribute="top" secondItem="wGg-8s-hmg" secondAttribute="top" constant="10" id="Twx-Q2-rCm"/>
                                     <constraint firstItem="VQu-OG-Tmu" firstAttribute="leading" secondItem="wGg-8s-hmg" secondAttribute="leading" id="VnK-dA-r1V"/>
                                     <constraint firstItem="14S-hS-zGR" firstAttribute="leading" secondItem="mpi-fa-qqV" secondAttribute="trailing" id="eAy-bc-6Mp"/>
                                     <constraint firstItem="VQu-OG-Tmu" firstAttribute="top" secondItem="wGg-8s-hmg" secondAttribute="top" id="iK6-f4-4kR"/>
                                     <constraint firstItem="mpi-fa-qqV" firstAttribute="height" secondItem="wGg-8s-hmg" secondAttribute="height" id="lAR-vy-q84"/>
                                     <constraint firstAttribute="trailing" secondItem="VQu-OG-Tmu" secondAttribute="trailing" id="oq7-kh-0QP"/>
                                     <constraint firstItem="14S-hS-zGR" firstAttribute="top" secondItem="wGg-8s-hmg" secondAttribute="top" id="rVq-O6-ccJ"/>
+                                    <constraint firstItem="PYH-24-m0I" firstAttribute="leading" secondItem="wGg-8s-hmg" secondAttribute="leading" constant="30" id="yru-j2-TUR"/>
                                     <constraint firstAttribute="bottom" secondItem="14S-hS-zGR" secondAttribute="bottom" id="zVI-8y-xjC"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="SBS-3s-6Cl"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5Y-ua-cAC" userLabel="Keyboard">
                                 <rect key="frame" x="0.0" y="40" width="320" height="180"/>
@@ -1016,6 +1034,7 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="guiDeleteBackKey" destination="epJ-Bw-64r" id="mUb-Va-fHg"/>
+                        <outlet property="guiNoContentMessage" destination="PYH-24-m0I" id="rLB-jp-n39"/>
                         <outlet property="guiShiftButton" destination="WwF-EL-MAT" id="NNK-s8-01F"/>
                         <outlet property="guiTagsCollectionView" destination="14S-hS-zGR" id="eTP-59-G0J"/>
                         <outlet property="guiToggleAlphaNumericButton" destination="cp8-Jr-HTK" id="14d-aY-KwL"/>
