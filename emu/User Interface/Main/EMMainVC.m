@@ -947,9 +947,19 @@
     // Reset
     NSArray *emus = [Emuticon allEmuticonsInPackage:package];
     for (Emuticon *emu in emus) {
+        [emu cleanUp];
         if (emu.prefferedFootageOID) {
-            [emu cleanUp];
+            UserFootage *footage = [UserFootage findWithID:emu.prefferedFootageOID context:EMDB.sh.context];
+            if (footage) [footage deleteAndCleanUp];
             emu.prefferedFootageOID = nil;
+        }
+    }
+    
+    if (package.prefferedFootageOID) {
+        UserFootage *footage = [UserFootage findWithID:package.prefferedFootageOID context:EMDB.sh.context];
+        if (footage) {
+            [footage deleteAndCleanUp];
+            package.prefferedFootageOID = nil;
         }
     }
     [package recountRenders];
@@ -999,7 +1009,7 @@
         if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
             [actionsMapping addAction:@"USER_CHOICE_RETAKE_PACK" text:LS(@"USER_CHOICE_RETAKE_PACK") section:sect];
         }
-        if ([self.selectedPackage hasEmusWithSpecificTakes]) {
+        if ([self.selectedPackage hasEmusWithSpecificTakes] || self.selectedPackage.prefferedFootageOID) {
             [actionsMapping addAction:@"USER_CHOICE_RESET_PACK" text:LS(@"USER_CHOICE_RESET_PACK") section:sect];
         }
         section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:sect] buttonStyle:JGActionSheetButtonStyleDefault];
