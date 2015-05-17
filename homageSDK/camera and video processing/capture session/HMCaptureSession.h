@@ -66,7 +66,6 @@
 }
 
 #pragma mark - session
-@property (nonatomic) BOOL debugMode;
 @property (nonatomic) NSString *prefferedSessionPreset;
 @property (nonatomic) CGSize prefferedSize;
 
@@ -186,7 +185,12 @@
 -(void)recordingDidFailWithError:(NSError *)error;
 
 
-
+/**
+ *  Returns YES if the capture session should be in debug mode.
+ *
+ *  @return YES if debug mode enabled, NO otherwise.
+ */
+-(BOOL)isCaptureSessionDebuggingModeEnabled;
 
 
 @end

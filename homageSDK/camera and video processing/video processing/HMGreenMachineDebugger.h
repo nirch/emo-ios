@@ -15,7 +15,9 @@
 
 @interface HMGreenMachineDebugger : NSObject
 
+@property (weak, atomic) dispatch_queue_t outputQueue;
 
 -(void)originalImage:(image_type *)m_original_image;
+-(void)zipLatestImages;
 
 @end

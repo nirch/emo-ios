@@ -40,6 +40,8 @@
 #import "EMMainVC.h"
 #import "HMBackgroundMarks.h"
 #import "AppManagement.h"
+#import "EMShareFile.h"
+
 
 @interface EMRecorderVC () <
     HMCaptureSessionDelegate,
@@ -63,7 +65,7 @@
 // User controls: recorder flow, user interaction, record, etc.
 @property (weak, nonatomic) IBOutlet UIView *guiUserControlsContainer;
 @property (weak) EMControlsBarVC *controlsVC;
-
+@property (nonatomic) EMShareFile *shareFile;
 
 // Background detection
 @property (weak, nonatomic) IBOutlet UIView *guiBGFeedBackContainer;
@@ -115,6 +117,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintCameraPreviewLeading;
 
 
+// Debugging
+@property (weak, nonatomic) IBOutlet UISwitch *guiDebuggingSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *guiDebuggingLabel;
+
+
 @end
 
 @implementation EMRecorderVC
@@ -145,6 +152,7 @@
     }
     vc.info = info;
     [vc reportOpeningRecorder];
+    
     return vc;
 }
 
@@ -343,6 +351,14 @@
                      name:hmkRenderingFinishedPreview
                    object:nil];
     
+    
+    if (AppManagement.sh.isTestApp) {
+        // On zipping finished in debug mode.
+        [nc addUniqueObserver:self
+                     selector:@selector(onDebuggingFinishedZippingFiles:)
+                         name:hmkDebuggingFinishedZippingFiles
+                       object:nil];
+    }
 }
 
 -(void)removeObservers
@@ -350,6 +366,7 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkNotificationBGDetectionInfo];
     [nc removeObserver:hmkRenderingFinishedPreview];
+    [nc removeObserver:hmkDebuggingFinishedZippingFiles];
 }
 
 #pragma mark - Observers handlers
@@ -403,6 +420,22 @@
     [self handleStateWithInfo:info
                     nextState:@(EMRecorderStateReviewPreview)];
 }
+
+-(void)onDebuggingFinishedZippingFiles:(NSNotification *)notification
+{
+    // Get the newly createed preview emuticon
+    NSDictionary *info = notification.userInfo;
+    NSString *zipfile = info[@"debug zipped folder"];
+    if (zipfile == nil) return;
+    
+    self.shareFile = [EMShareFile new];
+    self.shareFile.viewController = self;
+    NSURL *url = [NSURL fileURLWithPath:zipfile];
+    self.shareFile.objectToShare = url;
+    [self.shareFile share];
+}
+
+
 
 #pragma mark - Time
 -(NSTimeInterval)timePassedSinceRecorderOpened
@@ -534,7 +567,6 @@
     // Initialize the video processor.
     // Set the recorderVC as the session delegate.
     self.captureSession = [[HMCaptureSession alloc] init];
-    self.captureSession.debugMode = AppManagement.sh.isTestApp;
     self.captureSession.prefferedSessionPreset = AVCaptureSessionPreset640x480;
     self.captureSession.prefferedSize = CGSizeMake(480, 480);
     self.captureSession.sessionDelegate = self;
@@ -581,10 +613,7 @@
     // processing the feed of video frames.
     [self.captureSession initializeVideoProcessor:gm];
     self.greenMachine = gm;
-    HMLOG(TAG, EM_DBG, @"Initialized video processing.");
-    
-    // TODO: DAN, remove this from here when you implement the UI for start/stop debugging
-    self.greenMachine.debugMode = AppManagement.sh.isTestApp;
+    HMLOG(TAG, EM_DBG, @"Initialized video processing.");    
 }
 
 
@@ -595,7 +624,7 @@
                                                    inDomains:NSUserDomainMask] lastObject];
 }
 
-#pragma mark - Capture session delegate
+#pragma mark - HMCaptureSessionDelegate
 -(void)recordingDidStartWithInfo:(NSDictionary *)info
 {
     NSAssert([NSThread isMainThread], @"Method called using a thread other than main!");
@@ -643,6 +672,12 @@
 
     HMLOG(TAG, DEBUG, @"recording did fail with error %@", error);
     [self epicFail];
+}
+
+-(BOOL)isCaptureSessionDebuggingModeEnabled
+{
+    if (!AppManagement.sh.isTestApp) return NO;
+    return self.guiDebuggingSwitch.isOn;
 }
 
 #pragma mark - Onboarding delegate
@@ -817,6 +852,7 @@
     //
     // Capture session and video processing.
     //
+    [self updateDebuggingState];
     [self.captureSession setVideoProcessingState:HMVideoProcessingStateIdle
                                             info:nil];
     
@@ -1008,6 +1044,7 @@
     // Recorder and UI state.
     //
     [self hidePleaseWait];
+    if (AppManagement.sh.isTestApp) self.guiDebuggingSwitch.hidden = YES;
 
     // Show recording progress
     [self.feedBackVC showRecordingProgressOfDuration:self.recordingDuration];
@@ -1373,6 +1410,15 @@
     }
 }
 
+#pragma mark - Debugging
+-(void)updateDebuggingState
+{
+    BOOL isTestApp = AppManagement.sh.isTestApp;
+    self.guiDebuggingSwitch.hidden = !isTestApp;
+    self.guiDebuggingLabel.hidden = !self.guiDebuggingSwitch.isOn;
+}
+
+
 #pragma mark - Fake flow
 -(void)fakeFlow
 {
@@ -1424,9 +1470,11 @@
 // ===========
 // IB Actions.
 // ===========
-- (IBAction)onPressedDebugButton:(id)sender
+- (IBAction)onDebugSwitchStateChanged:(id)sender
 {
+    [self updateDebuggingState];
 }
+
 
 
 @end

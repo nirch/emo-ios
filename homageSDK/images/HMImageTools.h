@@ -57,4 +57,21 @@
 +(void)saveImageType4:(image_type *)image4
              withName:(NSString *)name;
 
+
+
+/**
+ *  Save an image_type object with 3 channels as Jpeg file.
+ *
+ *  @param image3 The image_type object (3 channels) that will be converted to UIImage and saved as PNG.
+ *  @param directory of the saved image
+ *  @param name   The name of the output file (not including extension name).
+ *  @param compression quality of the jpeg
+ */
++(void)saveImageType3Jpeg:(image_type *)image3
+            directoryPath:(NSString *)directoryPath
+                 withName:(NSString *)name
+       compressionQuality:(CGFloat)compressionQuality;
+
+
+
 @end

@@ -18,8 +18,6 @@ typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
     HMVideoProcessingStateInspectAndProcessFrames               = 3
 };
 
-@property (nonatomic) BOOL debugMode;
-
 /**
  *  Output queue (optional)
  */
@@ -62,5 +60,17 @@ typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
  *  Do some clean up operations.
  */
 -(void)cleanUp;
+
+
+@optional
+/**
+ *  Start a debug session.
+ */
+-(void)startDebugSession;
+
+/**
+ *  Finish a debug session.
+ */
+-(void)finishDebuSession;
 
 @end

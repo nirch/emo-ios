@@ -11,6 +11,7 @@
 #import "AWFanOpeningView.h"
 #import "EMTickingProgressView.h"
 #import "EMTickingProgressDelegate.h"
+#import "AppManagement.h"
 
 @interface EMBGFeedBackVC () <
     EMTickingProgressDelegate
@@ -23,8 +24,6 @@
 @property (weak, nonatomic) IBOutlet AWFanOpeningView *guiContourBadContainer;
 @property (weak, nonatomic) IBOutlet AWFanOpeningView *guiContourGoodContainer;
 @property (weak, nonatomic) IBOutlet EMSilhouetteView *guiSilhouetteBG;
-
-
 
 //
 // Recording progress feedback
@@ -162,8 +161,6 @@
 {
 }
 
-
-
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -173,6 +170,5 @@
     _goodBackgroundWeight = slider.value;
     [self update];
 }
-
 
 @end

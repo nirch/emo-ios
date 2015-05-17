@@ -69,5 +69,17 @@
        fileName:(NSString *)fileName
       extension:(NSString *)extension;
 
+/**
+ *  Converts a UIImage object to it's JPEG data represenstation and saves it to disk.
+ *
+ *  @param image A UIImage object
+ *  @param name  The name of the directory to save the file in
+ *  @param name  The name of the output file saved to disk (just the name, no extension)
+ *  @param compressionQuality The quality of the compression. Value in the range [0.0 ... 1.0]
+ */
++(void)saveJPEGOfUIImage:(UIImage *)image
+           directoryPath:(NSString *)directoryPath
+                withName:(NSString *)name
+      compressionQuality:(CGFloat)compressionQuality;
 
 @end

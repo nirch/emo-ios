@@ -67,5 +67,15 @@
     [imageData writeToFile:dataPath atomically:YES];
 }
 
++(void)saveJPEGOfUIImage:(UIImage *)image
+           directoryPath:(NSString *)directoryPath
+                withName:(NSString *)name
+      compressionQuality:(CGFloat)compressionQuality
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, compressionQuality);
+    [self saveData:imageData directoryPath:directoryPath fileName:name extension:@"jpg"];
+}
+
+
 
 @end

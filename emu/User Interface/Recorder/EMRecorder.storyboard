@@ -82,15 +82,6 @@
                                     <constraint firstAttribute="height" constant="150" id="OhS-l2-gFx"/>
                                 </constraints>
                             </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbW-XZ-kwz">
-                                <rect key="frame" x="16" y="8" width="343" height="30"/>
-                                <state key="normal" title="Debug">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedDebugButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B0Y-cE-H8m"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EMUNIZING, HOLD ON!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58B-sS-tlP" customClass="EMLabel">
                                 <rect key="frame" x="16" y="370" width="343" height="22"/>
                                 <constraints>
@@ -107,6 +98,19 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <switch hidden="YES" opaque="NO" alpha="0.29999999999999966" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="P0L-A7-drQ" userLabel="Debug Switch">
+                                <rect key="frame" x="163" y="123" width="51" height="31"/>
+                                <color key="onTintColor" red="0.99215686270000003" green="0.08235294118" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="onDebugSwitchStateChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Lrt-xU-zJT"/>
+                                </connections>
+                            </switch>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEBUG MODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JfO-2o-hgs">
+                                <rect key="frame" x="149" y="162" width="77" height="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="0.99215686270000003" green="0.08235294118" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -116,25 +120,26 @@
                             <constraint firstItem="WpW-ex-edX" firstAttribute="centerY" secondItem="rU3-fD-N15" secondAttribute="centerY" id="3QP-VM-tah"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="top" secondItem="Ocg-rD-rpG" secondAttribute="top" constant="14" id="4Qh-u9-hyu"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="centerX" secondItem="rU3-fD-N15" secondAttribute="centerX" id="6jS-Gq-4Dn"/>
+                            <constraint firstItem="P0L-A7-drQ" firstAttribute="top" secondItem="rU3-fD-N15" secondAttribute="top" constant="15" id="8XS-Wv-kTS"/>
                             <constraint firstItem="58B-sS-tlP" firstAttribute="top" secondItem="Mbm-Lk-tB3" secondAttribute="bottom" constant="15" id="9JD-Mg-TH9"/>
+                            <constraint firstItem="JfO-2o-hgs" firstAttribute="top" secondItem="P0L-A7-drQ" secondAttribute="bottom" constant="8" id="9rW-xP-z3B"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Ado-RV-myG"/>
                             <constraint firstItem="Mbm-Lk-tB3" firstAttribute="centerY" secondItem="rU3-fD-N15" secondAttribute="centerY" id="Cp5-14-431"/>
-                            <constraint firstItem="qbW-XZ-kwz" firstAttribute="trailing" secondItem="WpW-ex-edX" secondAttribute="trailing" id="Ful-T7-8Xm"/>
-                            <constraint firstItem="qbW-XZ-kwz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="GvA-rS-IXf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ooa-Vx-VYG" secondAttribute="bottom" id="IaY-Wz-wb1"/>
                             <constraint firstItem="Zr9-A9-dYy" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="top" id="J5x-5V-nNd"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="top" secondItem="Zr9-A9-dYy" secondAttribute="bottom" id="JJp-4f-o0f"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="width" secondItem="rU3-fD-N15" secondAttribute="width" id="MOh-48-hUD"/>
+                            <constraint firstItem="P0L-A7-drQ" firstAttribute="centerX" secondItem="JfO-2o-hgs" secondAttribute="centerX" id="SWA-67-oxz"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="StK-Gj-HGl"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="width" secondItem="KBW-Mp-3FC" secondAttribute="width" id="VFV-w0-rcB"/>
                             <constraint firstAttribute="centerX" secondItem="Mbm-Lk-tB3" secondAttribute="centerX" constant="0.5" id="VXM-44-ycB"/>
                             <constraint firstAttribute="centerY" secondItem="Mbm-Lk-tB3" secondAttribute="centerY" constant="-0.5" id="Vf0-HX-0tw"/>
                             <constraint firstItem="Zr9-A9-dYy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Xrk-mM-zTa"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="centerX" secondItem="Zr9-A9-dYy" secondAttribute="centerX" id="aeE-1o-Epq"/>
+                            <constraint firstItem="P0L-A7-drQ" firstAttribute="centerX" secondItem="rU3-fD-N15" secondAttribute="centerX" id="cfi-z0-eDo"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="height" secondItem="KBW-Mp-3FC" secondAttribute="height" id="d7p-FM-C4W"/>
                             <constraint firstItem="uLD-H3-Nlp" firstAttribute="centerY" secondItem="Ocg-rD-rpG" secondAttribute="centerY" id="fdr-Ib-LKR"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="glv-f1-xaX"/>
-                            <constraint firstItem="qbW-XZ-kwz" firstAttribute="leading" secondItem="rU3-fD-N15" secondAttribute="leading" id="hdp-NO-iPh"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="width" secondItem="58B-sS-tlP" secondAttribute="width" id="hun-kr-lkU"/>
                             <constraint firstAttribute="trailing" secondItem="Zr9-A9-dYy" secondAttribute="trailing" id="m2n-er-Ou0"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="top" secondItem="WpW-ex-edX" secondAttribute="bottom" constant="5" id="pLz-hD-V6x"/>
@@ -165,6 +170,8 @@
                         <outlet property="constraintCameraPreviewTrailing" destination="q2m-1W-z2G" id="IQD-v1-vwA"/>
                         <outlet property="guiBGFeedBackContainer" destination="WpW-ex-edX" id="Px4-Wn-q5m"/>
                         <outlet property="guiBadBGIcon" destination="Ocg-rD-rpG" id="D8E-Fy-huB"/>
+                        <outlet property="guiDebuggingLabel" destination="JfO-2o-hgs" id="IYN-Nz-Ba5"/>
+                        <outlet property="guiDebuggingSwitch" destination="P0L-A7-drQ" id="ytG-6y-5lM"/>
                         <outlet property="guiGoodBGIcon" destination="uLD-H3-Nlp" id="YHT-TE-XKl"/>
                         <outlet property="guiPleaseWaitLabel" destination="58B-sS-tlP" id="pdE-RX-8Ls"/>
                         <outlet property="guiPleaseWaitView" destination="Mbm-Lk-tB3" id="mEW-PP-Z6e"/>
@@ -387,6 +394,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxQ-lA-UXA" userLabel="Record Button" customClass="EMRecordButton">
                                 <rect key="frame" x="133" y="88" width="108" height="108"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="nxQ-lA-UXA" secondAttribute="height" multiplier="1:1" id="5KF-kg-orG"/>
                                 </constraints>

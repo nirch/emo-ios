@@ -64,7 +64,6 @@
 -(id)init
 {
     if (self = [super init]) {
-        _debugMode = NO;
         previousSecondTimestamps = [[NSMutableArray alloc] init];
         referenceOrientation = AVCaptureVideoOrientationPortrait;
         backgroundDetectionEnabled = NO;
@@ -178,8 +177,6 @@
     
     // Create serial queue for movie writing
     movieWritingQueue = AppManagement.sh.ioQueue;
-//    movieWritingQueue = dispatch_queue_create("Movie Writing Queue",
-//                                              DISPATCH_QUEUE_SERIAL);
     
     // If capture session not set up yet, set it up.
     if ( !captureSession )
@@ -457,6 +454,13 @@
     [self.writer prepareWithInfo:@{@"duration":@(duration)}];
     self.recording = YES;
     
+    // Debugging
+    if ([self.sessionDelegate isCaptureSessionDebuggingModeEnabled]) {
+        if ([self.videoProcessor respondsToSelector:@selector(startDebugSession)]) {
+            [self.videoProcessor startDebugSession];
+        }
+    }
+    
     // Tell delegate that recording did start
     // (communincates this to the delegate on the main thread)
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -489,7 +493,14 @@
     self.recording = NO;
     NSDictionary *info = [self.writer finishReturningInfo];
     self.writer = nil;
-    
+
+    // Debugging
+    if ([self.sessionDelegate isCaptureSessionDebuggingModeEnabled]) {
+        if ([self.videoProcessor respondsToSelector:@selector(finishDebuSession)]) {
+            [self.videoProcessor finishDebuSession];
+        }
+    }
+
     // Tell the delegate that the recording session ended,
     // on the main thread.
     dispatch_async(dispatch_get_main_queue(), ^{

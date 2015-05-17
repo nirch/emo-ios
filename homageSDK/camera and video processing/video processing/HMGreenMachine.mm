@@ -49,6 +49,7 @@
 @property (nonatomic) CGSize size;
 @property (nonatomic) HMBackgroundMarks *bgMarks;
 @property (nonatomic) HMBGMark lastBGMark;
+
 @property (nonatomic) HMGreenMachineDebugger *gmDebug;
 
 // The weight is a value between 0 (bad backgrounds) and 1 (good background)
@@ -61,7 +62,6 @@
 
 @implementation HMGreenMachine
 
-@synthesize debugMode = _debugMode;
 @synthesize backgroundImage = _backgroundImage;
 @synthesize contourFileName = _contourFileName;
 @synthesize processCounter = _processCounter;
@@ -81,7 +81,6 @@
 {
     self = [super init];
     if (self) {
-        _debugMode = NO;
     }
     return self;
 }
@@ -175,11 +174,22 @@
 }
 
 #pragma mark - debugging
--(HMGreenMachineDebugger *)gmDebug
+/**
+ *  Start a debug session.
+ */
+-(void)startDebugSession
 {
-    if (_gmDebug) return _gmDebug;
-    _gmDebug = [HMGreenMachineDebugger new];
-    return _gmDebug;
+    self.gmDebug = [HMGreenMachineDebugger new];
+    self.gmDebug.outputQueue = self.outputQueue;
+}
+
+/**
+ *  Finish a debug session.
+ */
+-(void)finishDebuSession
+{
+    [self.gmDebug zipLatestImages];
+    self.gmDebug = nil;
 }
 
 #pragma mark - Processing
@@ -194,11 +204,6 @@
     m_original_image = CVtool::CVPixelBufferRef_to_image_crop(pixelBuffer,
                                                               0, 80, 480, 480,
                                                               m_original_image);
-    
-    // Debugging
-    if (self.debugMode && self.gmDebug) {
-        [self.gmDebug originalImage:m_original_image];
-    }
 }
 
 -(CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer
@@ -214,6 +219,11 @@
     // Convert display image from bgr to rgb
     image3_bgr2rgb(m_display_image);
 
+    // Debugging (if required in test apps)
+    if (self.gmDebug) {
+        [self.gmDebug originalImage:original_bgr_image];
+    }
+    
     // Taking care of the output image.
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
@@ -227,10 +237,6 @@
                                                             m_output_image);     // The output image.
             m_output_image->timeStamp = output_t.value;
 
-//            static int i = 0; i++; [HMImageTools saveImageType3:original_bgr_image withName:[SF:@"Process-%@",@(i)]];
-//            [HMImageTools saveImageType3:m_output_image withName:[SF:@"Me-%@",@(i)]];
-
-            
             // Destroying the temp image
             image_destroy(original_bgr_image, 1);
         });
@@ -274,7 +280,7 @@
 
     // Get the background detection mark for this frame.
     HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
-    HMLOG(TAG, EM_VERBOSE, @"Background mark: %@", @(bgMark));
+    // HMLOG(TAG, EM_VERBOSE, @"Background mark: %@", @(bgMark));
     
     if (bgMark == HMBGMarkGood && _bgMarkWeight < 1) {
         // Good background (Still under threshold)
@@ -303,7 +309,7 @@
 
 -(void)_postBGMark
 {
-    HMLOG(TAG, EM_VERBOSE, @"BGMark:%@ weight:%@", @(self.lastBGMark), @(self.bgMarkWeight));
+    // HMLOG(TAG, EM_VERBOSE, @"BGMark:%@ weight:%@", @(self.lastBGMark), @(self.bgMarkWeight));
     
     // Gather some info.
     NSMutableDictionary *info = [NSMutableDictionary new];

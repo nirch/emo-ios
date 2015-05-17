@@ -296,6 +296,7 @@
 		08B589A51A93BB7B008D9068 /* EmuStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A41A93BB7B008D9068 /* EmuStyle.m */; };
 		08B589A91A93CF12008D9068 /* EMGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A81A93CF12008D9068 /* EMGradientView.m */; };
 		08B589CF1A9F13EE004F6FA1 /* 1.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08B589CE1A9F13EE004F6FA1 /* 1.ctr */; };
+		08B9876C1B08CB3300EA0D73 /* EMShareFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9876B1B08CB3300EA0D73 /* EMShareFile.m */; };
 		08BBBC701AD9758200D4AD1D /* EmuSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */; };
 		08BBBC731AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
 		08BBBC741AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
@@ -648,6 +649,8 @@
 		08B589A71A93CF12008D9068 /* EMGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMGradientView.h; sourceTree = "<group>"; };
 		08B589A81A93CF12008D9068 /* EMGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMGradientView.m; sourceTree = "<group>"; };
 		08B589CE1A9F13EE004F6FA1 /* 1.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.ctr; sourceTree = "<group>"; };
+		08B9876A1B08CB3300EA0D73 /* EMShareFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFile.h; sourceTree = "<group>"; };
+		08B9876B1B08CB3300EA0D73 /* EMShareFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareFile.m; sourceTree = "<group>"; };
 		08BBBC6E1AD9758200D4AD1D /* EmuSectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuSectionReusableView.h; sourceTree = "<group>"; };
 		08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuSectionReusableView.m; sourceTree = "<group>"; };
 		08BBBC711AD9B15F00D4AD1D /* Package+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Package+Logic.h"; sourceTree = "<group>"; };
@@ -1137,6 +1140,8 @@
 				0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */,
 				08EBB4151ABC8E7800A91E71 /* EMShareFBMessanger.h */,
 				08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */,
+				08B9876A1B08CB3300EA0D73 /* EMShareFile.h */,
+				08B9876B1B08CB3300EA0D73 /* EMShareFile.m */,
 			);
 			path = "Share Methods";
 			sourceTree = "<group>";
@@ -2255,6 +2260,7 @@
 				085C679B1A937EC9007BC910 /* EMOBCell.m in Sources */,
 				08CB89811A9AA12A00224A38 /* EMExperimentalCell.m in Sources */,
 				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
+				08B9876C1B08CB3300EA0D73 /* EMShareFile.m in Sources */,
 				08213B3A1ACC0A4600BE77E4 /* emu.xcdatamodeld in Sources */,
 				0833196B1B04EAA8000B8979 /* EmuticonDef.m in Sources */,
 				080CB39B1AA51B6100603E30 /* EMPackageCell.m in Sources */,

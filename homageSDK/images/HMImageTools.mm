@@ -75,4 +75,17 @@
     [HMImages savePNGOfUIImage:imageToSave withName:name];
 }
 
+
++(void)saveImageType3Jpeg:(image_type *)image3
+            directoryPath:(NSString *)directoryPath
+                 withName:(NSString *)name
+       compressionQuality:(CGFloat)compressionQuality
+
+{
+    image_type* image4 = image4_from(image3, NULL);
+    UIImage *imageToSave = [self createUIImageFromImageType:image4 withAlpha:NO];
+    [HMImages saveJPEGOfUIImage:imageToSave directoryPath:directoryPath withName:name compressionQuality:compressionQuality];
+}
+
+
 @end
