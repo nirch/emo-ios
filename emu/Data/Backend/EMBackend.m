@@ -580,7 +580,7 @@
     if (package.notificationText) {
         alertBody = package.notificationText;
     } else {
-        alertBody = [SF:LS(@"GENERAL_NEW_CONTENT_MESSAGE"), package.label];
+        alertBody = [SF:LS(@"GENERAL_NEW_CONTENT_MESSAGE"), [package localizedLabel]];
     }
 
     UIUserNotificationSettings *settings = [[UIApplication sharedApplication] currentUserNotificationSettings];

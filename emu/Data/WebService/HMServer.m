@@ -85,6 +85,9 @@
          [self.session.requestSerializer setValue:self.currentUserID forHTTPHeaderField:@"USER_ID"];
     }
     
+    // Localization
+    [self.session.requestSerializer setValue:AppManagement.sh.prefferedLanguages forHTTPHeaderField:@"Accept-Language"];
+    
     // Set the session response serializer and set the acceptable content types
     self.session.responseSerializer = [HMJSONResponseSerializerWithData new];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
@@ -192,12 +195,12 @@
         //
         // In development application.
         // Use only the test servers.
-        // Allows from UI to choose PUBLIC or SCRATCHPAD data.
-        // By default will use the scratchpad.
+        // Hardcoded choice if to use scratchpad or public data while developing.
         //
         port =      self.cfg[@"dev_port"];
         protocol =  self.cfg[@"dev_protocol"];
         host =      self.cfg[@"dev_host"];
+        self.usingPublicDataBase = YES;
         
     } else {
 
@@ -209,14 +212,8 @@
         port =      self.cfg[@"prod_port"];
         protocol =  self.cfg[@"prod_protocol"];
         host =      self.cfg[@"prod_host"];
-    }
-
-    if (AppManagement.sh.isTestApp || AppManagement.sh.isDevApp) {
-        // Scratchpad by default. Used by developers and content managers.
-        self.usingPublicDataBase = NO;
-    } else {
-        // Public production data. This is what the end users see.
-        self.usingPublicDataBase = YES;
+        self.usingPublicDataBase = !AppManagement.sh.isTestApp;
+        
     }
     
     if (port) {

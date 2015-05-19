@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "Gpw/Vtool/Vtool.h"
 
-
 PngSourceWithFX::PngSourceWithFX(NSArray *pngFiles)
 {
     m_pngFiles = pngFiles;

@@ -37,9 +37,10 @@
         NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
         animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
 
-        if (self.shouldCacheGifData)
+        if (self.shouldCacheGifData && animGif != nil) {
             [EMCaches.sh.gifsDataCache setObject:animGif
                                           forKey:[animatedGifURL description]];
+        }
     } else {
         // We have a cached animated gif.
         // HMLOG(TAG, EM_DBG, @"Used cached animated gif");

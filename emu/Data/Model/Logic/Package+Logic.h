@@ -159,6 +159,7 @@
 +(NSInteger)countNumberOfViewedPackagesInContext:(NSManagedObjectContext *)context;
 -(BOOL)doAllEmusHaveSpecificTakes;
 -(BOOL)hasEmusWithSpecificTakes;
+-(NSString *)localizedLabel;
 
 #pragma mark - Sampled results
 -(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID;

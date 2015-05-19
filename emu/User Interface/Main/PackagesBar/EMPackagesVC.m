@@ -195,7 +195,7 @@
 -(void)_configureCell:(EMPackageCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.guiLabel.text = package.label;
+    cell.guiLabel.text = [package localizedLabel];
     cell.isSelected = [package isEqual:self.selectedPackage];
     
     NSURL *url = [package urlForPackageIcon];

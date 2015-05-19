@@ -83,12 +83,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Cache in memory server side localized strings
+    // (if exist in local storage)
+    [AppManagement.sh updateLocalizedStrings];
+    
     self.refetchDataAttempted = NO;
     self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
     self.guiTagLabel.alpha = 0;
     self.guiRetakeButton.alpha = 0;
     self.guiBackToFBMButton.alpha = 0;
     self.guiCollectionView.alpha = 0;
+
     dispatch_after(DTIME(2.5), dispatch_get_main_queue(), ^{
         [self.guiActivity stopAnimating];
         if (self.guiCollectionView.alpha == 0) {
@@ -270,9 +276,15 @@
 
 -(void)onPackagesDataRefresh:(NSNotification *)notification
 {
+    // Cache in memory server side localized strings
+    // (if exist in local storage)
+    [AppManagement.sh updateLocalizedStrings];
+
+    // Did the refetch
     self.refetchDataAttempted = YES;
-    [self.packagesBarVC refresh];
     
+    // Update UI
+    [self.packagesBarVC refresh];
     if (self.guiCollectionView.alpha < 1) {
         [self.guiActivity stopAnimating];
         [UIView animateWithDuration:0.2 animations:^{
@@ -1005,7 +1017,7 @@
     //
     EMHolySheetSection *section1 = nil;
     if (self.selectedPackage) {
-        NSString *title = [SF:@"%@ pack", self.selectedPackage.label];
+        NSString *title = [SF:LS(@"USER_CHOICE_TITLE"), [self.selectedPackage localizedLabel]];
         if (![self.selectedPackage doAllEmusHaveSpecificTakes]) {
             [actionsMapping addAction:@"USER_CHOICE_RETAKE_PACK" text:LS(@"USER_CHOICE_RETAKE_PACK") section:sect];
         }
@@ -1047,7 +1059,7 @@
     //
     // Extra sections
     //
-    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"Cancel")] buttonStyle:JGActionSheetButtonStyleCancel];
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
     NSMutableArray *sections = [NSMutableArray new];
     if (section1) [sections addObject:section1];
     if (section2) [sections addObject:section2];

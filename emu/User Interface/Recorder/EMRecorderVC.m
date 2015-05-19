@@ -1413,16 +1413,16 @@
 #pragma mark - Debugging
 -(void)updateDebuggingState
 {
-    BOOL isTestApp = AppManagement.sh.isTestApp;
-    self.guiDebuggingSwitch.hidden = !isTestApp;
-    self.guiDebuggingLabel.hidden = !self.guiDebuggingSwitch.isOn;
+//    BOOL isTestApp = AppManagement.sh.isTestApp;
+//    self.guiDebuggingSwitch.hidden = !isTestApp;
+//    self.guiDebuggingLabel.hidden = !self.guiDebuggingSwitch.isOn;
 }
 
 
 #pragma mark - Fake flow
 -(void)fakeFlow
 {
-//    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
+    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_fakePostBGMark:) userInfo:nil repeats:YES];
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        [self _fakeExtraction];
 //    });

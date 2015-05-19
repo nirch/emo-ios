@@ -11,6 +11,7 @@
 #import "Package+Logic.h"
 #import "EMDB.h"
 #import "EMDB+Files.h"
+#import "AppManagement.h"
 
 @implementation Package (Logic)
 
@@ -332,6 +333,11 @@
     return [SF:@"#%@", [self.label lowercaseString]];
 }
 
+-(NSString *)localizedLabel
+{
+    NSString *key = [SF:@"PACKAGE_%@", [self.name uppercaseString]];
+    return LSS(key, self.label);
+}
 
 -(void)recountRenders
 {

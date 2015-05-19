@@ -23,6 +23,7 @@
 @property (nonatomic) BOOL isBuildOfTestApplication;
 @property (nonatomic) BOOL isBuildOfDevelopmentApplication;
 
+@property (nonatomic) NSDictionary *serverSideLocalizationString;
 
 @end
 
@@ -30,6 +31,7 @@
 
 @synthesize ioQueue = _ioQueue;
 @synthesize renderingQueue = _renderingQueue;
+@synthesize prefferedLanguages = _prefferedLanguages;
 
 #pragma mark - Initialization
 // A singleton
@@ -212,5 +214,27 @@ NSString* machineName()
     return model;
 }
 
+#pragma mark - Localization
+-(NSString *)prefferedLanguages
+{
+    if (_prefferedLanguages) return _prefferedLanguages;    
+    NSArray *languages = [NSLocale preferredLanguages];
+    if (languages == nil) languages = @[@"en"];
+    _prefferedLanguages = [languages componentsJoinedByString:@","];
+    return _prefferedLanguages;
+}
+
+-(NSString *)serverSideLocalizedString:(NSString *)stringKey defaultValue:(NSString *)defaultValue
+{
+    NSString *string = self.serverSideLocalizationString[stringKey];
+    if (string == nil) return defaultValue;
+    return string;
+}
+
+-(void)updateLocalizedStrings
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    _serverSideLocalizationString = appCFG.localization;
+}
 
 @end

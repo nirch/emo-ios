@@ -2,7 +2,7 @@
 //  AppCFG.m
 //  emu
 //
-//  Created by Aviv Wolf on 5/10/15.
+//  Created by Aviv Wolf on 5/19/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -17,6 +17,9 @@
 @dynamic configUpdatedOn;
 @dynamic defaultOutputVideoMaxFps;
 @dynamic latestPackagePublishedOn;
+@dynamic mixedScreenEmus;
+@dynamic mixedScreenEnabled;
+@dynamic mixedScreenPrioritizedEmus;
 @dynamic oid;
 @dynamic onboardingPassed;
 @dynamic onboardingUsingPackage;
@@ -27,8 +30,6 @@
 @dynamic userViewedEmuScreenTutorial;
 @dynamic userViewedKBTutorial;
 @dynamic userViewedMainTutorial;
-@dynamic mixedScreenEmus;
-@dynamic mixedScreenPrioritizedEmus;
-@dynamic mixedScreenEnabled;
+@dynamic localization;
 
 @end

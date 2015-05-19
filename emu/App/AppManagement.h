@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define LSS(STRINGKEY, DEFSTRING) [AppManagement.sh serverSideLocalizedString:STRINGKEY defaultValue:DEFSTRING]
+
 #import <Foundation/Foundation.h>
 
 @interface AppManagement : NSObject
@@ -30,6 +32,11 @@
 
 #pragma mark - info
 +(NSString *)deviceModelName;
+
+#pragma mark - Localization
+@property (nonatomic, readonly) NSString *prefferedLanguages;
+-(NSString *)serverSideLocalizedString:(NSString *)stringKey defaultValue:(NSString *)defaultValue;
+-(void)updateLocalizedStrings;
 
 #pragma mark - Queues
 @property (nonatomic, readonly) dispatch_queue_t ioQueue;

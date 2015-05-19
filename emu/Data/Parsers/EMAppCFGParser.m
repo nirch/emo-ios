@@ -31,6 +31,20 @@
     appCFG.clientName = [info safeStringForKey:@"client_name"];
     appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
     
+    
+    //
+    // Localization
+    //
+    NSDictionary *localization = [info safeDictionaryForKey:@"localization" defaultValue:nil];
+    if ([localization isKindOfClass:[NSDictionary class]]) {
+        appCFG.localization = localization;
+    } else {
+        appCFG.localization = nil;
+    }
+    
+    //
+    // Uploading sampled user content
+    //
     NSDictionary *uploadUserContent = [info safeDictionaryForKey:@"upload_user_content" defaultValue:@{@"enabled":@NO}];
     if (!(uploadUserContent[@"unchanged"] && [uploadUserContent[@"unchanged"] boolValue])) {
         // unchanged != YES so we need to change to the new values.
@@ -38,11 +52,18 @@
     }
     
     
+    //
+    // Application tweaks
+    //
     NSDictionary *tweakedValues = info[@"tweaks"];
     if ([tweakedValues isKindOfClass:[NSDictionary class]]) {
         appCFG.tweaks = tweakedValues;
     }
     
+    
+    //
+    // Mixed screen
+    //
     NSDictionary *mixedScreenInfo = info[@"mixed_screen"];
     if (mixedScreenInfo == nil) {
         // No info received from server. Use info stored locally.
