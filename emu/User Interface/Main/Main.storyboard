@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CKz-4p-446">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CKz-4p-446">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -434,6 +434,13 @@
                                     <constraint firstAttribute="width" constant="80" id="ur8-85-h8b"/>
                                 </constraints>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fau-bn-TfM">
+                                <rect key="frame" x="140" y="411" width="95" height="29"/>
+                                <segments>
+                                    <segment title="gif"/>
+                                    <segment title="video"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -441,6 +448,7 @@
                             <constraint firstItem="goj-wz-5hX" firstAttribute="width" secondItem="DTt-Hy-ZEY" secondAttribute="width" id="7ku-c5-zMN"/>
                             <constraint firstItem="goj-wz-5hX" firstAttribute="centerY" secondItem="DTt-Hy-ZEY" secondAttribute="centerY" id="BfA-OF-8gy"/>
                             <constraint firstItem="goj-wz-5hX" firstAttribute="height" secondItem="DTt-Hy-ZEY" secondAttribute="height" id="FVV-mq-Olx"/>
+                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="centerX" secondItem="fau-bn-TfM" secondAttribute="centerX" id="Ffg-WW-cMp"/>
                             <constraint firstItem="RfO-Jc-wDZ" firstAttribute="top" secondItem="DTt-Hy-ZEY" secondAttribute="bottom" constant="8" id="H9U-Fr-uR0"/>
                             <constraint firstItem="l1T-UB-AV6" firstAttribute="centerY" secondItem="Voh-xn-DcO" secondAttribute="centerY" id="Hv6-b9-dLg"/>
                             <constraint firstItem="Voh-xn-DcO" firstAttribute="top" secondItem="RfO-Jc-wDZ" secondAttribute="bottom" constant="8" id="IJE-1Z-bDw"/>
@@ -448,6 +456,7 @@
                             <constraint firstAttribute="centerX" secondItem="fTt-oM-iaE" secondAttribute="centerX" id="U1H-Ek-Rld"/>
                             <constraint firstItem="goj-wz-5hX" firstAttribute="centerX" secondItem="DTt-Hy-ZEY" secondAttribute="centerX" id="VuD-b0-U5b"/>
                             <constraint firstItem="6OK-A8-yVv" firstAttribute="top" secondItem="Voh-xn-DcO" secondAttribute="bottom" id="WFY-9h-N6i"/>
+                            <constraint firstItem="DTt-Hy-ZEY" firstAttribute="bottom" secondItem="fau-bn-TfM" secondAttribute="bottom" constant="12" id="YRR-zO-7Ck"/>
                             <constraint firstItem="DTt-Hy-ZEY" firstAttribute="trailing" secondItem="Ppi-hu-ZiR" secondAttribute="trailingMargin" id="cjp-4H-5hy" userLabel="Gif player right margin"/>
                             <constraint firstItem="DTt-Hy-ZEY" firstAttribute="top" secondItem="fTt-oM-iaE" secondAttribute="bottom" constant="44" id="gUb-sE-OAE" userLabel="Gif player top margin"/>
                             <constraint firstItem="l1T-UB-AV6" firstAttribute="centerX" secondItem="Voh-xn-DcO" secondAttribute="centerX" id="nhE-5i-RDJ"/>

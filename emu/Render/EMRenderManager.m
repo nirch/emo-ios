@@ -177,6 +177,7 @@
     renderer.outputOID = emu.oid;
     renderer.paletteString = emuDef.palette;
     renderer.outputPath = [EMDB outputPath];
+    renderer.shouldOutputGif = YES;
     
     // Dispatch the renderer on the rendering queue
     __weak EMRenderManager *weakSelf = self;
@@ -266,6 +267,7 @@
     renderer.outputOID = [[NSUUID UUID] UUIDString];
     renderer.paletteString = emuDef.palette;
     renderer.outputPath = [EMDB outputPath];
+    renderer.shouldOutputGif = YES;
     
     // Execute the rendering.
     [renderer render];

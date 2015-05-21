@@ -267,8 +267,16 @@
 		086005581A98B153008CD7DE /* EMUISound.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005571A98B153008CD7DE /* EMUISound.m */; };
 		086005651A99483E008CD7DE /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005641A99483E008CD7DE /* HMImages.m */; };
 		0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */; };
+		08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
+		08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
+		08653CF61B0CD8450016DC54 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
+		0899D2361B0BE42800CC6F88 /* EmuRenderingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899D2351B0BE42800CC6F88 /* EmuRenderingTests.m */; };
+		0899D23B1B0BE6C000CC6F88 /* test-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0899D2381B0BE6C000CC6F88 /* test-bg.gif */; };
+		0899D23C1B0BE6C000CC6F88 /* test-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0899D2391B0BE6C000CC6F88 /* test-fg.gif */; };
+		0899D23D1B0BE6C000CC6F88 /* test-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0899D23A1B0BE6C000CC6F88 /* test-mask.jpg */; };
+		0899D23F1B0C611400CC6F88 /* fake-user-take.png in Resources */ = {isa = PBXBuildFile; fileRef = 0899D23E1B0C611400CC6F88 /* fake-user-take.png */; };
 		089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
@@ -816,12 +824,19 @@
 		086005641A99483E008CD7DE /* HMImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMImages.m; sourceTree = "<group>"; };
 		0864F7081A9A195500F5EAF7 /* EMTickingProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTickingProgressView.h; sourceTree = "<group>"; };
 		0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTickingProgressView.m; sourceTree = "<group>"; };
+		08653CF21B0CD8450016DC54 /* EMVideoMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMVideoMaker.h; sourceTree = "<group>"; };
+		08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EMVideoMaker.mm; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
 		087F20901A8F5A03002B1678 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
 		087F20921A8F5A28002B1678 /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
 		087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
+		0899D2351B0BE42800CC6F88 /* EmuRenderingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuRenderingTests.m; sourceTree = "<group>"; };
+		0899D2381B0BE6C000CC6F88 /* test-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "test-bg.gif"; sourceTree = "<group>"; };
+		0899D2391B0BE6C000CC6F88 /* test-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "test-fg.gif"; sourceTree = "<group>"; };
+		0899D23A1B0BE6C000CC6F88 /* test-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "test-mask.jpg"; sourceTree = "<group>"; };
+		0899D23E1B0C611400CC6F88 /* fake-user-take.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-user-take.png"; sourceTree = "<group>"; };
 		089E78AD1A77FD8600BC3479 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
 		089E78AE1A77FD8600BC3479 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
 		089E78B21A780DEB00BC3479 /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
@@ -1634,6 +1649,17 @@
 			path = data;
 			sourceTree = "<group>";
 		};
+		0899D2371B0BE48D00CC6F88 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				0899D23E1B0C611400CC6F88 /* fake-user-take.png */,
+				0899D2381B0BE6C000CC6F88 /* test-bg.gif */,
+				0899D2391B0BE6C000CC6F88 /* test-fg.gif */,
+				0899D23A1B0BE6C000CC6F88 /* test-mask.jpg */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 		089E78AC1A77FD8600BC3479 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -1807,6 +1833,8 @@
 			children = (
 				08CB89C51A9B84F400224A38 /* VideoOutput.h */,
 				08CB89C61A9B84F400224A38 /* VideoOutput.mm */,
+				08653CF21B0CD8450016DC54 /* EMVideoMaker.h */,
+				08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */,
 			);
 			path = output;
 			sourceTree = "<group>";
@@ -1935,12 +1963,14 @@
 		08E692251AF60FF900BD6949 /* emutests */ = {
 			isa = PBXGroup;
 			children = (
+				08A6ECDE1AF6519C003982DB /* Helpers */,
+				08E692261AF60FF900BD6949 /* Supporting Files */,
+				0899D2371B0BE48D00CC6F88 /* resources */,
 				082902741AFADC94004DE369 /* EmuTestsAppDelegate.h */,
 				082902751AFADC94004DE369 /* EmuTestsAppDelegate.m */,
 				08E692281AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m */,
 				0829026F1AF7DDE8004DE369 /* EmuS3IntegrationTests.m */,
-				08A6ECDE1AF6519C003982DB /* Helpers */,
-				08E692261AF60FF900BD6949 /* Supporting Files */,
+				0899D2351B0BE42800CC6F88 /* EmuRenderingTests.m */,
 			);
 			path = emutests;
 			sourceTree = "<group>";
@@ -2410,15 +2440,18 @@
 				08331A2D1B06907D000B8979 /* yeah-omg-bg.gif in Resources */,
 				083319C71B06907D000B8979 /* casual-thanks-mask.jpg in Resources */,
 				08331A181B06907D000B8979 /* wasted-buzzzzzed-fg.gif in Resources */,
+				0899D23C1B0BE6C000CC6F88 /* test-fg.gif in Resources */,
 				08331A2A1B06907D000B8979 /* yeah-no-fg.gif in Resources */,
 				083319C11B06907D000B8979 /* casual-thanks-bg.gif in Resources */,
 				083319B21B06907D000B8979 /* attitude-coolstory-fg.gif in Resources */,
 				083319A91B06907D000B8979 /* 70s-groovy-bg.gif in Resources */,
 				08331A331B06907D000B8979 /* yeah-yeah-bg-v1.gif in Resources */,
 				083319AF1B06907D000B8979 /* attitude-coolstory-bg.gif in Resources */,
+				0899D23D1B0BE6C000CC6F88 /* test-mask.jpg in Resources */,
 				083319D31B06907D000B8979 /* crap-bitch-bg.gif in Resources */,
 				08331A061B06907D000B8979 /* party-twerk-bg.gif in Resources */,
 				083319FA1B06907D000B8979 /* meme-cage-bg.gif in Resources */,
+				0899D23F1B0C611400CC6F88 /* fake-user-take.png in Resources */,
 				083319BB1B06907D000B8979 /* casual-lol-fg.gif in Resources */,
 				083319B51B06907D000B8979 /* attitude-coolstory-mask.png in Resources */,
 				08331A001B06907D000B8979 /* party-party-bg.gif in Resources */,
@@ -2441,6 +2474,7 @@
 				082902731AFA7ACF004DE369 /* s3-2006-03-01.json in Resources */,
 				083319B81B06907D000B8979 /* casual-lol-bg.gif in Resources */,
 				083319D91B06907D000B8979 /* crap-bitch-mask.jpg in Resources */,
+				0899D23B1B0BE6C000CC6F88 /* test-bg.gif in Resources */,
 				083319CA1B06907D000B8979 /* casual-whats-bg.gif in Resources */,
 				083319E51B06907D000B8979 /* hearts-bg.gif in Resources */,
 				083319F71B06907D000B8979 /* meme-baby-fg.gif in Resources */,
@@ -2696,6 +2730,7 @@
 				08AA148A1B0BA658002E1B2F /* EMTickingProgressView.m in Sources */,
 				08AA148B1B0BA658002E1B2F /* EMShareCell.m in Sources */,
 				08AA148C1B0BA658002E1B2F /* Emuticon+Logic.m in Sources */,
+				08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
 				08AA148E1B0BA658002E1B2F /* EMBGFeedBackVC.m in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
@@ -2797,6 +2832,7 @@
 				0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */,
 				0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */,
 				08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */,
+				08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */,
 				085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */,
 				085C67621A937EC9007BC910 /* main.m in Sources */,
@@ -2834,6 +2870,8 @@
 				08A6ECE11AF651C1003982DB /* EMUniquenessTester.m in Sources */,
 				082902761AFADC94004DE369 /* EmuTestsAppDelegate.m in Sources */,
 				08E692291AF60FF900BD6949 /* EmuWebserviceIntegrationTests.m in Sources */,
+				08653CF61B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
+				0899D2361B0BE42800CC6F88 /* EmuRenderingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3263,7 +3301,7 @@
 					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 					"$(PROJECT_DIR)/emu",
@@ -3369,7 +3407,7 @@
 					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
@@ -3476,6 +3514,40 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
+					"\"${PODS_ROOT}/Headers/Public/AWSCore\"",
+					"\"${PODS_ROOT}/Headers/Public/AWSS3\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/CrashlyticsFramework\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKCoreKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKLoginKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKShareKit\"",
+					"\"${PODS_ROOT}/Headers/Public/GZIP\"",
+					"\"${PODS_ROOT}/Headers/Public/JDFTooltips\"",
+					"\"${PODS_ROOT}/Headers/Public/JGActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/MGBenchmark\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/Public/NSLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/Reachability\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/TMCache\"",
+					"\"${PODS_ROOT}/Headers/Public/Toast\"",
+					"\"${PODS_ROOT}/Headers/Public/UICKeyChainStore\"",
+					"\"${PODS_ROOT}/Headers/Public/XMLDictionary\"",
+					"\"${PODS_ROOT}/Headers/Public/zipzap\"",
+				);
 				INFOPLIST_FILE = emutests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3495,6 +3567,40 @@
 					"$(inherited)",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
+					"\"${PODS_ROOT}/Headers/Public/AWSCore\"",
+					"\"${PODS_ROOT}/Headers/Public/AWSS3\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/CrashlyticsFramework\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKCoreKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKLoginKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FBSDKShareKit\"",
+					"\"${PODS_ROOT}/Headers/Public/GZIP\"",
+					"\"${PODS_ROOT}/Headers/Public/JDFTooltips\"",
+					"\"${PODS_ROOT}/Headers/Public/JGActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/MGBenchmark\"",
+					"\"${PODS_ROOT}/Headers/Public/Mantle\"",
+					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/Public/NSLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/Reachability\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/TMCache\"",
+					"\"${PODS_ROOT}/Headers/Public/Toast\"",
+					"\"${PODS_ROOT}/Headers/Public/UICKeyChainStore\"",
+					"\"${PODS_ROOT}/Headers/Public/XMLDictionary\"",
+					"\"${PODS_ROOT}/Headers/Public/zipzap\"",
+				);
 				INFOPLIST_FILE = emutests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -8,25 +8,26 @@
 
 #import <Foundation/Foundation.h>
 #import "HrRendererLib/HrOutput/HrOutputI.h"
-#import <AVFoundation/AVFoundation.h>
-
-
+#import "EMVideoMaker.h"
 
 class VideoOutput : public CHrOutputI
 {
 public:
-    VideoOutput(CMVideoDimensions dimensions, float bitsPerPixel, NSURL *videoOutputUrl , int framesPerSec);
-    virtual int	WriteFrame( image_type *im, int iFrame );
+    VideoOutput(
+                CMVideoDimensions dimensions,
+                float bitsPerPixel,
+                NSURL *videoOutputUrl,
+                int framesPerSec
+                );
     
+    virtual int	WriteFrame( image_type *im, int iFrame );
 	virtual int Close();
     
+    // Effects on video output
+    void AddLoopEffect(int loopsCount, BOOL pingPong);
+    
 private:
-    // Background Color
-    AVAssetWriter *m_assetWriter;
-    AVAssetWriterInput *m_assetWriterVideoInput;
-    AVAssetWriterInputPixelBufferAdaptor *m_assetWriterPixelBufferInput;
-    CMTime m_currFrameTime;
-    CMTime m_timePerFrame;
+    EMVideoMaker *videoMaker;
     image_type* m_image = NULL;
 };
 

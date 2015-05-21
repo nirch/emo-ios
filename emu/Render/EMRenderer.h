@@ -16,9 +16,12 @@
 @property (nonatomic) NSString *outputPath;
 @property (nonatomic) NSString *userMaskPath;
 @property (nonatomic) NSString *userImagesPath;
+@property (nonatomic) NSArray *userImagesPathsArray;
 @property (nonatomic) NSString *backLayerPath;
 @property (nonatomic) NSString *frontLayerPath;
 @property (nonatomic) NSString *paletteString;
+@property (nonatomic) BOOL shouldOutputGif;
+@property (nonatomic) BOOL shouldOutputVideo;
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSInteger numberOfFrames;

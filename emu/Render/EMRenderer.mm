@@ -18,6 +18,9 @@
 #import "HrRendererLib/HrOutput/HrOutputGif.h"
 #import "HrRendererLib/HrEffect/HrEffectMask.h"
 #import "Gpw/Vtool/Vtool.h"
+#import "Uigp/GpMemoryLeak.h"
+
+#import "VideoOutput.h"
 
 //#import "Uigp/GpMemoryLeak.h"
 
@@ -28,13 +31,18 @@
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
     // (skips frames or drops frames as required).
-    NSArray *userImages = [self imagesPathsInPath:self.userImagesPath
-                                 numberOfFrames:self.numberOfFrames];
+    NSArray *userImages;
+    if (self.userImagesPathsArray == nil) {
+        userImages = [self imagesPathsInPath:self.userImagesPath
+                                     numberOfFrames:self.numberOfFrames];
 
-    if (userImages.count > 0) {
-        REMOTE_LOG(@"user images count:%@ firstImageName: %@", @(userImages.count), userImages[0]);
+        if (userImages.count > 0) {
+            REMOTE_LOG(@"user images count:%@ firstImageName: %@", @(userImages.count), userImages[0]);
+        } else {
+            REMOTE_LOG(@"user images empty?!");
+        }
     } else {
-        REMOTE_LOG(@"user images empty?!");
+        userImages = self.userImagesPathsArray;
     }
 
     //
@@ -90,54 +98,78 @@
     //
     // Output gif
     //
-    NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];;
-    CHrOutputGif *gifOutput = new CHrOutputGif();
-    gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
-
-    if (self.paletteString != nil) {
-        NSString *paletteNSString = self.paletteString;
-        const char *paletteConstString = [paletteNSString cStringUsingEncoding:NSASCIIStringEncoding];
-        size_t len = strlen(paletteConstString);
-        char palette[len];
-        memcpy(palette, paletteConstString, len);
-        gifOutput->SetPalette(palette);
+    CHrOutputGif *gifOutput = NULL;
+    if (self.shouldOutputGif) {
+        NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];;
+        gifOutput = new CHrOutputGif();
+        gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
+        if (self.paletteString != nil) {
+            NSString *paletteNSString = self.paletteString;
+            const char *paletteConstString = [paletteNSString cStringUsingEncoding:NSASCIIStringEncoding];
+            size_t len = strlen(paletteConstString);
+            char palette[len];
+            memcpy(palette, paletteConstString, len);
+            gifOutput->SetPalette(palette);
+        }
     }
     
-
-    // Add sources and render to outputs.
+    //
+    // Output video
+    //
+    VideoOutput *videoOutput = NULL;
+    if (self.shouldOutputVideo) {
+        NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
+        NSURL *videoURL = [NSURL fileURLWithPath:outputVideoPath];
+        videoOutput = new VideoOutput(
+                                      dimensions,
+                                      11.4,
+                                      videoURL,
+                                      [self fps]);
+        videoOutput->AddLoopEffect(10, true);
+    }
+    
+    // Add sources.
     CHomageRenderer *render = new CHomageRenderer();
     render->AddSource(bgSource);
     render->AddSource(userSource);
     if (fgSource != NULL) render->AddSource(fgSource);
-    render->AddOutput(gifOutput);
+
+    // Add outputs
+    if (gifOutput != NULL) render->AddOutput(gifOutput);
+    if (videoOutput != NULL) render->AddOutput(videoOutput);
+    
+    // Render!
     render->Process();
     
+    // Finishing up.
     if (userSource != NULL) {
         userSource->Close();
-        userSource->DeleteContents();
         delete userSource;
     }
     
     if (bgSource != NULL) {
         bgSource->Close();
-        bgSource->DeleteContents();
         delete bgSource;
     }
     
     if (fgSource != NULL) {
         fgSource->Close();
-        fgSource->DeleteContents();
         delete fgSource;
     }    
 
-    // Finishing up.
     if (gifOutput != NULL)  {
         gifOutput->Close();
-        gifOutput->DeleteContents();
         delete gifOutput;
     }
     
-//    gpMemory_leak_print(NULL);
+    if (videoOutput != NULL) {
+        videoOutput->Close();
+        delete videoOutput;
+    }
+    
+    //delete render;
+    
+//    gpMemory_leak_print(stdout);
 }
 
 
