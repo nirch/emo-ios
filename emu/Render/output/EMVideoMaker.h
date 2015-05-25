@@ -48,9 +48,7 @@
  
  (Warning: when used, sets streamed writing to NO. Check warning under streamed writing property)
 */
-@property (nonatomic, readonly) NSInteger fxLoops;
--(void)setFxLoops:(NSInteger)fxLoops;
-
+@property (nonatomic) NSInteger fxLoops;
 
 /**
  fxPingPong
@@ -58,8 +56,11 @@
  If set to YES will alternate playing the video from start to finish and in reverse in each loop.
  This effect will have no effect (HA!) if fxLoops is not set/used.
  */
-@property (nonatomic, readonly) BOOL fxPingPong;
--(void)setFxPingPong:(BOOL)fxPingPong;
+@property (nonatomic) BOOL fxPingPong;
+
+
+#pragma mark - Audio
+@property (nonatomic) NSURL *audioFileURL;
 
 
 #pragma mark - Adding frames

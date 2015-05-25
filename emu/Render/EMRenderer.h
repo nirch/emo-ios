@@ -20,11 +20,16 @@
 @property (nonatomic) NSString *backLayerPath;
 @property (nonatomic) NSString *frontLayerPath;
 @property (nonatomic) NSString *paletteString;
+
 @property (nonatomic) BOOL shouldOutputGif;
 @property (nonatomic) BOOL shouldOutputVideo;
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSInteger numberOfFrames;
+
+@property (nonatomic) NSInteger videoFXLoopsCount;
+@property (nonatomic) BOOL videoFXLoopPingPong;
+@property (nonatomic) NSURL *audioFileURL;
 
 -(void)render;
 

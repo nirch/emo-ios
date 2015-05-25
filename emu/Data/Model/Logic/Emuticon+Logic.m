@@ -188,6 +188,20 @@
 }
 
 
+
+-(NSURL *)audioFileURL
+{
+    if (self.audioFilePath == nil) return nil;
+    
+//    // Check if file exists.
+//    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:self.audioFilePath];
+//    if (!fileExists) return nil;
+    
+    // File exists, return url.
+    return [NSURL URLWithString:self.audioFilePath];
+}
+
+
 -(NSString *)s3KeyForSampledResult
 {
     NSString *deviceIdentifier = UIDevice.currentDevice.identifierForVendor.UUIDString;

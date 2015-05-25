@@ -126,20 +126,26 @@
     NSString *tempFolderName = [dateFormat stringFromDate:now];
     NSString *path = [NSString stringWithFormat:@"%@/%@", [EMDB outputPath], tempFolderName];
     NSFileManager *fm = [NSFileManager defaultManager];
-    [fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    NSError *error;
+    [fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+    XCTAssertNil(error, @"Error. Couldn't create output path when rendering video. %@", error);
     
-    [self measureBlock:^{
-        NSString *uuid = [[NSUUID UUID] UUIDString];
-        NSString *outputName = [NSString stringWithFormat:@"%@/%@", tempFolderName, uuid];
-        EMRenderer *renderer = [self simpleRendererToOutput:outputName];
-        renderer.shouldOutputGif = NO;
-        renderer.shouldOutputVideo = YES;
-        [renderer render];
-        
-        // 
-    }];
-
-    //[fm removeItemAtPath:path error:nil];
+    // Audio file
+    NSURL *audioFileURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"audio_test"
+                                                                   withExtension:@"mp3"];
+    
+    
+    NSString *uuid = [[NSUUID UUID] UUIDString];
+    NSString *outputName = [NSString stringWithFormat:@"%@/%@", tempFolderName, uuid];
+    EMRenderer *renderer = [self simpleRendererToOutput:outputName];
+    renderer.shouldOutputGif = NO;
+    renderer.shouldOutputVideo = YES;
+    renderer.videoFXLoopsCount = 10;
+    renderer.videoFXLoopPingPong = YES;
+    renderer.audioFileURL = audioFileURL;
+    [renderer render];
+    
+    [fm removeItemAtPath:path error:nil];
 }
 
 @end

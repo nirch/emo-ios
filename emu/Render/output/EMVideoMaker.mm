@@ -28,7 +28,9 @@
 }
 
 @property BOOL preparedForWriting;
-@property BOOL done;
+
+@property BOOL finishedWritingVideo;
+@property BOOL finishedAddingAudio;
 
 @end
 
@@ -37,6 +39,7 @@
 
 @synthesize steamedWriting = _steamedWriting;
 @synthesize fxLoops = _fxLoops;
+@synthesize audioFileURL = _audioFileURL;
 
 -(instancetype)init
 {
@@ -47,7 +50,9 @@
         _preparedForWriting = NO;
         _pbArray = CFArrayCreateMutable(NULL, 0, nil);
         _renderingQueue = AppManagement.sh.renderingQueue;
-        _done = NO;
+        _finishedWritingVideo = NO;
+        _finishedAddingAudio = NO;
+        _audioFileURL = nil;
         CFRetain(_pbArray);
     }
     return self;
@@ -61,9 +66,18 @@
     _steamedWriting = NO;
 }
 
+-(void)setFxPingPong:(BOOL)fxPingPong
+{
+    _fxPingPong = fxPingPong;
+}
+
 #pragma mark - Prepare for writing
 -(void)prepareForWriting:(NSError **)error
 {
+    // ================
+    //      Video
+    // ================
+    
     NSInteger numPixels = self.dimensions.width * self.dimensions.height;
     NSInteger bitsPerSecond = numPixels * self.bitsPerPixel;
 
@@ -95,7 +109,7 @@
 
     // Configure output settings
     assetWriterVideoInput = [[AVAssetWriterInput alloc] initWithMediaType:AVMediaTypeVideo outputSettings:videoCompressionSettings];
-    assetWriterVideoInput.expectsMediaDataInRealTime = NO;
+    assetWriterVideoInput.expectsMediaDataInRealTime = YES;
     
     
     if (![assetWriter canAddInput:assetWriterVideoInput]) {
@@ -190,7 +204,7 @@
             if (!self.steamedWriting) {
                 [self _cleanupStoredFrames];
             }
-            self.done = YES;
+            self.finishedWritingVideo = YES;
         }];
     } else {
         // TODO: error handling.
@@ -198,9 +212,20 @@
     }
     
     // Block until finished.
-    while (self.done == NO) {
+    while (self.finishedWritingVideo == NO) {
         NSDate *nextCheck = [NSDate dateWithTimeIntervalSinceNow:0.05];
         [[NSRunLoop currentRunLoop] runUntilDate:nextCheck];
+    }
+    
+    // Stitch audio to video file if required.
+    if (self.audioFileURL) {
+        [self stitchAudioToVideoFile];
+
+        // Block until finished.
+        while (self.finishedAddingAudio == NO) {
+            NSDate *nextCheck = [NSDate dateWithTimeIntervalSinceNow:0.05];
+            [[NSRunLoop currentRunLoop] runUntilDate:nextCheck];
+        }
     }
 }
 
@@ -264,6 +289,50 @@
     }
     CFArrayRemoveAllValues(_pbArray);
     CFRelease(_pbArray);
+}
+
+
+#pragma mark - Audio
+-(void)setAudioFileURL:(NSURL *)audioFileURL
+{
+    _audioFileURL = audioFileURL;
+}
+
+-(void)stitchAudioToVideoFile
+{
+    if (self.audioFileURL == nil) return;
+    
+    // The composition object for mixing audio and video files.
+    AVMutableComposition* mixComposition = [AVMutableComposition composition];
+    
+    // The name of the new output mixed video file.
+    NSString* outputFilePath = self.videoOutputURL.path;
+    outputFilePath = [outputFilePath stringByReplacingOccurrencesOfString:@".mp4" withString:@"-ws.mp4"];
+    NSURL *outputFileURL = [NSURL fileURLWithPath:outputFilePath];
+
+    CMTime nextClipStartTime = kCMTimeZero;
+    AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:self.videoOutputURL options:nil];
+    CMTimeRange video_timeRange = CMTimeRangeMake(kCMTimeZero,videoAsset.duration);
+    AVMutableCompositionTrack *a_compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+    [a_compositionVideoTrack insertTimeRange:video_timeRange ofTrack:[[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:nextClipStartTime error:nil];
+    
+    //nextClipStartTime = CMTimeAdd(nextClipStartTime, a_timeRange.duration);
+    
+    AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:self.audioFileURL options:nil];
+    CMTimeRange audio_timeRange = CMTimeRangeMake(kCMTimeZero, videoAsset.duration);
+    AVMutableCompositionTrack *b_compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+    [b_compositionAudioTrack insertTimeRange:audio_timeRange ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:nextClipStartTime error:nil];
+    
+    AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
+    _assetExport.outputFileType = AVFileTypeMPEG4;
+    _assetExport.outputURL = outputFileURL;
+    
+    [_assetExport exportAsynchronouslyWithCompletionHandler:^(void ) {
+        NSError *error = _assetExport.error;
+        // TODO: error handling.
+        NSLog(@">>>%@", error);
+        self.finishedAddingAudio = YES;
+    }];
 }
 
 

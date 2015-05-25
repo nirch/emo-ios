@@ -125,7 +125,18 @@
                                       11.4,
                                       videoURL,
                                       [self fps]);
-        videoOutput->AddLoopEffect(10, true);
+        
+        // Loop effects
+        if (self.videoFXLoopsCount>0) {
+            videoOutput->AddLoopEffect(
+                                       self.videoFXLoopsCount,
+                                       self.videoFXLoopPingPong);
+        }
+        
+        // Audio track
+        if (self.audioFileURL) {
+            videoOutput->AddAudio(self.audioFileURL);
+        }
     }
     
     // Add sources.

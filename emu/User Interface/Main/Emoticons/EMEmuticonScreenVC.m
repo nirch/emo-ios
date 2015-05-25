@@ -5,8 +5,12 @@
 //  Created by Aviv Wolf on 2/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+@import MediaPlayer;
+@import AVFoundation;
+
 #define TAG @"EMEmuticonScreen"
 
+#import <Toast/UIView+Toast.h>
 #import "EMEmuticonScreenVC.h"
 #import "EMDB.h"
 #import "EMAnimatedGifPlayer.h"
@@ -21,11 +25,13 @@
 #import "AppDelegate.h"
 #import "EMNotificationCenter.h"
 
-
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
-    EMRecorderDelegate
+    EMRecorderDelegate,
+    MPMediaPickerControllerDelegate
 >
+
+#define AUDIO_DURATION 12.0f
 
 @property (nonatomic) Emuticon *emuticon;
 
@@ -42,10 +48,24 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRetakeButton;
 @property (weak, nonatomic) IBOutlet UIView *guiShareContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiShareMainIconPosition;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 // Tutorial
 @property (strong, nonatomic) JDFSequentialTooltipManager *tooltipManager;
+
+// Rendering type
+@property (weak, nonatomic) IBOutlet UISegmentedControl *guiRenderingTypeSelector;
+
+// Audio/Video
+@property (weak, nonatomic) IBOutlet UIButton *guiAudioButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiAudioView;
+@property (weak, nonatomic) IBOutlet UIButton *guiAudioOKButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiAudioRemoveButton;
+@property (weak, nonatomic) IBOutlet UISlider *guiAudioTrimSlider;
+@property (weak, nonatomic) UIView *audioPlayPositionView;
+@property (nonatomic) BOOL showSelectedAudioUI;
+
+@property (nonatomic) NSString *playIdentifier;
+@property (nonatomic) AVPlayer *player;
 
 @end
 
@@ -56,7 +76,8 @@
     [super viewDidLoad];
     [self initData];
     [self refreshEmu];
-    [self initStyle];
+    [self initGUI];
+    [self updateAudioSelectionUI];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -88,19 +109,24 @@
 {
     [super viewWillDisappear:animated];
     
+    // Finish up
+    [self.audioPlayPositionView.layer removeAllAnimations];
+    [self audioStop];
+    
     // Remove observers
     [self removeObservers];
 }
 
 -(void)dealloc
 {
-    HMLOG(TAG, EM_VERBOSE, @"dealloc");
+    [self audioStop];
 }
 
 
--(void)initStyle
+-(void)initGUI
 {
-    // set appearance style
+    [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateNormal];
+    [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateHighlighted];
 }
 
 -(void)initData
@@ -302,48 +328,6 @@
     return params;
 }
 
-//
-//-(void)showEmuOptions
-//{
-//    UIAlertController *alert = [UIAlertController new];
-//    HMParams *params = [self paramsForCurrentEmuticon];
-//    
-//    // Retake footage.
-//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU")
-//                                              style:UIAlertActionStyleDefault
-//                                            handler:^(UIAlertAction *action) {
-//                                                // Retake
-//                                                [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
-//                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
-//                                                                      info:params.dictionary];
-//                                                [self retake];
-//                                            }]];
-//
-//    // Retake footage.
-//    if (self.emuticon.prefferedFootageOID) {
-//        [alert addAction:[UIAlertAction actionWithTitle:LS(@"EMU_SCREEN_CHOICE_RESET_EMU")
-//                                                  style:UIAlertActionStyleDefault
-//                                                handler:^(UIAlertAction *action) {
-//                                                    // Reset
-//                                                    [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
-//                                                    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
-//                                                                          info:params.dictionary];
-//                                                    [self resetEmu];
-//                                                }]];
-//    }
-//
-//    // Cancel
-//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
-//                                              style:UIAlertActionStyleCancel
-//                                            handler:^(UIAlertAction *action) {
-//                                                // Cancel
-//                                                [params addKey:AK_EP_CHOICE_TYPE value:@"cancel"];
-//                                                [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE
-//                                                                      info:params.dictionary];
-//                                            }]];
-//    
-//    [self presentViewController:alert animated:YES completion:nil];
-//}
 
 #pragma mark - Emu options
 -(void)showEmuOptions
@@ -420,6 +404,202 @@
     }
 }
 
+#pragma mark - Rendering type
+-(EMRenderingType)renderingType
+{
+    if (self.guiRenderingTypeSelector.selectedSegmentIndex == 0) {
+        return EMRenderingTypeGIF;
+    } else {
+        return EMRenderingTypeVideo;
+    }
+}
+
+
+#pragma mark - Audio & Video
+-(void)updateAudioSelectionUI
+{
+    // If GIF rendering selected, hide all UI elements related to audio.
+    if (self.renderingType == EMRenderingTypeGIF) {
+        self.guiAudioButton.hidden = YES;
+        self.guiAudioOKButton.hidden = YES;
+        self.guiAudioRemoveButton.hidden = YES;
+        self.guiAudioView.hidden = YES;
+        self.guiAudioTrimSlider.hidden = YES;
+        return;
+    }
+    
+    // When rendering type is video, show the UI for adding audio to the video.
+    // (or the UI allowing the user to hear the audio and trim it)
+    if (self.showSelectedAudioUI) {
+        // Editing selected audio trimming
+        // And allow user to hear the selected trimmed audio.
+        self.guiAudioButton.hidden = YES;
+        self.guiAudioOKButton.hidden = NO;
+        self.guiAudioRemoveButton.hidden = NO;
+        self.guiRenderingTypeSelector.hidden = YES;
+        self.guiAudioView.hidden = NO;
+        self.guiAudioTrimSlider.hidden = NO;
+        [self updateAudioTrimmingSlider];
+    } else {
+        // Hide audio trimming UI (return to displaying the rendering type selector (GIF/Video)
+        self.guiAudioButton.hidden = NO;
+        self.guiAudioOKButton.hidden = YES;
+        self.guiAudioRemoveButton.hidden = YES;
+        self.guiRenderingTypeSelector.hidden = NO;
+        self.guiAudioView.hidden = YES;
+        self.guiAudioTrimSlider.hidden = YES;
+        self.guiAudioButton.selected = self.emuticon.audioFileURL? YES:NO;
+    }
+}
+
+
+-(void)selectAudio
+{
+    MPMediaPickerController *picker = [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeMusic];
+    picker.delegate = self;
+    picker.allowsPickingMultipleItems = NO; // this is the default
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+
+-(void)audioStop
+{
+    [self.player pause];
+    self.player = nil;
+}
+
+
+-(void)playSelectedAudio
+{
+    NSURL *url = self.emuticon.audioFileURL;
+    if (url == nil) return;
+    
+    // New player
+    AVPlayerItem *audioItem = [AVPlayerItem playerItemWithURL:url];
+    self.player = [[AVPlayer alloc] initWithPlayerItem:audioItem];
+    NSString *playUUID = [[NSUUID UUID] UUIDString];
+    self.playIdentifier = [NSString stringWithString:playUUID];
+    
+    // Seek and play
+    CMTime seekTime = [self seekTimeForSelectedAudio];
+    [self.player seekToTime:seekTime];
+    [self.player play];
+    
+    // Stop when duration ends.
+    __weak EMEmuticonScreenVC *weakSelf = self;
+    dispatch_after(DTIME(AUDIO_DURATION), dispatch_get_main_queue(), ^{
+        if ([playUUID isEqualToString:weakSelf.playIdentifier]) {
+            [weakSelf.player pause];
+            weakSelf.audioPlayPositionView.hidden = YES;
+        }
+    });
+    
+    // Play seek indicator animation
+    [self restartPlaySeekAnimation];
+}
+
+
+-(void)restartPlaySeekAnimation
+{
+    UIView *posView = self.audioPlayPositionView;
+    UIView *sv = self.guiAudioTrimSlider.subviews[2];
+    if (self.audioPlayPositionView == nil) {
+        posView = [UIView new];
+        posView.userInteractionEnabled = NO;
+        posView.backgroundColor = [EmuStyle colorButtonBGNegative];
+        self.audioPlayPositionView = posView;
+        [sv addSubview:posView];
+    }
+
+    [posView.layer removeAllAnimations];
+    
+    CGFloat x1 = 0;
+    CGFloat x2 = sv.bounds.size.width;
+    CGRect f1 = CGRectMake(x1+3, 4, 3, self.guiAudioView.bounds.size.height-8);
+    CGRect f2 = CGRectMake(x2-8, 4, 3, self.guiAudioView.bounds.size.height-8);
+    posView.frame = f1;
+    posView.hidden = NO;
+    [UIView animateWithDuration:AUDIO_DURATION
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         posView.frame = f2;
+                     } completion:^(BOOL finished) {
+                         if (finished) {
+                             posView.hidden = YES;
+                         }
+                     }];
+}
+
+
+-(CMTime)seekTimeForSelectedAudio
+{
+    // The duration of the audio resource.
+    CMTime duration = self.player.currentItem.asset.duration;
+    
+    // The duration of the audio resource, in seconds
+    NSTimeInterval durationInSeconds = CMTimeGetSeconds(duration);
+    if (durationInSeconds < AUDIO_DURATION) {
+        return CMTimeMake(0, duration.timescale);
+    }
+    
+    duration = CMTimeAdd(duration, CMTimeMakeWithSeconds(-AUDIO_DURATION, duration.timescale));
+    CMTime seekTime = CMTimeMake(duration.value * self.guiAudioTrimSlider.value, duration.timescale);
+    return seekTime;
+}
+
+
+-(void)updateAudioTrimmingSlider
+{
+    NSURL *url = self.emuticon.audioFileURL;
+    if (url == nil) return;
+    
+    if (self.emuticon.audioStartTime == nil) {
+        self.guiAudioTrimSlider.value = 0.5;
+        return;
+    }
+    
+    // Get start time
+    AVPlayerItem *audioItem = [AVPlayerItem playerItemWithURL:url];
+    self.player = [[AVPlayer alloc] initWithPlayerItem:audioItem];
+    NSTimeInterval startTime = self.emuticon.audioStartTime.doubleValue;
+    
+    // Get % out of duration
+    CMTime duration = self.player.currentItem.asset.duration;
+    NSTimeInterval durationInSeconds = CMTimeGetSeconds(duration);
+    float pos = MAX(MIN(startTime/durationInSeconds,1.0),0.0);
+    self.guiAudioTrimSlider.value = pos;
+}
+
+#pragma mark - MPMediaPickerControllerDelegate
+-(void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+-(void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if (mediaItemCollection.count<1) return;
+    
+    MPMediaItem *item = (MPMediaItem *)[mediaItemCollection.items objectAtIndex:0];
+    NSURL *url = [item valueForProperty:MPMediaItemPropertyAssetURL];
+    self.emuticon.audioFilePath = [url absoluteString];
+    
+    // Check for DRM related errors.
+    if (url == nil) {
+        [self.view makeToast:LS(@"DRM_ERROR")];
+        self.showSelectedAudioUI = NO;
+        self.emuticon.audioFilePath = nil;
+        return;
+    }
+    
+    self.showSelectedAudioUI = YES;
+    [self updateAudioSelectionUI];
+    [self playSelectedAudio];
+}
+
 
 #pragma mark - IB Actions
 // ===========
@@ -477,5 +657,54 @@
     }];
 }
 
+
+- (IBAction)onPressedSoundButton:(UIButton *)sender
+{
+    if (self.emuticon.audioFileURL) {
+        self.showSelectedAudioUI = YES;
+        [self updateAudioTrimmingSlider];
+        [self updateAudioSelectionUI];
+    } else {
+        [self selectAudio];
+    }
+}
+
+
+- (IBAction)onChangedRenderType:(UISegmentedControl *)sender
+{
+    [self updateAudioSelectionUI];
+}
+
+
+- (IBAction)onChangedAudioSeekValue:(UISlider *)sender
+{
+    [self playSelectedAudio];
+}
+
+
+- (IBAction)onDraggedAudioSeek:(UISlider *)sender
+{
+    self.audioPlayPositionView.hidden = YES;
+}
+
+
+- (IBAction)onAudioSelectionOK:(id)sender
+{
+    NSTimeInterval audioStartTime = CMTimeGetSeconds([self seekTimeForSelectedAudio]);
+    self.emuticon.audioStartTime = @(audioStartTime);
+    self.showSelectedAudioUI = NO;
+    [self audioStop];
+    [self updateAudioSelectionUI];
+}
+
+
+- (IBAction)onAudioSelectionRemove:(id)sender
+{
+    self.emuticon.audioFilePath = nil;
+    self.emuticon.audioStartTime = nil;
+    self.showSelectedAudioUI = NO;
+    [self audioStop];
+    [self updateAudioSelectionUI];
+}
 
 @end

@@ -36,6 +36,12 @@
 #define emkDuration         @"duration"
 #define emkDate             @"date"
 
+typedef NS_ENUM(NSInteger, EMRenderingType) {
+    EMRenderingTypeGIF      = 0,
+    EMRenderingTypeVideo    = 1
+};
+
+
 @interface EMDB : NSObject
 
 // Core data stack

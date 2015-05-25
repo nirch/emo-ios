@@ -162,7 +162,17 @@
 -(UserFootage *)previewUserFootage;
 
 
+/**
+ * URL pointing to the audio file selected for this emuticon 
+ * (optional: can be nil).
+ */
+-(NSURL *)audioFileURL;
+
+
+
 -(NSString *)s3KeyForSampledResult;
+
+
 -(NSDictionary *)s3MetaDataForSampledResult;
 
 @end

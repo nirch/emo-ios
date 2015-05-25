@@ -23,8 +23,17 @@ public:
     virtual int	WriteFrame( image_type *im, int iFrame );
 	virtual int Close();
     
+    
+    
+    /** ==============================
+        Optional effects and features.
+        ============================== */
+    
     // Effects on video output
-    void AddLoopEffect(int loopsCount, BOOL pingPong);
+    void AddLoopEffect(NSInteger loopsCount, BOOL pingPong);
+    
+    // Audio track
+    void AddAudio(NSURL *audioFileURL);
     
 private:
     EMVideoMaker *videoMaker;

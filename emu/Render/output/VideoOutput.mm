@@ -24,12 +24,6 @@ VideoOutput::VideoOutput(
     videoMaker.fps = framesPerSec;
 }
 
-void VideoOutput::AddLoopEffect(int loopsCount, BOOL pingPong)
-{
-    videoMaker.fxLoops = loopsCount;
-    videoMaker.fxPingPong = pingPong;
-}
-
 int	VideoOutput::WriteFrame( image_type *im , int iFrame)
 {
     m_image = image3_from(im, m_image);
@@ -44,5 +38,17 @@ int VideoOutput::Close()
     videoMaker = NULL;
     if (m_image != NULL) image_destroy(m_image, 1);
     return 1;
+}
+
+
+void VideoOutput::AddLoopEffect(NSInteger loopsCount, BOOL pingPong)
+{
+    videoMaker.fxLoops = loopsCount;
+    videoMaker.fxPingPong = pingPong;
+}
+
+void VideoOutput::AddAudio(NSURL *audioFileURL)
+{
+    videoMaker.audioFileURL = audioFileURL;
 }
 

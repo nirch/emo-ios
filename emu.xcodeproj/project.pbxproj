@@ -233,8 +233,6 @@
 		083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E52641A9E1EB100A66FC8 /* EMEmuticonScreenVC.m */; };
 		08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08409E981AB1C69700EC0930 /* EMSplashVC.m */; };
 		08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08409E991AB1C69700EC0930 /* SplashView.xib */; };
-		0843190A1AED1D680057BEA3 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319091AED1D680057BEA3 /* Emuticon.m */; };
-		0843190B1AED1D680057BEA3 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319091AED1D680057BEA3 /* Emuticon.m */; };
 		084BB1351AFF8BDF004A0D4A /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
 		084BB1361AFF8BDF004A0D4A /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
@@ -270,6 +268,9 @@
 		08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
 		08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
 		08653CF61B0CD8450016DC54 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
+		0867C9F61B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
+		0867C9F71B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
+		0867C9F81B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		0899D2361B0BE42800CC6F88 /* EmuRenderingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899D2351B0BE42800CC6F88 /* EmuRenderingTests.m */; };
@@ -293,7 +294,6 @@
 		08AA14491B0BA658002E1B2F /* HMPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMPanel.m */; };
 		08AA144A1B0BA658002E1B2F /* EMCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 082720BF1B038CCB0046F38E /* EMCaches.m */; };
 		08AA144B1B0BA658002E1B2F /* HMGreenMachineDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D4531AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm */; };
-		08AA144C1B0BA658002E1B2F /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 084319091AED1D680057BEA3 /* Emuticon.m */; };
 		08AA144D1B0BA658002E1B2F /* EMControlsBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67441A937EC9007BC910 /* EMControlsBarVC.m */; };
 		08AA144E1B0BA658002E1B2F /* EMPackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD771AA37DC20078F14B /* EMPackageParser.m */; };
 		08AA144F1B0BA658002E1B2F /* EMAppCFGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD711AA37DC20078F14B /* EMAppCFGParser.m */; };
@@ -505,6 +505,7 @@
 		08BBBC731AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
 		08BBBC741AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
 		08BBBC971ADBEFC200D4AD1D /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */; };
+		08C3D17A1B0E77F900F30EA0 /* audio_test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 08C3D1791B0E77F900F30EA0 /* audio_test.mp3 */; };
 		08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */; };
 		08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAC41A9600E1008A3E0A /* headAndChest240X240.ctr */; };
 		08CAEAC71A9600E1008A3E0A /* headAndChest480X480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAC51A9600E1008A3E0A /* headAndChest480X480.ctr */; };
@@ -759,8 +760,6 @@
 		08409E971AB1C69700EC0930 /* EMSplashVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSplashVC.h; sourceTree = "<group>"; };
 		08409E981AB1C69700EC0930 /* EMSplashVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSplashVC.m; sourceTree = "<group>"; };
 		08409E991AB1C69700EC0930 /* SplashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashView.xib; sourceTree = "<group>"; };
-		084319081AED1D680057BEA3 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
-		084319091AED1D680057BEA3 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSDK.h; sourceTree = "<group>"; };
 		084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = latest_build_info.plist; sourceTree = "<group>"; };
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
@@ -826,6 +825,8 @@
 		0864F7091A9A195500F5EAF7 /* EMTickingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTickingProgressView.m; sourceTree = "<group>"; };
 		08653CF21B0CD8450016DC54 /* EMVideoMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMVideoMaker.h; sourceTree = "<group>"; };
 		08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EMVideoMaker.mm; sourceTree = "<group>"; };
+		0867C9F41B13943D00FF0E85 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
+		0867C9F51B13943D00FF0E85 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -889,6 +890,7 @@
 		08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Package+Logic.m"; sourceTree = "<group>"; };
 		08BBBC791ADA6E9E00D4AD1D /* emu1_ 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 3.xcdatamodel"; sourceTree = "<group>"; };
 		08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		08C3D1791B0E77F900F30EA0 /* audio_test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio_test.mp3; sourceTree = "<group>"; };
 		08CAEAC11A95E202008A3E0A /* EMSilhouetteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSilhouetteView.h; sourceTree = "<group>"; };
 		08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSilhouetteView.m; sourceTree = "<group>"; };
 		08CAEAC41A9600E1008A3E0A /* headAndChest240X240.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = headAndChest240X240.ctr; sourceTree = "<group>"; };
@@ -1466,14 +1468,14 @@
 		085C66FE1A937EC9007BC910 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0867C9F41B13943D00FF0E85 /* Emuticon.h */,
+				0867C9F51B13943D00FF0E85 /* Emuticon.m */,
 				08AA143F1B0B34F1002E1B2F /* AppCFG.h */,
 				08AA14401B0B34F1002E1B2F /* AppCFG.m */,
 				083319691B04EAA8000B8979 /* EmuticonDef.h */,
 				0833196A1B04EAA8000B8979 /* EmuticonDef.m */,
 				083319651B04D389000B8979 /* Package.h */,
 				083319661B04D389000B8979 /* Package.m */,
-				084319081AED1D680057BEA3 /* Emuticon.h */,
-				084319091AED1D680057BEA3 /* Emuticon.m */,
 				085A784E1AEC2364003E9F97 /* UserFootage.h */,
 				085A784F1AEC2364003E9F97 /* UserFootage.m */,
 			);
@@ -1652,6 +1654,7 @@
 		0899D2371B0BE48D00CC6F88 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				08C3D1791B0E77F900F30EA0 /* audio_test.mp3 */,
 				0899D23E1B0C611400CC6F88 /* fake-user-take.png */,
 				0899D2381B0BE6C000CC6F88 /* test-bg.gif */,
 				0899D2391B0BE6C000CC6F88 /* test-fg.gif */,
@@ -2457,6 +2460,7 @@
 				08331A001B06907D000B8979 /* party-party-bg.gif in Resources */,
 				083319F11B06907D000B8979 /* hot-mask.jpg in Resources */,
 				083319E21B06907D000B8979 /* crap-shit-mask.jpg in Resources */,
+				08C3D17A1B0E77F900F30EA0 /* audio_test.mp3 in Resources */,
 				08331A091B06907D000B8979 /* party-twerk-fg.gif in Resources */,
 				08331A0F1B06907D000B8979 /* snack-morning-fg.gif in Resources */,
 				083319C41B06907D000B8979 /* casual-thanks-fg.gif in Resources */,
@@ -2641,7 +2645,6 @@
 				08BBBC741AD9B15F00D4AD1D /* Package+Logic.m in Sources */,
 				08CED0D91AA5C7EF00C50D0C /* EMShareMail.m in Sources */,
 				08AC3E6F1AD2CC13005231B5 /* EmuStyle.m in Sources */,
-				0843190B1AED1D680057BEA3 /* Emuticon.m in Sources */,
 				08CED0D51AA5B81400C50D0C /* EmuCell.m in Sources */,
 				08213B401ACC14FB00BE77E4 /* EMPackagesParser.m in Sources */,
 				08213B3B1ACC0A4600BE77E4 /* emu.xcdatamodeld in Sources */,
@@ -2650,6 +2653,7 @@
 				08213B3E1ACC14F400BE77E4 /* EMEmuticonParser.m in Sources */,
 				08AB68091AD5679D0092B62B /* EMButton.m in Sources */,
 				080CB34A1AA4C11D00603E30 /* Emuticon+Logic.m in Sources */,
+				0867C9F81B13943D00FF0E85 /* Emuticon.m in Sources */,
 				080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */,
 				08AC3E6E1AD2C9A1005231B5 /* KBKeyButton.m in Sources */,
 				080CB34B1AA4C11D00603E30 /* AppCFG+Logic.m in Sources */,
@@ -2665,7 +2669,6 @@
 				08AA14491B0BA658002E1B2F /* HMPanel.m in Sources */,
 				08AA144A1B0BA658002E1B2F /* EMCaches.m in Sources */,
 				08AA144B1B0BA658002E1B2F /* HMGreenMachineDebugger.mm in Sources */,
-				08AA144C1B0BA658002E1B2F /* Emuticon.m in Sources */,
 				08AA144D1B0BA658002E1B2F /* EMControlsBarVC.m in Sources */,
 				08AA144E1B0BA658002E1B2F /* EMPackageParser.m in Sources */,
 				08AA144F1B0BA658002E1B2F /* EMAppCFGParser.m in Sources */,
@@ -2728,6 +2731,7 @@
 				08AA14881B0BA658002E1B2F /* HMCaptureSession.mm in Sources */,
 				08AA14891B0BA658002E1B2F /* EMExperimentalVC.m in Sources */,
 				08AA148A1B0BA658002E1B2F /* EMTickingProgressView.m in Sources */,
+				0867C9F71B13943D00FF0E85 /* Emuticon.m in Sources */,
 				08AA148B1B0BA658002E1B2F /* EMShareCell.m in Sources */,
 				08AA148C1B0BA658002E1B2F /* Emuticon+Logic.m in Sources */,
 				08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
@@ -2767,7 +2771,6 @@
 				0806BD821AA37DC80078F14B /* HMPanel.m in Sources */,
 				082720C01B038CCB0046F38E /* EMCaches.m in Sources */,
 				08D9D4541AC2C6BC004A83F3 /* HMGreenMachineDebugger.mm in Sources */,
-				0843190A1AED1D680057BEA3 /* Emuticon.m in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
 				0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */,
@@ -2830,6 +2833,7 @@
 				083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */,
 				08CB89821A9AA12A00224A38 /* EMExperimentalVC.m in Sources */,
 				0864F70A1A9A195500F5EAF7 /* EMTickingProgressView.m in Sources */,
+				0867C9F61B13943D00FF0E85 /* Emuticon.m in Sources */,
 				0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */,
 				08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */,
 				08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,

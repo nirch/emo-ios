@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.1.t</string>
+	<string>1.6.2.t</string>
 	<key>FacebookAppID</key>
 	<string>410672082391445</string>
 	<key>FacebookDisplayName</key>
@@ -62,6 +62,8 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

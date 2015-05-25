@@ -49,6 +49,7 @@
 #pragma mark - App Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     // Initialize Logging
     [self initLogging];
     
