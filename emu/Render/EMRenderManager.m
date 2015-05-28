@@ -294,4 +294,62 @@
 }
 
 
+
+-(void)renderVideoForEmu:(Emuticon *)emu
+              loopsCount:(NSInteger)loopsCount
+                pingPong:(BOOL)pingPong
+         completionBlock:(void (^)(void))completionBlock
+               failBlock:(void (^)(void))failBlock
+{
+    EmuticonDef *emuDef = emu.emuDef;
+    UserFootage *footage = [emu mostPrefferedUserFootage];
+    HMLOG(TAG,
+          EM_DBG,
+          @"Starting to render temp video file for emu named:%@. %@ frames.",
+          emuDef.name,
+          emuDef.framesCount
+          );
+    
+    REMOTE_LOG(@"Starting to render video for emuticon named: %@", emuDef.name);
+
+    EMRenderer *renderer = [EMRenderer new];
+    renderer.emuticonDefOID = emuDef.oid;
+    renderer.footageOID = footage.oid;
+    renderer.backLayerPath = [emuDef pathForBackLayer];
+    renderer.userImagesPath = [footage pathForUserImages];
+    renderer.userMaskPath = [emuDef pathForUserLayerMask];
+    renderer.frontLayerPath = [emuDef pathForFrontLayer];
+    renderer.numberOfFrames = [emuDef.framesCount integerValue];
+    renderer.duration = emuDef.duration.doubleValue;
+    renderer.paletteString = emuDef.palette;
+    renderer.shouldOutputGif = NO;
+
+    // Should output a looping video to the temp folder.
+    renderer.outputPath = NSTemporaryDirectory();
+    renderer.outputOID = emu.oid;
+    renderer.shouldOutputVideo = YES;
+    renderer.videoFXLoopsCount = loopsCount;
+    renderer.videoFXLoopPingPong = pingPong;
+    
+    // With audio track if defined.
+    if (emu.audioFileURL) {
+        renderer.audioFileURL = emu.audioFileURL;
+        renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
+    }
+    
+    // Render
+    dispatch_async(self.renderingQueue, ^(void){
+        [renderer render];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Callback on the main thread.
+            if (emu.videoURL) {
+                completionBlock();
+            } else {
+                failBlock();
+            }
+        });
+    });
+
+}
+
 @end

@@ -15,4 +15,6 @@
 @property (nonatomic, weak) id<EMShareDelegate> delegate;
 @property (nonatomic) BOOL allowFBExperience;
 
+-(void)update;
+
 @end

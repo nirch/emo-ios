@@ -30,6 +30,7 @@
 @property (nonatomic) NSInteger videoFXLoopsCount;
 @property (nonatomic) BOOL videoFXLoopPingPong;
 @property (nonatomic) NSURL *audioFileURL;
+@property (nonatomic) NSTimeInterval audioStartTime;
 
 -(void)render;
 

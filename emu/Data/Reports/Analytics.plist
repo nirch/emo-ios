@@ -718,6 +718,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>sharedMediaType</key>
+				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedEmu</key>
@@ -778,6 +780,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>sharedMediaType</key>
+				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
 			</dict>
 		</dict>
 		<key>Share:failed</key>
@@ -800,6 +804,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>sharedMediaType</key>
+				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
 			</dict>
 		</dict>
 		<key>Share:canceled</key>
@@ -822,6 +828,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>sharedMediaType</key>
+				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
 			</dict>
 		</dict>
 		<key>KB:didAppear</key>

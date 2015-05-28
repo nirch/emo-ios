@@ -26,7 +26,7 @@ VideoOutput::VideoOutput(
 
 int	VideoOutput::WriteFrame( image_type *im , int iFrame)
 {
-    m_image = image3_from(im, m_image);
+    m_image = image3_from_image4(im, m_image);
     image3_bgr2rgb(m_image);
     [videoMaker addImageFrame:m_image];
     return 1;
@@ -47,8 +47,9 @@ void VideoOutput::AddLoopEffect(NSInteger loopsCount, BOOL pingPong)
     videoMaker.fxPingPong = pingPong;
 }
 
-void VideoOutput::AddAudio(NSURL *audioFileURL)
+void VideoOutput::AddAudio(NSURL *audioFileURL, NSTimeInterval audioStartTime)
 {
     videoMaker.audioFileURL = audioFileURL;
+    videoMaker.audioStartTime = audioStartTime;
 }
 

@@ -26,40 +26,6 @@
 -(void)shareAnimatedGif{}
 -(void)shareVideo{}
 
--(void)selectWhatToShare
-{
-    UIAlertController *alert = [UIAlertController new];
-    alert.title = self.selectionTitle;
-    alert.message = self.selectionMessage;
-    
-    // Animated gif
-    UIAlertAction *asAnimatedGif = [UIAlertAction actionWithTitle:LS(@"ANIM_GIF")
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction *action) {
-                                                              [self shareAnimatedGif];
-                                                          }];
-    [alert addAction:asAnimatedGif];
-    
-    // Video
-    UIAlertAction *asVideo = [UIAlertAction actionWithTitle:LS(@"VIDEO")
-                                                      style:UIAlertActionStyleDefault
-                                                    handler:^(UIAlertAction *action) {
-                                                        [self shareVideo];
-                                                    }];
-    [alert addAction:asVideo];
-    
-    // Cancel
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:LS(@"CANCEL")
-                                                     style:UIAlertActionStyleCancel
-                                                   handler:^(UIAlertAction *action) {
-                                                       [self cancel];
-                                                   }];
-    [alert addAction:cancel];
-    [self.viewController presentViewController:alert
-                                      animated:YES
-                                    completion:nil];
-}
-
 -(void)shareSelection
 {
     switch (self.shareOption) {
@@ -69,10 +35,6 @@
             
         case emkShareOptionVideo:
             [self shareVideo];
-            break;
-            
-        case emkShareOptionBoth:
-            [self selectWhatToShare];
             break;
             
         default:

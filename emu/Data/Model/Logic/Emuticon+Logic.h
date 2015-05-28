@@ -101,19 +101,32 @@
 
 
 /**
- *  The url to the video rendered for this emuticon object.
+ *  The path to the video rendered for this emuticon object;
+ *  Always returns a value of where the video *should* be found 
+ *  (even if file doesn't currently exist at location)
  *
- *  @return NSURL pointing to the rendered video.
+ *  @return NSString of the path to be used for rendered video.
+ */
+-(NSString *)videoPath;
+
+
+/**
+ *  The url to the video rendered for this emuticon object.
+ *  Return nil if the video isn't found at location (specified by videoPath).
+ *
+ *  @return NSURL pointing to the rendered video (or nil if file is missing).
  */
 -(NSURL *)videoURL;
 
 
 /**
- *  The path to the video rendered for this emuticon object;
+ *  The raw data of the video rendered for this emuticon object.
+ *  (nil if video wasn't rendered)
  *
- *  @return NSString of the path to the rendered animated gif.
+ *  @return NSData of the raw data of the rendered video (or nil).
  */
--(NSString *)videoPath;
+-(NSData *)videoData;
+
 
 
 /**

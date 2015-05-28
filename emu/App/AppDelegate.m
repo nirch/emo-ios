@@ -63,6 +63,9 @@
     [HMPanel.sh personIdentify];
     [HMPanel.sh reportPersonDetails];
     
+    // Experiments
+    [HMPanel.sh initializeExperimentsWithLaunchOptions:launchOptions];
+    
     // FB Messanger optimized integration
     self.messengerUrlHandler = [[FBSDKMessengerURLHandler alloc] init];
     self.messengerUrlHandler.delegate = self;
@@ -141,6 +144,12 @@
     
     // Notify that app did become active.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkAppDidBecomeActive object:self userInfo:nil];
+    
+    // Delete temp files
+    NSArray* tmpDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:NULL];
+    for (NSString *file in tmpDirectory) {
+        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), file] error:NULL];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -153,16 +162,21 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    // Check if the handler knows what to do with this url
+    // Experiments (currently uses optimizely)
+    if([HMPanel.sh handleOpenURL:url]) {
+        return YES;
+    }
+    
+    // Facebook Messenger URLs
     if ([_messengerUrlHandler canOpenURL:url sourceApplication:sourceApplication]) {
-        // Handle the url
         [_messengerUrlHandler openURL:url sourceApplication:sourceApplication];
+        return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                              openURL:url
+                                                    sourceApplication:sourceApplication
+                                                           annotation:annotation];
     }
 
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation];
+    return NO;
 }
 
 #pragma mark - FBSDKMessengerURLHandlerDelegate

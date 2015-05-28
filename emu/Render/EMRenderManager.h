@@ -50,4 +50,15 @@
              info:(NSDictionary *)info;
 
 
+/**
+ *  Render video for givan emu in a background thread.
+ *  Calls the passed success/failure blocks when done.
+ *  (video rendering also posts progress notifications that can be subscribed to)
+ */
+-(void)renderVideoForEmu:(Emuticon *)emu
+              loopsCount:(NSInteger)loopsCount
+                pingPong:(BOOL)pingPong
+         completionBlock:(void (^)(void))completionBlock
+               failBlock:(void (^)(void))failBlock;
+
 @end

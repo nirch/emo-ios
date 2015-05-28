@@ -61,6 +61,7 @@
 
 #pragma mark - Audio
 @property (nonatomic) NSURL *audioFileURL;
+@property (nonatomic) NSTimeInterval audioStartTime;
 
 
 #pragma mark - Adding frames

@@ -100,24 +100,36 @@
 -(NSData *)animatedGifData
 {
     NSString *path = [self animatedGifPath];
-    NSData *gifData = [[NSData alloc] initWithContentsOfFile:path];
-    return gifData;
-}
-
-
--(NSURL *)videoURL
-{
-    NSString *outputPath = [self videoPath];
-    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
-    return url;
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    return data;
 }
 
 
 -(NSString *)videoPath
 {
-    NSString *videoName = [SF:@"%@.mp4", self.oid];
-    NSString *outputPath = [EMDB outputPathForFileName:videoName];
-    return outputPath;
+    // Video files are always stored in temp directory (and deleted when not required)
+    NSString *path = [SF:@"%@%@.mp4", NSTemporaryDirectory(), self.oid];
+    return path;
+}
+
+
+-(NSURL *)videoURL
+{
+    NSString *path = [self videoPath];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , path]];
+    if ([fm fileExistsAtPath:path]) {
+        return url;
+    }
+    return nil;
+}
+
+
+-(NSData *)videoData
+{
+    NSString *path = [self videoPath];
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    return data;
 }
 
 

@@ -13,6 +13,7 @@
 
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "PngSourceWithFX.h"
+#import "SolidColorSource.h"
 #import "HrRendererLib/HomageRenderer.h"
 #import "HrRendererLib/HrSource/HrSourceGif.h"
 #import "HrRendererLib/HrOutput/HrOutputGif.h"
@@ -28,6 +29,8 @@
 
 -(void)render
 {
+    CHomageRenderer *render = new CHomageRenderer();
+    
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
     // (skips frames or drops frames as required).
@@ -45,6 +48,17 @@
         userImages = self.userImagesPathsArray;
     }
 
+    
+    //
+    // Solid color background (always white for now)
+    // If required (currently if should output video)
+    //
+    SolidColorSource *solidBG = NULL;
+    if (self.shouldOutputVideo) {
+        solidBG = new SolidColorSource([UIColor whiteColor]);
+        render->AddSource(solidBG);
+    }
+    
     //
     // Get the source PNG images.
     //
@@ -122,9 +136,10 @@
         NSURL *videoURL = [NSURL fileURLWithPath:outputVideoPath];
         videoOutput = new VideoOutput(
                                       dimensions,
-                                      11.4,
+                                      41.0,
                                       videoURL,
                                       [self fps]);
+        
         
         // Loop effects
         if (self.videoFXLoopsCount>0) {
@@ -135,12 +150,14 @@
         
         // Audio track
         if (self.audioFileURL) {
-            videoOutput->AddAudio(self.audioFileURL);
+            videoOutput->AddAudio(
+                                  self.audioFileURL,
+                                  self.audioStartTime
+                                  );
         }
     }
     
     // Add sources.
-    CHomageRenderer *render = new CHomageRenderer();
     render->AddSource(bgSource);
     render->AddSource(userSource);
     if (fgSource != NULL) render->AddSource(fgSource);
@@ -153,6 +170,21 @@
     render->Process();
     
     // Finishing up.
+    if (gifOutput != NULL)  {
+        gifOutput->Close();
+        delete gifOutput;
+    }
+    
+    if (videoOutput != NULL) {
+        videoOutput->Close();
+        delete videoOutput;
+    }
+    
+    if (solidBG != NULL) {
+        solidBG->Close();
+        delete solidBG;
+    }
+    
     if (userSource != NULL) {
         userSource->Close();
         delete userSource;
@@ -166,19 +198,9 @@
     if (fgSource != NULL) {
         fgSource->Close();
         delete fgSource;
-    }    
-
-    if (gifOutput != NULL)  {
-        gifOutput->Close();
-        delete gifOutput;
     }
     
-    if (videoOutput != NULL) {
-        videoOutput->Close();
-        delete videoOutput;
-    }
-    
-    //delete render;
+    delete render;
     
 //    gpMemory_leak_print(stdout);
 }

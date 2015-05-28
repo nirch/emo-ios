@@ -31,7 +31,7 @@
     MPMediaPickerControllerDelegate
 >
 
-#define AUDIO_DURATION 12.0f
+#define AUDIO_DURATION 20.0f
 
 @property (nonatomic) Emuticon *emuticon;
 
@@ -269,6 +269,12 @@
     return self.emuticonOID;
 }
 
+
+-(EMMediaDataType)sharerDataTypeToShare
+{
+    return [self renderingType];
+}
+
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
 {
@@ -405,12 +411,12 @@
 }
 
 #pragma mark - Rendering type
--(EMRenderingType)renderingType
+-(EMMediaDataType)renderingType
 {
     if (self.guiRenderingTypeSelector.selectedSegmentIndex == 0) {
-        return EMRenderingTypeGIF;
+        return EMMediaDataTypeGIF;
     } else {
-        return EMRenderingTypeVideo;
+        return EMMediaDataTypeVideo;
     }
 }
 
@@ -419,7 +425,7 @@
 -(void)updateAudioSelectionUI
 {
     // If GIF rendering selected, hide all UI elements related to audio.
-    if (self.renderingType == EMRenderingTypeGIF) {
+    if (self.renderingType == EMMediaDataTypeGIF) {
         self.guiAudioButton.hidden = YES;
         self.guiAudioOKButton.hidden = YES;
         self.guiAudioRemoveButton.hidden = YES;
@@ -673,6 +679,7 @@
 - (IBAction)onChangedRenderType:(UISegmentedControl *)sender
 {
     [self updateAudioSelectionUI];
+    [self.shareVC update];
 }
 
 

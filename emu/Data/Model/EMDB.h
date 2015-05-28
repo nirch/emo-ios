@@ -36,9 +36,9 @@
 #define emkDuration         @"duration"
 #define emkDate             @"date"
 
-typedef NS_ENUM(NSInteger, EMRenderingType) {
-    EMRenderingTypeGIF      = 0,
-    EMRenderingTypeVideo    = 1
+typedef NS_ENUM(NSInteger, EMMediaDataType) {
+    EMMediaDataTypeGIF      = 0,
+    EMMediaDataTypeVideo    = 1
 };
 
 

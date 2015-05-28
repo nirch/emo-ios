@@ -5,6 +5,7 @@
 //  Created by Aviv Wolf on 2/23/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+#define TAG @"EMShareVC"
 
 @import MobileCoreServices;
 
@@ -23,7 +24,9 @@
 
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
-#define TAG @"EMShareVC"
+
+#import <Toast/UIView+Toast.h>
+#import "EMRenderManager.h"
 
 @interface EMShareVC () <
     UICollectionViewDataSource,
@@ -33,6 +36,8 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiFBMButtonContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiRenderingView;
+@property (weak, nonatomic) IBOutlet UIProgressView *guiRenderingProgress;
 
 @property (nonatomic, weak) UIButton *fbmButton;
 @property (nonatomic, weak) UIButton *fbmSmallerButton;
@@ -146,20 +151,39 @@
 }
 
 
+#pragma mark - Update
+-(void)update
+{
+    EMMediaDataType mediaTypeToShare = [self.delegate sharerDataTypeToShare];
+    
+    if (mediaTypeToShare == EMMediaDataTypeGIF) {
+        // A priorized list of share methods for animated gifs.
+        self.shareMethods = @[
+                              @(emkShareMethodFacebookMessanger),
+                              @(emkShareMethodAppleMessages),
+                              @(emkShareMethodMail),
+                              @(emkShareMethodSaveToCameraRoll),
+                              @(emkShareMethodCopy)
+                              ];
+    } else {
+        // A priorized list of share methods for video.
+        self.shareMethods = @[
+                              @(emkShareMethodFacebookMessanger),
+                              @(emkShareMethodFacebook),
+                              @(emkShareMethodAppleMessages),
+                              @(emkShareMethodWhatsapp),
+                              @(emkShareMethodMail),
+                              @(emkShareMethodSaveToCameraRoll),
+                              @(emkShareMethodCopy)
+                              ];
+    }
+    [self.guiCollectionView reloadData];
+}
+
+
 #pragma mark - Data
 -(void)initData
 {
-    // A priorized list of share methods.
-    self.shareMethods = @[
-                          @(emkShareMethodFacebookMessanger),
-                          //@(emkShareMethodFacebook),
-                          @(emkShareMethodAppleMessages),
-                          //@(emkShareMethodWhatsapp),
-                          @(emkShareMethodMail),
-                          @(emkShareMethodSaveToCameraRoll),
-                          @(emkShareMethodCopy)
-                          ];
-    
     self.shareNames = @{
                         @(emkShareMethodFacebookMessanger):  @"facebookm",
                         @(emkShareMethodFacebook):           @"facebook",
@@ -169,7 +193,7 @@
                         @(emkShareMethodSaveToCameraRoll):   @"savetocm",
                         @(emkShareMethodCopy):               @"copy"
                         };
-    
+    [self update];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -204,24 +228,6 @@
     UIImage *shareIcon = [UIImage imageNamed:buttonImageName];
     [cell.guiButton setImage:shareIcon forState:UIControlStateNormal];
     cell.guiButton.tag = indexPath.item;
-    
-    // Change how the share button of fb messenger looks
-    // to whatever style defined by the FB Messenger SDK
-    // (instead of the hardcoded image)
-    if ([shareMethod isEqualToNumber:@(emkShareMethodFacebookMessanger)]) {
-        if (self.fbmSmallerButton == nil) {
-            UIButton *button = [FBSDKMessengerShareButton circularButtonWithStyle:FBSDKMessengerShareButtonStyleWhite
-                                                                            width:58];
-            button.layer.cornerRadius = 30;
-            [cell addSubview:button];
-            button.center = cell.guiButton.center;
-            button.hidden = NO;
-            button.tag = 0;
-            cell.guiButton.hidden = YES;
-            [button addTarget:self action:@selector(onPressedShareButton:) forControlEvents:UIControlEventTouchUpInside];
-            self.fbmSmallerButton = button;
-        }
-    }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
@@ -254,22 +260,37 @@
     NSString *emuticonOID = [self.delegate shareObjectIdentifier];
     Emuticon *emu = [Emuticon findWithID:emuticonOID context:EMDB.sh.context];
     
+    // What to share? gif/video
+    EMMediaDataType mediaDataTypeToShare = [self.delegate sharerDataTypeToShare];
+    NSString *mediaDataTypeName;
+    if (mediaDataTypeToShare == EMMediaDataTypeGIF) {
+        mediaDataTypeName = @"gif";
+    } else {
+        mediaDataTypeName = @"video";
+    }
+    
     // Info about the share
     EMKShareMethod shareMethod = [self.shareMethods[index] integerValue];
     HMParams *params = [self paramsForEmuticon:emu];
     [params addKey:AK_EP_SHARE_METHOD value:self.shareNames[@(shareMethod)]];
     [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"shareVC"];
-
-    // Share
-    [self shareEmuticon:emu usingMethod:shareMethod info:params.dictionary];
+    [params addKey:AK_EP_SHARED_MEDIA_TYPE value:mediaDataTypeName];
     
     // Analytics
     [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON
-                             info:params.dictionary];
+                          info:params.dictionary];
 
+    // Share
+    [self shareEmuticon:emu
+          mediaDataType:mediaDataTypeToShare
+            usingMethod:shareMethod
+                   info:params.dictionary];
 }
 
--(void)shareEmuticon:(Emuticon *)emu usingMethod:(EMKShareMethod)method info:(NSDictionary *)info
+-(void)shareEmuticon:(Emuticon *)emu
+       mediaDataType:(EMMediaDataType)mediaDataType
+         usingMethod:(EMKShareMethod)method
+                info:(NSDictionary *)info
 {
     // Only one share operation at a time.
     if (self.sharer) return;
@@ -331,8 +352,51 @@
     self.sharer.viewController = self;
     self.sharer.view = self.view;
     self.sharer.info = info;
-    [self.sharer share];
+    
+    if (mediaDataType == EMMediaDataTypeGIF) {
+        self.sharer.shareOption = emkShareOptionAnimatedGif;
+        [self.sharer share];
+    } else {
+        self.sharer.shareOption = emkShareOptionVideo;
+        
+        // Check if rendered video available.
+        // (rendered video files are temp files)
+        if (emu.videoURL) {
+            [self.sharer share];
+        } else {
+            [self renderVideoBeforeShareForEmu:emu];
+        }
+    }
 }
+
+
+-(void)renderVideoBeforeShareForEmu:(Emuticon *)emu
+{
+    self.guiCollectionView.hidden = YES;
+    self.guiFBMButtonContainer.hidden = YES;
+    self.guiRenderingView.hidden = NO;
+    
+    [EMRenderManager.sh renderVideoForEmu:emu
+                               loopsCount:10
+                                 pingPong:NO
+                          completionBlock:^{
+                              // If we are here, emu.videoURL points to the rendered video.
+                              [self.sharer share];
+                              self.guiRenderingView.hidden = YES;
+                              self.guiCollectionView.hidden = NO;
+                              self.guiFBMButtonContainer.hidden = NO;
+                          } failBlock:^{
+                              // Failed :-(
+                              // No rendered video available.
+                              self.sharer = nil;
+                              [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+                              self.guiRenderingView.hidden = YES;
+                              self.guiCollectionView.hidden = NO;
+                              self.guiFBMButtonContainer.hidden = NO;
+                          }];
+}
+
+
 
 #pragma mark - EMShareDelegate
 -(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info

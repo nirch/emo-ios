@@ -5,9 +5,11 @@
 
 
 #import "HMPanel.h"
+#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Mixpanel.h>
 #import "AppManagement.h"
+#import "HMExperiments.h"
 
 @interface HMPanel()
 
@@ -65,7 +67,7 @@
 
 -(void)initCrashlytics
 {
-    [Crashlytics startWithAPIKey:@"daa34917843cd9e52b65a68cec43efac16fb680a"];
+    [Fabric with:@[CrashlyticsKit]];
     REMOTE_LOG(@"Initialized crashlytics");
 }
 
@@ -339,6 +341,21 @@
     [self.mixPanel.people addPushDeviceToken:pushToken];
 }
 
+
+#pragma mark - Experiments
+-(void)initializeExperimentsWithLaunchOptions:(NSDictionary *)launchOptions
+{
+    [Optimizely startOptimizelyWithAPIToken:@"AAM7hIkAjQ2O6Dtl6TfFywzCXVVjq4W5~2898251091"
+                              launchOptions:launchOptions];
+}
+
+-(BOOL)handleOpenURL:(NSURL *)url
+{
+    if([Optimizely handleOpenURL:url]) {
+        return YES;
+    }
+    return NO;
+}
 
 
 @end

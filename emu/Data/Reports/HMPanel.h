@@ -5,9 +5,11 @@
 // Currently, remote logging implementation uses crashlytics.
 #import <Crashlytics/Crashlytics.h>
 
+#import <Optimizely/Optimizely.h>
 #import "HMAnalyticsEvents.h"
 #import "HMParams.h"
 #import <MPTweakInline.h>
+
 
 #define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
 
@@ -44,9 +46,8 @@
 -(void)personDetails:(NSDictionary *)details;
 -(void)personPushToken:(NSData *)pushToken;
 
-#pragma mark - Tweaking
-// Wrapper of mixpanel tweak inline macros
-#define HMPanelTweakValue(name_, ...) MPTweakValue(name_, __VA_ARGS__)
-
+#pragma mark - Experiments
+-(void)initializeExperimentsWithLaunchOptions:(NSDictionary *)launchOptions;
+-(BOOL)handleOpenURL:(NSURL *)url;
 
 @end

@@ -24,9 +24,7 @@ typedef NS_ENUM(NSInteger, EMKShareMethod) {
 // What to share?
 typedef NS_ENUM(NSInteger, EMKShareOption) {
     emkShareOptionAnimatedGif           = 0,
-    emkShareOptionVideo                 = 1,
-    emkShareOptionBoth                  = 2,
-    emkShareOptionOther                 = 3
+    emkShareOptionVideo                 = 1
 };
 
 

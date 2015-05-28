@@ -8,7 +8,8 @@
 
 #import "EMDB.h"
 
-#define GROUP_CONTAINER_IDENTIFIER @"group.it.homage.Emu"
+#define GROUP_CONTAINER_IDENTIFIER              @"group.it.homage.Emu"
+#define GROUP_CONTAINER_IDENTIFIER_TEST_APP     @"group.it.homage.EmuBeta"
 
 @interface EMDB (Files)
 

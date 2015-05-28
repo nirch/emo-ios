@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Live Variables Supported Types</key>
+	<dict>
+		<key>Bool</key>
+		<true/>
+		<key>Number</key>
+		<true/>
+		<key>String</key>
+		<true/>
+	</dict>
+	<key>Live Variables</key>
+	<dict>
+		<key>featureVideoRenderExtraUserSettings</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Bool&gt; - Is the user allowed to tweak some extra options in video files rendering?
+(number of loops, ping pong effect etc)</string>
+			<key>defaultValue</key>
+			<false/>
+			<key>valueType</key>
+			<string>Boolean</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

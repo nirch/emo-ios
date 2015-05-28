@@ -33,7 +33,7 @@ public:
     void AddLoopEffect(NSInteger loopsCount, BOOL pingPong);
     
     // Audio track
-    void AddAudio(NSURL *audioFileURL);
+    void AddAudio(NSURL *audioFileURL, NSTimeInterval audioStartTime);
     
 private:
     EMVideoMaker *videoMaker;

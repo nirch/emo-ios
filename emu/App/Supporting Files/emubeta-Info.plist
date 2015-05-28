@@ -32,9 +32,33 @@
 				<string>fb410672082391445</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.optimizely</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>optly2898251091</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.2.t</string>
+	<string>1.6.3.t</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>daa34917843cd9e52b65a68cec43efac16fb680a</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>410672082391445</string>
 	<key>FacebookDisplayName</key>

@@ -25,7 +25,6 @@
 {
     self = [super init];
     if (self) {
-        // TODO: this use of "global" is ugly. Find a different solution if/when possible.
         AppDelegate *app = [[UIApplication sharedApplication] delegate];
         app.currentFBMSharer = self;
     }
@@ -66,6 +65,16 @@
 {
     [super share];
 
+    if (self.shareOption == emkShareOptionAnimatedGif) {
+        [self shareAnimatedGif];
+    } else {
+        [self shareVideo];
+    }
+}
+
+
+-(void)shareAnimatedGif
+{
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
     NSData *gifData = [emu animatedGifData];
@@ -77,7 +86,6 @@
         self.wasCanceled = NO;
         FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
         options.contextOverride = context;
-//        options.context = context;
         
         [FBSDKMessengerSharer shareAnimatedGIF:gifData withOptions:options];
         [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
@@ -87,6 +95,37 @@
         return;
     }
 }
+
+
+-(void)shareVideo
+{
+    // Get the
+    Emuticon *emu = self.objectToShare;
+    NSData *videoData = [emu videoData];
+    
+    
+    AppDelegate *app = [[UIApplication sharedApplication] delegate];
+    FBSDKMessengerContext *context = app.fbContext;
+
+    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityVideo) {
+        
+        self.wasCanceled = NO;
+        FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
+        options.contextOverride = context;
+        
+        [FBSDKMessengerSharer shareVideo:videoData withOptions:options];
+        [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
+
+    } else {
+        [self.delegate sharerDidFailWithInfo:self.info];
+        [self messengerMissingMessage];
+        return;
+    }
+}
+
+
+
+
 
 -(void)messengerMissingMessage
 {

@@ -7,6 +7,7 @@
 //
 
 #import "EMDB+Files.h"
+#import "AppManagement.h"
 
 @implementation EMDB (Files)
 
@@ -24,13 +25,11 @@
 +(NSURL *)rootURL
 {
     // Now using a group container (so keyboard and app can share resources and data)
+    NSString *groupContainerIdentifier = AppManagement.sh.isTestApp? GROUP_CONTAINER_IDENTIFIER_TEST_APP : GROUP_CONTAINER_IDENTIFIER;
     NSURL *groupURL = [[NSFileManager defaultManager]
                        containerURLForSecurityApplicationGroupIdentifier:
-                       GROUP_CONTAINER_IDENTIFIER];
+                       groupContainerIdentifier];
     return groupURL;
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-//    return [NSURL URLWithString:basePath];
 }
 
 +(NSString *)rootPath

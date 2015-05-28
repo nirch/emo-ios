@@ -41,6 +41,19 @@
 @synthesize fxLoops = _fxLoops;
 @synthesize audioFileURL = _audioFileURL;
 
+
+#pragma mark - Pixel buffer arrays
+void PixelBufferArrayReleaseCallback(CFAllocatorRef allocator, const void* value)
+{
+    if (value != NULL) {
+        CVPixelBufferRef pb = (CVPixelBufferRef)value;
+        CVPixelBufferRelease(pb);
+    }
+}
+const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback, 0, 0};
+
+
+#pragma mark - Initialization
 -(instancetype)init
 {
     self = [super init];
@@ -48,7 +61,7 @@
         _fxLoops = 0;
         _steamedWriting = YES;
         _preparedForWriting = NO;
-        _pbArray = CFArrayCreateMutable(NULL, 0, nil);
+        _pbArray = CFArrayCreateMutable(kCFAllocatorDefault, 0, &pbArrayCallBacks);
         _renderingQueue = AppManagement.sh.renderingQueue;
         _finishedWritingVideo = NO;
         _finishedAddingAudio = NO;
@@ -145,7 +158,7 @@
     if (self.steamedWriting) {
         CVPixelBufferRef pb = CVtool::CVPixelBufferRef_from_image(image);
         [self _writePixelBuffer:pb];
-        CFRelease(pb);
+        CVPixelBufferRelease(pb);
     } else {
         [self _storeImageFrame:image];
     }
@@ -202,7 +215,8 @@
         [assetWriter finishWritingWithCompletionHandler:^{
             // Finale cleanups after finishing writing (if required).
             if (!self.steamedWriting) {
-                [self _cleanupStoredFrames];
+                CFArrayRemoveAllValues(_pbArray);
+                CFRelease(_pbArray);
             }
             self.finishedWritingVideo = YES;
         }];
@@ -280,18 +294,6 @@
 }
 
 
--(void)_cleanupStoredFrames
-{
-    CFIndex fCount = CFArrayGetCount(_pbArray);
-    for (CFIndex i=0;i<fCount;i++) {
-        CVPixelBufferRef pb = (CVPixelBufferRef)CFArrayGetValueAtIndex(_pbArray, 0);
-        CFRelease(pb);
-    }
-    CFArrayRemoveAllValues(_pbArray);
-    CFRelease(_pbArray);
-}
-
-
 #pragma mark - Audio
 -(void)setAudioFileURL:(NSURL *)audioFileURL
 {
@@ -306,31 +308,37 @@
     AVMutableComposition* mixComposition = [AVMutableComposition composition];
     
     // The name of the new output mixed video file.
-    NSString* outputFilePath = self.videoOutputURL.path;
-    outputFilePath = [outputFilePath stringByReplacingOccurrencesOfString:@".mp4" withString:@"-ws.mp4"];
-    NSURL *outputFileURL = [NSURL fileURLWithPath:outputFilePath];
+    NSString* originalVideoPath = self.videoOutputURL.path;
+    NSString* outputFileWithAudioPath = [originalVideoPath stringByReplacingOccurrencesOfString:@".mp4" withString:@"-ws.mp4"];
+    NSURL *outputFileWithAudioURL = [NSURL fileURLWithPath:outputFileWithAudioPath];
 
+    // The video asset. Used range: from start to finish.
     CMTime nextClipStartTime = kCMTimeZero;
     AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:self.videoOutputURL options:nil];
     CMTimeRange video_timeRange = CMTimeRangeMake(kCMTimeZero,videoAsset.duration);
     AVMutableCompositionTrack *a_compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
     [a_compositionVideoTrack insertTimeRange:video_timeRange ofTrack:[[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:nextClipStartTime error:nil];
     
-    //nextClipStartTime = CMTimeAdd(nextClipStartTime, a_timeRange.duration);
-    
+    // The audio asset. Used range: from defined start time, with the duration defined by video.
     AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:self.audioFileURL options:nil];
-    CMTimeRange audio_timeRange = CMTimeRangeMake(kCMTimeZero, videoAsset.duration);
+    CMTime startTime = CMTimeMake(self.audioStartTime, 1);
+    CMTimeRange audio_timeRange = CMTimeRangeMake(startTime, videoAsset.duration);
+    
     AVMutableCompositionTrack *b_compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
     [b_compositionAudioTrack insertTimeRange:audio_timeRange ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:nextClipStartTime error:nil];
     
     AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
     _assetExport.outputFileType = AVFileTypeMPEG4;
-    _assetExport.outputURL = outputFileURL;
-    
+    _assetExport.outputURL = outputFileWithAudioURL;
     [_assetExport exportAsynchronouslyWithCompletionHandler:^(void ) {
         NSError *error = _assetExport.error;
-        // TODO: error handling.
-        NSLog(@">>>%@", error);
+        if (error == nil) {
+            NSFileManager *fm = [NSFileManager defaultManager];
+            [fm removeItemAtPath:originalVideoPath error:&error];
+            
+            if (error == nil)
+                [fm moveItemAtPath:outputFileWithAudioPath toPath:originalVideoPath error:&error];
+        }
         self.finishedAddingAudio = YES;
     }];
 }

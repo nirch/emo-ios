@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 17:59:07 05/14/15 IDT
+//  Created by build script on 09:21:53 05/26/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -389,6 +389,12 @@ User pressed one of the share buttons in the emoticon screen.
 **/
 #define AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON @"ItemDetails:userPressedShareButton"
 
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
+
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
 #define AK_EP_EMUTICON_OID @"emuticonOID"
 
@@ -398,11 +404,8 @@ User pressed one of the share buttons in the emoticon screen.
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
-/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
-#define AK_EP_SHARE_METHOD @"shareMethod"
-
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
+/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
+#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -871,6 +874,9 @@ Sharing was canceled by the user.
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
+/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
+#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
+
 /** Param:senderUI --> <string> - The originating UI the share was initated from. ShareVC, keyboard, etc. **/
 #define AK_EP_SENDER_UI @"senderUI"
 
@@ -895,6 +901,9 @@ Sharing failed. (Not related to any specific UI)
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
+/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
+#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
+
 /** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
 #define AK_EP_SENDER_UI @"senderUI"
 
@@ -918,6 +927,9 @@ Sharing was successful. (Not related to any specific UI)
 
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
+#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
 
 /** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
 #define AK_EP_SENDER_UI @"senderUI"

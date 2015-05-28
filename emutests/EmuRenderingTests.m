@@ -112,7 +112,7 @@
     }];
     
     // Delete output folder
-    //[fm removeItemAtPath:path error:nil];
+    [fm removeItemAtPath:path error:nil];
 }
 
 /**
@@ -134,16 +134,17 @@
     NSURL *audioFileURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"audio_test"
                                                                    withExtension:@"mp3"];
     
-    
-    NSString *uuid = [[NSUUID UUID] UUIDString];
-    NSString *outputName = [NSString stringWithFormat:@"%@/%@", tempFolderName, uuid];
-    EMRenderer *renderer = [self simpleRendererToOutput:outputName];
-    renderer.shouldOutputGif = NO;
-    renderer.shouldOutputVideo = YES;
-    renderer.videoFXLoopsCount = 10;
-    renderer.videoFXLoopPingPong = YES;
-    renderer.audioFileURL = audioFileURL;
-    [renderer render];
+    [self measureBlock:^{
+        NSString *uuid = [[NSUUID UUID] UUIDString];
+        NSString *outputName = [NSString stringWithFormat:@"%@/%@", tempFolderName, uuid];
+        EMRenderer *renderer = [self simpleRendererToOutput:outputName];
+        renderer.shouldOutputGif = NO;
+        renderer.shouldOutputVideo = YES;
+        renderer.videoFXLoopsCount = 5;
+        renderer.videoFXLoopPingPong = NO;
+        renderer.audioFileURL = audioFileURL;
+        [renderer render];
+    }];
     
     [fm removeItemAtPath:path error:nil];
 }

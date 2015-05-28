@@ -250,7 +250,6 @@
 		085C67741A937EC9007BC910 /* UserFootage+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670F1A937EC9007BC910 /* UserFootage+Logic.m */; };
 		085C67751A937EC9007BC910 /* NSManagedObject+FindAndCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */; };
 		085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 085C67141A937EC9007BC910 /* EMPNGSequenceWriter.mm */; };
-		085C67911A937EC9007BC910 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C67361A937EC9007BC910 /* LaunchScreen.xib */; };
 		085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C673E1A937EC9007BC910 /* EMBGFeedBackVC.m */; };
 		085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C673F1A937EC9007BC910 /* EMRecorder.storyboard */; };
@@ -271,6 +270,123 @@
 		0867C9F61B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
 		0867C9F71B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
 		0867C9F81B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
+		0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */; };
+		0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */; };
+		0867CA001B15F6B200FF0E85 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FE1B15F6B200FF0E85 /* Fabric.framework */; };
+		0867CA021B15F6B200FF0E85 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FE1B15F6B200FF0E85 /* Fabric.framework */; };
+		0867CA031B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */; };
+		0867CA051B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */; };
+		0867CA0B1B16602E00FF0E85 /* TagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AB68061AD5629C0092B62B /* TagCell.m */; };
+		0867CA0C1B16602E00FF0E85 /* UserFootage.m in Sources */ = {isa = PBXBuildFile; fileRef = 085A784F1AEC2364003E9F97 /* UserFootage.m */; };
+		0867CA0D1B16602E00FF0E85 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89CC1A9B92AD00224A38 /* EMDB.m */; };
+		0867CA0E1B16602E00FF0E85 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
+		0867CA0F1B16602E00FF0E85 /* EMKeyboardContainerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */; };
+		0867CA101B16602E00FF0E85 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
+		0867CA111B16602E00FF0E85 /* EMPackagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB3521AA50D5300603E30 /* EMPackagesVC.m */; };
+		0867CA121B16602E00FF0E85 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
+		0867CA131B16602E00FF0E85 /* HMPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD811AA37DC80078F14B /* HMPanel.m */; };
+		0867CA141B16602E00FF0E85 /* EMEmusKeyboardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080489E81AA5957A008CC885 /* EMEmusKeyboardVC.m */; };
+		0867CA151B16602E00FF0E85 /* EMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899B1A93B9E5008D9068 /* EMLabel.m */; };
+		0867CA161B16602E00FF0E85 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
+		0867CA171B16602E00FF0E85 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
+		0867CA181B16602E00FF0E85 /* EmuSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */; };
+		0867CA191B16602E00FF0E85 /* NSManagedObject+FindAndCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */; };
+		0867CA1A1B16602E00FF0E85 /* EMAlphaNumericKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC3E691AD15465005231B5 /* EMAlphaNumericKeyboard.m */; };
+		0867CA1B1B16602E00FF0E85 /* EmuBaseStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A11A93BB65008D9068 /* EmuBaseStyle.m */; };
+		0867CA1C1B16602E00FF0E85 /* EMShareAppleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */; };
+		0867CA1D1B16602E00FF0E85 /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
+		0867CA1E1B16602E00FF0E85 /* EMPackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD771AA37DC20078F14B /* EMPackageParser.m */; };
+		0867CA1F1B16602E00FF0E85 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 0833196A1B04EAA8000B8979 /* EmuticonDef.m */; };
+		0867CA201B16602E00FF0E85 /* AppManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D44D1AC2B0E4004A83F3 /* AppManagement.m */; };
+		0867CA211B16602E00FF0E85 /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; };
+		0867CA221B16602E00FF0E85 /* EMCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 082720BF1B038CCB0046F38E /* EMCaches.m */; };
+		0867CA231B16602E00FF0E85 /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
+		0867CA241B16602E00FF0E85 /* EMShareMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */; };
+		0867CA251B16602E00FF0E85 /* EmuStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A41A93BB7B008D9068 /* EmuStyle.m */; };
+		0867CA261B16602E00FF0E85 /* EmuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E525B1A9E1E6200A66FC8 /* EmuCell.m */; };
+		0867CA271B16602E00FF0E85 /* EMPackagesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD791AA37DC20078F14B /* EMPackagesParser.m */; };
+		0867CA281B16602E00FF0E85 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */; };
+		0867CA291B16602E00FF0E85 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AA14401B0B34F1002E1B2F /* AppCFG.m */; };
+		0867CA2A1B16602E00FF0E85 /* EMAppCFGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD711AA37DC20078F14B /* EMAppCFGParser.m */; };
+		0867CA2B1B16602E00FF0E85 /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD731AA37DC20078F14B /* EMEmuticonParser.m */; };
+		0867CA2C1B16602E00FF0E85 /* EMButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899E1A93B9F7008D9068 /* EMButton.m */; };
+		0867CA2D1B16602E00FF0E85 /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
+		0867CA2E1B16602E00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
+		0867CA2F1B16602E00FF0E85 /* UserFootage+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670F1A937EC9007BC910 /* UserFootage+Logic.m */; };
+		0867CA301B16602E00FF0E85 /* KBKeyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC3E6D1AD2C9A1005231B5 /* KBKeyButton.m */; };
+		0867CA311B16602E00FF0E85 /* AppCFG+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670B1A937EC9007BC910 /* AppCFG+Logic.m */; };
+		0867CA321B16602E00FF0E85 /* HMParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED1241AA7281B00C50D0C /* HMParams.m */; };
+		0867CA331B16602E00FF0E85 /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
+		0867CA351B16602E00FF0E85 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
+		0867CA361B16602E00FF0E85 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */; };
+		0867CA371B16602E00FF0E85 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FE1B15F6B200FF0E85 /* Fabric.framework */; };
+		0867CA391B16602E00FF0E85 /* yeah-yeah-fg-v1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A61B06907D000B8979 /* yeah-yeah-fg-v1.gif */; };
+		0867CA3A1B16602E00FF0E85 /* crap-bitch-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833197F1B06907D000B8979 /* crap-bitch-bg.gif */; };
+		0867CA3B1B16602E00FF0E85 /* crap-bitch-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 083319811B06907D000B8979 /* crap-bitch-mask.jpg */; };
+		0867CA3C1B16602E00FF0E85 /* casual-lol-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 083319771B06907D000B8979 /* casual-lol-mask.jpg */; };
+		0867CA3D1B16602E00FF0E85 /* ServerCFG.plist in Resources */ = {isa = PBXBuildFile; fileRef = 080B05A31AB06E85003C19E7 /* ServerCFG.plist */; };
+		0867CA3E1B16602E00FF0E85 /* yeah-omg-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A31B06907D000B8979 /* yeah-omg-bg.gif */; };
+		0867CA3F1B16602E00FF0E85 /* casual-whats-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833197C1B06907D000B8979 /* casual-whats-fg.gif */; };
+		0867CA401B16602E00FF0E85 /* snack-morning-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319971B06907D000B8979 /* snack-morning-fg.gif */; };
+		0867CA411B16602E00FF0E85 /* hearts-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 083319881B06907D000B8979 /* hearts-mask.jpg */; };
+		0867CA421B16602E00FF0E85 /* party-twerk-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319931B06907D000B8979 /* party-twerk-bg.gif */; };
+		0867CA431B16602E00FF0E85 /* crap-shit-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319821B06907D000B8979 /* crap-shit-bg.gif */; };
+		0867CA441B16602E00FF0E85 /* recordingEnd.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBA1B01F5B90046F38E /* recordingEnd.wav */; };
+		0867CA451B16602E00FF0E85 /* party-party-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319921B06907D000B8979 /* party-party-fg.gif */; };
+		0867CA461B16602E00FF0E85 /* casual-lol-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319751B06907D000B8979 /* casual-lol-bg.gif */; };
+		0867CA471B16602E00FF0E85 /* yeah-no-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A11B06907D000B8979 /* yeah-no-bg.gif */; };
+		0867CA481B16602E00FF0E85 /* simpleSwipe.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBB1B01F5B90046F38E /* simpleSwipe.wav */; };
+		0867CA491B16602E00FF0E85 /* yeah-yeah-bg-v1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A51B06907D000B8979 /* yeah-yeah-bg-v1.gif */; };
+		0867CA4A1B16602E00FF0E85 /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
+		0867CA4B1B16602E00FF0E85 /* wasted-buzzzzzed-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0833199C1B06907D000B8979 /* wasted-buzzzzzed-mask.jpg */; };
+		0867CA4C1B16602E00FF0E85 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319871B06907D000B8979 /* hearts-fg.gif */; };
+		0867CA4D1B16602E00FF0E85 /* casual-whats-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833197B1B06907D000B8979 /* casual-whats-bg.gif */; };
+		0867CA4E1B16602E00FF0E85 /* Keyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */; };
+		0867CA4F1B16602E00FF0E85 /* meme-cage-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833198F1B06907D000B8979 /* meme-cage-fg.gif */; };
+		0867CA501B16602E00FF0E85 /* onboarding_packages_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 08271FE11B0203820046F38E /* onboarding_packages_test.json */; };
+		0867CA511B16602E00FF0E85 /* yeah-no-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A21B06907D000B8979 /* yeah-no-fg.gif */; };
+		0867CA521B16602E00FF0E85 /* onboarding_packages_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 08331A371B069CA7000B8979 /* onboarding_packages_prod.json */; };
+		0867CA531B16602E00FF0E85 /* meme-cage-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833198E1B06907D000B8979 /* meme-cage-bg.gif */; };
+		0867CA541B16602E00FF0E85 /* wasted-buzzzzzed-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833199B1B06907D000B8979 /* wasted-buzzzzzed-fg.gif */; };
+		0867CA551B16602E00FF0E85 /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319861B06907D000B8979 /* hearts-bg.gif */; };
+		0867CA561B16602E00FF0E85 /* attitude-coolstory-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319721B06907D000B8979 /* attitude-coolstory-fg.gif */; };
+		0867CA571B16602E00FF0E85 /* crap-bitch-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319801B06907D000B8979 /* crap-bitch-fg.gif */; };
+		0867CA581B16602E00FF0E85 /* cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB51B01F5B90046F38E /* cancel.wav */; };
+		0867CA591B16602E00FF0E85 /* wasted-ubercool-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0833199F1B06907D000B8979 /* wasted-ubercool-mask.jpg */; };
+		0867CA5A1B16602E00FF0E85 /* meme-baby-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833198C1B06907D000B8979 /* meme-baby-bg.gif */; };
+		0867CA5B1B16602E00FF0E85 /* wasted-buzzzzzed-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833199A1B06907D000B8979 /* wasted-buzzzzzed-bg.gif */; };
+		0867CA5C1B16602E00FF0E85 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08AA14381B08F062002E1B2F /* Localizable.strings */; };
+		0867CA5D1B16602E00FF0E85 /* goodBG.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB71B01F5B90046F38E /* goodBG.wav */; };
+		0867CA5E1B16602E00FF0E85 /* wasted-ubercool-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833199E1B06907D000B8979 /* wasted-ubercool-fg.gif */; };
+		0867CA5F1B16602E00FF0E85 /* attitude-coolstory-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319711B06907D000B8979 /* attitude-coolstory-bg.gif */; };
+		0867CA601B16602E00FF0E85 /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
+		0867CA611B16602E00FF0E85 /* 70s-peace-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833196F1B06907D000B8979 /* 70s-peace-bg.gif */; };
+		0867CA621B16602E00FF0E85 /* wasted-ubercool-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833199D1B06907D000B8979 /* wasted-ubercool-bg.gif */; };
+		0867CA631B16602E00FF0E85 /* yeah-omg-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A41B06907D000B8979 /* yeah-omg-fg.gif */; };
+		0867CA641B16602E00FF0E85 /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319891B06907D000B8979 /* hot-bg.gif */; };
+		0867CA651B16602E00FF0E85 /* snack-morning-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319961B06907D000B8979 /* snack-morning-bg.gif */; };
+		0867CA661B16602E00FF0E85 /* casual-whats-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0833197D1B06907D000B8979 /* casual-whats-mask.jpg */; };
+		0867CA671B16602E00FF0E85 /* kbAllowAccessTutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBE1B01F5B90046F38E /* kbAllowAccessTutorial.mp4 */; };
+		0867CA681B16602E00FF0E85 /* attitude-coolstory-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 083319731B06907D000B8979 /* attitude-coolstory-mask.png */; };
+		0867CA691B16602E00FF0E85 /* casual-thanks-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319781B06907D000B8979 /* casual-thanks-bg.gif */; };
+		0867CA6B1B16602E00FF0E85 /* casual-thanks-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319791B06907D000B8979 /* casual-thanks-fg.gif */; };
+		0867CA6C1B16602E00FF0E85 /* startRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBC1B01F5B90046F38E /* startRecording.wav */; };
+		0867CA6D1B16602E00FF0E85 /* party-party-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319911B06907D000B8979 /* party-party-bg.gif */; };
+		0867CA6E1B16602E00FF0E85 /* meme-baby-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833198D1B06907D000B8979 /* meme-baby-fg.gif */; };
+		0867CA6F1B16602E00FF0E85 /* snack-morning-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 083319981B06907D000B8979 /* snack-morning-mask.jpg */; };
+		0867CA701B16602E00FF0E85 /* endRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB61B01F5B90046F38E /* endRecording.wav */; };
+		0867CA711B16602E00FF0E85 /* crap-shit-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 083319841B06907D000B8979 /* crap-shit-mask.jpg */; };
+		0867CA721B16602E00FF0E85 /* casual-lol-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319761B06907D000B8979 /* casual-lol-fg.gif */; };
+		0867CA731B16602E00FF0E85 /* plasticClickSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB81B01F5B90046F38E /* plasticClickSound.wav */; };
+		0867CA741B16602E00FF0E85 /* hot-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0833198A1B06907D000B8979 /* hot-mask.jpg */; };
+		0867CA751B16602E00FF0E85 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833196E1B06907D000B8979 /* 70s-groovy-bg.gif */; };
+		0867CA761B16602E00FF0E85 /* casual-thanks-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0833197A1B06907D000B8979 /* casual-thanks-mask.jpg */; };
+		0867CA771B16602E00FF0E85 /* crap-shit-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319831B06907D000B8979 /* crap-shit-fg.gif */; };
+		0867CA781B16602E00FF0E85 /* pressedButton.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB91B01F5B90046F38E /* pressedButton.wav */; };
+		0867CA791B16602E00FF0E85 /* party-twerk-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319941B06907D000B8979 /* party-twerk-fg.gif */; };
+		086911D11B16D70F00D5D29F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
+		086911D21B16D73000D5D29F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
+		086911D31B16D73100D5D29F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		0899D2361B0BE42800CC6F88 /* EmuRenderingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899D2351B0BE42800CC6F88 /* EmuRenderingTests.m */; };
@@ -428,7 +544,6 @@
 		08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C67361A937EC9007BC910 /* LaunchScreen.xib */; };
 		08AA14D31B0BA658002E1B2F /* yeah-yeah-bg-v1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A51B06907D000B8979 /* yeah-yeah-bg-v1.gif */; };
 		08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
-		08AA14D51B0BA658002E1B2F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		08AA14D61B0BA658002E1B2F /* party-twerk-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319931B06907D000B8979 /* party-twerk-bg.gif */; };
 		08AA14D71B0BA658002E1B2F /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
 		08AA14D81B0BA658002E1B2F /* 3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896A1A9AA12A00224A38 /* 3.gif */; };
@@ -483,7 +598,6 @@
 		08AA15091B0BA658002E1B2F /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
 		08AA150A1B0BA658002E1B2F /* 4.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896B1A9AA12A00224A38 /* 4.gif */; };
 		08AA150B1B0BA658002E1B2F /* onboarding_packages_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 08331A371B069CA7000B8979 /* onboarding_packages_prod.json */; };
-		08AA150F1B0BA658002E1B2F /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 080CB31A1AA4A9DD00603E30 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		08AB68071AD5629C0092B62B /* TagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AB68061AD5629C0092B62B /* TagCell.m */; };
 		08AB68081AD567990092B62B /* EMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899B1A93B9E5008D9068 /* EMLabel.m */; };
 		08AB68091AD5679D0092B62B /* EMButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899E1A93B9F7008D9068 /* EMButton.m */; };
@@ -576,13 +690,6 @@
 			remoteGlobalIDString = 080CB3191AA4A9DD00603E30;
 			remoteInfo = Keyboard;
 		};
-		08AA14451B0BA658002E1B2F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08D9297C1A77A36D00B6A68F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 080CB3191AA4A9DD00603E30;
-			remoteInfo = Keyboard;
-		};
 		08E6922A1AF60FF900BD6949 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D9297C1A77A36D00B6A68F /* Project object */;
@@ -600,17 +707,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				08AC3E671AD134A4005231B5 /* Keyboard.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		08AA150E1B0BA658002E1B2F /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				08AA150F1B0BA658002E1B2F /* Keyboard.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -827,6 +923,16 @@
 		08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EMVideoMaker.mm; sourceTree = "<group>"; };
 		0867C9F41B13943D00FF0E85 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
 		0867C9F51B13943D00FF0E85 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
+		0867C9F91B14C40700FF0E85 /* SolidColorSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolidColorSource.h; sourceTree = "<group>"; };
+		0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SolidColorSource.mm; sourceTree = "<group>"; };
+		0867C9FE1B15F6B200FF0E85 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		0867CA061B16551E00FF0E85 /* Experiments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Experiments.plist; sourceTree = "<group>"; };
+		0867CA081B16569E00FF0E85 /* HMExperiments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMExperiments.h; sourceTree = "<group>"; };
+		0867CA7D1B16602E00FF0E85 /* KeyboardBeta.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KeyboardBeta.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0867CA7E1B16602E00FF0E85 /* Keyboard copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Keyboard copy-Info.plist"; path = "/Users/aviv/DEV/workspaces/xcode/emo/Keyboard copy-Info.plist"; sourceTree = "<absolute>"; };
+		086911D41B1740AB00D5D29F /* emubeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = emubeta.entitlements; sourceTree = "<group>"; };
+		086911D51B17412500D5D29F /* KeyboardBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = KeyboardBeta.entitlements; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -859,7 +965,7 @@
 		08AA143A1B0B341F002E1B2F /* emu1_6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_6.xcdatamodel; sourceTree = "<group>"; };
 		08AA143F1B0B34F1002E1B2F /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
 		08AA14401B0B34F1002E1B2F /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
-		08AA15131B0BA658002E1B2F /* emu-beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "emu-beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		08AA15131B0BA658002E1B2F /* emubeta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emubeta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08AA15151B0BA73A002E1B2F /* emubeta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "emubeta-Info.plist"; sourceTree = "<group>"; };
 		08AB68051AD5629C0092B62B /* TagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagCell.h; sourceTree = "<group>"; };
 		08AB68061AD5629C0092B62B /* TagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagCell.m; sourceTree = "<group>"; };
@@ -981,6 +1087,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				08E1728D1ABDBBA7002FE477 /* libPods.a in Frameworks */,
+				0867CA051B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */,
+				0867CA021B15F6B200FF0E85 /* Fabric.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0867CA341B16602E00FF0E85 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0867CA351B16602E00FF0E85 /* libPods.a in Frameworks */,
+				0867CA361B16602E00FF0E85 /* Crashlytics.framework in Frameworks */,
+				0867CA371B16602E00FF0E85 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1015,6 +1133,8 @@
 				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
 				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
 				A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */,
+				0867CA031B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */,
+				0867CA001B15F6B200FF0E85 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,16 +1164,19 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
-		0806BD7F1AA37DC80078F14B /* Reports */ = {
+		0806BD7F1AA37DC80078F14B /* Reports & Experiments */ = {
 			isa = PBXGroup;
 			children = (
 				08CED10F1AA6DA8800C50D0C /* Analytics.plist */,
+				0867CA061B16551E00FF0E85 /* Experiments.plist */,
+				0867CA081B16569E00FF0E85 /* HMExperiments.h */,
 				08CED1221AA727BC00C50D0C /* HMAnalyticsEvents.h */,
 				0806BD801AA37DC80078F14B /* HMPanel.h */,
 				0806BD811AA37DC80078F14B /* HMPanel.m */,
 				08CED1231AA7281B00C50D0C /* HMParams.h */,
 				08CED1241AA7281B00C50D0C /* HMParams.m */,
 			);
+			name = "Reports & Experiments";
 			path = Reports;
 			sourceTree = "<group>";
 		};
@@ -1089,6 +1212,7 @@
 			isa = PBXGroup;
 			children = (
 				080CB34F1AA4DC0300603E30 /* Keyboard.entitlements */,
+				086911D51B17412500D5D29F /* KeyboardBeta.entitlements */,
 				0808E32C1AA591CE008B47E2 /* Keyboard.storyboard */,
 				080489EA1AA59959008CC885 /* EMKeyboardContainerDelegate.h */,
 				080CB31E1AA4A9DD00603E30 /* EMKeyboardContainerVC.h */,
@@ -1432,7 +1556,7 @@
 				0806BD841AA392230078F14B /* Backend */,
 				080B05921AB064E2003C19E7 /* WebService */,
 				0806BD6F1AA37DC20078F14B /* Parsers */,
-				0806BD7F1AA37DC80078F14B /* Reports */,
+				0806BD7F1AA37DC80078F14B /* Reports & Experiments */,
 				085C66E71A937EC9007BC910 /* Contours */,
 				085C67121A937EC9007BC910 /* Output */,
 				085C67151A937EC9007BC910 /* Tests */,
@@ -1827,6 +1951,8 @@
 			children = (
 				08EF7F4F1AC71B3800829825 /* PngSourceWithFX.h */,
 				08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */,
+				0867C9F91B14C40700FF0E85 /* SolidColorSource.h */,
+				0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -1880,6 +2006,7 @@
 				08D929851A77A36D00B6A68F /* Products */,
 				66A306109166C5AB9F6B2628 /* Pods */,
 				F818AC31536FB92317D788B6 /* Frameworks */,
+				0867CA7E1B16602E00FF0E85 /* Keyboard copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1889,7 +2016,8 @@
 				08D929841A77A36D00B6A68F /* emu.app */,
 				080CB31A1AA4A9DD00603E30 /* Keyboard.appex */,
 				08E692241AF60FF900BD6949 /* emutests.xctest */,
-				08AA15131B0BA658002E1B2F /* emu-beta.app */,
+				08AA15131B0BA658002E1B2F /* emubeta.app */,
+				0867CA7D1B16602E00FF0E85 /* KeyboardBeta.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1898,12 +2026,13 @@
 			isa = PBXGroup;
 			children = (
 				080CB34E1AA4DB7800603E30 /* emu.entitlements */,
+				086911D41B1740AB00D5D29F /* emubeta.entitlements */,
+				08CB898C1A9B2F9200224A38 /* Render */,
 				08AA14271B08EDA1002E1B2F /* Localization */,
 				085C66DD1A937EC9007BC910 /* App */,
 				085C67251A937EC9007BC910 /* User Interface */,
 				08271FAD1B01F5B90046F38E /* Local Resources */,
 				085C66E61A937EC9007BC910 /* Data */,
-				08CB898C1A9B2F9200224A38 /* Render */,
 				08D929F61A77E14400B6A68F /* Frameworks */,
 			);
 			path = emu;
@@ -2011,6 +2140,8 @@
 		F818AC31536FB92317D788B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0867C9FE1B15F6B200FF0E85 /* Fabric.framework */,
+				0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */,
 				08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */,
 				A9E28DB442779D1DF1167B33 /* libPods.a */,
 			);
@@ -2037,9 +2168,26 @@
 			productReference = 080CB31A1AA4A9DD00603E30 /* Keyboard.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		08AA14431B0BA658002E1B2F /* emu-beta */ = {
+		0867CA091B16602E00FF0E85 /* KeyboardBeta */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 08AA15101B0BA658002E1B2F /* Build configuration list for PBXNativeTarget "emu-beta" */;
+			buildConfigurationList = 0867CA7A1B16602E00FF0E85 /* Build configuration list for PBXNativeTarget "KeyboardBeta" */;
+			buildPhases = (
+				0867CA0A1B16602E00FF0E85 /* Sources */,
+				0867CA341B16602E00FF0E85 /* Frameworks */,
+				0867CA381B16602E00FF0E85 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KeyboardBeta;
+			productName = Keyboard;
+			productReference = 0867CA7D1B16602E00FF0E85 /* KeyboardBeta.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		08AA14431B0BA658002E1B2F /* emubeta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08AA15101B0BA658002E1B2F /* Build configuration list for PBXNativeTarget "emubeta" */;
 			buildPhases = (
 				08AA14461B0BA658002E1B2F /* Check Pods Manifest.lock */,
 				08AA14471B0BA658002E1B2F /* Emu pre build scripts: runs prebuild.py */,
@@ -2048,16 +2196,14 @@
 				08AA14B21B0BA658002E1B2F /* Resources */,
 				08AA150C1B0BA658002E1B2F /* Copy Pods Resources */,
 				08AA150D1B0BA658002E1B2F /* Crashlytics Run Script */,
-				08AA150E1B0BA658002E1B2F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				08AA14441B0BA658002E1B2F /* PBXTargetDependency */,
 			);
-			name = "emu-beta";
+			name = emubeta;
 			productName = emo;
-			productReference = 08AA15131B0BA658002E1B2F /* emu-beta.app */;
+			productReference = 08AA15131B0BA658002E1B2F /* emubeta.app */;
 			productType = "com.apple.product-type.application";
 		};
 		08D929831A77A36D00B6A68F /* emu */ = {
@@ -2119,8 +2265,21 @@
 							};
 						};
 					};
+					0867CA091B16602E00FF0E85 = {
+						DevelopmentTeam = 56F7YSPHC5;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					08AA14431B0BA658002E1B2F = {
 						DevelopmentTeam = 56F7YSPHC5;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					08D929831A77A36D00B6A68F = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -2158,8 +2317,9 @@
 			projectRoot = "";
 			targets = (
 				08D929831A77A36D00B6A68F /* emu */,
-				08AA14431B0BA658002E1B2F /* emu-beta */,
 				080CB3191AA4A9DD00603E30 /* Keyboard */,
+				08AA14431B0BA658002E1B2F /* emubeta */,
+				0867CA091B16602E00FF0E85 /* KeyboardBeta */,
 				08E692231AF60FF900BD6949 /* emutests */,
 			);
 		};
@@ -2238,6 +2398,78 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0867CA381B16602E00FF0E85 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0867CA391B16602E00FF0E85 /* yeah-yeah-fg-v1.gif in Resources */,
+				0867CA3A1B16602E00FF0E85 /* crap-bitch-bg.gif in Resources */,
+				0867CA3B1B16602E00FF0E85 /* crap-bitch-mask.jpg in Resources */,
+				0867CA3C1B16602E00FF0E85 /* casual-lol-mask.jpg in Resources */,
+				0867CA3D1B16602E00FF0E85 /* ServerCFG.plist in Resources */,
+				0867CA3E1B16602E00FF0E85 /* yeah-omg-bg.gif in Resources */,
+				0867CA3F1B16602E00FF0E85 /* casual-whats-fg.gif in Resources */,
+				0867CA401B16602E00FF0E85 /* snack-morning-fg.gif in Resources */,
+				0867CA411B16602E00FF0E85 /* hearts-mask.jpg in Resources */,
+				0867CA421B16602E00FF0E85 /* party-twerk-bg.gif in Resources */,
+				0867CA431B16602E00FF0E85 /* crap-shit-bg.gif in Resources */,
+				0867CA441B16602E00FF0E85 /* recordingEnd.wav in Resources */,
+				0867CA451B16602E00FF0E85 /* party-party-fg.gif in Resources */,
+				0867CA461B16602E00FF0E85 /* casual-lol-bg.gif in Resources */,
+				0867CA471B16602E00FF0E85 /* yeah-no-bg.gif in Resources */,
+				0867CA481B16602E00FF0E85 /* simpleSwipe.wav in Resources */,
+				086911D31B16D73100D5D29F /* Images.xcassets in Resources */,
+				0867CA491B16602E00FF0E85 /* yeah-yeah-bg-v1.gif in Resources */,
+				0867CA4A1B16602E00FF0E85 /* latest_build_info.plist in Resources */,
+				0867CA4B1B16602E00FF0E85 /* wasted-buzzzzzed-mask.jpg in Resources */,
+				0867CA4C1B16602E00FF0E85 /* hearts-fg.gif in Resources */,
+				0867CA4D1B16602E00FF0E85 /* casual-whats-bg.gif in Resources */,
+				0867CA4E1B16602E00FF0E85 /* Keyboard.storyboard in Resources */,
+				0867CA4F1B16602E00FF0E85 /* meme-cage-fg.gif in Resources */,
+				0867CA501B16602E00FF0E85 /* onboarding_packages_test.json in Resources */,
+				0867CA511B16602E00FF0E85 /* yeah-no-fg.gif in Resources */,
+				0867CA521B16602E00FF0E85 /* onboarding_packages_prod.json in Resources */,
+				0867CA531B16602E00FF0E85 /* meme-cage-bg.gif in Resources */,
+				0867CA541B16602E00FF0E85 /* wasted-buzzzzzed-fg.gif in Resources */,
+				0867CA551B16602E00FF0E85 /* hearts-bg.gif in Resources */,
+				0867CA561B16602E00FF0E85 /* attitude-coolstory-fg.gif in Resources */,
+				0867CA571B16602E00FF0E85 /* crap-bitch-fg.gif in Resources */,
+				0867CA581B16602E00FF0E85 /* cancel.wav in Resources */,
+				0867CA591B16602E00FF0E85 /* wasted-ubercool-mask.jpg in Resources */,
+				0867CA5A1B16602E00FF0E85 /* meme-baby-bg.gif in Resources */,
+				0867CA5B1B16602E00FF0E85 /* wasted-buzzzzzed-bg.gif in Resources */,
+				0867CA5C1B16602E00FF0E85 /* Localizable.strings in Resources */,
+				0867CA5D1B16602E00FF0E85 /* goodBG.wav in Resources */,
+				0867CA5E1B16602E00FF0E85 /* wasted-ubercool-fg.gif in Resources */,
+				0867CA5F1B16602E00FF0E85 /* attitude-coolstory-bg.gif in Resources */,
+				0867CA601B16602E00FF0E85 /* Analytics.plist in Resources */,
+				0867CA611B16602E00FF0E85 /* 70s-peace-bg.gif in Resources */,
+				0867CA621B16602E00FF0E85 /* wasted-ubercool-bg.gif in Resources */,
+				0867CA631B16602E00FF0E85 /* yeah-omg-fg.gif in Resources */,
+				0867CA641B16602E00FF0E85 /* hot-bg.gif in Resources */,
+				0867CA651B16602E00FF0E85 /* snack-morning-bg.gif in Resources */,
+				0867CA661B16602E00FF0E85 /* casual-whats-mask.jpg in Resources */,
+				0867CA671B16602E00FF0E85 /* kbAllowAccessTutorial.mp4 in Resources */,
+				0867CA681B16602E00FF0E85 /* attitude-coolstory-mask.png in Resources */,
+				0867CA691B16602E00FF0E85 /* casual-thanks-bg.gif in Resources */,
+				0867CA6B1B16602E00FF0E85 /* casual-thanks-fg.gif in Resources */,
+				0867CA6C1B16602E00FF0E85 /* startRecording.wav in Resources */,
+				0867CA6D1B16602E00FF0E85 /* party-party-bg.gif in Resources */,
+				0867CA6E1B16602E00FF0E85 /* meme-baby-fg.gif in Resources */,
+				0867CA6F1B16602E00FF0E85 /* snack-morning-mask.jpg in Resources */,
+				0867CA701B16602E00FF0E85 /* endRecording.wav in Resources */,
+				0867CA711B16602E00FF0E85 /* crap-shit-mask.jpg in Resources */,
+				0867CA721B16602E00FF0E85 /* casual-lol-fg.gif in Resources */,
+				0867CA731B16602E00FF0E85 /* plasticClickSound.wav in Resources */,
+				0867CA741B16602E00FF0E85 /* hot-mask.jpg in Resources */,
+				0867CA751B16602E00FF0E85 /* 70s-groovy-bg.gif in Resources */,
+				0867CA761B16602E00FF0E85 /* casual-thanks-mask.jpg in Resources */,
+				0867CA771B16602E00FF0E85 /* crap-shit-fg.gif in Resources */,
+				0867CA781B16602E00FF0E85 /* pressedButton.wav in Resources */,
+				0867CA791B16602E00FF0E85 /* party-twerk-fg.gif in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		08AA14B21B0BA658002E1B2F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2276,7 +2508,7 @@
 				08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */,
 				08AA14D31B0BA658002E1B2F /* yeah-yeah-bg-v1.gif in Resources */,
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
-				08AA14D51B0BA658002E1B2F /* Images.xcassets in Resources */,
+				086911D21B16D73000D5D29F /* Images.xcassets in Resources */,
 				08AA14D61B0BA658002E1B2F /* party-twerk-bg.gif in Resources */,
 				08AA14D71B0BA658002E1B2F /* latest_build_info.plist in Resources */,
 				08AA14D81B0BA658002E1B2F /* 3.gif in Resources */,
@@ -2372,7 +2604,7 @@
 				085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */,
 				08331A311B06907D000B8979 /* yeah-yeah-bg-v1.gif in Resources */,
 				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
-				085C67911A937EC9007BC910 /* Images.xcassets in Resources */,
+				086911D11B16D70F00D5D29F /* Images.xcassets in Resources */,
 				08331A041B06907D000B8979 /* party-twerk-bg.gif in Resources */,
 				084BB1351AFF8BDF004A0D4A /* latest_build_info.plist in Resources */,
 				08CB897B1A9AA12A00224A38 /* 3.gif in Resources */,
@@ -2521,7 +2753,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
+			shellScript = "./Pods/Fabric/Fabric.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
 		};
 		08AA14461B0BA658002E1B2F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2579,7 +2811,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
+			shellScript = "./Pods/Fabric/Fabric.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
 		};
 		8FBC813E5FFEBB73F078542C /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2662,6 +2894,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0867CA0A1B16602E00FF0E85 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0867CA0B1B16602E00FF0E85 /* TagCell.m in Sources */,
+				0867CA0C1B16602E00FF0E85 /* UserFootage.m in Sources */,
+				0867CA0D1B16602E00FF0E85 /* EMDB.m in Sources */,
+				0867CA0E1B16602E00FF0E85 /* EMShare.m in Sources */,
+				0867CA0F1B16602E00FF0E85 /* EMKeyboardContainerVC.m in Sources */,
+				0867CA101B16602E00FF0E85 /* EMShareCopy.m in Sources */,
+				0867CA111B16602E00FF0E85 /* EMPackagesVC.m in Sources */,
+				0867CA121B16602E00FF0E85 /* HMParser.m in Sources */,
+				0867CA131B16602E00FF0E85 /* HMPanel.m in Sources */,
+				0867CA141B16602E00FF0E85 /* EMEmusKeyboardVC.m in Sources */,
+				0867CA151B16602E00FF0E85 /* EMLabel.m in Sources */,
+				0867CA161B16602E00FF0E85 /* EmuticonDef+Logic.m in Sources */,
+				0867CA171B16602E00FF0E85 /* Package.m in Sources */,
+				0867CA181B16602E00FF0E85 /* EmuSectionReusableView.m in Sources */,
+				0867CA191B16602E00FF0E85 /* NSManagedObject+FindAndCreate.m in Sources */,
+				0867CA1A1B16602E00FF0E85 /* EMAlphaNumericKeyboard.m in Sources */,
+				0867CA1B1B16602E00FF0E85 /* EmuBaseStyle.m in Sources */,
+				0867CA1C1B16602E00FF0E85 /* EMShareAppleMessage.m in Sources */,
+				0867CA1D1B16602E00FF0E85 /* EMDB+Files.m in Sources */,
+				0867CA1E1B16602E00FF0E85 /* EMPackageParser.m in Sources */,
+				0867CA1F1B16602E00FF0E85 /* EmuticonDef.m in Sources */,
+				0867CA201B16602E00FF0E85 /* AppManagement.m in Sources */,
+				0867CA211B16602E00FF0E85 /* EMPackageCell.m in Sources */,
+				0867CA221B16602E00FF0E85 /* EMCaches.m in Sources */,
+				0867CA231B16602E00FF0E85 /* Package+Logic.m in Sources */,
+				0867CA241B16602E00FF0E85 /* EMShareMail.m in Sources */,
+				0867CA251B16602E00FF0E85 /* EmuStyle.m in Sources */,
+				0867CA261B16602E00FF0E85 /* EmuCell.m in Sources */,
+				0867CA271B16602E00FF0E85 /* EMPackagesParser.m in Sources */,
+				0867CA281B16602E00FF0E85 /* emu.xcdatamodeld in Sources */,
+				0867CA291B16602E00FF0E85 /* AppCFG.m in Sources */,
+				0867CA2A1B16602E00FF0E85 /* EMAppCFGParser.m in Sources */,
+				0867CA2B1B16602E00FF0E85 /* EMEmuticonParser.m in Sources */,
+				0867CA2C1B16602E00FF0E85 /* EMButton.m in Sources */,
+				0867CA2D1B16602E00FF0E85 /* Emuticon+Logic.m in Sources */,
+				0867CA2E1B16602E00FF0E85 /* Emuticon.m in Sources */,
+				0867CA2F1B16602E00FF0E85 /* UserFootage+Logic.m in Sources */,
+				0867CA301B16602E00FF0E85 /* KBKeyButton.m in Sources */,
+				0867CA311B16602E00FF0E85 /* AppCFG+Logic.m in Sources */,
+				0867CA321B16602E00FF0E85 /* HMParams.m in Sources */,
+				0867CA331B16602E00FF0E85 /* EMShareSaveToCameraRoll.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		08AA14481B0BA658002E1B2F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2704,6 +2984,7 @@
 				08AA146D1B0BA658002E1B2F /* EMShareFBMessanger.m in Sources */,
 				08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */,
 				08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */,
+				0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08AA14701B0BA658002E1B2F /* EMMainVC.m in Sources */,
 				08AA14711B0BA658002E1B2F /* EMShareVC.m in Sources */,
 				08AA14721B0BA658002E1B2F /* Package.m in Sources */,
@@ -2806,6 +3087,7 @@
 				08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
+				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				083E52621A9E1E6B00A66FC8 /* EMMainVC.m in Sources */,
 				08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */,
 				083319671B04D389000B8979 /* Package.m in Sources */,
@@ -2886,11 +3168,6 @@
 			isa = PBXTargetDependency;
 			target = 080CB3191AA4A9DD00603E30 /* Keyboard */;
 			targetProxy = 080CB3211AA4A9DD00603E30 /* PBXContainerItemProxy */;
-		};
-		08AA14441B0BA658002E1B2F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 080CB3191AA4A9DD00603E30 /* Keyboard */;
-			targetProxy = 08AA14451B0BA658002E1B2F /* PBXContainerItemProxy */;
 		};
 		08E6922B1AF60FF900BD6949 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3001,13 +3278,102 @@
 			};
 			name = Release;
 		};
+		0867CA7B1B16602E00FF0E85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 085C66E11A937EC9007BC910 /* Config.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PODS_ROOT)/CrashlyticsFramework\"",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/CrashlyticsFramework\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FacebookSDK\"",
+					"\"${PODS_ROOT}/Headers/Public/MGBenchmark\"",
+					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/Public/NSLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Toast\"",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "Keyboard copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = KeyboardBeta;
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0867CA7C1B16602E00FF0E85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 085C66E21A937EC9007BC910 /* Config.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PODS_ROOT)/CrashlyticsFramework\"",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/CrashlyticsFramework\"",
+					"\"${PODS_ROOT}/Headers/Public/FLAnimatedImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/Facebook-iOS-SDK/FacebookSDK\"",
+					"\"${PODS_ROOT}/Headers/Public/MGBenchmark\"",
+					"\"${PODS_ROOT}/Headers/Public/Mixpanel\"",
+					"\"${PODS_ROOT}/Headers/Public/NSLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/Toast\"",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "Keyboard copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				PRODUCT_NAME = KeyboardBeta;
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		08AA15111B0BA658002E1B2F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E11A937EC9007BC910 /* Config.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = emu/emu.entitlements;
+				CODE_SIGN_ENTITLEMENTS = emu/emubeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3101,7 +3467,7 @@
 					"-weak_framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_NAME = "emu-beta";
+				PRODUCT_NAME = emubeta;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -3111,9 +3477,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E21A937EC9007BC910 /* Config.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = emu/emu.entitlements;
+				CODE_SIGN_ENTITLEMENTS = emu/emubeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -3207,7 +3573,7 @@
 					"-weak_framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_NAME = "emu-beta";
+				PRODUCT_NAME = emubeta;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -3625,7 +3991,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08AA15101B0BA658002E1B2F /* Build configuration list for PBXNativeTarget "emu-beta" */ = {
+		0867CA7A1B16602E00FF0E85 /* Build configuration list for PBXNativeTarget "KeyboardBeta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0867CA7B1B16602E00FF0E85 /* Debug */,
+				0867CA7C1B16602E00FF0E85 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08AA15101B0BA658002E1B2F /* Build configuration list for PBXNativeTarget "emubeta" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08AA15111B0BA658002E1B2F /* Debug */,

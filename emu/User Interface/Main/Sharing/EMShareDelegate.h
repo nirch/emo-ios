@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EMDB.h"
 
 @protocol EMShareDelegate <NSObject>
 
@@ -24,5 +25,8 @@
 
 // An optional call, just for finishing up when required.
 -(void)sharerDidFinishWithInfo:(NSDictionary *)info;
+
+// GIF / Video data should be shared.
+-(EMMediaDataType)sharerDataTypeToShare;
 
 @end
