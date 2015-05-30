@@ -6,10 +6,21 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-// This line defines an OptimizelyVariableKey called myGravityVariable
-OptimizelyVariableKeyForNumber(testVar1, @9.8);
-OptimizelyVariableKeyForNumber(testVar2, @9.8);
-OptimizelyVariableKeyForNumber(testVar3, @9.8);
+
+#pragma mark - Live Variables
+//
+// Live Variables
+//
+
+/**
+---------------------------------------
+featureVideoRenderExtraUserSettings
+---------------------------------------
+value type: Bool
+default values: False
+description: <Bool> - Is the user allowed to tweak some extra options in video files rendering?
+(number of loops, ping pong effect etc)
+*/
+OptimizelyVariableKeyForBool(featureVideoRenderExtraUserSettings, @"Var type Bool unrecognized :-(!");
 
 
-OptimizelyVariableKeyForBool(testVar, YES);

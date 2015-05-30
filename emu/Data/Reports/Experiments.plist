@@ -21,7 +21,7 @@
 			<key>defaultValue</key>
 			<false/>
 			<key>valueType</key>
-			<string>Boolean</string>
+			<string>Bool</string>
 		</dict>
 	</dict>
 </dict>

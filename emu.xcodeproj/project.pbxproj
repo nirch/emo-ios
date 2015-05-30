@@ -272,10 +272,6 @@
 		0867C9F81B13943D00FF0E85 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9F51B13943D00FF0E85 /* Emuticon.m */; };
 		0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */; };
 		0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */; };
-		0867CA001B15F6B200FF0E85 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FE1B15F6B200FF0E85 /* Fabric.framework */; };
-		0867CA021B15F6B200FF0E85 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FE1B15F6B200FF0E85 /* Fabric.framework */; };
-		0867CA031B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */; };
-		0867CA051B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */; };
 		0867CA0B1B16602E00FF0E85 /* TagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AB68061AD5629C0092B62B /* TagCell.m */; };
 		0867CA0C1B16602E00FF0E85 /* UserFootage.m in Sources */ = {isa = PBXBuildFile; fileRef = 085A784F1AEC2364003E9F97 /* UserFootage.m */; };
 		0867CA0D1B16602E00FF0E85 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89CC1A9B92AD00224A38 /* EMDB.m */; };
@@ -318,8 +314,6 @@
 		0867CA321B16602E00FF0E85 /* HMParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CED1241AA7281B00C50D0C /* HMParams.m */; };
 		0867CA331B16602E00FF0E85 /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
 		0867CA351B16602E00FF0E85 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
-		0867CA361B16602E00FF0E85 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */; };
-		0867CA371B16602E00FF0E85 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867C9FE1B15F6B200FF0E85 /* Fabric.framework */; };
 		0867CA391B16602E00FF0E85 /* yeah-yeah-fg-v1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A61B06907D000B8979 /* yeah-yeah-fg-v1.gif */; };
 		0867CA3A1B16602E00FF0E85 /* crap-bitch-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833197F1B06907D000B8979 /* crap-bitch-bg.gif */; };
 		0867CA3B1B16602E00FF0E85 /* crap-bitch-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 083319811B06907D000B8979 /* crap-bitch-mask.jpg */; };
@@ -398,7 +392,6 @@
 		089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
 		089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
-		089E943B1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089E943A1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework */; };
 		089EAB831AE674D90074AD09 /* EMActionsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 089EAB821AE674D90074AD09 /* EMActionsArray.m */; };
 		08A6ECE11AF651C1003982DB /* EMUniquenessTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A6ECE01AF651C1003982DB /* EMUniquenessTester.m */; };
 		08A907191ACABB82008534F7 /* EMAlertsPermissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */; };
@@ -500,9 +493,7 @@
 		08AA14A41B0BA658002E1B2F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
 		08AA14A51B0BA658002E1B2F /* EMSilhouetteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */; };
 		08AA14A61B0BA658002E1B2F /* EMRenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB898E1A9B2FAE00224A38 /* EMRenderManager.m */; };
-		08AA14A81B0BA658002E1B2F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */; };
 		08AA14A91B0BA658002E1B2F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */; };
-		08AA14AA1B0BA658002E1B2F /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089E943A1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework */; };
 		08AA14AB1B0BA658002E1B2F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F21A77E0D500B6A68F /* QuartzCore.framework */; };
 		08AA14AC1B0BA658002E1B2F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929F01A77E0C300B6A68F /* CoreVideo.framework */; };
 		08AA14AD1B0BA658002E1B2F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EE1A77E0BC00B6A68F /* CoreMedia.framework */; };
@@ -618,7 +609,6 @@
 		08BBBC701AD9758200D4AD1D /* EmuSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */; };
 		08BBBC731AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
 		08BBBC741AD9B15F00D4AD1D /* Package+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */; };
-		08BBBC971ADBEFC200D4AD1D /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */; };
 		08C3D17A1B0E77F900F30EA0 /* audio_test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 08C3D1791B0E77F900F30EA0 /* audio_test.mp3 */; };
 		08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */; };
 		08CAEAC61A9600E1008A3E0A /* headAndChest240X240.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAC41A9600E1008A3E0A /* headAndChest240X240.ctr */; };
@@ -925,8 +915,6 @@
 		0867C9F51B13943D00FF0E85 /* Emuticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emuticon.m; sourceTree = "<group>"; };
 		0867C9F91B14C40700FF0E85 /* SolidColorSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolidColorSource.h; sourceTree = "<group>"; };
 		0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SolidColorSource.mm; sourceTree = "<group>"; };
-		0867C9FE1B15F6B200FF0E85 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		0867CA061B16551E00FF0E85 /* Experiments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Experiments.plist; sourceTree = "<group>"; };
 		0867CA081B16569E00FF0E85 /* HMExperiments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMExperiments.h; sourceTree = "<group>"; };
 		0867CA7D1B16602E00FF0E85 /* KeyboardBeta.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KeyboardBeta.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -951,7 +939,6 @@
 		089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		089E78B51A780DEB00BC3479 /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
 		089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
-		089E943A1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		089E943C1AE3DFAB004BECAE /* emu1_ 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 4.xcdatamodel"; sourceTree = "<group>"; };
 		089EAB811AE674D90074AD09 /* EMActionsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMActionsArray.h; sourceTree = "<group>"; };
 		089EAB821AE674D90074AD09 /* EMActionsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMActionsArray.m; sourceTree = "<group>"; };
@@ -995,7 +982,6 @@
 		08BBBC711AD9B15F00D4AD1D /* Package+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Package+Logic.h"; sourceTree = "<group>"; };
 		08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Package+Logic.m"; sourceTree = "<group>"; };
 		08BBBC791ADA6E9E00D4AD1D /* emu1_ 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 3.xcdatamodel"; sourceTree = "<group>"; };
-		08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		08C3D1791B0E77F900F30EA0 /* audio_test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio_test.mp3; sourceTree = "<group>"; };
 		08CAEAC11A95E202008A3E0A /* EMSilhouetteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSilhouetteView.h; sourceTree = "<group>"; };
 		08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSilhouetteView.m; sourceTree = "<group>"; };
@@ -1087,8 +1073,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				08E1728D1ABDBBA7002FE477 /* libPods.a in Frameworks */,
-				0867CA051B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */,
-				0867CA021B15F6B200FF0E85 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1097,8 +1081,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0867CA351B16602E00FF0E85 /* libPods.a in Frameworks */,
-				0867CA361B16602E00FF0E85 /* Crashlytics.framework in Frameworks */,
-				0867CA371B16602E00FF0E85 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1106,9 +1088,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08AA14A81B0BA658002E1B2F /* AVKit.framework in Frameworks */,
 				08AA14A91B0BA658002E1B2F /* AssetsLibrary.framework in Frameworks */,
-				08AA14AA1B0BA658002E1B2F /* FBSDKMessengerShareKit.framework in Frameworks */,
 				08AA14AB1B0BA658002E1B2F /* QuartzCore.framework in Frameworks */,
 				08AA14AC1B0BA658002E1B2F /* CoreVideo.framework in Frameworks */,
 				08AA14AD1B0BA658002E1B2F /* CoreMedia.framework in Frameworks */,
@@ -1123,9 +1103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08BBBC971ADBEFC200D4AD1D /* AVKit.framework in Frameworks */,
 				08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */,
-				089E943B1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework in Frameworks */,
 				08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */,
 				08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */,
 				08D929EF1A77E0BC00B6A68F /* CoreMedia.framework in Frameworks */,
@@ -1133,8 +1111,6 @@
 				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
 				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
 				A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */,
-				0867CA031B15F6B200FF0E85 /* Crashlytics.framework in Frameworks */,
-				0867CA001B15F6B200FF0E85 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2042,7 +2018,6 @@
 			isa = PBXGroup;
 			children = (
 				083334761A822E4D008AC771 /* libz.dylib */,
-				089E943A1AE3BFA6004BECAE /* FBSDKMessengerShareKit.framework */,
 				08D929F41A77E0DE00B6A68F /* AssetsLibrary.framework */,
 				08D929F21A77E0D500B6A68F /* QuartzCore.framework */,
 				08D929F01A77E0C300B6A68F /* CoreVideo.framework */,
@@ -2140,9 +2115,6 @@
 		F818AC31536FB92317D788B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0867C9FE1B15F6B200FF0E85 /* Fabric.framework */,
-				0867C9FF1B15F6B200FF0E85 /* Crashlytics.framework */,
-				08BBBC8E1ADBBFD400D4AD1D /* AVKit.framework */,
 				A9E28DB442779D1DF1167B33 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -3196,11 +3168,7 @@
 				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(PODS_ROOT)/CrashlyticsFramework\"",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -3243,11 +3211,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(PODS_ROOT)/CrashlyticsFramework\"",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -3285,11 +3249,7 @@
 				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(PODS_ROOT)/CrashlyticsFramework\"",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -3332,11 +3292,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(PODS_ROOT)/CrashlyticsFramework\"",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -3384,7 +3340,6 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"$(PROJECT_DIR)/emu",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3422,7 +3377,6 @@
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-Bolts\"",
 					"-l\"Pods-CrashlyticsFramework\"",
-					"-l\"Pods-Facebook-iOS-SDK\"",
 					"-l\"Pods-Mixpanel\"",
 					"-l\"Pods-SDWebImage\"",
 					"-l\"icucore\"",
@@ -3491,7 +3445,6 @@
 					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"$(PROJECT_DIR)/emu",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3528,7 +3481,6 @@
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-Bolts\"",
 					"-l\"Pods-CrashlyticsFramework\"",
-					"-l\"Pods-Facebook-iOS-SDK\"",
 					"-l\"Pods-Mixpanel\"",
 					"-l\"Pods-SDWebImage\"",
 					"-l\"icucore\"",
@@ -3674,7 +3626,6 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"$(PROJECT_DIR)/emu",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3712,7 +3663,6 @@
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-Bolts\"",
 					"-l\"Pods-CrashlyticsFramework\"",
-					"-l\"Pods-Facebook-iOS-SDK\"",
 					"-l\"Pods-Mixpanel\"",
 					"-l\"Pods-SDWebImage\"",
 					"-l\"icucore\"",
@@ -3781,7 +3731,6 @@
 					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"$(PROJECT_DIR)/emu",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -3818,7 +3767,6 @@
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-Bolts\"",
 					"-l\"Pods-CrashlyticsFramework\"",
-					"-l\"Pods-Facebook-iOS-SDK\"",
 					"-l\"Pods-Mixpanel\"",
 					"-l\"Pods-SDWebImage\"",
 					"-l\"icucore\"",
