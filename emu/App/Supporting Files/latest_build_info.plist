@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>build_counter</key>
-	<integer>1250</integer>
+	<integer>1256</integer>
 	<key>build_date</key>
-	<date>2015-05-30T14:11:10Z</date>
+	<date>2015-05-30T14:56:41Z</date>
 	<key>build_type</key>
 	<string>Debug</string>
 	<key>machine_name</key>
 	<string>La-Big-Mac.local</string>
 	<key>target_name</key>
-	<string>emu</string>
+	<string>emubeta</string>
 </dict>
 </plist>

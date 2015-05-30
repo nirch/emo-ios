@@ -20,6 +20,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "EMUISound.h"
+#import "AppManagement.h"
 
 
 @interface AppDelegate ()<
@@ -43,7 +44,8 @@
                      kLoggerOption_BrowseOnlyLocalDomain |
                      kLoggerOption_UseSSL
                      );
-    LoggerSetupBonjour(logger, NULL, (CFStringRef)@"AvivLogger");
+    NSString *deviceName = [[UIDevice currentDevice] name];
+    LoggerSetupBonjour(logger, NULL, (CFStringRef)CFBridgingRetain(deviceName));
 }
 
 #pragma mark - App Delegate
