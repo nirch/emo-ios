@@ -165,12 +165,12 @@
     if (self.alreadyUnzipped.boolValue)
         return NO;
     
-    NSString *resourcesPath = [self resourcesPath];
-    
     BOOL pathExists = [EMDB pathExists:[self resourcesPath]];
     BOOL zippedPackageAvailableLocally = [self zippedPackageAvailableLocally];
+
+    #if defined(DEBUG)
+    NSString *resourcesPath = [self resourcesPath];
     NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcesPath error:nil];
-    
     HMLOG(TAG,
           EM_VERBOSE,
           @"Checking resources path:%@ exists:%@ availableLocally:%@ filesCount:%@",
@@ -178,6 +178,7 @@
           @(pathExists),
           @(zippedPackageAvailableLocally),
           @(dirContents.count));
+    #endif
     
     if (pathExists) return NO;
     if (zippedPackageAvailableLocally) return NO;

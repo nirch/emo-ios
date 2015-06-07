@@ -24,11 +24,15 @@
 -(void)share
 {
     [super share];
-    
+    [self shareSelection];
+}
+
+-(void)shareAnimatedGif
+{
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
     NSData *gifData = [emu animatedGifData];
-
+    
     // Check if able to send text.
     if(![MFMessageComposeViewController canSendText]) {
         [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
@@ -48,6 +52,34 @@
                                       animated:YES
                                     completion:nil];
 }
+
+
+-(void)shareVideo
+{
+    // Get the data of the animated gif.
+    Emuticon *emu = self.objectToShare;
+    NSData *videoData = [emu videoData];
+    
+    // Check if able to send text.
+    if(![MFMessageComposeViewController canSendText]) {
+        [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+        [self.delegate sharerDidFailWithInfo:self.info];
+        return;
+    }
+    
+    // Show the compose view controller
+    self.picker = [MFMessageComposeViewController new];
+    self.picker.messageComposeDelegate = self;
+    
+    [self.picker addAttachmentData:videoData
+                    typeIdentifier:@"public.mpeg-4"
+                          filename:[SF:@"%@.mp4", emu.emuDef.name]];
+    
+    [self.viewController presentViewController:self.picker
+                                      animated:YES
+                                    completion:nil];
+}
+
 
 -(void)messageComposeViewController:(MFMessageComposeViewController *)controller
                 didFinishWithResult:(MessageComposeResult)result

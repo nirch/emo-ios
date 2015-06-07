@@ -205,7 +205,7 @@
 {
     if (self.audioFilePath == nil) return nil;
     
-//    // Check if file exists.
+    // Check if file exists.
 //    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:self.audioFilePath];
 //    if (!fileExists) return nil;
     
@@ -234,6 +234,26 @@
     [params addKey:@"deviceIdentifier" value:UIDevice.currentDevice.identifierForVendor.UUIDString];
     [params addKey:@"deviceName" value:[[UIDevice currentDevice] name]];    
     return params.dictionary;
+}
+
+
+-(BOOL)engagedUserVideoSettings
+{
+    if (self.videoLoopsEffect) return YES;
+    if (self.videoLoopsCount) return YES;
+    if (self.audioFileURL) return YES;
+    return NO;
+}
+
+
+-(void)cleanTempVideoResources
+{
+    NSString *tempOutputPath = NSTemporaryDirectory();
+    NSString *outputVideoPath1 = [SF:@"%@/%@.mp4", tempOutputPath, self.oid];
+    NSString *outputVideoPath2 = [SF:@"%@/%@-ws.mp4", tempOutputPath, self.oid];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:outputVideoPath1 error:nil];
+    [fm removeItemAtPath:outputVideoPath2 error:nil];
 }
 
 @end

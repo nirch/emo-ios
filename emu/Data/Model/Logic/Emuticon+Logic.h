@@ -15,6 +15,14 @@
 
 @interface Emuticon (Logic)
 
+// By default will loop emu 5 times when rendering video
+#define EMU_DEFAULT_VIDEO_LOOPS_COUNT 5
+
+// By default will just repeat the emu on video render
+// 0 - Normal Repeat
+// 1 - Boomerang loop
+#define EMU_DEFAULT_VIDEO_LOOPS_FX 0
+
 /**
  *  Finds emuticon object with the provided oid.
  *
@@ -187,5 +195,10 @@
 
 
 -(NSDictionary *)s3MetaDataForSampledResult;
+
+
+-(BOOL)engagedUserVideoSettings;
+
+-(void)cleanTempVideoResources;
 
 @end

@@ -16,5 +16,6 @@
 @property (nonatomic) BOOL allowFBExperience;
 
 -(void)update;
+-(void)updateProgress:(float)progress;
 
 @end

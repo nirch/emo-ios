@@ -7,6 +7,7 @@
 //
 
 #import "EMShare.h"
+#import "EMDB.h"
 
 @implementation EMShare
 
@@ -44,5 +45,12 @@
     }
 }
 
+-(void)cleanUp
+{
+    if ([self.objectToShare isKindOfClass:[Emuticon class]]) {
+        Emuticon *emu = self.objectToShare;
+        [emu cleanTempVideoResources];
+    }
+}
 
 @end

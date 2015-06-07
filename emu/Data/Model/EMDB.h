@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, EMMediaDataType) {
 @property (readonly, nonatomic) NSManagedObjectContext *context;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) NSDictionary *cachedTweakedValues;
 
 // Persistance / saving
 -(void)save;

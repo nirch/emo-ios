@@ -260,8 +260,11 @@
     //
     // send GET Request to server
     //
+    #if defined(DEBUG)
     NSDate *requestDateTime = [NSDate date];
     HMLOG(TAG, EM_DBG, @"GET request:%@/%@", self.session.baseURL, relativeURL);
+    #endif
+    
     [self chooseSerializerForParser:parser];
     
     [self.session GET:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -339,8 +342,11 @@
     //
     // send POST Request to server
     //
+    #if defined(DEBUG)
     NSDate *requestDateTime = [NSDate date];
     HMLOG(TAG, EM_DBG, @"POST request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
+    #endif
+    
     [self chooseSerializerForParser:parser];
     [self.session POST:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -414,8 +420,11 @@
     //
     // send DELETE Request to server
     //
+    #if defined(DEBUG)
     NSDate *requestDateTime = [NSDate date];
     HMLOG(TAG, EM_DBG, @"DELETE request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
+    #endif
+    
     [self chooseSerializerForParser:parser];
     [self.session DELETE:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -489,8 +498,11 @@
     //
     // send PUT Request to server
     //
+    #if defined(DEBUG)
     NSDate *requestDateTime = [NSDate date];
     HMLOG(TAG, EM_DBG, @"PUT request:%@/%@ parameters:%@", self.session.baseURL, relativeURL, parameters);
+    #endif
+    
     [self chooseSerializerForParser:parser];
     [self.session PUT:relativeURL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         

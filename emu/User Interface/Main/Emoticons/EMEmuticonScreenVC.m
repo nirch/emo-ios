@@ -24,6 +24,7 @@
 #import "EMActionsArray.h"
 #import "AppDelegate.h"
 #import "EMNotificationCenter.h"
+#import "EMVideoSettingsPopover.h"
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
@@ -57,6 +58,7 @@
 
 // Audio/Video
 @property (weak, nonatomic) IBOutlet UIButton *guiAudioButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiVideoSettingsButton;
 @property (weak, nonatomic) IBOutlet UIImageView *guiAudioView;
 @property (weak, nonatomic) IBOutlet UIButton *guiAudioOKButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiAudioRemoveButton;
@@ -84,6 +86,9 @@
 {
     [super viewWillAppear:animated];
 
+    // Experiments
+    [self initExperiments];
+    
     // Only iPhone4s needs special treatment of the layout
     [self layoutFixesIfRequired];
     
@@ -127,6 +132,26 @@
 {
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateNormal];
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateHighlighted];
+
+    //
+    // Enable / disable render to video
+    // According to tweak or experiment.
+    BOOL isVideoRenderingAllowed = [HMPanel.sh boolForKey:VK_FEATURE_VIDEO_RENDER fallbackValue:NO];
+    if (isVideoRenderingAllowed) {
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        EMMediaDataType predderedRenderingType = appCFG.userPrefferedShareType.integerValue;
+        
+        // Allow rendering selection.
+        self.guiRenderingTypeSelector.hidden = NO;
+        self.guiRenderingTypeSelector.enabled = YES;
+        self.guiRenderingTypeSelector.selectedSegmentIndex = predderedRenderingType==0?0:1;
+        [self.shareVC update];
+
+    } else {
+        self.guiRenderingTypeSelector.hidden = YES;
+        self.guiRenderingTypeSelector.enabled = NO;
+        self.guiRenderingTypeSelector.selectedSegmentIndex = 0;
+    }
 }
 
 -(void)initData
@@ -190,6 +215,12 @@
                  selector:@selector(onAppDidBecomeActive:)
                      name:emkAppDidBecomeActive
                    object:nil];
+    
+    // Rendering progres.
+    [nc addUniqueObserver:self
+                 selector:@selector(onRenderingProgressReport:)
+                     name:emkUIRenderProgressReport
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -197,6 +228,7 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
     [nc removeObserver:emkAppDidBecomeActive];
+    [nc removeObserver:emkUIRenderProgressReport];
 }
 
 #pragma mark - Observers handlers
@@ -216,6 +248,28 @@
 -(void)onAppDidBecomeActive:(NSNotification *)notification
 {
     [self updateFBMessengerExperienceState];
+}
+
+
+-(void)onRenderingProgressReport:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSNumber *progressNumber = info[@"progress"];
+    if (progressNumber == nil) return;
+
+    float progress = progressNumber.floatValue;
+    [self.shareVC updateProgress:progress];
+}
+
+
+#pragma mark - Experiments
+-(void)initExperiments
+{
+    NSString *iconName = [HMPanel.sh stringForKey:VK_ICON_NAME_NAV_RETAKE fallbackValue:@"retakeIcon"];
+    UIImage *icon = [UIImage imageNamed:iconName];
+    [self.guiRetakeButton setImage:icon forState:UIControlStateNormal];
+    [self.guiRetakeButton setImage:icon forState:UIControlStateSelected];
+    [self.guiRetakeButton setImage:icon forState:UIControlStateHighlighted];
 }
 
 #pragma mark - FB Messenger experience
@@ -425,12 +479,18 @@
 -(void)updateAudioSelectionUI
 {
     // If GIF rendering selected, hide all UI elements related to audio.
-    if (self.renderingType == EMMediaDataTypeGIF) {
+    // Also hide audio related UI, if the audio feature is not enabled.
+    BOOL isVideoRenderingWithAudioAllowed = [HMPanel.sh boolForKey:VK_FEATURE_VIDEO_RENDER_WITH_AUDIO fallbackValue:NO];
+    BOOL isVideoExtraSettingsAllowed = [HMPanel.sh boolForKey:VK_FEATURE_VIDEO_RENDER_EXTRA_USER_SETTINGS fallbackValue:NO];
+
+    
+    if (self.renderingType == EMMediaDataTypeGIF || !isVideoRenderingWithAudioAllowed) {
         self.guiAudioButton.hidden = YES;
         self.guiAudioOKButton.hidden = YES;
         self.guiAudioRemoveButton.hidden = YES;
         self.guiAudioView.hidden = YES;
         self.guiAudioTrimSlider.hidden = YES;
+        self.guiVideoSettingsButton.hidden = YES;
         return;
     }
     
@@ -440,6 +500,7 @@
         // Editing selected audio trimming
         // And allow user to hear the selected trimmed audio.
         self.guiAudioButton.hidden = YES;
+        self.guiVideoSettingsButton.hidden = YES;
         self.guiAudioOKButton.hidden = NO;
         self.guiAudioRemoveButton.hidden = NO;
         self.guiRenderingTypeSelector.hidden = YES;
@@ -455,6 +516,7 @@
         self.guiAudioView.hidden = YES;
         self.guiAudioTrimSlider.hidden = YES;
         self.guiAudioButton.selected = self.emuticon.audioFileURL? YES:NO;
+        self.guiVideoSettingsButton.hidden = !isVideoExtraSettingsAllowed;
     }
 }
 
@@ -577,6 +639,65 @@
     self.guiAudioTrimSlider.value = pos;
 }
 
+
+-(void)audioRemoveOptions
+{
+    EMActionsArray *actionsMapping = [EMActionsArray new];
+    
+    //
+    // Retake options
+    //
+    NSString *title = LS(@"AUDIO_REMOVE_TITLE");
+    [actionsMapping addAction:@"AUDIO_REMOVE" text:LS(@"AUDIO_REMOVE") section:0];
+    [actionsMapping addAction:@"AUDIO_REPLACE" text:LS(@"AUDIO_REPLACE") section:0];
+    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
+    
+    //
+    // Cancel
+    //
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
+    
+    //
+    // Sections
+    //
+    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, cancelSection]];
+
+    //
+    // Holy sheet
+    //
+    EMHolySheet *sheet = [EMHolySheet actionSheetWithSections:sections];
+    [sheet setButtonPressedBlock:^(JGActionSheet *sender, NSIndexPath *indexPath) {
+        [sender dismissAnimated:YES];
+        [self handleAudioRemoveIndexPath:indexPath actionsMapping:actionsMapping];
+    }];
+    [sheet setOutsidePressBlock:^(JGActionSheet *sender) {
+        [sender dismissAnimated:YES];
+    }];
+    [sheet showInView:self.view animated:YES];
+}
+
+-(void)handleAudioRemoveIndexPath:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping
+{
+    NSString *actionName = [actionsMapping actionNameForIndexPath:indexPath];
+    if (actionName == nil) return;
+    
+    if ([actionName isEqualToString:@"AUDIO_REMOVE"]) {
+        [self audioRemove];
+    } else if ([actionName isEqualToString:@"AUDIO_REPLACE"]) {
+        [self audioStop];
+        [self selectAudio];
+    }
+}
+
+-(void)audioRemove
+{
+    self.emuticon.audioFilePath = nil;
+    self.emuticon.audioStartTime = nil;
+    self.showSelectedAudioUI = NO;
+    [self audioStop];
+    [self updateAudioSelectionUI];
+}
+
 #pragma mark - MPMediaPickerControllerDelegate
 -(void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker
 {
@@ -680,6 +801,10 @@
 {
     [self updateAudioSelectionUI];
     [self.shareVC update];
+    
+    // Store user preference
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    appCFG.userPrefferedShareType = @([self renderingType]);
 }
 
 
@@ -707,11 +832,21 @@
 
 - (IBAction)onAudioSelectionRemove:(id)sender
 {
-    self.emuticon.audioFilePath = nil;
-    self.emuticon.audioStartTime = nil;
-    self.showSelectedAudioUI = NO;
-    [self audioStop];
-    [self updateAudioSelectionUI];
+    [self audioRemoveOptions];
+}
+
+- (IBAction)onPressedVideoSettingsButton:(UIButton *)sender
+{
+    EMVideoSettingsPopover *vc = [[EMVideoSettingsPopover alloc] init];
+    vc.preferredContentSize = CGSizeMake(210, 140);
+    vc.emu = self.emuticon;
+
+    UIPopoverPresentationController *po = vc.popoverPresentationController;
+    po.sourceView = sender; //The view containing the anchor rectangle for the popover.
+    po.sourceRect = sender.bounds; //The rectangle in the specified view in which to anchor the popover.
+    po.permittedArrowDirections = UIPopoverArrowDirectionDown;
+
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 @end

@@ -22,7 +22,6 @@
 #import "EMUISound.h"
 #import "AppManagement.h"
 
-
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
 >
@@ -61,6 +60,7 @@
     // Initialize analytics, set super parameters and report application launch.
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];
     [HMPanel.sh reportSuperParameters];
+    [HMPanel.sh checkAndReportIfAppUpdated];
     [HMPanel.sh analyticsEvent:AK_E_APP_LAUNCHED];
     [HMPanel.sh personIdentify];
     [HMPanel.sh reportPersonDetails];
@@ -147,11 +147,11 @@
     // Notify that app did become active.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkAppDidBecomeActive object:self userInfo:nil];
     
-    // Delete temp files
-    NSArray* tmpDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:NULL];
-    for (NSString *file in tmpDirectory) {
-        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), file] error:NULL];
-    }
+//    // Delete temp files
+//    NSArray* tmpDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:NULL];
+//    for (NSString *file in tmpDirectory) {
+//        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), file] error:NULL];
+//    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

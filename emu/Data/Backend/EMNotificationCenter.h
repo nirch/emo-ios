@@ -23,3 +23,5 @@
 #define emkUIDataRefreshPackages @"emk backend data refreshed packages"
 #define emkUIDownloadedResourcesForEmuticon @"emk backend downloaded resources for emuticon"
 #define emkUIMainShouldShowPackage @"emk ui main should show package"
+
+#define emkUIRenderProgressReport @"emk render progress report"

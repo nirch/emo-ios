@@ -11,6 +11,84 @@
 		<key>String</key>
 		<true/>
 	</dict>
+	<key>Goals</key>
+	<dict>
+		<key>shared</key>
+		<dict>
+			<key>description</key>
+			<string>User shared content (of any type).</string>
+		</dict>
+		<key>sharedVideo</key>
+		<dict>
+			<key>description</key>
+			<string>User shared video content.</string>
+		</dict>
+		<key>sharedGif</key>
+		<dict>
+			<key>description</key>
+			<string>User shared animated gif content.</string>
+		</dict>
+		<key>sharedEngagingVideo</key>
+		<dict>
+			<key>description</key>
+			<string>User shared a video created with more engagement by the user. The user added audio or played around with the advanced video settings before sharing.</string>
+		</dict>
+		<key>shareFBM</key>
+		<dict>
+			<key>description</key>
+			<string>User shared using facebook messenger.</string>
+		</dict>
+		<key>shareKB</key>
+		<dict>
+			<key>description</key>
+			<string>User copied to clipboard using the keyboard extension.</string>
+		</dict>
+		<key>keyboardOpened</key>
+		<dict>
+			<key>description</key>
+			<string>The user opened the keyboard.</string>
+		</dict>
+		<key>retakeNew</key>
+		<dict>
+			<key>description</key>
+			<string>The user opened the recorder for a retake and finished the recorder flow succesfully (onboarding excluded).</string>
+		</dict>
+		<key>retakeNewWithGoodBackground</key>
+		<dict>
+			<key>description</key>
+			<string>The user opened the recorder for a retake and finished the recorder flow succesfully with good background (onboarding excluded).</string>
+		</dict>
+		<key>onboardingFinished</key>
+		<dict>
+			<key>description</key>
+			<string>The user finished successfully the recorder onboarding.</string>
+		</dict>
+		<key>onboardingFinishedWithGoodBackground</key>
+		<dict>
+			<key>description</key>
+			<string>The user finished successfully the recorder onboarding and the take was with good background mark.</string>
+		</dict>
+		<key>browsingViewed20Emus</key>
+		<dict>
+			<key>description</key>
+			<string>The user browsed content and seen at least 20 rendered emus.</string>
+		</dict>
+		<key>browsingViewed40Emus</key>
+		<dict>
+			<key>description</key>
+			<string>The user browsed content and seen at least 50 rendered emus.</string>
+		</dict>
+		<key>browsingViewedManyEmus</key>
+		<dict>
+			<key>description</key>
+			<string>The user browsed content and seen at least 75% of all emus.</string>
+		</dict>
+		<key>notificationsUserAgreed</key>
+		<dict>
+			<key>description</key>
+			<string>The user browsed content and seen at least 75% of all emus.</string>
+		</dict>
+	</dict>
 	<key>Live Variables</key>
 	<dict>
 		<key>featureVideoRenderExtraUserSettings</key>
@@ -22,6 +100,33 @@
 			<false/>
 			<key>valueType</key>
 			<string>Bool</string>
+		</dict>
+		<key>featureVideoRender</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Bool&gt; - Is the user allowed to render emus as videos?</string>
+			<key>defaultValue</key>
+			<false/>
+			<key>valueType</key>
+			<string>Bool</string>
+		</dict>
+		<key>featureVideoRenderWithAudio</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Bool&gt; - Is the user allowed to render emus as videos with audio?</string>
+			<key>defaultValue</key>
+			<false/>
+			<key>valueType</key>
+			<string>Bool</string>
+		</dict>
+		<key>iconNameNavRetake</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;String&gt; - The name of the icon used for the retake button in the top navigation bar.</string>
+			<key>defaultValue</key>
+			<string>retakeIcon</string>
+			<key>valueType</key>
+			<string>String</string>
 		</dict>
 	</dict>
 </dict>

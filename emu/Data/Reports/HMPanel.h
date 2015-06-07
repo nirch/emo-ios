@@ -9,7 +9,11 @@
 #import "HMAnalyticsEvents.h"
 #import "HMParams.h"
 #import <MPTweakInline.h>
+#import "HMExperiments.h"
 
+#define VK_FEATURE_VIDEO_RENDER @"featureVideoRender"
+#define VK_FEATURE_VIDEO_RENDER_WITH_AUDIO @"featureVideoRenderWithAudio"
+#define VK_FEATURE_VIDEO_RENDER_EXTRA_USER_SETTINGS @"featureVideoRenderExtraUserSettings"
 
 #define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
 
@@ -46,8 +50,24 @@
 -(void)personDetails:(NSDictionary *)details;
 -(void)personPushToken:(NSData *)pushToken;
 
-#pragma mark - Experiments
+#pragma mark - Experiments, tweaks & user feedback
 -(void)initializeExperimentsWithLaunchOptions:(NSDictionary *)launchOptions;
 -(BOOL)handleOpenURL:(NSURL *)url;
+-(void)experimentGoalEvent:(NSString *)eventName;
+-(void)userFeedbackDialoguesPoint;
+
+// -----------------------------------------
+// Live variables
+//
+// The value is defined by this logic:
+//      - If a tweak value is forced by >>emu server<< (in the tweaks dictionary), that value will be used.
+//      - otherwise If an experiment defined that value, that value will be used or the related default.
+//      - if no value was defined at all for given key (key not recognized), the fallback value is returned.
+//
+-(BOOL)boolForKey:(NSString *)key fallbackValue:(BOOL)fallbackValue;
+-(NSNumber *)numberForKey:(NSString *)key fallbackValue:(NSNumber *)fallbackValue;
+-(NSString *)stringForKey:(NSString *)key fallbackValue:(NSString *)fallbackValue;
+// -----------------------------------------
+
 
 @end

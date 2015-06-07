@@ -56,8 +56,6 @@
  *  (video rendering also posts progress notifications that can be subscribed to)
  */
 -(void)renderVideoForEmu:(Emuticon *)emu
-              loopsCount:(NSInteger)loopsCount
-                pingPong:(BOOL)pingPong
          completionBlock:(void (^)(void))completionBlock
                failBlock:(void (^)(void))failBlock;
 

@@ -109,6 +109,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self initExperiments];
 
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
 
@@ -154,6 +155,17 @@
     self.guiCollectionView.delegate = nil;
     self.guiCollectionView.dataSource = nil;
 }
+
+#pragma mark - Experiments
+-(void)initExperiments
+{
+    NSString *iconName = [HMPanel.sh stringForKey:VK_ICON_NAME_NAV_RETAKE fallbackValue:@"retakeIcon"];
+    UIImage *icon = [UIImage imageNamed:iconName];
+    [self.guiRetakeButton setImage:icon forState:UIControlStateNormal];
+    [self.guiRetakeButton setImage:icon forState:UIControlStateSelected];
+    [self.guiRetakeButton setImage:icon forState:UIControlStateHighlighted];
+}
+
 
 #pragma mark - Memory warnings
 -(void)didReceiveMemoryWarning
@@ -392,7 +404,6 @@
         HMLOG(TAG, EM_DBG, @"Showing emuticons for mixed screen");
         REMOTE_LOG(@"Showing emuticons for mixed screen");
     }
-    
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
@@ -747,12 +758,15 @@
     [self dismissViewControllerAnimated:YES completion:^{
         [self.splashVC hideAnimated:YES];
         [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+        
+        if (flowType == EMRecorderFlowTypeOnboarding) {
+            // Onboarding finished goals
+            [self onboardingFinishedGoalsWithInfo:info];
+        } else {
+            [self retakeFinishedGoalWithInfo:info];
+        }
     }];
-    
-//    // Handle what to do next, depending on the flow of the dismissed recorder.
-//    [self resetFetchedResultsController];
-//    [self.guiCollectionView reloadData];
-    
+        
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
         [self _handleChangeToMixScreen];
@@ -761,6 +775,27 @@
         [self handleFlow];
     }
 }
+
+-(void)onboardingFinishedGoalsWithInfo:(NSDictionary *)info
+{
+    [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED];
+    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
+    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
+        [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED_WITH_GOOD_BACKGROUND];
+    }
+}
+
+
+-(void)retakeFinishedGoalWithInfo:(NSDictionary *)info
+{
+    [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW];
+    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
+    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
+        [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW_WITH_GOOD_BACKGROUND];
+    }
+}
+
+
 
 -(void)showKBTutorial
 {
@@ -1164,6 +1199,7 @@
     if (package != nil) {
         // A specific packge.
         [self _handleChangeToPackage:package];
+        [HMPanel.sh userFeedbackDialoguesPoint];
     } else {
         // Mix screen
         [self _handleChangeToMixScreen];

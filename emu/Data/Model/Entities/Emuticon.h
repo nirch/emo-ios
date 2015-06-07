@@ -2,7 +2,7 @@
 //  Emuticon.h
 //  emu
 //
-//  Created by Aviv Wolf on 5/25/15.
+//  Created by Aviv Wolf on 6/1/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -22,6 +22,8 @@
 @property (nonatomic, retain) NSNumber * rendersCount;
 @property (nonatomic, retain) NSNumber * usageCount;
 @property (nonatomic, retain) NSNumber * wasRendered;
+@property (nonatomic, retain) NSNumber * videoLoopsCount;
+@property (nonatomic, retain) NSNumber * videoLoopsEffect;
 @property (nonatomic, retain) EmuticonDef *emuDef;
 
 @end

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EMVideoSettingsPopover">
+            <connections>
+                <outlet property="guiLoopCountLabel" destination="dFm-Ht-6Ni" id="reH-NC-VFh"/>
+                <outlet property="guiLoopCountSlider" destination="ecd-qD-BcW" id="pl5-6r-dJl"/>
+                <outlet property="guiLoopTypeSegmentedControl" destination="gqZ-Ut-gQy" id="NdP-Of-f8b"/>
+                <outlet property="view" destination="iN0-l3-epB" id="O6t-xU-uw6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="210" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gqZ-Ut-gQy">
+                    <rect key="frame" x="16" y="16" width="178" height="29"/>
+                    <segments>
+                        <segment title="Repeat"/>
+                        <segment title="Boomerang"/>
+                    </segments>
+                    <color key="tintColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="onLoopFXValueChanged:" destination="-1" eventType="valueChanged" id="vJs-rO-v6j"/>
+                    </connections>
+                </segmentedControl>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="2" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="ecd-qD-BcW">
+                    <rect key="frame" x="14" y="94" width="182" height="31"/>
+                    <color key="tintColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="onLoopCountSliderValueChanged:" destination="-1" eventType="valueChanged" id="MQA-v2-mE8"/>
+                    </connections>
+                </slider>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 times" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFm-Ht-6Ni" customClass="EMLabel">
+                    <rect key="frame" x="16" y="60" width="178" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="gqZ-Ut-gQy" secondAttribute="trailing" constant="16" id="0Xi-22-Oaw"/>
+                <constraint firstItem="ecd-qD-BcW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="4O9-e8-dQJ"/>
+                <constraint firstItem="dFm-Ht-6Ni" firstAttribute="top" secondItem="ecd-qD-BcW" secondAttribute="bottom" constant="16" id="6Dr-To-lzA"/>
+                <constraint firstAttribute="trailing" secondItem="ecd-qD-BcW" secondAttribute="trailing" constant="16" id="77u-1I-Dqh"/>
+                <constraint firstAttribute="trailing" secondItem="ecd-qD-BcW" secondAttribute="trailing" constant="16" id="DXG-Tp-l9L"/>
+                <constraint firstAttribute="trailing" secondItem="dFm-Ht-6Ni" secondAttribute="trailing" constant="16" id="Fhu-bZ-XqW"/>
+                <constraint firstItem="gqZ-Ut-gQy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="QaG-YS-jhH"/>
+                <constraint firstItem="dFm-Ht-6Ni" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Rcf-we-d1r"/>
+                <constraint firstAttribute="centerY" secondItem="dFm-Ht-6Ni" secondAttribute="centerY" id="XXH-jJ-mol"/>
+                <constraint firstAttribute="bottom" secondItem="ecd-qD-BcW" secondAttribute="bottom" constant="16" id="Z8N-9t-1Y0"/>
+                <constraint firstAttribute="bottom" secondItem="dFm-Ht-6Ni" secondAttribute="bottom" constant="16" id="ccq-2P-hGr"/>
+                <constraint firstAttribute="trailing" secondItem="dFm-Ht-6Ni" secondAttribute="trailing" constant="16" id="f2Q-42-vqt"/>
+                <constraint firstItem="ecd-qD-BcW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="iZE-zm-sR0"/>
+                <constraint firstItem="ecd-qD-BcW" firstAttribute="top" secondItem="gqZ-Ut-gQy" secondAttribute="top" constant="36" id="oFt-Vk-uSg"/>
+                <constraint firstItem="gqZ-Ut-gQy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="sYF-aT-uhl"/>
+                <constraint firstItem="dFm-Ht-6Ni" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="t66-rO-xyC"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="6Dr-To-lzA"/>
+                    <exclude reference="Fhu-bZ-XqW"/>
+                    <exclude reference="Rcf-we-d1r"/>
+                    <exclude reference="ccq-2P-hGr"/>
+                    <exclude reference="4O9-e8-dQJ"/>
+                    <exclude reference="77u-1I-Dqh"/>
+                    <exclude reference="oFt-Vk-uSg"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="438" y="190.5"/>
+        </view>
+    </objects>
+</document>

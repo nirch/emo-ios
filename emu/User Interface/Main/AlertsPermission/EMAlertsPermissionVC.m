@@ -152,6 +152,7 @@
     [self confirmAlerts];
     [self hideAnimated:YES];
     [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OKAY];
+    [HMPanel.sh experimentGoalEvent:GK_NOTIFICATIONS_USER_AGREED];
 }
 
 - (IBAction)onPressedNoButton:(id)sender

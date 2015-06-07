@@ -16,7 +16,6 @@
 -(void)share
 {
     [super share];
-
     self.selectionTitle = LS(@"SHARE_SAVE_EMU_CHOICE_TITLE");
     self.selectionMessage = nil;
     [self shareSelection];

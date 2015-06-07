@@ -117,6 +117,9 @@
                                 AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]
                                 }];
     [HMPanel.sh analyticsForceSend];
+
+    // Experiments Goal
+    [HMPanel.sh experimentGoalEvent:GK_KEYBOARD_OPENED];
 }
 
 #pragma mark - Initializations
@@ -344,7 +347,7 @@
     self.sharer.viewController = self;
     self.sharer.view = self.view;
     self.sharer.delegate = self;
-    self.sharer.info = params.dictionary;
+    self.sharer.info = [NSMutableDictionary dictionaryWithDictionary:params.dictionary];
     self.sharer.selectionMessage = LS(@"SHARE_TOAST_COPIED_KB");
     [self.sharer share];
 }
@@ -362,6 +365,9 @@
     HMParams *params = [HMParams new];
     [params addKey:AK_PD_NUMBER_OF_KB_COPY_EMU_COUNT value:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_COPY_EMU_COUNT]];
     [HMPanel.sh personDetails:params.dictionary];
+
+    // Experiments Goal
+    [HMPanel.sh experimentGoalEvent:GK_SHARE_KB];
 }
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info

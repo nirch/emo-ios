@@ -22,6 +22,7 @@
 #import "Uigp/GpMemoryLeak.h"
 
 #import "VideoOutput.h"
+#import "ThumbOutput.h"
 
 //#import "Uigp/GpMemoryLeak.h"
 
@@ -110,7 +111,24 @@
     dimensions.height = 240;
     
     //
-    // Output gif
+    // Output thumb
+    //
+    ThumbOutput *thumbOutput = NULL;
+    if (self.shouldOutputGif || self.shouldOutputVideo) {
+        NSInteger thumbFrame;
+        if (self.thumbOfFrame) {
+            thumbFrame = MIN(self.numberOfFrames-1, self.thumbOfFrame.integerValue);
+        } else {
+            thumbFrame = self.numberOfFrames-1;
+        }
+        
+        NSString *outputThumbPath = [SF:@"%@/%@.jpg", self.outputPath, self.outputOID];;
+        NSURL *thumbOutputURL = [NSURL fileURLWithPath:outputThumbPath];
+        thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_JPG);
+    }
+    
+    //
+    // Output animated gif
     //
     CHrOutputGif *gifOutput = NULL;
     if (self.shouldOutputGif) {
@@ -145,7 +163,7 @@
         if (self.videoFXLoopsCount>0) {
             videoOutput->AddLoopEffect(
                                        self.videoFXLoopsCount,
-                                       self.videoFXLoopPingPong);
+                                       self.videoFXLoopEffect == 1);
         }
         
         // Audio track
@@ -165,6 +183,8 @@
     // Add outputs
     if (gifOutput != NULL) render->AddOutput(gifOutput);
     if (videoOutput != NULL) render->AddOutput(videoOutput);
+    if (thumbOutput != NULL) render->AddOutput(thumbOutput);
+    
     
     // Render!
     render->Process();
@@ -179,6 +199,12 @@
         videoOutput->Close();
         delete videoOutput;
     }
+    
+    if (thumbOutput != NULL) {
+        thumbOutput->Close();
+        delete thumbOutput;
+    }
+    
     
     if (solidBG != NULL) {
         solidBG->Close();

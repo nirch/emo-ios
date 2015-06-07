@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 13:40:58 05/30/15 IDT
+//  Created by build script on 19:41:55 06/04/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -917,6 +917,64 @@ Sharing was successful. (Not related to any specific UI)
 #define AK_EP_PACKAGE_OID @"packageOID"
 
 /** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
+#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
+
+/** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
+#define AK_EP_SENDER_UI @"senderUI"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Sharing was successful. (Not related to any specific UI)
+**/
+#define AK_E_SHARE_FILE_DISMISSED_DLG @"ShareFile:dismissedDlg"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
+#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
+
+/** Param:recognizedApplication --> <string> - The identifier of the app opened (on the rare instance it is recognized. Most newer apps don't report this) **/
+#define AK_EP_RECOGNIZED_APPLICATION @"recognizedApplication"
+
+/** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
+#define AK_EP_SENDER_UI @"senderUI"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User pressed the three dots on share screen for "open file in another
+    app".
+**/
+#define AK_E_SHARE_FILE_OPENED_DLG @"ShareFile:openedDlg"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing **/
 #define AK_EP_SHARE_METHOD @"shareMethod"
 
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/

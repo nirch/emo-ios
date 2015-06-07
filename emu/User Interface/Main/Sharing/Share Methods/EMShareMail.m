@@ -25,7 +25,14 @@
 -(void)share
 {
     [super share];
-    
+    [self shareSelection];
+}
+
+
+-(void)shareAnimatedGif
+{
+    [super shareAnimatedGif];
+
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
     NSData *gifData = [emu animatedGifData];
@@ -39,7 +46,7 @@
     
     // Open the composer with the animated gif as attachment
     self.picker = [[MFMailComposeViewController alloc] init];
-//    self.picker.delegate = (id<UINavigationControllerDelegate>)self.viewController.navigationController;
+    //    self.picker.delegate = (id<UINavigationControllerDelegate>)self.viewController.navigationController;
     self.picker.mailComposeDelegate = self;
     [self.picker addAttachmentData:gifData
                           mimeType:@"image/gif"
@@ -49,6 +56,39 @@
                                       animated:YES
                                     completion:nil];
 }
+
+
+-(void)shareVideo
+{
+    [super shareVideo];
+    
+    // Get the data of the animated gif.
+    Emuticon *emu = self.objectToShare;
+    NSData *videoData = [emu videoData];
+    
+    // First check if mail client configured correctly.
+    if (![MFMailComposeViewController canSendMail]) {
+        [self.view makeToast:LS(@"SHARE_TOAST_MAIL_CLIENT_NOT_CONFIGURED")];
+        [self.delegate sharerDidFailWithInfo:self.info];
+        return;
+    }
+    
+    // Open the composer with the animated gif as attachment
+    self.picker = [[MFMailComposeViewController alloc] init];
+    //    self.picker.delegate = (id<UINavigationControllerDelegate>)self.viewController.navigationController;
+    self.picker.mailComposeDelegate = self;
+    [self.picker addAttachmentData:videoData
+                          mimeType:@"public.mpeg-4"
+                          fileName:[SF:@"%@.mp4", emu.emuDef.name]];
+    
+    [self.viewController presentViewController:self.picker
+                                      animated:YES
+                                    completion:nil];
+}
+
+
+
+
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller
           didFinishWithResult:(MFMailComposeResult)result

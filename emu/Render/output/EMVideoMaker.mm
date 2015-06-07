@@ -9,6 +9,7 @@
 #import "EMVideoMaker.h"
 #import "Gpw/Vtool/Vtool.h"
 #import "AppManagement.h"
+#import "EMNotificationCenter.h"
 
 @interface EMVideoMaker() {
     AVAssetWriter *assetWriter;
@@ -277,14 +278,26 @@ const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback
 
 -(void)_nextLoop
 {
-    _fLoopCount++;
-    //_fCurrIndex=0;
-    if (_fDirection>0) {
-        _fCurrIndex = _fCount-2;
+    if (self.fxPingPong) {
+        _fLoopCount++;
+        if (_fDirection>0) {
+            _fCurrIndex = _fCount-2;
+        } else {
+            _fCurrIndex = 1;
+        }
+        _fDirection*=-1;
     } else {
-        _fCurrIndex = 1;
+        _fLoopCount++;
+        _fCurrIndex=0;
     }
-    _fDirection*=-1;
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        float progress = (float)_fLoopCount / (float)_fxLoops;
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIRenderProgressReport
+                                                            object:nil
+                                                          userInfo:@{@"progress":@(progress)}];
+    });
+    
 }
 
 -(BOOL)_moreFramesAvailable

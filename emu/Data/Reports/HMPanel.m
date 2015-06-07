@@ -9,15 +9,14 @@
 #import <Crashlytics/Crashlytics.h>
 #import <Mixpanel.h>
 #import "AppManagement.h"
-#import "HMExperiments.h"
+#import "EMDB.h"
 
 @interface HMPanel()
 
 @property (nonatomic) NSMutableDictionary *cfg;
-
-
 @property (nonatomic) NSString *mixPanelToken;
 @property (nonatomic) Mixpanel *mixPanel;
+@property (nonatomic) HMExperiments *experiments;
 
 @end
 
@@ -50,6 +49,9 @@
         
         // Crashlytics
         [self initCrashlytics];
+        
+        // Experiments
+        [self initExperiments];
     }
     return self;
 }
@@ -68,6 +70,8 @@
 -(void)initCrashlytics
 {
     [Fabric with:@[CrashlyticsKit]];
+    Crashlytics *crashlytics = [Crashlytics sharedInstance];
+    [crashlytics setObjectValue:[[UIDevice currentDevice] name] forKey:@"device name"];
     REMOTE_LOG(@"Initialized crashlytics");
 }
 
@@ -81,10 +85,18 @@
         HMLOG(TAG, EM_DBG, @"Initializing mixpanel with token: %@", self.mixPanelToken);
         self.mixPanel = [Mixpanel sharedInstanceWithToken:self.mixPanelToken
                                             launchOptions:launchOptions];
+        self.mixPanel.showSurveyOnActive = NO;
     } else {
         HMLOG(TAG, EM_DBG, @"Mixpanel already initialized.");
     }
 }
+
+
+-(void)userFeedbackDialoguesPoint
+{
+    [self.mixPanel showSurvey];
+}
+
 
 -(void)reportSuperParameters
 {
@@ -205,8 +217,9 @@
 -(BOOL)checkAndReportIfAppUpdated
 {
     BOOL wasUpdated = NO;
+    
     // We don't care about this for test applications
-    //if (self.isTestApp) return;
+    if (AppManagement.sh.isTestApp) return NO;
     
     // Production app should track update events.
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -343,10 +356,18 @@
 
 
 #pragma mark - Experiments
+-(void)initExperiments
+{
+    self.experiments = [HMExperiments new];
+}
+
 -(void)initializeExperimentsWithLaunchOptions:(NSDictionary *)launchOptions
 {
     [Optimizely startOptimizelyWithAPIToken:@"AAM7hIkAjQ2O6Dtl6TfFywzCXVVjq4W5~2898251091"
-                              launchOptions:launchOptions];
+                              launchOptions:launchOptions
+                  experimentsLoadedCallback:^(BOOL success, NSError *error) {
+                      [Optimizely activateMixpanelIntegration];
+                  }];
 }
 
 -(BOOL)handleOpenURL:(NSURL *)url
@@ -355,6 +376,55 @@
         return YES;
     }
     return NO;
+}
+
+
+-(void)experimentGoalEvent:(NSString *)eventName
+{
+    [Optimizely trackEvent:eventName];
+}
+
+-(BOOL)boolForKey:(NSString *)key fallbackValue:(BOOL)fallbackValue
+{
+    // Forced emu server tweaked value?
+    NSNumber *boolNumber = [AppCFG tweakedNumber:key];
+    if (boolNumber) return [boolNumber boolValue];
+    
+    // Optimizely live variables.
+    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+    if (opKey) return [Optimizely boolForKey:opKey];
+
+    // Nope. So use the passed fallback value instead.
+    return fallbackValue;
+}
+
+-(NSNumber *)numberForKey:(NSString *)key fallbackValue:(NSNumber *)fallbackValue
+{
+    // Forced emu server tweaked value?
+    NSNumber *number = [AppCFG tweakedNumber:key];
+    if (number) return number;
+
+    // Optimizely live variables.
+    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+    if (opKey) return [Optimizely numberForKey:opKey];
+
+    // Nope. So use the passed fallback value instead.
+    return fallbackValue;
+}
+
+
+-(NSString *)stringForKey:(NSString *)key fallbackValue:(NSString *)fallbackValue
+{
+    // Forced emu server tweaked value?
+    NSString *str = [AppCFG tweakedString:key];
+    if (str) return str;
+    
+    // Optimizely live variables.
+    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+    if (opKey) return [Optimizely stringForKey:opKey];
+    
+    // Nope. So use the passed fallback value instead.
+    return fallbackValue;
 }
 
 

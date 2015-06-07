@@ -141,12 +141,12 @@
         renderer.shouldOutputGif = NO;
         renderer.shouldOutputVideo = YES;
         renderer.videoFXLoopsCount = 5;
-        renderer.videoFXLoopPingPong = NO;
+        renderer.videoFXLoopEffect = 1;
         renderer.audioFileURL = audioFileURL;
         [renderer render];
     }];
     
-    [fm removeItemAtPath:path error:nil];
+    //[fm removeItemAtPath:path error:nil];
 }
 
 @end

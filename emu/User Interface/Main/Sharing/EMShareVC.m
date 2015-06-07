@@ -21,6 +21,7 @@
 #import "EMShareMail.h"
 #import "EMShareAppleMessage.h"
 #import "EMShareFBMessanger.h"
+#import "EMShareDocumentInteraction.h"
 
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
@@ -46,6 +47,7 @@
 @property (nonatomic) NSDictionary *shareNames;
 @property (nonatomic) NSDictionary *shareMethodsNames;
 @property (nonatomic) EMShare *sharer;
+@property (nonatomic) EMShare *previousSharer;
 
 @end
 
@@ -169,12 +171,13 @@
         // A priorized list of share methods for video.
         self.shareMethods = @[
                               @(emkShareMethodFacebookMessanger),
-                              @(emkShareMethodFacebook),
+                              //@(emkShareMethodFacebook),
                               @(emkShareMethodAppleMessages),
-                              @(emkShareMethodWhatsapp),
+                              //@(emkShareMethodWhatsapp), // Deprecated: implemented as part of emkShareMethodDocumentInteraction
                               @(emkShareMethodMail),
                               @(emkShareMethodSaveToCameraRoll),
-                              @(emkShareMethodCopy)
+                              @(emkShareMethodCopy),
+                              @(emkShareMethodDocumentInteraction)
                               ];
     }
     [self.guiCollectionView reloadData];
@@ -185,13 +188,14 @@
 -(void)initData
 {
     self.shareNames = @{
-                        @(emkShareMethodFacebookMessanger):  @"facebookm",
-                        @(emkShareMethodFacebook):           @"facebook",
-                        @(emkShareMethodAppleMessages):      @"iMessage",
-                        @(emkShareMethodWhatsapp):           @"whatsapp",
-                        @(emkShareMethodMail):               @"mail",
-                        @(emkShareMethodSaveToCameraRoll):   @"savetocm",
-                        @(emkShareMethodCopy):               @"copy"
+                        @(emkShareMethodFacebookMessanger):     @"facebookm",
+                        @(emkShareMethodFacebook):              @"facebook",
+                        @(emkShareMethodAppleMessages):         @"iMessage",
+                        @(emkShareMethodWhatsapp):              @"whatsapp",
+                        @(emkShareMethodMail):                  @"mail",
+                        @(emkShareMethodSaveToCameraRoll):      @"savetocm",
+                        @(emkShareMethodCopy):                  @"copy",
+                        @(emkShareMethodDocumentInteraction):   @"sharemisc"
                         };
     [self update];
 }
@@ -308,7 +312,6 @@
         // Save to camera roll
         //
         self.sharer = [EMShareSaveToCameraRoll new];
-        // self.sharer.shareOption = emkShareOptionBoth;
         
     } else if (method == emkShareMethodMail) {
         
@@ -330,6 +333,13 @@
         // Facebook messagenger
         //
         self.sharer = [EMShareFBMessanger new];
+
+    } else if (method == emkShareMethodDocumentInteraction) {
+        
+        //
+        // Whatsapp
+        //
+        self.sharer = [EMShareDocumentInteraction new];
         
     } else {
         //
@@ -347,11 +357,11 @@
     }
     
     // Share
+    self.sharer.info = [NSMutableDictionary dictionaryWithDictionary:info];
     self.sharer.objectToShare = emu;
     self.sharer.delegate = self;
     self.sharer.viewController = self;
     self.sharer.view = self.view;
-    self.sharer.info = info;
     
     if (mediaDataType == EMMediaDataTypeGIF) {
         self.sharer.shareOption = emkShareOptionAnimatedGif;
@@ -375,10 +385,9 @@
     self.guiCollectionView.hidden = YES;
     self.guiFBMButtonContainer.hidden = YES;
     self.guiRenderingView.hidden = NO;
+    self.guiRenderingProgress.progress = 0;
     
     [EMRenderManager.sh renderVideoForEmu:emu
-                               loopsCount:10
-                                 pingPong:NO
                           completionBlock:^{
                               // If we are here, emu.videoURL points to the rendered video.
                               [self.sharer share];
@@ -401,7 +410,24 @@
 #pragma mark - EMShareDelegate
 -(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
 {
+    [self.sharer cleanUp];
     self.sharer = nil;
+    NSString *emuOID = info[AK_EP_EMUTICON_OID];
+    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+
+    // Goals acheived!
+    [HMPanel.sh experimentGoalEvent:GK_SHARED];
+    if ([info[AK_EP_SHARED_MEDIA_TYPE] isEqualToString:@"gif"]) [HMPanel.sh experimentGoalEvent:GK_SHARED_GIF];
+    if ([info[AK_EP_SHARE_METHOD] isEqualToString:@"facebookm"]) [HMPanel.sh experimentGoalEvent:GK_SHARE_FBM];
+    if ([info[AK_EP_SHARED_MEDIA_TYPE] isEqualToString:@"video"]) {
+        // Any shared video.
+        [HMPanel.sh experimentGoalEvent:GK_SHARED_VIDEO];
+        
+        // Shared video with user playing around with the settings and audio of the video.
+        if ([emu engagedUserVideoSettings])
+            [HMPanel.sh experimentGoalEvent:GK_SHARED_ENGAGING_VIDEO];
+    }
+    
     
     // Analytics
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT];
@@ -416,6 +442,7 @@
 
 -(void)sharerDidCancelWithInfo:(NSDictionary *)info
 {
+    [self.sharer cleanUp];
     self.sharer = nil;
 
     // Analytics
@@ -424,6 +451,7 @@
 
 -(void)sharerDidFailWithInfo:(NSDictionary *)info
 {
+    [self.sharer cleanUp];
     self.sharer = nil;
     
     // Analytics
@@ -432,6 +460,7 @@
 
 -(void)sharerDidFinishWithInfo:(NSDictionary *)info
 {
+    self.previousSharer = self.sharer;
     self.sharer = nil;
 }
 
@@ -439,6 +468,12 @@
 {
     CGFloat x = scrollView.contentOffset.x;
     if (x<-30 && _allowFBExperience) [self hideExtraShareOptionsAnimated:YES];
+}
+
+#pragma mark - progress
+-(void)updateProgress:(float)progress
+{
+    self.guiRenderingProgress.progress = progress;
 }
 
 #pragma mark - IB Actions

@@ -26,9 +26,10 @@
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSInteger numberOfFrames;
+@property (nonatomic) NSNumber *thumbOfFrame;
 
 @property (nonatomic) NSInteger videoFXLoopsCount;
-@property (nonatomic) BOOL videoFXLoopPingPong;
+@property (nonatomic) NSInteger videoFXLoopEffect;
 @property (nonatomic) NSURL *audioFileURL;
 @property (nonatomic) NSTimeInterval audioStartTime;
 

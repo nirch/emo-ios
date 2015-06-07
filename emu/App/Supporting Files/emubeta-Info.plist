@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb410672082391445</string>
+				<string>fb428894703902516</string>
 			</array>
 		</dict>
 		<dict>
@@ -44,7 +44,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.6.3.t</string>
+	<string>1.6.5.t</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -60,9 +60,9 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>410672082391445</string>
+	<string>428894703902516</string>
 	<key>FacebookDisplayName</key>
-	<string>Emu</string>
+	<string>EmuBeta</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -93,6 +93,9 @@
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

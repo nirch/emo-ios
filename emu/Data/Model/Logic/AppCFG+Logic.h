@@ -25,8 +25,12 @@
 
 
 #pragma mark - tweaked values
++(NSNumber *)tweakedNumber:(NSString *)name;
+//+(BOOL)tweakedBool:(NSString *)name;
++(NSString *)tweakedString:(NSString *)name;
 +(BOOL)tweakedBool:(NSString *)name defaultValue:(BOOL)defaultValue;
 +(NSInteger)tweakedInteger:(NSString *)name defaultValue:(NSInteger)defaultValue;
++(NSString *)tweakedString:(NSString *)name defaultValue:(NSString *)defaultValue;
 +(NSTimeInterval)tweakedInterval:(NSString *)name defaultValue:(NSTimeInterval)defaultValue;
 
 @end

@@ -88,40 +88,71 @@
 #pragma mark - tweaked values
 +(NSDictionary *)tweakedValues
 {
+    if (EMDB.sh.cachedTweakedValues)
+        return EMDB.sh.cachedTweakedValues;
+    
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     NSDictionary *tweaks = appCFG.tweaks;
-    if ([tweaks isKindOfClass:[NSDictionary class]]) return tweaks;
+    if ([tweaks isKindOfClass:[NSDictionary class]]) {
+        EMDB.sh.cachedTweakedValues = tweaks;
+        return tweaks;
+    }
+    return nil;
+}
+
++(NSNumber *)tweakedNumber:(NSString *)name
+{
+    NSDictionary *tweaks = [self tweakedValues];
+    if (tweaks == nil) return nil;
+    
+    id value = tweaks[name];
+    if ([value isKindOfClass:[NSNumber class]]) return value;
+    return nil;
+}
+
+//+(BOOL)tweakedBool:(NSString *)name
+//{
+//    NSNumber *boolNumber = [self tweakedNumber:name];
+//    if (boolNumber) return [boolNumber boolValue];
+//    return nil;
+//}
+
++(NSString *)tweakedString:(NSString *)name
+{
+    NSDictionary *tweaks = [self tweakedValues];
+    if (tweaks == nil) return nil;
+    
+    id value = tweaks[name];
+    if ([value isKindOfClass:[NSString class]]) return value;
     return nil;
 }
 
 +(BOOL)tweakedBool:(NSString *)name defaultValue:(BOOL)defaultValue
 {
-    NSDictionary *tweaks = [self tweakedValues];
-    if (tweaks == nil) return defaultValue;
-
-    id value = tweaks[name];
-    if ([value isKindOfClass:[NSNumber class]]) return [value boolValue];
+    NSNumber *boolNumber = [self tweakedNumber:name];
+    if (boolNumber) return [boolNumber boolValue];
     return defaultValue;
 }
 
 +(NSInteger)tweakedInteger:(NSString *)name defaultValue:(NSInteger)defaultValue
 {
-    NSDictionary *tweaks = [self tweakedValues];
-    if (tweaks == nil) return defaultValue;
-    
-    id value = tweaks[name];
-    if ([value isKindOfClass:[NSNumber class]]) return [value integerValue];
+    NSNumber *number = [self tweakedNumber:name];
+    if (number) return [number integerValue];
+    return defaultValue;
+}
+
++(NSString *)tweakedString:(NSString *)name defaultValue:(NSString *)defaultValue
+{
+    NSString *str = [self tweakedString:name];
+    if (str) return str;
     return defaultValue;
 }
 
 
 +(NSTimeInterval)tweakedInterval:(NSString *)name defaultValue:(NSTimeInterval)defaultValue
 {
-    NSDictionary *tweaks = [self tweakedValues];
-    if (tweaks == nil) return defaultValue;
-    
-    id value = tweaks[name];
-    if ([value isKindOfClass:[NSNumber class]]) return [value doubleValue];
+    NSNumber *number = [self tweakedNumber:name];
+    if (number) return [number doubleValue];
     return defaultValue;
 }
 

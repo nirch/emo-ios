@@ -296,8 +296,6 @@
 
 
 -(void)renderVideoForEmu:(Emuticon *)emu
-              loopsCount:(NSInteger)loopsCount
-                pingPong:(BOOL)pingPong
          completionBlock:(void (^)(void))completionBlock
                failBlock:(void (^)(void))failBlock
 {
@@ -328,14 +326,14 @@
     renderer.outputPath = NSTemporaryDirectory();
     renderer.outputOID = emu.oid;
     renderer.shouldOutputVideo = YES;
-    renderer.videoFXLoopsCount = loopsCount;
-    renderer.videoFXLoopPingPong = pingPong;
+
+    // Audio track (optional)
+    renderer.audioFileURL = emu.audioFileURL;
+    renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
     
-    // With audio track if defined.
-    if (emu.audioFileURL) {
-        renderer.audioFileURL = emu.audioFileURL;
-        renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
-    }
+    // Video settings (optional, use defaults if not defined)
+    renderer.videoFXLoopsCount = emu.videoLoopsCount && emu.videoLoopsCount.integerValue>0? emu.videoLoopsCount.integerValue : EMU_DEFAULT_VIDEO_LOOPS_COUNT;
+    renderer.videoFXLoopEffect = emu.videoLoopsEffect? emu.videoLoopsEffect.integerValue : EMU_DEFAULT_VIDEO_LOOPS_FX;
     
     // Render
     dispatch_async(self.renderingQueue, ^(void){

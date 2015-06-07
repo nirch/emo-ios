@@ -784,6 +784,56 @@ or
 				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
 			</dict>
 		</dict>
+		<key>ShareFile:openedDlg</key>
+		<dict>
+			<key>v</key>
+			<string>1.6.5</string>
+			<key>description</key>
+			<string>User pressed the three dots on share screen for &quot;open file in another app&quot;.</string>
+			<key>params</key>
+			<dict>
+				<key>senderUI</key>
+				<string>&lt;string&gt; - The originating UI the share was initated from. Emoticon screen, keyboard, etc.</string>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>sharedMediaType</key>
+				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
+			</dict>
+		</dict>
+		<key>ShareFile:dismissedDlg</key>
+		<dict>
+			<key>v</key>
+			<string>1.6.5</string>
+			<key>description</key>
+			<string>Sharing was successful. (Not related to any specific UI)</string>
+			<key>params</key>
+			<dict>
+				<key>recognizedApplication</key>
+				<string>&lt;string&gt; - The identifier of the app opened (on the rare instance it is recognized. Most newer apps don&apos;t report this)</string>
+				<key>senderUI</key>
+				<string>&lt;string&gt; - The originating UI the share was initated from. Emoticon screen, keyboard, etc.</string>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>sharedMediaType</key>
+				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
+			</dict>
+		</dict>
 		<key>Share:failed</key>
 		<dict>
 			<key>v</key>

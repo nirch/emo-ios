@@ -16,12 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-}
-
-#pragma mark - VC prefferences
--(BOOL)prefersStatusBarHidden
-{
-    return YES;
+    self.navigationBar.backgroundColor = [UIColor redColor];
+    self.navigationBar.tintColor = [UIColor blueColor];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 @end
