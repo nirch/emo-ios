@@ -79,6 +79,7 @@
     [self initData];
     [self refreshEmu];
     [self initGUI];
+    [self initLocalization];
     [self updateAudioSelectionUI];
 }
 
@@ -152,6 +153,12 @@
         self.guiRenderingTypeSelector.enabled = NO;
         self.guiRenderingTypeSelector.selectedSegmentIndex = 0;
     }
+}
+
+-(void)initLocalization
+{
+    [self.guiRenderingTypeSelector setTitle:LS(@"ANIM_GIF") forSegmentAtIndex:0];
+    [self.guiRenderingTypeSelector setTitle:LS(@"VIDEO") forSegmentAtIndex:1];
 }
 
 -(void)initData
@@ -647,7 +654,7 @@
     //
     // Retake options
     //
-    NSString *title = LS(@"AUDIO_REMOVE_TITLE");
+    NSString *title = LS(@"AUDIO_OPTIONS_TITLE");
     [actionsMapping addAction:@"AUDIO_REMOVE" text:LS(@"AUDIO_REMOVE") section:0];
     [actionsMapping addAction:@"AUDIO_REPLACE" text:LS(@"AUDIO_REPLACE") section:0];
     EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];

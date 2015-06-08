@@ -54,6 +54,17 @@ description: <String> - The name of the icon used for the retake button in the t
 OptimizelyVariableKeyForString(iconNameNavRetake, @"retakeIcon");
 
 
+/**
+---------------------------------------
+onboardingEmusForPreviewList
+---------------------------------------
+value type: String
+default values: 
+description: <String> - A list of preffered emus oids to use for preview in the onboarding stage (given as a comma delimited string)
+*/
+OptimizelyVariableKeyForString(onboardingEmusForPreviewList, @"");
+
+
 
 @implementation HMExperiments
 
@@ -65,7 +76,8 @@ OptimizelyVariableKeyForString(iconNameNavRetake, @"retakeIcon");
             @"featureVideoRender":featureVideoRender,
 			@"featureVideoRenderExtraUserSettings":featureVideoRenderExtraUserSettings,
 			@"featureVideoRenderWithAudio":featureVideoRenderWithAudio,
-			@"iconNameNavRetake":iconNameNavRetake
+			@"iconNameNavRetake":iconNameNavRetake,
+			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList
         };
     }
     return self;

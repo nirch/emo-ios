@@ -251,10 +251,14 @@
 -(HMParams *)paramsForEmuticon:(Emuticon *)emuticon
 {
     HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_INSTANCE_OID value:emuticon.oid];
     [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emuticon.emuDef.name];
     [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emuticon.emuDef.oid];
     [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emuticon.emuDef.package.name];
     [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emuticon.emuDef.package.oid];
+    [params addKey:AK_EP_AUDIO_FILE_SET value:@(emuticon.audioFilePath!=nil)];
+    [params addKey:AK_EP_VIDEO_LOOP_TYPE_SET valueIfNotNil:emuticon.videoLoopsEffect];
+    [params addKey:AK_EP_VIDEO_LOOPS_COUNT_SET valueIfNotNil:emuticon.videoLoopsCount];
     return params;
 }
 
@@ -411,8 +415,9 @@
 -(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
 {
     [self.sharer cleanUp];
+    self.previousSharer = self.sharer;
     self.sharer = nil;
-    NSString *emuOID = info[AK_EP_EMUTICON_OID];
+    NSString *emuOID = info[AK_EP_EMUTICON_INSTANCE_OID];
     Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
 
     // Goals acheived!
@@ -424,12 +429,19 @@
         [HMPanel.sh experimentGoalEvent:GK_SHARED_VIDEO];
         
         // Shared video with user playing around with the settings and audio of the video.
-        if ([emu engagedUserVideoSettings])
+        if ([emu engagedUserVideoSettings]) {
             [HMPanel.sh experimentGoalEvent:GK_SHARED_ENGAGING_VIDEO];
+            [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_ENGAGED_VIDEO_SHARES_USING_APP_COUNT];
+            [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_ENGAGED_VIDEO_USING_APP value:@YES];
+        }
+        
+        // Analytics for video shares
+        [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_VIDEO_SHARES_USING_APP_COUNT];
+        [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_VIDEO_USING_APP value:@YES];
     }
     
     
-    // Analytics
+    // Analytics for any share
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT];
     [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_SHARE_USING_APP value:@YES];
     [HMPanel.sh analyticsEvent:AK_E_SHARE_SUCCESS info:info];

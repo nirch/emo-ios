@@ -398,6 +398,7 @@
         AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
        
         NSArray *emus = appCFG.mixedScreenEmus;
+        assert(emus);
         predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.oid in %@", @NO, emus];
         sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.mixedScreenOrder" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES] ];
         
@@ -437,21 +438,16 @@
         /**
          *  Open the recorder for the first time.
          */
-        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
+        NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST
+                                          fallbackValue:nil];
+        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
+        
+        
         if (emuticonDefForOnboarding == nil) {
-            // No info for onboarding.
-            // Fallback to the bundled data existing on the device.
-            REMOTE_LOG(@"No server side info. Using onboarding data bundled on device.");
-            [self initPackagesForOnboarding];
-
-            emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
-            if (emuticonDefForOnboarding == nil) {
-                REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
-            }
+            REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
         }
         REMOTE_LOG(@"Opening recorder for the first time");
         REMOTE_LOG(@"Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
-        
         [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
                              info:@{
                                     emkEmuticonDefOID:emuticonDefForOnboarding.oid,
@@ -479,21 +475,6 @@
     }
 }
 
-
--(void)initPackagesForOnboarding
-{
-    NSString *onboardingLocalFileName = AppManagement.sh.isTestApp? @"onboarding_packages_test":@"onboarding_packages_prod";
-    NSString *path = [[NSBundle mainBundle] pathForResource:onboardingLocalFileName ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (error || json==nil) {
-        [self epicFail:[error description]];
-        return;
-    }
-    [EMBackend.sh parseOnboardingPackages:json];
-}
 
 -(void)epicFail:(NSString *)errorMessage
 {

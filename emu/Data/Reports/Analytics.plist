@@ -71,6 +71,26 @@ or
 			<key>description</key>
 			<string>true if numberOfSharesUsingAppCount &gt; 0</string>
 		</dict>
+		<key>numberOfVideoSharesUsingAppCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user shared an emu rendered as video from within the app.</string>
+		</dict>
+		<key>didEverShareVideoUsingApp</key>
+		<dict>
+			<key>description</key>
+			<string>true if numberOfVideoSharesUsingAppCount &gt; 0</string>
+		</dict>
+		<key>numberOfEngagedVideoSharesUsingAppCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user shared an emu rendered as video from within the app and the user also played around with video settings like numner pf loops and loop type.</string>
+		</dict>
+		<key>didEverShareEngagedVideoUsingApp</key>
+		<dict>
+			<key>description</key>
+			<string>true if numberOfEngagedVideoSharesUsingAppCount &gt; 0</string>
+		</dict>
 		<key>numberOfApprovedRetakes</key>
 		<dict>
 			<key>description</key>
@@ -782,6 +802,12 @@ or
 				<string>&lt;string&gt; - the oid of the related package</string>
 				<key>sharedMediaType</key>
 				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
+				<key>audioFileSet</key>
+				<string>&lt;bool&gt; - true if an audio file was set for video rendering</string>
+				<key>videoLoopsCountSet</key>
+				<string>&lt;int&gt; - number of loops set for video rendering</string>
+				<key>videoLoopTypeSet</key>
+				<string>&lt;int&gt; - loop type set for video rendering</string>
 			</dict>
 		</dict>
 		<key>ShareFile:openedDlg</key>

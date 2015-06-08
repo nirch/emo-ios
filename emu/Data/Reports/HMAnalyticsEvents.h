@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 19:41:55 06/04/15 IDT
+//  Created by build script on 15:59:15 06/08/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -11,6 +11,10 @@
 //
 //
 
+#pragma mark - General
+#define AK_EP_EMUTICON_INSTANCE_OID @"emuOnDeviceInstaceOID"
+
+
 
 #pragma mark - Super parameters
 //
@@ -18,25 +22,89 @@
 //
 
 
-/** True if the keyboard ever appeared. **/
-#define AK_S_DID_KEYBOARD_EVER_APPEAR @"didKeyboardEverAppear"
+/** The number of times the user navigated to a different package in the
+    app. **/
+#define AK_S_NUMBER_OF_PACKAGES_NAVIGATED @"numberOfPackagesNavigated"
 
 
-/** The number of times the alpha numeric keyboard was shown. **/
-#define AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT @"numberOfAlphaNumericKBAppearancesCount"
+/** The number of times the user launched the application. **/
+#define AK_S_LAUNCHES_COUNT @"launchesCount"
+
+
+/** True if the user ever navigated to another package in the app. **/
+#define AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE @"didEverNavigateToAnotherPackage"
+
+
+/** true if numberOfSharesUsingAppCount > 0 **/
+#define AK_S_DID_EVER_SHARE_USING_APP @"didEverShareUsingApp"
+
+
+/** true if numberOfVideoSharesUsingAppCount > 0 **/
+#define AK_S_DID_EVER_SHARE_VIDEO_USING_APP @"didEverShareVideoUsingApp"
+
+
+/** true if numberOfEngagedVideoSharesUsingAppCount > 0 **/
+#define AK_S_DID_EVER_SHARE_ENGAGED_VIDEO_USING_APP @"didEverShareEngagedVideoUsingApp"
+
+
+/** The number of times the user pressed an emu in the keyboard and copied
+    to clipboard **/
+#define AK_S_NUMBER_OF_KB_COPY_EMU_COUNT @"numberOfKBCopyEmuCount"
+
+
+/** The number of times the user shared an emu from within the app. **/
+#define AK_S_NUMBER_OF_SHARES_USING_APP_COUNT @"numberOfSharesUsingAppCount"
+
+
+/** The localized language preference on the user's device (good to know
+    for the time we will want to localize the app). **/
+#define AK_S_LOCALIZATION_PREFERENCE @"localizationPreference"
 
 
 /** The number of times the app did become active **/
 #define AK_S_DID_BECOME_ACTIVE_COUNT @"didBecomeActiveCount"
 
 
+/** <number> - Number indicating the user's current
+    UIUserNotificationSettings **/
+#define AK_S_NOTIFICATIONS_SETTINGS @"notificationsSettings"
+
+
 /** True if in the context of a messanger conversation. **/
 #define AK_S_IN_MESSANGER_CONTEXT @"inMessangerContext"
 
 
-/** <number> - Number indicating the user's current
-    UIUserNotificationSettings **/
-#define AK_S_NOTIFICATIONS_SETTINGS @"notificationsSettings"
+/** Did the user ever finished a second retake. Opened the recorder and
+    finished the recorder flow (disregarding oboarding) **/
+#define AK_S_DID_EVER_FINISH_A_RETAKE @"didEverFinishARetake"
+
+
+/** <string> - The name of the emu used on the preview stage in the
+    recorder onboarding flow (when user opened app for the first time) **/
+#define AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING @"emuNameUsedForPreviewOnOnboarding"
+
+
+/** The number of times the alpha numeric keyboard was shown. **/
+#define AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT @"numberOfAlphaNumericKBAppearancesCount"
+
+
+/** The number of times keyboard did appear. **/
+#define AK_S_NUMBER_OF_KB_APPEARANCES_COUNT @"numberOfKBAppearancesCount"
+
+
+/** True if the keyboard ever appeared. **/
+#define AK_S_DID_KEYBOARD_EVER_APPEAR @"didKeyboardEverAppear"
+
+
+/** The long build version string in the following format:
+    <big>.<small>.<build#> for production application. or
+    <big>.<small>.<build#>.t for test application. **/
+#define AK_S_BUILD_VERSION @"buildVersion"
+
+
+/** The number of times the user shared an emu rendered as video from
+    within the app. **/
+#define AK_S_NUMBER_OF_VIDEO_SHARES_USING_APP_COUNT @"numberOfVideoSharesUsingAppCount"
 
 
 /** The model of the user's device **/
@@ -51,65 +119,20 @@
 #define AK_S_DID_ALPHA_NUMERIC_KB_EVER_APPEAR @"didAlphaNumericKBEverAppear"
 
 
-/** The number of times the user launched the application. **/
-#define AK_S_LAUNCHES_COUNT @"launchesCount"
-
-
-/** true if numberOfSharesUsingAppCount > 0 **/
-#define AK_S_DID_EVER_SHARE_USING_APP @"didEverShareUsingApp"
-
-
 /** The number of times the user pressed "I love it" and confirmed the
     take in the recorder (not counting oboarding recorder) **/
 #define AK_S_NUMBER_OF_APPROVED_RETAKES @"numberOfApprovedRetakes"
 
 
-/** Did the user ever finished a second retake. Opened the recorder and
-    finished the recorder flow (disregarding oboarding) **/
-#define AK_S_DID_EVER_FINISH_A_RETAKE @"didEverFinishARetake"
-
-
-/** The long build version string in the following format:
-    <big>.<small>.<build#> for production application. or
-    <big>.<small>.<build#>.t for test application. **/
-#define AK_S_BUILD_VERSION @"buildVersion"
-
-
-/** The number of times the user navigated to a different package in the
-    app. **/
-#define AK_S_NUMBER_OF_PACKAGES_NAVIGATED @"numberOfPackagesNavigated"
-
-
-/** The localized language preference on the user's device (good to know
-    for the time we will want to localize the app). **/
-#define AK_S_LOCALIZATION_PREFERENCE @"localizationPreference"
-
-
-/** The number of times keyboard did appear. **/
-#define AK_S_NUMBER_OF_KB_APPEARANCES_COUNT @"numberOfKBAppearancesCount"
-
-
-/** The number of times the user pressed an emu in the keyboard and copied
-    to clipboard **/
-#define AK_S_NUMBER_OF_KB_COPY_EMU_COUNT @"numberOfKBCopyEmuCount"
-
-
-/** True if the user ever navigated to another package in the app. **/
-#define AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE @"didEverNavigateToAnotherPackage"
-
-
-/** The number of times the user shared an emu from within the app. **/
-#define AK_S_NUMBER_OF_SHARES_USING_APP_COUNT @"numberOfSharesUsingAppCount"
+/** The number of times the user shared an emu rendered as video from
+    within the app and the user also played around with video settings
+    like numner pf loops and loop type. **/
+#define AK_S_NUMBER_OF_ENGAGED_VIDEO_SHARES_USING_APP_COUNT @"numberOfEngagedVideoSharesUsingAppCount"
 
 
 /** A mnemonic name of the application. Currently: "Emu iOS". Used in case
     we will create white labels of the Emu app in the future. **/
 #define AK_S_CLIENT_NAME @"clientName"
-
-
-/** <string> - The name of the emu used on the preview stage in the
-    recorder onboarding flow (when user opened app for the first time) **/
-#define AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING @"emuNameUsedForPreviewOnOnboarding"
 
 
 
@@ -913,8 +936,14 @@ Sharing was successful. (Not related to any specific UI)
 **/
 #define AK_E_SHARE_SUCCESS @"Share:success"
 
+/** Param:audioFileSet --> <bool> - true if an audio file was set for video rendering **/
+#define AK_EP_AUDIO_FILE_SET @"audioFileSet"
+
 /** Param:packageOID --> <string> - the oid of the related package **/
 #define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:videoLoopsCountSet --> <int> - number of loops set for video rendering **/
+#define AK_EP_VIDEO_LOOPS_COUNT_SET @"videoLoopsCountSet"
 
 /** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
 #define AK_EP_SHARE_METHOD @"shareMethod"
@@ -933,6 +962,9 @@ Sharing was successful. (Not related to any specific UI)
 
 /** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
 #define AK_EP_SENDER_UI @"senderUI"
+
+/** Param:videoLoopTypeSet --> <int> - loop type set for video rendering **/
+#define AK_EP_VIDEO_LOOP_TYPE_SET @"videoLoopTypeSet"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

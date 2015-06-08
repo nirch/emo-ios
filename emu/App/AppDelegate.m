@@ -59,6 +59,7 @@
     
     // Initialize analytics, set super parameters and report application launch.
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];
+    [HMPanel.sh reportBuildInfo];
     [HMPanel.sh reportSuperParameters];
     [HMPanel.sh checkAndReportIfAppUpdated];
     [HMPanel.sh analyticsEvent:AK_E_APP_LAUNCHED];
@@ -145,13 +146,7 @@
     appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
     
     // Notify that app did become active.
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkAppDidBecomeActive object:self userInfo:nil];
-    
-//    // Delete temp files
-//    NSArray* tmpDirectory = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:NULL];
-//    for (NSString *file in tmpDirectory) {
-//        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), file] error:NULL];
-//    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkAppDidBecomeActive object:self userInfo:nil];    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

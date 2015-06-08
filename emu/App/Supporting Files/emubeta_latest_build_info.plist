@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>build_counter</key>
+	<integer>1678</integer>
+	<key>build_date</key>
+	<date>2015-06-08T19:26:53Z</date>
+	<key>build_type</key>
+	<string>Debug</string>
+	<key>machine_name</key>
+	<string>La-Big-Mac.local</string>
+	<key>target_name</key>
+	<string>emubeta</string>
+</dict>
+</plist>

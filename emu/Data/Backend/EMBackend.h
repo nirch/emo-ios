@@ -22,9 +22,6 @@
 #pragma mark - Web Service
 @property (nonatomic, readonly) HMServer *server;
 
-#pragma mark - Local data
--(void)parseOnboardingPackages:(NSDictionary *)json;
-
 #pragma mark - Downloading resources
 -(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info;
 -(void)downloadResourcesForEmuDef:(EmuticonDef *)emuDef info:(NSDictionary *)info;

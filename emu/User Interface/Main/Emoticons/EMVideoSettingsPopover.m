@@ -56,7 +56,8 @@
     NSInteger loopCount = self.emu.videoLoopsCount?self.emu.videoLoopsCount.integerValue:EMU_DEFAULT_VIDEO_LOOPS_COUNT;
     if (loopCount==0) loopCount = EMU_DEFAULT_VIDEO_LOOPS_COUNT;
     self.guiLoopCountSlider.value = loopCount;
-    self.guiLoopCountLabel.text = [SF:@"%@ times", @(loopCount)];
+    NSString *numberString = [SF:@"%@", @(loopCount)];
+    self.guiLoopCountLabel.text = [LS(@"N_TIMES") stringByReplacingOccurrencesOfString:@"#" withString:numberString];
 }
 
 #pragma mark - IB Actions

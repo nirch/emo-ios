@@ -55,7 +55,9 @@ class Builder:
         print "Configuration: '%s'" % self.cfg[K_CONFIGURATION]
 
     def update_build_info(self):
-        path = os.path.join(self.cfg[K_SRCROOT], "emu", "App", "Supporting Files", "latest_build_info.plist")
+        file_name = "%s_latest_build_info.plist" % self.cfg[K_TARGET_NAME]
+        path = os.path.join(self.cfg[K_SRCROOT], "emu", "App", "Supporting Files", file_name)
+        
         info = plistlib.readPlist(path)
 
         # inc build counter

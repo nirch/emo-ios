@@ -128,6 +128,15 @@
 			<key>valueType</key>
 			<string>String</string>
 		</dict>
+		<key>onboardingEmusForPreviewList</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;String&gt; - A list of preffered emus oids to use for preview in the onboarding stage (given as a comma delimited string)</string>
+			<key>defaultValue</key>
+			<string></string>
+			<key>valueType</key>
+			<string>String</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

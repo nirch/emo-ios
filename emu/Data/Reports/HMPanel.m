@@ -109,6 +109,7 @@
     
     // More flags as super parameters
     [params addKey:AK_S_DID_EVER_SHARE_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+    [params addKey:AK_S_DID_EVER_SHARE_VIDEO_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_VIDEO_SHARES_USING_APP_COUNT]];
     [params addKey:AK_S_DID_EVER_FINISH_A_RETAKE value:[self didEverCountedKey:AK_S_NUMBER_OF_APPROVED_RETAKES]];
     [params addKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:[self didEverCountedKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED]];
     
@@ -189,7 +190,8 @@
 -(void)reportBuildInfo
 {
     // Read build info plist if exists.
-    NSDictionary *buildInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"latest_build_info" ofType:@"plist"]];
+    NSString *fileName = AppManagement.sh.isTestApp?@"emubeta_latest_build_info":@"emu_latest_build_info";
+    NSDictionary *buildInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"]];
     HMLOG(TAG, EM_DBG, @"latest build info: %@", buildInfo);
     
     // Super properties.
@@ -425,6 +427,29 @@
     
     // Nope. So use the passed fallback value instead.
     return fallbackValue;
+}
+
+
+-(NSArray *)listForKey:(NSString *)key fallbackValue:(NSArray *)fallbackValue
+{
+    // Forced emu server tweaked value?
+    NSString *str = [AppCFG tweakedString:key];
+    if (str) return [self listFromString:str];
+
+    // Optimizely live variables.
+    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+    if (opKey) return [self listFromString:[Optimizely stringForKey:opKey]];
+    
+    // Nope. So use the passed fallback value instead.
+    return fallbackValue;
+}
+
+-(NSArray *)listFromString:(NSString *)str
+{
+    str = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (str.length == 0) return nil;
+    NSArray *list = [str componentsSeparatedByString:@","];
+    return list;
 }
 
 

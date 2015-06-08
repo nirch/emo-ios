@@ -323,6 +323,7 @@
 -(HMParams *)paramsForEmuticon:(Emuticon *)emuticon
 {
     HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_INSTANCE_OID valueIfNotNil:emuticon.oid];
     [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emuticon.emuDef.name];
     [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emuticon.emuDef.oid];
     [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emuticon.emuDef.package.name];

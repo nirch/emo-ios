@@ -34,16 +34,19 @@
 
 -(EmuticonDef *)emuticonDefForOnboarding
 {
+    return [self emuticonDefForOnboardingWithPrefferedEmus:nil];
+}
+
+-(EmuticonDef *)emuticonDefForOnboardingWithPrefferedEmus:(NSArray *)prefferedEmus
+{
     NSArray *emus = self.mixedScreenEmus;
     if (emus == nil) return nil;
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"oid in %@ AND disallowedForOnboardingPreview=%@", emus, @NO];
     NSArray *emuDefs = [NSManagedObject fetchEntityNamed:E_EMU_DEF
                                            withPredicate:predicate
                                                inContext:self.managedObjectContext];
 
     NSMutableArray *emuDefsWithAvailableLocalResources = [NSMutableArray new];
-    
     for (EmuticonDef *emuDef in emuDefs) {
         if ([emuDef allResourcesAvailable]) {
             [emuDefsWithAvailableLocalResources addObject:emuDef];
@@ -55,9 +58,32 @@
     assert(emuDefsWithAvailableLocalResources.count>0);
     
     // Choose a random emu def from the list.
-    NSInteger randomIndex = arc4random() % emuDefsWithAvailableLocalResources.count;
+    NSInteger randomIndex = [self chooseEmuIndexForOnboardingFromList:emuDefsWithAvailableLocalResources
+                                                    withPrefferedEmus:prefferedEmus];
     return emuDefsWithAvailableLocalResources[randomIndex];
 }
+
+
+-(NSInteger)chooseEmuIndexForOnboardingFromList:(NSArray *)emus withPrefferedEmus:(NSArray *)prefferedEmus
+{
+    if (prefferedEmus == nil) return arc4random() % emus.count;
+
+    // Try to get a random one from the preffered list.
+    NSMutableArray *prefferedIndexes = [NSMutableArray new];
+    for (NSInteger i = 0;i<emus.count;i++) {
+        EmuticonDef *emuDef = emus[i];
+        if ([prefferedEmus containsObject:emuDef.name]) [prefferedIndexes addObject:@(i)];
+    }
+    
+    // If no preffered available, just use a random one from the complete list.
+    if (prefferedIndexes.count<1) return arc4random() % emus.count;
+
+    // Return an index of a random *preffered* emu.
+    NSInteger index = [prefferedIndexes[arc4random() % prefferedIndexes.count] integerValue];
+    return index;
+}
+
+
 
 -(void)createMissingEmuticonObjectsForMixedScreen
 {

@@ -234,8 +234,6 @@
 		083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E52641A9E1EB100A66FC8 /* EMEmuticonScreenVC.m */; };
 		08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08409E981AB1C69700EC0930 /* EMSplashVC.m */; };
 		08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08409E991AB1C69700EC0930 /* SplashView.xib */; };
-		084BB1351AFF8BDF004A0D4A /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
-		084BB1361AFF8BDF004A0D4A /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
 		0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
 		0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
@@ -264,6 +262,8 @@
 		085D69431B2475290083ADD9 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D69411B2475290083ADD9 /* AppCFG.m */; };
 		085D69441B2475290083ADD9 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D69411B2475290083ADD9 /* AppCFG.m */; };
 		085D69451B2475290083ADD9 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D69411B2475290083ADD9 /* AppCFG.m */; };
+		085D69491B25B90B0083ADD9 /* emu_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D69481B25B90B0083ADD9 /* emu_latest_build_info.plist */; };
+		085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */; };
 		0860054C1A978AAB008CD7DE /* EMFlowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860054B1A978AAB008CD7DE /* EMFlowButton.m */; };
 		0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860054E1A97C210008CD7DE /* EMMessageButton.m */; };
 		086005581A98B153008CD7DE /* EMUISound.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005571A98B153008CD7DE /* EMUISound.m */; };
@@ -331,7 +331,6 @@
 		0867CA471B16602E00FF0E85 /* yeah-no-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A11B06907D000B8979 /* yeah-no-bg.gif */; };
 		0867CA481B16602E00FF0E85 /* simpleSwipe.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBB1B01F5B90046F38E /* simpleSwipe.wav */; };
 		0867CA491B16602E00FF0E85 /* yeah-yeah-bg-v1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A51B06907D000B8979 /* yeah-yeah-bg-v1.gif */; };
-		0867CA4A1B16602E00FF0E85 /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
 		0867CA4B1B16602E00FF0E85 /* wasted-buzzzzzed-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0833199C1B06907D000B8979 /* wasted-buzzzzzed-mask.jpg */; };
 		0867CA4C1B16602E00FF0E85 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319871B06907D000B8979 /* hearts-fg.gif */; };
 		0867CA4D1B16602E00FF0E85 /* casual-whats-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0833197B1B06907D000B8979 /* casual-whats-bg.gif */; };
@@ -539,7 +538,6 @@
 		08AA14D31B0BA658002E1B2F /* yeah-yeah-bg-v1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319A51B06907D000B8979 /* yeah-yeah-bg-v1.gif */; };
 		08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
 		08AA14D61B0BA658002E1B2F /* party-twerk-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319931B06907D000B8979 /* party-twerk-bg.gif */; };
-		08AA14D71B0BA658002E1B2F /* latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */; };
 		08AA14D81B0BA658002E1B2F /* 3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB896A1A9AA12A00224A38 /* 3.gif */; };
 		08AA14D91B0BA658002E1B2F /* casual-lol-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083319751B06907D000B8979 /* casual-lol-bg.gif */; };
 		08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */; };
@@ -888,7 +886,6 @@
 		08409E981AB1C69700EC0930 /* EMSplashVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSplashVC.m; sourceTree = "<group>"; };
 		08409E991AB1C69700EC0930 /* SplashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashView.xib; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSDK.h; sourceTree = "<group>"; };
-		084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = latest_build_info.plist; sourceTree = "<group>"; };
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
 		0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCell.m; sourceTree = "<group>"; };
 		0854EE2F1A9F93B700FD3833 /* EMShareDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareDelegate.h; sourceTree = "<group>"; };
@@ -942,6 +939,9 @@
 		085C67511A937EC9007BC910 /* EMPreviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPreviewVC.m; sourceTree = "<group>"; };
 		085D69401B2475290083ADD9 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
 		085D69411B2475290083ADD9 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
+		085D69461B25A8800083ADD9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		085D69481B25B90B0083ADD9 /* emu_latest_build_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emu_latest_build_info.plist; sourceTree = "<group>"; };
+		085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emubeta_latest_build_info.plist; sourceTree = "<group>"; };
 		0860054A1A978AAB008CD7DE /* EMFlowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFlowButton.h; sourceTree = "<group>"; };
 		0860054B1A978AAB008CD7DE /* EMFlowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFlowButton.m; sourceTree = "<group>"; };
 		0860054D1A97C210008CD7DE /* EMMessageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMessageButton.h; sourceTree = "<group>"; };
@@ -1566,7 +1566,8 @@
 		085C66E01A937EC9007BC910 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				084BB1341AFF8BDE004A0D4A /* latest_build_info.plist */,
+				085D69481B25B90B0083ADD9 /* emu_latest_build_info.plist */,
+				085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */,
 				085C66E11A937EC9007BC910 /* Config.debug.xcconfig */,
 				085C66E21A937EC9007BC910 /* Config.release.xcconfig */,
 				085C66E31A937EC9007BC910 /* emu-prefix.pch */,
@@ -2345,6 +2346,7 @@
 				en,
 				Base,
 				fr,
+				es,
 			);
 			mainGroup = 08D9297B1A77A36D00B6A68F;
 			productRefGroup = 08D929851A77A36D00B6A68F /* Products */;
@@ -2383,7 +2385,6 @@
 				08271FD61B01F5B90046F38E /* simpleSwipe.wav in Resources */,
 				080DC0E01B242B9900953403 /* Images.xcassets in Resources */,
 				08331A321B06907D000B8979 /* yeah-yeah-bg-v1.gif in Resources */,
-				084BB1361AFF8BDF004A0D4A /* latest_build_info.plist in Resources */,
 				08331A1A1B06907D000B8979 /* wasted-buzzzzzed-mask.jpg in Resources */,
 				083319E71B06907D000B8979 /* hearts-fg.gif in Resources */,
 				083319C91B06907D000B8979 /* casual-whats-bg.gif in Resources */,
@@ -2455,7 +2456,6 @@
 				0867CA481B16602E00FF0E85 /* simpleSwipe.wav in Resources */,
 				086911D31B16D73100D5D29F /* Images.xcassets in Resources */,
 				0867CA491B16602E00FF0E85 /* yeah-yeah-bg-v1.gif in Resources */,
-				0867CA4A1B16602E00FF0E85 /* latest_build_info.plist in Resources */,
 				0867CA4B1B16602E00FF0E85 /* wasted-buzzzzzed-mask.jpg in Resources */,
 				0867CA4C1B16602E00FF0E85 /* hearts-fg.gif in Resources */,
 				0867CA4D1B16602E00FF0E85 /* casual-whats-bg.gif in Resources */,
@@ -2544,7 +2544,6 @@
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
 				086911D21B16D73000D5D29F /* Images.xcassets in Resources */,
 				08AA14D61B0BA658002E1B2F /* party-twerk-bg.gif in Resources */,
-				08AA14D71B0BA658002E1B2F /* latest_build_info.plist in Resources */,
 				08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				08AA14D81B0BA658002E1B2F /* 3.gif in Resources */,
 				08AA14D91B0BA658002E1B2F /* casual-lol-bg.gif in Resources */,
@@ -2588,6 +2587,7 @@
 				08AA14FE1B0BA658002E1B2F /* 5.gif in Resources */,
 				08AA14FF1B0BA658002E1B2F /* meme-cage-fg.gif in Resources */,
 				08AA15001B0BA658002E1B2F /* 8.gif in Resources */,
+				085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */,
 				08AA15011B0BA658002E1B2F /* recordingEnd.wav in Resources */,
 				08AA15021B0BA658002E1B2F /* 1.ctr in Resources */,
 				08AA15031B0BA658002E1B2F /* casual-thanks-bg.gif in Resources */,
@@ -2640,7 +2640,6 @@
 				08331A311B06907D000B8979 /* yeah-yeah-bg-v1.gif in Resources */,
 				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
 				08331A041B06907D000B8979 /* party-twerk-bg.gif in Resources */,
-				084BB1351AFF8BDF004A0D4A /* latest_build_info.plist in Resources */,
 				08ED7FF81B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				08CB897B1A9AA12A00224A38 /* 3.gif in Resources */,
 				083319B61B06907D000B8979 /* casual-lol-bg.gif in Resources */,
@@ -2683,6 +2682,7 @@
 				083319AD1B06907D000B8979 /* attitude-coolstory-bg.gif in Resources */,
 				08CB897D1A9AA12A00224A38 /* 5.gif in Resources */,
 				083319FB1B06907D000B8979 /* meme-cage-fg.gif in Resources */,
+				085D69491B25B90B0083ADD9 /* emu_latest_build_info.plist in Resources */,
 				08CB89801A9AA12A00224A38 /* 8.gif in Resources */,
 				08271FD31B01F5B90046F38E /* recordingEnd.wav in Resources */,
 				08B589CF1A9F13EE004F6FA1 /* 1.ctr in Resources */,
@@ -3239,6 +3239,7 @@
 			children = (
 				08AA14371B08F062002E1B2F /* Base */,
 				08AA14391B08F069002E1B2F /* fr */,
+				085D69461B25A8800083ADD9 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

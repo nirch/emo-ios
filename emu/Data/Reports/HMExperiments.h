@@ -25,6 +25,9 @@
 /** iconNameNavRetake : <String> - The name of the icon used for the retake button in the top navigation bar.  */
 #define VK_ICON_NAME_NAV_RETAKE @"iconNameNavRetake" 
 
+/** onboardingEmusForPreviewList : <String> - A list of preffered emus oids to use for preview in the onboarding stage (given as a comma delimited string)  */
+#define VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST @"onboardingEmusForPreviewList" 
+
 
 
 #pragma mark - Goals

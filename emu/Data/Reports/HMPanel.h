@@ -67,6 +67,7 @@
 -(BOOL)boolForKey:(NSString *)key fallbackValue:(BOOL)fallbackValue;
 -(NSNumber *)numberForKey:(NSString *)key fallbackValue:(NSNumber *)fallbackValue;
 -(NSString *)stringForKey:(NSString *)key fallbackValue:(NSString *)fallbackValue;
+-(NSArray *)listForKey:(NSString *)key fallbackValue:(NSArray *)fallbackValue;
 // -----------------------------------------
 
 

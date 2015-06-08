@@ -12,6 +12,7 @@
 #import "EMDB+Files.h"
 #import "EMAppCFGParser.h"
 #import "EMPackagesParser.h"
+#import "AppManagement.h"
 
 #import "HMServer.h"
 #import "HMServer+Packages.h"
@@ -69,6 +70,7 @@
         self.session = [AFHTTPSessionManager manager];
         [self initTransferManager];
         [self initObservers];
+        [self initLocalData];
     }
     return self;
 }
@@ -603,8 +605,24 @@
 }
 
 #pragma mark - Local data
--(void)parseOnboardingPackages:(NSDictionary *)json
+-(void)initLocalData
 {
+    // Ensure critical data is available, and if not, use data bundled with the app.
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (appCFG.mixedScreenEmus == nil) {
+        [self initMixedScreenData];
+    }
+}
+
+-(void)initMixedScreenData
+{
+    // The onboarding local file name for tests and production.
+    NSString *onboardingLocalFileName = AppManagement.sh.isTestApp? @"onboarding_packages_test":@"onboarding_packages_prod";
+    NSString *path = [[NSBundle mainBundle] pathForResource:onboardingLocalFileName ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    
     EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
     parser.parseForOnboarding = YES;
     parser.objectToParse = json;

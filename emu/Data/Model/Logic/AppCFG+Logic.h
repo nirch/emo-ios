@@ -18,6 +18,7 @@
 -(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;
 -(EmuticonDef *)emuticonDefForOnboarding;
+-(EmuticonDef *)emuticonDefForOnboardingWithPrefferedEmus:(NSArray *)prefferedEmus;
 -(void)createMissingEmuticonObjectsForMixedScreen;
 
 #pragma mark - Sampled results

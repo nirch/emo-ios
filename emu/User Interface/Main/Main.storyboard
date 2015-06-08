@@ -29,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbE-le-gs5" userLabel="Nav bar">
-                                <rect key="frame" x="0.0" y="20" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWl-1a-ucc" userLabel="Options Button">
                                         <rect key="frame" x="321" y="20" width="44" height="44"/>
@@ -90,7 +90,7 @@
                                 </variation>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
-                                <rect key="frame" x="0.0" y="84" width="375" height="583"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6e8-IW-4Yd">
@@ -131,7 +131,7 @@
                                                             <rect key="frame" x="61" y="62" width="60" height="59"/>
                                                         </imageView>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999994" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="failed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BF-Mr-rwB">
-                                                            <rect key="frame" x="77" y="129" width="28" height="13.5"/>
+                                                            <rect key="frame" x="77" y="129" width="28" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -218,14 +218,14 @@
                                 </connections>
                             </collectionView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ax-G4-sQU" userLabel="Keyboard Tutorial">
-                                <rect key="frame" x="0.0" y="84" width="375" height="583"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="mWY-Jt-XXr" kind="embed" identifier="tutorial segue" id="2Nz-xu-li1"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVB-YX-jx8" userLabel="emu logo button">
-                                <rect key="frame" x="156" y="34" width="62" height="62"/>
+                                <rect key="frame" x="156" y="14" width="62" height="62"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="8Ep-hC-b17"/>
                                     <constraint firstAttribute="width" constant="62" id="xqH-rm-D0l"/>
@@ -340,7 +340,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTt-oM-iaE" userLabel="Nav bar">
-                                <rect key="frame" x="0.0" y="20" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iyM-lb-cs0" userLabel="Back Button">
                                         <rect key="frame" x="10" y="20" width="44" height="44"/>
@@ -393,7 +393,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTt-Hy-ZEY" userLabel="Gif Player Container View">
-                                <rect key="frame" x="16" y="128" width="343" height="343"/>
+                                <rect key="frame" x="16" y="108" width="343" height="343"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DTt-Hy-ZEY" secondAttribute="height" multiplier="1:1" id="Tnd-Dg-K1Y"/>
                                 </constraints>
@@ -402,7 +402,7 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="goj-wz-5hX" userLabel="Emu button">
-                                <rect key="frame" x="16" y="128" width="343" height="343"/>
+                                <rect key="frame" x="16" y="108" width="343" height="343"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -411,13 +411,13 @@
                                 </connections>
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Voh-xn-DcO" userLabel="Share Container View">
-                                <rect key="frame" x="0.0" y="517" width="375" height="150"/>
+                                <rect key="frame" x="0.0" y="497" width="375" height="170"/>
                                 <connections>
                                     <segue destination="73x-p5-EXH" kind="embed" identifier="embed share" id="hG9-N0-4FM"/>
                                 </connections>
                             </containerView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RfO-Jc-wDZ" userLabel="Some title (deprecated)" customClass="EMLabel">
-                                <rect key="frame" x="133" y="479" width="109" height="30"/>
+                                <rect key="frame" x="133" y="459" width="109" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -427,7 +427,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l1T-UB-AV6" userLabel="FBM Share position">
-                                <rect key="frame" x="147" y="552" width="80" height="80"/>
+                                <rect key="frame" x="147" y="542" width="80" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="qyB-km-w11"/>
@@ -435,7 +435,7 @@
                                 </constraints>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fau-bn-TfM">
-                                <rect key="frame" x="88" y="478" width="200" height="30"/>
+                                <rect key="frame" x="88" y="458" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="70j-od-1nh"/>
                                     <constraint firstAttribute="height" constant="29" id="beh-O1-do3"/>
@@ -450,10 +450,10 @@
                                 </connections>
                             </segmentedControl>
                             <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="soundWave" translatesAutoresizingMaskIntoConstraints="NO" id="kSW-18-HdN" userLabel="Audio view">
-                                <rect key="frame" x="88" y="478" width="200" height="29"/>
+                                <rect key="frame" x="88" y="458" width="200" height="29"/>
                             </imageView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HlW-V9-20u" userLabel="Audio trim Slider">
-                                <rect key="frame" x="86" y="478" width="204" height="30"/>
+                                <rect key="frame" x="86" y="458" width="204" height="30"/>
                                 <color key="minimumTrackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="maximumTrackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="thumbTintColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
@@ -463,7 +463,7 @@
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CaI-JM-cM2" userLabel="Sound Button">
-                                <rect key="frame" x="296" y="478" width="44" height="29"/>
+                                <rect key="frame" x="296" y="458" width="44" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="N4S-hz-The"/>
                                     <constraint firstAttribute="width" constant="44" id="b6M-6B-vEJ"/>
@@ -486,7 +486,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VoS-PS-Xnz" userLabel="Video settings button">
-                                <rect key="frame" x="36" y="478" width="44" height="29"/>
+                                <rect key="frame" x="36" y="458" width="44" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="0ni-hx-xwi"/>
                                     <constraint firstAttribute="height" constant="29" id="Nge-eT-ggw"/>
@@ -508,7 +508,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q47-Mq-Qsa" userLabel="Sound OK Button">
-                                <rect key="frame" x="296" y="478" width="44" height="29"/>
+                                <rect key="frame" x="296" y="458" width="44" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="C4u-5v-yr2"/>
                                 </constraints>
@@ -521,7 +521,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jbF-Vd-eWa" userLabel="Sound Remove Button">
-                                <rect key="frame" x="36" y="478" width="44" height="29"/>
+                                <rect key="frame" x="36" y="458" width="44" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="jZT-NO-ogK"/>
                                 </constraints>
@@ -692,11 +692,11 @@
                         <viewControllerLayoutGuide type="bottom" id="KAf-Tu-Ykt"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Sb0-zb-Crb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="900" horizontalCompressionResistancePriority="1000" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EGa-9a-b7E">
-                                <rect key="frame" x="0.0" y="35" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="45" width="375" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="TCm-m9-cow"/>
@@ -753,7 +753,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cS0-PY-VDO" userLabel="Messanger container">
-                                <rect key="frame" x="0.0" y="35" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="45" width="375" height="80"/>
                                 <subviews>
                                     <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQT-cL-zDF" userLabel="More share options">
                                         <rect key="frame" x="317" y="19" width="30" height="42"/>
@@ -776,7 +776,7 @@
                                 </connections>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZVj-PF-vVZ" userLabel="Rendering">
-                                <rect key="frame" x="-1" y="35" width="375" height="80"/>
+                                <rect key="frame" x="-1" y="45" width="375" height="80"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5Qv-qj-8Nr">
                                         <rect key="frame" x="112" y="39" width="150" height="2"/>
@@ -785,7 +785,7 @@
                                         </constraints>
                                     </progressView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rendering video..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhS-ia-LZo" customClass="EMLabel">
-                                        <rect key="frame" x="129" y="21" width="109.5" height="15"/>
+                                        <rect key="frame" x="129" y="21" width="110" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="giM-zc-LOs"/>
                                         </constraints>
@@ -1124,11 +1124,11 @@
                         <viewControllerLayoutGuide type="bottom" id="e7c-Xs-j8E"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wYX-Vc-Kax" customClass="EMGradientView">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="583"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTb-nj-Zrm" userLabel="Continue Button" customClass="EMFlowButton">
-                                <rect key="frame" x="16" y="503" width="343" height="65"/>
+                                <rect key="frame" x="16" y="523" width="343" height="65"/>
                                 <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="dhz-d3-oBr"/>
@@ -1143,13 +1143,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General &gt; Keyboard &gt; Keyboards &gt; Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T24-qE-57O" customClass="EMLabel">
-                                <rect key="frame" x="34" y="456" width="307.5" height="20.5"/>
+                                <rect key="frame" x="34" y="476" width="308" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.27479079365730286" green="0.5571715235710144" blue="0.89757764339447021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use your Emu from your keyboard. Add the keyboard from settings and allow full access:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TOF-MX-5Rm" customClass="EMLabel">
-                                <rect key="frame" x="37" y="367" width="302" height="80"/>
+                                <rect key="frame" x="37" y="387" width="302" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="302" id="U6t-Gw-PCn"/>
                                     <constraint firstAttribute="height" constant="80" id="j60-HR-kQ0"/>
