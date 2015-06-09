@@ -496,8 +496,8 @@
 
     // Debugging
     if ([self.sessionDelegate isCaptureSessionDebuggingModeEnabled]) {
-        if ([self.videoProcessor respondsToSelector:@selector(finishDebuSession)]) {
-            [self.videoProcessor finishDebuSession];
+        if ([self.videoProcessor respondsToSelector:@selector(finishDebuSessionWithInfo:)]) {
+            [self.videoProcessor finishDebuSessionWithInfo:info];
         }
     }
 

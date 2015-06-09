@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, HMWritesFramesOfType) {
 
 @required
 @property (nonatomic) HMWritesFramesOfType writesFramesOfType;
+@property (nonatomic) BOOL debugMode;
 
 /**
  *  Final initializations, before starting.
@@ -77,14 +78,14 @@ typedef NS_ENUM(NSInteger, HMWritesFramesOfType) {
 -(void)writePixelBufferFrame:(CMSampleBufferRef)sampleBuffer;
 
 
-/**
- *  Optional value indicating the path to save the output file (or files) to.
- */
-@property (nonatomic) NSURL *outputPathURL;
-
-/**
- *  Optional value indicating the base name of the output file (or files).
- */
-@property (nonatomic) NSString *outputFileName;
+///**
+// *  Optional value indicating the path to save the output file (or files) to.
+// */
+//@property (nonatomic) NSURL *outputPathURL;
+//
+///**
+// *  Optional value indicating the base name of the output file (or files).
+// */
+//@property (nonatomic) NSString *outputFileName;
 
 @end

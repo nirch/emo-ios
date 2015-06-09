@@ -71,6 +71,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiBGFeedBackContainer;
 @property (weak, nonatomic) IBOutlet UIImageView *guiGoodBGIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *guiBadBGIcon;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *guiDebugSaveType;
 @property (weak, nonatomic) EMBGFeedBackVC *feedBackVC;
 @property (nonatomic) NSInteger latestBGMark;
 
@@ -259,9 +260,6 @@
     [super didReceiveMemoryWarning];
     HMLOG(TAG, EM_ERR, @"Memory warning in recorder");
     REMOTE_LOG(@"RecorderVC Memory warning");
-    
-    // Go boom on a test application.
-    //[HMPanel.sh explodeOnTestApplicationsWithInfo:nil];
 }
 
 
@@ -1036,6 +1034,7 @@
     // Create a new writer to be used in recording the png sequence.
     EMPNGSequenceWriter *writer = [EMPNGSequenceWriter new];
     writer.writesFramesOfType = HMWritesFramesOfTypeImageType;
+    writer.debugMode = self.guiDebuggingSwitch.isOn && self.guiDebugSaveType.selectedSegmentIndex == 1;
     [self.captureSession startRecordingUsingWriter:writer
                                           duration:self.recordingDuration];
     
@@ -1044,7 +1043,10 @@
     // Recorder and UI state.
     //
     [self hidePleaseWait];
-    if (AppManagement.sh.isTestApp) self.guiDebuggingSwitch.hidden = YES;
+    if (AppManagement.sh.isTestApp) {
+        self.guiDebugSaveType.hidden = YES;
+        self.guiDebuggingSwitch.hidden = YES;
+    }
 
     // Show recording progress
     [self.feedBackVC showRecordingProgressOfDuration:self.recordingDuration];
@@ -1413,9 +1415,10 @@
 #pragma mark - Debugging
 -(void)updateDebuggingState
 {
-//    BOOL isTestApp = AppManagement.sh.isTestApp;
-//    self.guiDebuggingSwitch.hidden = !isTestApp;
-//    self.guiDebuggingLabel.hidden = !self.guiDebuggingSwitch.isOn;
+    BOOL isTestApp = AppManagement.sh.isTestApp;
+    self.guiDebuggingSwitch.hidden = !isTestApp;
+    self.guiDebuggingLabel.hidden = !self.guiDebuggingSwitch.isOn;
+    self.guiDebugSaveType.hidden = !self.guiDebuggingSwitch.isOn;
 }
 
 

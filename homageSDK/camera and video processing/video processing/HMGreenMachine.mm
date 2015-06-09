@@ -186,10 +186,9 @@
 /**
  *  Finish a debug session.
  */
--(void)finishDebuSession
+-(void)finishDebuSessionWithInfo:(NSDictionary *)info
 {
-    [self.gmDebug zipLatestImages];
-    self.gmDebug = nil;
+    [self.gmDebug finishupWithInfo:info];
 }
 
 #pragma mark - Processing
@@ -236,13 +235,12 @@
                                                             m_mask,              // The mask calculated by the algorithm ->Process method.
                                                             m_output_image);     // The output image.
             m_output_image->timeStamp = output_t.value;
-
+            
             // Destroying the temp image
             image_destroy(original_bgr_image, 1);
         });
     }
-
-    // Converting the result of the algo into CVPixelBuffer
+    
     CVImageBufferRef processedPixelBuffer = CVtool::CVPixelBufferRef_from_image(m_display_image);
     
     // Getting the sample timing info from the sample buffer

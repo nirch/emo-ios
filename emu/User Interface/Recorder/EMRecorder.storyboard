@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -111,6 +111,14 @@
                                 <color key="textColor" red="0.99215686270000003" green="0.08235294118" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl hidden="YES" opaque="NO" alpha="0.49999999999999994" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Tiu-wl-Wri">
+                                <rect key="frame" x="76" y="407" width="225" height="29"/>
+                                <segments>
+                                    <segment title="Raw"/>
+                                    <segment title="Raw+Processed"/>
+                                </segments>
+                                <color key="tintColor" red="0.99215686270000003" green="0.08235294118" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -123,14 +131,18 @@
                             <constraint firstItem="P0L-A7-drQ" firstAttribute="top" secondItem="rU3-fD-N15" secondAttribute="top" constant="15" id="8XS-Wv-kTS"/>
                             <constraint firstItem="58B-sS-tlP" firstAttribute="top" secondItem="Mbm-Lk-tB3" secondAttribute="bottom" constant="15" id="9JD-Mg-TH9"/>
                             <constraint firstItem="JfO-2o-hgs" firstAttribute="top" secondItem="P0L-A7-drQ" secondAttribute="bottom" constant="8" id="9rW-xP-z3B"/>
+                            <constraint firstItem="P0L-A7-drQ" firstAttribute="centerX" secondItem="Tiu-wl-Wri" secondAttribute="centerX" id="A6u-QD-Fsp"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Ado-RV-myG"/>
                             <constraint firstItem="Mbm-Lk-tB3" firstAttribute="centerY" secondItem="rU3-fD-N15" secondAttribute="centerY" id="Cp5-14-431"/>
+                            <constraint firstItem="WpW-ex-edX" firstAttribute="centerX" secondItem="Tiu-wl-Wri" secondAttribute="centerX" constant="-0.5" id="FdU-kY-MqD"/>
+                            <constraint firstItem="Tiu-wl-Wri" firstAttribute="top" secondItem="JfO-2o-hgs" secondAttribute="bottom" constant="5" id="HIs-zG-oVH"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ooa-Vx-VYG" secondAttribute="bottom" id="IaY-Wz-wb1"/>
                             <constraint firstItem="Zr9-A9-dYy" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="top" id="J5x-5V-nNd"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="top" secondItem="Zr9-A9-dYy" secondAttribute="bottom" id="JJp-4f-o0f"/>
                             <constraint firstItem="WpW-ex-edX" firstAttribute="width" secondItem="rU3-fD-N15" secondAttribute="width" id="MOh-48-hUD"/>
                             <constraint firstItem="P0L-A7-drQ" firstAttribute="centerX" secondItem="JfO-2o-hgs" secondAttribute="centerX" id="SWA-67-oxz"/>
                             <constraint firstItem="Ooa-Vx-VYG" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="StK-Gj-HGl"/>
+                            <constraint firstItem="Tiu-wl-Wri" firstAttribute="top" secondItem="WpW-ex-edX" secondAttribute="bottom" constant="-44" id="UnD-Jq-R52"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="width" secondItem="KBW-Mp-3FC" secondAttribute="width" id="VFV-w0-rcB"/>
                             <constraint firstAttribute="centerX" secondItem="Mbm-Lk-tB3" secondAttribute="centerX" constant="0.5" id="VXM-44-ycB"/>
                             <constraint firstAttribute="centerY" secondItem="Mbm-Lk-tB3" secondAttribute="centerY" constant="-0.5" id="Vf0-HX-0tw"/>
@@ -147,8 +159,10 @@
                             <constraint firstItem="WpW-ex-edX" firstAttribute="height" secondItem="rU3-fD-N15" secondAttribute="height" id="qOj-hR-iUJ"/>
                             <constraint firstItem="Mbm-Lk-tB3" firstAttribute="centerX" secondItem="rU3-fD-N15" secondAttribute="centerX" id="qWq-p1-9Vw"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="centerY" secondItem="KBW-Mp-3FC" secondAttribute="centerY" id="u0a-Rm-nDp"/>
+                            <constraint firstItem="JfO-2o-hgs" firstAttribute="centerX" secondItem="Tiu-wl-Wri" secondAttribute="centerX" id="wNg-Px-Biv"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="centerX" secondItem="58B-sS-tlP" secondAttribute="centerX" id="x3A-lQ-xsy"/>
                             <constraint firstItem="rU3-fD-N15" firstAttribute="centerX" secondItem="KBW-Mp-3FC" secondAttribute="centerX" id="yDQ-tZ-VO4"/>
+                            <constraint firstItem="Tiu-wl-Wri" firstAttribute="top" secondItem="P0L-A7-drQ" secondAttribute="bottom" constant="5" id="zgH-yJ-PM5"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
@@ -157,8 +171,12 @@
                             <mask key="constraints">
                                 <exclude reference="Ado-RV-myG"/>
                                 <exclude reference="aeE-1o-Epq"/>
+                                <exclude reference="A6u-QD-Fsp"/>
+                                <exclude reference="wNg-Px-Biv"/>
                                 <exclude reference="VXM-44-ycB"/>
                                 <exclude reference="Vf0-HX-0tw"/>
+                                <exclude reference="HIs-zG-oVH"/>
+                                <exclude reference="zgH-yJ-PM5"/>
                             </mask>
                         </variation>
                     </view>
@@ -170,6 +188,7 @@
                         <outlet property="constraintCameraPreviewTrailing" destination="q2m-1W-z2G" id="IQD-v1-vwA"/>
                         <outlet property="guiBGFeedBackContainer" destination="WpW-ex-edX" id="Px4-Wn-q5m"/>
                         <outlet property="guiBadBGIcon" destination="Ocg-rD-rpG" id="D8E-Fy-huB"/>
+                        <outlet property="guiDebugSaveType" destination="Tiu-wl-Wri" id="CVc-k5-PMF"/>
                         <outlet property="guiDebuggingLabel" destination="JfO-2o-hgs" id="IYN-Nz-Ba5"/>
                         <outlet property="guiDebuggingSwitch" destination="P0L-A7-drQ" id="ytG-6y-5lM"/>
                         <outlet property="guiGoodBGIcon" destination="uLD-H3-Nlp" id="YHT-TE-XKl"/>

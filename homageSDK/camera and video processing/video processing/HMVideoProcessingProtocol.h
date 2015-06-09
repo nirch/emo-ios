@@ -71,6 +71,6 @@ typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
 /**
  *  Finish a debug session.
  */
--(void)finishDebuSession;
+-(void)finishDebuSessionWithInfo:(NSDictionary *)info;
 
 @end

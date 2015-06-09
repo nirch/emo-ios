@@ -5,6 +5,7 @@ platform :ios,          '8.0'
 pod 'AFNetworking',     '~> 2.5.0',     :inhibit_warnings => true
 pod 'SDWebImage', '~> 3.7.0'
 pod 'zipzap', '~> 8.0'
+pod 'ZipKit', '~> 1.0',                 :inhibit_warnings => true
 pod 'AWSS3', '~> 2.1',                  :inhibit_warnings => true
 
 # GUI & Players

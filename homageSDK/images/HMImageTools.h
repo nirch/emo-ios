@@ -57,7 +57,9 @@
 +(void)saveImageType4:(image_type *)image4
              withName:(NSString *)name;
 
-
++(void)saveImageType4:(image_type *)image4
+        directoryPath:(NSString *)directoryPath
+             withName:(NSString *)name;
 
 /**
  *  Save an image_type object with 3 channels as Jpeg file.

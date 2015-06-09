@@ -46,8 +46,7 @@
 
 #pragma mark - HMWriterProtocol
 @synthesize writesFramesOfType = _writesFramesOfType;
-@synthesize outputPathURL = _outputPathURL;
-@synthesize outputFileName = _outputFileName;
+@synthesize debugMode = _debugMode;
 
 
 -(void)prepareWithInfo:(NSDictionary *)info
@@ -75,10 +74,12 @@
     [EMPNGSequenceWriter savePNGSequence:self.pngs toFolderNamed:oid];
     [self clean];
     return @{
+             emkPath:[EMDB pathForFootageWithOID:oid],
              emkOID:oid,
              emkNumberOfFrames:@(self.framesCount),
              emkDate:[NSDate date],
-             emkDuration:@(self.durationInSeconds)
+             emkDuration:@(self.durationInSeconds),
+             emkDebug:@(self.debugMode)
              };
 }
 
@@ -100,22 +101,6 @@
                           withName:[SF:@"img-%@", @(frameCount)]];
     }
 }
-
-//+(NSString *)createFootageDirectoryNamed:(NSString *)directoryName
-//{
-//    // Get the paths
-//    NSString *footagesPath = [EMDB footagesPath];
-//    NSString *dirPath = [footagesPath stringByAppendingPathComponent:[SF:@"/%@", directoryName]];
-//    
-//    // Create the directory.
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    if (![fm fileExistsAtPath:dirPath])
-//        [fm createDirectoryAtPath:dirPath
-//      withIntermediateDirectories:NO
-//                       attributes:nil error:nil];
-//    
-//    return dirPath;
-//}
 
 -(void)cancel
 {
@@ -161,8 +146,6 @@
             done = YES;
             return;
         }
-
-        // NSLog(@">>>> XXX %@ %@ %@", @(self.framesCount), @(totalTime), @(currentFrameTimeStamp-previousFrameTimeStamp));
     }
     
     

@@ -8,148 +8,77 @@
 #define TAG @"HMGreenMachineDebugger"
 
 #import "HMGreenMachineDebugger.h"
-#import <zipzap/zipzap.h>
-#import "ZZArchive.h"
+#import <ZipKit/ZKFileArchive.h>
 
 @interface HMGreenMachineDebugger()
 
-@property NSString *tempFilePath;
-@property int totalImages;
+@property NSString *rootDir;
+@property NSString *folderPath;
+@property NSString *outputName;
+
+@property NSInteger inImageCount;
+@property NSInteger outImageCount;
 
 @end
 
 @implementation HMGreenMachineDebugger
 
-NSString* const zipFolderName = @"emu_debug.zip";
-NSString* const pathToImagesFolder = @"emu_debug_files";
-NSString* const imageFileName = @"im-";
-NSString* const imageExt = @".jpg";
+NSString* const inFileName = @"in-";
+NSString* const outFileName = @"out-";
+NSString* const inExt = @".jpg";
+NSString* const outExt = @".png";
 
 -(instancetype)init
 {
     self = [super init];
     
     if (self) {
-        // set file path to images folder
-        self.tempFilePath = [SF:@"%@%@", NSTemporaryDirectory(), pathToImagesFolder];
+        NSFileManager *fm = [NSFileManager defaultManager];
         
-        // delete previous folder if exists
-        [[NSFileManager defaultManager] removeItemAtPath:self.tempFilePath error:nil];
+        // Folder name.
+        NSDate *now = [NSDate date];
+        NSDateFormatter *f = [NSDateFormatter new];
+        f.dateFormat = @"YYYYMM_ddHHmmss";
         
-        // create new images folder
-        [self createDirectory:self.tempFilePath];
+        // Folder path
+        self.rootDir = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
+        self.outputName = [SF:@"DEBUG_%@",[f stringFromDate:now]];
+        self.folderPath = [self.rootDir stringByAppendingPathComponent:self.outputName];
+        
+        // Create the folder
+        [fm createDirectoryAtPath:self.folderPath withIntermediateDirectories:NO
+                       attributes:nil error:nil];
     }
     return self;
 }
-
--(void)createDirectory:(NSString *)directoryName
-{
-    
-    NSError * error = nil;
-    [[NSFileManager defaultManager] createDirectoryAtPath:directoryName
-                              withIntermediateDirectories:YES
-                                               attributes:nil                                                                   error:&error];
-}
-
-
--(NSString *)getImageName:(int)i
-{
-    return [SF:@"/%@%04d",imageFileName, i];
-}
-
 
 # pragma mark - Debug a frame (original image)
 -(void)originalImage:(image_type *)m_original_image
 {
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
-            // Set image name
-            NSString *imagePath = [self getImageName:++self.totalImages];
-            NSLog(@"totalImages: %d", self.totalImages);
-            
             // save image to file
-            [HMImageTools saveImageType3Jpeg:m_original_image directoryPath:self.tempFilePath withName:imagePath compressionQuality:1.0];
-            NSLog(@"Saved Image: %@/%@%@", self.tempFilePath, [self getImageName:self.totalImages], imageExt);
+            NSString *imagePath = [SF:@"/%@%04ld",inFileName, ++self.inImageCount];
+            [HMImageTools saveImageType3Jpeg:m_original_image directoryPath:self.folderPath withName:imagePath compressionQuality:1.0];
         });
     }
-
 }
 
-
-#pragma mark - Zip it
-// Zip all the images previously saved to disk
--(void)zipLatestImages{
-    // zipping of images
+-(void)finishupWithInfo:(NSDictionary *)info
+{
+    NSNumber *debugMode = info[@"debug"];
+    if (debugMode == nil || ([debugMode boolValue] == NO)) return;
     
-    // create zip folder path
-    NSString *zipFolderPath = [SF:@"%@%@", NSTemporaryDirectory(), zipFolderName];
-    
-    // create the archive for the zipped files
-    ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:zipFolderPath]
-                                                   options:@{ZZOpenOptionsCreateIfMissingKey : @YES}
-                                                     error:nil];
-    
-    // set first image path
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[SF:@"%@/%@%@",pathToImagesFolder, [self getImageName:1], imageExt]];
-    // set filename of first image
-    NSString *filename = [SF:@"%@/%@%@",pathToImagesFolder, [self getImageName:1], imageExt];
-    
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-    
-    if (fileExists) {
-        // create archive and zip first image
-        [newArchive updateEntries:
-         @[
-           [ZZArchiveEntry archiveEntryWithFileName:filename
-                                           compress:YES
-                                          dataBlock:^(NSError** error)
-            {
-                // return the data of the image
-                NSData *data = [[NSFileManager defaultManager] contentsAtPath:filePath];
-                return data;
-            }]
-           ]
-                            error:nil];
-    }
-    
-    for (int i = 2; i < self.totalImages; i++) {
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-        
-        if (fileExists) {
-            // get filepath of image
-            filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[SF:@"%@/%@%@",pathToImagesFolder, [self getImageName:i], imageExt]];
-            
-            // set filename of image
-            filename = [SF:@"%@/%@%@",pathToImagesFolder, [self getImageName:i], imageExt];
-            
-            // update archive adding new images
-            ZZArchive* oldArchive = [ZZArchive archiveWithURL:[NSURL fileURLWithPath:zipFolderPath]
-                                                        error:nil];
-            [oldArchive updateEntries:
-             [oldArchive.entries arrayByAddingObject:
-              [ZZArchiveEntry archiveEntryWithFileName:filename
-                                              compress:YES
-                                             dataBlock:^(NSError** error)
-               {
-                   // return the data of the image
-                   NSData *data = [[NSFileManager defaultManager] contentsAtPath:filePath];
-                   return data;
-               }]]
-                                error:nil];
-        }
-    }
-    
-    
-    // reset image count
-    self.totalImages = 0;
-    
-    // Post the notification with the zip file.
-    NSDictionary *info = @{@"debug zipped folder":zipFolderPath};
-    [[NSNotificationCenter defaultCenter] postNotificationName:hmkDebuggingFinishedZippingFiles
-                                                        object:nil
-                                                      userInfo:info];
-    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSString *srcPath = [SF:@"%@/" ,info[@"path"]];
+        NSString *destPath = [SF:@"%@/output" ,self.folderPath];
+        NSError *error;
+        [fm copyItemAtPath:srcPath toPath:destPath error:&error];
+        HMLOG(TAG, EM_DBG, @"Error while copying processed images: %@", [error localizedDescription]);
+    });
 }
+
 
 
 @end

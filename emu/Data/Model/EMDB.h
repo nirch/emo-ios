@@ -26,6 +26,7 @@
 #import "Package+Logic.h"
 
 // Keys for passing info around
+#define emkPath             @"path"
 #define emkOID              @"oid"
 #define emkEmuticonOID      @"emuticon oid"
 #define emkEmuticonDefOID   @"emuticon definition oid"
@@ -35,6 +36,7 @@
 #define emkNumberOfFrames   @"number of frames"
 #define emkDuration         @"duration"
 #define emkDate             @"date"
+#define emkDebug            @"debug"
 
 typedef NS_ENUM(NSInteger, EMMediaDataType) {
     EMMediaDataTypeGIF      = 0,
