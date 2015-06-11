@@ -28,6 +28,7 @@ NSString* const outFileName = @"out-";
 NSString* const inExt = @".jpg";
 NSString* const outExt = @".png";
 
+
 -(instancetype)init
 {
     self = [super init];
@@ -52,17 +53,19 @@ NSString* const outExt = @".png";
     return self;
 }
 
+
 # pragma mark - Debug a frame (original image)
 -(void)originalImage:(image_type *)m_original_image
 {
     if (self.outputQueue) {
         dispatch_async(self.outputQueue, ^{
             // save image to file
-            NSString *imagePath = [SF:@"/%@%04ld",inFileName, ++self.inImageCount];
+            NSString *imagePath = [SF:@"/%@%04ld",inFileName, (long)++self.inImageCount];
             [HMImageTools saveImageType3Jpeg:m_original_image directoryPath:self.folderPath withName:imagePath compressionQuality:1.0];
         });
     }
 }
+
 
 -(void)finishupWithInfo:(NSDictionary *)info
 {

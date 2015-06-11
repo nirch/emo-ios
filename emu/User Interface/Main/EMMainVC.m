@@ -1065,6 +1065,7 @@
         NSString *message = [SF:@"Data: %@", EMBackend.sh.server.usingPublicDataBase? @"PUBLIC":@"SCRATCHPAD"];
         [actionsMapping addAction:@"CLEAN_AND_RENDER" text:@"Clean and render" section:sect];
         [actionsMapping addAction:@"RELOAD_ALL" text:@"Reload all data & Render" section:sect];
+        [actionsMapping addAction:@"DEBUG_SCREEN" text:@"Debug screen" section:sect];
         debugSection = [EMHolySheetSection sectionWithTitle:title
                                                     message:message
                                                buttonTitles:[actionsMapping textsForSection:sect]
@@ -1124,6 +1125,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
                                                             object:self
                                                           userInfo:@{@"forced_reload":@YES}];
+
+    } else if ([actionName isEqualToString:@"DEBUG_SCREEN"]) {
+        
+        // Debug screen
+        [self performSegueWithIdentifier:@"debug screen segue" sender:nil];
         
     } else if ([actionName isEqualToString:@"USER_CHOICE_ABOUT"]) {
         

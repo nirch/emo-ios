@@ -8,6 +8,6 @@
 
 #import "EMShare.h"
 
-@interface EMShareFile : EMShare
+@interface EMShareDebuggingFile : EMShare
 
 @end

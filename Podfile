@@ -27,3 +27,4 @@ pod 'FBSDKMessengerShareKit', '~> 1.2'
 
 # Debugging
 pod 'NSLogger', '~> 1.5'
+pod 'MBProgressHUD', '~> 0.9'

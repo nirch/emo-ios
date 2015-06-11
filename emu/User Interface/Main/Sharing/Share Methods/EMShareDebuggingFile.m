@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#import "EMShareFile.h"
+#import "EMShareDebuggingFile.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import <Toast/UIView+Toast.h>
 
-@interface EMShareFile()<
+@interface EMShareDebuggingFile()<
 UIDocumentInteractionControllerDelegate,
 MFMailComposeViewControllerDelegate
 >
@@ -21,7 +21,7 @@ MFMailComposeViewControllerDelegate
 
 @end
 
-@implementation EMShareFile
+@implementation EMShareDebuggingFile
 
 
 -(void)share{

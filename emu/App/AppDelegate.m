@@ -223,6 +223,8 @@
     [HMPanel.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
+
+#pragma mark - Notifications
 -(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
     HMParams *params = [HMParams new];

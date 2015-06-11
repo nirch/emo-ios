@@ -40,7 +40,7 @@
 #import "EMMainVC.h"
 #import "HMBackgroundMarks.h"
 #import "AppManagement.h"
-#import "EMShareFile.h"
+#import "EMShareDebuggingFile.h"
 
 
 @interface EMRecorderVC () <
@@ -65,7 +65,7 @@
 // User controls: recorder flow, user interaction, record, etc.
 @property (weak, nonatomic) IBOutlet UIView *guiUserControlsContainer;
 @property (weak) EMControlsBarVC *controlsVC;
-@property (nonatomic) EMShareFile *shareFile;
+@property (nonatomic) EMShareDebuggingFile *shareFile;
 
 // Background detection
 @property (weak, nonatomic) IBOutlet UIView *guiBGFeedBackContainer;
@@ -426,7 +426,7 @@
     NSString *zipfile = info[@"debug zipped folder"];
     if (zipfile == nil) return;
     
-    self.shareFile = [EMShareFile new];
+    self.shareFile = [EMShareDebuggingFile new];
     self.shareFile.viewController = self;
     NSURL *url = [NSURL fileURLWithPath:zipfile];
     self.shareFile.objectToShare = url;
