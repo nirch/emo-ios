@@ -343,9 +343,9 @@
     [self.gifPlayerVC stopAnimating];
     [self.gifPlayerVC startActivity];
     
-    // Will need to send the emuticon to rendering
-    [EMRenderManager.sh enqueueEmu:self.emuticon
-                              info:@{@"emuticonOID":self.emuticon.oid}];
+//    // Will need to send the emuticon to rendering
+//    [EMRenderManager.sh enqueueEmu:self.emuticon
+//                              info:@{@"emuticonOID":self.emuticon.oid}];
 
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -375,12 +375,12 @@
 #pragma mark - Render
 -(void)resetEmu
 {
-    NSDictionary *info = @{
-                           @"emuticonOID":self.emuticon.oid,
-                           @"packageOID":self.emuticon.emuDef.package.oid
-                           };
+//    NSDictionary *info = @{
+//                           @"emuticonOID":self.emuticon.oid,
+//                           @"packageOID":self.emuticon.emuDef.package.oid
+//                           };
     self.emuticon.prefferedFootageOID = nil;
-    [EMRenderManager.sh renderingRequiredForEmu:self.emuticon info:info];
+    //[EMRenderManager.sh renderingRequiredForEmu:self.emuticon info:info];
     [self refreshEmu];
 }
 

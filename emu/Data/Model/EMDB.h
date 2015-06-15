@@ -27,6 +27,7 @@
 
 // Keys for passing info around
 #define emkPath             @"path"
+#define emkIndexPath        @"indexPath"
 #define emkOID              @"oid"
 #define emkEmuticonOID      @"emuticon oid"
 #define emkEmuticonDefOID   @"emuticon definition oid"

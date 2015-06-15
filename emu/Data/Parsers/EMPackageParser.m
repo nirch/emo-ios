@@ -63,6 +63,7 @@
             [emuParser parse];
         }
     }
+    [pkg createMissingEmuticonObjects];
 }
 
 @end

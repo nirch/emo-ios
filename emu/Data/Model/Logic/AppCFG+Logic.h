@@ -19,7 +19,7 @@
 -(Package *)packageForOnboarding;
 -(EmuticonDef *)emuticonDefForOnboarding;
 -(EmuticonDef *)emuticonDefForOnboardingWithPrefferedEmus:(NSArray *)prefferedEmus;
--(void)createMissingEmuticonObjectsForMixedScreen;
+//-(void)createMissingEmuticonObjectsForMixedScreen;
 
 #pragma mark - Sampled results
 -(BOOL)shouldUploadSampledResults;

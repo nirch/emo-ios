@@ -16,6 +16,11 @@
 
 @implementation Emuticon (Logic)
 
+-(NSComparisonResult)compare:(Emuticon *)otherObject
+{
+    return [self.oid compare:otherObject.oid];
+}
+
 +(Emuticon *)findWithID:(NSString *)oid
                 context:(NSManagedObjectContext *)context
 {

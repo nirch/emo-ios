@@ -31,6 +31,8 @@
 
 @synthesize ioQueue = _ioQueue;
 @synthesize renderingQueue = _renderingQueue;
+@synthesize managementQueue = _managementQueue;
+
 @synthesize prefferedLanguages = _prefferedLanguages;
 
 #pragma mark - Initialization

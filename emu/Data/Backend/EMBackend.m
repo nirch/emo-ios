@@ -263,67 +263,67 @@
 
 -(void)downloadResourcesForPackage:(Package *)package
 {
-    NSURL *remoteURL = [package urlForZippedResources];
-    NSURL *localURL = [NSURL URLWithString:[package zippedPackageTempPath]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:remoteURL];
-    NSString *tempFilePath = [SF:@"%@/%@.zip", NSTemporaryDirectory(), package.oid];
-    NSURLSessionDownloadTask *downloadTask;
-    
-    // The download task.
-    downloadTask = [self.session downloadTaskWithRequest:request
-                                           progress:nil
-                                        destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-                                            return [NSURL fileURLWithPath:tempFilePath];
-                                        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-                                            //
-                                            // Download completion.
-                                            //
-                                            HMParams *params = [HMParams new];
-                                            [params addKey:AK_EP_REMOTE_URL value:remoteURL.path];
-                                            [params addKey:AK_EP_LOCAL_FILE_NAME value:filePath];
-
-                                            if (error) {
-                                                HMLOG(TAG, EM_ERR, @"Error while downloading zipped resources file from %@", remoteURL.path);
-                                                [params addKey:AK_EP_ERROR value:[error description]];
-                                                [HMPanel.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED info:params.dictionary];
-                                            } else {
-                                                //
-                                                // The zipped file was downloaded to a temp file.
-                                                //
-                                                HMLOG(TAG, EM_DBG, @"Downloaded resources file: %@", filePath);
-                                                
-                                                //
-                                                // Analytics
-                                                //
-                                                [HMPanel.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS info:params.dictionary];
-
-                                                if ([[NSFileManager defaultManager] fileExistsAtPath:filePath.path]) {
-                                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                                        NSFileManager *fm = [NSFileManager defaultManager];
-                                                        
-                                                        
-                                                        // Delete file if already exists at destination.
-                                                        [fm removeItemAtPath:localURL.path error:nil];
-                                                        
-                                                        NSError *error;
-
-                                                        // Copy the temp file to expected place.
-                                                        [fm copyItemAtPath:filePath.path toPath:localURL.path error:&error];
-                                                        
-                                                        // Delete temp file.
-                                                        if (error == nil)
-                                                            [fm removeItemAtPath:filePath.path error:&error];
-                                                        
-                                                        // Unzip the resources
-                                                        [self unzipResourcesForPackage:package];
-                                                    });
-                                                } else {
-                                                    HMLOG(TAG, EM_ERR, @"Error (missing file) while downloading resources file %@", filePath);
-                                                }
-                                            }
-                                        }];
-    
-    [downloadTask resume];
+//    NSURL *remoteURL = [package urlForZippedResources];
+//    NSURL *localURL = [NSURL URLWithString:[package zippedPackageTempPath]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:remoteURL];
+//    NSString *tempFilePath = [SF:@"%@/%@.zip", NSTemporaryDirectory(), package.oid];
+//    NSURLSessionDownloadTask *downloadTask;
+//    
+//    // The download task.
+//    downloadTask = [self.session downloadTaskWithRequest:request
+//                                           progress:nil
+//                                        destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+//                                            return [NSURL fileURLWithPath:tempFilePath];
+//                                        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+//                                            //
+//                                            // Download completion.
+//                                            //
+//                                            HMParams *params = [HMParams new];
+//                                            [params addKey:AK_EP_REMOTE_URL value:remoteURL.path];
+//                                            [params addKey:AK_EP_LOCAL_FILE_NAME value:filePath];
+//
+//                                            if (error) {
+//                                                HMLOG(TAG, EM_ERR, @"Error while downloading zipped resources file from %@", remoteURL.path);
+//                                                [params addKey:AK_EP_ERROR value:[error description]];
+//                                                [HMPanel.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED info:params.dictionary];
+//                                            } else {
+//                                                //
+//                                                // The zipped file was downloaded to a temp file.
+//                                                //
+//                                                HMLOG(TAG, EM_DBG, @"Downloaded resources file: %@", filePath);
+//                                                
+//                                                //
+//                                                // Analytics
+//                                                //
+//                                                [HMPanel.sh analyticsEvent:AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS info:params.dictionary];
+//
+//                                                if ([[NSFileManager defaultManager] fileExistsAtPath:filePath.path]) {
+//                                                    dispatch_async(dispatch_get_main_queue(), ^{
+//                                                        NSFileManager *fm = [NSFileManager defaultManager];
+//                                                        
+//                                                        
+//                                                        // Delete file if already exists at destination.
+//                                                        [fm removeItemAtPath:localURL.path error:nil];
+//                                                        
+//                                                        NSError *error;
+//
+//                                                        // Copy the temp file to expected place.
+//                                                        [fm copyItemAtPath:filePath.path toPath:localURL.path error:&error];
+//                                                        
+//                                                        // Delete temp file.
+//                                                        if (error == nil)
+//                                                            [fm removeItemAtPath:filePath.path error:&error];
+//                                                        
+//                                                        // Unzip the resources
+//                                                        [self unzipResourcesForPackage:package];
+//                                                    });
+//                                                } else {
+//                                                    HMLOG(TAG, EM_ERR, @"Error (missing file) while downloading resources file %@", filePath);
+//                                                }
+//                                            }
+//                                        }];
+//    
+//    [downloadTask resume];
 }
 
 -(void)unzipResourcesForPackage:(Package *)package

@@ -6,6 +6,14 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define HM_RENDER_DOMAIN @"EMRenderer"
+
+typedef NS_ENUM(NSInteger, EMRenderError) {
+    EMRenderErrorMissingBackLayer       = 1000,
+    EMRenderErrorMissingOutputPath      = 2000,
+    EMRenderErrorMissingOutputType      = 3000,
+    EMRenderErrorMissingUserLayer       = 4000
+};
 
 
 @interface EMRenderer : NSObject
@@ -21,6 +29,7 @@
 @property (nonatomic) NSString *frontLayerPath;
 @property (nonatomic) NSString *paletteString;
 
+@property (nonatomic) BOOL shouldOutputThumb;
 @property (nonatomic) BOOL shouldOutputGif;
 @property (nonatomic) BOOL shouldOutputVideo;
 
@@ -33,6 +42,24 @@
 @property (nonatomic) NSURL *audioFileURL;
 @property (nonatomic) NSTimeInterval audioStartTime;
 
+/**
+ *  Render the emu according to the settings.
+ *   - Should be called on a background thread.
+ *   - Should be called after checking that the renderer was set properly (use isValid method).
+ *
+ */
 -(void)render;
+
+/**
+ * Validate that the renderer was set properly.
+ * If a required settings is missing, will return an NSError object.
+ */
+-(void)validateReturningError:(NSError **)error;
+
+
+/**
+ * Returns YES if all outputs rendered successfully and saved to disk.
+ */
+-(BOOL)finishedSuccessfully;
 
 @end

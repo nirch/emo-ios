@@ -15,6 +15,9 @@
 
 @interface Emuticon (Logic)
 
+-(NSComparisonResult)compare:(Emuticon *)otherObject;
+
+
 // By default will loop emu 5 times when rendering video
 #define EMU_DEFAULT_VIDEO_LOOPS_COUNT 5
 

@@ -399,4 +399,9 @@
     return YES;
 }
 
+-(NSComparisonResult)compare:(Package *)otherObject
+{
+    return [self.oid compare:otherObject.oid];
+}
+
 @end

@@ -85,15 +85,15 @@
 
 
 
--(void)createMissingEmuticonObjectsForMixedScreen
-{
-    NSArray *emus = self.mixedScreenEmus;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"oid in %@", emus];
-    NSArray *emuDefs = [NSManagedObject fetchEntityNamed:E_EMU_DEF
-                                           withPredicate:predicate
-                                               inContext:self.managedObjectContext];
-    [EmuticonDef createMissingEmuticonsForEmuDefs:emuDefs];
-}
+//-(void)createMissingEmuticonObjectsForMixedScreen
+//{
+//    NSArray *emus = self.mixedScreenEmus;
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"oid in %@", emus];
+//    NSArray *emuDefs = [NSManagedObject fetchEntityNamed:E_EMU_DEF
+//                                           withPredicate:predicate
+//                                               inContext:self.managedObjectContext];
+//    [EmuticonDef createMissingEmuticonsForEmuDefs:emuDefs];
+//}
 
 -(BOOL)isPackageUsedForOnboarding:(Package *)package
 {

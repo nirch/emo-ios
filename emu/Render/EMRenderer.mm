@@ -272,5 +272,42 @@
     return pngs;
 }
 
+-(void)validateReturningError:(NSError **)error
+{
+    if (self.backLayerPath == nil) {
+        *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
+                                    code:EMRenderErrorMissingBackLayer
+                                userInfo:@{NSLocalizedDescriptionKey:@"Renderer error: backLayerPath not set."}];
+        return;
+    }
+
+    if (self.outputPath == nil) {
+        *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
+                                    code:EMRenderErrorMissingOutputPath
+                                userInfo:@{NSLocalizedDescriptionKey:@"Renderer error: outputPath not set."}];
+        return;
+    }
+
+    if (!self.shouldOutputGif && !self.shouldOutputThumb && !self.shouldOutputVideo) {
+        *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
+                                    code:EMRenderErrorMissingOutputType
+                                userInfo:@{NSLocalizedDescriptionKey:@"Renderer error: no output type set. Set at least one of: gif, thumb or video."}];
+        return;
+    }
+    
+    if (self.userImagesPath == nil && self.userImagesPathsArray == nil) {
+        *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
+                                    code:EMRenderErrorMissingUserLayer
+                                userInfo:@{NSLocalizedDescriptionKey:@"Renderer error: no user layer set."}];
+        return;
+    }
+    error = nil;
+}
+
+
+-(BOOL)finishedSuccessfully
+{
+    return YES;
+}
 
 @end

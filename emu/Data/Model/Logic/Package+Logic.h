@@ -140,6 +140,7 @@
  */
 -(NSString *)zippedPackageTempPath;
 
+
 /**
  *  A remote url for resource with the given name.
  *
@@ -164,6 +165,6 @@
 #pragma mark - Sampled results
 -(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID;
 
-
+-(NSComparisonResult)compare:(Package *)otherObject;
 
 @end

@@ -2,25 +2,30 @@
 //  EMRenderManager.m
 //  emu
 //
-//  Created by Aviv Wolf on 2/23/15.
+//  Created by Aviv Wolf on 6/14/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
-
 #define TAG @"EMRenderManager"
+#define MAX_CONCURRENT_RENDERS 4
 
 #import "EMRenderManager.h"
-#import "EMDB.h"
-#import "EMDB+Files.h"
 #import "EMRenderer.h"
 #import "AppManagement.h"
-#import "EMBackend.h"
-#import "EMNotificationCenter.h"
+#import "EMDB.h"
+#import "EMDB+Files.h"
+#import "EMDownloadsManager.h"
 
 @interface EMRenderManager()
 
-@property (atomic) BOOL isRendering;
+// renderingQueue - a concurent queue for rendering emus.
 @property (atomic) dispatch_queue_t renderingQueue;
-@property NSMutableDictionary *requiredRendersPerPackageOID;
+
+// An unordered pool of emus that require rendering.
+@property (nonatomic) NSMutableDictionary *emusInfo;
+@property (nonatomic) NSMutableDictionary *idleEmusPool;
+@property (nonatomic) NSMutableDictionary *renderingEmusPool;
+@property (nonatomic) NSString *silhouetteImagesPath;
+@property (nonatomic) EMDownloadsManager *downloadsManager;
 
 @end
 
@@ -49,284 +54,171 @@
 {
     self = [super init];
     if (self) {
-        self.isRendering = NO;
-        self.requiredRendersPerPackageOID = [NSMutableDictionary new];
-        [self initRenderingQueue];
+        [self initData];
+        [self initDownloadsManager];
+        [self initResources];
+        [self initQueues];
         [self initObservers];
     }
     return self;
 }
 
--(void)initRenderingQueue
+-(void)initData
+{
+    self.emusInfo = [NSMutableDictionary new];
+    self.idleEmusPool = [NSMutableDictionary new];
+    self.renderingEmusPool = [NSMutableDictionary new];
+}
+
+-(void)initQueues
 {
     self.renderingQueue = AppManagement.sh.renderingQueue;
+}
+
+-(void)initResources
+{
+    NSString *silhouettePath = [[NSBundle mainBundle] pathForResource:@"sil-1" ofType:@"png"];
+    self.silhouetteImagesPath = silhouettePath;
+}
+
+-(void)initDownloadsManager
+{
+    self.downloadsManager = [EMDownloadsManager new];
 }
 
 #pragma mark - Observers
 -(void)initObservers
 {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-
-    // Backend downloaded (or failed to download) missing resources for emuticon.
-    [nc addUniqueObserver:self
-                 selector:@selector(onDownloadedResourcesForEmuticon:)
-                     name:emkUIDownloadedResourcesForEmuticon
-                   object:nil];
-
+    
 }
 
-#pragma mark - Observers handlers
--(void)onDownloadedResourcesForEmuticon:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    if ([info[@"for"] isEqualToString:@"preview"]) {
-        NSString *emuDefOID = info[@"emuDefOID"];
-        NSString *footageOID = info[@"footageOID"];
-        EmuticonDef *emuDef = [EmuticonDef findWithID:emuDefOID context:EMDB.sh.context];
-        if ([emuDef allResourcesAvailable]) {
-            UserFootage *footage = [UserFootage findWithID:footageOID context:EMDB.sh.context];
-            [self renderPreviewForFootage:footage withEmuDef:emuDef];
-        }
-    }
-}
 
-#pragma mark - Rendering management
--(void)renderingRequiredForEmu:(Emuticon *)emu
-                          info:(NSDictionary *)info
+#pragma mark - Managing rendering queues
+-(void)enqueueEmuOID:(NSString *)emuOID withInfo:(NSDictionary *)info
 {
-    Package *package = emu.emuDef.package;
-    NSString *packageOID = package.oid;
-
-    NSMutableDictionary *emusInPackage = self.requiredRendersPerPackageOID[packageOID];
-    if (emusInPackage == nil) {
-        emusInPackage = [NSMutableDictionary new];
-        self.requiredRendersPerPackageOID[packageOID] = emusInPackage;
-    }
-    if (emusInPackage[emu.oid] == nil) {
-        emusInPackage[emu.oid] = info;
-    }
-    [self manageRendering];
-}
-
--(void)doneWithEmu:(Emuticon *)emu
-{
-    Package *package = emu.emuDef.package;
-    NSString *packageOID = package.oid;
-    NSMutableDictionary *emusInPackage = self.requiredRendersPerPackageOID[packageOID];
-    if (emusInPackage == nil) return;
-    if (emusInPackage[emu.oid]) {
-        [emusInPackage removeObjectForKey:emu.oid];
-        if (emusInPackage.count == 0) {
-            [self.requiredRendersPerPackageOID removeObjectForKey:packageOID];
-        }
-    }
-}
-
--(void)manageRendering
-{
-    if (self.isRendering) return;
-    
-    NSMutableDictionary *emusInPackage;
-    if (self.prioritizedPackageOID == nil) {
-        // Any package will do
-        emusInPackage = [self.requiredRendersPerPackageOID.allValues firstObject];
-    } else {
-        emusInPackage = self.requiredRendersPerPackageOID[self.prioritizedPackageOID];
-        
-        // Didn't find in prioritized package? Any package will do.
-        if (emusInPackage == nil)
-            emusInPackage = [self.requiredRendersPerPackageOID.allValues firstObject];
-    }
-    
-    // Nothing to render? Do nothing.
-    if (emusInPackage == nil) return;
-    
-    NSDictionary *info = [emusInPackage.allValues firstObject];
-    Emuticon *emu = [Emuticon findWithID:info[@"emuticonOID"] context:EMDB.sh.context];
-    if (emu) {
-        [self enqueueEmu:emu info:info];
-    }
-}
-
-#pragma mark - Rendering
--(void)enqueueEmu:(Emuticon *)emu info:(NSDictionary *)info
-{
-    if (self.isRendering) return;
-    
-    self.isRendering = YES;
-    EmuticonDef *emuDef = emu.emuDef;
-    UserFootage *footage = [emu mostPrefferedUserFootage];
-    
-    HMLOG(TAG,
-          EM_DBG,
-          @"Starting to render emuticon named:%@. %@ frames.",
-          emuDef.name,
-          emuDef.framesCount
-          );
-    
-    // Create a render object.
-    EMRenderer *renderer = [EMRenderer new];
-    renderer.emuticonDefOID = emuDef.oid;
-    renderer.footageOID = footage.oid;
-    renderer.backLayerPath = [emuDef pathForBackLayer];
-    renderer.userImagesPath = [footage pathForUserImages];
-    renderer.userMaskPath = [emuDef pathForUserLayerMask];
-    renderer.frontLayerPath = [emuDef pathForFrontLayer];
-    renderer.numberOfFrames = [emuDef.framesCount integerValue];
-    renderer.duration = emuDef.duration.doubleValue;
-    renderer.outputOID = emu.oid;
-    renderer.paletteString = emuDef.palette;
-    renderer.outputPath = [EMDB outputPath];
-    renderer.shouldOutputGif = YES;
-    
-    // Dispatch the renderer on the rendering queue
-    __weak EMRenderManager *weakSelf = self;
-    dispatch_async(self.renderingQueue, ^(void){
-        //
-        // Render in a background thread.
-        //
-        [renderer render];
-        HMLOG(TAG, EM_VERBOSE, @"Finished rendering emuticon %@", renderer.outputOID);
-        
-        // Update model in main thread.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            emu.wasRendered = @YES;
-            emu.renderedSampleUploaded = @NO;
-            
-            NSInteger count = emu.emuDef.package.rendersCount.integerValue;
-            emu.emuDef.package.rendersCount = @(count+1);
-            
-            count = emu.rendersCount.integerValue;
-            emu.rendersCount = @(count+1);
-            
-            [weakSelf doneWithEmu:emu];
-            self.isRendering = NO;
-            [EMDB.sh save];
-            
-            // Notify main thread about rendered emu.
-            [[NSNotificationCenter defaultCenter] postNotificationName:hmkRenderingFinished
-                                                                object:self
-                                                              userInfo:info];
-            [self manageRendering];
-        });
-        
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self _enqueueEmuOID:emuOID withInfo:info];
     });
 }
 
-
-
--(void)renderPreviewForFootage:(UserFootage *)footage
-                    withEmuDef:(EmuticonDef *)emuDef
+/**
+ This method accesses EMDB. Call this only on the main thread!
+ */
+-(void)_enqueueEmuOID:(NSString *)emuOID withInfo:(NSDictionary *)info
 {
-    HMLOG(TAG,
-          EM_DBG,
-          @"Starting to render emuticon named:%@ for preview. %@ frames. User footage frames: %@",
-          emuDef.name,
-          emuDef.framesCount,
-          footage.framesCount
-          );
+    NSAssert(emuOID != nil, @"nil emuOID passed to _enqueueEmuOID");
+    NSAssert(info != nil, @"nil info passed to _enqueueEmuOID");
     
-    NSDictionary *info = @{
-                           @"for":@"preview",
-                           @"emuDefOID":emuDef.oid,
-                           @"footageOID":footage.oid,
-                           @"packageOID":emuDef.package.oid,
-                           };
-
-    
-    REMOTE_LOG(@"Starting to render emuticon named: %@ for preview", emuDef.name);
-    BOOL allResourcesAvailable = [emuDef allResourcesAvailable];
-    if (allResourcesAvailable) {
-        REMOTE_LOG(@"All resources available for: %@", emuDef.name);
-        // Render in a background thread.
-        dispatch_async(self.renderingQueue, ^(void){
-            [self _renderPreviewForFootage:(UserFootage *)footage
-                                withEmuDef:(EmuticonDef *)emuDef];
-        });
+    // If emu already has all required local recources, put the emu on the idle queue
+    // and it will wait there for concurrent rendering.
+    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    if ([emu.emuDef allResourcesAvailable]) {
+        //
+        self.idleEmusPool[emu.oid] = info;
     } else {
-        REMOTE_LOG(@"Some resources missing for: %@ will try to download", emuDef.name);
-        [EMBackend.sh downloadResourcesForEmuDef:emuDef info:info];
+        // Not all resources are available for this emu.
+        // enqueue it for download.
+    }
+    [self manageQueues];
+}
+
+/**
+ This method accesses EMDB. Call this only on the main thread!
+ */
+-(void)manageQueues
+{
+    //
+    // Rendering emus that already have all required resources locally.
+    //
+    if (self.renderingEmusPool.count < MAX_CONCURRENT_RENDERS && self.idleEmusPool.count>0) {
+        [self popEmuFromIdleEmusPoolAndRender];
+    }
+}
+
+
+/**
+ This method accesses EMDB. Call this only on the main thread!
+ */
+-(void)popEmuFromIdleEmusPoolAndRender
+{
+    // Get the emu
+    NSEnumerator *enumerator = [self.idleEmusPool keyEnumerator];
+    NSString *emuOID = [enumerator nextObject];
+    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    
+    // Remove the emu from the idle pool
+    [self.idleEmusPool removeObjectForKey:emuOID];
+    HMLOG(TAG, EM_DBG, @"Emu:%@/%@ will send for rendering.", emu.emuDef.package.name, emu.emuDef.name);
+
+    // Put on rendering pool.
+    self.renderingEmusPool[emu.oid] = @YES;
+
+    __weak EMRenderManager *weakSelf = self;
+    [self renderEmu:emu completionBlock:^{
+        //
+        // Succesffuly rendered emu.
+        //
+        Emuticon *renderedEmu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        [weakSelf.renderingEmusPool removeObjectForKey:renderedEmu.oid];
+        renderedEmu.wasRendered = @YES;
+        [EMDB.sh save];
+        [weakSelf manageQueues];
+        HMLOG(TAG, EM_VERBOSE, @"Rendered emu: %@", renderedEmu.emuDef.name);
+    } failBlock:^{
+        //
+        // Failed rendering emu.
+        //
+        Emuticon *failedEmu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        [weakSelf.renderingEmusPool removeObjectForKey:failedEmu.oid];
+        failedEmu.wasRendered = @NO;
+        [EMDB.sh save];
+        [weakSelf manageQueues];
+        HMLOG(TAG, EM_VERBOSE, @"Failed rendering emu: %@", failedEmu.emuDef.name);
+    }];
+}
+
+
+#pragma mark - A single render with completion blocks
+-(void)renderEmu:(Emuticon *)emu
+ completionBlock:(void (^)(void))completionBlock
+       failBlock:(void (^)(void))failBlock
+{
+    EMRenderer *renderer = [self rendererForEmu:emu];
+    renderer.shouldOutputGif = YES;
+    renderer.shouldOutputThumb = YES;
+    renderer.outputPath = [EMDB outputPath];
+    
+    // Validate settings
+    NSError *error;
+    [renderer validateReturningError:&error];
+    if (error) {
+        failBlock();
         return;
     }
-}
-
-
--(void)_renderPreviewForFootage:(UserFootage *)footage
-                     withEmuDef:(EmuticonDef *)emuDef
-{
-    // Create a render object.
-    EMRenderer *renderer = [EMRenderer new];
-    renderer.emuticonDefOID = emuDef.oid;
-    renderer.footageOID = footage.oid;
-    renderer.backLayerPath = [emuDef pathForBackLayer];
-    renderer.userImagesPath = [footage pathForUserImages];
-    renderer.userMaskPath = [emuDef pathForUserLayerMask];
-    renderer.frontLayerPath = [emuDef pathForFrontLayer];
-    renderer.numberOfFrames = [emuDef.framesCount integerValue];
-    renderer.duration = emuDef.duration.doubleValue;
-    renderer.outputOID = [[NSUUID UUID] UUIDString];
-    renderer.paletteString = emuDef.palette;
-    renderer.outputPath = [EMDB outputPath];
-    renderer.shouldOutputGif = YES;
     
-    // Execute the rendering.
-    [renderer render];
-    
-    HMLOG(TAG, EM_DBG, @"Finished rendering preview %@", renderer.outputOID);
-    
-    // Finished rendering
-    // Post a notification to the main thread
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // Create an object in the model for the rendered preview.
-        Emuticon *emu = [Emuticon previewWithOID:renderer.outputOID
-                                      footageOID:renderer.footageOID
-                                  emuticonDefOID:renderer.emuticonDefOID
-                                         context:EMDB.sh.context];
-
-        // Post the notification with the render info.
-        NSDictionary *info = @{emkEmuticonOID:emu.oid};
-        [[NSNotificationCenter defaultCenter] postNotificationName:hmkRenderingFinishedPreview
-                                                            object:self
-                                                          userInfo:info];
-        
-        HMLOG(TAG, EM_DBG, @"Notified main thread about preview %@", renderer.outputOID);
+    // Render
+    dispatch_async(self.renderingQueue, ^(void){
+        [renderer render];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([renderer finishedSuccessfully]) {
+                completionBlock();
+            } else {
+                failBlock();
+            }
+        });
     });
 }
-
-
 
 -(void)renderVideoForEmu:(Emuticon *)emu
          completionBlock:(void (^)(void))completionBlock
                failBlock:(void (^)(void))failBlock
 {
-    EmuticonDef *emuDef = emu.emuDef;
-    UserFootage *footage = [emu mostPrefferedUserFootage];
-    HMLOG(TAG,
-          EM_DBG,
-          @"Starting to render temp video file for emu named:%@. %@ frames.",
-          emuDef.name,
-          emuDef.framesCount
-          );
+    EMRenderer *renderer = [self rendererForEmu:emu];
+    renderer.shouldOutputVideo = YES;
     
-    REMOTE_LOG(@"Starting to render video for emuticon named: %@", emuDef.name);
-
-    EMRenderer *renderer = [EMRenderer new];
-    renderer.emuticonDefOID = emuDef.oid;
-    renderer.footageOID = footage.oid;
-    renderer.backLayerPath = [emuDef pathForBackLayer];
-    renderer.userImagesPath = [footage pathForUserImages];
-    renderer.userMaskPath = [emuDef pathForUserLayerMask];
-    renderer.frontLayerPath = [emuDef pathForFrontLayer];
-    renderer.numberOfFrames = [emuDef.framesCount integerValue];
-    renderer.duration = emuDef.duration.doubleValue;
-    renderer.paletteString = emuDef.palette;
-    renderer.shouldOutputGif = NO;
-
     // Should output a looping video to the temp folder.
     renderer.outputPath = NSTemporaryDirectory();
-    renderer.outputOID = emu.oid;
-    renderer.shouldOutputVideo = YES;
-
+    
     // Audio track (optional)
     renderer.audioFileURL = emu.audioFileURL;
     renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
@@ -347,7 +239,49 @@
             }
         });
     });
+}
 
+-(EMRenderer *)rendererForEmu:(Emuticon *)emu
+{
+    EmuticonDef *emuDef = emu.emuDef;
+    EMRenderer *renderer = [EMRenderer new];
+    renderer.emuticonDefOID = emuDef.oid;
+    renderer.backLayerPath = [emuDef pathForBackLayer];
+    renderer.userMaskPath = [emuDef pathForUserLayerMask];
+    renderer.frontLayerPath = [emuDef pathForFrontLayer];
+    renderer.numberOfFrames = [emuDef.framesCount integerValue];
+    renderer.duration = emuDef.duration.doubleValue;
+    renderer.paletteString = emuDef.palette;
+    renderer.outputOID = emu.oid;
+    
+    // User footage layer
+    UserFootage *footage = [emu mostPrefferedUserFootage];
+    if (footage) {
+        renderer.footageOID = footage.oid;
+        renderer.userImagesPath = [footage pathForUserImages];
+    } else {
+        renderer.footageOID = @"sil";
+        NSMutableArray *arr = [NSMutableArray new];
+        for (int i=0;i<emu.emuDef.framesCount.integerValue;i++) {
+            [arr addObject:self.silhouetteImagesPath];
+        }
+        renderer.userImagesPathsArray = arr;
+    }
+    
+    // Defaults. Override this as required.
+    renderer.shouldOutputGif = NO;
+    renderer.shouldOutputThumb = NO;
+    renderer.shouldOutputVideo = NO;
+    
+    return renderer;
+}
+
+
+
+-(void)renderPreviewForFootage:(UserFootage *)footage
+                    withEmuDef:(EmuticonDef *)emuDef
+{
+    
 }
 
 @end
