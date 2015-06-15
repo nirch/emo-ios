@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
     EMRenderErrorMissingBackLayer       = 1000,
     EMRenderErrorMissingOutputPath      = 2000,
     EMRenderErrorMissingOutputType      = 3000,
-    EMRenderErrorMissingUserLayer       = 4000
+    EMRenderErrorMissingUserLayer       = 4000,
+    EMRenderErrorMissingOutputFile      = 5000
 };
 
 
@@ -54,12 +55,12 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
  * Validate that the renderer was set properly.
  * If a required settings is missing, will return an NSError object.
  */
--(void)validateReturningError:(NSError **)error;
+-(void)validateSetupWithError:(NSError **)error;
 
 
 /**
- * Returns YES if all outputs rendered successfully and saved to disk.
+ * Returns an NSError object if not all outputs rendered successfully and saved to disk.
  */
--(BOOL)finishedSuccessfully;
+-(void)validateOutputResultsWithError:(NSError **)error;
 
 @end

@@ -66,6 +66,17 @@
 		082720C01B038CCB0046F38E /* EMCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 082720BF1B038CCB0046F38E /* EMCaches.m */; };
 		082720C11B038CCB0046F38E /* EMCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 082720BF1B038CCB0046F38E /* EMCaches.m */; };
 		0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0827C6D81A8608E200B14294 /* uniformBGParams.xml */; };
+		08325A951B2EAE5A00C6C5C8 /* emutests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325A941B2EAE5A00C6C5C8 /* emutests.m */; };
+		08325A9D1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325A9C1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.m */; };
+		08325A9F1B2EB49C00C6C5C8 /* EmuS3IntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325A9E1B2EB49C00C6C5C8 /* EmuS3IntegrationTests.m */; };
+		08325AA11B2EB4D200C6C5C8 /* EmuWebserviceIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325AA01B2EB4D200C6C5C8 /* EmuWebserviceIntegrationTests.m */; };
+		08325AA51B2EB51600C6C5C8 /* EMUniquenessTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325AA41B2EB51600C6C5C8 /* EMUniquenessTester.m */; };
+		08325AA71B2EB54B00C6C5C8 /* EmuRenderingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325AA61B2EB54B00C6C5C8 /* EmuRenderingTests.m */; };
+		08325AAE1B2EB6D800C6C5C8 /* audio_test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 08325AA91B2EB6D800C6C5C8 /* audio_test.mp3 */; };
+		08325AAF1B2EB6D800C6C5C8 /* fake-user-take.png in Resources */ = {isa = PBXBuildFile; fileRef = 08325AAA1B2EB6D800C6C5C8 /* fake-user-take.png */; };
+		08325AB01B2EB6D800C6C5C8 /* test-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08325AAB1B2EB6D800C6C5C8 /* test-bg.gif */; };
+		08325AB11B2EB6D800C6C5C8 /* test-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08325AAC1B2EB6D800C6C5C8 /* test-fg.gif */; };
+		08325AB21B2EB6D800C6C5C8 /* test-mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08325AAD1B2EB6D800C6C5C8 /* test-mask.jpg */; };
 		0833189A1B049D3E000B8979 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083318991B049D3E000B8979 /* EMRenderer.mm */; };
 		083319671B04D389000B8979 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
 		083319681B04D389000B8979 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
@@ -657,6 +668,13 @@
 			remoteGlobalIDString = 080CB3191AA4A9DD00603E30;
 			remoteInfo = Keyboard;
 		};
+		08325A961B2EAE5A00C6C5C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08D9297C1A77A36D00B6A68F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08D929831A77A36D00B6A68F;
+			remoteInfo = emu;
+		};
 		08ED7FFB1B1E022500B6856F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08D9297C1A77A36D00B6A68F /* Project object */;
@@ -751,6 +769,21 @@
 		0827C6D81A8608E200B14294 /* uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = uniformBGParams.xml; sourceTree = "<group>"; };
 		082902721AFA7ACF004DE369 /* s3-2006-03-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "s3-2006-03-01.json"; sourceTree = "<group>"; };
 		082B282A1AFFC84B00E25323 /* emu1_4_12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_4_12.xcdatamodel; sourceTree = "<group>"; };
+		08325A901B2EAE5A00C6C5C8 /* emutests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = emutests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08325A931B2EAE5A00C6C5C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08325A941B2EAE5A00C6C5C8 /* emutests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = emutests.m; sourceTree = "<group>"; };
+		08325A9B1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmuTestsAppDelegate.h; path = "Supporting Files/EmuTestsAppDelegate.h"; sourceTree = "<group>"; };
+		08325A9C1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmuTestsAppDelegate.m; path = "Supporting Files/EmuTestsAppDelegate.m"; sourceTree = "<group>"; };
+		08325A9E1B2EB49C00C6C5C8 /* EmuS3IntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuS3IntegrationTests.m; sourceTree = "<group>"; };
+		08325AA01B2EB4D200C6C5C8 /* EmuWebserviceIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuWebserviceIntegrationTests.m; sourceTree = "<group>"; };
+		08325AA31B2EB51600C6C5C8 /* EMUniquenessTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUniquenessTester.h; sourceTree = "<group>"; };
+		08325AA41B2EB51600C6C5C8 /* EMUniquenessTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUniquenessTester.m; sourceTree = "<group>"; };
+		08325AA61B2EB54B00C6C5C8 /* EmuRenderingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuRenderingTests.m; sourceTree = "<group>"; };
+		08325AA91B2EB6D800C6C5C8 /* audio_test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio_test.mp3; sourceTree = "<group>"; };
+		08325AAA1B2EB6D800C6C5C8 /* fake-user-take.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fake-user-take.png"; sourceTree = "<group>"; };
+		08325AAB1B2EB6D800C6C5C8 /* test-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "test-bg.gif"; sourceTree = "<group>"; };
+		08325AAC1B2EB6D800C6C5C8 /* test-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "test-fg.gif"; sourceTree = "<group>"; };
+		08325AAD1B2EB6D800C6C5C8 /* test-mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "test-mask.jpg"; sourceTree = "<group>"; };
 		083318981B049D3E000B8979 /* EMRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRenderer.h; sourceTree = "<group>"; };
 		083318991B049D3E000B8979 /* EMRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EMRenderer.mm; sourceTree = "<group>"; };
 		083319651B04D389000B8979 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
@@ -1079,6 +1112,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08325A8D1B2EAE5A00C6C5C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0867CA341B16602E00FF0E85 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1292,6 +1332,51 @@
 				083319A01B06907D000B8979 /* yeah */,
 			);
 			path = emus;
+			sourceTree = "<group>";
+		};
+		08325A911B2EAE5A00C6C5C8 /* emutests */ = {
+			isa = PBXGroup;
+			children = (
+				08325A941B2EAE5A00C6C5C8 /* emutests.m */,
+				08325A9E1B2EB49C00C6C5C8 /* EmuS3IntegrationTests.m */,
+				08325AA01B2EB4D200C6C5C8 /* EmuWebserviceIntegrationTests.m */,
+				08325AA61B2EB54B00C6C5C8 /* EmuRenderingTests.m */,
+				08325AA81B2EB6D800C6C5C8 /* resources */,
+				08325AA21B2EB51600C6C5C8 /* Helpers */,
+				08325A921B2EAE5A00C6C5C8 /* Supporting Files */,
+			);
+			path = emutests;
+			sourceTree = "<group>";
+		};
+		08325A921B2EAE5A00C6C5C8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				08325A931B2EAE5A00C6C5C8 /* Info.plist */,
+				08325A9B1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.h */,
+				08325A9C1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		08325AA21B2EB51600C6C5C8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				08325AA31B2EB51600C6C5C8 /* EMUniquenessTester.h */,
+				08325AA41B2EB51600C6C5C8 /* EMUniquenessTester.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		08325AA81B2EB6D800C6C5C8 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				08325AA91B2EB6D800C6C5C8 /* audio_test.mp3 */,
+				08325AAA1B2EB6D800C6C5C8 /* fake-user-take.png */,
+				08325AAB1B2EB6D800C6C5C8 /* test-bg.gif */,
+				08325AAC1B2EB6D800C6C5C8 /* test-fg.gif */,
+				08325AAD1B2EB6D800C6C5C8 /* test-mask.jpg */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 		0833196D1B06907D000B8979 /* 70s */ = {
@@ -2039,6 +2124,7 @@
 				08D929861A77A36D00B6A68F /* emu */,
 				080CB31B1AA4A9DD00603E30 /* Keyboard */,
 				08D929F71A77EFBD00B6A68F /* homageSDK */,
+				08325A911B2EAE5A00C6C5C8 /* emutests */,
 				08D929851A77A36D00B6A68F /* Products */,
 				66A306109166C5AB9F6B2628 /* Pods */,
 				F818AC31536FB92317D788B6 /* Frameworks */,
@@ -2052,6 +2138,7 @@
 				080CB31A1AA4A9DD00603E30 /* Keyboard.appex */,
 				08AA15131B0BA658002E1B2F /* emubeta.app */,
 				0867CA7D1B16602E00FF0E85 /* KeyboardBeta.appex */,
+				08325A901B2EAE5A00C6C5C8 /* emutests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2179,6 +2266,24 @@
 			productReference = 080CB31A1AA4A9DD00603E30 /* Keyboard.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		08325A8F1B2EAE5A00C6C5C8 /* emutests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08325A9A1B2EAE5A00C6C5C8 /* Build configuration list for PBXNativeTarget "emutests" */;
+			buildPhases = (
+				08325A8C1B2EAE5A00C6C5C8 /* Sources */,
+				08325A8D1B2EAE5A00C6C5C8 /* Frameworks */,
+				08325A8E1B2EAE5A00C6C5C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08325A971B2EAE5A00C6C5C8 /* PBXTargetDependency */,
+			);
+			name = emutests;
+			productName = emutests;
+			productReference = 08325A901B2EAE5A00C6C5C8 /* emutests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		0867CA091B16602E00FF0E85 /* KeyboardBeta */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0867CA7A1B16602E00FF0E85 /* Build configuration list for PBXNativeTarget "KeyboardBeta" */;
@@ -2260,6 +2365,10 @@
 							};
 						};
 					};
+					08325A8F1B2EAE5A00C6C5C8 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 08D929831A77A36D00B6A68F;
+					};
 					0867CA091B16602E00FF0E85 = {
 						DevelopmentTeam = 56F7YSPHC5;
 						SystemCapabilities = {
@@ -2312,6 +2421,7 @@
 				080CB3191AA4A9DD00603E30 /* Keyboard */,
 				08AA14431B0BA658002E1B2F /* emubeta */,
 				0867CA091B16602E00FF0E85 /* KeyboardBeta */,
+				08325A8F1B2EAE5A00C6C5C8 /* emutests */,
 			);
 		};
 /* End PBXProject section */
@@ -2387,6 +2497,18 @@
 				083319DE1B06907D000B8979 /* crap-shit-fg.gif in Resources */,
 				08271FD21B01F5B90046F38E /* pressedButton.wav in Resources */,
 				08331A081B06907D000B8979 /* party-twerk-fg.gif in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08325A8E1B2EAE5A00C6C5C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08325AAF1B2EB6D800C6C5C8 /* fake-user-take.png in Resources */,
+				08325AB11B2EB6D800C6C5C8 /* test-fg.gif in Resources */,
+				08325AB01B2EB6D800C6C5C8 /* test-bg.gif in Resources */,
+				08325AAE1B2EB6D800C6C5C8 /* audio_test.mp3 in Resources */,
+				08325AB21B2EB6D800C6C5C8 /* test-mask.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2834,6 +2956,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08325A8C1B2EAE5A00C6C5C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08325AA71B2EB54B00C6C5C8 /* EmuRenderingTests.m in Sources */,
+				08325A9F1B2EB49C00C6C5C8 /* EmuS3IntegrationTests.m in Sources */,
+				08325A9D1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.m in Sources */,
+				08325A951B2EAE5A00C6C5C8 /* emutests.m in Sources */,
+				08325AA51B2EB51600C6C5C8 /* EMUniquenessTester.m in Sources */,
+				08325AA11B2EB4D200C6C5C8 /* EmuWebserviceIntegrationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0867CA0A1B16602E00FF0E85 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3117,6 +3252,11 @@
 			target = 080CB3191AA4A9DD00603E30 /* Keyboard */;
 			targetProxy = 080CB3211AA4A9DD00603E30 /* PBXContainerItemProxy */;
 		};
+		08325A971B2EAE5A00C6C5C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08D929831A77A36D00B6A68F /* emu */;
+			targetProxy = 08325A961B2EAE5A00C6C5C8 /* PBXContainerItemProxy */;
+		};
 		08ED7FFC1B1E022500B6856F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0867CA091B16602E00FF0E85 /* KeyboardBeta */;
@@ -3216,6 +3356,56 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		08325A981B2EAE5A00C6C5C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/**",
+				);
+				INFOPLIST_FILE = emutests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/emu.app/emu";
+			};
+			name = Debug;
+		};
+		08325A991B2EAE5A00C6C5C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/**",
+				);
+				INFOPLIST_FILE = emutests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/emu.app/emu";
 			};
 			name = Release;
 		};
@@ -3819,6 +4009,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		08325A9A1B2EAE5A00C6C5C8 /* Build configuration list for PBXNativeTarget "emutests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08325A981B2EAE5A00C6C5C8 /* Debug */,
+				08325A991B2EAE5A00C6C5C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		0867CA7A1B16602E00FF0E85 /* Build configuration list for PBXNativeTarget "KeyboardBeta" */ = {
 			isa = XCConfigurationList;

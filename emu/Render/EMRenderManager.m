@@ -190,7 +190,7 @@
     
     // Validate settings
     NSError *error;
-    [renderer validateReturningError:&error];
+    [renderer validateSetupWithError:&error];
     if (error) {
         failBlock();
         return;
@@ -200,10 +200,12 @@
     dispatch_async(self.renderingQueue, ^(void){
         [renderer render];
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([renderer finishedSuccessfully]) {
-                completionBlock();
-            } else {
+            NSError *error = nil;
+            [renderer validateSetupWithError:&error];
+            if (error) {
                 failBlock();
+            } else {
+                completionBlock();
             }
         });
     });
@@ -231,11 +233,12 @@
     dispatch_async(self.renderingQueue, ^(void){
         [renderer render];
         dispatch_async(dispatch_get_main_queue(), ^{
-            // Callback on the main thread.
-            if (emu.videoURL) {
-                completionBlock();
-            } else {
+            NSError *error = nil;
+            [renderer validateSetupWithError:&error];
+            if (error) {
                 failBlock();
+            } else {
+                completionBlock();
             }
         });
     });

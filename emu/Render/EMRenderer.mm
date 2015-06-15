@@ -26,11 +26,18 @@
 
 //#import "Uigp/GpMemoryLeak.h"
 
+@interface EMRenderer()
+
+@property (nonatomic) NSMutableArray *outputFiles;
+
+@end
+
 @implementation EMRenderer
 
 -(void)render
 {
     CHomageRenderer *render = new CHomageRenderer();
+    self.outputFiles = [NSMutableArray new];
     
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
@@ -125,6 +132,7 @@
         NSString *outputThumbPath = [SF:@"%@/%@.jpg", self.outputPath, self.outputOID];;
         NSURL *thumbOutputURL = [NSURL fileURLWithPath:outputThumbPath];
         thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_JPG);
+        [self.outputFiles addObject:[thumbOutputURL path]];
     }
     
     //
@@ -132,7 +140,8 @@
     //
     CHrOutputGif *gifOutput = NULL;
     if (self.shouldOutputGif) {
-        NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];;
+        NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];
+        [self.outputFiles addObject:outputGifPath];
         gifOutput = new CHrOutputGif();
         gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
         if (self.paletteString != nil) {
@@ -151,6 +160,7 @@
     VideoOutput *videoOutput = NULL;
     if (self.shouldOutputVideo) {
         NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
+        [self.outputFiles addObject:outputVideoPath];
         NSURL *videoURL = [NSURL fileURLWithPath:outputVideoPath];
         videoOutput = new VideoOutput(
                                       dimensions,
@@ -272,7 +282,7 @@
     return pngs;
 }
 
--(void)validateReturningError:(NSError **)error
+-(void)validateSetupWithError:(NSError **)error
 {
     if (self.backLayerPath == nil) {
         *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
@@ -305,9 +315,22 @@
 }
 
 
--(BOOL)finishedSuccessfully
+-(void)validateOutputResultsWithError:(NSError **)error
 {
-    return YES;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    // Make sure all output files exist on disk and that they are not empty.
+    for (NSString *filePath in self.outputFiles) {
+        BOOL fileExists = [fm fileExistsAtPath:filePath isDirectory:nil];
+        if (!fileExists) {
+            *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
+                                         code:EMRenderErrorMissingOutputFile
+                                     userInfo:@{NSLocalizedDescriptionKey:[SF:@"Renderer error: output file not found at:%@", filePath]}];
+            return;
+        }
+    }
+    error = nil;
+    return;
 }
 
 @end
