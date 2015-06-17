@@ -2,6 +2,9 @@
 //  EMRenderManager.h
 //  emu
 //
+//  Singleton by choice.
+//  Use as singleton within the app and use instances in unit tests.
+//
 //  Created by Aviv Wolf on 6/14/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -9,12 +12,14 @@
 @class UserFootage;
 @class EmuticonDef;
 @class Emuticon;
+@class EMDB;
 
 @interface EMRenderManager : NSObject
 
 #pragma mark - Initialization
 +(EMRenderManager *)sharedInstance;
 +(EMRenderManager *)sh;
+-(instancetype)initWithDB:(EMDB *)db;
 
 #pragma mark - Managing rendering queues
 /** 

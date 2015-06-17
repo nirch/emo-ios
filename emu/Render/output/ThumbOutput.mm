@@ -26,6 +26,8 @@ int	ThumbOutput::WriteFrame( image_type *im , int iFrame)
     if (iFrame != frameNumber) return 1;
     
     // Create the thumb image
+    im = image_bgr2rgb(im, im);
+    
     UIImage *thumbImage = [HMImageTools createUIImageFromImageType:im withAlpha:NO];
     
     // Write it to a PNG file.

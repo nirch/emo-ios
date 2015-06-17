@@ -9,6 +9,8 @@
 #import "PngSourceWithFX.h"
 #import <UIKit/UIKit.h>
 #import "Gpw/Vtool/Vtool.h"
+#import "ImageType/ImageTool.h"
+
 
 PngSourceWithFX::PngSourceWithFX(NSArray *pngFiles)
 {
@@ -22,6 +24,7 @@ int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
         NSString *imagePath = [m_pngFiles objectAtIndex:iFrame];
         UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
         *im = CVtool::UIimage_to_image(image, *im);
+        image_bgr2rgb(*im, *im);
         ProcessEffect(*im, iFrame, im);
         return 1;
     }

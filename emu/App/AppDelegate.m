@@ -44,6 +44,7 @@
                      kLoggerOption_UseSSL
                      );
     NSString *deviceName = [[UIDevice currentDevice] name];
+    if ([deviceName isEqualToString:@"iPhone Simulator"]) deviceName = @"Aviv's iPhone 6 Plus";
     LoggerSetupBonjour(logger, NULL, (CFStringRef)CFBridgingRetain(deviceName));
 }
 

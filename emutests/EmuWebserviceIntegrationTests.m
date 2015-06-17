@@ -237,29 +237,6 @@ static BOOL _useScratchpad;
 }
 
 
-///**
-// *  Test that exactly 1 emu is marked as use_for_preview per pack.
-// */
-//-(void)testOnlyOneEmuPerPackWithUseForPreviewFlag
-//{
-//    [self ensureDataAvailable];
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
-//        if(error) XCTFail(@"%s Failed with error: %@", __PRETTY_FUNCTION__, error);
-//    }];
-//    
-//    NSArray *packs = _json[@"packages"];
-//    for (NSDictionary *pack in packs) {
-//        NSArray *emus = pack[@"emuticons"];
-//        NSInteger useForPreviewInPackCount = 0;
-//        for (NSDictionary *emu in emus) {
-//            if (emu[@"use_for_preview"] && [emu[@"use_for_preview"] boolValue]) {
-//                useForPreviewInPackCount++;
-//            }
-//        }
-//        XCTAssert(useForPreviewInPackCount==1, @"Exactly 1 emu should be marked as use for preview per pack. %@ marked in pack: %@", @(useForPreviewInPackCount), pack[@"name"]);
-//    }
-//}
-
 #pragma mark - Configuration
 /**
  *  Test for expected configuration values.
@@ -331,7 +308,6 @@ static BOOL _useScratchpad;
         // Ensure name of the emu used is the correct one.
         XCTAssert([name isEqualToString:emuDef[@"name"]], @"Mixed screen uses emu named: %@ but name should be: %@", name, emuDef[@"name"]);
     }
-
 }
 
 @end

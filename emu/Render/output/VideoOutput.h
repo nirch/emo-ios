@@ -19,10 +19,10 @@ public:
                 NSURL *videoOutputUrl,
                 int framesPerSec
                 );
+    virtual ~VideoOutput();
     
     virtual int	WriteFrame( image_type *im, int iFrame );
 	virtual int Close();
-    
     
     
     /** ==============================

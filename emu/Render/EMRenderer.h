@@ -8,6 +8,10 @@
 
 #define HM_RENDER_DOMAIN @"EMRenderer"
 
+#define HM_K_OUTPUT_GIF @"output gif"
+#define HM_K_OUTPUT_VIDEO @"output video"
+#define HM_K_OUTPUT_THUMB @"output thumb"
+
 typedef NS_ENUM(NSInteger, EMRenderError) {
     EMRenderErrorMissingBackLayer       = 1000,
     EMRenderErrorMissingOutputPath      = 2000,
@@ -62,5 +66,11 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
  * Returns an NSError object if not all outputs rendered successfully and saved to disk.
  */
 -(void)validateOutputResultsWithError:(NSError **)error;
+
+/**
+ * Returns the file path of the output of the given kind.
+ * (returns nil if anavailable)
+ */
+-(NSString *)filePathForOutputOfKind:(NSString *)outputKind;
 
 @end

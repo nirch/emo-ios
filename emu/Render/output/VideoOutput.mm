@@ -27,7 +27,7 @@ VideoOutput::VideoOutput(
 int	VideoOutput::WriteFrame( image_type *im , int iFrame)
 {
     m_image = image3_from_image4(im, m_image);
-    image3_bgr2rgb(m_image);
+    image_bgr2rgb(m_image, m_image);
     [videoMaker addImageFrame:m_image];
     return 1;
 }
@@ -36,7 +36,6 @@ int VideoOutput::Close()
 {
     [videoMaker finishUp];
     videoMaker = NULL;
-    if (m_image != NULL) image_destroy(m_image, 1);
     return 1;
 }
 
@@ -51,5 +50,10 @@ void VideoOutput::AddAudio(NSURL *audioFileURL, NSTimeInterval audioStartTime)
 {
     videoMaker.audioFileURL = audioFileURL;
     videoMaker.audioStartTime = audioStartTime;
+}
+
+VideoOutput::~VideoOutput()
+{
+    Close();
 }
 

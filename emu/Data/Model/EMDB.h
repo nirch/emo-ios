@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, EMMediaDataType) {
 @interface EMDB : NSObject
 
 // Core data stack
+@property (readonly, strong) NSString *storeName;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, nonatomic) NSManagedObjectContext *context;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -56,7 +57,11 @@ typedef NS_ENUM(NSInteger, EMMediaDataType) {
 
 // Persistance / saving
 -(void)save;
-//-(NSURL *)applicationDocumentsDirectory;
+
+// Mocking & Tests
+-(void)initFakeDBNamed:(NSString *)name;
+-(void)deleteStoreWithError:(NSError **)error;
+
 
 #pragma mark - Initialization
 +(EMDB *)sharedInstance;

@@ -11,4 +11,6 @@
 
 @interface EMDownloadsManager : NSObject
 
+-(void)enqueueEmuOIDForDownload:(NSString *)emuOID withInfo:(NSDictionary *)info;
+
 @end

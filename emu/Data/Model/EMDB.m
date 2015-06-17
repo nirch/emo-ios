@@ -71,6 +71,9 @@
         resultString = [self.dateStringForFileFormatter stringFromDate:date];
         msg = [SF:@"Test time formatter: %@ %@ %@", testString, date, resultString];
         REMOTE_LOG(@"%@", msg);
+        
+        // Default store name
+        _storeName = @"emu";
     }
     return self;
 }
@@ -92,11 +95,31 @@
     }
 }
 
+#pragma mark - Mocking & Tests
+// Mocking & Tests
+-(void)initFakeDBNamed:(NSString *)name
+{
+    _storeName = name;
+}
+
+-(void)deleteStoreWithError:(NSError **)error
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    error = nil;
+    [fm removeItemAtPath:[[self storeURL] path] error:error];
+}
+
 #pragma mark - Core Data stack
-//-(NSURL *)applicationDocumentsDirectory {
-//    // The directory the application uses to store the Core Data store file. This code uses a directory named "it.homage.ios.emu" in the application's documents directory.
-//    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-//}
+-(NSURL *)storeURL
+{
+    // The group container url
+    NSURL *groupURL = [EMDB rootURL];
+    
+    // The sqlite file
+    NSURL *storeURL = [groupURL URLByAppendingPathComponent:[SF:@"%@.sqlite", self.storeName]];
+    
+    return storeURL;
+}
 
 - (NSManagedObjectModel *)managedObjectModel {
     // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
@@ -118,14 +141,10 @@
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     
-    // The group container url
-    NSURL *groupURL = [EMDB rootURL];
-
-    // The sqlite file
-    NSURL *storeURL = [groupURL URLByAppendingPathComponent:@"emu.sqlite"];
 
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+    NSURL *storeURL = [self storeURL];
     
     // Auto light migration.
     NSDictionary *options = @{

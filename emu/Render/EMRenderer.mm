@@ -28,7 +28,7 @@
 
 @interface EMRenderer()
 
-@property (nonatomic) NSMutableArray *outputFiles;
+@property (nonatomic) NSMutableDictionary *outputFiles;
 
 @end
 
@@ -37,13 +37,13 @@
 -(void)render
 {
     CHomageRenderer *render = new CHomageRenderer();
-    self.outputFiles = [NSMutableArray new];
+    self.outputFiles = [NSMutableDictionary new];
     
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
     // (skips frames or drops frames as required).
     NSArray *userImages;
-    if (self.userImagesPathsArray == nil) {
+    if (self.userImagesPathsArray == nil && self.userImagesPath != nil) {
         userImages = [self imagesPathsInPath:self.userImagesPath
                                      numberOfFrames:self.numberOfFrames];
 
@@ -52,11 +52,10 @@
         } else {
             REMOTE_LOG(@"user images empty?!");
         }
-    } else {
+    } else if (self.userImagesPathsArray) {
         userImages = self.userImagesPathsArray;
     }
 
-    
     //
     // Solid color background (always white for now)
     // If required (currently if should output video)
@@ -68,9 +67,12 @@
     }
     
     //
-    // Get the source PNG images.
+    // Get the source PNG images (but only if userImages provided)
     //
-    PngSourceWithFX *userSource = new PngSourceWithFX(userImages);
+    PngSourceWithFX *userSource;
+    if (userImages) {
+        userSource = new PngSourceWithFX(userImages);
+    }
 
     //
     // Set mask if provided.
@@ -91,23 +93,19 @@
     //
     // Background source.
     //
-    CHrSourceGif *bgSource;
+    CHrSourceGif *bgSource = NULL;
     if (self.backLayerPath) {
         bgSource = new CHrSourceGif();
         bgSource->Init((char*)self.backLayerPath.UTF8String);
-    } else {
-        bgSource = NULL;
     }
 
     //
     // Foreground source.
     //
-    CHrSourceGif *fgSource;
+    CHrSourceGif *fgSource = NULL;
     if (self.frontLayerPath) {
         fgSource = new CHrSourceGif();
         fgSource->Init((char*)self.frontLayerPath.UTF8String);
-    } else {
-        fgSource = NULL;
     }
     
     //
@@ -132,7 +130,7 @@
         NSString *outputThumbPath = [SF:@"%@/%@.jpg", self.outputPath, self.outputOID];;
         NSURL *thumbOutputURL = [NSURL fileURLWithPath:outputThumbPath];
         thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_JPG);
-        [self.outputFiles addObject:[thumbOutputURL path]];
+        self.outputFiles[HM_K_OUTPUT_THUMB] = [thumbOutputURL path];
     }
     
     //
@@ -141,7 +139,7 @@
     CHrOutputGif *gifOutput = NULL;
     if (self.shouldOutputGif) {
         NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];
-        [self.outputFiles addObject:outputGifPath];
+        self.outputFiles[HM_K_OUTPUT_GIF] = outputGifPath;
         gifOutput = new CHrOutputGif();
         gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
         if (self.paletteString != nil) {
@@ -160,7 +158,7 @@
     VideoOutput *videoOutput = NULL;
     if (self.shouldOutputVideo) {
         NSString *outputVideoPath = [SF:@"%@/%@.mp4", self.outputPath, self.outputOID];
-        [self.outputFiles addObject:outputVideoPath];
+        self.outputFiles[HM_K_OUTPUT_VIDEO] = outputVideoPath;
         NSURL *videoURL = [NSURL fileURLWithPath:outputVideoPath];
         videoOutput = new VideoOutput(
                                       dimensions,
@@ -185,57 +183,25 @@
         }
     }
     
+    // ----------------------------------------------
+    // Connect sources and outputs.
+    //
+    
     // Add sources.
     render->AddSource(bgSource);
-    render->AddSource(userSource);
+    if (userSource != NULL) render->AddSource(userSource);
     if (fgSource != NULL) render->AddSource(fgSource);
 
     // Add outputs
     if (gifOutput != NULL) render->AddOutput(gifOutput);
     if (videoOutput != NULL) render->AddOutput(videoOutput);
     if (thumbOutput != NULL) render->AddOutput(thumbOutput);
-    
+    // ----------------------------------------------
     
     // Render!
     render->Process();
     
-    // Finishing up.
-    if (gifOutput != NULL)  {
-        gifOutput->Close();
-        delete gifOutput;
-    }
-    
-    if (videoOutput != NULL) {
-        videoOutput->Close();
-        delete videoOutput;
-    }
-    
-    if (thumbOutput != NULL) {
-        thumbOutput->Close();
-        delete thumbOutput;
-    }
-    
-    
-    if (solidBG != NULL) {
-        solidBG->Close();
-        delete solidBG;
-    }
-    
-    if (userSource != NULL) {
-        userSource->Close();
-        delete userSource;
-    }
-    
-    if (bgSource != NULL) {
-        bgSource->Close();
-        delete bgSource;
-    }
-    
-    if (fgSource != NULL) {
-        fgSource->Close();
-        delete fgSource;
-    }
-    
+    // Done
     delete render;
     
 //    gpMemory_leak_print(stdout);
@@ -320,7 +286,7 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     
     // Make sure all output files exist on disk and that they are not empty.
-    for (NSString *filePath in self.outputFiles) {
+    for (NSString *filePath in self.outputFiles.allValues) {
         BOOL fileExists = [fm fileExistsAtPath:filePath isDirectory:nil];
         if (!fileExists) {
             *error = [NSError errorWithDomain:HM_RENDER_DOMAIN
@@ -331,6 +297,11 @@
     }
     error = nil;
     return;
+}
+
+-(NSString *)filePathForOutputOfKind:(NSString *)outputKind
+{
+    return self.outputFiles[outputKind];
 }
 
 @end

@@ -207,7 +207,7 @@
 
 -(CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer
 {
-    image_type* original_bgr_image = image3_to_BGR(m_original_image, NULL);
+    image_type* original_bgr_image = image_bgr2rgb(m_original_image, m_original_image);
     
     // Where the magic happens. Process the frame and extract the foreground.
     m_foregroundExtraction->Process(original_bgr_image, 1, &m_mask);
@@ -216,7 +216,7 @@
     m_display_image = m_foregroundExtraction->GetImage(m_background_image, m_display_image);
     
     // Convert display image from bgr to rgb
-    image3_bgr2rgb(m_display_image);
+    image_bgr2rgb(m_display_image, m_display_image);
 
     // Debugging (if required in test apps)
     if (self.gmDebug) {
@@ -274,7 +274,7 @@
     // If we don't have a frame to inspect, skip.
     if (m_original_image == NULL) return;
     
-    image_to_inspect = image3_to_BGR(m_original_image, image_to_inspect);
+    image_to_inspect = image_bgr2rgb(m_original_image, image_to_inspect);
 
     // Get the background detection mark for this frame.
     HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);

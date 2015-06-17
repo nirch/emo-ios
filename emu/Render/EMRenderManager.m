@@ -2,6 +2,10 @@
 //  EMRenderManager.m
 //  emu
 //
+//  Singleton by choice.
+//  Use as singleton within the app and use instances in unit tests.
+//  Initialize with a seperate db instance / context when unit testing.
+//
 //  Created by Aviv Wolf on 6/14/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -16,6 +20,8 @@
 #import "EMDownloadsManager.h"
 
 @interface EMRenderManager()
+
+@property EMDB *db;
 
 // renderingQueue - a concurent queue for rendering emus.
 @property (atomic) dispatch_queue_t renderingQueue;
@@ -39,6 +45,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[EMRenderManager alloc] init];
+        [sharedInstance finalizeInitializations];
     });
     
     return sharedInstance;
@@ -50,18 +57,26 @@
     return [EMRenderManager sharedInstance];
 }
 
--(id)init
+-(void)finalizeInitializations
+{
+    [self initData];
+    [self initDownloadsManager];
+    [self initResources];
+    [self initQueues];
+    [self initObservers];
+    if (self.db == nil) self.db = EMDB.sh;
+}
+
+-(instancetype)initWithDB:(EMDB *)db
 {
     self = [super init];
     if (self) {
-        [self initData];
-        [self initDownloadsManager];
-        [self initResources];
-        [self initQueues];
-        [self initObservers];
+        self.db = db;
+        [self finalizeInitializations];
     }
     return self;
 }
+
 
 -(void)initData
 {
@@ -111,13 +126,14 @@
     
     // If emu already has all required local recources, put the emu on the idle queue
     // and it will wait there for concurrent rendering.
-    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    Emuticon *emu = [Emuticon findWithID:emuOID context:self.db.context];
     if ([emu.emuDef allResourcesAvailable]) {
         //
         self.idleEmusPool[emu.oid] = info;
     } else {
         // Not all resources are available for this emu.
         // enqueue it for download.
+        [self.downloadsManager enqueueEmuOIDForDownload:emuOID withInfo:info];
     }
     [self manageQueues];
 }
@@ -144,7 +160,7 @@
     // Get the emu
     NSEnumerator *enumerator = [self.idleEmusPool keyEnumerator];
     NSString *emuOID = [enumerator nextObject];
-    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    Emuticon *emu = [Emuticon findWithID:emuOID context:self.db.context];
     
     // Remove the emu from the idle pool
     [self.idleEmusPool removeObjectForKey:emuOID];
@@ -158,20 +174,20 @@
         //
         // Succesffuly rendered emu.
         //
-        Emuticon *renderedEmu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        Emuticon *renderedEmu = [Emuticon findWithID:emuOID context:self.db.context];
         [weakSelf.renderingEmusPool removeObjectForKey:renderedEmu.oid];
         renderedEmu.wasRendered = @YES;
-        [EMDB.sh save];
+        [self.db save];
         [weakSelf manageQueues];
         HMLOG(TAG, EM_VERBOSE, @"Rendered emu: %@", renderedEmu.emuDef.name);
     } failBlock:^{
         //
         // Failed rendering emu.
         //
-        Emuticon *failedEmu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        Emuticon *failedEmu = [Emuticon findWithID:emuOID context:self.db.context];
         [weakSelf.renderingEmusPool removeObjectForKey:failedEmu.oid];
         failedEmu.wasRendered = @NO;
-        [EMDB.sh save];
+        [self.db save];
         [weakSelf manageQueues];
         HMLOG(TAG, EM_VERBOSE, @"Failed rendering emu: %@", failedEmu.emuDef.name);
     }];
