@@ -78,7 +78,7 @@
     [application setMinimumBackgroundFetchInterval:[AppCFG tweakedInterval:@"background_fetches_minimum_interval" defaultValue:10800]];
 
     // Launched.
-    HMLOG(TAG, EM_DBG, @"Application launched");
+    HMLOG(TAG, EM_DBG, @"Application launched info:%@", launchOptions);
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     
     // Push notifications
@@ -90,7 +90,7 @@
     // Preload sounds
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
     [EMUISound sh];
-    
+        
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }
@@ -261,6 +261,7 @@
     if ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground  )
     {
         HMParams *params = [HMParams new];
+        [params addKey:AK_EP_NOTIFICATION_TYPE value:@"remote"];
         [self handleNotificationWithInfo:userInfo params:params];
     }
 }
@@ -270,26 +271,34 @@
 {
     HMLOG(TAG, EM_DBG, @"APN: Background fetch requested");
     NSString *packageOID = info[@"packageOID"];
-    [EMBackend.sh reloadPackagesInTheBackgroundWithNewDataHandler:^{
-        // Will try to download zipped resources for new package (if resources not available)
-        completionHandler(UIBackgroundFetchResultNewData);
-    } noNewDataHandler:^{
-        if (packageOID) {
-            HMLOG(TAG, EM_DBG, @"Checking package with id: %@", packageOID);
-            Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
-            if (package) {
-                [EMBackend.sh bgDownloadZippedResourcesForPackage:package
-                                                completionHandler:^{
-                                                    completionHandler(UIBackgroundFetchResultNewData);
-                                                } failHandler:^{
-                                                    completionHandler(UIBackgroundFetchResultFailed);
-                                                }];
+    
+    if (application.applicationState == UIApplicationStateBackground) {
+        [EMBackend.sh reloadPackagesInTheBackgroundWithNewDataHandler:^{
+            // Will try to download zipped resources for new package (if resources not available)
+            completionHandler(UIBackgroundFetchResultNewData);
+        } noNewDataHandler:^{
+            if (packageOID) {
+                HMLOG(TAG, EM_DBG, @"Checking package with id: %@", packageOID);
+                Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
+                if (package) {
+                    [EMBackend.sh bgDownloadZippedResourcesForPackage:package
+                                                    completionHandler:^{
+                                                        completionHandler(UIBackgroundFetchResultNewData);
+                                                    } failHandler:^{
+                                                        completionHandler(UIBackgroundFetchResultFailed);
+                                                    }];
+                }
             }
-        }
-        completionHandler(UIBackgroundFetchResultNoData);
-    } failedFetchHandler:^{
-        completionHandler(UIBackgroundFetchResultFailed);
-    }];
+            completionHandler(UIBackgroundFetchResultNoData);
+        } failedFetchHandler:^{
+            completionHandler(UIBackgroundFetchResultFailed);
+        }];
+    } else if (application.applicationState == UIApplicationStateInactive) {
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_NOTIFICATION_TYPE value:@"remote"];
+        [self handleNotificationWithInfo:info params:params];
+    }
+
 }
 
 -(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params

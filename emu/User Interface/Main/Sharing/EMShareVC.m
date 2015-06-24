@@ -207,7 +207,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat w = self.screenRect.size.width/6.5;
-    if (self.screenRect.size.width <= 320) w = self.screenRect.size.width/6.5;
+    if (self.screenRect.size.width <= 320) w = self.screenRect.size.width/5.2;
     return CGSizeMake(w, 80);
 }
 

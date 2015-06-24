@@ -356,7 +356,7 @@
 {
     if (pushToken == nil) return;
     [self.mixPanel.people addPushDeviceToken:pushToken];
-    [self personDetails:@{@"pushToken":pushToken}];
+    [self personDetails:@{@"pushToken":[pushToken description]}];
 }
 
 
