@@ -126,8 +126,37 @@
 @property(readonly, getter=isRecording) BOOL recording;
 
 #pragma mark - Camera params
+
+/**
+ * Switch to the other camera (if available) in the middle of an active session.
+ */
+-(void)switchCamera;
+
+/**
+ * Lock focus+exposure on point 0.5,0.5 (center)
+ */
 -(void)cameraLockedFocus;
+
+/**
+ * Unlock the focus+exposure and auto focus on point 0.5,0.5 (center).
+ */
 -(void)cameraUnlockedFocus;
+
+/**
+ * Refocus+exposure and lock camera on a given normalized point.
+ *
+ *  @param point            A normalized CGPoint (coord values 0.0 - 1.0) to refocus on.
+ *  @param inspectFrame     Bool indicating if to inspect a frame when focus relocked.
+ *                          (YES will be ignored if no video processor available)
+ */
+-(void)refocusOnPoint:(CGPoint)point inspectFrame:(BOOL)inspectFrame;
+
+/**
+ * Auto Refocus+exposure camera on a given normalized point.
+ *
+ *  @param point            A normalized CGPoint (coord values 0.0 - 1.0) to refocus on.
+ */
+-(void)autoFocusOnPoint:(CGPoint)point;
 
 @end
 

@@ -86,9 +86,34 @@
 }
 
 #pragma mark - Camera
+-(void)switchCamera
+{
+//    AVCaptureDevicePosition currentPosition = videoIn.device.position;
+//    AVCaptureDevicePosition otherPosition = currentPosition == AVCaptureDevicePositionFront? AVCaptureDevicePositionBack: AVCaptureDevicePositionFront;
+//    
+//    // First check that the device support the alternative position.
+//    AVCaptureDevice *otherCamera = [self videoDeviceWithPosition:otherPosition];
+//    if (otherCamera == nil) return;
+//    
+//    // We have the other camera, lets switch to it.
+//    [captureSession beginConfiguration];
+//    [captureSession removeInput:videoIn];
+//    NSError *error;
+//    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:otherCamera error:&error];
+//    [captureSession addInput:videoIn];
+//    [captureSession commitConfiguration];
+}
+
+
+
 -(void)cameraLockedFocus
 {
     CGPoint point = CGPointMake(0.5, 0.5);
+    [self cameraLockedFocusOnPoint:point];
+}
+
+-(void)cameraLockedFocusOnPoint:(CGPoint)point
+{
     AVCaptureDevice *device = [videoIn device];
     NSError *error = nil;
     if ([device lockForConfiguration:&error]) {
@@ -101,7 +126,7 @@
             device.focusMode = AVCaptureFocusModeLocked;
         }
         
-        // Lock exposure point to the middle of the screen.
+        // Lock exposure point to the point of interest.
         if ([device isExposurePointOfInterestSupported] &&
             [device isExposureModeSupported:AVCaptureExposureModeLocked]) {
             
@@ -127,6 +152,11 @@
 -(void)cameraUnlockedFocus
 {
     CGPoint point = CGPointMake(0.5, 0.5);
+    [self cameraUnlockedFocusOnPoint:point];
+}
+
+-(void)cameraUnlockedFocusOnPoint:(CGPoint)point
+{
     AVCaptureDevice *device = [videoIn device];
     NSError *error = nil;
     if ([device lockForConfiguration:&error]) {
@@ -161,6 +191,18 @@
         HMLOG(TAG, EM_ERR, @"Failed preparing camera for video processing.");
     }
 }
+
+-(void)refocusOnPoint:(CGPoint)point inspectFrame:(BOOL)inspectFrame
+{
+    [self cameraLockedFocusOnPoint:point];
+    
+}
+
+-(void)autoFocusOnPoint:(CGPoint)point
+{
+    [self cameraUnlockedFocusOnPoint:point];
+}
+
 
 #pragma mark - capture session
 - (void)setupAndStartCaptureSession
@@ -266,9 +308,17 @@
     
     // Should inpect the frame?
     BOOL thisFrameShouldBeInspected = (state == HMVideoProcessingStateInspectFrames ||
+                                       state == HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames ||
                                        state == HMVideoProcessingStateInspectAndProcessFrames) &&
                                         (extractCounter % 15 == 0);
+    if (state == HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames) {
+        // HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames
+        // ==> HMVideoProcessingStateProcessFrames
+        [self setVideoProcessingState:HMVideoProcessingStateProcessFrames];
+        state = self.videoProcessingState;
+    }
 
+    
     // Count frames
     extractCounter++;
     

@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet HMPreviewView *guiGLPreviewView;
 @property (weak, nonatomic) IBOutlet UIImageView *guiFakeFootage;
 
+@property (nonatomic) UIImageView *focusPointView;
+
 @end
 
 @implementation EMPreviewVC
@@ -44,6 +46,44 @@
     // Don't make OpenGLES calls while in the background.
     if ( [UIApplication sharedApplication].applicationState != UIApplicationStateBackground )
         [self.guiGLPreviewView displayPixelBuffer:pixelBuffer];
+}
+
+-(UIImageView *)focusPointView
+{
+    if (_focusPointView == nil) {
+        _focusPointView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        _focusPointView.image = [UIImage imageNamed:@"focusPoint"];
+        [self.view addSubview:_focusPointView];
+    }
+    return _focusPointView;
+}
+
+-(void)showFocusViewOnPoint:(CGPoint)point
+{
+    // Position
+    CGFloat x = MIN(MAX(point.x,0.0f),1.0f);
+    CGFloat y = MIN(MAX(point.y,0.0f),1.0f);
+    x = x * self.view.bounds.size.width;
+    y = y * self.view.bounds.size.height;
+    
+    __weak UIImageView *v = self.focusPointView;
+    v.center = CGPointMake(x, y);
+    v.alpha = 0.1;
+    v.transform = CGAffineTransformMakeScale(1.4, 1.4);
+    
+    // Animate
+    [UIView animateWithDuration:2.5 animations:^{
+        v.alpha = 0.4;
+        v.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        v.alpha = 1.0;
+        [UIView animateWithDuration:0.3
+                              delay:1.5
+                            options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             v.alpha = 0;
+                         } completion:nil];
+    }];
 }
 
 @end

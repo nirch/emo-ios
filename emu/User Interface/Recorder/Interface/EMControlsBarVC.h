@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) id<EMRecorderControlsDelegate> delegate;
 
+
 #pragma mark - States
 /**
  *  The state of the UI.

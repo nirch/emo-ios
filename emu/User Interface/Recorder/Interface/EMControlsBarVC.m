@@ -15,6 +15,7 @@
 #import "EMFlowButton.h"
 #import "EMMessageButton.h"
 #import "EMLabel.h"
+#import "HMPanel.h"
 
 @interface EMControlsBarVC () <
     EMCountDownDelegate
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet EMMessageButton *guiBadMessageButton;
 @property (weak, nonatomic) IBOutlet EMMessageButton *guiGoodMessageButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiLongMessage;
+@property (weak, nonatomic) IBOutlet UIButton *guiExposureButton;
+
 @property (nonatomic) BOOL userPressedContinueAnyway;
 @property (nonatomic) HMBGMark latestBGMark;
 @property (nonatomic) HMBackgroundMarks *bgMarks;
@@ -34,8 +37,12 @@
 @property (weak, nonatomic) IBOutlet EMFlowButton *guiNegativeButton;
 @property (weak, nonatomic) IBOutlet EMFlowButton *guiPositiveButton;
 
-// Recording & Countdown
+// Recording & Camera
 @property (weak, nonatomic) IBOutlet EMRecordButton *guiRecordButton;
+@property (weak, nonatomic) IBOutlet UIView *guiRefocusButtonContainer;
+@property (weak, nonatomic) IBOutlet UIView *guiSwitchCameraButtonContainer;
+
+// Countdown (will be deprecated soon)
 @property (weak, nonatomic) IBOutlet EMLabel *guiCountdownLabel;
 @property (nonatomic) NSInteger countDownNumber;
 
@@ -47,6 +54,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initExperiments];
     [self initState];
     [self initGUI];
 }
@@ -57,6 +65,16 @@
     [self layoutFixesIfRequired];
 }
 
+-(void)initExperiments
+{
+    BOOL showAdvancedCameraOptionsOnOnboarding = [HMPanel.sh boolForKey:VK_RECORDER_SHOW_ADVANCED_CAMERA_OPTIONS_ON_ONBOARDING fallbackValue:YES];
+    if ([self.delegate isOnboarding] && !showAdvancedCameraOptionsOnOnboarding) {
+        self.guiExposureButton.hidden = YES;
+    } else {
+        self.guiExposureButton.hidden = NO;
+    }
+}
+
 -(void)initState
 {
     self.userPressedContinueAnyway = NO;
@@ -65,6 +83,12 @@
     self.latestBGMarkTime = [[NSProcessInfo processInfo] systemUptime];
     self.bgMarks = [HMBackgroundMarks new];
     _state = EMRecorderControlsStateHidden;
+}
+
+-(NSInteger)countDownFrom
+{
+    NSNumber *number = [HMPanel.sh numberForKey:VK_RECORDER_RECORD_BUTTON_COUNTDOWN_FROM fallbackValue:@0];
+    return number.integerValue;
 }
 
 -(void)initGUI
@@ -158,6 +182,8 @@
     self.guiRecordButton.alpha = 0;
     self.guiCountdownLabel.alpha = 0;
     self.guiLongMessage.alpha = 0;
+    self.guiRefocusButtonContainer.alpha = 0;
+    self.guiSwitchCameraButtonContainer.alpha = 0;
 }
 
 -(void)stateHiddenAnimated:(BOOL)animated
@@ -191,6 +217,9 @@
     
     self.guiRecordButton.alpha = 1;
     self.guiGoodMessageButton.alpha = 1;
+    self.guiRefocusButtonContainer.alpha = 1;
+    self.guiSwitchCameraButtonContainer.alpha = 1;
+    
     [self.guiGoodMessageButton setTitle:LS(@"RECORDER_MESSAGE_WHEN_READY")
                                forState:UIControlStateNormal];
     [self.guiGoodMessageButton updateShowingIcon:NO positive:YES];
@@ -201,6 +230,8 @@
     // Update the count down to recording
     self.guiCountdownLabel.text = [SF:@"%@", @(self.countDownNumber)];
     self.guiCountdownLabel.alpha = 1;
+    self.guiRefocusButtonContainer.alpha = 0;
+    self.guiSwitchCameraButtonContainer.alpha = 0;
 }
 
 -(void)stateRecordingAnimated:(BOOL)animated
@@ -208,7 +239,9 @@
     // Hide the record button.
     self.guiCountdownLabel.text = nil;
     self.guiRecordButton.alpha = 0;
-    
+    self.guiRefocusButtonContainer.alpha = 0;
+    self.guiSwitchCameraButtonContainer.alpha = 0;
+
     // Notify the delegate that recording should start.
     [self.delegate controlSentAction:EMRecorderControlsActionStartRecording
                                 info:nil];
@@ -372,6 +405,13 @@
     self.guiGoodMessageButton.alpha = 1;
 }
 
+#pragma mark - Restarting
+-(void)restart
+{
+    [self.delegate controlSentAction:EMRecorderControlsActionRestart info:nil];
+}
+
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -390,8 +430,13 @@
     if (recordButton.isCounting) {
         [self cancelCountdown];
     } else {
-        [recordButton startCountDownFromNumber:3];
-        [EMUISound.sh playSoundNamed:SND_PRESSED_BUTTON];
+        NSInteger countDownFrom = [self countDownFrom];
+        if (countDownFrom > 0) {
+            [recordButton startCountDownFromNumber:countDownFrom];
+            [EMUISound.sh playSoundNamed:SND_PRESSED_BUTTON];
+        } else {
+            [recordButton.delegate countDownDidFinish];
+        }
         self.guiGoodMessageButton.alpha = 0;
     }
 }
@@ -408,6 +453,22 @@
     [self hideAll];
     [self.delegate controlSentAction:EMRecorderControlsActionYes
                                 info:nil];
+}
+
+- (IBAction)onPressedRefocusButton:(UIButton *)sender
+{
+    sender.hidden = YES;
+    [self.delegate controlSentAction:EMRecorderControlsActionRefocus
+                                info:nil];
+    dispatch_after(DTIME(2.6), dispatch_get_main_queue(), ^{
+        sender.hidden = NO;
+    });
+}
+
+- (IBAction)onPressedRestartButton:(UIButton *)sender
+{
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_RESTART_BUTTON];
+    [self restart];
 }
 
 @end

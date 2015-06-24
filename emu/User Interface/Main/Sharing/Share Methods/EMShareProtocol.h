@@ -19,13 +19,15 @@ typedef NS_ENUM(NSInteger, EMKShareMethod) {
     emkShareMethodAppleMessages                         = 7000,
     emkShareMethodOther                                 = 8000,
     emkShareMethodFile                                  = 9000,
-    emkShareMethodDocumentInteraction                   = 10000
+    emkShareMethodDocumentInteraction                   = 10000,
+    emkShareMethodTwitter                               = 11000
 };
 
 // What to share?
 typedef NS_ENUM(NSInteger, EMKShareOption) {
     emkShareOptionAnimatedGif           = 0,
-    emkShareOptionVideo                 = 1
+    emkShareOptionVideo                 = 1,
+    emkShareText                        = 2
 };
 
 

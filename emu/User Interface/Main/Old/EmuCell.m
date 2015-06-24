@@ -48,7 +48,7 @@
     
     self.guiAnimGifView.animatedImage = animGif;
     self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
-    //[self.guiAnimGifView startAnimating];
+    [self.guiAnimGifView startAnimating];
 }
 
 -(void)stopAnimating

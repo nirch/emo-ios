@@ -26,18 +26,20 @@
 #import "Package+Logic.h"
 
 // Keys for passing info around
-#define emkPath             @"path"
-#define emkIndexPath        @"indexPath"
-#define emkOID              @"oid"
-#define emkEmuticonOID      @"emuticon oid"
-#define emkEmuticonDefOID   @"emuticon definition oid"
-#define emkEmuticonDefName   @"emuticon definition name"
-#define emkFootageOID       @"footage oid"
-#define emkOutputOID        @"output oid"
-#define emkNumberOfFrames   @"number of frames"
-#define emkDuration         @"duration"
-#define emkDate             @"date"
-#define emkDebug            @"debug"
+#define emkPath                     @"path"
+#define emkResourcesLocalPath       @"resources local path"
+#define emkResourcesRemoteURL       @"resources remote url"
+#define emkIndexPath                @"indexPath"
+#define emkOID                      @"oid"
+#define emkEmuticonOID              @"emuticon oid"
+#define emkEmuticonDefOID           @"emuticon definition oid"
+#define emkEmuticonDefName          @"emuticon definition name"
+#define emkFootageOID               @"footage oid"
+#define emkOutputOID                @"output oid"
+#define emkNumberOfFrames           @"number of frames"
+#define emkDuration                 @"duration"
+#define emkDate                     @"date"
+#define emkDebug                    @"debug"
 
 typedef NS_ENUM(NSInteger, EMMediaDataType) {
     EMMediaDataTypeGIF      = 0,

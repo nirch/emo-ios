@@ -25,8 +25,11 @@
 @property (nonatomic) NSString *selectionMessage;
 
 -(void)shareSelection;
+
 -(void)shareAnimatedGif;
 -(void)shareVideo;
+-(void)shareText;
+
 -(void)cancel;
 
 @end

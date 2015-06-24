@@ -365,6 +365,42 @@ or
 			<key>description</key>
 			<string>The user pressed the restart button that causes the recorder to restart the flow of the recorder.</string>
 		</dict>
+		<key>Rec:refocus</key>
+		<dict>
+			<key>v</key>
+			<string>1.7.6</string>
+			<key>description</key>
+			<string>User requested to refocus + detect exposure + redetect background</string>
+			<key>params</key>
+			<dict>
+				<key>pointX</key>
+				<string>&lt;float&gt; - The x coordinate of the tap (normalized 0.0 - 1.0 values)
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview</string>
+				<key>pointY</key>
+				<string>&lt;float&gt; - The y coordinate of the tap (normalized 0.0 - 1.0 values)
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview</string>
+				<key>pointString</key>
+				<string>&lt;string&gt; - The (x,y) coordinate of the tap given as a string
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview</string>
+				<key>origin</key>
+				<string>&lt;string&gt; - How the user requested this to happen: &quot;exposure button&quot; or &quot;tapped preview&quot;</string>
+			</dict>
+		</dict>
 		<key>Rec:userPressedAppButton</key>
 		<dict>
 			<key>v</key>
@@ -399,6 +435,26 @@ or
     3 - EMOnBoardingStageRecording
     4 - EMOnBoardingStageFinishingUp
     5 - EMOnBoardingStageReview</string>
+			</dict>
+		</dict>
+		<key>Rec:userPressedSwitchCameraButton</key>
+		<dict>
+			<key>v</key>
+			<string>1.7.6</string>
+			<key>description</key>
+			<string>user pressed the switch camera button.</string>
+			<key>params</key>
+			<dict>
+				<key>stage</key>
+				<string>&lt;int&gt; - the stage this happened. Possible values:
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview</string>
+				<key>switchedTo</key>
+				<string>&lt;string&gt; - the camera the user switched to (front / back)</string>
 			</dict>
 		</dict>
 		<key>Rec:stageAlignStarted</key>
@@ -908,6 +964,20 @@ or
 				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
 			</dict>
 		</dict>
+		<key>Share:app</key>
+		<dict>
+			<key>v</key>
+			<string>1.7.6</string>
+			<key>description</key>
+			<string>User sent a link to the app on the app store.</string>
+			<key>params</key>
+			<dict>
+				<key>senderUI</key>
+				<string>&lt;string&gt; - The originating UI the share was initated from. Emoticon screen, keyboard, etc.</string>
+				<key>shareMethod</key>
+				<string>&lt;string&gt; - the name of the method of sharing (mail etc)</string>
+			</dict>
+		</dict>
 		<key>KB:didAppear</key>
 		<dict>
 			<key>v</key>
@@ -957,6 +1027,31 @@ or
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
 			</dict>
+		</dict>
+		<key>KB:selectedHashTag</key>
+		<dict>
+			<key>v</key>
+			<string>1.7.6</string>
+			<key>description</key>
+			<string>User pressed one of the hashtags in the alpha numeric keyboard</string>
+			<key>params</key>
+			<dict>
+				<key>hashtag</key>
+				<string>&lt;string&gt; - the hashtag</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the originating ui for this event</string>
+				<key>isPackage</key>
+				<string>&lt;bool&gt; - Yes if the hashtag is a name of a package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - The oid of the selected package (in case that isPackage is true)</string>
+			</dict>
+		</dict>
+		<key>KB:alphaNumericKBShown</key>
+		<dict>
+			<key>v</key>
+			<string>1.7.6</string>
+			<key>description</key>
+			<string>User opened the alpha numeric keyboard</string>
 		</dict>
 		<key>BE:zippedPackageDownloadSuccess</key>
 		<dict>

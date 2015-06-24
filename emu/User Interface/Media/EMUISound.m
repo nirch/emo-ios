@@ -57,14 +57,14 @@
                         SND_START_RECORDING:@"startRecording.wav",
                         SND_RECORDING_ENDED:@"endRecording.wav",
                         SND_SOFT_CLICK:@"plasticClickSound.wav",
-                        SND_SWIPE:@"simpleSwipe.wav"
+                        SND_SWIPE:@"simpleSwipe.wav",
+                        SND_FOCUSING:@"focusing.wav"
                         };
     
     // Load audio files from bundle.
     self.players = [NSMutableDictionary new];
     self.sounds = [NSMutableDictionary new];
     for (NSString *soundName in self.soundFiles.allKeys) {
-        
         NSString *soundFile = self.soundFiles[soundName];
         AFSoundItem *soundItem = [[AFSoundItem alloc] initWithLocalResource:soundFile atPath:nil];
         self.sounds[soundName] = soundItem;
@@ -74,12 +74,22 @@
 #pragma mark - playing
 -(void)playSoundNamed:(NSString *)soundName
 {
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    if (![audioSession.category isEqualToString:AVAudioSessionCategoryAmbient]) {
+        NSError *setCategoryErr = nil;
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&setCategoryErr];
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    }
+
     AFSoundPlayback *player;
     if (self.players[soundName]) {
         player = self.players[soundName];
         [player restart];
         [player play];
     } else {
+        NSError *setCategoryErr = nil;
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&setCategoryErr];
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
         AFSoundItem *soundItem = self.sounds[soundName];
         player = [[AFSoundPlayback alloc] initWithItem:soundItem];
         self.players[soundName] = player;

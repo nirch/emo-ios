@@ -12,10 +12,37 @@
 
 // Video Processing States
 typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
-    HMVideoProcessingStateIdle                                  = 0,
-    HMVideoProcessingStateInspectFrames                         = 1,
-    HMVideoProcessingStateProcessFrames                         = 2,
-    HMVideoProcessingStateInspectAndProcessFrames               = 3
+    /** 
+     * Idle:
+     * no video processing taking place.
+     */
+    HMVideoProcessingStateIdle                                      = 0,
+    
+    /**
+     * Inspect frames:
+     * continuesly inspect frames
+     */
+    HMVideoProcessingStateInspectFrames                             = 1,
+    
+    /**
+     * Process frames:
+     * continuesly process frames
+     */
+    HMVideoProcessingStateProcessFrames                             = 2,
+    
+    /**
+     * Inspect and process frames:
+     * continuesly inspect and process frames
+     */
+    HMVideoProcessingStateInspectAndProcessFrames                   = 3,
+    
+    /**
+     * Inspect the next (single) frame and process frames:
+     * Will inspect and process the next frame.
+     * After the next frame is inspected, the state is changed to
+     * HMVideoProcessingStateProcessFrames and will continue processing frames.
+     */
+    HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames    = 4
 };
 
 /**

@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 08:19:22 06/15/15 IDT
+//  Created by build script on 14:20:31 06/24/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -503,10 +503,33 @@ user pressed the emu button at the top and an 'about message' was
 #define AK_E_ITEMS_USER_SELECTED_ITEM @"Items:userSelectedItem"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User opened the alpha numeric keyboard
+**/
+#define AK_E_KB_ALPHA_NUMERIC_KB_SHOWN @"KB:alphaNumericKBShown"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The keyboard appeared (event sent only when user actually enabled
     keyboard full access)
 **/
 #define AK_E_KB_DID_APPEAR @"KB:didAppear"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User pressed one of the hashtags in the alpha numeric keyboard
+**/
+#define AK_E_KB_SELECTED_HASH_TAG @"KB:selectedHashTag"
+
+/** Param:isPackage --> <bool> - Yes if the hashtag is a name of a package **/
+#define AK_EP_IS_PACKAGE @"isPackage"
+
+/** Param:packageOID --> <string> - The oid of the selected package (in case that isPackage is true) **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:originUI --> <string> - the originating ui for this event **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:hashtag --> <string> - the hashtag **/
+#define AK_EP_HASHTAG @"hashtag"
+
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 User pressed one of the emoticons for copying
@@ -616,6 +639,42 @@ The recorder screen was opened and just appeared on screen. The event
 
 /** Param:packageOID --> <string> - the oid of the related package (sent even in onboarding according to the used package set in AppCFG) **/
 #define AK_EP_PACKAGE_OID @"packageOID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User requested to refocus + detect exposure + redetect background
+**/
+#define AK_E_REC_REFOCUS @"Rec:refocus"
+
+/** Param:pointX --> <float> - The x coordinate of the tap (normalized 0.0 - 1.0 values)
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview **/
+#define AK_EP_POINT_X @"pointX"
+
+/** Param:pointY --> <float> - The y coordinate of the tap (normalized 0.0 - 1.0 values)
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview **/
+#define AK_EP_POINT_Y @"pointY"
+
+/** Param:origin --> <string> - How the user requested this to happen: "exposure button" or "tapped preview" **/
+#define AK_EP_ORIGIN @"origin"
+
+/** Param:pointString --> <string> - The (x,y) coordinate of the tap given as a string
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview **/
+#define AK_EP_POINT_STRING @"pointString"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -835,6 +894,24 @@ The user pressed the restart button that causes the recorder to
 #define AK_E_REC_USER_PRESSED_RESTART_BUTTON @"Rec:userPressedRestartButton"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+user pressed the switch camera button.
+**/
+#define AK_E_REC_USER_PRESSED_SWITCH_CAMERA_BUTTON @"Rec:userPressedSwitchCameraButton"
+
+/** Param:switchedTo --> <string> - the camera the user switched to (front / back) **/
+#define AK_EP_SWITCHED_TO @"switchedTo"
+
+/** Param:stage --> <int> - the stage this happened. Possible values:
+	0 - EMOnBoardingStageWelcome
+    1 - EMOnBoardingStageAlign
+    2 - EMOnBoardingStageExtractionPreview
+    3 - EMOnBoardingStageRecording
+    4 - EMOnBoardingStageFinishingUp
+    5 - EMOnBoardingStageReview **/
+#define AK_EP_STAGE @"stage"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Recorder was dismissed.
 **/
 #define AK_E_REC_WAS_DISMISSED @"Rec:wasDismissed"
@@ -875,6 +952,18 @@ User opened iOS settings application.
 
 /** Param:reason --> <string> - The reason the user asked to open the settings app. **/
 #define AK_EP_REASON @"reason"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User sent a link to the app on the app store.
+**/
+#define AK_E_SHARE_APP @"Share:app"
+
+/** Param:senderUI --> <string> - The originating UI the share was initated from. Emoticon screen, keyboard, etc. **/
+#define AK_EP_SENDER_UI @"senderUI"
+
+/** Param:shareMethod --> <string> - the name of the method of sharing (mail etc) **/
+#define AK_EP_SHARE_METHOD @"shareMethod"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

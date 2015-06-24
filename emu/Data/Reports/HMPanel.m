@@ -185,6 +185,7 @@
     
     // Report event to mixpanel.
     [self.mixPanel track:event properties:info];
+    HMLOG(TAG, EM_VERBOSE, @"Event:%@ info:%@", event, info);
 }
 
 -(void)reportBuildInfo
@@ -353,7 +354,9 @@
 
 -(void)personPushToken:(NSData *)pushToken
 {
+    if (pushToken == nil) return;
     [self.mixPanel.people addPushDeviceToken:pushToken];
+    [self personDetails:@{@"pushToken":pushToken}];
 }
 
 

@@ -10,5 +10,6 @@
 
 -(void)onboardingDidGoBackToStageNumber:(NSInteger)stageNumber;
 -(void)onboardingUserWantsToCancel;
+-(void)onboardingWantsToSwitchCamera;
 
 @end

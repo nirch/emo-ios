@@ -271,8 +271,8 @@
 {
     NSString *outputName = [[NSUUID UUID] UUIDString];
     
-    NSURL *urlForFG = [[NSBundle bundleForClass:[self class]] URLForResource:@"gif-transp" withExtension:@"gif"];
-    XCTAssertNotNil(urlForFG, @"Missing test-fg resource?");
+//    NSURL *urlForFG = [[NSBundle bundleForClass:[self class]] URLForResource:@"flames" withExtension:@"gif"];
+//    XCTAssertNotNil(urlForFG, @"Missing test-fg resource?");
     
     NSURL *urlForBG = [[NSBundle bundleForClass:[self class]] URLForResource:@"gif-bg-16" withExtension:@"gif"];
     XCTAssertNotNil(urlForBG,  @"Missing test-bg resource?");
@@ -282,7 +282,7 @@
     renderer.emuticonDefOID = @"test emu";
     renderer.footageOID = @"test footage";
     renderer.backLayerPath = [urlForBG path];
-    renderer.frontLayerPath = [urlForFG path];
+    //renderer.frontLayerPath = [urlForFG path];
     renderer.userImagesPathsArray = [self arrayOfFakeUserFrames:16];
     renderer.numberOfFrames = 16;
     renderer.duration = 5;

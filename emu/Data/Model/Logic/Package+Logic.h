@@ -151,6 +151,14 @@
 -(NSURL *)urlForResourceNamed:(NSString *)resourceName;
 
 
+/**
+ *  A remote url for folder of resources of this package.
+ *
+ *  @return NSURL pointing to where the resources of the pack are stored.
+ */
+-(NSURL *)urlForResources;
+
+
 -(NSArray *)emuticonsWithNoSpecificFootage;
 -(NSURL *)urlForPackageIcon;
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;

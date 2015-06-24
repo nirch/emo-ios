@@ -119,7 +119,7 @@
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu cell" id="NrH-gI-DET" customClass="EmuCell">
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu kb cell" id="NrH-gI-DET" customClass="EmuKBCell">
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
@@ -155,8 +155,8 @@
                                                             <constraint firstAttribute="trailing" secondItem="la8-wb-pv4" secondAttribute="trailing" constant="2" id="w7c-C6-x3E"/>
                                                         </constraints>
                                                         <connections>
-                                                            <outlet property="guiActivity" destination="tnZ-UQ-Odo" id="DY1-Zs-mmh"/>
-                                                            <outlet property="guiAnimGifView" destination="la8-wb-pv4" id="LDB-UR-cKJ"/>
+                                                            <outlet property="guiActivity" destination="tnZ-UQ-Odo" id="tba-0T-GuF"/>
+                                                            <outlet property="guiAnimGifView" destination="la8-wb-pv4" id="paV-2s-B4c"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>

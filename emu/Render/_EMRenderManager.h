@@ -13,13 +13,14 @@
 @class EmuticonDef;
 @class Emuticon;
 @class EMDB;
+@class AFHTTPSessionManager;
 
 @interface EMRenderManager : NSObject
 
 #pragma mark - Initialization
 +(EMRenderManager *)sharedInstance;
 +(EMRenderManager *)sh;
--(instancetype)initWithDB:(EMDB *)db;
+-(instancetype)initWithDB:(EMDB *)db session:(AFHTTPSessionManager *)session;
 
 #pragma mark - Managing rendering queues
 /** 

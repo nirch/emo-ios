@@ -25,6 +25,8 @@
 
     // The original captured image
     image_type *m_original_image;
+    image_type *m_original_rgb_image;
+    
     image_type* image_to_inspect;
     
     // The mask is the result of the algorithm
@@ -203,24 +205,23 @@
     m_original_image = CVtool::CVPixelBufferRef_to_image_crop(pixelBuffer,
                                                               0, 80, 480, 480,
                                                               m_original_image);
+    m_original_rgb_image = image_bgr2rgb(m_original_image, m_original_rgb_image);
 }
 
 -(CMSampleBufferRef)processFrame:(CMSampleBufferRef)sampleBuffer
 {
-    image_type* original_bgr_image = image_bgr2rgb(m_original_image, m_original_image);
-    
     // Where the magic happens. Process the frame and extract the foreground.
-    m_foregroundExtraction->Process(original_bgr_image, 1, &m_mask);
+    m_foregroundExtraction->Process(m_original_rgb_image, 1, &m_mask);
     
     // Stitching the foreground and the background together (and then converting to RGB)
     m_display_image = m_foregroundExtraction->GetImage(m_background_image, m_display_image);
     
     // Convert display image from bgr to rgb
-    image_bgr2rgb(m_display_image, m_display_image);
+    m_display_image = image_bgr2rgb(m_display_image, m_display_image);
 
     // Debugging (if required in test apps)
     if (self.gmDebug) {
-        [self.gmDebug originalImage:original_bgr_image];
+        [self.gmDebug originalImage:m_original_rgb_image];
     }
     
     // Taking care of the output image.
@@ -230,14 +231,11 @@
             //
             // Using the mask we got from UB->Process()
             // Set pixels recognized as background as alpha with maximum transparency.
-            m_output_image = imageA_set_alpha_inversed_mask(original_bgr_image,  // The The original image taken (cropped)
-                                                            255,                 // The alpha amount to add to the pixels marked in the mask.
-                                                            m_mask,              // The mask calculated by the algorithm ->Process method.
-                                                            m_output_image);     // The output image.
+            m_output_image = imageA_set_alpha_inversed_mask(m_original_image,   // The The original image taken (cropped)
+                                                            255,                    // The alpha amount to add to the pixels marked in the mask.
+                                                            m_mask,                 // The mask calculated by the algorithm ->Process method.
+                                                            m_output_image);        // The output image.
             m_output_image->timeStamp = output_t.value;
-            
-            // Destroying the temp image
-            image_destroy(original_bgr_image, 1);
         });
     }
     

@@ -11,6 +11,7 @@
 #import "EMDB.h"
 #import "EMPackageCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "HMPanel.h"
 
 @interface EMPackagesVC() <
     UICollectionViewDataSource,
@@ -283,19 +284,30 @@
 {
     if (self.showMixedPackage) {
         if (indexPath.item == 0) {
-            [self selectThisPackage:nil];
+            [self selectThisPackage:nil originUI:nil];
             return;
         } else {
             indexPath = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:0];
         }
     }
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self selectThisPackage:package];
+    
+    NSString *originUI = self.onlyRenderedPackages? @"kb packages bar" : nil;
+    [self selectThisPackage:package originUI:originUI];
 }
 
--(void)selectThisPackage:(Package *)package
+-(void)selectThisPackage:(Package *)package originUI:(NSString *)originUI
 {
     [self selectThisPackage:package highlightOnly:NO];
+    
+    if ([originUI hasPrefix:@"kb"]) {
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_IS_PACKAGE value:@YES];
+        [params addKey:AK_EP_PACKAGE_NAME value:package.name];
+        [params addKey:AK_EP_PACKAGE_OID value:package.oid];
+        [params addKey:AK_EP_ORIGIN_UI value:originUI];
+        [HMPanel.sh analyticsEvent:AK_E_KB_SELECTED_HASH_TAG info:params.dictionary];
+    }
 }
 
 -(void)selectThisPackage:(Package *)package highlightOnly:(BOOL)highlightOnly

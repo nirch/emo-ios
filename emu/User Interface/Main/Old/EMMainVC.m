@@ -33,6 +33,8 @@
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "EMCaches.h"
 
+#import "EMShareMail.h"
+
 @interface EMMainVC () <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
@@ -40,7 +42,8 @@
     EMRecorderDelegate,
     UIGestureRecognizerDelegate,
     EMPackageSelectionDelegate,
-    EMInterfaceDelegate
+    EMInterfaceDelegate,
+    EMShareDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
@@ -57,7 +60,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRetakeButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiBackToFBMButton;
 
-
+@property (nonatomic) EMShare *sharer;
 
 @property (weak, nonatomic) EMSplashVC *splashVC;
 
@@ -344,7 +347,7 @@
     Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
     if (package == nil) return;
     
-    [self.packagesBarVC selectThisPackage:package];
+    [self.packagesBarVC selectThisPackage:package originUI:nil];
 }
 
 
@@ -651,7 +654,7 @@
         
         UserFootage *mostPrefferedFootage = [emu mostPrefferedUserFootage];
         if (mostPrefferedFootage != nil) {
-//            [EMRenderManager.sh renderingRequiredForEmu:emu info:info];
+            [EMRenderManager.sh renderingRequiredForEmu:emu info:info];
         } else {
             [self failedCell:cell];
         }
@@ -1051,6 +1054,7 @@
     if (notificationSettings.types == UIUserNotificationTypeNone) {
         [actionsMapping addAction:@"NOTIFICATIONS_ENABLE" text:LS(@"NOTIFICATIONS_ENABLE") section:sect];
     }
+    [actionsMapping addAction:@"USER_CHOICE_SHARE_APP" text:LS(@"USER_CHOICE_SHARE_APP") section:sect];
     [actionsMapping addAction:@"USER_CHOICE_ABOUT_KB" text:LS(@"USER_CHOICE_ABOUT_KB") section:sect];
     [actionsMapping addAction:@"USER_CHOICE_ABOUT" text:LS(@"USER_CHOICE_ABOUT") section:sect];
     EMHolySheetSection *section2 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:sect] buttonStyle:JGActionSheetButtonStyleDefault];
@@ -1130,12 +1134,16 @@
         
         // Debug screen
         [self performSegueWithIdentifier:@"debug screen segue" sender:nil];
+
+    } else if ([actionName isEqualToString:@"USER_CHOICE_SHARE_APP"]) {
+
+        [self shareApp];
         
     } else if ([actionName isEqualToString:@"USER_CHOICE_ABOUT"]) {
         
         // About message.
         [self aboutMessage];
-        
+
     } else if ([actionName isEqualToString:@"NOTIFICATIONS_ENABLE"]) {
         
         // Go to the application settings screen.
@@ -1149,6 +1157,48 @@
     }
 }
 
+#pragma mark - Share app
+-(void)shareApp
+{
+    NSString *subjectString = [HMPanel.sh stringForKey:VK_TEXT_SHARE_APP_SUBJECT fallbackValue:@"Emu - Selfie Stickers"];
+    NSString *body = [HMPanel.sh stringForKey:VK_TEXT_SHARE_APP_BODY fallbackValue:@"Hi\n\nCheck out this cool app:\n\nEmu - Selfie Stickers\nhttps://geo.itunes.apple.com/app/id969789079?mt=8&uo=6"];
+    self.sharer = [EMShareMail new];
+    self.sharer.objectToShare = @{
+                                  @"subject":subjectString,
+                                  @"body":body
+                                  };
+    self.sharer.shareOption = emkShareText;
+    self.sharer.viewController = self;
+    self.sharer.view = self.view;
+    self.sharer.delegate = self;
+    [self.sharer share];
+}
+
+
+#pragma mark - EMShareDelegate
+// Sharing did happen.
+-(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
+{
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_SENDER_UI value:@"main"];
+    [params addKey:AK_EP_SHARE_METHOD value:@"mail"];
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_APP info:params.dictionary];
+}
+
+// Sharing was cancelled.
+-(void)sharerDidCancelWithInfo:(NSDictionary *)info
+{
+}
+
+// Sharing failed.
+-(void)sharerDidFailWithInfo:(NSDictionary *)info
+{
+}
+
+// An optional call, just for finishing up when required.
+-(void)sharerDidFinishWithInfo:(NSDictionary *)info
+{
+}
 
 #pragma mark - About message
 -(void)aboutMessage

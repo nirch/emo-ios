@@ -27,11 +27,12 @@
 @property (atomic) dispatch_queue_t renderingQueue;
 
 // An unordered pool of emus that require rendering.
-@property (nonatomic) NSMutableDictionary *emusInfo;
-@property (nonatomic) NSMutableDictionary *idleEmusPool;
+@property (nonatomic) NSMutableDictionary *readyForRenderEmusPool;
 @property (nonatomic) NSMutableDictionary *renderingEmusPool;
 @property (nonatomic) NSString *silhouetteImagesPath;
 @property (nonatomic) EMDownloadsManager *downloadsManager;
+@property (nonatomic) AFHTTPSessionManager *session;
+
 
 @end
 
@@ -67,11 +68,12 @@
     if (self.db == nil) self.db = EMDB.sh;
 }
 
--(instancetype)initWithDB:(EMDB *)db
+-(instancetype)initWithDB:(EMDB *)db session:(AFHTTPSessionManager *)session;
 {
     self = [super init];
     if (self) {
         self.db = db;
+        self.session = session;
         [self finalizeInitializations];
     }
     return self;
@@ -80,8 +82,7 @@
 
 -(void)initData
 {
-    self.emusInfo = [NSMutableDictionary new];
-    self.idleEmusPool = [NSMutableDictionary new];
+    self.readyForRenderEmusPool = [NSMutableDictionary new];
     self.renderingEmusPool = [NSMutableDictionary new];
 }
 
@@ -129,7 +130,7 @@
     Emuticon *emu = [Emuticon findWithID:emuOID context:self.db.context];
     if ([emu.emuDef allResourcesAvailable]) {
         //
-        self.idleEmusPool[emu.oid] = info;
+        self.readyForRenderEmusPool[emu.oid] = info;
     } else {
         // Not all resources are available for this emu.
         // enqueue it for download.
@@ -146,7 +147,7 @@
     //
     // Rendering emus that already have all required resources locally.
     //
-    if (self.renderingEmusPool.count < MAX_CONCURRENT_RENDERS && self.idleEmusPool.count>0) {
+    if (self.readyForRenderEmusPool.count < MAX_CONCURRENT_RENDERS && self.readyForRenderEmusPool.count>0) {
         [self popEmuFromIdleEmusPoolAndRender];
     }
 }
@@ -158,16 +159,17 @@
 -(void)popEmuFromIdleEmusPoolAndRender
 {
     // Get the emu
-    NSEnumerator *enumerator = [self.idleEmusPool keyEnumerator];
+    NSEnumerator *enumerator = [self.readyForRenderEmusPool keyEnumerator];
     NSString *emuOID = [enumerator nextObject];
     Emuticon *emu = [Emuticon findWithID:emuOID context:self.db.context];
     
     // Remove the emu from the idle pool
-    [self.idleEmusPool removeObjectForKey:emuOID];
+    NSDictionary *info = self.readyForRenderEmusPool[emuOID];
+    [self.readyForRenderEmusPool removeObjectForKey:emuOID];
     HMLOG(TAG, EM_DBG, @"Emu:%@/%@ will send for rendering.", emu.emuDef.package.name, emu.emuDef.name);
 
     // Put on rendering pool.
-    self.renderingEmusPool[emu.oid] = @YES;
+    self.renderingEmusPool[emu.oid] = info;
 
     __weak EMRenderManager *weakSelf = self;
     [self renderEmu:emu completionBlock:^{

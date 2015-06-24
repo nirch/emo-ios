@@ -23,7 +23,7 @@
 
 -(BOOL)isEmpty;
 
--(void)selectThisPackage:(Package *)package;
+-(void)selectThisPackage:(Package *)package originUI:(NSString *)originUI;
 -(void)selectThisPackage:(Package *)package highlightOnly:(BOOL)highlightOnly;
 
 -(void)selectPackageAtIndex:(NSInteger)index;

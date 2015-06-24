@@ -75,7 +75,6 @@
     
     // Open the composer with the animated gif as attachment
     self.picker = [[MFMailComposeViewController alloc] init];
-    //    self.picker.delegate = (id<UINavigationControllerDelegate>)self.viewController.navigationController;
     self.picker.mailComposeDelegate = self;
     [self.picker addAttachmentData:videoData
                           mimeType:@"public.mpeg-4"
@@ -87,7 +86,30 @@
 }
 
 
+-(void)shareText
+{
+    [super shareText];
+    
+    // First check if mail client configured correctly.
+    if (![MFMailComposeViewController canSendMail]) {
+        [self.view makeToast:LS(@"SHARE_TOAST_MAIL_CLIENT_NOT_CONFIGURED")];
+        [self.delegate sharerDidFailWithInfo:self.info];
+        return;
+    }
 
+    NSString *subject = self.objectToShare[@"subject"];
+    NSString *body = self.objectToShare[@"body"];
+    
+    self.picker = [[MFMailComposeViewController alloc] init];
+    self.picker.mailComposeDelegate = self;
+
+    [self.picker setSubject:subject];
+    [self.picker setMessageBody:body isHTML:NO];
+    
+    [self.viewController presentViewController:self.picker
+                                      animated:YES
+                                    completion:nil];
+}
 
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller

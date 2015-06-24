@@ -13,6 +13,7 @@
 #define SND_CANCEL          @"cancel"
 #define SND_SOFT_CLICK      @"soft click"
 #define SND_SWIPE           @"swipe"
+#define SND_FOCUSING        @"focusing"
 
 
 

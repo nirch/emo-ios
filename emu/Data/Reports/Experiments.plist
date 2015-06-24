@@ -137,6 +137,42 @@
 			<key>valueType</key>
 			<string>String</string>
 		</dict>
+		<key>recorderRecordButtonCountdownFrom</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Int&gt; - Number of seconds to countdown from before starting to record (if 0 will not count down and start recording immediately)</string>
+			<key>defaultValue</key>
+			<integer>0</integer>
+			<key>valueType</key>
+			<string>Number</string>
+		</dict>
+		<key>recorderShowAdvancedCameraOptionsOnOnboarding</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Bool&gt; - Boolean value indicating if the advanced camera options are shown to the user when the recorder is opened for the first time for onboarding.</string>
+			<key>defaultValue</key>
+			<false/>
+			<key>valueType</key>
+			<string>Bool</string>
+		</dict>
+		<key>textShareAppSubject</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;String&gt; - The subject text for the email sent when the user select to share app link using email.</string>
+			<key>defaultValue</key>
+			<string>Emu - Selfie Stickers</string>
+			<key>valueType</key>
+			<string>String</string>
+		</dict>
+		<key>textShareAppBody</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;String&gt; - The body text for the email sent when the user select to share app link using email.</string>
+			<key>defaultValue</key>
+			<string>Hi\n\nCheck out this cool app:\n\nEmu - Selfie Stickers\nhttps://geo.itunes.apple.com/app/id969789079?mt=8&amp;uo=6</string>
+			<key>valueType</key>
+			<string>String</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

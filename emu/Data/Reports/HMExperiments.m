@@ -65,6 +65,50 @@ description: <String> - A list of preffered emus oids to use for preview in the 
 OptimizelyVariableKeyForString(onboardingEmusForPreviewList, @"");
 
 
+/**
+---------------------------------------
+recorderRecordButtonCountdownFrom
+---------------------------------------
+value type: Number
+default values: 0
+description: <Int> - Number of seconds to countdown from before starting to record (if 0 will not count down and start recording immediately)
+*/
+OptimizelyVariableKeyForNumber(recorderRecordButtonCountdownFrom, @0);
+
+
+/**
+---------------------------------------
+recorderShowAdvancedCameraOptionsOnOnboarding
+---------------------------------------
+value type: Bool
+default values: False
+description: <Bool> - Boolean value indicating if the advanced camera options are shown to the user when the recorder is opened for the first time for onboarding.
+*/
+OptimizelyVariableKeyForBool(recorderShowAdvancedCameraOptionsOnOnboarding, NO);
+
+
+/**
+---------------------------------------
+textShareAppBody
+---------------------------------------
+value type: String
+default values: Hi\n\nCheck out this cool app:\n\nEmu - Selfie Stickers\nhttps://geo.itunes.apple.com/app/id969789079?mt=8&uo=6
+description: <String> - The body text for the email sent when the user select to share app link using email.
+*/
+OptimizelyVariableKeyForString(textShareAppBody, @"Hi\n\nCheck out this cool app:\n\nEmu - Selfie Stickers\nhttps://geo.itunes.apple.com/app/id969789079?mt=8&uo=6");
+
+
+/**
+---------------------------------------
+textShareAppSubject
+---------------------------------------
+value type: String
+default values: Emu - Selfie Stickers
+description: <String> - The subject text for the email sent when the user select to share app link using email.
+*/
+OptimizelyVariableKeyForString(textShareAppSubject, @"Emu - Selfie Stickers");
+
+
 
 @implementation HMExperiments
 
@@ -77,7 +121,11 @@ OptimizelyVariableKeyForString(onboardingEmusForPreviewList, @"");
 			@"featureVideoRenderExtraUserSettings":featureVideoRenderExtraUserSettings,
 			@"featureVideoRenderWithAudio":featureVideoRenderWithAudio,
 			@"iconNameNavRetake":iconNameNavRetake,
-			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList
+			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList,
+			@"recorderRecordButtonCountdownFrom":recorderRecordButtonCountdownFrom,
+			@"recorderShowAdvancedCameraOptionsOnOnboarding":recorderShowAdvancedCameraOptionsOnOnboarding,
+			@"textShareAppBody":textShareAppBody,
+			@"textShareAppSubject":textShareAppSubject
         };
     }
     return self;

@@ -14,10 +14,14 @@ typedef NS_ENUM(NSInteger, EMRecorderControlsAction) {
     EMRecorderControlsActionYes                         = 1100,
     EMRecorderControlsActionNo                          = 1200,
     EMRecorderControlsActionStartRecording              = 1300,
-    EMRecorderControlsActionRecordingDurationEnded      = 1400
+    EMRecorderControlsActionRecordingDurationEnded      = 1400,
+    EMRecorderControlsActionRestart                     = 1500,
+    EMRecorderControlsActionRefocus                     = 1600
 };
 
 -(void)controlSentAction:(EMRecorderControlsAction)action
                     info:(NSDictionary *)info;
+
+-(BOOL)isOnboarding;
 
 @end

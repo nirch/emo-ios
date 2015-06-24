@@ -8,7 +8,7 @@
 
 #import "EMEmusKeyboardVC.h"
 #import "EMDB.h"
-#import "EmuCell.h"
+#import "EmuKBCell.h"
 #import "EMShareCopy.h"
 #import "HMPanel.h"
 #import "EMAlphaNumericKeyboard.h"
@@ -219,8 +219,8 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"emu cell";
-    EmuCell *cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
+    static NSString *cellIdentifier = @"emu kb cell";
+    EmuKBCell *cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                                                       forIndexPath:indexPath];
     [self configureCell:cell forIndexPath:indexPath];
     return cell;
@@ -254,14 +254,13 @@
 
 
 #pragma mark - Cells & Views
--(void)configureCell:(EmuCell *)cell
+-(void)configureCell:(EmuKBCell *)cell
         forIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.transform = CGAffineTransformIdentity;
     cell.alpha = 1;
     cell.backgroundColor = [UIColor clearColor];
-    cell.shouldCacheGifData = NO;
     if (emu.wasRendered.boolValue) {
         [cell.guiActivity stopAnimating];
         cell.animatedGifURL = [emu animatedGifURL];
@@ -269,10 +268,6 @@
         // TODO: support rendering in keyboard.
         [cell.guiActivity startAnimating];
         cell.animatedGifURL = nil;
-        //        [EMRenderManager.sh enqueueEmu:emu info:@{
-        //                                                  @"indexPath":indexPath,
-        //                                                  @"emuticonOID":emu.oid
-        //                                                  }];
     }
     
 }
@@ -431,7 +426,7 @@
     [self hideAlphaNumericKBAnimated:YES];
     if (info[@"package"]) {
         Package *package = info[@"package"];
-        [self.packagesVC selectThisPackage:package];
+        [self.packagesVC selectThisPackage:package originUI:@"kb alphanumeric"];
     }
 }
 
@@ -449,6 +444,7 @@
     self.guiAlphaNumericKBContainer.transform = CGAffineTransformIdentity;
     self.guiAlphaNumericKBContainer.alpha = 1;
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_ALPHA_NUMERIC_KB_APPEARANCES_COUNT];
+    [HMPanel.sh analyticsEvent:AK_E_KB_ALPHA_NUMERIC_KB_SHOWN];
 }
 
 -(void)hideAlphaNumericKBAnimated:(BOOL)animated

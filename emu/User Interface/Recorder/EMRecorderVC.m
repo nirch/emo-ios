@@ -41,6 +41,7 @@
 #import "HMBackgroundMarks.h"
 #import "AppManagement.h"
 #import "EMShareDebuggingFile.h"
+#import "HMPanel.h"
 
 
 @interface EMRecorderVC () <
@@ -101,6 +102,7 @@
 //
 @property (strong, nonatomic, readwrite) HMCaptureSession *captureSession;
 @property (weak, nonatomic) HMGreenMachine *greenMachine;
+@property (nonatomic) BOOL currentlyAutoFocusing;
 
 
 //
@@ -706,6 +708,14 @@
     [self.recorderSessionAnalyticsParams addKey:AK_EP_FINISHED_FLOW valueIfNotNil:@0];
     [self.delegate recorderCanceledByTheUserInFlow:self.flowType
                                               info:self.recorderSessionAnalyticsParams.dictionary];
+}
+
+-(void)onboardingWantsToSwitchCamera
+{
+    [self.captureSession switchCamera];
+    
+    // Restart.
+    [self stateRestart];
 }
 
 #pragma mark - Updating States
@@ -1396,6 +1406,14 @@
         [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_REVIEW_USER_PRESSED_CONFIRM_BUTTON
                                  info:params.dictionary];
         
+    } else if (action == EMRecorderControlsActionRestart) {
+        
+        [self stateRestart];
+        
+    } else if (action == EMRecorderControlsActionRefocus) {
+
+        [self refocusOnPoint:CGPointMake(0.5, 0.5) originUI:@"exposure button"];
+        
     } else {
         /*
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
@@ -1410,6 +1428,11 @@
                                                            @"state":@(self.recorderState)
                                                            }];
     }
+}
+
+-(BOOL)isOnboarding
+{
+    return self.flowType == EMRecorderFlowTypeOnboarding;
 }
 
 #pragma mark - Debugging
@@ -1469,6 +1492,35 @@
                                                       userInfo:info];
 }
 
+#pragma mark - Refocus
+-(void)refocusOnPoint:(CGPoint)normalizedPoint originUI:(NSString *)originUI
+{
+    if (self.currentlyAutoFocusing) return;
+
+    self.currentlyAutoFocusing = YES;
+    [EMUISound.sh playSoundNamed:SND_FOCUSING];
+
+    [self.previewVC showFocusViewOnPoint:normalizedPoint];
+    
+    // Refocus
+    [self.captureSession autoFocusOnPoint:normalizedPoint];
+    self.currentlyAutoFocusing = YES;
+    dispatch_after(DTIME(2.6), dispatch_get_main_queue(), ^{
+        self.currentlyAutoFocusing = NO;
+        [self.captureSession refocusOnPoint:normalizedPoint inspectFrame:YES];
+        [self.captureSession setVideoProcessingState:HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames
+                                                info:nil];
+    });
+    
+    // Analytics
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_POINT_X value:@(normalizedPoint.x)];
+    [params addKey:AK_EP_POINT_Y value:@(normalizedPoint.y)];
+    [params addKey:AK_EP_POINT_STRING value:[SF:@"(%@,%@)", @(normalizedPoint.x),@(normalizedPoint.y)]];
+    [params addKey:AK_EP_ORIGIN valueIfNotNil:originUI];
+    [HMPanel.sh analyticsEvent:AK_E_REC_REFOCUS info:params.dictionary];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -1478,6 +1530,22 @@
     [self updateDebuggingState];
 }
 
+- (IBAction)onCameraFeedTapRecognized:(UITapGestureRecognizer *)sender
+{
+    BOOL showAdvancedCameraOptionsOnOnboarding = [HMPanel.sh boolForKey:VK_RECORDER_SHOW_ADVANCED_CAMERA_OPTIONS_ON_ONBOARDING fallbackValue:YES];
+    if ([self isOnboarding] && !showAdvancedCameraOptionsOnOnboarding) return;
+    
+    if (self.recorderState != EMRecorderStateFGExtractionInProgress) return;
+    if (sender.state != UIGestureRecognizerStateEnded || sender.numberOfTouches < 1) return;
+    if (self.currentlyAutoFocusing) return;
+
+    CGPoint pos = [sender locationInView:sender.view];
+    CGFloat x = pos.x / sender.view.bounds.size.width;
+    CGFloat y = pos.y / sender.view.bounds.size.height;
+    CGPoint normalizedPoint = CGPointMake(x,y);
+    [self refocusOnPoint:normalizedPoint originUI:@"tapped preview"];
+    HMLOG(TAG, EM_DBG, @"Tap point: (%@,%@)", @(pos.x), @(pos.y));
+}
 
 
 @end

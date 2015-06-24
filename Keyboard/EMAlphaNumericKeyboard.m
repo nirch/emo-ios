@@ -11,6 +11,7 @@
 #import "EMDB.h"
 #import "TagCell.h"
 #import "KBKeyButton.h"
+#import "HMPanel.h"
 
 #define KB_ABC @1000
 #define KB_NUMERIC @2000
@@ -302,6 +303,12 @@
     Package *package = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (package == nil) return;
     [self.delegate keyboardShouldDismissAlphaNumericWithInfo:@{@"package":package}];
+
+//    HMParams *params = [HMParams new];
+//    [params addKey:AK_EP_IS_PACKAGE value:@YES];
+//    [params addKey:AK_EP_PACKAGE_NAME value:package.name];
+//    [params addKey:AK_EP_PACKAGE_OID value:package.oid];
+//    [HMPanel.sh analyticsEvent:AK_E_KB_SELECTED_HASH_TAG info:params.dictionary];
 }
 
 -(void)configureCell:(TagCell *)cell forIndexPath:(NSIndexPath *)indexPath

@@ -28,6 +28,18 @@
 /** onboardingEmusForPreviewList : <String> - A list of preffered emus oids to use for preview in the onboarding stage (given as a comma delimited string)  */
 #define VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST @"onboardingEmusForPreviewList" 
 
+/** recorderRecordButtonCountdownFrom : <Int> - Number of seconds to countdown from before starting to record (if 0 will not count down and start recording immediately)  */
+#define VK_RECORDER_RECORD_BUTTON_COUNTDOWN_FROM @"recorderRecordButtonCountdownFrom" 
+
+/** recorderShowAdvancedCameraOptionsOnOnboarding : <Bool> - Boolean value indicating if the advanced camera options are shown to the user when the recorder is opened for the first time for onboarding.  */
+#define VK_RECORDER_SHOW_ADVANCED_CAMERA_OPTIONS_ON_ONBOARDING @"recorderShowAdvancedCameraOptionsOnOnboarding" 
+
+/** textShareAppBody : <String> - The body text for the email sent when the user select to share app link using email.  */
+#define VK_TEXT_SHARE_APP_BODY @"textShareAppBody" 
+
+/** textShareAppSubject : <String> - The subject text for the email sent when the user select to share app link using email.  */
+#define VK_TEXT_SHARE_APP_SUBJECT @"textShareAppSubject" 
+
 
 
 #pragma mark - Goals

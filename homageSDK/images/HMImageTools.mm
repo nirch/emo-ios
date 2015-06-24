@@ -14,16 +14,18 @@
 #pragma mark - UIImage
 +(UIImage *)createUIImageFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha
 {
+    
     // Get the data
     unsigned char *pixels        = imageData->data;
     
     // Info about the image.
-    int size = imageData->width * imageData->height * 4;
+    int channelsCount = imageData->channel;
+    int size = imageData->width * imageData->height * channelsCount;
     size_t width                    = imageData->width;
     size_t height                   = imageData->height;
     size_t bitsPerComponent         = 8;
-    size_t bitsPerPixel             = 32;
-    size_t bytesPerRow              = imageData->width * 4;
+    size_t bitsPerPixel             = bitsPerComponent * channelsCount;
+    size_t bytesPerRow              = imageData->width * channelsCount;
     CGColorSpaceRef colorspace      = CGColorSpaceCreateDeviceRGB();
     
     CGBitmapInfo bitmapInfo;

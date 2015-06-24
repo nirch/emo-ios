@@ -22,6 +22,7 @@
 #import "EMShareAppleMessage.h"
 #import "EMShareFBMessanger.h"
 #import "EMShareDocumentInteraction.h"
+#import "EMShareTwitter.h"
 
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
@@ -48,6 +49,8 @@
 @property (nonatomic) NSDictionary *shareMethodsNames;
 @property (nonatomic) EMShare *sharer;
 @property (nonatomic) EMShare *previousSharer;
+
+@property (nonatomic) CGRect screenRect;
 
 @end
 
@@ -82,13 +85,11 @@
 -(void)initGUI
 {
     // The big messenger button.
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenHeight = screenRect.size.height;
+    self.screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenHeight = self.screenRect.size.height;
     CGFloat buttonWidth = 90;
-    if (screenHeight <= 480.0) {
-        buttonWidth = 70;
-    }
-
+    if (screenHeight <= 480.0) buttonWidth -= 20;
+    
     UIButton *button = [FBSDKMessengerShareButton circularButtonWithStyle:FBSDKMessengerShareButtonStyleBlue
                                                                     width:buttonWidth];
     button.tag = 0;
@@ -160,25 +161,25 @@
     
     if (mediaTypeToShare == EMMediaDataTypeGIF) {
         // A priorized list of share methods for animated gifs.
-        self.shareMethods = @[
-                              @(emkShareMethodFacebookMessanger),
-                              @(emkShareMethodAppleMessages),
-                              @(emkShareMethodMail),
-                              @(emkShareMethodSaveToCameraRoll),
-                              @(emkShareMethodCopy)
-                              ];
+        NSMutableArray *arr = [NSMutableArray new];
+        [arr addObject:@(emkShareMethodFacebookMessanger)];
+        [arr addObject:@(emkShareMethodAppleMessages)];
+        [arr addObject:@(emkShareMethodTwitter)];
+        [arr addObject:@(emkShareMethodMail)];
+        [arr addObject:@(emkShareMethodSaveToCameraRoll)];
+        [arr addObject:@(emkShareMethodCopy)];
+        self.shareMethods = arr;
+
     } else {
         // A priorized list of share methods for video.
-        self.shareMethods = @[
-                              @(emkShareMethodFacebookMessanger),
-                              //@(emkShareMethodFacebook),
-                              @(emkShareMethodAppleMessages),
-                              //@(emkShareMethodWhatsapp), // Deprecated: implemented as part of emkShareMethodDocumentInteraction
-                              @(emkShareMethodMail),
-                              @(emkShareMethodSaveToCameraRoll),
-                              @(emkShareMethodCopy),
-                              @(emkShareMethodDocumentInteraction)
-                              ];
+        NSMutableArray *arr = [NSMutableArray new];
+        [arr addObject:@(emkShareMethodFacebookMessanger)];
+        [arr addObject:@(emkShareMethodAppleMessages)];
+        [arr addObject:@(emkShareMethodDocumentInteraction)];
+        [arr addObject:@(emkShareMethodMail)];
+        [arr addObject:@(emkShareMethodSaveToCameraRoll)];
+        [arr addObject:@(emkShareMethodCopy)];
+        self.shareMethods = arr;
     }
     [self.guiCollectionView reloadData];
 }
@@ -189,6 +190,7 @@
 {
     self.shareNames = @{
                         @(emkShareMethodFacebookMessanger):     @"facebookm",
+                        @(emkShareMethodTwitter):               @"twitter",
                         @(emkShareMethodFacebook):              @"facebook",
                         @(emkShareMethodAppleMessages):         @"iMessage",
                         @(emkShareMethodWhatsapp):              @"whatsapp",
@@ -199,6 +201,16 @@
                         };
     [self update];
 }
+
+
+#pragma mark - UICollectionViewDelegate
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat w = self.screenRect.size.width/6.5;
+    if (self.screenRect.size.width <= 320) w = self.screenRect.size.width/6.5;
+    return CGSizeMake(w, 80);
+}
+
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -341,9 +353,16 @@
     } else if (method == emkShareMethodDocumentInteraction) {
         
         //
-        // Whatsapp
+        // Documents interaction
         //
         self.sharer = [EMShareDocumentInteraction new];
+        
+    } else if (method == emkShareMethodTwitter) {
+        
+        //
+        // Twitter
+        //
+        self.sharer = [EMShareTwitter new];
         
     } else {
         //

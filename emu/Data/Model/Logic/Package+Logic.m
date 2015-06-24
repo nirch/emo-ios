@@ -262,16 +262,21 @@
 
 -(NSURL *)urlForResourceNamed:(NSString *)resourceName
 {
-    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
-    NSString *urlString = [SF:@"%@/%@/packages/%@/%@",
-                           cfg.baseResourceURL,
-                           cfg.bucketName,
-                           self.name,
-                           resourceName];
-    NSURL *url = [NSURL URLWithString:urlString];
+    NSURL *url = [[self urlForResources] URLByAppendingPathComponent:resourceName];
     return url;
 }
 
+
+-(NSURL *)urlForResources
+{
+    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+    NSString *urlString = [SF:@"%@/%@/packages/%@",
+                           cfg.baseResourceURL,
+                           cfg.bucketName,
+                           self.name];
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
 
 -(NSURL *)localURLForZippedResources
 {

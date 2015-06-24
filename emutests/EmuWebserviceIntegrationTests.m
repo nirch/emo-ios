@@ -310,4 +310,29 @@ static BOOL _useScratchpad;
     }
 }
 
+-(void)testMixedScreenLocalResources
+{
+    [self ensureDataAvailable];
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+        if(error) XCTFail(@"%s Failed with error: %@", __PRETTY_FUNCTION__, error);
+    }];
+    
+    NSDictionary *mixedScreen = _json[@"mixed_screen"];
+    XCTAssertNotNil(mixedScreen, @"Mixed screen data missing.");
+    XCTAssert([mixedScreen isKindOfClass:[NSDictionary class]], @"Mixed screen data is invalid: %@", mixedScreen);
+    NSArray *emus = mixedScreen[@"emus"];
+    XCTAssertNotNil(emus, @"No emus defined for mixed screen?");
+    NSDictionary *emusByOID = [self allEmusByOID];
+    
+    // Check all emus in mixed screen.
+    for (NSDictionary *emu in emus) {
+        
+        // Ensure emu definition exists and with the correct oid.
+        NSString *oid = emu[@"oid"];
+        NSString *name = emu[@"name"];
+        NSDictionary *emuDef = emusByOID[oid];
+        XCTAssertNotNil(emuDef, @"Mixed screen contains unknown emu:%@ name:%@", oid, name);
+    }
+}
+
 @end

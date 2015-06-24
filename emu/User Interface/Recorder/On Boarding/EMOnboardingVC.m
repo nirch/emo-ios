@@ -18,7 +18,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UIButton *guiEmuButton;
-@property (weak, nonatomic) IBOutlet UIButton *guiRestartButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiSwitchCameraButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiCancelButton;
 
 // A changing title depending on current stage of the flow
@@ -90,7 +90,7 @@
 {
     self.guiPagerView.pagesCount = EMOB_STAGES-1;
     self.guiPagerView.alpha = 0;
-    self.guiRestartButton.alpha = 0;
+    self.guiSwitchCameraButton.alpha = 0;
     [self update];
     
     // Depending on flow type
@@ -162,10 +162,10 @@
         self.guiCancelButton.alpha = 1;
     }
 
-    if (self.stage == EMOnBoardingStageExtractionPreview) {
-        self.guiRestartButton.alpha = 1;
+    if (self.stage == EMOnBoardingStageAlign || self.stage == EMOnBoardingStageExtractionPreview) {
+        self.guiSwitchCameraButton.alpha = 1;
     } else {
-        self.guiRestartButton.alpha = 0;
+        self.guiSwitchCameraButton.alpha = 0;
     }
 }
 
@@ -216,18 +216,16 @@
 }
 
 
-#pragma mark - Restarting
--(void)restart
-{
-    self.stage = 0;
-    [self update];
-    [self.delegate onboardingDidGoBackToStageNumber:0];
-}
-
 #pragma mark - Canceling
 -(void)cancel
 {
     [self.delegate onboardingUserWantsToCancel];
+}
+
+#pragma mark - Switch camera
+-(void)switchCamera
+{
+    [self.delegate onboardingWantsToSwitchCamera];
 }
 
 #pragma mark - IB Actions
@@ -236,25 +234,42 @@
 // ===========
 - (IBAction)onPressedEmuButton:(UIButton *)sender
 {
+    // Analytics
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_STAGE value:@(self.stage)];
-    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_APP_BUTTON
-                             info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_APP_BUTTON info:params.dictionary];
+
+    // Action.
     [self aboutMessage];
 }
 
-- (IBAction)onPressedRestartButton:(UIButton *)sender
+- (IBAction)onPressedSwitchCameraButton:(UIButton *)sender
 {
-    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_RESTART_BUTTON];
-    [self restart];
+    // Analytics
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_STAGE value:@(self.stage)];
+    // TODO: add this param.
+    [params addKey:AK_EP_SWITCHED_TO value:@"xxx"];
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_SWITCH_CAMERA_BUTTON info:params.dictionary];
+    
+    // Action
+    [self switchCamera];
+    
+    // Disable for a while
+    sender.hidden = YES;
+    dispatch_after(DTIME(3), dispatch_get_main_queue(), ^{
+        sender.hidden = NO;
+    });
 }
 
 - (IBAction)onPressedCancelButton:(UIButton *)sender
 {
+    // Analytics
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_STAGE value:@(self.stage)];
-    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_CANCEL_BUTTON
-                             info:params.dictionary];
+    [HMPanel.sh analyticsEvent:AK_E_REC_USER_PRESSED_CANCEL_BUTTON info:params.dictionary];
+    
+    // Action
     [self cancel];
 }
 
