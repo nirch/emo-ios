@@ -56,7 +56,7 @@
 
 // The weight is a value between 0 (bad backgrounds) and 1 (good background)
 @property (nonatomic) CGFloat bgMarkWeight;
-#define BG_MARK_WEIGHT_DELTA 0.1
+#define BG_MARK_WEIGHT_DELTA 0.2
 
 @property NSInteger processCounter;
 

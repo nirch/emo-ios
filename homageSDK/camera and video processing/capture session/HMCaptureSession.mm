@@ -32,6 +32,7 @@
 @property (nonatomic) NSInteger extractCounter;
 
 // Video feed
+@property (nonatomic) AVCaptureDevicePosition prefferedCamera;
 @property (nonatomic) BOOL shouldDropAllFrames;
 @property (readwrite) Float64 videoFrameRate;
 @property (readwrite) CMVideoDimensions videoDimensions;
@@ -70,6 +71,7 @@
         extractCounter = 0;
         self.shouldDropAllFrames = NO;
         self.uuid = [[NSUUID UUID] UUIDString];
+        self.prefferedCamera = AVCaptureDevicePositionFront;
         HMLOG(TAG, EM_DBG, @"Started capture session %@", self.uuid);
     }
     return self;
@@ -88,20 +90,20 @@
 #pragma mark - Camera
 -(void)switchCamera
 {
-//    AVCaptureDevicePosition currentPosition = videoIn.device.position;
-//    AVCaptureDevicePosition otherPosition = currentPosition == AVCaptureDevicePositionFront? AVCaptureDevicePositionBack: AVCaptureDevicePositionFront;
-//    
-//    // First check that the device support the alternative position.
-//    AVCaptureDevice *otherCamera = [self videoDeviceWithPosition:otherPosition];
-//    if (otherCamera == nil) return;
-//    
-//    // We have the other camera, lets switch to it.
-//    [captureSession beginConfiguration];
-//    [captureSession removeInput:videoIn];
-//    NSError *error;
-//    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:otherCamera error:&error];
-//    [captureSession addInput:videoIn];
-//    [captureSession commitConfiguration];
+    AVCaptureDevicePosition currentPosition = videoIn.device.position;
+    AVCaptureDevicePosition otherPosition = currentPosition == AVCaptureDevicePositionFront? AVCaptureDevicePositionBack: AVCaptureDevicePositionFront;
+    
+    // First check that the device support the alternative position.
+    AVCaptureDevice *otherCamera = [self videoDeviceWithPosition:otherPosition];
+    if (otherCamera == nil) return;
+    
+    // We have the other camera, lets switch to it.
+    self.prefferedCamera = otherPosition;
+    [self stopAndTearDownCaptureSession];
+    [self setupAndStartCaptureSession];
+    dispatch_after(DTIME(0.5), dispatch_get_main_queue(), ^{
+        self.shouldDropAllFrames = NO;
+    });
 }
 
 
@@ -221,11 +223,11 @@
     movieWritingQueue = AppManagement.sh.ioQueue;
     
     // If capture session not set up yet, set it up.
-    if ( !captureSession )
+    if ( !captureSession || !captureSession.isRunning )
         [self setupCaptureSession];
     
     // If capture session is not running yet, start running.
-    if ( !captureSession.isRunning )
+    if ( captureSession != nil && !captureSession.isRunning )
         [captureSession startRunning];
 }
 
@@ -240,7 +242,7 @@
 	/*
 	 * Create video connection
 	 */
-    AVCaptureDevice *camera = [self videoDeviceWithPosition:AVCaptureDevicePositionFront];
+    AVCaptureDevice *camera = [self videoDeviceWithPosition:self.prefferedCamera];
     videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:camera error:nil];
     
     if ([captureSession canAddInput:videoIn])
@@ -326,6 +328,9 @@
     BOOL thisFrameShouldBeProcessed = state == HMVideoProcessingStateProcessFrames ||
                                         state == HMVideoProcessingStateInspectAndProcessFrames;
 
+    HMLOG(TAG, EM_VERBOSE, @"Connection:%@ videoConnection:%@", connection, videoConnection);
+
+    
     if ( connection == videoConnection ) {
         
         if (self.videoProcessor) {
@@ -449,11 +454,11 @@
         movieWritingQueue = NULL;
     }
     
-    // releasing the video processor (if exists)
-    if (self.videoProcessor) {
-        self.videoProcessingState = HMVideoProcessingStateIdle;
-        self.videoProcessor = nil;
-    }
+//    // releasing the video processor (if exists)
+//    if (self.videoProcessor) {
+//        self.videoProcessingState = HMVideoProcessingStateIdle;
+//        self.videoProcessor = nil;
+//    }
     
     videoConnection = nil;
 }
