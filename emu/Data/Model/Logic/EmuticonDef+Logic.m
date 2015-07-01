@@ -52,6 +52,11 @@
 }
 
 
+-(NSString *)pathForUserLayerDynamicMask
+{
+    return [EMDB pathForResourceNamed:self.sourceUserLayerDynamicMask path:[self.package resourcesPath]];
+}
+
 +(NSArray *)createMissingEmuticonsForEmuDefs:(NSArray *)emuDefs
 {
     NSMutableArray *emus = [NSMutableArray new];
@@ -100,6 +105,12 @@
         return NO;
     }
     
+    // If should have a dynamic user mask, check if available.
+    if (self.sourceUserLayerDynamicMask &&
+        [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) {
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -120,6 +131,9 @@
     
     if (self.sourceUserLayerMask)
         [self removeResourceNamed:self.sourceUserLayerMask];
+    
+    if (self.sourceUserLayerDynamicMask)
+        [self removeResourceNamed:self.sourceUserLayerDynamicMask];
 }
 
 -(void)removeResourceNamed:(NSString *)resourceName

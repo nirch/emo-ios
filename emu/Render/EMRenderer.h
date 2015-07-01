@@ -27,9 +27,12 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
 @property (nonatomic) NSString *footageOID;
 @property (nonatomic) NSString *outputOID;
 @property (nonatomic) NSString *outputPath;
+
 @property (nonatomic) NSString *userMaskPath;
+@property (nonatomic) NSString *userDynamicMaskPath;
 @property (nonatomic) NSString *userImagesPath;
 @property (nonatomic) NSArray *userImagesPathsArray;
+
 @property (nonatomic) NSString *backLayerPath;
 @property (nonatomic) NSString *frontLayerPath;
 @property (nonatomic) NSString *paletteString;
@@ -46,6 +49,7 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
 @property (nonatomic) NSInteger videoFXLoopEffect;
 @property (nonatomic) NSURL *audioFileURL;
 @property (nonatomic) NSTimeInterval audioStartTime;
+@property (nonatomic) NSDictionary *effects;
 
 /**
  *  Render the emu according to the settings.

@@ -33,6 +33,7 @@
 -(NSNumber *)didEverCountedKey:(NSString *)counterKey;
 -(BOOL)checkAndReportIfAppUpdated;
 -(void)analyticsForceSend;
+
 -(void)analyticsEvent:(NSString *)event;
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info;
 -(void)explodeOnTestApplicationsWithInfo:(NSDictionary *)info;

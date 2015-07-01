@@ -18,6 +18,8 @@
 #import "HrRendererLib/HrSource/HrSourceGif.h"
 #import "HrRendererLib/HrOutput/HrOutputGif.h"
 #import "HrRendererLib/HrEffect/HrEffectMask.h"
+#import "HrRendererLib/HrEffect/HrEffectPose.h"
+#import "HrRendererLib/HrEffect/HrEffectMaskGif.h"
 #import "Gpw/Vtool/Vtool.h"
 #import "Uigp/GpMemoryLeak.h"
 
@@ -61,7 +63,7 @@
     // If required (currently if should output video)
     //
     SolidColorSource *solidBG = NULL;
-    if (self.shouldOutputVideo) {
+    if (self.shouldOutputVideo || self.backLayerPath == nil) {
         solidBG = new SolidColorSource([UIColor whiteColor]);
         render->AddSource(solidBG);
     }
@@ -89,6 +91,25 @@
         maskImageType = NULL;
     }
 
+    //
+    // Position effects
+    //
+    if (self.effects && self.effects[@"position"]) {
+        CHrEffectPose *posEffects = new CHrEffectPose();
+        
+        NSString *stringForPositionEffect = [self stringForPositioningEffect:self.effects[@"position"]];
+        posEffects->InitFromData((char*)stringForPositionEffect.UTF8String);
+        userSource->AddEffect(posEffects);
+    }
+    
+    //
+    // User dynamic mask effect
+    //
+    if (self.userDynamicMaskPath) {
+        CHrEffectMaskGif *maskGifEffect = new CHrEffectMaskGif();
+        maskGifEffect->Init((char*)self.userDynamicMaskPath.UTF8String);
+        userSource->AddEffect(maskGifEffect);
+    }
     
     //
     // Background source.
@@ -188,7 +209,7 @@
     //
     
     // Add sources.
-    render->AddSource(bgSource);
+    if (bgSource != NULL) render->AddSource(bgSource);
     if (userSource != NULL) render->AddSource(userSource);
     if (fgSource != NULL) render->AddSource(fgSource);
 
@@ -207,6 +228,29 @@
 //    gpMemory_leak_print(stdout);
 }
 
+
+-(NSString *)stringForPositioningEffect:(NSArray *)positionEffect
+{
+    if (![positionEffect isKindOfClass:[NSArray class]] || positionEffect.count <1) return nil;
+    
+    NSMutableString *s = [NSMutableString new];
+    [s appendString:[SF:@"TF 1 %@\t", @(positionEffect.count)]];
+    for (NSDictionary *kFrame in positionEffect) {
+        // "none <frame#> 6 <x> <y> <scale> <rx> <ry> <rz>"
+        [s appendString:[SF:@"none %@ 6 %@ %@ %@ %@ %@ %@\t",
+                         kFrame[@"frame"],
+                         kFrame[@"pos"][0],
+                         kFrame[@"pos"][1],
+                         kFrame[@"scale"],
+                         kFrame[@"rotate"][0],
+                         kFrame[@"rotate"][1],
+                         kFrame[@"rotate"][2]
+                         ]
+         ];
+    }
+    [s appendString:@"\0"];
+    return s;
+}
 
 #pragma mark - Helper methods
 -(int)fps

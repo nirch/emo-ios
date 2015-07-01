@@ -74,15 +74,17 @@
     }
 
     // Emu definitions and resources
-    emuDef.sourceBackLayer             = [info safeStringForKey:@"source_back_layer" defaultsDictionary:defaults];
-    emuDef.sourceFrontLayer            = [info safeStringForKey:@"source_front_layer" defaultsDictionary:defaults];
-    emuDef.sourceUserLayerMask         = [info safeStringForKey:@"source_user_layer_mask" defaultsDictionary:defaults];
-    emuDef.useForPreview               = [info safeBoolNumberForKey:@"use_for_preview" defaultsDictionary:defaults];
-    emuDef.duration                    = [info safeDecimalNumberForKey:@"duration" defaultsDictionary:defaults];
-    emuDef.framesCount                 = [info safeNumberForKey:@"frames_count" defaultsDictionary:defaults];
-    emuDef.thumbnailFrameIndex         = [info safeNumberForKey:@"thumbnail_frame_index" defaultsDictionary:defaults];
-    emuDef.palette                     = [info safeStringForKey:@"palette" defaultsDictionary:defaults];
-    emuDef.disallowedForOnboardingPreview = [info safeBoolNumberForKey:@"disallowed_for_onboarding_preview" defaultsValue:@NO];
+    emuDef.sourceBackLayer                  = [info safeStringForKey:@"source_back_layer" defaultsDictionary:defaults];
+    emuDef.sourceFrontLayer                 = [info safeStringForKey:@"source_front_layer" defaultsDictionary:defaults];
+    emuDef.sourceUserLayerMask              = [info safeStringForKey:@"source_user_layer_mask" defaultsDictionary:defaults];
+    emuDef.sourceUserLayerDynamicMask       = [info safeStringForKey:@"source_user_dynamic_mask" defaultsDictionary:defaults];
+    emuDef.useForPreview                    = [info safeBoolNumberForKey:@"use_for_preview" defaultsDictionary:defaults];
+    emuDef.duration                         = [info safeDecimalNumberForKey:@"duration" defaultsDictionary:defaults];
+    emuDef.framesCount                      = [info safeNumberForKey:@"frames_count" defaultsDictionary:defaults];
+    emuDef.thumbnailFrameIndex              = [info safeNumberForKey:@"thumbnail_frame_index" defaultsDictionary:defaults];
+    emuDef.palette                          = [info safeStringForKey:@"palette" defaultsDictionary:defaults];
+    emuDef.disallowedForOnboardingPreview   = [info safeBoolNumberForKey:@"disallowed_for_onboarding_preview" defaultsValue:@NO];
+    emuDef.effects                          = [info safeDictionaryForKey:@"effects" defaultValue:nil];
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

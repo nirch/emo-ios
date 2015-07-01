@@ -2,8 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>clientName</key>
-	<string>Emu iOS</string>
+	<key>clientNames</key>
+	<dict>
+		<key>iOS</key>
+		<string>Emu iOS</string>
+		<key>Android</key>
+		<string>Emu Android</string>
+	</dict>
 	<key>token</key>
 	<dict>
 		<key>testToken</key>
@@ -1132,6 +1137,154 @@ or
 				<string>&lt;string&gt; - (optional) name of a package, if user notified about that newly available package.</string>
 			</dict>
 		</dict>
+		<key>Footage:screenAppeared</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User opened the user&apos;s takes screen</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - (optional) oid of a package, if user opened the screen from a context of a pack.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - (optional) name of a package, if user opened the screen from a context of a pack.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - (optional) the name of the related emoticon (if user opened the screen from a context of a specific emu)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - (optional) the oid of the related emoticon (if user opened the screen from a context of a specific emu)</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+			</dict>
+		</dict>
+		<key>Footage:screenCancel</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User dismissed the takes screen</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - (optional) oid of a package, if user opened the screen from a context of a pack.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - (optional) name of a package, if user opened the screen from a context of a pack.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - (optional) the name of the related emoticon (if user opened the screen from a context of a specific emu)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - (optional) the oid of the related emoticon (if user opened the screen from a context of a specific emu)</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+				<key>reason</key>
+				<string>&lt;string&gt; - The reason the screen was dismissed (footage confirmed, back button pressed, system back key etc.)</string>
+			</dict>
+		</dict>
+		<key>Footage:deleted</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User deleted a footage</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - (optional) oid of a package, if user opened footages screen from a context of a pack.</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - (optional) name of a package, if user opened footages screen from a context of a pack.</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - (optional) the name of the related emoticon (if user opened footages screen from a context of a specific emu)</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - (optional) the oid of the related emoticon (if user opened footages screen from a context of a specific emu)</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+			</dict>
+		</dict>
+		<key>Footage:appliedToEmu</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User applied take to a specific emu</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - oid of a package</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - name of a package</string>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+			</dict>
+		</dict>
+		<key>Footage:appliedToPack</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User applied take to a whole pack (this event will be deprecated soon)</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - oid of a package</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - name of a package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+			</dict>
+		</dict>
+		<key>Footage:appliedToAll</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User applied footage to all packs (this event will be deprecated soon)</string>
+			<key>params</key>
+			<dict>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - oid of a package</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - name of a package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+			</dict>
+		</dict>
+		<key>Footage:changedDefault</key>
+		<dict>
+			<key>v</key>
+			<string></string>
+			<key>description</key>
+			<string>User applied take to all unlocked </string>
+		</dict>
+	</dict>
+	<key>eventsCategories</key>
+	<dict>
+		<key>Footage</key>
+		<string>Takes selection / editing / deleting screen</string>
+		<key>App</key>
+		<string>Application</string>
+		<key>FBM</key>
+		<string>Facebook messanger</string>
+		<key>Notifications</key>
+		<string>Notifications related</string>
+		<key>Settings</key>
+		<string>Application settings</string>
+		<key>Rec</key>
+		<string>Recorder</string>
+		<key>Items</key>
+		<string>Main emus screen / feed</string>
+		<key>ItemDetails</key>
+		<string>Specific emu details screen</string>
+		<key>Share</key>
+		<string>Share related events</string>
+		<key>ShareFile</key>
+		<string>(deprecated)</string>
+		<key>KB</key>
+		<string>Keyboard</string>
+		<key>BE</key>
+		<string>Back end events</string>
 	</dict>
 </dict>
 </plist>

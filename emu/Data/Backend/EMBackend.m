@@ -431,10 +431,15 @@
         [emuDef isMissingResourceNamed:emuDef.sourceBackLayer])
         requiredResources[emuDef.sourceBackLayer] = info;
     
-    // User mask layer
+    // User layer - static mask
     if (emuDef.sourceUserLayerMask &&
         [emuDef isMissingResourceNamed:emuDef.sourceUserLayerMask])
         requiredResources[emuDef.sourceUserLayerMask] = info;
+    
+    // User layer - dynamic mask
+    if (emuDef.sourceUserLayerDynamicMask &&
+        [emuDef isMissingResourceNamed:emuDef.sourceUserLayerDynamicMask])
+        requiredResources[emuDef.sourceUserLayerDynamicMask] = info;
     
     // Download the required resources.
     if (requiredResources.count > 0) {

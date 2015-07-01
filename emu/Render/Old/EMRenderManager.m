@@ -174,6 +174,7 @@
     renderer.backLayerPath = [emuDef pathForBackLayer];
     renderer.userImagesPath = [footage pathForUserImages];
     renderer.userMaskPath = [emuDef pathForUserLayerMask];
+    renderer.userDynamicMaskPath = [emuDef pathForUserLayerDynamicMask];
     renderer.frontLayerPath = [emuDef pathForFrontLayer];
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
@@ -181,6 +182,7 @@
     renderer.paletteString = emuDef.palette;
     renderer.outputPath = [EMDB outputPath];
     renderer.shouldOutputGif = YES;
+    renderer.effects = emuDef.effects;
     
     // Dispatch the renderer on the rendering queue
     __weak EMRenderManager *weakSelf = self;
@@ -264,6 +266,7 @@
     renderer.backLayerPath = [emuDef pathForBackLayer];
     renderer.userImagesPath = [footage pathForUserImages];
     renderer.userMaskPath = [emuDef pathForUserLayerMask];
+    renderer.userDynamicMaskPath = [emuDef pathForUserLayerDynamicMask];
     renderer.frontLayerPath = [emuDef pathForFrontLayer];
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
@@ -271,7 +274,8 @@
     renderer.paletteString = emuDef.palette;
     renderer.outputPath = [EMDB outputPath];
     renderer.shouldOutputGif = YES;
-    
+    renderer.effects = emuDef.effects;
+
     // Execute the rendering.
     [renderer render];
     
@@ -319,11 +323,13 @@
     renderer.backLayerPath = [emuDef pathForBackLayer];
     renderer.userImagesPath = [footage pathForUserImages];
     renderer.userMaskPath = [emuDef pathForUserLayerMask];
+    renderer.userDynamicMaskPath = [emuDef pathForUserLayerDynamicMask];
     renderer.frontLayerPath = [emuDef pathForFrontLayer];
     renderer.numberOfFrames = [emuDef.framesCount integerValue];
     renderer.duration = emuDef.duration.doubleValue;
     renderer.paletteString = emuDef.palette;
     renderer.shouldOutputGif = NO;
+    renderer.effects = emuDef.effects;
 
     // Should output a looping video to the temp folder.
     renderer.outputPath = NSTemporaryDirectory();
