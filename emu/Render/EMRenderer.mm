@@ -20,6 +20,7 @@
 #import "HrRendererLib/HrEffect/HrEffectMask.h"
 #import "HrRendererLib/HrEffect/HrEffectPose.h"
 #import "HrRendererLib/HrEffect/HrEffectMaskGif.h"
+#import "HrEffectBW.h"
 #import "Gpw/Vtool/Vtool.h"
 #import "Uigp/GpMemoryLeak.h"
 
@@ -92,23 +93,10 @@
     }
 
     //
-    // Position effects
+    // More effects to the user layer
     //
-    if (self.effects && self.effects[@"position"]) {
-        CHrEffectPose *posEffects = new CHrEffectPose();
-        
-        NSString *stringForPositionEffect = [self stringForPositioningEffect:self.effects[@"position"]];
-        posEffects->InitFromData((char*)stringForPositionEffect.UTF8String);
-        userSource->AddEffect(posEffects);
-    }
-    
-    //
-    // User dynamic mask effect
-    //
-    if (self.userDynamicMaskPath) {
-        CHrEffectMaskGif *maskGifEffect = new CHrEffectMaskGif();
-        maskGifEffect->Init((char*)self.userDynamicMaskPath.UTF8String);
-        userSource->AddEffect(maskGifEffect);
+    if (self.effects) {
+        [self addEffectsToSource:userSource];
     }
     
     //
@@ -226,6 +214,41 @@
     delete render;
     
 //    gpMemory_leak_print(stdout);
+}
+
+-(void)addEffectsToSource:(CHrSourceI *)source
+{
+    if (self.effects == nil) return;
+    
+    //
+    // Position effects
+    //
+    if (self.effects[@"position"]) {
+        CHrEffectPose *posEffects = new CHrEffectPose();
+        NSString *stringForPositionEffect = [self stringForPositioningEffect:self.effects[@"position"]];
+        posEffects->InitFromData((char*)stringForPositionEffect.UTF8String);
+        source->AddEffect(posEffects);
+    }
+    
+    //
+    // User dynamic mask effect
+    //
+    if (self.userDynamicMaskPath) {
+        CHrEffectMaskGif *maskGifEffect = new CHrEffectMaskGif();
+        maskGifEffect->Init((char*)self.userDynamicMaskPath.UTF8String);
+        source->AddEffect(maskGifEffect);
+    }
+    
+    
+    //
+    // Colors effects
+    //
+    CHrEffectBW *bwEffect = NULL;
+    if (self.effects[@"grayscale"] && [self.effects[@"grayscale"] boolValue]) {
+        bwEffect = new CHrEffectBW();
+        bwEffect->Init();
+        source->AddEffect(bwEffect);
+    }
 }
 
 

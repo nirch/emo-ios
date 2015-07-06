@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		080489E91AA5957A008CC885 /* EMEmusKeyboardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080489E81AA5957A008CC885 /* EMEmusKeyboardVC.m */; };
+		0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */; };
+		0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */; };
+		0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */; };
+		0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */; };
 		0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD711AA37DC20078F14B /* EMAppCFGParser.m */; };
 		0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD731AA37DC20078F14B /* EMEmuticonParser.m */; };
 		0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD771AA37DC20078F14B /* EMPackageParser.m */; };
@@ -705,6 +709,10 @@
 		080489E71AA5957A008CC885 /* EMEmusKeyboardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmusKeyboardVC.h; sourceTree = "<group>"; };
 		080489E81AA5957A008CC885 /* EMEmusKeyboardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMEmusKeyboardVC.m; sourceTree = "<group>"; };
 		080489EA1AA59959008CC885 /* EMKeyboardContainerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeyboardContainerDelegate.h; sourceTree = "<group>"; };
+		0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HrEffectBW.cpp; sourceTree = "<group>"; };
+		0805ABC01B492C9E0099ECBE /* HrEffectBW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HrEffectBW.h; sourceTree = "<group>"; };
+		0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HrEffectRGBA.cpp; sourceTree = "<group>"; };
+		0805ABC41B4A80380099ECBE /* HrEffectRGBA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HrEffectRGBA.h; sourceTree = "<group>"; };
 		0806BD701AA37DC20078F14B /* EMAppCFGParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAppCFGParser.h; sourceTree = "<group>"; };
 		0806BD711AA37DC20078F14B /* EMAppCFGParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAppCFGParser.m; sourceTree = "<group>"; };
 		0806BD721AA37DC20078F14B /* EMEmuticonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmuticonParser.h; sourceTree = "<group>"; };
@@ -1176,6 +1184,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0805ABBE1B492C7C0099ECBE /* fx */ = {
+			isa = PBXGroup;
+			children = (
+				0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */,
+				0805ABC01B492C9E0099ECBE /* HrEffectBW.h */,
+				0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */,
+				0805ABC41B4A80380099ECBE /* HrEffectRGBA.h */,
+			);
+			path = fx;
+			sourceTree = "<group>";
+		};
 		0806BD6F1AA37DC20078F14B /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2087,6 +2106,7 @@
 				083318991B049D3E000B8979 /* EMRenderer.mm */,
 				084AF4321B36B0890056FC34 /* EMRenderManager.h */,
 				084AF4331B36B0890056FC34 /* EMRenderManager.m */,
+				0805ABBE1B492C7C0099ECBE /* fx */,
 				08819CD91B2CCBFB00D2D77A /* Downloads Manager */,
 				08CB89C01A9B6CCF00224A38 /* source */,
 				08CB89C41A9B84F400224A38 /* output */,
@@ -3062,6 +3082,7 @@
 				08AA14541B0BA658002E1B2F /* HMImageTools.mm in Sources */,
 				08AA14551B0BA658002E1B2F /* HMGMError.m in Sources */,
 				08AA14561B0BA658002E1B2F /* EMPagerView.m in Sources */,
+				0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08AA14571B0BA658002E1B2F /* EmuBaseStyle.m in Sources */,
 				08AA14581B0BA658002E1B2F /* HMParams.m in Sources */,
 				08AA14591B0BA658002E1B2F /* EMMessageButton.m in Sources */,
@@ -3127,6 +3148,7 @@
 				08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
 				08AA148E1B0BA658002E1B2F /* EMBGFeedBackVC.m in Sources */,
+				0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
 				08AA14901B0BA658002E1B2F /* AWFanOpeningView.m in Sources */,
 				08AA14911B0BA658002E1B2F /* HMCaptureSessionError.m in Sources */,
@@ -3172,6 +3194,7 @@
 				083D54751A8CB0A10048604A /* HMImageTools.mm in Sources */,
 				0833348C1A827D81008AC771 /* HMGMError.m in Sources */,
 				083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */,
+				0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */,
 				08CED1251AA7281B00C50D0C /* HMParams.m in Sources */,
 				0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */,
@@ -3237,6 +3260,7 @@
 				08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */,
 				085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */,
+				0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				085C67621A937EC9007BC910 /* main.m in Sources */,
 				08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */,
 				08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */,
