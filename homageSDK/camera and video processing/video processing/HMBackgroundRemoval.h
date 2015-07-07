@@ -1,5 +1,5 @@
 //
-//  HMGreenMachine.h
+//  HMBackgroundRemoval.h
 //  homage sdk
 //
 //  Created by Aviv Wolf on 1/29/15.
@@ -11,27 +11,27 @@
 
 #import "HMGMError.h"
 
-@interface HMGreenMachine : NSObject<
+@interface HMBackgroundRemoval : NSObject<
     HMVideoProcessingProtocol
 >
 
 /**
- *  Factory for HMGreenMachine. Creates a new instance of the green machine
+ *  Factory for HMBackgroundRemoval. Creates a new instance of the green machine
  *  it and validates initialization.
  *
  *  @param bgImageFilename A background image. Image must not contain an alpha channel.
  *  @param contourFileName Name of the corresponding ctr file.
  *  @param error           out error (HMGMError) or nil if no error found.
  *
- *  @return HMGreenMachine instance if initialized properly. nil if error found in initialization.
+ *  @return HMBackgroundRemoval instance if initialized properly. nil if error found in initialization.
  */
-+(HMGreenMachine *)greenMachineWithBGImageFileName:(NSString *)bgImageFilename
++(HMBackgroundRemoval *)backgroundRemovalWithBGImageFileName:(NSString *)bgImageFilename
                                    contourFileName:(NSString *)contourFileName
                                              error:(HMGMError **)error;
 
 
 /**
- *  Initializes and validates the green machine instance.
+ *  Initializes and validates the background removal instance.
  *
  *  @param bgImageFilename A background image. Image must not contain an alpha channel.
  *  @param contourFileName Name of the corresponding ctr file.

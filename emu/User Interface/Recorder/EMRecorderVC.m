@@ -101,7 +101,7 @@
 // The video capture session & green machine
 //
 @property (strong, nonatomic, readwrite) HMCaptureSession *captureSession;
-@property (weak, nonatomic) HMGreenMachine *greenMachine;
+@property (weak, nonatomic) HMBackgroundRemoval *backgroundRemoval;
 @property (nonatomic) BOOL currentlyAutoFocusing;
 
 
@@ -596,8 +596,8 @@
     // And check for errors in initalization.
     //
     NSError *error;
-    HMGreenMachine *gm = [HMGreenMachine greenMachineWithBGImageFileName:@"clear480x480"
-                                                         contourFileName:@"1" // @"headAndChest480X480"
+    HMBackgroundRemoval *br = [HMBackgroundRemoval backgroundRemovalWithBGImageFileName:@"clear480x480"
+                                                         contourFileName:@"emuDefaultContour480"
                                                                    error:&error];
     
     
@@ -611,8 +611,8 @@
     // to the control of the capture session object.
     // The capture session will use the green machine for
     // processing the feed of video frames.
-    [self.captureSession initializeVideoProcessor:gm];
-    self.greenMachine = gm;
+    [self.captureSession initializeVideoProcessor:br];
+    self.backgroundRemoval = br;
     HMLOG(TAG, EM_DBG, @"Initialized video processing.");    
 }
 

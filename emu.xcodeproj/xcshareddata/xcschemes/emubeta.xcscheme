@@ -51,6 +51,11 @@
                BlueprintName = "emutests"
                ReferencedContainer = "container:emu.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "EmuRenderingTests/testCVBugFirstFrameTrailsInAnimatedGif">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

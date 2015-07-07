@@ -1,24 +1,24 @@
 //
-//  HMGreenMachine.m
+//  HMBackgroundRemoval.m
 //  emu
 //
 //  Created by Aviv Wolf on 1/29/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#define TAG @"HMGreenMachine"
+#define TAG @"HMBackgroundRemoval"
 
-#import "HMGreenMachine.h"
+#import "HMBackgroundRemoval.h"
 #import "HMBackgroundMarks.h"
 #import "HMGMError.h"
-#import "HMGreenMachineDebugger.h"
+#import "HMBackgroundRemovalDebugger.h"
 
 #import "HMImageTools.h"
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "Gpw/Vtool/Vtool.h"
 #import "ImageType/ImageTool.h"
 
-@interface HMGreenMachine() {
+@interface HMBackgroundRemoval() {
     
     //int counter;
     CUniformBackground *m_foregroundExtraction;
@@ -52,7 +52,7 @@
 @property (nonatomic) HMBackgroundMarks *bgMarks;
 @property (nonatomic) HMBGMark lastBGMark;
 
-@property (nonatomic) HMGreenMachineDebugger *gmDebug;
+@property (nonatomic) HMBackgroundRemovalDebugger *brDebug;
 
 // The weight is a value between 0 (bad backgrounds) and 1 (good background)
 @property (nonatomic) CGFloat bgMarkWeight;
@@ -62,18 +62,18 @@
 
 @end
 
-@implementation HMGreenMachine
+@implementation HMBackgroundRemoval
 
 @synthesize backgroundImage = _backgroundImage;
 @synthesize contourFileName = _contourFileName;
 @synthesize processCounter = _processCounter;
 @synthesize outputQueue = _outputQueue;
 
-+(HMGreenMachine *)greenMachineWithBGImageFileName:(NSString *)bgImageFilename
++(HMBackgroundRemoval *)backgroundRemovalWithBGImageFileName:(NSString *)bgImageFilename
                                    contourFileName:(NSString *)contourFileName
                                              error:(HMGMError **)error
 {
-    HMGreenMachine *gm = [[HMGreenMachine alloc] initWithBGImageFileName:bgImageFilename
+    HMBackgroundRemoval *gm = [[HMBackgroundRemoval alloc] initWithBGImageFileName:bgImageFilename
                                                          contourFileName:contourFileName
                                                                    error:error];
     return gm;
@@ -181,8 +181,9 @@
  */
 -(void)startDebugSession
 {
-    self.gmDebug = [HMGreenMachineDebugger new];
-    self.gmDebug.outputQueue = self.outputQueue;
+    self.brDebug = [HMBackgroundRemovalDebugger new];
+    [self.brDebug reset];
+    self.brDebug.outputQueue = self.outputQueue;
 }
 
 /**
@@ -190,7 +191,7 @@
  */
 -(void)finishDebuSessionWithInfo:(NSDictionary *)info
 {
-    [self.gmDebug finishupWithInfo:info];
+    [self.brDebug finishupWithInfo:info];
 }
 
 #pragma mark - Processing
@@ -219,11 +220,6 @@
     // Convert display image from bgr to rgb
     m_display_image = image_bgr2rgb(m_display_image, m_display_image);
 
-    // Debugging (if required in test apps)
-    if (self.gmDebug) {
-        [self.gmDebug originalImage:m_original_rgb_image];
-    }
-    
     // Taking care of the output image.
     CMTime output_t = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     if (self.outputQueue) {
@@ -262,6 +258,13 @@
                                        &processedSampleBuffer);
     CFRelease(processedPixelBuffer);
 
+    // Debugging before finished.
+    // (if required in test apps and turned on by user)
+    if (self.brDebug) {
+        [self.brDebug originalImage:m_original_image timeInfo:output_t];
+    }
+
+    
     // Store the latest processed sample buffer.
     return processedSampleBuffer;
 }

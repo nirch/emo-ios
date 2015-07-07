@@ -5,7 +5,6 @@
 //  Created by Aviv Wolf on 5/20/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
-
 @import AVFoundation;
 
 #import <UIKit/UIKit.h>
@@ -60,6 +59,7 @@
     [renderer validateOutputResultsWithError:&error];
     XCTAssertNil(error, @"Error while rendering a single thumb: %@", [error localizedDescription]);
 }
+
 
 - (void)testRenderSingleVideo
 {
@@ -121,8 +121,17 @@
     }];
     
     // Delete output folder
-    //[fm removeItemAtPath:path error:nil];
+    [fm removeItemAtPath:path error:nil];
 }
+
+
+-(void)testWideScreenRender {
+    NSString *uuid = [[NSUUID UUID] UUIDString];
+    EMRenderer *renderer = [self simpleRendererToOutput:uuid];
+    renderer.shouldOutputGif = YES;
+    [renderer render];
+}
+
 
 /**
  *  Measure performance of outputting video.
@@ -306,6 +315,7 @@
     // Analyse result and check if the bug exists.
     
 }
+
 
 
 

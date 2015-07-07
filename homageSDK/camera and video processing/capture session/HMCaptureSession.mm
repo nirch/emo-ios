@@ -327,10 +327,8 @@
     // Should process the frame?
     BOOL thisFrameShouldBeProcessed = state == HMVideoProcessingStateProcessFrames ||
                                         state == HMVideoProcessingStateInspectAndProcessFrames;
+//    HMLOG(TAG, EM_VERBOSE, @"Connection:%@ videoConnection:%@", connection, videoConnection);
 
-    HMLOG(TAG, EM_VERBOSE, @"Connection:%@ videoConnection:%@", connection, videoConnection);
-
-    
     if ( connection == videoConnection ) {
         
         if (self.videoProcessor) {

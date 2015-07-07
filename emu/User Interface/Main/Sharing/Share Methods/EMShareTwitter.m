@@ -112,7 +112,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.view makeToast:LS(@"SHARE_TOAST_SHARED")];
-        [self.delegate sharerDidFailWithInfo:self.info];
+        [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
         self.view.alpha = 1;
     });
 }
