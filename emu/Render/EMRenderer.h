@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
 
 @property (nonatomic) NSString *backLayerPath;
 @property (nonatomic) NSString *frontLayerPath;
+@property (nonatomic) NSString *waterMarkName;
+
 @property (nonatomic) NSString *paletteString;
 
 @property (nonatomic) BOOL shouldOutputThumb;

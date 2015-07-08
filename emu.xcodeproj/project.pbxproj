@@ -616,6 +616,8 @@
 		08CF07A61B4BDC2600034BB5 /* EmuCaptureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07A51B4BDC2600034BB5 /* EmuCaptureTests.m */; };
 		08CF07A81B4C122900034BB5 /* emuDefaultContour480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CF07A71B4C122900034BB5 /* emuDefaultContour480.ctr */; };
 		08CF07A91B4C122900034BB5 /* emuDefaultContour480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CF07A71B4C122900034BB5 /* emuDefaultContour480.ctr */; };
+		08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */; };
+		08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */; };
 		08D558B71B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D558B81B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
@@ -1086,6 +1088,8 @@
 		08CED1241AA7281B00C50D0C /* HMParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParams.m; sourceTree = "<group>"; };
 		08CF07A51B4BDC2600034BB5 /* EmuCaptureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuCaptureTests.m; sourceTree = "<group>"; };
 		08CF07A71B4C122900034BB5 /* emuDefaultContour480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emuDefaultContour480.ctr; sourceTree = "<group>"; };
+		08CF07AA1B4CFB0700034BB5 /* WaterMarkSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterMarkSource.h; sourceTree = "<group>"; };
+		08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WaterMarkSource.mm; sourceTree = "<group>"; };
 		08D558B51B286114006BF723 /* EMDebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDebugCell.h; sourceTree = "<group>"; };
 		08D558B61B286114006BF723 /* EMDebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDebugCell.m; sourceTree = "<group>"; };
 		08D929841A77A36D00B6A68F /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2122,6 +2126,8 @@
 				08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */,
 				0867C9F91B14C40700FF0E85 /* SolidColorSource.h */,
 				0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */,
+				08CF07AA1B4CFB0700034BB5 /* WaterMarkSource.h */,
+				08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -3111,6 +3117,7 @@
 				08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */,
 				08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */,
 				0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
+				08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
 				08AA14711B0BA658002E1B2F /* EMShareVC.m in Sources */,
 				08AA14721B0BA658002E1B2F /* Package.m in Sources */,
 				08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */,
@@ -3223,6 +3230,7 @@
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
+				08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
 				08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */,
 				083319671B04D389000B8979 /* Package.m in Sources */,
 				08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */,

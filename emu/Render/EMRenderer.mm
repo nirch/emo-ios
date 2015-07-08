@@ -14,6 +14,8 @@
 #import "MattingLib/UniformBackground/UniformBackground.h"
 #import "PngSourceWithFX.h"
 #import "SolidColorSource.h"
+#import "WaterMarkSource.h"
+
 #import "HrRendererLib/HomageRenderer.h"
 #import "HrRendererLib/HrSource/HrSourceGif.h"
 #import "HrRendererLib/HrOutput/HrOutputGif.h"
@@ -117,6 +119,18 @@
         fgSource->Init((char*)self.frontLayerPath.UTF8String);
     }
     
+    
+    //
+    // Watermark source
+    //
+    WaterMarkSource *waterMarkSource = NULL;
+    if (self.waterMarkName) {
+        waterMarkSource = new WaterMarkSource(self.waterMarkName);
+    }
+    
+    
+    
+    
     //
     // Dimensions.
     //
@@ -200,6 +214,7 @@
     if (bgSource != NULL) render->AddSource(bgSource);
     if (userSource != NULL) render->AddSource(userSource);
     if (fgSource != NULL) render->AddSource(fgSource);
+    if (waterMarkSource != NULL) render->AddSource(waterMarkSource);
 
     // Add outputs
     if (gifOutput != NULL) render->AddOutput(gifOutput);

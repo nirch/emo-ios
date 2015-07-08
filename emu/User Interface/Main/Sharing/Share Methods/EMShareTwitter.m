@@ -13,7 +13,9 @@
 #import <Toast/UIView+Toast.h>
 #import "AppDelegate.h"
 
-@interface EMShareTwitter()
+@interface EMShareTwitter() <
+    UITextFieldDelegate
+>
 
 @end
 
@@ -39,6 +41,32 @@
 
 -(void)shareAnimatedGif
 {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"Twitter"
+                                                                     message:nil
+                                                              preferredStyle:UIAlertControllerStyleAlert];
+
+    [alertVC addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.delegate = self;
+    }];
+
+    [alertVC addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
+                                                style:UIAlertActionStyleCancel
+                                              handler:^(UIAlertAction *action) {
+                                                  [self cancel];
+                                              }]];
+    [alertVC addAction:[UIAlertAction actionWithTitle:LS(@"POST")
+                                                style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction *action) {
+                                                  UITextField *textField = [alertVC.textFields firstObject];
+                                                  [self _shareAnimatedGifWithText:textField.text];
+                                              }]];
+    
+    [self.viewController presentViewController:alertVC animated:YES completion:nil];
+}
+
+
+-(void)_shareAnimatedGifWithText:(NSString *)text
+{
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
     NSData *gifData = [emu animatedGifData];
@@ -47,7 +75,7 @@
     ACAccountStore *account = [[ACAccountStore alloc] init];
     ACAccountType *twitterType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSDictionary *postOptions = nil;
-
+    
     // Attempt to post the postMessage
     [account requestAccessToAccountsWithType:twitterType
                                      options:postOptions
@@ -64,39 +92,42 @@
                                       [self shareMediaData:gifData
                                             twitterAccount:accountsList.lastObject
                                                  mediaType:@"image/gif"
-                                             fileExtension:@"gif"];
+                                             fileExtension:@"gif"
+                                                      text:text
+                                       ];
                                   }];
 }
 
+
 -(void)shareVideo
 {
-    // Get the data of the animated gif.
-    Emuticon *emu = self.objectToShare;
-    NSData *videoData = [emu videoData];
-    
-    // Get Twitter account
-    ACAccountStore *account = [[ACAccountStore alloc] init];
-    ACAccountType *twitterType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    NSDictionary *postOptions = nil;
-    
-    // Attempt to post the postMessage
-    [account requestAccessToAccountsWithType:twitterType
-                                     options:postOptions
-                                  completion:^(BOOL accessGranted, NSError *error) {
-                                      if (!accessGranted || error) {
-                                          [self failed];
-                                          return;
-                                      }
-                                      NSArray *accountsList = [account accountsWithAccountType:twitterType];
-                                      if (accountsList == nil || accountsList.count < 1) {
-                                          [self failed];
-                                          return;
-                                      }
-                                      [self shareMediaData:videoData
-                                            twitterAccount:accountsList.lastObject
-                                                 mediaType:@"public.mpeg-4"
-                                             fileExtension:@"mp4"];
-                                  }];
+//    // Get the data of the animated gif.
+//    Emuticon *emu = self.objectToShare;
+//    NSData *videoData = [emu videoData];
+//    
+//    // Get Twitter account
+//    ACAccountStore *account = [[ACAccountStore alloc] init];
+//    ACAccountType *twitterType = [account accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+//    NSDictionary *postOptions = nil;
+//    
+//    // Attempt to post the postMessage
+//    [account requestAccessToAccountsWithType:twitterType
+//                                     options:postOptions
+//                                  completion:^(BOOL accessGranted, NSError *error) {
+//                                      if (!accessGranted || error) {
+//                                          [self failed];
+//                                          return;
+//                                      }
+//                                      NSArray *accountsList = [account accountsWithAccountType:twitterType];
+//                                      if (accountsList == nil || accountsList.count < 1) {
+//                                          [self failed];
+//                                          return;
+//                                      }
+//                                      [self shareMediaData:videoData
+//                                            twitterAccount:accountsList.lastObject
+//                                                 mediaType:@"public.mpeg-4"
+//                                             fileExtension:@"mp4"];
+//                                  }];
 }
 
 -(void)failed
@@ -117,18 +148,28 @@
     });
 }
 
+-(void)cancel
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view makeToast:LS(@"SHARE_TOAST_CANCELED")];
+        [self.delegate sharerDidCancelWithInfo:self.info];
+        self.view.alpha = 1;
+    });
+}
 
 -(void)shareMediaData:(NSData *)data
        twitterAccount:(ACAccount *)account
             mediaType:(NSString *)mediaType
         fileExtension:(NSString *)fileExtension
+                 text:(NSString *)text
 {
     // Create the upload post request
-    SLRequest *postRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/update_with_media.json"] parameters:nil];
+    SLRequest *postRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/update_with_media.json"] parameters:@{@"status":text}];
     
     // Add image to post
     NSString *uuid = [[NSUUID UUID] UUIDString];
     [postRequest addMultipartData:data withName:@"media" type:mediaType filename:[SF:@"%@.%@", uuid, fileExtension]];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.view makeToast:LS(@"SHARE_TOAST_UPLOADING_TO_TWITTER")];
     });
@@ -143,6 +184,19 @@
         }
         [self success];
     }];
+}
+
+#pragma mark - UITextFieldDelegate
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // Prevent crashing undo bug – see note below.
+    if(range.length + range.location > textField.text.length)
+    {
+        return NO;
+    }
+    
+    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    return newLength <= 100;
 }
 
 @end

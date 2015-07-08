@@ -313,6 +313,7 @@ const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback
     _audioFileURL = audioFileURL;
 }
 
+
 -(void)stitchAudioToVideoFile
 {
     if (self.audioFileURL == nil) return;
@@ -320,26 +321,38 @@ const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback
     // The composition object for mixing audio and video files.
     AVMutableComposition* mixComposition = [AVMutableComposition composition];
     
+    
+    //
     // The name of the new output mixed video file.
+    //
     NSString* originalVideoPath = self.videoOutputURL.path;
     NSString* outputFileWithAudioPath = [originalVideoPath stringByReplacingOccurrencesOfString:@".mp4" withString:@"-ws.mp4"];
     NSURL *outputFileWithAudioURL = [NSURL fileURLWithPath:outputFileWithAudioPath];
 
+    
+    //
     // The video asset. Used range: from start to finish.
+    //
     CMTime nextClipStartTime = kCMTimeZero;
     AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:self.videoOutputURL options:nil];
     CMTimeRange video_timeRange = CMTimeRangeMake(kCMTimeZero,videoAsset.duration);
     AVMutableCompositionTrack *a_compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
     [a_compositionVideoTrack insertTimeRange:video_timeRange ofTrack:[[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:nextClipStartTime error:nil];
     
+    
+    //
     // The audio asset. Used range: from defined start time, with the duration defined by video.
+    //
     AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:self.audioFileURL options:nil];
     CMTime startTime = CMTimeMake(self.audioStartTime, 1);
     CMTimeRange audio_timeRange = CMTimeRangeMake(startTime, videoAsset.duration);
-    
     AVMutableCompositionTrack *b_compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
     [b_compositionAudioTrack insertTimeRange:audio_timeRange ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:nextClipStartTime error:nil];
     
+    
+    //
+    // Export
+    //
     AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
     _assetExport.outputFileType = AVFileTypeMPEG4;
     _assetExport.outputURL = outputFileWithAudioURL;

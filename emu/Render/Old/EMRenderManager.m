@@ -303,6 +303,7 @@
 
 
 -(void)renderVideoForEmu:(Emuticon *)emu
+       requiresWaterMark:(BOOL)requiresWaterMark
          completionBlock:(void (^)(void))completionBlock
                failBlock:(void (^)(void))failBlock
 {
@@ -330,6 +331,7 @@
     renderer.paletteString = emuDef.palette;
     renderer.shouldOutputGif = NO;
     renderer.effects = emuDef.effects;
+    renderer.waterMarkName = requiresWaterMark?@"emuUglyWaterMark":nil;
 
     // Should output a looping video to the temp folder.
     renderer.outputPath = NSTemporaryDirectory();

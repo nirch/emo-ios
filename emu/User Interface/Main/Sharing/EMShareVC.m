@@ -397,13 +397,14 @@
         if (emu.videoURL) {
             [self.sharer share];
         } else {
-            [self renderVideoBeforeShareForEmu:emu];
+            BOOL requiresWaterMark = (method != emkShareMethodFacebookMessanger);
+            [self renderVideoBeforeShareForEmu:emu requiresWaterMark:requiresWaterMark];
         }
     }
 }
 
 
--(void)renderVideoBeforeShareForEmu:(Emuticon *)emu
+-(void)renderVideoBeforeShareForEmu:(Emuticon *)emu requiresWaterMark:(BOOL)requiresWaterMark
 {
     self.guiCollectionView.hidden = YES;
     self.guiFBMButtonContainer.hidden = YES;
@@ -411,6 +412,7 @@
     self.guiRenderingProgress.progress = 0;
     
     [EMRenderManager.sh renderVideoForEmu:emu
+                        requiresWaterMark:requiresWaterMark
                           completionBlock:^{
                               // If we are here, emu.videoURL points to the rendered video.
                               [self.sharer share];
