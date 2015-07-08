@@ -404,7 +404,8 @@
 }
 
 
--(void)renderVideoBeforeShareForEmu:(Emuticon *)emu requiresWaterMark:(BOOL)requiresWaterMark
+-(void)renderVideoBeforeShareForEmu:(Emuticon *)emu
+                  requiresWaterMark:(BOOL)requiresWaterMark
 {
     self.guiCollectionView.hidden = YES;
     self.guiFBMButtonContainer.hidden = YES;

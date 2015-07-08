@@ -45,6 +45,17 @@ OptimizelyVariableKeyForBool(featureVideoRenderWithAudio, NO);
 
 /**
 ---------------------------------------
+htmlShareAppBody
+---------------------------------------
+value type: String
+default values: 
+description: <String> - The body html for the email sent when the user select to share app link using email.
+*/
+OptimizelyVariableKeyForString(htmlShareAppBody, @"");
+
+
+/**
+---------------------------------------
 iconNameNavRetake
 ---------------------------------------
 value type: String
@@ -120,6 +131,7 @@ OptimizelyVariableKeyForString(textShareAppSubject, @"Emu - Selfie Stickers");
             @"featureVideoRender":featureVideoRender,
 			@"featureVideoRenderExtraUserSettings":featureVideoRenderExtraUserSettings,
 			@"featureVideoRenderWithAudio":featureVideoRenderWithAudio,
+			@"htmlShareAppBody":htmlShareAppBody,
 			@"iconNameNavRetake":iconNameNavRetake,
 			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList,
 			@"recorderRecordButtonCountdownFrom":recorderRecordButtonCountdownFrom,

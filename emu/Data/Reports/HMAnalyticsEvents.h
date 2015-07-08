@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 14:20:31 06/24/15 IDT
+//  Created by build script on 13:57:20 07/08/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -79,8 +79,8 @@
 #define AK_S_DID_EVER_FINISH_A_RETAKE @"didEverFinishARetake"
 
 
-/** <string> - The name of the emu used on the preview stage in the
-    recorder onboarding flow (when user opened app for the first time) **/
+/** The name of the emu used on the preview stage in the recorder
+    onboarding flow (when user opened app for the first time) **/
 #define AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING @"emuNameUsedForPreviewOnOnboarding"
 
 
@@ -140,6 +140,10 @@
 //
 // Person Details
 //
+
+
+/** The name of the client used: emu-android or emu-ios **/
+#define AK_PD_LAST_USED_CLIENT @"lastUsedClient"
 
 
 /** True if the keyboard ever appeared for the user from any device. **/
@@ -333,6 +337,125 @@ Facebook messenger integration opened the app using a deep link.
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User applied footage to all packs (this event will be deprecated soon)
+**/
+#define AK_E_FOOTAGE_APPLIED_TO_ALL @"Footage:appliedToAll"
+
+/** Param:packageOID --> <string> - oid of a package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:originUI --> <string> - The UI the screen was opened from (items, itemDetails, KB etc). **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageName --> <string> - name of a package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User applied take to a specific emu
+**/
+#define AK_E_FOOTAGE_APPLIED_TO_EMU @"Footage:appliedToEmu"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageOID --> <string> - oid of a package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - The UI the screen was opened from (items, itemDetails, KB etc). **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageName --> <string> - name of a package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User applied take to a whole pack (this event will be deprecated soon)
+**/
+#define AK_E_FOOTAGE_APPLIED_TO_PACK @"Footage:appliedToPack"
+
+/** Param:packageOID --> <string> - oid of a package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:originUI --> <string> - The UI the screen was opened from (items, itemDetails, KB etc). **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageName --> <string> - name of a package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User applied take to all unlocked
+**/
+#define AK_E_FOOTAGE_CHANGED_DEFAULT @"Footage:changedDefault"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User deleted a footage
+**/
+#define AK_E_FOOTAGE_DELETED @"Footage:deleted"
+
+/** Param:emuticonOID --> <string> - (optional) the oid of the related emoticon (if user opened footages screen from a context of a specific emu) **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageOID --> <string> - (optional) oid of a package, if user opened footages screen from a context of a pack. **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:emuticonName --> <string> - (optional) the name of the related emoticon (if user opened footages screen from a context of a specific emu) **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - The UI the screen was opened from (items, itemDetails, KB etc). **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageName --> <string> - (optional) name of a package, if user opened footages screen from a context of a pack. **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User opened the user's takes screen
+**/
+#define AK_E_FOOTAGE_SCREEN_APPEARED @"Footage:screenAppeared"
+
+/** Param:emuticonOID --> <string> - (optional) the oid of the related emoticon (if user opened the screen from a context of a specific emu) **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageOID --> <string> - (optional) oid of a package, if user opened the screen from a context of a pack. **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:emuticonName --> <string> - (optional) the name of the related emoticon (if user opened the screen from a context of a specific emu) **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - The UI the screen was opened from (items, itemDetails, KB etc). **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageName --> <string> - (optional) name of a package, if user opened the screen from a context of a pack. **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User dismissed the takes screen
+**/
+#define AK_E_FOOTAGE_SCREEN_CANCEL @"Footage:screenCancel"
+
+/** Param:emuticonOID --> <string> - (optional) the oid of the related emoticon (if user opened the screen from a context of a specific emu) **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageOID --> <string> - (optional) oid of a package, if user opened the screen from a context of a pack. **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+/** Param:emuticonName --> <string> - (optional) the name of the related emoticon (if user opened the screen from a context of a specific emu) **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - The UI the screen was opened from (items, itemDetails, KB etc). **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageName --> <string> - (optional) name of a package, if user opened the screen from a context of a pack. **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 User selected an option
 **/
 #define AK_E_ITEM_DETAILS_USER_CHOICE @"ItemDetails:userChoice"
@@ -375,6 +498,24 @@ User selected an option
 User tapped the Emu
 **/
 #define AK_E_ITEM_DETAILS_USER_PRESSED_EMU @"ItemDetails:userPressedEmu"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+When user clicks replace footage button
+**/
+#define AK_E_ITEM_DETAILS_USER_PRESSED_FOOTAGE_BUTTON @"ItemDetails:userPressedFootageButton"
 
 /** Param:emuticonOID --> <string> - the oid of the related emoticon **/
 #define AK_EP_EMUTICON_OID @"emuticonOID"
@@ -497,8 +638,8 @@ user selected to retake with an option (for all emoticons or all in
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-user pressed the emu button at the top and an 'about message' was
-    shown.
+User selected a specific emu from the feed (item details screen will
+    be opened)
 **/
 #define AK_E_ITEMS_USER_SELECTED_ITEM @"Items:userSelectedItem"
 
@@ -842,11 +983,14 @@ When user asked if he likes the result he chose to try again and
 /** Param:emuticonName --> <string> - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow) **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
 
+/** Param:latestBackgroundMark --> <int> - The latest background detection mark before user pressed the record button. **/
+#define AK_EP_LATEST_BACKGROUND_MARK @"latestBackgroundMark"
+
 /** Param:timePassedSinceRecorderOpened --> <interval> - the time interval passed since the Rec:opened event. **/
 #define AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED @"timePassedSinceRecorderOpened"
 
-/** Param:latestBackgroundMark --> <int> - The latest background detection mark before user pressed the record button. **/
-#define AK_EP_LATEST_BACKGROUND_MARK @"latestBackgroundMark"
+/** Param:userPressed --> <string> - (optional) the UI element the user pressed to try a different take (used in android where system back and retry button do the same thing) **/
+#define AK_EP_USER_PRESSED @"userPressed"
 
 /** Param:flowType --> <string> - the flow type definition the recorder was opened with. Possible values: 
  'onboarding' - recorder on boarding when app launched for the first time.

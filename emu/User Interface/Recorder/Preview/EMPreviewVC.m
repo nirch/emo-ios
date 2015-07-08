@@ -68,21 +68,22 @@
     
     __weak UIImageView *v = self.focusPointView;
     v.center = CGPointMake(x, y);
-    v.alpha = 0.1;
-    v.transform = CGAffineTransformMakeScale(1.4, 1.4);
+    v.hidden = NO;
+    v.transform = CGAffineTransformMakeScale(2.4, 2.4);
     
     // Animate
     [UIView animateWithDuration:2.5 animations:^{
-        v.alpha = 0.4;
+        //v.alpha = 0.4;
         v.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
-        v.alpha = 1.0;
+        //v.alpha = 1.0;
         [UIView animateWithDuration:0.3
                               delay:1.5
                             options:UIViewAnimationOptionCurveLinear
                          animations:^{
-                             v.alpha = 0;
-                         } completion:nil];
+                         } completion:^(BOOL finished) {
+                             v.hidden = YES;
+                         }];
     }];
 }
 

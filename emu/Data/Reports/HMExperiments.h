@@ -22,6 +22,9 @@
 /** featureVideoRenderWithAudio : <Bool> - Is the user allowed to render emus as videos with audio?  */
 #define VK_FEATURE_VIDEO_RENDER_WITH_AUDIO @"featureVideoRenderWithAudio" 
 
+/** htmlShareAppBody : <String> - The body html for the email sent when the user select to share app link using email.  */
+#define VK_HTML_SHARE_APP_BODY @"htmlShareAppBody" 
+
 /** iconNameNavRetake : <String> - The name of the icon used for the retake button in the top navigation bar.  */
 #define VK_ICON_NAME_NAV_RETAKE @"iconNameNavRetake" 
 

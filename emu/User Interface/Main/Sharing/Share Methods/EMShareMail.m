@@ -89,22 +89,34 @@
 -(void)shareText
 {
     [super shareText];
-    
+    NSString *subject = self.objectToShare[@"subject"];
+    NSString *body = self.objectToShare[@"body"];
+    [self _shareContent:body subject:subject isHTML:NO];
+}
+
+
+-(void)shareHTML
+{
+    [super shareHTML];
+    NSString *subject = self.objectToShare[@"subject"];
+    NSString *body = self.objectToShare[@"body"];
+    [self _shareContent:body subject:subject isHTML:YES];
+}
+
+-(void)_shareContent:(NSString *)contentBody subject:(NSString *)subject isHTML:(BOOL)isHTML
+{
     // First check if mail client configured correctly.
     if (![MFMailComposeViewController canSendMail]) {
         [self.view makeToast:LS(@"SHARE_TOAST_MAIL_CLIENT_NOT_CONFIGURED")];
         [self.delegate sharerDidFailWithInfo:self.info];
         return;
     }
-
-    NSString *subject = self.objectToShare[@"subject"];
-    NSString *body = self.objectToShare[@"body"];
     
     self.picker = [[MFMailComposeViewController alloc] init];
     self.picker.mailComposeDelegate = self;
-
+    
     [self.picker setSubject:subject];
-    [self.picker setMessageBody:body isHTML:NO];
+    [self.picker setMessageBody:contentBody isHTML:isHTML];
     
     [self.viewController presentViewController:self.picker
                                       animated:YES

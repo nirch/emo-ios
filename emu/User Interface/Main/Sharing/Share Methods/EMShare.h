@@ -29,6 +29,7 @@
 -(void)shareAnimatedGif;
 -(void)shareVideo;
 -(void)shareText;
+-(void)shareHTML;
 
 -(void)cancel;
 

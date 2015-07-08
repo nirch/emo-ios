@@ -618,6 +618,8 @@
 		08CF07A91B4C122900034BB5 /* emuDefaultContour480.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 08CF07A71B4C122900034BB5 /* emuDefaultContour480.ctr */; };
 		08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */; };
 		08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */; };
+		08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */ = {isa = PBXBuildFile; fileRef = 08CF07AF1B4D65CC00034BB5 /* shareapp.html */; };
+		08CF07B11B4D65CC00034BB5 /* shareapp.html in Resources */ = {isa = PBXBuildFile; fileRef = 08CF07AF1B4D65CC00034BB5 /* shareapp.html */; };
 		08D558B71B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D558B81B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
@@ -1090,6 +1092,7 @@
 		08CF07A71B4C122900034BB5 /* emuDefaultContour480.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emuDefaultContour480.ctr; sourceTree = "<group>"; };
 		08CF07AA1B4CFB0700034BB5 /* WaterMarkSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterMarkSource.h; sourceTree = "<group>"; };
 		08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WaterMarkSource.mm; sourceTree = "<group>"; };
+		08CF07AF1B4D65CC00034BB5 /* shareapp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = shareapp.html; sourceTree = "<group>"; };
 		08D558B51B286114006BF723 /* EMDebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDebugCell.h; sourceTree = "<group>"; };
 		08D558B61B286114006BF723 /* EMDebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDebugCell.m; sourceTree = "<group>"; };
 		08D929841A77A36D00B6A68F /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1312,6 +1315,7 @@
 		08271FAD1B01F5B90046F38E /* Local Resources */ = {
 			isa = PBXGroup;
 			children = (
+				08CF07AE1B4D65CC00034BB5 /* html */,
 				08819CCC1B2C76BE00D2D77A /* gifs */,
 				0896D5191B2D8D430094ED41 /* pngs */,
 				08271FE41B0211DA0046F38E /* emus */,
@@ -2173,6 +2177,14 @@
 			path = Tutorial;
 			sourceTree = "<group>";
 		};
+		08CF07AE1B4D65CC00034BB5 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				08CF07AF1B4D65CC00034BB5 /* shareapp.html */,
+			);
+			path = html;
+			sourceTree = "<group>";
+		};
 		08D9297B1A77A36D00B6A68F = {
 			isa = PBXGroup;
 			children = (
@@ -2692,6 +2704,7 @@
 				08AA14EC1B0BA658002E1B2F /* startRecording.wav in Resources */,
 				08AA14ED1B0BA658002E1B2F /* uniformBGParams.xml in Resources */,
 				08AA14EE1B0BA658002E1B2F /* Localizable.strings in Resources */,
+				08CF07B11B4D65CC00034BB5 /* shareapp.html in Resources */,
 				084AF47E1B383B810056FC34 /* attitude-coolstory-fg.gif in Resources */,
 				08AA14EF1B0BA658002E1B2F /* EMRecorder.storyboard in Resources */,
 				084AF5121B383B810056FC34 /* wasted-ubercool-fg.gif in Resources */,
@@ -2790,6 +2803,7 @@
 				0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */,
 				08AA14351B08F062002E1B2F /* Localizable.strings in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
+				08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */,
 				084AF47C1B383B810056FC34 /* attitude-coolstory-fg.gif in Resources */,
 				08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */,
 				084AF5101B383B810056FC34 /* wasted-ubercool-fg.gif in Resources */,

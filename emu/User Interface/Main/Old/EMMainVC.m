@@ -1160,14 +1160,18 @@
 #pragma mark - Share app
 -(void)shareApp
 {
-    NSString *subjectString = [HMPanel.sh stringForKey:VK_TEXT_SHARE_APP_SUBJECT fallbackValue:@"Emu - Selfie Stickers"];
-    NSString *body = [HMPanel.sh stringForKey:VK_TEXT_SHARE_APP_BODY fallbackValue:@"Hi\n\nCheck out this cool app:\n\nEmu - Selfie Stickers\nhttps://geo.itunes.apple.com/app/id969789079?mt=8&uo=6"];
+    NSString *subjectString = [HMPanel.sh stringForKey:VK_TEXT_SHARE_APP_SUBJECT fallbackValue:@"Emu - Animated Selfie Stickers"];
+
+    NSURL *htmlURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"shareapp" ofType:@"html"]];
+    NSString *defaultHTMLBody = [NSString stringWithContentsOfURL:htmlURL encoding:NSUTF8StringEncoding error:nil];
+    NSString *htmlBody = [HMPanel.sh stringForKey:VK_HTML_SHARE_APP_BODY fallbackValue:defaultHTMLBody];
+    
     self.sharer = [EMShareMail new];
     self.sharer.objectToShare = @{
                                   @"subject":subjectString,
-                                  @"body":body
+                                  @"body":htmlBody
                                   };
-    self.sharer.shareOption = emkShareText;
+    self.sharer.shareOption = emkShareHTML;
     self.sharer.viewController = self;
     self.sharer.view = self.view;
     self.sharer.delegate = self;

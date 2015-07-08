@@ -173,6 +173,15 @@
 			<key>valueType</key>
 			<string>String</string>
 		</dict>
+		<key>htmlShareAppBody</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;String&gt; - The body html for the email sent when the user select to share app link using email.</string>
+			<key>defaultValue</key>
+			<string></string>
+			<key>valueType</key>
+			<string>String</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

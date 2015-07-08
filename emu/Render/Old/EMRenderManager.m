@@ -315,9 +315,12 @@
           emuDef.name,
           emuDef.framesCount
           );
-    
-    REMOTE_LOG(@"Starting to render video for emuticon named: %@", emuDef.name);
+    REMOTE_LOG(
+               @"Starting to render video for emuticon named: %@",
+               emuDef.name
+               );
 
+    
     EMRenderer *renderer = [EMRenderer new];
     renderer.emuticonDefOID = emuDef.oid;
     renderer.footageOID = footage.oid;
@@ -333,18 +336,22 @@
     renderer.effects = emuDef.effects;
     renderer.waterMarkName = requiresWaterMark?@"emuUglyWaterMark":nil;
 
+    
     // Should output a looping video to the temp folder.
     renderer.outputPath = NSTemporaryDirectory();
     renderer.outputOID = emu.oid;
     renderer.shouldOutputVideo = YES;
 
+    
     // Audio track (optional)
     renderer.audioFileURL = emu.audioFileURL;
     renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
     
+    
     // Video settings (optional, use defaults if not defined)
     renderer.videoFXLoopsCount = emu.videoLoopsCount && emu.videoLoopsCount.integerValue>0? emu.videoLoopsCount.integerValue : EMU_DEFAULT_VIDEO_LOOPS_COUNT;
     renderer.videoFXLoopEffect = emu.videoLoopsEffect? emu.videoLoopsEffect.integerValue : EMU_DEFAULT_VIDEO_LOOPS_FX;
+    
     
     // Render
     dispatch_async(self.renderingQueue, ^(void){
@@ -358,7 +365,6 @@
             }
         });
     });
-
 }
 
 @end

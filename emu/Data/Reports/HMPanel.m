@@ -426,7 +426,12 @@
     
     // Optimizely live variables.
     OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
-    if (opKey) return [Optimizely stringForKey:opKey];
+    if (opKey &&
+        [Optimizely stringForKey:opKey] &&
+        [[Optimizely stringForKey:opKey] length]>0) {
+        // A non empty string defined. Return it.
+        return [Optimizely stringForKey:opKey];
+    }
     
     // Nope. So use the passed fallback value instead.
     return fallbackValue;

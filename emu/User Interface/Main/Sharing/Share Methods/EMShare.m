@@ -27,6 +27,7 @@
 -(void)shareAnimatedGif{}
 -(void)shareVideo{}
 -(void)shareText{}
+-(void)shareHTML{}
 
 -(void)shareSelection
 {
@@ -41,6 +42,10 @@
             
         case emkShareText:
             [self shareText];
+            break;
+            
+        case emkShareHTML:
+            [self shareHTML];
             break;
             
         default:
