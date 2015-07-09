@@ -43,9 +43,7 @@
 
     NSNumber *shouldAutoDownload = [info safeBoolNumberForKey:@"should_auto_download"];
     pkg.shouldAutoDownload = shouldAutoDownload? shouldAutoDownload: @YES;
-
-    NSNumber *priority = self.packagesPriorities[oid];
-    pkg.priority = priority? priority:@9999;
+    pkg.priority = @0;
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;

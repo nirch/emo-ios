@@ -54,6 +54,17 @@
  */
 +(NSArray *)allPackagesPrioritizedInContext:(NSManagedObjectContext *)context;
 
+
+/**
+ *  Reorders packages in local storage, given new priority info.
+ *
+ *  @param priorityInfo     - The info about the packages to prioritize.
+ *  @param context          - The managed object context.
+ *
+ */
++(void)prioritizePackagesWithInfo:(NSDictionary *)priorityInfo context:(NSManagedObjectContext *)context;
+
+
 /**
  *  The json file name holding the emuticons definitions for this package.
  *

@@ -1507,7 +1507,7 @@
     self.currentlyAutoFocusing = YES;
     dispatch_after(DTIME(2.6), dispatch_get_main_queue(), ^{
         self.currentlyAutoFocusing = NO;
-        [self.captureSession refocusOnPoint:normalizedPoint inspectFrame:YES];
+        [self.captureSession autoFocusOnPoint:normalizedPoint];
         [self.captureSession setVideoProcessingState:HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames
                                                 info:nil];
     });

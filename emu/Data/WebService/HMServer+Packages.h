@@ -10,6 +10,7 @@
 
 @interface HMServer (Packages)
 
--(void)refreshPackagesInfoWithInfo:(NSDictionary *)info;
+-(void)fetchPackagesFullInfoWithInfo:(NSDictionary *)info;
+-(void)fetchPackagesUpdatesSince:(NSNumber *)timestamp withInfo:(NSDictionary *)info;
 
 @end

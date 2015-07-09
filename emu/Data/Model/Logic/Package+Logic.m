@@ -64,6 +64,29 @@
 }
 
 
++(void)prioritizePackagesWithInfo:(NSDictionary *)priorityInfo context:(NSManagedObjectContext *)context
+{
+    if (priorityInfo.count < 1) return;
+    NSInteger now = (NSInteger)[[NSDate date] timeIntervalSinceReferenceDate];
+    
+    // Get the packages that need to be prioritized.
+    NSArray *oids = priorityInfo.allKeys;
+    NSError *error;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND oid in %@", @YES, oids];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
+    fetchRequest.predicate = predicate;
+
+    NSArray *packages = [context executeFetchRequest:fetchRequest error:&error];
+    for (Package *package in packages) {
+        NSNumber *priority = priorityInfo[package.oid];
+        priority = priority? @(now + priority.integerValue) : @0;
+        package.priority = priority;
+    }
+}
+
+
+
+
 -(NSString *)jsonFileName
 {
     return [SF:@"%@Package", self.name];

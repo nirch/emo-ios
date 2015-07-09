@@ -20,6 +20,8 @@
 		<string>emuapi/packages/full</string>
 		<key>packages meta</key>
 		<string>emuapi/packages/meta</string>
+		<key>packages update</key>
+		<string>emuapi/packages/update</string>
 	</dict>
 </dict>
 </plist>

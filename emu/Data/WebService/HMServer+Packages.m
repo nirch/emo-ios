@@ -13,7 +13,7 @@
 
 @implementation HMServer (Packages)
 
--(void)refreshPackagesInfoWithInfo:(NSDictionary *)info
+-(void)fetchPackagesFullInfoWithInfo:(NSDictionary *)info
 {
     EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
     [self getRelativeURLNamed:@"packages full"
@@ -22,5 +22,25 @@
                          info:info
                        parser:parser];
 }
+
+
+-(void)fetchPackagesUpdatesSince:(NSNumber *)timestamp withInfo:(NSDictionary *)info
+{
+    if (timestamp == nil ||
+        ![timestamp isKindOfClass:[NSNumber class]] ||
+        [timestamp isEqualToNumber:@0]) {
+        // Fetch it all.
+        [self fetchPackagesFullInfoWithInfo:info];
+        return;
+    }
+    
+    EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
+    [self getRelativeURLNamed:@"packages update"
+                   parameters:@{@"after":[timestamp stringValue]}
+             notificationName:emkDataUpdatedPackages
+                         info:info
+                       parser:parser];
+}
+
 
 @end

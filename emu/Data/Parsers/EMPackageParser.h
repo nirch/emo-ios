@@ -13,6 +13,7 @@
 //@property (nonatomic) NSNumber *incrementalOrder;
 @property (nonatomic) BOOL parseForOnboarding;
 @property (nonatomic) NSDictionary *mixedScreenPriorities;
-@property (nonatomic) NSDictionary *packagesPriorities;
+//@property (nonatomic) NSDictionary *packagesPriorities;
+//@property (nonatomic) NSTimeInterval now;
 
 @end

@@ -194,12 +194,6 @@
     }
 }
 
--(void)refocusOnPoint:(CGPoint)point inspectFrame:(BOOL)inspectFrame
-{
-    [self cameraLockedFocusOnPoint:point];
-    
-}
-
 -(void)autoFocusOnPoint:(CGPoint)point
 {
     [self cameraUnlockedFocusOnPoint:point];

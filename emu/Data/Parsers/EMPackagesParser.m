@@ -23,11 +23,6 @@
     if (info == nil) return;
     
     //
-    // Packages priorities
-    //
-    NSDictionary *packagesPriorities = [HMParser prioritiesByOID:info[@"prioritized_packages"]];
-    
-    //
     // Mixed screen priorities
     //
     NSDictionary *mixedScreenPriorities = [HMParser prioritiesByOID:info[@"mixed_screen"][@"prioritized_emus"]];
@@ -44,14 +39,32 @@
     // Iterate and parse packages
     //
     EMPackageParser *packageParser = [[EMPackageParser alloc] initWithContext:self.ctx];
+
     NSArray *packages = info[@"packages"];
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSNumber *latestTimestamp = appCFG.lastUpdateTimestamp?appCFG.lastUpdateTimestamp:[NSNumber numberWithFloat:0];
+    
     for (NSDictionary *packageInfo in packages) {
         packageParser.objectToParse = packageInfo;
         packageParser.mixedScreenPriorities = mixedScreenPriorities;
-        packageParser.packagesPriorities = packagesPriorities;
         packageParser.parseForOnboarding = self.parseForOnboarding;
         [packageParser parse];
+        
+        // last update timestamp
+        NSNumber *timestamp = packageInfo[@"data_update_time_stamp"];
+        if (timestamp && [latestTimestamp compare:timestamp] == NSOrderedAscending) {
+            latestTimestamp = timestamp;
+        }
     }
+    
+    //
+    // Packages priorities
+    //
+    NSDictionary *packagesPriorities = [HMParser prioritiesByOID:info[@"prioritized_packages"]];
+    [Package prioritizePackagesWithInfo:packagesPriorities context:self.ctx];
+    
+    // Save the timestamp.
+    appCFG.lastUpdateTimestamp = latestTimestamp;
     
     // And we're done.
     HMLOG(TAG, EM_VERBOSE, @"Parsed %@ package/s", @(packages.count));

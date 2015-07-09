@@ -27,15 +27,15 @@
     [super tearDown];
 }
 
-- (void)testBackgroundDetection {
-    NSError *error;
-    HMBackgroundRemoval *vp = [HMBackgroundRemoval backgroundRemovalWithBGImageFileName:@""
-                                                                        contourFileName:@""
-                                                                                  error:&error];
-    XCTAssertNotNil(error, @"Error while init video processor: %@", [error localizedDescription]);
-    
-
-}
+//- (void)testBackgroundDetection {
+//    NSError *error;
+//    HMBackgroundRemoval *vp = [HMBackgroundRemoval backgroundRemovalWithBGImageFileName:@""
+//                                                                        contourFileName:@""
+//                                                                                  error:&error];
+//    XCTAssertNotNil(error, @"Error while init video processor: %@", [error localizedDescription]);
+//    
+//
+//}
 
 
 //#pragma mark - Helpers

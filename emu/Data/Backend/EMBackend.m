@@ -202,7 +202,7 @@
     if (self.latestRefresh && !shouldForceRefresh) {
         NSDate *now = [NSDate date];
         NSTimeInterval timePassedSincePreviousFetch = [now timeIntervalSinceDate:self.latestRefresh];
-        if (timePassedSincePreviousFetch > 600) {
+        if (timePassedSincePreviousFetch > 0) {
             shouldRefresh = YES;
         }
     } else {
@@ -212,7 +212,9 @@
     //
     
     if (shouldRefresh) {
-        [self.server refreshPackagesInfoWithInfo:notification.userInfo];
+        // Refetch all or just get an update?
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        [self.server fetchPackagesUpdatesSince:appCFG.lastUpdateTimestamp withInfo:notification.userInfo];
     }
     
     // Save it all

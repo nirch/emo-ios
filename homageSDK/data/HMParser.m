@@ -95,7 +95,7 @@
     for (id p in prioritizedObjects) {
         index++;
         NSString *oid = [HMParser parsedOID:p];
-        if (oid) priorities[oid] = @(index);
+        if (oid) priorities[oid] = @(prioritizedObjects.count - index);
     }
     return priorities;
 }
