@@ -18,7 +18,7 @@ pod 'JGActionSheet', '~> 1.0'
 # Reporting and experiments
 pod 'Mixpanel', '~> 2.7.0',             :inhibit_warnings => true
 pod 'Fabric', '~> 1.3.0' # required
-pod 'Fabric/Crashlytics', '~> 1.3.0'
+pod 'Fabric/Crashlytics', '~> 1.3.2'
 pod 'Optimizely-iOS-SDK'
 
 # Facebook

@@ -67,6 +67,18 @@ OptimizelyVariableKeyForString(iconNameNavRetake, @"retakeIcon");
 
 /**
 ---------------------------------------
+logicBGRemovalBehavior
+---------------------------------------
+value type: Number
+default values: 0
+description: <Number> - 0 - Normal. 1 - New behavior with bg detection sync changes.
+(number of loops, ping pong effect etc)
+*/
+OptimizelyVariableKeyForNumber(logicBGRemovalBehavior, @0);
+
+
+/**
+---------------------------------------
 onboardingEmusForPreviewList
 ---------------------------------------
 value type: String
@@ -133,6 +145,7 @@ OptimizelyVariableKeyForString(textShareAppSubject, @"Emu - Selfie Stickers");
 			@"featureVideoRenderWithAudio":featureVideoRenderWithAudio,
 			@"htmlShareAppBody":htmlShareAppBody,
 			@"iconNameNavRetake":iconNameNavRetake,
+			@"logicBGRemovalBehavior":logicBGRemovalBehavior,
 			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList,
 			@"recorderRecordButtonCountdownFrom":recorderRecordButtonCountdownFrom,
 			@"recorderShowAdvancedCameraOptionsOnOnboarding":recorderShowAdvancedCameraOptionsOnOnboarding,

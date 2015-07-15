@@ -10,6 +10,8 @@
 
 @protocol HMVideoProcessingProtocol <NSObject>
 
+@property NSInteger behaviorVariant;
+
 // Video Processing States
 typedef NS_ENUM(NSInteger, HMVideoProcessingState) {
     /** 

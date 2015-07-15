@@ -62,6 +62,7 @@
     // Add app information to the headers.
     [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
     [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
+    [self.session.requestSerializer setValue:@"Emu iOS" forHTTPHeaderField:@"APP_CLIENT_NAME"];
     
     // Using public database or just the scratchpad?
     if (self.usingPublicDataBase == NO) {

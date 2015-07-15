@@ -90,22 +90,33 @@
 #pragma mark - Camera
 -(void)switchCamera
 {
-    AVCaptureDevicePosition currentPosition = videoIn.device.position;
-    AVCaptureDevicePosition otherPosition = currentPosition == AVCaptureDevicePositionFront? AVCaptureDevicePositionBack: AVCaptureDevicePositionFront;
-    
-    // First check that the device support the alternative position.
-    AVCaptureDevice *otherCamera = [self videoDeviceWithPosition:otherPosition];
-    if (otherCamera == nil) return;
-    
-    // We have the other camera, lets switch to it.
-    self.prefferedCamera = otherPosition;
-    [self stopAndTearDownCaptureSession];
-    [self setupAndStartCaptureSession];
-    dispatch_after(DTIME(0.5), dispatch_get_main_queue(), ^{
-        self.shouldDropAllFrames = NO;
-    });
+//    AVCaptureDevicePosition currentPosition = videoIn.device.position;
+//    AVCaptureDevicePosition otherPosition = currentPosition == AVCaptureDevicePositionFront? AVCaptureDevicePositionBack: AVCaptureDevicePositionFront;
+//    
+//    // First check that the device support the alternative position.
+//    AVCaptureDevice *otherCamera = [self videoDeviceWithPosition:otherPosition];
+//    if (otherCamera == nil) return;
+//    self.shouldDropAllFrames = YES;
+//    
+//    // We have the other camera, lets switch to it.
+//    self.prefferedCamera = otherPosition;
+//    [self stopAndTearDownCaptureSession];
+//    dispatch_after(DTIME(2.0), dispatch_get_main_queue(), ^{
+//        [self setupAndStartCaptureSession];
+//        self.shouldDropAllFrames = NO;
+//    });
 }
 
+// Find a camera with the specified AVCaptureDevicePosition, returning nil if one is not found
+- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
+{
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices)
+    {
+        if ([device position] == position) return device;
+    }
+    return nil;
+}
 
 
 -(void)cameraLockedFocus
@@ -313,7 +324,7 @@
     BOOL thisFrameShouldBeInspected = (state == HMVideoProcessingStateInspectFrames ||
                                        state == HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames ||
                                        state == HMVideoProcessingStateInspectAndProcessFrames) &&
-                                        (extractCounter % 15 == 0);
+                                        (extractCounter % 20 == 0);
     if (state == HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames) {
         // HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames
         // ==> HMVideoProcessingStateProcessFrames
@@ -452,12 +463,6 @@
     if (movieWritingQueue) {
         movieWritingQueue = NULL;
     }
-    
-//    // releasing the video processor (if exists)
-//    if (self.videoProcessor) {
-//        self.videoProcessingState = HMVideoProcessingStateIdle;
-//        self.videoProcessor = nil;
-//    }
     
     videoConnection = nil;
 }

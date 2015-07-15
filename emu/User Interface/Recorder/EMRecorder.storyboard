@@ -713,7 +713,7 @@
                                     <action selector="onPressedEmuButton:" destination="Vj3-Kt-kX8" eventType="touchUpInside" id="YwY-CL-KUj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-Kq-iEm" userLabel="Restart button" customClass="EMButton">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-Kq-iEm" userLabel="Restart button" customClass="EMButton">
                                 <rect key="frame" x="315" y="23" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="gto-Vq-SjQ"/>

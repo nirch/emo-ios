@@ -59,6 +59,8 @@
 #define BG_MARK_WEIGHT_DELTA 0.2
 
 @property NSInteger processCounter;
+@property NSInteger inspectCounter;
+@property NSString *rootDir;
 
 @end
 
@@ -67,7 +69,9 @@
 @synthesize backgroundImage = _backgroundImage;
 @synthesize contourFileName = _contourFileName;
 @synthesize processCounter = _processCounter;
+@synthesize inspectCounter = _inspectCounter;
 @synthesize outputQueue = _outputQueue;
+@synthesize behaviorVariant = _behaviorVariant;
 
 +(HMBackgroundRemoval *)backgroundRemovalWithBGImageFileName:(NSString *)bgImageFilename
                                    contourFileName:(NSString *)contourFileName
@@ -83,6 +87,8 @@
 {
     self = [super init];
     if (self) {
+        self.rootDir = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
+        self.behaviorVariant = 0;
     }
     return self;
 }
@@ -275,11 +281,18 @@
     // If we don't have a frame to inspect, skip.
     if (m_original_image == NULL) return;
     
-    image_to_inspect = image_bgr2rgb(m_original_image, image_to_inspect);
-
-    // Get the background detection mark for this frame.
-    HMBGMark bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
-    // HMLOG(TAG, EM_VERBOSE, @"Background mark: %@", @(bgMark));
+    HMBGMark bgMark;
+    
+    // AB Testing behavior variant (checknig if synchronization of ProcessBackground improves stability.)
+    if (_behaviorVariant == 0) {
+        image_to_inspect = image_bgr2rgb(m_original_image, image_to_inspect);
+        bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
+    } else {
+        @synchronized(self) {
+            image_to_inspect = image_bgr2rgb(m_original_image, image_to_inspect);
+            bgMark = (HMBGMark)m_foregroundExtraction->ProcessBackground(image_to_inspect, 1);
+        }
+    }
     
     if (bgMark == HMBGMarkGood && _bgMarkWeight < 1) {
         // Good background (Still under threshold)

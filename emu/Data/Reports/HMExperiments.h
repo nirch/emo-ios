@@ -28,6 +28,10 @@
 /** iconNameNavRetake : <String> - The name of the icon used for the retake button in the top navigation bar.  */
 #define VK_ICON_NAME_NAV_RETAKE @"iconNameNavRetake" 
 
+/** logicBGRemovalBehavior : <Number> - 0 - Normal. 1 - New behavior with bg detection sync changes.
+(number of loops, ping pong effect etc)  */
+#define VK_LOGIC_BG_REMOVAL_BEHAVIOR @"logicBGRemovalBehavior" 
+
 /** onboardingEmusForPreviewList : <String> - A list of preffered emus oids to use for preview in the onboarding stage (given as a comma delimited string)  */
 #define VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST @"onboardingEmusForPreviewList" 
 

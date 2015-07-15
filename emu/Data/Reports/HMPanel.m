@@ -75,6 +75,13 @@
     REMOTE_LOG(@"Initialized crashlytics");
 }
 
+-(void)remoteKey:(NSString *)key value:(NSString *)value
+{
+    if (key == nil || value == nil) return;
+    Crashlytics *crashlytics = [Crashlytics sharedInstance];
+    [crashlytics setObjectValue:value forKey:key];
+}
+
 -(void)initMixPanelWithOptions:(NSDictionary *)launchOptions
 {
     self.mixPanelToken = self.cfg[@"token"][AppManagement.sh.isTestApp?@"testToken":@"productionToken"];
@@ -105,7 +112,7 @@
     [params addKey:AK_S_LOCALIZATION_PREFERENCE value:[self localizationPreference]];
     [params addKey:AK_S_DEVICE_MODEL value:[AppManagement deviceModelName]];
     [params addKey:AK_S_LAUNCHES_COUNT value:[self launchesCount]];
-    [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]];
+    [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]?self.cfg[AK_S_CLIENT_NAME]:@"Emu iOS"];
     
     // More flags as super parameters
     [params addKey:AK_S_DID_EVER_SHARE_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];

@@ -15,7 +15,6 @@
 #define VK_FEATURE_VIDEO_RENDER_WITH_AUDIO @"featureVideoRenderWithAudio"
 #define VK_FEATURE_VIDEO_RENDER_EXTRA_USER_SETTINGS @"featureVideoRenderExtraUserSettings"
 
-#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
 
 @interface HMPanel : NSObject
 
@@ -23,6 +22,10 @@
 +(HMPanel *)sharedInstance;
 +(HMPanel *)sh;
 -(void)initializeAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions;
+
+#pragma mark - Remote logging
+#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
+-(void)remoteKey:(NSString *)key value:(NSString *)value;
 
 #pragma mark - Tracking
 -(void)reportSuperParameters;

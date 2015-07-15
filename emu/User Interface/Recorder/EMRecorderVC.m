@@ -599,7 +599,9 @@
     HMBackgroundRemoval *br = [HMBackgroundRemoval backgroundRemovalWithBGImageFileName:@"clear480x480"
                                                          contourFileName:@"emuDefaultContour480"
                                                                    error:&error];
-    
+    NSNumber *bVariant = [HMPanel.sh numberForKey:VK_LOGIC_BG_REMOVAL_BEHAVIOR fallbackValue:@0];
+    [HMPanel.sh remoteKey:@"bg detection logic variant" value:bVariant.stringValue];
+    br.behaviorVariant = bVariant.integerValue;
     
     if (error) {
         HMLOG(TAG, EM_ERR, @"GM error: %@", [error localizedDescription]);
@@ -613,7 +615,7 @@
     // processing the feed of video frames.
     [self.captureSession initializeVideoProcessor:br];
     self.backgroundRemoval = br;
-    HMLOG(TAG, EM_DBG, @"Initialized video processing.");    
+    HMLOG(TAG, EM_DBG, @"Initialized video processing.");
 }
 
 
@@ -728,7 +730,7 @@
 {
     self.guiPreviewContainerView.hidden = YES;
     [self.captureSession switchCamera];
-    [self stateRestart];
+//    [self stateRestart];
 }
 
 #pragma mark - Updating States
@@ -888,7 +890,7 @@
     [self.feedBackVC showBGFeedbackAnimated:NO];
     [self.feedBackVC hideRecordingProgressAnimated:NO];
     
-    [self showCameraFeedUIAnimated:YES];
+    [self showCameraFeedUI];
     self.guiPleaseWaitLabel.hidden = YES;
     [self hideResultUIAnimated:YES];
     
@@ -1113,7 +1115,7 @@
     // the view controller will be notified when the background processes
     // are finished)
     [self.feedBackVC hideRecordingProgressAnimated:NO];
-    [self hideCameraFeedUIAnimated:YES];
+    [self hideCameraFeedUI];
     [self.guiPleaseWaitView startAnimating];
     
     //
@@ -1277,33 +1279,16 @@
 }
 
 #pragma mark - Camera Feed UI Show/Hide
--(void)hideCameraFeedUIAnimated:(BOOL)animated
+-(void)hideCameraFeedUI
 {
-    if (animated) {
-        [UIView animateWithDuration:0.3
-                         animations:^{
-                             [self hideCameraFeedUIAnimated:NO];
-                         } completion:nil];
-        return;
-    }
-
     self.guiBGFeedBackContainer.alpha = 0;
     self.guiPreviewContainerView.alpha = 0;
 }
 
--(void)showCameraFeedUIAnimated:(BOOL)animated
+-(void)showCameraFeedUI
 {
-    if (animated) {
-        [UIView animateWithDuration:0.3
-                         animations:^{
-                             [self showCameraFeedUIAnimated:NO];
-                         } completion:nil];
-        return;
-    }
-    
     self.guiBGFeedBackContainer.alpha = 1;
     self.guiPreviewContainerView.alpha = 1;
-    
     [self.guiPleaseWaitView stopAnimating];
 }
 

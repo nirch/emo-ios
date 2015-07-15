@@ -182,6 +182,16 @@
 			<key>valueType</key>
 			<string>String</string>
 		</dict>
+		<key>logicBGRemovalBehavior</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Number&gt; - 0 - Normal. 1 - New behavior with bg detection sync changes.
+(number of loops, ping pong effect etc)</string>
+			<key>defaultValue</key>
+			<integer>0</integer>
+			<key>valueType</key>
+			<string>Number</string>
+		</dict>
 	</dict>
 </dict>
 </plist>
