@@ -41,6 +41,8 @@
 
 -(void)shareAnimatedGif
 {
+    [super shareAnimatedGif];
+    
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"Twitter"
                                                                      message:nil
                                                               preferredStyle:UIAlertControllerStyleAlert];

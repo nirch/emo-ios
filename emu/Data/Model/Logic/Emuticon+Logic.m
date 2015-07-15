@@ -227,7 +227,20 @@
     return key;
 }
 
--(NSDictionary *)s3MetaDataForSampledResult
+
+-(NSString *)generateOIDForUpload
+{
+    NSString *oid = [EMDB generateOID];
+    return oid;
+}
+
+-(NSString *)s3KeyForUploadForOID:(NSString *)oid
+{
+    NSString *key = [SF:@"users_content/shared/%@.gif", oid];
+    return key;
+}
+
+-(NSDictionary *)metaDataForUpload
 {
     HMParams *params = [HMParams new];
     [params addKey:@"emuticonDefOID" value:self.emuDef.oid];

@@ -403,6 +403,14 @@
 		08819CDD1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
 		08819CDE1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
 		08819CDF1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
+		08851DE61B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
+		08851DE71B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
+		08851DEA1B53E5D100DC9619 /* EMShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE91B53E5D100DC9619 /* EMShareFacebook.m */; };
+		08851DEB1B53E5D100DC9619 /* EMShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE91B53E5D100DC9619 /* EMShareFacebook.m */; };
+		08851DEE1B540BD500DC9619 /* MongoID.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DED1B540BD500DC9619 /* MongoID.m */; };
+		08851DEF1B540BD500DC9619 /* MongoID.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DED1B540BD500DC9619 /* MongoID.m */; };
+		08851DF01B540BD500DC9619 /* MongoID.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DED1B540BD500DC9619 /* MongoID.m */; };
+		08851DF11B540BD500DC9619 /* MongoID.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DED1B540BD500DC9619 /* MongoID.m */; };
 		08875E101B19F51200E6663C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08875E0F1B19F51200E6663C /* AVKit.framework */; };
 		08875E111B19F51E00E6663C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08875E0F1B19F51200E6663C /* AVKit.framework */; };
 		08875E171B1AF25600E6663C /* ThumbOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08875E161B1AF25600E6663C /* ThumbOutput.mm */; };
@@ -986,6 +994,12 @@
 		08819CCD1B2C76BE00D2D77A /* dl.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dl.gif; sourceTree = "<group>"; };
 		08819CDA1B2CCC3100D2D77A /* EMDownloadsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDownloadsManager.h; sourceTree = "<group>"; };
 		08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDownloadsManager.m; sourceTree = "<group>"; };
+		08851DE41B53E32600DC9619 /* EMUploadAndShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUploadAndShare.h; sourceTree = "<group>"; };
+		08851DE51B53E32600DC9619 /* EMUploadAndShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUploadAndShare.m; sourceTree = "<group>"; };
+		08851DE81B53E5D100DC9619 /* EMShareFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFacebook.h; sourceTree = "<group>"; };
+		08851DE91B53E5D100DC9619 /* EMShareFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareFacebook.m; sourceTree = "<group>"; };
+		08851DEC1B540BD500DC9619 /* MongoID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MongoID.h; sourceTree = "<group>"; };
+		08851DED1B540BD500DC9619 /* MongoID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MongoID.m; sourceTree = "<group>"; };
 		08875E0F1B19F51200E6663C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		08875E151B1AF25600E6663C /* ThumbOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbOutput.h; sourceTree = "<group>"; };
 		08875E161B1AF25600E6663C /* ThumbOutput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ThumbOutput.mm; sourceTree = "<group>"; };
@@ -1626,6 +1640,10 @@
 				0854EE371A9FB21D00FD3833 /* EMShareProtocol.h */,
 				0854EE341A9FA6F900FD3833 /* EMShare.h */,
 				0854EE351A9FA6F900FD3833 /* EMShare.m */,
+				08851DE41B53E32600DC9619 /* EMUploadAndShare.h */,
+				08851DE51B53E32600DC9619 /* EMUploadAndShare.m */,
+				08851DE81B53E5D100DC9619 /* EMShareFacebook.h */,
+				08851DE91B53E5D100DC9619 /* EMShareFacebook.m */,
 				0854EE311A9FA6CE00FD3833 /* EMShareCopy.h */,
 				0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */,
 				0854EE381A9FC37000FD3833 /* EMShareSaveToCameraRoll.h */,
@@ -1707,6 +1725,8 @@
 				08CB89CC1A9B92AD00224A38 /* EMDB.m */,
 				085C67101A937EC9007BC910 /* NSManagedObject+FindAndCreate.h */,
 				085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */,
+				08851DEC1B540BD500DC9619 /* MongoID.h */,
+				08851DED1B540BD500DC9619 /* MongoID.m */,
 				085C66FE1A937EC9007BC910 /* Entities */,
 				085C67091A937EC9007BC910 /* Logic */,
 			);
@@ -2973,6 +2993,7 @@
 				080CB3411AA4C10B00603E30 /* EMDB.m in Sources */,
 				08CED0D61AA5C7EF00C50D0C /* EMShare.m in Sources */,
 				080CB3201AA4A9DD00603E30 /* EMKeyboardContainerVC.m in Sources */,
+				08851DEF1B540BD500DC9619 /* MongoID.m in Sources */,
 				08CED0D71AA5C7EF00C50D0C /* EMShareCopy.m in Sources */,
 				081EFF2D1AD89CE4001E0BA1 /* EMPackagesVC.m in Sources */,
 				08213B411ACC150500BE77E4 /* HMParser.m in Sources */,
@@ -3041,6 +3062,7 @@
 				0867CA0D1B16602E00FF0E85 /* EMDB.m in Sources */,
 				0867CA0E1B16602E00FF0E85 /* EMShare.m in Sources */,
 				0867CA0F1B16602E00FF0E85 /* EMKeyboardContainerVC.m in Sources */,
+				08851DF11B540BD500DC9619 /* MongoID.m in Sources */,
 				0867CA101B16602E00FF0E85 /* EMShareCopy.m in Sources */,
 				0867CA111B16602E00FF0E85 /* EMPackagesVC.m in Sources */,
 				0867CA121B16602E00FF0E85 /* HMParser.m in Sources */,
@@ -3086,6 +3108,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08851DE71B53E32600DC9619 /* EMUploadAndShare.m in Sources */,
 				08AA14491B0BA658002E1B2F /* HMPanel.m in Sources */,
 				08AA144A1B0BA658002E1B2F /* EMCaches.m in Sources */,
 				08AA144B1B0BA658002E1B2F /* HMBackgroundRemovalDebugger.mm in Sources */,
@@ -3130,6 +3153,7 @@
 				08AA146C1B0BA658002E1B2F /* UserFootage.m in Sources */,
 				08AA146D1B0BA658002E1B2F /* EMShareFBMessanger.m in Sources */,
 				08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */,
+				08851DF01B540BD500DC9619 /* MongoID.m in Sources */,
 				08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */,
 				0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
@@ -3180,6 +3204,7 @@
 				08AA14981B0BA658002E1B2F /* EMAlertsPermissionVC.m in Sources */,
 				08BE1F9F1B28487C00A34232 /* EMDebugViewController.m in Sources */,
 				08AA14991B0BA658002E1B2F /* EMGradientView.m in Sources */,
+				08851DEB1B53E5D100DC9619 /* EMShareFacebook.m in Sources */,
 				08AA149B1B0BA658002E1B2F /* NSManagedObject+FindAndCreate.m in Sources */,
 				08AA149C1B0BA658002E1B2F /* EMLabel.m in Sources */,
 				08AA149D1B0BA658002E1B2F /* AppManagement.m in Sources */,
@@ -3199,6 +3224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08851DE61B53E32600DC9619 /* EMUploadAndShare.m in Sources */,
 				0806BD821AA37DC80078F14B /* HMPanel.m in Sources */,
 				082720C01B038CCB0046F38E /* EMCaches.m in Sources */,
 				08D9D4541AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm in Sources */,
@@ -3243,6 +3269,7 @@
 				085A78501AEC2364003E9F97 /* UserFootage.m in Sources */,
 				08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
+				08851DEE1B540BD500DC9619 /* MongoID.m in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
@@ -3293,6 +3320,7 @@
 				08A9071C1ACABB9E008534F7 /* EMAlertsPermissionVC.m in Sources */,
 				08BE1F9E1B28487C00A34232 /* EMDebugViewController.m in Sources */,
 				08B589A91A93CF12008D9068 /* EMGradientView.m in Sources */,
+				08851DEA1B53E5D100DC9619 /* EMShareFacebook.m in Sources */,
 				085C67751A937EC9007BC910 /* NSManagedObject+FindAndCreate.m in Sources */,
 				08B5899C1A93B9E5008D9068 /* EMLabel.m in Sources */,
 				08D9D44E1AC2B0E4004A83F3 /* AppManagement.m in Sources */,

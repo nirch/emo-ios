@@ -265,7 +265,7 @@
     if (progressNumber == nil) return;
 
     float progress = progressNumber.floatValue;
-    [self.shareVC updateProgress:progress];
+    [self.shareVC updateProgress:progress animated:NO];
 }
 
 

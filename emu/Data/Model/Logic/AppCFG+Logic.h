@@ -14,6 +14,10 @@
 
 @interface AppCFG (Logic)
 
+// S3 credentials (upload only)
+#define S3_UPLOAD_ACCESS_KEY @"AKIAINLSJGFQCJUIWV3A"
+#define S3_UPLOAD_SECRET_KEY @"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"
+
 +(AppCFG *)cfgInContext:(NSManagedObjectContext *)context;
 -(BOOL)isPackageUsedForOnboarding:(Package *)package;
 -(Package *)packageForOnboarding;

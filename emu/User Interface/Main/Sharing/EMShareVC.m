@@ -23,6 +23,7 @@
 #import "EMShareFBMessanger.h"
 #import "EMShareDocumentInteraction.h"
 #import "EMShareTwitter.h"
+#import "EMShareFacebook.h"
 
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
@@ -40,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiFBMButtonContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiRenderingView;
 @property (weak, nonatomic) IBOutlet UIProgressView *guiRenderingProgress;
+@property (weak, nonatomic) IBOutlet EMLabel *guiRenderingProgressLabel;
 
 @property (nonatomic, weak) UIButton *fbmButton;
 @property (nonatomic, weak) UIButton *fbmSmallerButton;
@@ -163,6 +165,7 @@
         // A priorized list of share methods for animated gifs.
         NSMutableArray *arr = [NSMutableArray new];
         [arr addObject:@(emkShareMethodFacebookMessanger)];
+        [arr addObject:@(emkShareMethodFacebook)];
         [arr addObject:@(emkShareMethodAppleMessages)];
         [arr addObject:@(emkShareMethodTwitter)];
         [arr addObject:@(emkShareMethodMail)];
@@ -350,6 +353,13 @@
         //
         self.sharer = [EMShareFBMessanger new];
 
+    } else if (method == emkShareMethodFacebook) {
+        
+        //
+        // Facebook (uploads to s3 and shares a link to a web page)
+        //
+        self.sharer = [EMShareFacebook new];
+
     } else if (method == emkShareMethodDocumentInteraction) {
         
         //
@@ -365,6 +375,7 @@
         self.sharer = [EMShareTwitter new];
         
     } else {
+        
         //
         // Unimplemented.
         //
@@ -377,9 +388,13 @@
         [alert addAction:okAction];
         [self presentViewController:alert animated:YES completion:nil];
         HMLOG(TAG, EM_ERR, @"Unimplemented share method.");
+        
     }
     
+    
+    //
     // Share
+    //
     self.sharer.info = [NSMutableDictionary dictionaryWithDictionary:info];
     self.sharer.objectToShare = emu;
     self.sharer.delegate = self;
@@ -387,9 +402,18 @@
     self.sharer.view = self.view;
     
     if (mediaDataType == EMMediaDataTypeGIF) {
+
+        //
+        // GIF
+        //
         self.sharer.shareOption = emkShareOptionAnimatedGif;
         [self.sharer share];
+
     } else {
+
+        //
+        // Video
+        //
         self.sharer.shareOption = emkShareOptionVideo;
         
         // Check if rendered video available.
@@ -397,9 +421,11 @@
         if (emu.videoURL) {
             [self.sharer share];
         } else {
+            // No video file? Render it!
             BOOL requiresWaterMark = (method != emkShareMethodFacebookMessanger);
             [self renderVideoBeforeShareForEmu:emu requiresWaterMark:requiresWaterMark];
         }
+        
     }
 }
 
@@ -411,6 +437,7 @@
     self.guiFBMButtonContainer.hidden = YES;
     self.guiRenderingView.hidden = NO;
     self.guiRenderingProgress.progress = 0;
+    self.guiRenderingProgressLabel.text = LS(@"EMUNIZING");
     
     [EMRenderManager.sh renderVideoForEmu:emu
                         requiresWaterMark:requiresWaterMark
@@ -496,19 +523,43 @@
 {
     self.previousSharer = self.sharer;
     self.sharer = nil;
+    self.guiRenderingView.hidden = YES;
+    self.guiCollectionView.hidden = NO;
+    self.guiFBMButtonContainer.hidden = NO;
 }
 
+-(void)sharerDidStartLongOperation:(NSDictionary *)info label:(NSString *)label
+{
+    self.guiCollectionView.hidden = YES;
+    self.guiFBMButtonContainer.hidden = YES;
+    self.guiRenderingView.hidden = NO;
+    self.guiRenderingProgress.progress = 0;
+    if (label) self.guiRenderingProgressLabel.text = label;
+}
+
+-(void)sharerDidProgress:(float)progress info:(NSDictionary *)info
+{
+    [self updateProgress:progress animated:YES];
+}
+
+#pragma mark - progress
+-(void)updateProgress:(float)progress animated:(BOOL)animated
+{
+    [self.guiRenderingProgress setProgress:progress animated:animated];
+    if (progress >= 1) {
+        dispatch_after(DTIME(1.5), dispatch_get_main_queue(), ^{
+            self.guiRenderingView.hidden = YES;
+        });
+    }
+}
+
+#pragma mark - Scroll
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat x = scrollView.contentOffset.x;
     if (x<-30 && _allowFBExperience) [self hideExtraShareOptionsAnimated:YES];
 }
 
-#pragma mark - progress
--(void)updateProgress:(float)progress
-{
-    self.guiRenderingProgress.progress = progress;
-}
 
 #pragma mark - IB Actions
 // ===========

@@ -625,6 +625,20 @@
 }
 
 #pragma mark - HMCaptureSessionDelegate
+-(void)sessionUsingCameraPosition:(AVCaptureDevicePosition)position
+{
+    if (position == AVCaptureDevicePositionBack) {
+        self.guiPreviewContainerView.transform = CGAffineTransformMakeScale(-1, 1);
+    } else {
+        self.guiPreviewContainerView.transform = CGAffineTransformIdentity;
+    }
+    if (self.guiPreviewContainerView.hidden) {
+        dispatch_after(DTIME(0.5), dispatch_get_main_queue(), ^{
+            self.guiPreviewContainerView.hidden = NO;
+        });
+    }
+}
+
 -(void)recordingDidStartWithInfo:(NSDictionary *)info
 {
     NSAssert([NSThread isMainThread], @"Method called using a thread other than main!");
@@ -712,9 +726,8 @@
 
 -(void)onboardingWantsToSwitchCamera
 {
+    self.guiPreviewContainerView.hidden = YES;
     [self.captureSession switchCamera];
-    
-    // Restart.
     [self stateRestart];
 }
 
@@ -1274,11 +1287,8 @@
         return;
     }
 
-    CGAffineTransform t = CGAffineTransformMakeTranslation(-30, 0);
-    self.guiBGFeedBackContainer.transform = t;
     self.guiBGFeedBackContainer.alpha = 0;
     self.guiPreviewContainerView.alpha = 0;
-    self.guiPreviewContainerView.transform = t;
 }
 
 -(void)showCameraFeedUIAnimated:(BOOL)animated
@@ -1292,10 +1302,7 @@
     }
     
     self.guiBGFeedBackContainer.alpha = 1;
-    self.guiBGFeedBackContainer.transform = CGAffineTransformIdentity;
-
     self.guiPreviewContainerView.alpha = 1;
-    self.guiPreviewContainerView.transform = CGAffineTransformIdentity;
     
     [self.guiPleaseWaitView stopAnimating];
 }

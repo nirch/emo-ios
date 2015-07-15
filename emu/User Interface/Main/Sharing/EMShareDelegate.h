@@ -26,6 +26,12 @@
 // An optional call, just for finishing up when required.
 -(void)sharerDidFinishWithInfo:(NSDictionary *)info;
 
+// An optional call (in case long operation with progress started)
+-(void)sharerDidStartLongOperation:(NSDictionary *)info label:(NSString *)label;
+
+// An optional call (in case long operation with progress started)
+-(void)sharerDidProgress:(float)progress info:(NSDictionary *)info;
+
 // GIF / Video data should be shared.
 -(EMMediaDataType)sharerDataTypeToShare;
 

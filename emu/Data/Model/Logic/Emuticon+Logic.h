@@ -194,14 +194,15 @@
 
 
 
+
+// Info for uploaded content.
+-(NSString *)generateOIDForUpload;
+-(NSString *)s3KeyForUploadForOID:(NSString *)oid;
+-(NSDictionary *)metaDataForUpload;
 -(NSString *)s3KeyForSampledResult;
 
-
--(NSDictionary *)s3MetaDataForSampledResult;
-
-
+// Videos
 -(BOOL)engagedUserVideoSettings;
-
 -(void)cleanTempVideoResources;
 
 @end

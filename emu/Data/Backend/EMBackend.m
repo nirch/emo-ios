@@ -24,11 +24,6 @@
 #import <zipzap.h>
 #import <AWSS3.h>
 
-// S3 credentials (upload only)
-#define S3_ACCESS_KEY @"AKIAINLSJGFQCJUIWV3A"
-#define S3_SECRET_KEY @"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"
-
-
 @interface EMBackend()
 
 @property (nonatomic) NSMutableDictionary *currentlyDownloadingFromURLS;
@@ -36,8 +31,6 @@
 @property (nonatomic) AFHTTPSessionManager *session;
 @property (nonatomic) AFHTTPSessionManager *backgroundSession;
 @property (nonatomic) NSDate *latestRefresh;
-
-@property (nonatomic) AWSS3TransferManager *transferManager;
 
 @end
 
@@ -78,12 +71,22 @@
 
 -(void)initTransferManager
 {
-    AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_ACCESS_KEY secretKey:S3_SECRET_KEY];
+    if (_transferManager == nil) {
+        [self transferManager];
+    }
+}
+
+-(AWSS3TransferManager *)transferManager
+{
+    if (_transferManager) return _transferManager;
+    AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_UPLOAD_ACCESS_KEY secretKey:S3_UPLOAD_SECRET_KEY];
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
-    self.transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    _transferManager = [AWSS3TransferManager defaultS3TransferManager];
     HMLOG(TAG, EM_DBG, @"Started s3 transfer manager");
+    return _transferManager;
 }
+
 
 #pragma mark - Observers
 -(void)initObservers
@@ -152,7 +155,7 @@
     uploadRequest.body = localURL;
     
     uploadRequest.contentType = @"image/gif";
-    uploadRequest.metadata = [emuToSample s3MetaDataForSampledResult];
+    uploadRequest.metadata = [emuToSample metaDataForUpload];
     
     BFTask *uploadTask = [self.transferManager upload:uploadRequest];
     [uploadTask continueWithExecutor:[BFExecutor defaultExecutor] withBlock:^id(BFTask *task) {
@@ -169,16 +172,6 @@
         }
         return nil;
     }];
-    
-
-    
-//    [[self.transferManager upload:uploadRequest] continueWithSuccessBlock:^id(BFTask *task) {
-//        NSInteger count = emuToSample.emuDef.package.sampledEmuCount.integerValue;
-//        count++;
-//        emuToSample.emuDef.package.sampledEmuCount = @(count);
-//        emuToSample.renderedSampleUploaded = @YES;
-//        return nil;
-//    }];
 }
 
 /**

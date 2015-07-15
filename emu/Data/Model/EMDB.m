@@ -13,6 +13,7 @@
 #import "HMPanel.h"
 #import "HMParser.h"
 #import "AppManagement.h"
+#import "MongoID.h"
 
 @implementation EMDB
 
@@ -78,6 +79,13 @@
     return self;
 }
 
+#pragma mark - BSON Object ID
++(NSString *)generateOID
+{
+    ObjectID _id = [MongoID id];
+    NSString *objectOIDString = [MongoID stringWithId:_id];
+    return objectOIDString;
+}
 
 #pragma mark - Persistance
 - (void)save {

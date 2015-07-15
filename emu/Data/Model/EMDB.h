@@ -69,6 +69,9 @@ typedef NS_ENUM(NSInteger, EMMediaDataType) {
 +(EMDB *)sharedInstance;
 +(EMDB *)sh;
 
+#pragma mark - BSON Object ID
++(NSString *)generateOID;
+
 #pragma mark - Date formatters
 @property (nonatomic) NSDateFormatter *timeStringForFileFormatter;
 @property (nonatomic) NSDateFormatter *dateStringForFileFormatter;

@@ -236,8 +236,15 @@
 	/*
 	 * Create video connection
 	 */
+    NSError *error;
     AVCaptureDevice *camera = [self videoDeviceWithPosition:self.prefferedCamera];
-    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:camera error:nil];
+    videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:camera error:&error];
+    HMLOG(TAG, EM_ERR, @"Camera error: %@", [error localizedDescription]);
+    REMOTE_LOG(@"Camera error in setupCaptureSession: %@", [error localizedDescription]);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.sessionDelegate sessionUsingCameraPosition:self.prefferedCamera];
+    });
     
     if ([captureSession canAddInput:videoIn])
         [captureSession addInput:videoIn];

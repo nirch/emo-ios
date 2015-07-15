@@ -695,8 +695,8 @@
                                             <constraint firstAttribute="width" constant="150" id="9rb-QF-7au"/>
                                         </constraints>
                                     </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rendering video..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhS-ia-LZo" customClass="EMLabel">
-                                        <rect key="frame" x="129" y="21" width="110" height="15"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="please wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhS-ia-LZo" userLabel="Progress label" customClass="EMLabel">
+                                        <rect key="frame" x="144" y="21" width="80" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="giM-zc-LOs"/>
                                         </constraints>
@@ -704,7 +704,7 @@
                                         <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="RENDERING_VIDEO"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="EMUNIZING"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                 </subviews>
@@ -743,6 +743,7 @@
                         <outlet property="guiCollectionView" destination="EGa-9a-b7E" id="W8g-i4-GpS"/>
                         <outlet property="guiFBMButtonContainer" destination="cS0-PY-VDO" id="RRz-yj-6F7"/>
                         <outlet property="guiRenderingProgress" destination="5Qv-qj-8Nr" id="evH-Qw-Pim"/>
+                        <outlet property="guiRenderingProgressLabel" destination="zhS-ia-LZo" id="tBB-3W-aRj"/>
                         <outlet property="guiRenderingView" destination="ZVj-PF-vVZ" id="zGi-Oe-wAZ"/>
                     </connections>
                 </viewController>

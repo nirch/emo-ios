@@ -10,6 +10,7 @@
 @class Emuticon;
 @class EmuticonDef;
 @class Package;
+@class AWSS3TransferManager;
 
 #import <Foundation/Foundation.h>
 
@@ -21,6 +22,10 @@
 
 #pragma mark - Web Service
 @property (nonatomic, readonly) HMServer *server;
+
+#pragma mark - Uploading
+@property (nonatomic) AWSS3TransferManager *transferManager;
+
 
 #pragma mark - Downloading resources
 -(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info;

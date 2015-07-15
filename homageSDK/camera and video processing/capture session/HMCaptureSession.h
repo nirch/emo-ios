@@ -174,6 +174,14 @@
 
 @required
 /**
+ *  The session is reporting that it is using the given camera position.
+ *
+ *  @param position - AVCaptureDevicePosition indicating if front/back camera.
+ */
+-(void)sessionUsingCameraPosition:(AVCaptureDevicePosition)position;
+
+
+/**
  *  Recording did start.
  *
  *  @param info Extra info about the recording.
