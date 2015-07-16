@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--MainVC-->
+        <!--FeedVC-->
         <scene sceneID="t06-tf-XgU">
             <objects>
-                <viewController storyboardIdentifier="main vc" id="hdW-YC-ZoO" customClass="EMMainVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="main vc" id="hdW-YC-ZoO" customClass="EMFeedVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mE0-st-E63"/>
                         <viewControllerLayoutGuide type="bottom" id="Rby-Sw-7wo"/>
@@ -28,76 +28,15 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbE-le-gs5" userLabel="Nav bar">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWl-1a-ucc" userLabel="Options Button">
-                                        <rect key="frame" x="321" y="20" width="44" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="9fx-ry-VhH"/>
-                                            <constraint firstAttribute="height" constant="44" id="p9A-Oh-7DL"/>
-                                        </constraints>
-                                        <state key="normal" image="optionsIcon">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onPressedNavButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="tbk-fM-BsG"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpK-cJ-Ijf" userLabel="Recorder Button">
-                                        <rect key="frame" x="10" y="20" width="44" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="AVE-Ad-22F"/>
-                                            <constraint firstAttribute="width" constant="44" id="Py2-ZW-Jkk"/>
-                                            <constraint firstAttribute="height" constant="44" id="Yyh-23-cA1"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="fZ8-a5-kV1"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                        <state key="normal" image="retakeIcon"/>
-                                        <connections>
-                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="MRm-5l-JLS"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1I-qV-A17" userLabel="Back To Messenger">
-                                        <rect key="frame" x="10" y="20" width="70" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="Quc-tC-Y4i"/>
-                                            <constraint firstAttribute="width" constant="70" id="ZLh-WN-7gn"/>
-                                        </constraints>
-                                        <state key="normal" image="back2FBMButton">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onPressedBackToFBMButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="Y7y-6h-aDe"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="wpK-cJ-Ijf" secondAttribute="bottom" id="3zp-Zl-itR"/>
-                                    <constraint firstAttribute="trailing" secondItem="wpK-cJ-Ijf" secondAttribute="trailing" constant="10" id="5UB-QD-NcF"/>
-                                    <constraint firstAttribute="height" constant="64" id="Ado-2f-rnW"/>
-                                    <constraint firstItem="wpK-cJ-Ijf" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="KfG-Qd-mya"/>
-                                    <constraint firstAttribute="bottom" secondItem="k1I-qV-A17" secondAttribute="bottom" id="L0H-Kh-LNh"/>
-                                    <constraint firstAttribute="bottom" secondItem="qWl-1a-ucc" secondAttribute="bottom" id="PgL-9v-ZVK"/>
-                                    <constraint firstAttribute="trailing" secondItem="qWl-1a-ucc" secondAttribute="trailing" constant="10" id="TpA-2n-oAY"/>
-                                    <constraint firstItem="k1I-qV-A17" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="rzB-i2-Y7S"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="5UB-QD-NcF"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yt-61-8E0">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6e8-IW-4Yd">
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="5" minY="6" maxX="5" maxY="60"/>
+                                    <inset key="sectionInset" minX="5" minY="47" maxX="5" maxY="60"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu cell" id="ebO-hW-ziY" customClass="EmuCell">
@@ -131,7 +70,7 @@
                                                             <rect key="frame" x="61" y="62" width="60" height="59"/>
                                                         </imageView>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999994" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="failed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BF-Mr-rwB">
-                                                            <rect key="frame" x="77" y="129" width="28" height="14"/>
+                                                            <rect key="frame" x="77" y="129" width="28" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -217,18 +156,89 @@
                                     <outletCollection property="gestureRecognizers" destination="s4l-CM-CKZ" appends="YES" id="hiO-Lj-3YE"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbE-le-gs5" userLabel="Nav bar">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWl-1a-ucc" userLabel="Options Button">
+                                        <rect key="frame" x="321" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="9fx-ry-VhH"/>
+                                            <constraint firstAttribute="height" constant="44" id="p9A-Oh-7DL"/>
+                                        </constraints>
+                                        <state key="normal" image="optionsIcon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedNavButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="tbk-fM-BsG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpK-cJ-Ijf" userLabel="Recorder Button">
+                                        <rect key="frame" x="10" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="AVE-Ad-22F"/>
+                                            <constraint firstAttribute="width" constant="44" id="Py2-ZW-Jkk"/>
+                                            <constraint firstAttribute="height" constant="44" id="Yyh-23-cA1"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="fZ8-a5-kV1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" image="retakeIcon"/>
+                                        <connections>
+                                            <action selector="onPressedRetakeButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="MRm-5l-JLS"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1I-qV-A17" userLabel="Back To Messenger">
+                                        <rect key="frame" x="10" y="0.0" width="70" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Quc-tC-Y4i"/>
+                                            <constraint firstAttribute="width" constant="70" id="ZLh-WN-7gn"/>
+                                        </constraints>
+                                        <state key="normal" image="back2FBMButton">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedBackToFBMButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="Y7y-6h-aDe"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsp-RN-SBk" userLabel="sep">
+                                        <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="7Ec-Cd-Goy"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="0.96999999999999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="wpK-cJ-Ijf" secondAttribute="bottom" id="3zp-Zl-itR"/>
+                                    <constraint firstAttribute="trailing" secondItem="wpK-cJ-Ijf" secondAttribute="trailing" constant="10" id="5UB-QD-NcF"/>
+                                    <constraint firstAttribute="bottom" secondItem="vsp-RN-SBk" secondAttribute="bottom" id="A0F-Az-7Tz"/>
+                                    <constraint firstAttribute="height" constant="44" id="Ado-2f-rnW"/>
+                                    <constraint firstItem="wpK-cJ-Ijf" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="KfG-Qd-mya"/>
+                                    <constraint firstAttribute="bottom" secondItem="k1I-qV-A17" secondAttribute="bottom" id="L0H-Kh-LNh"/>
+                                    <constraint firstAttribute="bottom" secondItem="qWl-1a-ucc" secondAttribute="bottom" id="PgL-9v-ZVK"/>
+                                    <constraint firstAttribute="trailing" secondItem="vsp-RN-SBk" secondAttribute="trailing" id="PgZ-o9-1dF"/>
+                                    <constraint firstAttribute="trailing" secondItem="qWl-1a-ucc" secondAttribute="trailing" constant="10" id="TpA-2n-oAY"/>
+                                    <constraint firstItem="vsp-RN-SBk" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" id="hQ8-wv-L7K"/>
+                                    <constraint firstItem="k1I-qV-A17" firstAttribute="leading" secondItem="nbE-le-gs5" secondAttribute="leading" constant="10" id="rzB-i2-Y7S"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5UB-QD-NcF"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ax-G4-sQU" userLabel="Keyboard Tutorial">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="mWY-Jt-XXr" kind="embed" identifier="tutorial segue" id="2Nz-xu-li1"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVB-YX-jx8" userLabel="emu logo button">
-                                <rect key="frame" x="156" y="14" width="62" height="62"/>
+                                <rect key="frame" x="165" y="10" width="44" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="62" id="8Ep-hC-b17"/>
-                                    <constraint firstAttribute="width" constant="62" id="xqH-rm-D0l"/>
+                                    <constraint firstAttribute="height" constant="44" id="8Ep-hC-b17"/>
+                                    <constraint firstAttribute="width" constant="44" id="xqH-rm-D0l"/>
                                 </constraints>
                                 <state key="normal" image="emuNavLogo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -237,7 +247,7 @@
                                     <action selector="onPressedEmuButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="8p8-jX-GFX"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="989-sh-hZS" userLabel="Packages Bar Container">
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="989-sh-hZS" userLabel="Packages Bar Container">
                                 <rect key="frame" x="0.0" y="611" width="375" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -251,7 +261,7 @@
                         <constraints>
                             <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="2yt-61-8E0" secondAttribute="bottom" id="3TE-hj-unx"/>
                             <constraint firstAttribute="centerX" secondItem="O1N-Y7-AdJ" secondAttribute="centerX" constant="-8" id="AaW-aR-Va1"/>
-                            <constraint firstItem="2yt-61-8E0" firstAttribute="top" secondItem="mE0-st-E63" secondAttribute="bottom" constant="64" id="EHe-AY-tQe"/>
+                            <constraint firstItem="2yt-61-8E0" firstAttribute="top" secondItem="mE0-st-E63" secondAttribute="bottom" id="EHe-AY-tQe"/>
                             <constraint firstAttribute="centerY" secondItem="O1N-Y7-AdJ" secondAttribute="centerY" constant="-9" id="F8U-uY-Y5x"/>
                             <constraint firstAttribute="trailing" secondItem="2yt-61-8E0" secondAttribute="trailing" id="FHE-vL-QUX"/>
                             <constraint firstAttribute="width" secondItem="nbE-le-gs5" secondAttribute="width" id="GmY-Vh-8pa"/>
@@ -265,7 +275,7 @@
                             <constraint firstItem="989-sh-hZS" firstAttribute="leading" secondItem="7k7-rZ-9LV" secondAttribute="leading" id="jLr-Yr-7K8"/>
                             <constraint firstAttribute="centerX" secondItem="3Ax-G4-sQU" secondAttribute="centerX" id="ptC-lG-yiu"/>
                             <constraint firstAttribute="centerY" secondItem="qcV-HC-46K" secondAttribute="centerY" constant="-32" id="r8t-xB-dal"/>
-                            <constraint firstItem="nbE-le-gs5" firstAttribute="top" secondItem="XVB-YX-jx8" secondAttribute="top" constant="-14" id="r9p-xt-BQn"/>
+                            <constraint firstItem="nbE-le-gs5" firstAttribute="top" secondItem="XVB-YX-jx8" secondAttribute="top" constant="-10" id="r9p-xt-BQn"/>
                             <constraint firstItem="Rby-Sw-7wo" firstAttribute="top" secondItem="3Ax-G4-sQU" secondAttribute="bottom" id="rry-i6-oBv"/>
                             <constraint firstItem="3Ax-G4-sQU" firstAttribute="top" secondItem="nbE-le-gs5" secondAttribute="bottom" id="vdt-W2-IAm"/>
                             <constraint firstAttribute="trailing" secondItem="989-sh-hZS" secondAttribute="trailing" id="yO2-YZ-O0w"/>
@@ -1236,11 +1246,11 @@
                         <viewControllerLayoutGuide type="bottom" id="e7c-Xs-j8E"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wYX-Vc-Kax" customClass="EMGradientView">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTb-nj-Zrm" userLabel="Continue Button" customClass="EMFlowButton">
-                                <rect key="frame" x="16" y="523" width="343" height="65"/>
+                                <rect key="frame" x="16" y="543" width="343" height="65"/>
                                 <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="dhz-d3-oBr"/>
@@ -1255,13 +1265,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General &gt; Keyboard &gt; Keyboards &gt; Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T24-qE-57O" customClass="EMLabel">
-                                <rect key="frame" x="34" y="476" width="308" height="21"/>
+                                <rect key="frame" x="34" y="496" width="308" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.27479079365730286" green="0.5571715235710144" blue="0.89757764339447021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use your Emu from your keyboard. Add the keyboard from settings and allow full access:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TOF-MX-5Rm" customClass="EMLabel">
-                                <rect key="frame" x="37" y="387" width="302" height="80"/>
+                                <rect key="frame" x="37" y="407" width="302" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="302" id="U6t-Gw-PCn"/>
                                     <constraint firstAttribute="height" constant="80" id="j60-HR-kQ0"/>

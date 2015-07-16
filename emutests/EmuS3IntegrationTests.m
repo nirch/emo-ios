@@ -90,11 +90,11 @@ static BOOL _useScratchpad;
     AWSS3ListObjectsRequest *request = [[AWSS3ListObjectsRequest alloc] init];
     request.bucket = bucket;
     request.prefix = folder;
-    BFTask *task = [s3 listObjects:request];
+    AWSTask *task = [s3 listObjects:request];
     
     // Send list request to s3.
-    __block BFTask *responseTask;
-    [task continueWithExecutor:[BFExecutor defaultExecutor] withBlock:^id(BFTask *task) {
+    __block AWSTask *responseTask;
+    [task continueWithExecutor:[AWSExecutor defaultExecutor] withBlock:^id(AWSTask *task) {
         responseTask = task;
         [expectation fulfill];
         return task;

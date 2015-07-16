@@ -37,7 +37,6 @@
 #import "EMunizingView.h"
 #import "EMLabel.h"
 #import "EMAnimatedGifPlayer.h"
-#import "EMMainVC.h"
 #import "HMBackgroundMarks.h"
 #import "AppManagement.h"
 #import "EMShareDebuggingFile.h"

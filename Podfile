@@ -6,7 +6,7 @@ pod 'AFNetworking',     '~> 2.5.0',     :inhibit_warnings => true
 pod 'SDWebImage', '~> 3.7.0'
 pod 'zipzap', '~> 8.0'
 pod 'ZipKit', '~> 1.0',                 :inhibit_warnings => true
-pod 'AWSS3', '~> 2.1',                  :inhibit_warnings => true
+pod 'AWSS3', '~> 2.2',                  :inhibit_warnings => true
 
 # GUI & Players
 pod 'FLAnimatedImage', '~> 1.0'
@@ -17,8 +17,8 @@ pod 'JGActionSheet', '~> 1.0'
 
 # Reporting and experiments
 pod 'Mixpanel', '~> 2.7.0',             :inhibit_warnings => true
-pod 'Fabric', '~> 1.3.0' # required
-pod 'Fabric/Crashlytics', '~> 1.3.2'
+pod 'Fabric'
+pod 'Crashlytics'
 pod 'Optimizely-iOS-SDK'
 
 # Facebook

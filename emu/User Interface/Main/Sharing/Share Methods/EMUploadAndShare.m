@@ -69,8 +69,8 @@
     };
     
     
-    BFTask *uploadTask = [EMBackend.sh.transferManager upload:uploadRequest];
-    [uploadTask continueWithExecutor:[BFExecutor defaultExecutor] withBlock:^id(BFTask *task) {
+    AWSTask *uploadTask = [EMBackend.sh.transferManager upload:uploadRequest];
+    [uploadTask continueWithExecutor:[AWSExecutor defaultExecutor] withBlock:^id(AWSTask *task) {
         HMLOG(TAG, EM_DBG, @"upload task: %@", task);
         if (task.completed && task.error == nil) {
             HMLOG(TAG, EM_DBG, @"Uploaded gif to s3: %@", key);

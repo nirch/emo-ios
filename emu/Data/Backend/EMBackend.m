@@ -157,8 +157,8 @@
     uploadRequest.contentType = @"image/gif";
     uploadRequest.metadata = [emuToSample metaDataForUpload];
     
-    BFTask *uploadTask = [self.transferManager upload:uploadRequest];
-    [uploadTask continueWithExecutor:[BFExecutor defaultExecutor] withBlock:^id(BFTask *task) {
+    AWSTask *uploadTask = [self.transferManager upload:uploadRequest];
+    [uploadTask continueWithExecutor:[AWSExecutor defaultExecutor] withBlock:^id(AWSTask *task) {
         HMLOG(TAG, EM_DBG, @"upload task: %@", task);
         if (task.completed && task.error == nil) {
             NSInteger count = emuToSample.emuDef.package.sampledEmuCount.integerValue;
@@ -520,44 +520,46 @@
 #pragma mark - Data migration
 -(void)handleMigrationIfRequired
 {
-    // Get old love package
-    Package *oldPackage = [Package findWithID:@"1" context:EMDB.sh.context];
-    if (oldPackage == nil) return;
-    NSArray *oldEmuticons = [Emuticon allEmuticonsInPackage:oldPackage];
-    if (oldEmuticons.count != 6) return;
+    return; // Deprecated
     
-    // Get new love package.
-    Package *newPackage = [Package findWithID:@"54f826de64617400ae140000" context:EMDB.sh.context];
-    if (newPackage == nil) return;
-    NSArray *newEmuticons = [Emuticon allEmuticonsInPackage:newPackage];
-    if (newEmuticons.count == 0) {
-        [newPackage createMissingEmuticonObjects];
-    }
-    
-    //
-    // Migration
-    //
-    if (oldPackage.prefferedFootageOID) {
-        newPackage.prefferedFootageOID = oldPackage.prefferedFootageOID;
-    }
-    
-    // Iterate emus of old package
-    for (Emuticon *oldEmu in [Emuticon allEmuticonsInPackage:oldPackage]) {
-        [oldEmu cleanUp];
-        NSString *name = oldEmu.emuDef.name;
-        HMLOG(TAG, EM_VERBOSE, @"Migrating: %@", name);
-
-        Emuticon *newEmu = [Emuticon findWithName:name
-                                          package:newPackage
-                                          context:EMDB.sh.context];
-        [newEmu cleanUp];
-        if (oldEmu.prefferedFootageOID != nil) {
-            newEmu.prefferedFootageOID = oldEmu.prefferedFootageOID;
-        }
-    }
-    
-    // Delete old package
-    [EMDB.sh.context deleteObject:oldPackage];
+//    // Get old love package
+//    Package *oldPackage = [Package findWithID:@"1" context:EMDB.sh.context];
+//    if (oldPackage == nil) return;
+//    NSArray *oldEmuticons = [Emuticon allEmuticonsInPackage:oldPackage];
+//    if (oldEmuticons.count != 6) return;
+//    
+//    // Get new love package.
+//    Package *newPackage = [Package findWithID:@"54f826de64617400ae140000" context:EMDB.sh.context];
+//    if (newPackage == nil) return;
+//    NSArray *newEmuticons = [Emuticon allEmuticonsInPackage:newPackage];
+//    if (newEmuticons.count == 0) {
+//        [newPackage createMissingEmuticonObjects];
+//    }
+//    
+//    //
+//    // Migration
+//    //
+//    if (oldPackage.prefferedFootageOID) {
+//        newPackage.prefferedFootageOID = oldPackage.prefferedFootageOID;
+//    }
+//    
+//    // Iterate emus of old package
+//    for (Emuticon *oldEmu in [Emuticon allEmuticonsInPackage:oldPackage]) {
+//        [oldEmu cleanUp];
+//        NSString *name = oldEmu.emuDef.name;
+//        HMLOG(TAG, EM_VERBOSE, @"Migrating: %@", name);
+//
+//        Emuticon *newEmu = [Emuticon findWithName:name
+//                                          package:newPackage
+//                                          context:EMDB.sh.context];
+//        [newEmu cleanUp];
+//        if (oldEmu.prefferedFootageOID != nil) {
+//            newEmu.prefferedFootageOID = oldEmu.prefferedFootageOID;
+//        }
+//    }
+//    
+//    // Delete old package
+//    [EMDB.sh.context deleteObject:oldPackage];
 }
 
 

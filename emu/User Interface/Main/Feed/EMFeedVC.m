@@ -7,9 +7,9 @@
 //
 
 
-#define TAG @"EMMainVC"
+#define TAG @"EMFeedVC"
 
-#import "EMMainVC.h"
+#import "EMFeedVC.h"
 #import "EMRecorderVC.h"
 #import "EMDB.h"
 #import "EMDB+Files.h"
@@ -35,7 +35,7 @@
 
 #import "EMShareMail.h"
 
-@interface EMMainVC () <
+@interface EMFeedVC () <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
@@ -78,9 +78,11 @@
 
 @property (nonatomic) BOOL refetchDataAttempted;
 
+@property (nonatomic) BOOL guiInitialized;
+
 @end
 
-@implementation EMMainVC
+@implementation EMFeedVC
 
 @synthesize fetchedResultsController = _fetchedResultsController;
 
@@ -91,13 +93,10 @@
     // (if exist in local storage)
     [AppManagement.sh updateLocalizedStrings];
     
+    self.guiInitialized = NO;
     self.refetchDataAttempted = NO;
     self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
-    self.guiTagLabel.alpha = 0;
-    self.guiRetakeButton.alpha = 0;
-    self.guiBackToFBMButton.alpha = 0;
-    self.guiCollectionView.alpha = 0;
-
+    
     dispatch_after(DTIME(2.5), dispatch_get_main_queue(), ^{
         [self.guiActivity stopAnimating];
         if (self.guiCollectionView.alpha == 0) {
@@ -159,6 +158,37 @@
     self.guiCollectionView.dataSource = nil;
 }
 
+#pragma mark - Layout
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self layoutGUI];
+}
+
+#pragma mark - GUI init
+-(void)layoutGUI
+{
+    // Updates
+    
+    // Initializations on first GUI layout updates.
+    if (!self.guiInitialized) {
+        self.guiTagLabel.alpha = 0;
+        self.guiRetakeButton.alpha = 0;
+        self.guiBackToFBMButton.alpha = 0;
+        self.guiCollectionView.alpha = 0;
+
+        CALayer *nl = self.guiNavView.layer;
+        nl.shadowColor = [UIColor blackColor].CGColor;
+        nl.shadowRadius = 2;
+        nl.shadowOpacity = 0.15;
+        nl.shadowOffset = CGSizeMake(0, 4);
+        nl.shadowPath = [UIBezierPath bezierPathWithRect:nl.bounds].CGPath;
+        
+        // Mark as initialized
+        self.guiInitialized = YES;
+    }
+}
+
 #pragma mark - Experiments
 -(void)initExperiments
 {
@@ -181,10 +211,10 @@
 
 
 #pragma mark - initializations
-+(EMMainVC *)mainVCWithInfo:(NSDictionary *)info
++(EMFeedVC *)mainVCWithInfo:(NSDictionary *)info
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    EMMainVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"main vc"];
+    EMFeedVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"main vc"];
     return vc;
 }
 
@@ -398,22 +428,26 @@
         REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
     } else {
         // The mixed screen.
-        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-       
-        NSArray *emus = appCFG.mixedScreenEmus;
-        assert(emus);
-        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.oid in %@", @NO, emus];
-        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.mixedScreenOrder" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES] ];
+//        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//       
+//        NSArray *emus = appCFG.mixedScreenEmus;
+//        assert(emus);
+//        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.oid in %@", @NO, emus];
+//        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.mixedScreenOrder" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES] ];
+//        
+//        HMLOG(TAG, EM_DBG, @"Showing emuticons for mixed screen");
+//        REMOTE_LOG(@"Showing emuticons for mixed screen");
+
+        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@", @NO];
+        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
         
-        HMLOG(TAG, EM_DBG, @"Showing emuticons for mixed screen");
-        REMOTE_LOG(@"Showing emuticons for mixed screen");
     }
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = sortDescriptors;
     fetchRequest.fetchBatchSize = 20;
-    fetchRequest.fetchLimit = 40;
+//    fetchRequest.fetchLimit = 40;
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
@@ -1296,7 +1330,7 @@
 
 -(void)transitionToPackage:(Package *)package
 {
-    __weak EMMainVC *weakSelf = self;
+    __weak EMFeedVC *weakSelf = self;
     
     self.guiTagLabel.text = [package tagLabel];
     self.guiTagLabel.alpha = 1.0;

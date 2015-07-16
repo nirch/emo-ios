@@ -10,8 +10,8 @@
 
 
 
-@interface EMMainVC : UIViewController
+@interface EMFeedVC : UIViewController
 
-+(EMMainVC *)mainVCWithInfo:(NSDictionary *)info;
++(EMFeedVC *)mainVCWithInfo:(NSDictionary *)info;
 
 @end
