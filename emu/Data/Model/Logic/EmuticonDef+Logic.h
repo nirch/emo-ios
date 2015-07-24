@@ -67,7 +67,9 @@
 -(NSString *)pathForFrontLayer;
 -(NSString *)pathForUserLayerDynamicMask;
 
+-(NSInteger)requiredResourcesCount;
 -(BOOL)allResourcesAvailable;
+-(NSArray *)allMissingResourcesNames;
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName;
 -(void)removeAllResources;
 

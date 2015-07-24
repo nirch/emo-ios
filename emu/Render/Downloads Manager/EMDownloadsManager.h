@@ -16,4 +16,5 @@
 -(instancetype)initWithDB:(EMDB *)db session:(AFHTTPSessionManager *)session;
 -(void)enqueueEmuOIDForDownload:(NSString *)emuOID withInfo:(NSDictionary *)info;
 
+
 @end

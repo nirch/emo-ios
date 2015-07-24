@@ -2,7 +2,7 @@
 //  EmuticonDef.h
 //  emu
 //
-//  Created by Aviv Wolf on 7/1/15.
+//  Created by Aviv Wolf on 7/22/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -25,10 +25,11 @@
 @property (nonatomic, retain) NSDate * patchedOn;
 @property (nonatomic, retain) NSString * sourceBackLayer;
 @property (nonatomic, retain) NSString * sourceFrontLayer;
+@property (nonatomic, retain) NSString * sourceUserLayerDynamicMask;
 @property (nonatomic, retain) NSString * sourceUserLayerMask;
 @property (nonatomic, retain) NSNumber * thumbnailFrameIndex;
 @property (nonatomic, retain) NSNumber * useForPreview;
-@property (nonatomic, retain) NSString * sourceUserLayerDynamicMask;
+@property (nonatomic, retain) NSNumber * dlProgress;
 @property (nonatomic, retain) NSSet *emus;
 @property (nonatomic, retain) Package *package;
 @end

@@ -18,6 +18,7 @@
 #import "AppManagement.h"
 #import "EMBackend.h"
 #import "EMNotificationCenter.h"
+#import "EMRenderManager2.h"
 
 @interface EMRenderManager()
 
@@ -62,7 +63,7 @@
 
 -(void)initRenderingQueue
 {
-    self.renderingQueue = AppManagement.sh.renderingQueue;
+    self.renderingQueue = EMRenderManager2.sh.renderingQueue;
 }
 
 #pragma mark - Observers

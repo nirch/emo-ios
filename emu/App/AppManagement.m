@@ -9,6 +9,7 @@
 #import "AppManagement.h"
 #import "EMDB.h"
 #import <sys/utsname.h>
+#import <RegExCategories.h>
 
 @interface AppManagement()
 
@@ -30,8 +31,6 @@
 @implementation AppManagement
 
 @synthesize ioQueue = _ioQueue;
-@synthesize renderingQueue = _renderingQueue;
-@synthesize managementQueue = _managementQueue;
 
 @synthesize prefferedLanguages = _prefferedLanguages;
 
@@ -104,12 +103,32 @@
     return _ioQueue;
 }
 
--(dispatch_queue_t)renderingQueue
+/**
+ *  Will try to recognise the generation of the device.
+ *  will return nil if unrecognised (or unimportant)
+ *  (return nil on iPhone simulator or iPad simulator)
+ *
+ *  @return NSNumber with the detected device generation (or nil)
+ */
++(NSNumber *)deviceGeneration
 {
-    if (_renderingQueue) return _renderingQueue;
-    _renderingQueue = dispatch_queue_create("rendering Queue", DISPATCH_QUEUE_SERIAL);
-    return _renderingQueue;
+    NSString *name = machineName();
+    if (![name isMatch:RX(@"(iPhone|iPod|iPad).*")]) return nil;
+    
+    NSArray *matches = [name matchesWithDetails:RX(@"^(iPhone|iPod|iPad)(\\d+)?,(\\d+)$")];
+    if (matches.count < 1) return nil;
+    
+    RxMatch *match = matches[0];
+    RxMatchGroup *m = match.groups[2];
+    NSString *numStr = m.value;
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *num = [f numberFromString:numStr];
+    return num;
 }
+
+
 
 +(NSString *)deviceModelName
 {

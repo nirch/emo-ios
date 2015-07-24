@@ -36,7 +36,7 @@
     pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
     pkg.notificationText = [info safeStringForKey:@"notification_text"];
-    pkg.isActive = [info safeBoolNumberForKey:@"is_active" defaultsValue:@YES];
+    pkg.isActive = [info safeBoolNumberForKey:@"active" defaultsValue:@YES];
     pkg.requiredVersion = [info safeStringForKey:@"requiredVersion"];
     pkg.zipppedPackageFileName = [info safeStringForKey:@"zipped_package_file_name"];
     pkg.showOnPacksBar = @(!self.parseForOnboarding);

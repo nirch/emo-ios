@@ -288,6 +288,27 @@ or
 	</dict>
 	<key>events</key>
 	<dict>
+		<key>Migration:hasPrefferedFootageAndCacheDirExists</key>
+		<dict>
+			<key>av</key>
+			<string>1.3.0</string>
+			<key>description</key>
+			<string>User has preffered footage and cache dir</string>
+		</dict>
+		<key>Migration:noPrefferedFootage</key>
+		<dict>
+			<key>av</key>
+			<string>1.3.0</string>
+			<key>description</key>
+			<string>User has no preffered footage</string>
+		</dict>
+		<key>Migration:needsMigration</key>
+		<dict>
+			<key>av</key>
+			<string>1.3.0</string>
+			<key>description</key>
+			<string>User will perform migration</string>
+		</dict>
 		<key>ItemDetails:userPressedFootageButton</key>
 		<dict>
 			<key>av</key>
@@ -361,7 +382,7 @@ or
 		<key>FBM:integration</key>
 		<dict>
 			<key>androidRemark</key>
-			<string>not implemented yet</string>
+			<string>niy</string>
 			<key>v</key>
 			<string>1.2.2</string>
 			<key>description</key>
@@ -378,7 +399,7 @@ or
 		<key>FBM:install</key>
 		<dict>
 			<key>av</key>
-			<string>1.0.8</string>
+			<string>1.1.8</string>
 			<key>v</key>
 			<string>1.2.5</string>
 			<key>description</key>
@@ -386,8 +407,8 @@ or
 		</dict>
 		<key>FBM:dismissedInstall</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
+			<key>av</key>
+			<string>1.1.8</string>
 			<key>v</key>
 			<string>1.2.5</string>
 			<key>description</key>
@@ -1059,6 +1080,8 @@ or
 				<key>videoLoopTypeSet</key>
 				<string>&lt;int&gt; - loop type set for video rendering</string>
 			</dict>
+			<key>fabric</key>
+			<true/>
 		</dict>
 		<key>ShareFile:openedDlg</key>
 		<dict>
@@ -1181,6 +1204,8 @@ or
 				<key>shareMethod</key>
 				<string>&lt;string&gt; - the name of the method of sharing (mail etc)</string>
 			</dict>
+			<key>fabric</key>
+			<true/>
 		</dict>
 		<key>KB:didAppear</key>
 		<dict>

@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 16:16:34 07/16/15 IDT
+//  Created by build script on 11:11:43 07/24/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -714,6 +714,21 @@ User pressed the next input button (changed to another keyboard)
 #define AK_E_KB_USER_PRESSED_NEXT_INPUT_BUTTON @"KB:userPressedNextInputButton"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User has preffered footage and cache dir
+**/
+#define AK_E_MIGRATION_HAS_PREFFERED_FOOTAGE_AND_CACHE_DIR_EXISTS @"Migration:hasPrefferedFootageAndCacheDirExists"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User will perform migration
+**/
+#define AK_E_MIGRATION_NEEDS_MIGRATION @"Migration:needsMigration"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User has no preffered footage
+**/
+#define AK_E_MIGRATION_NO_PREFFERED_FOOTAGE @"Migration:noPrefferedFootage"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 App delegate notifications registration change
 **/
 #define AK_E_NOTIFICATIONS_REGISTRATION_SETTINGS @"Notifications:registrationSettings"
@@ -1259,3 +1274,8 @@ User pressed the three dots on share screen for "open file in another
 
 
 
+
+/**
+Events also reported to Fabric Crashlytics Answers
+**/
+#define FABRIC_EVENTS @"fabric"

@@ -10,6 +10,7 @@
 #import <Mixpanel.h>
 #import "AppManagement.h"
 #import "EMDB.h"
+#import "HMAnalyticsEvents.h"
 
 @interface HMPanel()
 
@@ -193,6 +194,47 @@
     // Report event to mixpanel.
     [self.mixPanel track:event properties:info];
     HMLOG(TAG, EM_VERBOSE, @"Event:%@ info:%@", event, info);
+    
+    
+    if (e[FABRIC_EVENTS]!=nil && [e[FABRIC_EVENTS] boolValue]) {
+        [self fabricAnswersEvent:event info:info];
+    }
+}
+
+-(void)fabricAnswersEvent:(NSString *)event info:(NSDictionary *)info
+{
+    // Special events.
+    if ([event isEqualToString:AK_E_SHARE_SUCCESS]) {
+        [self fabricAnswersShareEventWithInfo:info];
+        return;
+    } else if ([event isEqualToString:AK_E_SHARE_APP]) {
+        [self fabricAnswersShareAppEventWithInfo:info];
+        return;
+    }
+    
+    // Custom events.
+    [Answers logCustomEventWithName:event customAttributes:info];
+}
+
+-(void)fabricAnswersShareEventWithInfo:(NSDictionary *)info
+{
+    NSString *method = info[AK_EP_SHARE_METHOD];
+    NSString *contentName = info[AK_EP_EMUTICON_NAME];
+    NSString *contentType = info[AK_EP_SHARED_MEDIA_TYPE];
+    NSString *contentId = info[AK_EP_EMUTICON_OID];
+    NSString *packageName = info[AK_EP_PACKAGE_NAME];    
+    [Answers logShareWithMethod:method?method:@"unknown"
+                    contentName:contentName?contentName:@"unknown"
+                    contentType:contentType?contentType:@"unknown"
+                      contentId:contentId?contentId:@"unknown"
+               customAttributes:@{@"packageName":packageName?packageName:@"unknown"}];
+}
+
+-(void)fabricAnswersShareAppEventWithInfo:(NSDictionary *)info
+{
+    NSString *method = info[AK_EP_SHARE_METHOD];
+    [Answers logInviteWithMethod:method?method:@"unknown"
+                customAttributes:nil];
 }
 
 -(void)reportBuildInfo

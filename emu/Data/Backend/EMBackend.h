@@ -24,7 +24,7 @@
 @property (nonatomic, readonly) HMServer *server;
 
 #pragma mark - Uploading
-@property (nonatomic) AWSS3TransferManager *transferManager;
+@property (nonatomic, readonly) AWSS3TransferManager *transferManager;
 
 
 #pragma mark - Downloading resources

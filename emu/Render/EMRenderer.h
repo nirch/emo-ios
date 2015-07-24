@@ -53,6 +53,17 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
 @property (nonatomic) NSTimeInterval audioStartTime;
 @property (nonatomic) NSDictionary *effects;
 
+
+/**
+ *  Creates a new instance of the renderer
+ *  configured with the passed render info.
+ *
+ *  @param renderInfo A dictionary with all required rendering info.
+ *
+ *  @return A new Renderer instance.
+ */
++(instancetype)rendererWithInfo:(NSDictionary *)renderInfo;
+
 /**
  *  Render the emu according to the settings.
  *   - Should be called on a background thread.

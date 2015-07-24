@@ -63,7 +63,6 @@ const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback
         _steamedWriting = YES;
         _preparedForWriting = NO;
         _pbArray = CFArrayCreateMutable(kCFAllocatorDefault, 0, &pbArrayCallBacks);
-        _renderingQueue = AppManagement.sh.renderingQueue;
         _finishedWritingVideo = NO;
         _finishedAddingAudio = NO;
         _audioFileURL = nil;

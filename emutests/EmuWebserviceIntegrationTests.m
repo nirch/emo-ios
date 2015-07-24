@@ -335,4 +335,22 @@ static BOOL _useScratchpad;
     }
 }
 
+
+-(void)testAllPackagesHaveDataUpdateTimeStamp
+{
+    [self ensureDataAvailable];
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+        if(error) XCTFail(@"%s Failed with error: %@", __PRETTY_FUNCTION__, error);
+    }];
+
+    NSArray *packs = _json[@"packages"];
+    for (NSDictionary *pack in packs) {
+        NSNumber *timeStampNumber = pack[@"data_update_time_stamp"];
+        XCTAssertNotNil(timeStampNumber, @"Missing data_update_time_stamp for pack: %@", pack[@"name"]);
+        
+        NSInteger timeStamp = timeStampNumber.integerValue;
+        XCTAssert(timeStamp > 1400000000, @"Unexpected data_update_time_stamp value (%@) for pack: %@", @(timeStamp), pack[@"name"]);
+    }
+}
+
 @end

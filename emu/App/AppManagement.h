@@ -32,6 +32,7 @@
 
 #pragma mark - info
 +(NSString *)deviceModelName;
++(NSNumber *)deviceGeneration;
 
 #pragma mark - Localization
 @property (nonatomic, readonly) NSString *prefferedLanguages;
@@ -40,7 +41,5 @@
 
 #pragma mark - Queues
 @property (nonatomic, readonly) dispatch_queue_t ioQueue;
-@property (nonatomic, readonly) dispatch_queue_t renderingQueue;
-@property (nonatomic, readonly) dispatch_queue_t managementQueue;
 
 @end

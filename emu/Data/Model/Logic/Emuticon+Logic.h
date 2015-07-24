@@ -87,6 +87,9 @@
 +(NSArray *)allEmuticonsInPackage:(Package *)package;
 
 
+-(NSURL *)thumbURL;
+-(NSString *)thumbPath;
+
 /**
  *  The url to the animated gif rendered for this emuticon object.
  *
@@ -204,5 +207,25 @@
 // Videos
 -(BOOL)engagedUserVideoSettings;
 -(void)cleanTempVideoResources;
+
+
+// Converting info to none core data object
+#define rkEmuticonDefOID        @"emuticonDefOID"
+#define rkFootageOID            @"footageOID"
+#define rkBackLayerPath         @"backLayerPath"
+#define rkUserImagesPath        @"userImagesPath"
+#define rkUserMaskPath          @"userMaskPath"
+#define rkUserDynamicMaskPath   @"userDynamicMaskPath"
+#define rkFrontLayerPath        @"frontLayerPath"
+#define rkNumberOfFrames        @"numberOfFrames"
+#define rkDuration              @"duration"
+#define rkOutputOID             @"outputOID"
+#define rkPaletteString         @"paletteString"
+#define rkOutputPath            @"outputPath"
+#define rkShouldOutputGif       @"shouldOutputGif"
+#define rkEffects               @"effects"
+
+-(NSDictionary *)infoForGifRender;
+
 
 @end

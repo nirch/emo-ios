@@ -12,15 +12,20 @@
 
 @interface EmuCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *guiDebugLabel;
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimGifView;
+@property (weak, nonatomic) IBOutlet UIImageView *guiThumbView;
+
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 @property (weak, nonatomic) IBOutlet UIImageView *guiLock;
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiFailedImage;
 @property (weak, nonatomic) IBOutlet UILabel *guiFailedLabel;
 
-
 @property (nonatomic) NSURL *animatedGifURL;
 @property (nonatomic) BOOL shouldCacheGifData;
+
+-(void)setAnimatedGifNamed:(NSString *)gifName;
 
 @end

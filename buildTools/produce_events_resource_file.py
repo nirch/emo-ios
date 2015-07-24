@@ -30,6 +30,13 @@ HEADER = """//
 
 """
 
+FOOTER = """
+/**
+Events also reported to Fabric Crashlytics Answers
+**/
+#define FABRIC_EVENTS @"fabric"
+"""
+
 INDENT = "    "
 
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
@@ -182,6 +189,7 @@ def main():
         f.write("\n\n")
         write_analytics_events(f, cfg)
         f.write("\n\n")
+        f.write(FOOTER)
         f.close()
         print "Done."
 

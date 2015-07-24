@@ -31,24 +31,43 @@
         return;
     }
 
-    FLAnimatedImage *animGif = [EMCaches.sh.gifsDataCache objectForKey:[animatedGifURL description]];
-    if (animGif == nil) {
-        // If not cached, load it from url.
-        NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
-        animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-
-        if (self.shouldCacheGifData && animGif != nil) {
-            [EMCaches.sh.gifsDataCache setObject:animGif
-                                          forKey:[animatedGifURL description]];
-        }
-    } else {
-        // We have a cached animated gif.
-        // HMLOG(TAG, EM_DBG, @"Used cached animated gif");
-    }
+    [self.guiAnimGifView stopAnimating];
+    self.guiAnimGifView.animatedImage = nil;
     
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        // Load the data in the background.
+        NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
+        FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+        __weak EmuCell *wSelf = self;
+        wSelf.guiAnimGifView.hidden = NO;
+        wSelf.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Make sure this cell is still representing the same emu
+            if (![_animatedGifURL isEqual:animatedGifURL]) return;
+
+            // Play the loaded animGif and reveal.
+            wSelf.guiAnimGifView.animatedImage = animGif;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIView animateWithDuration:0.2 animations:^{
+                    wSelf.guiThumbView.alpha = 0;
+                }];
+            });
+        });
+    });
+}
+
+-(void)setAnimatedGifNamed:(NSString *)gifName
+{
+    NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
+    FLAnimatedImage *animGif = [EMCaches.sh.gifsDataCache objectForKey:gifURL];
+    if (animGif == nil) {
+        NSData *animGifData = [NSData dataWithContentsOfURL:gifURL];
+        animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+        [EMCaches.sh.gifsDataCache setObject:animGif forKey:[gifURL description]];
+    }
     self.guiAnimGifView.animatedImage = animGif;
     self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.guiAnimGifView startAnimating];
 }
 
 -(void)stopAnimating

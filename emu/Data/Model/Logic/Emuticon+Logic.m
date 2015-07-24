@@ -86,6 +86,21 @@
 }
 
 
+-(NSURL *)thumbURL
+{
+    NSString *outputPath = [self thumbPath];
+    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
+    return url;
+}
+
+-(NSString *)thumbPath
+{
+    NSString *jpgName = [SF:@"%@.jpg", self.oid];
+    NSString *outputPath = [EMDB outputPathForFileName:jpgName];
+    return outputPath;
+}
+
+
 -(NSURL *)animatedGifURL
 {
     NSString *outputPath = [self animatedGifPath];
@@ -272,6 +287,30 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:outputVideoPath1 error:nil];
     [fm removeItemAtPath:outputVideoPath2 error:nil];
+}
+
+-(NSDictionary *)infoForGifRender
+{
+    EmuticonDef *emuDef = self.emuDef;
+    UserFootage *footage = [self mostPrefferedUserFootage];
+    HMParams *params = [HMParams new];
+
+    [params addKey:rkEmuticonDefOID         valueIfNotNil:emuDef.oid];
+    [params addKey:rkFootageOID             valueIfNotNil:footage.oid];
+    [params addKey:rkBackLayerPath          valueIfNotNil:[emuDef pathForBackLayer]];
+    [params addKey:rkUserImagesPath         valueIfNotNil:[footage pathForUserImages]];
+    [params addKey:rkUserMaskPath           valueIfNotNil:[emuDef pathForUserLayerMask]];
+    [params addKey:rkUserDynamicMaskPath    valueIfNotNil:[emuDef pathForUserLayerDynamicMask]];
+    [params addKey:rkFrontLayerPath         valueIfNotNil:[emuDef pathForFrontLayer]];
+    [params addKey:rkNumberOfFrames         valueIfNotNil:emuDef.framesCount];
+    [params addKey:rkDuration               valueIfNotNil:emuDef.duration];
+    [params addKey:rkOutputOID              valueIfNotNil:self.oid];
+    [params addKey:rkPaletteString          valueIfNotNil:emuDef.palette];
+    [params addKey:rkOutputPath             valueIfNotNil:[EMDB outputPath]];
+    [params addKey:rkShouldOutputGif        valueIfNotNil:@YES];
+    [params addKey:rkEffects                valueIfNotNil:emuDef.effects];
+    
+    return params.dictionary;
 }
 
 

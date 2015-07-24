@@ -29,6 +29,8 @@
 #import "VideoOutput.h"
 #import "ThumbOutput.h"
 
+#import "Emuticon+Logic.h"
+
 //#import "Uigp/GpMemoryLeak.h"
 
 @interface EMRenderer()
@@ -39,6 +41,29 @@
 
 @implementation EMRenderer
 
+#pragma mark - Initializations
++(instancetype)rendererWithInfo:(NSDictionary *)renderInfo
+{
+    EMRenderer *r = [EMRenderer new];
+    r.emuticonDefOID =          renderInfo[rkEmuticonDefOID];
+    r.footageOID =              renderInfo[rkFootageOID];
+    r.backLayerPath =           renderInfo[rkBackLayerPath];
+    r.userImagesPath =          renderInfo[rkUserImagesPath];
+    r.userMaskPath =            renderInfo[rkUserMaskPath];
+    r.userDynamicMaskPath =     renderInfo[rkUserDynamicMaskPath];
+    r.frontLayerPath =          renderInfo[rkFrontLayerPath];
+    r.numberOfFrames =          [renderInfo[rkNumberOfFrames] integerValue];
+    r.duration =                [renderInfo[rkDuration] doubleValue];
+    r.outputOID =               renderInfo[rkOutputOID];
+    r.paletteString =           renderInfo[rkPaletteString];
+    r.outputPath =              renderInfo[rkOutputPath];
+    r.shouldOutputGif =         renderInfo[rkShouldOutputGif]?[renderInfo[rkShouldOutputGif] boolValue]:NO;
+    r.effects =                 renderInfo[rkEffects];
+    return r;
+}
+
+
+#pragma mark - Rendering
 -(void)render
 {
     CHomageRenderer *render = new CHomageRenderer();

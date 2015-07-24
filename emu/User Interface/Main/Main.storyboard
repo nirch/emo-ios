@@ -56,9 +56,9 @@
                                                             <rect key="frame" x="16" y="16" width="150" height="150"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eCw-gP-EQE">
-                                                            <rect key="frame" x="81" y="81" width="20" height="20"/>
-                                                        </activityIndicatorView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="liQ-HG-2bL">
+                                                            <rect key="frame" x="17" y="17" width="150" height="150"/>
+                                                        </imageView>
                                                         <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="h2L-nW-vHa">
                                                             <rect key="frame" x="164" y="164" width="10" height="10"/>
                                                             <constraints>
@@ -69,20 +69,32 @@
                                                         <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999966" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emuNavLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Af4-Mu-Clg">
                                                             <rect key="frame" x="61" y="62" width="60" height="59"/>
                                                         </imageView>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eCw-gP-EQE">
+                                                            <rect key="frame" x="72" y="72" width="37" height="37"/>
+                                                            <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </activityIndicatorView>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999994" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="failed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BF-Mr-rwB">
-                                                            <rect key="frame" x="77" y="129" width="28" height="13.5"/>
+                                                            <rect key="frame" x="77" y="129" width="28" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJh-a7-uhZ" userLabel="DEBUG">
+                                                            <rect key="frame" x="15" y="145" width="47" height="23"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                                            <color key="textColor" red="1" green="0.1450980392" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="0dd-vr-JnE"/>
+                                                        <constraint firstItem="liQ-HG-2bL" firstAttribute="height" secondItem="Ghz-B2-vH6" secondAttribute="height" id="1GA-C1-Who"/>
                                                         <constraint firstAttribute="centerX" secondItem="Af4-Mu-Clg" secondAttribute="centerX" id="1lb-PD-8dD"/>
                                                         <constraint firstAttribute="centerX" secondItem="eCw-gP-EQE" secondAttribute="centerX" id="4Ul-BA-fwp"/>
                                                         <constraint firstAttribute="centerY" secondItem="Af4-Mu-Clg" secondAttribute="centerY" id="9Q7-yl-LYU"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="9QU-Gc-Ae5"/>
+                                                        <constraint firstAttribute="bottom" secondItem="rJh-a7-uhZ" secondAttribute="bottom" constant="15" id="BcG-uN-lip"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="leading" secondItem="QKm-Wq-5ON" secondAttribute="leading" constant="16" id="DOH-SG-wYa"/>
                                                         <constraint firstItem="Jqd-nH-4Zq" firstAttribute="width" secondItem="QKm-Wq-5ON" secondAttribute="width" id="KPO-xA-pNv"/>
                                                         <constraint firstAttribute="centerY" secondItem="eCw-gP-EQE" secondAttribute="centerY" id="KPz-8f-K5u"/>
@@ -92,8 +104,12 @@
                                                         <constraint firstAttribute="centerY" secondItem="Jqd-nH-4Zq" secondAttribute="centerY" id="TnV-Ef-GZd"/>
                                                         <constraint firstAttribute="centerX" secondItem="Jqd-nH-4Zq" secondAttribute="centerX" id="VfL-M2-bBt"/>
                                                         <constraint firstAttribute="bottom" secondItem="Ghz-B2-vH6" secondAttribute="bottom" constant="16" id="Zxd-C8-nhM"/>
+                                                        <constraint firstItem="liQ-HG-2bL" firstAttribute="centerX" secondItem="Ghz-B2-vH6" secondAttribute="centerX" constant="0.5" id="aS2-2n-uRb"/>
+                                                        <constraint firstItem="rJh-a7-uhZ" firstAttribute="leading" secondItem="QKm-Wq-5ON" secondAttribute="leading" constant="15" id="ahf-UO-9Yh"/>
+                                                        <constraint firstItem="liQ-HG-2bL" firstAttribute="width" secondItem="Ghz-B2-vH6" secondAttribute="width" id="bTe-Tm-tOi"/>
                                                         <constraint firstAttribute="trailing" secondItem="h2L-nW-vHa" secondAttribute="trailing" constant="8" id="pF0-q8-nZk"/>
                                                         <constraint firstItem="Ghz-B2-vH6" firstAttribute="top" secondItem="QKm-Wq-5ON" secondAttribute="top" constant="16" id="ssq-Co-OFD"/>
+                                                        <constraint firstItem="liQ-HG-2bL" firstAttribute="centerY" secondItem="Ghz-B2-vH6" secondAttribute="centerY" constant="0.5" id="uL7-Oj-MQo"/>
                                                         <constraint firstItem="Jqd-nH-4Zq" firstAttribute="height" secondItem="QKm-Wq-5ON" secondAttribute="height" id="vj5-Qf-55L"/>
                                                         <constraint firstAttribute="bottom" secondItem="h2L-nW-vHa" secondAttribute="bottom" constant="8" id="yio-t9-zDg"/>
                                                     </constraints>
@@ -120,9 +136,11 @@
                                         <connections>
                                             <outlet property="guiActivity" destination="eCw-gP-EQE" id="I5W-4K-Keb"/>
                                             <outlet property="guiAnimGifView" destination="Ghz-B2-vH6" id="sq3-zl-H6g"/>
+                                            <outlet property="guiDebugLabel" destination="rJh-a7-uhZ" id="iee-EA-tIq"/>
                                             <outlet property="guiFailedImage" destination="Af4-Mu-Clg" id="lsg-dV-Kad"/>
                                             <outlet property="guiFailedLabel" destination="2BF-Mr-rwB" id="eFy-sf-c70"/>
                                             <outlet property="guiLock" destination="h2L-nW-vHa" id="XHp-gh-SuK"/>
+                                            <outlet property="guiThumbView" destination="liQ-HG-2bL" id="B0j-ri-7Fh"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="tag cell" id="bUE-x7-RSe">
@@ -227,13 +245,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ax-G4-sQU" userLabel="Keyboard Tutorial">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="mWY-Jt-XXr" kind="embed" identifier="tutorial segue" id="2Nz-xu-li1"/>
-                                </connections>
-                            </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVB-YX-jx8" userLabel="emu logo button">
                                 <rect key="frame" x="165" y="10" width="44" height="44"/>
                                 <constraints>
@@ -247,7 +258,7 @@
                                     <action selector="onPressedEmuButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="8p8-jX-GFX"/>
                                 </connections>
                             </button>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="989-sh-hZS" userLabel="Packages Bar Container">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="989-sh-hZS" userLabel="Packages Bar Container">
                                 <rect key="frame" x="0.0" y="611" width="375" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -255,6 +266,13 @@
                                 </constraints>
                                 <connections>
                                     <segue destination="jAm-lM-9cu" kind="embed" identifier="packages bar segue" id="Q3p-GG-pfF"/>
+                                </connections>
+                            </containerView>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ax-G4-sQU" userLabel="Keyboard Tutorial">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="mWY-Jt-XXr" kind="embed" identifier="tutorial segue" id="2Nz-xu-li1"/>
                                 </connections>
                             </containerView>
                         </subviews>

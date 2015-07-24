@@ -20,50 +20,36 @@
 	<dict>
 		<key>emuNameUsedForPreviewOnOnboarding</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>did not implement yet</string>
 			<key>description</key>
-			<string>The name of the emu used on the preview stage in the recorder onboarding flow (when user opened app for the first time)</string>
+			<string>&lt;string&gt; - The name of the emu used on the preview stage in the recorder onboarding flow (when user opened app for the first time)</string>
 		</dict>
 		<key>notificationsSettings</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>did not implement yet</string>
 			<key>description</key>
 			<string>&lt;number&gt; - Number indicating the user&apos;s current UIUserNotificationSettings</string>
 		</dict>
 		<key>firstLaunchDate</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.8</string>
 			<key>description</key>
 			<string>&lt;date&gt; - The date of the first time the app was launched by the user</string>
 		</dict>
 		<key>deviceModel</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The model of the user&apos;s device</string>
 		</dict>
 		<key>clientName</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>A mnemonic name of the application. Currently: &quot;Emu iOS&quot;. Used in case we will create white labels of the Emu app in the future.</string>
 		</dict>
 		<key>localizationPreference</key>
 		<dict>
-			<key>av</key>
-			<string>did not implement yet</string>
 			<key>description</key>
 			<string>The localized language preference on the user&apos;s device (good to know for the time we will want to localize the app).</string>
 		</dict>
 		<key>buildVersion</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The long build version string in the following format:
 &lt;big&gt;.&lt;small&gt;.&lt;build#&gt; for production application.
@@ -72,129 +58,91 @@ or
 		</dict>
 		<key>launchesCount</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the user launched the application.</string>
 		</dict>
 		<key>didBecomeActiveCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>cannot know when app is moved to background and comes back</string>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the app did become active</string>
 		</dict>
 		<key>numberOfSharesUsingAppCount</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the user shared an emu from within the app.</string>
 		</dict>
 		<key>didEverShareUsingApp</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>true if numberOfSharesUsingAppCount &gt; 0</string>
 		</dict>
 		<key>numberOfVideoSharesUsingAppCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>video not implemented yet</string>
 			<key>description</key>
 			<string>The number of times the user shared an emu rendered as video from within the app.</string>
 		</dict>
 		<key>didEverShareVideoUsingApp</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>video not implemented yet</string>
 			<key>description</key>
 			<string>true if numberOfVideoSharesUsingAppCount &gt; 0</string>
 		</dict>
 		<key>numberOfEngagedVideoSharesUsingAppCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>video not implemented yet</string>
 			<key>description</key>
 			<string>The number of times the user shared an emu rendered as video from within the app and the user also played around with video settings like numner pf loops and loop type.</string>
 		</dict>
 		<key>didEverShareEngagedVideoUsingApp</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>video not implemented yet</string>
 			<key>description</key>
 			<string>true if numberOfEngagedVideoSharesUsingAppCount &gt; 0</string>
 		</dict>
 		<key>numberOfApprovedRetakes</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the user pressed &quot;I love it&quot; and confirmed the take in the recorder (not counting oboarding recorder)</string>
 		</dict>
 		<key>didEverFinishARetake</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>Did the user ever finished a second retake. Opened the recorder and finished the recorder flow (disregarding oboarding)</string>
 		</dict>
 		<key>numberOfPackagesNavigated</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the user navigated to a different package in the app.</string>
 		</dict>
 		<key>didEverNavigateToAnotherPackage</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>True if the user ever navigated to another package in the app.</string>
 		</dict>
 		<key>inMessangerContext</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>True if in the context of a messanger conversation.</string>
 		</dict>
 		<key>numberOfKBAppearancesCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>keyboard not implemented yet</string>
 			<key>description</key>
 			<string>The number of times keyboard did appear.</string>
 		</dict>
 		<key>didKeyboardEverAppear</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>keyboard not implemented yet</string>
 			<key>description</key>
 			<string>True if the keyboard ever appeared.</string>
 		</dict>
 		<key>numberOfAlphaNumericKBAppearancesCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>keyboard not implemented yet</string>
 			<key>description</key>
 			<string>The number of times the alpha numeric keyboard was shown.</string>
 		</dict>
 		<key>didAlphaNumericKBEverAppear</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>keyboard not implemented yet</string>
 			<key>description</key>
 			<string>True if numberOfAlphaNumericKBAppearancesCount&gt;0</string>
 		</dict>
 		<key>numberOfKBCopyEmuCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>keyboard not implemented yet</string>
 			<key>description</key>
 			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard</string>
 		</dict>
@@ -203,113 +151,64 @@ or
 	<dict>
 		<key>emuNameUsedForPreviewOnOnboarding</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>description</key>
 			<string>&lt;string&gt; - The name of the emu used on the preview stage in the recorder onboarding flow (when user opened app for the first time)</string>
 		</dict>
 		<key>firstLaunchDate</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>&lt;date&gt; - The date of the first time the user launched from any device.</string>
 		</dict>
 		<key>lastLaunchDate</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>&lt;date&gt; - The date of the last time the user launched from any device.</string>
 		</dict>
 		<key>numberOfBecameActive</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.9</string>
 			<key>description</key>
 			<string>The number of times an app became active for the user from any device.</string>
 		</dict>
 		<key>numberOfSharesUsingAppCount</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the user shared an emu from within the app from any device.</string>
 		</dict>
 		<key>didEverShareUsingApp</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>true if numberOfSharesUsingAppCount &gt; 0</string>
 		</dict>
 		<key>numberOfApprovedRetakes</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>The number of times the user pressed &quot;I love it&quot; and confirmed the take in the recorder (not counting oboarding recorder) from any device.</string>
 		</dict>
 		<key>didEverFinishARetake</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>Did the user ever finished a second retake. Opened the recorder and finished the recorder flow (disregarding oboarding) from any device.</string>
 		</dict>
 		<key>numberOfKBAppearancesCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>description</key>
 			<string>The number of times keyboard did appear for the user from any device.</string>
 		</dict>
-		<key>lastUsedClient</key>
-		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
-			<key>description</key>
-			<string>The name of the client used: emu-android or emu-ios</string>
-		</dict>
 		<key>didKeyboardEverAppear</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>description</key>
 			<string>True if the keyboard ever appeared for the user from any device.</string>
 		</dict>
 		<key>numberOfKBCopyEmuCount</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>description</key>
 			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard from any device.</string>
 		</dict>
 	</dict>
 	<key>events</key>
 	<dict>
-		<key>ItemDetails:userPressedFootageButton</key>
-		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
-			<key>description</key>
-			<string>When user clicks replace footage button</string>
-			<key>params</key>
-			<dict>
-				<key>emuticonName</key>
-				<string>&lt;string&gt; - the name of the related emoticon</string>
-				<key>emuticonOID</key>
-				<string>&lt;string&gt; - the oid of the related emoticon</string>
-				<key>packageName</key>
-				<string>&lt;string&gt; - the name of the related package</string>
-				<key>packageOID</key>
-				<string>&lt;string&gt; - the oid of the related package</string>
-			</dict>
-		</dict>
 		<key>App:launched</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.9</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -317,8 +216,6 @@ or
 		</dict>
 		<key>App:enteredBackground</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -326,8 +223,6 @@ or
 		</dict>
 		<key>App:enteredForeground</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -335,8 +230,6 @@ or
 		</dict>
 		<key>App:versionUpdated</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.8</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -351,8 +244,6 @@ or
 		</dict>
 		<key>App:didBecomeActive</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -360,8 +251,6 @@ or
 		</dict>
 		<key>FBM:integration</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.2.2</string>
 			<key>description</key>
@@ -377,8 +266,6 @@ or
 		</dict>
 		<key>FBM:install</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.8</string>
 			<key>v</key>
 			<string>1.2.5</string>
 			<key>description</key>
@@ -386,8 +273,6 @@ or
 		</dict>
 		<key>FBM:dismissedInstall</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.2.5</string>
 			<key>description</key>
@@ -395,8 +280,6 @@ or
 		</dict>
 		<key>Notifications:userNotNow</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not available yet</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -404,8 +287,6 @@ or
 		</dict>
 		<key>Notifications:userOkay</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not available yet</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -418,8 +299,6 @@ or
 		</dict>
 		<key>Notifications:registrationSettings</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not available yet</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -432,8 +311,6 @@ or
 		</dict>
 		<key>Notifications:userOpenedNotification</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -452,8 +329,6 @@ or
 		</dict>
 		<key>Settings:userOpenedSettingsApp</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -466,8 +341,6 @@ or
 		</dict>
 		<key>Rec:opened</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -492,8 +365,6 @@ or
 		</dict>
 		<key>Rec:userPressedRestartButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>do not have such button yet</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -501,8 +372,6 @@ or
 		</dict>
 		<key>Rec:refocus</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.7.6</string>
 			<key>description</key>
@@ -539,8 +408,6 @@ or
 		</dict>
 		<key>Rec:userPressedAppButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not pressable in android</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -559,8 +426,6 @@ or
 		</dict>
 		<key>Rec:userPressedCancelButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>in android it&apos;s back button</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -579,8 +444,6 @@ or
 		</dict>
 		<key>Rec:userPressedSwitchCameraButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.7.6</string>
 			<key>description</key>
@@ -601,8 +464,6 @@ or
 		</dict>
 		<key>Rec:stageAlignStarted</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -610,8 +471,6 @@ or
 		</dict>
 		<key>Rec:stageAlignUserPressedContinueWithBadBackground</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -626,8 +485,6 @@ or
 		<dict>
 			<key>v</key>
 			<string>1.0.8</string>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>description</key>
 			<string>A threshold of good background was reached and fg extraction should start</string>
 			<key>params</key>
@@ -638,8 +495,6 @@ or
 		</dict>
 		<key>Rec:stageExtStarted</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -652,8 +507,6 @@ or
 		</dict>
 		<key>Rec:stageExtUserPressedRecord</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -666,8 +519,6 @@ or
 		</dict>
 		<key>Rec:stageExtUserCanceledRecord</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not implemented yet</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -675,8 +526,6 @@ or
 		</dict>
 		<key>Rec:stageRecordingDidStart</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -705,8 +554,6 @@ or
 		</dict>
 		<key>Rec:stageRecordingDidFinish</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -735,16 +582,12 @@ or
 		</dict>
 		<key>Rec:stageReviewUserPressedRetakeButton</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.1.0</string>
 			<key>description</key>
 			<string>When user asked if he likes the result he chose to try again and retake. You just can&apos;t please some people. :-(</string>
 			<key>params</key>
 			<dict>
-				<key>userPressed</key>
-				<string>&lt;string&gt; - (optional) the UI element the user pressed to try a different take (used in android where system back and retry button do the same thing)</string>
 				<key>flowType</key>
 				<string>&lt;string&gt; - the flow type definition the recorder was opened with. Possible values: 
  &apos;onboarding&apos; - recorder on boarding when app launched for the first time.
@@ -767,8 +610,6 @@ or
 		</dict>
 		<key>Rec:stageReviewUserPressedConfirmButton</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.1.0</string>
 			<key>description</key>
@@ -797,8 +638,6 @@ or
 		</dict>
 		<key>Rec:wasDismissed</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -829,8 +668,6 @@ or
 		</dict>
 		<key>Items:userPressedAppButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>not pressable yet</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -838,8 +675,6 @@ or
 		</dict>
 		<key>Items:userPressedNavButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -847,8 +682,6 @@ or
 		</dict>
 		<key>Items:userNavSelectionResetPack</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -863,8 +696,6 @@ or
 		</dict>
 		<key>Items:userNavSelectionCancel</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -872,8 +703,6 @@ or
 		</dict>
 		<key>Items:userPressedRetakeButton</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -888,8 +717,6 @@ or
 		</dict>
 		<key>Items:userRetakeOption</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -906,8 +733,6 @@ or
 		</dict>
 		<key>Items:userRetakeCanceled</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -915,17 +740,13 @@ or
 		</dict>
 		<key>Items:userSelectedItem</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.9</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
-			<string>User selected a specific emu from the feed (item details screen will be opened)</string>
+			<string>user pressed the emu button at the top and an &apos;about message&apos; was shown.</string>
 		</dict>
 		<key>ItemDetails:userPressedBackButton</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -944,8 +765,6 @@ or
 		</dict>
 		<key>ItemDetails:userPressedRetakeButton</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -964,8 +783,6 @@ or
 		</dict>
 		<key>ItemDetails:userPressedShareButton</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -988,8 +805,6 @@ or
 		</dict>
 		<key>ItemDetails:userPressedEmu</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.3.8</string>
 			<key>description</key>
@@ -1008,8 +823,6 @@ or
 		</dict>
 		<key>ItemDetails:userChoice</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>no such screen in android niy</string>
 			<key>v</key>
 			<string>1.3.8</string>
 			<key>description</key>
@@ -1030,8 +843,6 @@ or
 		</dict>
 		<key>Share:success</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1062,8 +873,6 @@ or
 		</dict>
 		<key>ShareFile:openedDlg</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.6.5</string>
 			<key>description</key>
@@ -1088,8 +897,6 @@ or
 		</dict>
 		<key>ShareFile:dismissedDlg</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.6.5</string>
 			<key>description</key>
@@ -1116,8 +923,6 @@ or
 		</dict>
 		<key>Share:failed</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1142,8 +947,6 @@ or
 		</dict>
 		<key>Share:canceled</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>cannot implement this yet in android</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1168,8 +971,6 @@ or
 		</dict>
 		<key>Share:app</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.7.6</string>
 			<key>description</key>
@@ -1184,8 +985,6 @@ or
 		</dict>
 		<key>KB:didAppear</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1193,8 +992,6 @@ or
 		</dict>
 		<key>KB:userPressedNextInputButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1202,8 +999,6 @@ or
 		</dict>
 		<key>KB:userPressedItem</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1222,8 +1017,6 @@ or
 		</dict>
 		<key>KB:userPressedBackButton</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>description</key>
@@ -1242,8 +1035,6 @@ or
 		</dict>
 		<key>KB:selectedHashTag</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.7.6</string>
 			<key>description</key>
@@ -1262,8 +1053,6 @@ or
 		</dict>
 		<key>KB:alphaNumericKBShown</key>
 		<dict>
-			<key>androidRemark</key>
-			<string>niy</string>
 			<key>v</key>
 			<string>1.7.6</string>
 			<key>description</key>
@@ -1271,8 +1060,6 @@ or
 		</dict>
 		<key>BE:zippedPackageDownloadSuccess</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.1.0</string>
 			<key>description</key>
@@ -1287,8 +1074,6 @@ or
 		</dict>
 		<key>BE:zippedPackageDownloadFailed</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.1.0</string>
 			<key>description</key>
@@ -1305,8 +1090,6 @@ or
 		</dict>
 		<key>BE:zippedPackageUnzipSuccess</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.2.0</string>
 			<key>description</key>
@@ -1321,8 +1104,6 @@ or
 		</dict>
 		<key>BE:zippedPackageUnzipFailed</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.2.0</string>
 			<key>description</key>
@@ -1339,8 +1120,6 @@ or
 		</dict>
 		<key>BE:backgroundFetch</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string>1.2.7</string>
 			<key>description</key>
@@ -1360,8 +1139,6 @@ or
 		</dict>
 		<key>Footage:screenAppeared</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.8</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>
@@ -1382,8 +1159,6 @@ or
 		</dict>
 		<key>Footage:screenCancel</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.8</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>
@@ -1400,12 +1175,12 @@ or
 				<string>&lt;string&gt; - (optional) the oid of the related emoticon (if user opened the screen from a context of a specific emu)</string>
 				<key>originUI</key>
 				<string>&lt;string&gt; - The UI the screen was opened from (items, itemDetails, KB etc).</string>
+				<key>reason</key>
+				<string>&lt;string&gt; - The reason the screen was dismissed (footage confirmed, back button pressed, system back key etc.)</string>
 			</dict>
 		</dict>
 		<key>Footage:deleted</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>
@@ -1426,8 +1201,6 @@ or
 		</dict>
 		<key>Footage:appliedToEmu</key>
 		<dict>
-			<key>av</key>
-			<string>1.0.8</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>
@@ -1448,8 +1221,6 @@ or
 		</dict>
 		<key>Footage:appliedToPack</key>
 		<dict>
-			<key>androidRemarks</key>
-			<string>niy</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>
@@ -1466,8 +1237,6 @@ or
 		</dict>
 		<key>Footage:appliedToAll</key>
 		<dict>
-			<key>androidRemarks</key>
-			<string>niy</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>
@@ -1484,8 +1253,6 @@ or
 		</dict>
 		<key>Footage:changedDefault</key>
 		<dict>
-			<key>androidRemarks</key>
-			<string>niy</string>
 			<key>v</key>
 			<string></string>
 			<key>description</key>

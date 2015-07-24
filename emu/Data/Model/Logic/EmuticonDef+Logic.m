@@ -87,39 +87,47 @@
 
 -(BOOL)allResourcesAvailable
 {
-    // If should have a back layer, check if available.
-    if (self.sourceBackLayer &&
-        [self isMissingResourceNamed:self.sourceBackLayer]) {
-        return NO;
-    }
-    
-    // If should have a front layer, check if available.
-    if (self.sourceFrontLayer &&
-        [self isMissingResourceNamed:self.sourceFrontLayer]) {
-        return NO;
-    }
-    
-    // If should have a user mask, check if available.
-    if (self.sourceUserLayerMask &&
-        [self isMissingResourceNamed:self.sourceUserLayerMask]) {
-        return NO;
-    }
-    
-    // If should have a dynamic user mask, check if available.
-    if (self.sourceUserLayerDynamicMask &&
-        [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) {
-        return NO;
-    }
-    
+    if (self.sourceBackLayer && [self isMissingResourceNamed:self.sourceBackLayer]) return NO;
+    if (self.sourceFrontLayer && [self isMissingResourceNamed:self.sourceFrontLayer]) return NO;
+    if (self.sourceUserLayerMask && [self isMissingResourceNamed:self.sourceUserLayerMask]) return NO;
+    if (self.sourceUserLayerDynamicMask && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) return NO;
     return YES;
+}
+
+-(NSInteger)requiredResourcesCount
+{
+    NSInteger count;
+    if (self.sourceBackLayer) count++;
+    if (self.sourceFrontLayer) count++;
+    if (self.sourceUserLayerMask) count++;
+    if (self.sourceUserLayerDynamicMask) count++;
+    return count;
+}
+
+-(NSArray *)allMissingResourcesNames
+{
+    NSMutableArray *resourcesNames = [NSMutableArray new];
+    if (self.sourceBackLayer && [self isMissingResourceNamed:self.sourceBackLayer]) [resourcesNames addObject:self.sourceBackLayer];
+    if (self.sourceFrontLayer && [self isMissingResourceNamed:self.sourceFrontLayer]) [resourcesNames addObject:self.sourceFrontLayer];
+    if (self.sourceUserLayerMask && [self isMissingResourceNamed:self.sourceUserLayerMask]) [resourcesNames addObject:self.sourceUserLayerMask];
+    if (self.sourceUserLayerDynamicMask && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) [resourcesNames addObject:self.sourceUserLayerDynamicMask];
+    return resourcesNames;
 }
 
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName
 {
-    NSString *resourcesPath = [self.package resourcesPath];
-    NSString *resourcePath = [EMDB pathForResourceNamed:resourceName path:resourcesPath];
+    NSString *resourcePath = [self pathForResourceNamed:resourceName];
     return resourcePath == nil;
 }
+
+
+-(NSString *)pathForResourceNamed:(NSString *)resourceName
+{
+    NSString *resourcesPath = [self.package resourcesPath];
+    NSString *resourcePath = [EMDB pathForResourceNamed:resourceName path:resourcesPath];
+    return resourcePath;
+}
+
 
 -(void)removeAllResources
 {

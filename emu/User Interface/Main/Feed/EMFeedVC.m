@@ -16,7 +16,6 @@
 #import "EMBackend.h"
 #import "EmuCell.h"
 #import "EMEmuticonScreenVC.h"
-#import "EMRenderManager.h"
 #import "EMPackagesVC.h"
 #import "EMInterfaceDelegate.h"
 #import "EMTutorialVC.h"
@@ -32,8 +31,12 @@
 #import "EMActionsArray.h"
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "EMCaches.h"
-
 #import "EMShareMail.h"
+
+#import "EMRenderManager.h"
+#import "EMRenderManager2.h"
+#import "EMDownloadsManager2.h"
+
 
 @interface EMFeedVC () <
     UICollectionViewDataSource,
@@ -138,6 +141,9 @@
 {
     [super viewDidAppear:animated];
     self.guiCollectionView.userInteractionEnabled = YES;
+    dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
+        [self handleVisibleCells];
+    });
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -238,10 +244,15 @@
     
     // On background detection information received.
     [nc addUniqueObserver:self
-                 selector:@selector(onRenderingFinished:)
+                 selector:@selector(onEmuStateUpdated:)
                      name:hmkRenderingFinished
                    object:nil];
-    
+
+    // Backend downloaded (or failed to download) missing resources for emuticon.
+    [nc addUniqueObserver:self
+                 selector:@selector(onEmuStateUpdated:)
+                     name:hmkDownloadResourceFinished
+                   object:nil];
     
     // Backend refreshed information about packages
     [nc addUniqueObserver:self
@@ -249,13 +260,6 @@
                      name:emkUIDataRefreshPackages
                    object:nil];
     
-    // Backend downloaded (or failed to download) missing resources for emuticon.
-    [nc addUniqueObserver:self
-                 selector:@selector(onDownloadedResourcesForEmuticon:)
-                     name:emkUIDownloadedResourcesForEmuticon
-                   object:nil];
-    
-
     // Need to choose another package
     [nc addUniqueObserver:self
                  selector:@selector(onShouldShowPackage:)
@@ -275,15 +279,14 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
     [nc removeObserver:emkUIDataRefreshPackages];
-    [nc removeObserver:emkUIDownloadedResourcesForEmuticon];
+    [nc removeObserver:hmkDownloadResourceFinished];
     [nc removeObserver:emkUIMainShouldShowPackage];
     [nc removeObserver:emkAppDidBecomeActive];
 }
 
 #pragma mark - Observers handlers
--(void)onRenderingFinished:(NSNotification *)notification
+-(void)onEmuStateUpdated:(NSNotification *)notification
 {
-    
     NSDictionary *info = notification.userInfo;
     NSIndexPath *indexPath = info[@"indexPath"];
     NSString *oid = info[@"emuticonOID"];
@@ -298,17 +301,19 @@
     
     // Make sure indexpath is in the range of the fetched results controller.
     if (indexPath.item >= self.fetchedResultsController.fetchedObjects.count) {
-        // Ignore of item out of range of the currently displayed data.
+        // Ignore if item out of range of the currently displayed data.
         return;
     }
 
-    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
     // ignore notifications not relating to emus visible on screen.
     if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
     
     // ignore if the rendered emu isn't where expected.
-    if (![emu.oid isEqualToString:oid]) return;
+    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (![emu.oid isEqualToString:oid])
+    {
+        return;
+    }
     
     // The cell is on screen, refresh it.
     if ([self.guiCollectionView numberOfItemsInSection:0] == self.fetchedResultsController.fetchedObjects.count) {
@@ -351,22 +356,6 @@
     
     // Handle the flow
     [self handleFlow];
-}
-
--(void)onDownloadedResourcesForEmuticon:(NSNotification *)notification
-{
-    NSDictionary *info = notification.userInfo;
-    if (info == nil) return;
-    
-    NSIndexPath *indexPath = info[@"indexPath"];
-    NSString *emuOID = info[@"emuticonOID"];
-
-    if (indexPath.item >= self.fetchedResultsController.fetchedObjects.count) return;
-    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (emu == nil || ![emu.oid isEqualToString:emuOID]) return;
-    if (![emu.emuDef.package.oid isEqualToString:self.selectedPackage.oid]) return;
-    
-    [self.guiCollectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
 
 -(void)onShouldShowPackage:(NSNotification *)notification
@@ -428,18 +417,18 @@
         REMOTE_LOG(@"Showing emuticons for package: %@", self.selectedPackage.name);
     } else {
         // The mixed screen.
-//        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//       
-//        NSArray *emus = appCFG.mixedScreenEmus;
-//        assert(emus);
-//        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.oid in %@", @NO, emus];
-//        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.mixedScreenOrder" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES] ];
-//        
-//        HMLOG(TAG, EM_DBG, @"Showing emuticons for mixed screen");
-//        REMOTE_LOG(@"Showing emuticons for mixed screen");
-
-        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@", @NO];
-        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+       
+        NSArray *emus = appCFG.mixedScreenEmus;
+        assert(emus);
+        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.oid in %@", @NO, emus];
+        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.mixedScreenOrder" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES] ];
+        
+        HMLOG(TAG, EM_DBG, @"Showing emuticons for mixed screen");
+        REMOTE_LOG(@"Showing emuticons for mixed screen");
+        
+//        predicate = [NSPredicate predicateWithFormat:@"isPreview=%@", @NO];
+//        sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
         
     }
     
@@ -462,6 +451,11 @@
     _fetchedResultsController = nil;
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
+    if (error == nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handleVisibleCells];
+        });
+    }
 }
 
 #pragma mark - Flow
@@ -500,7 +494,7 @@
         
         REMOTE_LOG(@"The main screen");
         
-        // Refresh
+        // Refresh on first appearance
         [self resetFetchedResultsController];
         [self.guiCollectionView reloadData];
         
@@ -603,6 +597,20 @@
     return YES;
 }
 
+-(void)updateContentInsetsForObjectsCount:(NSInteger)count
+{
+    if (count <= 6) {
+        CGSize vSize = self.guiCollectionView.bounds.size;
+        CGFloat padding = 0;
+        if (vSize.height == 736) padding = 16;
+        if (vSize.height == 667) padding = 10;
+        self.guiCollectionView.contentInset = UIEdgeInsetsMake(padding, 0, 0, 0);
+    } else {
+        self.guiCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+
+}
+
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -612,12 +620,15 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
+    NSInteger count;
     if (section == 0) {
-        NSInteger count = self.fetchedResultsController.fetchedObjects.count;
-        return count;
+        count = self.fetchedResultsController.fetchedObjects.count;
     } else {
-        return 30;
+        count = 30;
     }
+
+    [self updateContentInsetsForObjectsCount:count];
+    return count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -629,8 +640,7 @@
     
     if (indexPath.section == 0) {
         cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-        [self configureCell:cell forIndexPath:indexPath];
-    } else {
+        [self configureCell:cell forIndexPath:indexPath];    } else {
         cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:tagCellIdentifier forIndexPath:indexPath];
         [self configureTagCell:cell forIndexPath:indexPath];
     }
@@ -667,53 +677,43 @@
     
     cell.guiFailedImage.hidden = YES;
     cell.guiFailedLabel.hidden = YES;
-    cell.animatedGifURL = nil;
+    [cell.guiActivity stopAnimating];
+    
+    cell.guiDebugLabel.text = [SF:@"%@>>%@", @(indexPath.item), emu.emuDef.name];
     
     if (emu.wasRendered.boolValue) {
-        
         //
         // Emu already rendered. Just display it.
+        // (Display thumb first and load animated gif in background thread)
         //
-        [cell.guiActivity stopAnimating];
-        cell.shouldCacheGifData = self.selectedPackage? NO:YES;
-        cell.animatedGifURL = [emu animatedGifURL];
+        NSURL *gifURL = [emu animatedGifURL];
+        cell.guiThumbView.image = [UIImage imageWithContentsOfFile:[emu thumbPath]];
+        cell.guiThumbView.hidden = NO;
+        cell.guiThumbView.alpha = 1;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.animatedGifURL = gifURL;
+        });
         
     } else if ([emu.emuDef allResourcesAvailable]) {
-        
         //
-        // Need to render and we have all required resources to do so.
+        // Emu not rendered yet, but all resources available.
+        // We can render this emu.
         //
-        [cell.guiActivity startAnimating];
         cell.animatedGifURL = nil;
-        
         UserFootage *mostPrefferedFootage = [emu mostPrefferedUserFootage];
         if (mostPrefferedFootage != nil) {
-            [EMRenderManager.sh renderingRequiredForEmu:emu info:info];
+            cell.animatedGifURL = nil;
+            [cell setAnimatedGifNamed:@"rendering"];
+            [EMRenderManager2.sh enqueueEmu:emu indexPath:nil userInfo:info];
         } else {
             [self failedCell:cell];
         }
         
-    } else if (self.triedToReloadResourcesForEmuOID[emu.oid] == nil) {
-
-        //
-        // Missing resources for this emu.
-        //
-        [cell.guiActivity startAnimating];
-        cell.animatedGifURL = nil;
-        
-        // Download missing resources for emuticon
-        self.triedToReloadResourcesForEmuOID[emu.oid] = @YES;
-        [EMBackend.sh downloadResourcesForEmu:emu
-                                         info:info];
-        
     } else {
-        
-        //
-        // Missing resources and failed downloading resources for this emu.
-        //
-        [self failedCell:cell];
+        cell.animatedGifURL = nil;
+        [cell setAnimatedGifNamed:@"downloading"];
+        cell.guiThumbView.hidden = YES;
     }
-    
     cell.guiLock.alpha = emu.prefferedFootageOID? 0.2 : 0.0;
 }
 
@@ -767,7 +767,71 @@
     }];
 }
 
+#pragma mark - Scrolling
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    HMLOG(TAG, EM_VERBOSE, @"Finished scrolling (after deceleration)");
+    [self handleVisibleCells];
+}
 
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    [self handleVisibleCells];
+}
+
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    //self.isScrolling = YES;
+    HMLOG(TAG, EM_VERBOSE, @"Begin scrolling");
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                 willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        // Will not decelerate after dragging, so scrolling just ended.
+        [self handleVisibleCells];
+        HMLOG(TAG, EM_VERBOSE, @"Finished scrolling A");
+    }
+}
+
+
+#pragma mark - Required downloads
+-(void)handleVisibleCells
+{
+    NSArray *visibleIndexPaths = self.guiCollectionView.indexPathsForVisibleItems;
+    BOOL anyEnqueued = NO;
+    NSMutableDictionary *prioritizedOID = [NSMutableDictionary new];
+    for (NSIndexPath *indexPath in visibleIndexPaths) {
+        Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        // We don't need the resources because the emu is already rendered.
+        if (emu.wasRendered.boolValue) continue;
+        
+        NSDictionary *userInfo = @{
+                                   @"for":@"emu",
+                                   @"indexPath":indexPath,
+                                   @"emuticonOID":emu.oid,
+                                   @"packageOID":emu.emuDef.package.oid,
+                                   };
+        
+        prioritizedOID[emu.oid] = @YES;
+        NSArray *missingResourcesNames = [emu.emuDef allMissingResourcesNames];
+        if (missingResourcesNames.count>0) {
+            [EMDownloadsManager2.sh enqueueResourcesForOID:emu.oid
+                                                     names:missingResourcesNames
+                                                      path:emu.emuDef.package.name
+                                                  userInfo:userInfo];
+        }
+        anyEnqueued = YES;
+    }
+    if (anyEnqueued) {
+        [EMRenderManager2.sh updatePriorities:prioritizedOID];
+        [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
+        [EMDownloadsManager2.sh manageQueue];
+    }
+}
 
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
@@ -1266,9 +1330,6 @@
         [self.guiCollectionView reloadData];
         return;
     }
-    
-    // Tell manager to prioritize current selected package.
-//    EMRenderManager.sh.prioritizedPackageOID = package.oid;
     
     // A specific package or mixed screen?
     if (package != nil) {

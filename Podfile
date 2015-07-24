@@ -21,6 +21,9 @@ pod 'Fabric'
 pod 'Crashlytics'
 pod 'Optimizely-iOS-SDK'
 
+# General
+pod 'RegExCategories', '~> 1.0'
+
 # Facebook
 pod 'FBSDKCoreKit', '~> 4.2'
 pod 'FBSDKMessengerShareKit', '~> 1.2'

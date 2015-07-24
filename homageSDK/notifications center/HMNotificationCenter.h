@@ -23,6 +23,8 @@
 // Rendering
 #define hmkRenderingFinishedPreview  @"hmk finished rendering preview"
 #define hmkRenderingFinished         @"hmk finished rendering"
+#define hmkDownloadResourceFinished  @"hmk finished downloading resource"
+
 
 // Debugging
 #define hmkDebuggingFinishedZippingFiles  @"hmk debug finished zipping images and ready to share"
