@@ -29,7 +29,7 @@
 
 
 #import <Toast/UIView+Toast.h>
-#import "EMRenderManager.h"
+#import "EMRenderManager2.h"
 
 @interface EMShareVC () <
     UICollectionViewDataSource,
@@ -439,23 +439,23 @@
     self.guiRenderingProgress.progress = 0;
     self.guiRenderingProgressLabel.text = LS(@"EMUNIZING");
     
-    [EMRenderManager.sh renderVideoForEmu:emu
-                        requiresWaterMark:requiresWaterMark
-                          completionBlock:^{
-                              // If we are here, emu.videoURL points to the rendered video.
-                              [self.sharer share];
-                              self.guiRenderingView.hidden = YES;
-                              self.guiCollectionView.hidden = NO;
-                              self.guiFBMButtonContainer.hidden = NO;
-                          } failBlock:^{
-                              // Failed :-(
-                              // No rendered video available.
-                              self.sharer = nil;
-                              [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
-                              self.guiRenderingView.hidden = YES;
-                              self.guiCollectionView.hidden = NO;
-                              self.guiFBMButtonContainer.hidden = NO;
-                          }];
+    [EMRenderManager2.sh renderVideoForEmu:emu
+                         requiresWaterMark:requiresWaterMark
+                           completionBlock:^{
+                               // If we are here, emu.videoURL points to the rendered video.
+                               [self.sharer share];
+                               self.guiRenderingView.hidden = YES;
+                               self.guiCollectionView.hidden = NO;
+                               self.guiFBMButtonContainer.hidden = NO;
+                           } failBlock:^{
+                               // Failed :-(
+                               // No rendered video available.
+                               self.sharer = nil;
+                               [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+                               self.guiRenderingView.hidden = YES;
+                               self.guiCollectionView.hidden = NO;
+                               self.guiFBMButtonContainer.hidden = NO;
+                           }];
 }
 
 

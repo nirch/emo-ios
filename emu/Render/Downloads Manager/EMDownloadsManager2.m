@@ -111,12 +111,33 @@
 #pragma mark - Resume/Pause
 -(void)resume
 {
-    
+    __weak EMDownloadsManager2 *wSelf = self;
+    dispatch_async(self.downloadingManagementQueue, ^{
+        [wSelf.transferManager resumeAll:^(AWSRequest *request) {
+        }];
+    });
 }
 
 -(void)pause
 {
-    
+    __weak EMDownloadsManager2 *wSelf = self;
+    dispatch_async(self.downloadingManagementQueue, ^{
+        [wSelf.transferManager pauseAll];
+    });
+}
+
+-(void)clear
+{
+    __weak EMDownloadsManager2 *wSelf = self;
+    dispatch_async(self.downloadingManagementQueue, ^{
+        [wSelf _clear];
+    });
+}
+
+-(void)_clear
+{
+    // clear all work pending on queues
+    _neededDownloadsPool = [NSMutableDictionary new];
 }
 
 #pragma mark - JOB ID
@@ -245,15 +266,24 @@
     [downloadTask continueWithBlock:^id(AWSTask *task) {
         if (task.completed) {
             if (task.error) {
-                HMLOG(TAG, EM_ERR, @"Failed downloading resource: %@", name);
-                // Download failed
-                dispatch_async(self.downloadingManagementQueue, ^{
-                    [wSelf _failedJobForOID:oid resourceName:name];
-                });
+                if (task.error.code == AWSS3TransferManagerErrorCancelled) {
+                    HMLOG(TAG, EM_VERBOSE, @"Cancelled downloading resource: %@", name);
+                    // Download failed
+                    dispatch_async(self.downloadingManagementQueue, ^{
+                        [wSelf _cancelledJobForOID:oid resourceName:name];
+                    });
+                } else {
+                    HMLOG(TAG, EM_ERR, @"Failed downloading resource: %@", name);
+                    // Download failed
+                    dispatch_async(self.downloadingManagementQueue, ^{
+                        [wSelf _failedJobForOID:oid resourceName:name error:task.error];
+                    });
+                }
             } else {
+                HMLOG(TAG, EM_ERR, @"downloaded: %@", name);
                 // Download successful
                 dispatch_async(self.downloadingManagementQueue, ^{
-                    [wSelf _finishJobForOID:oid resourceName:name];
+                    [wSelf _finishJobForOID:oid resourceName:name error:nil];
                 });
             }
         }
@@ -261,23 +291,31 @@
     }];
 }
 
--(void)_failedJobForOID:(NSString *)oid resourceName:(NSString *)name
+-(void)_cancelledJobForOID:(NSString *)oid resourceName:(NSString *)name
 {
-    [self _finishJobForOID:oid resourceName:name];
+    [self _finishJobForOID:oid resourceName:name error:nil];
 }
 
--(void)_finishJobForOID:(NSString *)oid resourceName:(NSString *)name
+-(void)_failedJobForOID:(NSString *)oid resourceName:(NSString *)name error:(NSError *)error
+{
+    [self _finishJobForOID:oid resourceName:name error:error];
+}
+
+-(void)_finishJobForOID:(NSString *)oid resourceName:(NSString *)name error:(NSError *)error
 {
     NSString *jobID = [self jobIDForOID:oid resourceName:name];
     [self.downloadingPool removeObjectForKey:jobID];
 
     __weak EMDownloadsManager2 *wSelf = self;
     
-    // Post to the UI that a render was finished.
+    // Post to the UI that a download was finished.
+    NSDictionary *userInfoForOID = self.userInfo[oid]?self.userInfo[oid]:@{};
+    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:userInfoForOID];
+    if (error) info[@"error"] = error;
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:hmkDownloadResourceFinished
                                                             object:self
-                                                          userInfo:self.userInfo[oid]];
+                                                          userInfo:info];
     });
 
     dispatch_async(self.downloadingManagementQueue, ^{

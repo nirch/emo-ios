@@ -95,8 +95,6 @@
 		083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E52641A9E1EB100A66FC8 /* EMEmuticonScreenVC.m */; };
 		08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08409E981AB1C69700EC0930 /* EMSplashVC.m */; };
 		08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08409E991AB1C69700EC0930 /* SplashView.xib */; };
-		084AF4341B36B0890056FC34 /* EMRenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4331B36B0890056FC34 /* EMRenderManager.m */; };
-		084AF4351B36B0890056FC34 /* EMRenderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4331B36B0890056FC34 /* EMRenderManager.m */; };
 		084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4711B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
@@ -382,10 +380,40 @@
 		086911D31B16D73100D5D29F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		0869D8611B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */; };
 		0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */; };
+		0874030E1B63971200866A74 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
+		0874030F1B63971300866A74 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
+		087403101B63971D00866A74 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
+		087403111B63971E00866A74 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
 		087BCFBB1B5FC1E400A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
 		087BCFBC1B5FC1E400A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
 		087BCFBD1B5FCFCA00A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
 		087BCFBE1B5FCFCB00A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
+		087BCFBF1B625AE600A7A930 /* EMRenderManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C0D1B580AFE000DDCF9 /* EMRenderManager2.m */; };
+		087BCFC01B625AE800A7A930 /* EMRenderManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C0D1B580AFE000DDCF9 /* EMRenderManager2.m */; };
+		087BCFC11B625AEE00A7A930 /* EMDownloadsManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C2A1B5BAEED000DDCF9 /* EMDownloadsManager2.m */; };
+		087BCFC21B625AEF00A7A930 /* EMDownloadsManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C2A1B5BAEED000DDCF9 /* EMDownloadsManager2.m */; };
+		087BCFC31B625B6200A7A930 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083318991B049D3E000B8979 /* EMRenderer.mm */; };
+		087BCFC41B625B6300A7A930 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083318991B049D3E000B8979 /* EMRenderer.mm */; };
+		087BCFC71B6269C200A7A930 /* HrEffectBW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */; };
+		087BCFC81B6269C300A7A930 /* HrEffectBW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */; };
+		087BCFC91B6269C800A7A930 /* HrEffectRGBA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */; };
+		087BCFCA1B6269C900A7A930 /* HrEffectRGBA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */; };
+		087BCFCB1B6269D200A7A930 /* PngSourceWithFX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */; };
+		087BCFCC1B6269D300A7A930 /* PngSourceWithFX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */; };
+		087BCFCD1B6269D700A7A930 /* SolidColorSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */; };
+		087BCFCE1B6269D700A7A930 /* SolidColorSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0867C9FA1B14C40700FF0E85 /* SolidColorSource.mm */; };
+		087BCFCF1B6269DB00A7A930 /* WaterMarkSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */; };
+		087BCFD01B6269DC00A7A930 /* WaterMarkSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CF07AB1B4CFB0700034BB5 /* WaterMarkSource.mm */; };
+		087BCFD31B626BB200A7A930 /* ThumbOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08875E161B1AF25600E6663C /* ThumbOutput.mm */; };
+		087BCFD41B626BB300A7A930 /* ThumbOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08875E161B1AF25600E6663C /* ThumbOutput.mm */; };
+		087BCFD51B626BB800A7A930 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
+		087BCFD61B626BB900A7A930 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
+		087BCFD71B626BBD00A7A930 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
+		087BCFD81B626BBE00A7A930 /* EMVideoMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08653CF31B0CD8450016DC54 /* EMVideoMaker.mm */; };
+		087BCFD91B626BE700A7A930 /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083D54741A8CB0A10048604A /* HMImageTools.mm */; };
+		087BCFDA1B626BE800A7A930 /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083D54741A8CB0A10048604A /* HMImageTools.mm */; };
+		087BCFDB1B626BEC00A7A930 /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005641A99483E008CD7DE /* HMImages.m */; };
+		087BCFDC1B626BED00A7A930 /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005641A99483E008CD7DE /* HMImages.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		08819CDC1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
@@ -816,8 +844,6 @@
 		08409E981AB1C69700EC0930 /* EMSplashVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSplashVC.m; sourceTree = "<group>"; };
 		08409E991AB1C69700EC0930 /* SplashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashView.xib; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMSDK.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		084AF4321B36B0890056FC34 /* EMRenderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMRenderManager.h; path = Old/EMRenderManager.h; sourceTree = "<group>"; };
-		084AF4331B36B0890056FC34 /* EMRenderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMRenderManager.m; path = Old/EMRenderManager.m; sourceTree = "<group>"; };
 		084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-groovy-bg.gif"; sourceTree = "<group>"; };
 		084AF4381B383B810056FC34 /* 70s-peace-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-peace-bg.gif"; sourceTree = "<group>"; };
 		084AF43A1B383B810056FC34 /* attitude-coolstory-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "attitude-coolstory-bg.gif"; sourceTree = "<group>"; };
@@ -947,6 +973,7 @@
 		086911D51B17412500D5D29F /* KeyboardBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = KeyboardBeta.entitlements; sourceTree = "<group>"; };
 		0869D85F1B1E53E800A5E2F5 /* EMShareDocumentInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareDocumentInteraction.h; sourceTree = "<group>"; };
 		0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareDocumentInteraction.m; sourceTree = "<group>"; };
+		087403121B63E41200866A74 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
 		087BCFB91B5FC1E400A7A930 /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
 		087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
@@ -2066,8 +2093,6 @@
 			children = (
 				083318981B049D3E000B8979 /* EMRenderer.h */,
 				083318991B049D3E000B8979 /* EMRenderer.mm */,
-				084AF4321B36B0890056FC34 /* EMRenderManager.h */,
-				084AF4331B36B0890056FC34 /* EMRenderManager.m */,
 				08967C0C1B580AFE000DDCF9 /* EMRenderManager2.h */,
 				08967C0D1B580AFE000DDCF9 /* EMRenderManager2.m */,
 				0805ABBE1B492C7C0099ECBE /* fx */,
@@ -2434,6 +2459,7 @@
 				Base,
 				fr,
 				es,
+				he,
 			);
 			mainGroup = 08D9297B1A77A36D00B6A68F;
 			productRefGroup = 08D929851A77A36D00B6A68F /* Products */;
@@ -2916,16 +2942,21 @@
 				08CED1271AA79B7900C50D0C /* HMPanel.m in Sources */,
 				080489E91AA5957A008CC885 /* EMEmusKeyboardVC.m in Sources */,
 				08AB68081AD567990092B62B /* EMLabel.m in Sources */,
+				087403111B63971E00866A74 /* NSNotificationCenter+Utils.m in Sources */,
 				080CB34C1AA4C11D00603E30 /* EmuticonDef+Logic.m in Sources */,
 				083319681B04D389000B8979 /* Package.m in Sources */,
+				087BCFDC1B626BED00A7A930 /* HMImages.m in Sources */,
+				087BCFCD1B6269D700A7A930 /* SolidColorSource.mm in Sources */,
 				08BBBC701AD9758200D4AD1D /* EmuSectionReusableView.m in Sources */,
 				080CB3421AA4C10F00603E30 /* NSManagedObject+FindAndCreate.m in Sources */,
+				087BCFCB1B6269D200A7A930 /* PngSourceWithFX.mm in Sources */,
 				08ED80001B1E026600B6856F /* HMExperiments.m in Sources */,
 				08658B431B4E598700EC4B19 /* AppCFG.m in Sources */,
 				08AC3E6A1AD15465005231B5 /* EMAlphaNumericKeyboard.m in Sources */,
 				08819CDD1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */,
 				08AC3E701AD2CC16005231B5 /* EmuBaseStyle.m in Sources */,
 				08CED0DA1AA5C7EF00C50D0C /* EMShareAppleMessage.m in Sources */,
+				087BCFD71B626BBD00A7A930 /* EMVideoMaker.mm in Sources */,
 				080CB3481AA4C11D00603E30 /* EMDB+Files.m in Sources */,
 				08213B3F1ACC14F700BE77E4 /* EMPackageParser.m in Sources */,
 				08D9D44F1AC2B3F1004A83F3 /* AppManagement.m in Sources */,
@@ -2933,16 +2964,26 @@
 				082720C11B038CCB0046F38E /* EMCaches.m in Sources */,
 				08BBBC741AD9B15F00D4AD1D /* Package+Logic.m in Sources */,
 				08CED0D91AA5C7EF00C50D0C /* EMShareMail.m in Sources */,
+				087BCFC31B625B6200A7A930 /* EMRenderer.mm in Sources */,
 				08AC3E6F1AD2CC13005231B5 /* EmuStyle.m in Sources */,
+				087BCFC11B625AEE00A7A930 /* EMDownloadsManager2.m in Sources */,
 				08213B401ACC14FB00BE77E4 /* EMPackagesParser.m in Sources */,
+				087BCFDA1B626BE800A7A930 /* HMImageTools.mm in Sources */,
 				08213B3B1ACC0A4600BE77E4 /* emu.xcdatamodeld in Sources */,
 				084AF53B1B3AA8900056FC34 /* EmuKBCell.m in Sources */,
 				08213B3D1ACC14F000BE77E4 /* EMAppCFGParser.m in Sources */,
 				08213B3E1ACC14F400BE77E4 /* EMEmuticonParser.m in Sources */,
+				087BCFD31B626BB200A7A930 /* ThumbOutput.mm in Sources */,
 				08AB68091AD5679D0092B62B /* EMButton.m in Sources */,
 				080CB34A1AA4C11D00603E30 /* Emuticon+Logic.m in Sources */,
 				08ED7FF01B1C860E00B6856F /* Emuticon.m in Sources */,
 				080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */,
+				087BCFC71B6269C200A7A930 /* HrEffectBW.cpp in Sources */,
+				087BCFD51B626BB800A7A930 /* VideoOutput.mm in Sources */,
+				087BCFCF1B6269DB00A7A930 /* WaterMarkSource.mm in Sources */,
+				0874030E1B63971200866A74 /* NSNotification+Utils.m in Sources */,
+				087BCFBF1B625AE600A7A930 /* EMRenderManager2.m in Sources */,
+				087BCFC91B6269C800A7A930 /* HrEffectRGBA.cpp in Sources */,
 				087BCFBD1B5FCFCA00A7A930 /* EmuticonDef.m in Sources */,
 				08AC3E6E1AD2C9A1005231B5 /* KBKeyButton.m in Sources */,
 				080CB34B1AA4C11D00603E30 /* AppCFG+Logic.m in Sources */,
@@ -2985,16 +3026,21 @@
 				0867CA131B16602E00FF0E85 /* HMPanel.m in Sources */,
 				0867CA141B16602E00FF0E85 /* EMEmusKeyboardVC.m in Sources */,
 				0867CA151B16602E00FF0E85 /* EMLabel.m in Sources */,
+				087403101B63971D00866A74 /* NSNotificationCenter+Utils.m in Sources */,
 				0867CA161B16602E00FF0E85 /* EmuticonDef+Logic.m in Sources */,
 				0867CA171B16602E00FF0E85 /* Package.m in Sources */,
+				087BCFDB1B626BEC00A7A930 /* HMImages.m in Sources */,
+				087BCFCE1B6269D700A7A930 /* SolidColorSource.mm in Sources */,
 				0867CA181B16602E00FF0E85 /* EmuSectionReusableView.m in Sources */,
 				0867CA191B16602E00FF0E85 /* NSManagedObject+FindAndCreate.m in Sources */,
+				087BCFCC1B6269D300A7A930 /* PngSourceWithFX.mm in Sources */,
 				08ED80011B1E026600B6856F /* HMExperiments.m in Sources */,
 				08658B451B4E598700EC4B19 /* AppCFG.m in Sources */,
 				0867CA1A1B16602E00FF0E85 /* EMAlphaNumericKeyboard.m in Sources */,
 				08819CDF1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */,
 				0867CA1B1B16602E00FF0E85 /* EmuBaseStyle.m in Sources */,
 				0867CA1C1B16602E00FF0E85 /* EMShareAppleMessage.m in Sources */,
+				087BCFD81B626BBE00A7A930 /* EMVideoMaker.mm in Sources */,
 				0867CA1D1B16602E00FF0E85 /* EMDB+Files.m in Sources */,
 				0867CA1E1B16602E00FF0E85 /* EMPackageParser.m in Sources */,
 				0867CA201B16602E00FF0E85 /* AppManagement.m in Sources */,
@@ -3002,16 +3048,26 @@
 				0867CA221B16602E00FF0E85 /* EMCaches.m in Sources */,
 				0867CA231B16602E00FF0E85 /* Package+Logic.m in Sources */,
 				0867CA241B16602E00FF0E85 /* EMShareMail.m in Sources */,
+				087BCFC41B625B6300A7A930 /* EMRenderer.mm in Sources */,
 				0867CA251B16602E00FF0E85 /* EmuStyle.m in Sources */,
+				087BCFC21B625AEF00A7A930 /* EMDownloadsManager2.m in Sources */,
 				0867CA271B16602E00FF0E85 /* EMPackagesParser.m in Sources */,
+				087BCFD91B626BE700A7A930 /* HMImageTools.mm in Sources */,
 				0867CA281B16602E00FF0E85 /* emu.xcdatamodeld in Sources */,
 				084AF53C1B3AA8900056FC34 /* EmuKBCell.m in Sources */,
 				0867CA2A1B16602E00FF0E85 /* EMAppCFGParser.m in Sources */,
 				0867CA2B1B16602E00FF0E85 /* EMEmuticonParser.m in Sources */,
+				087BCFD41B626BB300A7A930 /* ThumbOutput.mm in Sources */,
 				0867CA2C1B16602E00FF0E85 /* EMButton.m in Sources */,
 				0867CA2D1B16602E00FF0E85 /* Emuticon+Logic.m in Sources */,
 				08ED7FF21B1C860E00B6856F /* Emuticon.m in Sources */,
 				0867CA2F1B16602E00FF0E85 /* UserFootage+Logic.m in Sources */,
+				087BCFC81B6269C300A7A930 /* HrEffectBW.cpp in Sources */,
+				087BCFD61B626BB900A7A930 /* VideoOutput.mm in Sources */,
+				087BCFD01B6269DC00A7A930 /* WaterMarkSource.mm in Sources */,
+				0874030F1B63971300866A74 /* NSNotification+Utils.m in Sources */,
+				087BCFC01B625AE800A7A930 /* EMRenderManager2.m in Sources */,
+				087BCFCA1B6269C900A7A930 /* HrEffectRGBA.cpp in Sources */,
 				087BCFBE1B5FCFCB00A7A930 /* EmuticonDef.m in Sources */,
 				0867CA301B16602E00FF0E85 /* KBKeyButton.m in Sources */,
 				0867CA311B16602E00FF0E85 /* AppCFG+Logic.m in Sources */,
@@ -3057,7 +3113,6 @@
 				08AA14601B0BA658002E1B2F /* EMButton.m in Sources */,
 				08AA14611B0BA658002E1B2F /* Package+Logic.m in Sources */,
 				08AA14621B0BA658002E1B2F /* EMShareAppleMessage.m in Sources */,
-				084AF4351B36B0890056FC34 /* EMRenderManager.m in Sources */,
 				08AA14631B0BA658002E1B2F /* EMSplashVC.m in Sources */,
 				08AA14641B0BA658002E1B2F /* HMImages.m in Sources */,
 				08AA14651B0BA658002E1B2F /* AppCFG+Logic.m in Sources */,
@@ -3173,7 +3228,6 @@
 				08B5899F1A93B9F7008D9068 /* EMButton.m in Sources */,
 				08BBBC731AD9B15F00D4AD1D /* Package+Logic.m in Sources */,
 				0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */,
-				084AF4341B36B0890056FC34 /* EMRenderManager.m in Sources */,
 				08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */,
 				086005651A99483E008CD7DE /* HMImages.m in Sources */,
 				085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */,
@@ -3284,6 +3338,7 @@
 				08AA14371B08F062002E1B2F /* Base */,
 				08AA14391B08F069002E1B2F /* fr */,
 				085D69461B25A8800083ADD9 /* es */,
+				087403121B63E41200866A74 /* he */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -3298,13 +3353,26 @@
 				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
@@ -3323,8 +3391,99 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Keyboard/Supporting Files/Keyboard.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lPlnTracker",
+					"-lMattingLib",
+					"-lEdgeLib",
+					"-lHrRendererLib",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-AFSoundManager\"",
+					"-l\"Pods-AWSCore\"",
+					"-l\"Pods-AWSS3\"",
+					"-l\"Pods-Bolts\"",
+					"-l\"Pods-FBSDKCoreKit\"",
+					"-l\"Pods-FBSDKMessengerShareKit\"",
+					"-l\"Pods-FLAnimatedImage\"",
+					"-l\"Pods-JDFTooltips\"",
+					"-l\"Pods-JGActionSheet\"",
+					"-l\"Pods-MBProgressHUD\"",
+					"-l\"Pods-Mixpanel\"",
+					"-l\"Pods-NSLogger\"",
+					"-l\"Pods-RegExCategories\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"Pods-Toast\"",
+					"-l\"Pods-ZipKit\"",
+					"-l\"Pods-zipzap\"",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MediaPlayer\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Optimizely\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3341,9 +3500,22 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				HEADER_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
@@ -3362,8 +3534,99 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Keyboard/Supporting Files/Keyboard.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lPlnTracker",
+					"-lMattingLib",
+					"-lEdgeLib",
+					"-lHrRendererLib",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-AFSoundManager\"",
+					"-l\"Pods-AWSCore\"",
+					"-l\"Pods-AWSS3\"",
+					"-l\"Pods-Bolts\"",
+					"-l\"Pods-FBSDKCoreKit\"",
+					"-l\"Pods-FBSDKMessengerShareKit\"",
+					"-l\"Pods-FLAnimatedImage\"",
+					"-l\"Pods-JDFTooltips\"",
+					"-l\"Pods-JGActionSheet\"",
+					"-l\"Pods-MBProgressHUD\"",
+					"-l\"Pods-Mixpanel\"",
+					"-l\"Pods-NSLogger\"",
+					"-l\"Pods-RegExCategories\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"Pods-Toast\"",
+					"-l\"Pods-ZipKit\"",
+					"-l\"Pods-zipzap\"",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MediaPlayer\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Optimizely\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3428,16 +3691,30 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E11A937EC9007BC910 /* Config.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
@@ -3452,17 +3729,109 @@
 					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/Public/Toast\"",
 					"$(PROJECT_DIR)",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Keyboard/Supporting Files/KeyboardBeta.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lPlnTracker",
+					"-lMattingLib",
+					"-lEdgeLib",
+					"-lHrRendererLib",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-AFSoundManager\"",
+					"-l\"Pods-AWSCore\"",
+					"-l\"Pods-AWSS3\"",
+					"-l\"Pods-Bolts\"",
+					"-l\"Pods-FBSDKCoreKit\"",
+					"-l\"Pods-FBSDKMessengerShareKit\"",
+					"-l\"Pods-FLAnimatedImage\"",
+					"-l\"Pods-JDFTooltips\"",
+					"-l\"Pods-JGActionSheet\"",
+					"-l\"Pods-MBProgressHUD\"",
+					"-l\"Pods-Mixpanel\"",
+					"-l\"Pods-NSLogger\"",
+					"-l\"Pods-RegExCategories\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"Pods-Toast\"",
+					"-l\"Pods-ZipKit\"",
+					"-l\"Pods-zipzap\"",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MediaPlayer\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Optimizely\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_NAME = KeyboardBeta;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -3470,13 +3839,27 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E21A937EC9007BC910 /* Config.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"$(PROJECT_DIR)",
+					"$(inherited)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
 				HEADER_SEARCH_PATHS = (
+					"../homage-cv-app/Homage/**",
+					"../homage-cv-app/Core/Util/**",
+					"../homage-cv-app/Core/ImageLib/**",
+					"../homage-cv-app/VimGui/**",
+					"../homage-cv-app/Tracking/**",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/Public/AFSoundManager\"",
@@ -3491,17 +3874,109 @@
 					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/Public/Toast\"",
 					"$(PROJECT_DIR)",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Keyboard/Supporting Files/KeyboardBeta.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lGpw",
+					"-lUtil",
+					"-lImage",
+					"-lPlnTracker",
+					"-lMattingLib",
+					"-lEdgeLib",
+					"-lHrRendererLib",
+					"-l\"MPCategoryHelpers\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-AFSoundManager\"",
+					"-l\"Pods-AWSCore\"",
+					"-l\"Pods-AWSS3\"",
+					"-l\"Pods-Bolts\"",
+					"-l\"Pods-FBSDKCoreKit\"",
+					"-l\"Pods-FBSDKMessengerShareKit\"",
+					"-l\"Pods-FLAnimatedImage\"",
+					"-l\"Pods-JDFTooltips\"",
+					"-l\"Pods-JGActionSheet\"",
+					"-l\"Pods-MBProgressHUD\"",
+					"-l\"Pods-Mixpanel\"",
+					"-l\"Pods-NSLogger\"",
+					"-l\"Pods-RegExCategories\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"Pods-Toast\"",
+					"-l\"Pods-ZipKit\"",
+					"-l\"Pods-zipzap\"",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MediaPlayer\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Optimizely\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"AudioToolbox\"",
+					"-weak_framework",
+					"\"CoreGraphics\"",
+					"-weak_framework",
+					"\"CoreLocation\"",
+					"-weak_framework",
+					"\"Foundation\"",
+					"-weak_framework",
+					"\"QuartzCore\"",
+					"-weak_framework",
+					"\"Security\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-weak_framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_NAME = KeyboardBeta;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -3520,7 +3995,7 @@
 					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3623,11 +4098,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3644,11 +4119,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/emu/App/Supporting Files/emubeta-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3826,11 +4301,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/emu/App/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3941,11 +4416,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/emu/App/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
+					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
+					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);

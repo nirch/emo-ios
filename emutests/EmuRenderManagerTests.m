@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "EMRenderManager.h"
+#import "EMRenderManager2.h"
 #import "EMDB.h"
 
 @interface EmuRenderManagerTests : XCTestCase

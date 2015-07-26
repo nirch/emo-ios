@@ -165,16 +165,27 @@
 
 -(void)cleanUp
 {
+    [self cleanUp:YES andRemoveResources:NO];
+}
+
+-(void)cleanUp:(BOOL)cleanUp andRemoveResources:(BOOL)removeResources
+{
     // Delete rendered output files
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSError *error;
-    [fm removeItemAtPath:[self animatedGifPath] error:&error];
-    [fm removeItemAtPath:[self videoPath] error:&error];
-    [EMCaches.sh removeCachedGifForEmu:self];
+    if (cleanUp) {
+        NSError *error;
+        [fm removeItemAtPath:[self animatedGifPath] error:&error];
+        [fm removeItemAtPath:[self videoPath] error:&error];
+        [EMCaches.sh removeCachedGifForEmu:self];
+        
+        // Mark it as not rendered.
+        self.wasRendered = @NO;
+        self.renderedSampleUploaded = @NO;
+    }
 
-    // Mark it as not rendered.
-    self.wasRendered = @NO;
-    self.renderedSampleUploaded = @NO;
+    if (removeResources) {
+        [self.emuDef removeAllResources];
+    }
 }
 
 

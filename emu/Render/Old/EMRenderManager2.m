@@ -31,7 +31,6 @@
 #import "EMDB+Files.h"
 #import "EMRenderer.h"
 #import "AppManagement.h"
-#import "EMBackend.h"
 #import "EMNotificationCenter.h"
 #import "AppManagement.h"
 
@@ -278,5 +277,127 @@
     });
     
 }
+
+#pragma mark - Quick renders
+// TODO: this is old code that should be revised.
+-(void)renderPreviewForFootage:(UserFootage *)footage
+                    withEmuDef:(EmuticonDef *)emuDef
+{
+    HMLOG(TAG,
+          EM_DBG,
+          @"Starting to render emuticon named:%@ for preview. %@ frames. User footage frames: %@",
+          emuDef.name,
+          emuDef.framesCount,
+          footage.framesCount
+          );
+
+    BOOL allResourcesAvailable = [emuDef allResourcesAvailable];
+    if (allResourcesAvailable) {
+        // Create a render object.
+        EMRenderer *renderer = [EMRenderer new];
+        renderer.emuticonDefOID = emuDef.oid;
+        renderer.footageOID = footage.oid;
+        renderer.backLayerPath = [emuDef pathForBackLayer];
+        renderer.userImagesPath = [footage pathForUserImages];
+        renderer.userMaskPath = [emuDef pathForUserLayerMask];
+        renderer.userDynamicMaskPath = [emuDef pathForUserLayerDynamicMask];
+        renderer.frontLayerPath = [emuDef pathForFrontLayer];
+        renderer.numberOfFrames = [emuDef.framesCount integerValue];
+        renderer.duration = emuDef.duration.doubleValue;
+        renderer.outputOID = [[NSUUID UUID] UUIDString];
+        renderer.paletteString = emuDef.palette;
+        renderer.outputPath = [EMDB outputPath];
+        renderer.shouldOutputGif = YES;
+        renderer.effects = emuDef.effects;
+        
+        dispatch_async(self.renderingQueue, ^(void){
+            // Render in a background thread.
+            // Execute the rendering.
+            [renderer render];
+            
+            HMLOG(TAG, EM_DBG, @"Finished rendering preview %@", renderer.outputOID);
+            
+            // Finished rendering
+            // Post a notification to the main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Create an object in the model for the rendered preview.
+                Emuticon *emu = [Emuticon previewWithOID:renderer.outputOID
+                                              footageOID:renderer.footageOID
+                                          emuticonDefOID:renderer.emuticonDefOID
+                                                 context:EMDB.sh.context];
+                
+                // Post the notification with the render info.
+                NSDictionary *info = @{emkEmuticonOID:emu.oid};
+                [[NSNotificationCenter defaultCenter] postNotificationName:hmkRenderingFinishedPreview
+                                                                    object:self
+                                                                  userInfo:info];
+                
+                HMLOG(TAG, EM_DBG, @"Notified main thread about preview %@", renderer.outputOID);
+            });
+        });
+    }
+}
+
+
+-(void)renderVideoForEmu:(Emuticon *)emu
+       requiresWaterMark:(BOOL)requiresWaterMark
+         completionBlock:(void (^)(void))completionBlock
+               failBlock:(void (^)(void))failBlock
+{
+    EmuticonDef *emuDef = emu.emuDef;
+    UserFootage *footage = [emu mostPrefferedUserFootage];
+    HMLOG(TAG,
+          EM_DBG,
+          @"Starting to render temp video file for emu named:%@. %@ frames.",
+          emuDef.name,
+          emuDef.framesCount
+          );
+    
+    EMRenderer *renderer = [EMRenderer new];
+    renderer.emuticonDefOID = emuDef.oid;
+    renderer.footageOID = footage.oid;
+    renderer.backLayerPath = [emuDef pathForBackLayer];
+    renderer.userImagesPath = [footage pathForUserImages];
+    renderer.userMaskPath = [emuDef pathForUserLayerMask];
+    renderer.userDynamicMaskPath = [emuDef pathForUserLayerDynamicMask];
+    renderer.frontLayerPath = [emuDef pathForFrontLayer];
+    renderer.numberOfFrames = [emuDef.framesCount integerValue];
+    renderer.duration = emuDef.duration.doubleValue;
+    renderer.paletteString = emuDef.palette;
+    renderer.shouldOutputGif = NO;
+    renderer.effects = emuDef.effects;
+    renderer.waterMarkName = requiresWaterMark?@"emuUglyWaterMark":nil;
+    
+    
+    // Should output a looping video to the temp folder.
+    renderer.outputPath = NSTemporaryDirectory();
+    renderer.outputOID = emu.oid;
+    renderer.shouldOutputVideo = YES;
+    
+    
+    // Audio track (optional)
+    renderer.audioFileURL = emu.audioFileURL;
+    renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
+    
+    
+    // Video settings (optional, use defaults if not defined)
+    renderer.videoFXLoopsCount = emu.videoLoopsCount && emu.videoLoopsCount.integerValue>0? emu.videoLoopsCount.integerValue : EMU_DEFAULT_VIDEO_LOOPS_COUNT;
+    renderer.videoFXLoopEffect = emu.videoLoopsEffect? emu.videoLoopsEffect.integerValue : EMU_DEFAULT_VIDEO_LOOPS_FX;
+    
+    
+    // Render
+    dispatch_async(self.renderingQueue, ^(void){
+        [renderer render];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Callback on the main thread.
+            if (emu.videoURL) {
+                completionBlock();
+            } else {
+                failBlock();
+            }
+        });
+    });
+}
+
 
 @end

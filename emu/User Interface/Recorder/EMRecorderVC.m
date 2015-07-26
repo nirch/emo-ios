@@ -33,7 +33,6 @@
 #import "EMControlsBarVC.h"
 #import "EMRecordButton.h"
 #import "EMPNGSequenceWriter.h"
-#import "EMRenderManager.h"
 #import "EMunizingView.h"
 #import "EMLabel.h"
 #import "EMAnimatedGifPlayer.h"
@@ -42,6 +41,8 @@
 #import "EMShareDebuggingFile.h"
 #import "HMPanel.h"
 
+#import "EMRenderManager2.h"
+#import "EMDownloadsManager2.h"
 
 @interface EMRecorderVC () <
     HMCaptureSessionDelegate,
@@ -55,6 +56,7 @@
 @property (nonatomic) NSString *emuticonDefNameForPreview;
 @property (nonatomic) Emuticon *emuticonToUpdate;
 @property (nonatomic) Emuticon *previewEmuticon;
+@property (nonatomic) EmuticonDef *emuDefForPreviewLastUsed;
 
 @property (nonatomic) NSDate *dateTimeOpened;
 
@@ -350,6 +352,11 @@
                      name:hmkRenderingFinishedPreview
                    object:nil];
     
+    // On finished downloading a resource.
+    [nc addUniqueObserver:self
+                 selector:@selector(onResourceDownloadFinished:)
+                     name:hmkDownloadResourceFinished
+                   object:nil];
     
     if (AppManagement.sh.isTestApp) {
         // On zipping finished in debug mode.
@@ -434,7 +441,34 @@
     [self.shareFile share];
 }
 
+-(void)onResourceDownloadFinished:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if (![info[@"for"] isEqualToString:@"preview"]) return;
+    
+    NSString *emuDefOID = info[@"emuDefOID"];
+    if (![emuDefOID isEqualToString:self.emuDefForPreviewLastUsed.oid]) return;
+    
+    // Handle download resource errors.
+    NSString *footageOID = notification.userInfo[@"footageOID"];
+    UserFootage *footage = [UserFootage findWithID:footageOID context:EMDB.sh.context];
+    if (footage == nil) {
+        [self epicFail];
+        return;
+    }
 
+    if (notification.isReportingError) {
+        // Bah, failed to download a required resource.
+        // It is not possible to render a preview without all
+        // required user.
+        [self downloadResourcesFailWithFootage:footage];
+        return;
+    }
+    
+    // If all resources available, we can render and how the preview.
+    if ([self.emuDefForPreviewLastUsed allResourcesAvailable])
+        [self showPreviewForFootage:footage];
+}
 
 #pragma mark - Time
 -(NSTimeInterval)timePassedSinceRecorderOpened
@@ -559,6 +593,26 @@
     [self presentViewController:alertVC animated:YES completion:nil];
 }
 
+-(void)downloadResourcesFailWithFootage:(UserFootage *)footage
+{
+    // Something went terribly wrong.
+    // Will restart the flow after showing an alert to the user.
+    UIAlertController *alertVC = [UIAlertController new];
+    [alertVC addAction:[UIAlertAction actionWithTitle:LS(@"TRY_AGAIN")
+                                                style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction *action) {
+                                                  [self showPreviewForFootage:footage];
+                                              }]];
+    [alertVC addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
+                                                style:UIAlertActionStyleCancel
+                                              handler:^(UIAlertAction *action) {
+                                                  [self stateRestart];
+                                              }]];
+    alertVC.title = LS(@"NETWORK_PROBLEM");
+    alertVC.message = LS(@"ALERT_CHECK_INTERNET_MESSAGE");
+    [self presentViewController:alertVC animated:YES completion:nil];
+}
+
 
 #pragma mark - Capture session
 -(void)initCaptureSession
@@ -648,6 +702,44 @@
 }
 
 
+-(void)showPreviewForFootage:(UserFootage *)footage
+{
+    // Get an emuticon definition to be used for the preview.
+    EmuticonDef *emuDefForPreview;
+    if (self.emuDefForPreviewLastUsed) {
+        emuDefForPreview = self.emuDefForPreviewLastUsed;
+    } else if (self.emuticonToUpdate) {
+        emuDefForPreview = self.emuticonToUpdate.emuDef;
+    } else if (self.emuticonDefOIDForPreview) {
+        emuDefForPreview = [EmuticonDef findWithID:self.emuticonDefOIDForPreview context:EMDB.sh.context];
+    } else {
+        emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
+    }
+    self.emuDefForPreviewLastUsed = emuDefForPreview;
+    
+    // Check if all resources required for this render are available
+    if ([emuDefForPreview allResourcesAvailable]) {
+        // Send the footage to preview rendering.
+        [EMRenderManager2.sh renderPreviewForFootage:footage
+                                          withEmuDef:emuDefForPreview];
+    } else {
+        // Some resources are missing.
+        NSString *oid =emuDefForPreview.oid;
+        NSArray *resourcesNames = [emuDefForPreview allMissingResourcesNames];
+        EMDownloadsManager2 *dm = EMDownloadsManager2.sh;
+        [dm updatePriorities:@{oid:@YES}];
+        [dm enqueueResourcesForOID:emuDefForPreview.oid
+                             names:resourcesNames
+                              path:emuDefForPreview.package.name
+                          userInfo:@{
+                                     @"for":@"preview",
+                                     @"emuDefOID":emuDefForPreview.oid,
+                                     @"footageOID":footage.oid
+                                     }];
+        [dm manageQueue];
+    }
+}
+
 -(void)recordingDidStopWithInfo:(NSDictionary *)info
 {
     NSAssert([NSThread isMainThread], @"Method called using a thread other than main!");
@@ -657,19 +749,7 @@
     UserFootage *footage = [UserFootage userFootageWithInfo:info context:EMDB.sh.context];
     [EMDB.sh save];
     
-    // Get an emuticon definition to be used for the preview.
-    EmuticonDef *emuDefForPreview;
-    if (self.emuticonToUpdate) {
-        emuDefForPreview = self.emuticonToUpdate.emuDef;
-    } else if (self.emuticonDefOIDForPreview) {
-        emuDefForPreview = [EmuticonDef findWithID:self.emuticonDefOIDForPreview context:EMDB.sh.context];
-    } else {
-        emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
-    }
-    
-    // Send the footage to preview rendering.
-    [EMRenderManager.sh renderPreviewForFootage:footage
-                                     withEmuDef:emuDefForPreview];
+    [self showPreviewForFootage:footage];
 }
 
 

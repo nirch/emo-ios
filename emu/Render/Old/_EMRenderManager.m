@@ -16,7 +16,6 @@
 #import "EMDB+Files.h"
 #import "EMRenderer.h"
 #import "AppManagement.h"
-#import "EMBackend.h"
 #import "EMNotificationCenter.h"
 #import "EMRenderManager2.h"
 
@@ -224,36 +223,33 @@
 -(void)renderPreviewForFootage:(UserFootage *)footage
                     withEmuDef:(EmuticonDef *)emuDef
 {
-    HMLOG(TAG,
-          EM_DBG,
-          @"Starting to render emuticon named:%@ for preview. %@ frames. User footage frames: %@",
-          emuDef.name,
-          emuDef.framesCount,
-          footage.framesCount
-          );
-    
-    NSDictionary *info = @{
-                           @"for":@"preview",
-                           @"emuDefOID":emuDef.oid,
-                           @"footageOID":footage.oid,
-                           @"packageOID":emuDef.package.oid,
-                           };
-
-    
-    REMOTE_LOG(@"Starting to render emuticon named: %@ for preview", emuDef.name);
-    BOOL allResourcesAvailable = [emuDef allResourcesAvailable];
-    if (allResourcesAvailable) {
-        REMOTE_LOG(@"All resources available for: %@", emuDef.name);
-        // Render in a background thread.
-        dispatch_async(self.renderingQueue, ^(void){
-            [self _renderPreviewForFootage:(UserFootage *)footage
-                                withEmuDef:(EmuticonDef *)emuDef];
-        });
-    } else {
-        REMOTE_LOG(@"Some resources missing for: %@ will try to download", emuDef.name);
-        [EMBackend.sh downloadResourcesForEmuDef:emuDef info:info];
-        return;
-    }
+//    HMLOG(TAG,
+//          EM_DBG,
+//          @"Starting to render emuticon named:%@ for preview. %@ frames. User footage frames: %@",
+//          emuDef.name,
+//          emuDef.framesCount,
+//          footage.framesCount
+//          );
+//    
+//    NSDictionary *info = @{
+//                           @"for":@"preview",
+//                           @"emuDefOID":emuDef.oid,
+//                           @"footageOID":footage.oid,
+//                           @"packageOID":emuDef.package.oid,
+//                           };
+//
+//    
+//    BOOL allResourcesAvailable = [emuDef allResourcesAvailable];
+//    if (allResourcesAvailable) {
+//        // Render in a background thread.
+//        dispatch_async(self.renderingQueue, ^(void){
+//            [self _renderPreviewForFootage:(UserFootage *)footage
+//                                withEmuDef:(EmuticonDef *)emuDef];
+//        });
+//    } else {
+//        //[EMBackend.sh downloadResourcesForEmuDef:emuDef info:info];
+//        return;
+//    }
 }
 
 
@@ -316,11 +312,6 @@
           emuDef.name,
           emuDef.framesCount
           );
-    REMOTE_LOG(
-               @"Starting to render video for emuticon named: %@",
-               emuDef.name
-               );
-
     
     EMRenderer *renderer = [EMRenderer new];
     renderer.emuticonDefOID = emuDef.oid;

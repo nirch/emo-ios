@@ -9,6 +9,7 @@
 #import "EMAnimatedGifPlayer.h"
 #import <FLAnimatedImageView.h>
 #import <FLAnimatedImage.h>
+#import "EMCaches.h"
 
 @interface EMAnimatedGifPlayer ()
 
@@ -52,6 +53,19 @@
 -(void)setLocked:(BOOL)locked
 {
     self.guiLock.alpha = locked? 0.2:0.0;
+}
+
+-(void)setAnimatedGifNamed:(NSString *)gifName
+{
+    NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
+    FLAnimatedImage *animGif = [EMCaches.sh.gifsDataCache objectForKey:gifURL];
+    if (animGif == nil) {
+        NSData *animGifData = [NSData dataWithContentsOfURL:gifURL];
+        animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+        [EMCaches.sh.gifsDataCache setObject:animGif forKey:[gifURL description]];
+    }
+    self.guiAnimGifView.animatedImage = animGif;
+    self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 @end

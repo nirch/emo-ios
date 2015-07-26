@@ -200,6 +200,10 @@
     }
     _managedObjectContext = [[NSManagedObjectContext alloc] init];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    
+    NSMergePolicy *mergePolicy = [[NSMergePolicy alloc] initWithMergeType:NSOverwriteMergePolicyType];
+    _managedObjectContext.mergePolicy = mergePolicy;
+
     return _managedObjectContext;
 }
 

@@ -18,13 +18,13 @@
 #import "EMRecorderVC.h"
 #import "EMUISound.h"
 #import <JDFTooltips.h>
-#import "EMRenderManager.h"
+#import "EMRenderManager2.h"
+#import "EMDownloadsManager2.h"
 #import "EMHolySheet.h"
 #import "EMActionsArray.h"
 #import "AppDelegate.h"
 #import "EMNotificationCenter.h"
 #import "EMVideoSettingsPopover.h"
-#import "EMRenderManager.h"
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
@@ -35,6 +35,9 @@
 #define AUDIO_DURATION 20.0f
 
 @property (nonatomic) Emuticon *emuticon;
+
+@property (nonatomic) BOOL guiInitialized;
+@property (weak, nonatomic) IBOutlet UIView *guiNavView;
 
 // Emu player
 @property (weak, nonatomic) IBOutlet UIView *guiEmuContainer;
@@ -131,6 +134,7 @@
 
 -(void)initGUI
 {
+    self.guiInitialized = NO;
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateNormal];
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateHighlighted];
 
@@ -155,6 +159,26 @@
     }
 }
 
+#pragma mark - GUI init
+-(void)layoutGUI
+{
+    // Updates
+    
+    // Initializations on first GUI layout updates.
+    if (!self.guiInitialized) {
+        CALayer *nl = self.guiNavView.layer;
+        nl.shadowColor = [UIColor blackColor].CGColor;
+        nl.shadowRadius = 2;
+        nl.shadowOpacity = 0.15;
+        nl.shadowOffset = CGSizeMake(0, 4);
+        nl.shadowPath = [UIBezierPath bezierPathWithRect:nl.bounds].CGPath;
+        
+        // Mark as initialized
+        self.guiInitialized = YES;
+    }
+}
+
+
 -(void)initLocalization
 {
     [self.guiRenderingTypeSelector setTitle:LS(@"ANIM_GIF") forSegmentAtIndex:0];
@@ -170,15 +194,43 @@
 
 -(void)refreshEmu
 {
-    NSURL *url = [self.emuticon animatedGifURL];
-    self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
-
-    if (url) {
-        // Show the animated gif
+    if (self.emuticon.wasRendered.boolValue) {
+        // Was rendered.
+        NSURL *url = [self.emuticon animatedGifURL];
+        self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
         self.gifPlayerVC.animatedGifURL = url;
-    } else {
-        self.gifPlayerVC.animatedGifURL = nil;
+        return;
     }
+    
+    Emuticon *emu = self.emuticon;
+    if (emu == nil) return;
+
+    // Not rendered yet.
+    if ([self.emuticon.emuDef allResourcesAvailable]) {
+        // Send for rendering (with highest priority)
+        [self.gifPlayerVC setAnimatedGifNamed:@"rendering"];
+        EMRenderManager2 *rm = EMRenderManager2.sh;
+        [rm updatePriorities:@{emu.oid:@YES}];
+        [rm enqueueEmu:emu
+             indexPath:[NSIndexPath indexPathForItem:0 inSection:0]
+              userInfo:@{@"emuticonOID":emu.oid}];
+        return;
+    }
+    
+    // Need to render but some resources are missing.
+    // Download the required resources with high priority.
+    return;
+    [self.gifPlayerVC setAnimatedGifNamed:@"downloading"];
+    EMDownloadsManager2 *dm = EMDownloadsManager2.sh;
+
+    EmuticonDef *emuDef = emu.emuDef;
+    [dm clear];
+    [dm updatePriorities:@{emu.oid:@YES}];
+    [dm enqueueResourcesForOID:emu.oid
+                         names:[emuDef allMissingResourcesNames]
+                          path:emuDef.package.name
+                      userInfo:@{@"emuticonOID":emu.oid}];
+    [dm manageQueue];
 }
 
 #pragma mark - Tutorial
@@ -211,11 +263,18 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    // On background detection information received.
+    // On rendering finished update
     [nc addUniqueObserver:self
                  selector:@selector(onRenderingFinished:)
                      name:hmkRenderingFinished
                    object:nil];
+    
+    // On download resources update
+    [nc addUniqueObserver:self
+                 selector:@selector(onResourceDownloadFinished:)
+                     name:hmkDownloadResourceFinished
+                   object:nil];
+    
     
     // App did become active.
     [nc addUniqueObserver:self
@@ -249,6 +308,22 @@
     
     // Show the animated gif
     [self refreshEmu];
+}
+
+-(void)onResourceDownloadFinished:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *oid = info[@"emuticonOID"];
+    
+    // ignore notifications not relating to emus on screen
+    if (![self.emuticon.oid isEqualToString:oid]) return;
+    
+    // Update and render.
+    __weak EMEmuticonScreenVC *weakSelf = self;
+    dispatch_after(DTIME(0.2), dispatch_get_main_queue(), ^{
+        if ([weakSelf.emuticon.emuDef allResourcesAvailable])
+            [weakSelf refreshEmu];
+    });
 }
 
 
@@ -315,6 +390,13 @@
     self.guiConstraintPlayerTop.constant = 15;
 }
 
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self layoutGUI];
+}
+
+
 #pragma mark - VC prefferences
 -(BOOL)prefersStatusBarHidden
 {
@@ -344,8 +426,9 @@
     [self.gifPlayerVC startActivity];
     
     // Will need to send the emuticon to rendering
-    [EMRenderManager.sh renderingRequiredForEmu:self.emuticon
-                              info:@{@"emuticonOID":self.emuticon.oid}];
+    [EMRenderManager2.sh enqueueEmu:self.emuticon
+                          indexPath:[NSIndexPath indexPathForItem:0 inSection:0]
+                           userInfo:@{@"emuticonOID":self.emuticon.oid}];
 
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -375,13 +458,14 @@
 #pragma mark - Render
 -(void)resetEmu
 {
-    NSDictionary *info = @{
-                           @"emuticonOID":self.emuticon.oid,
-                           @"packageOID":self.emuticon.emuDef.package.oid
-                           };
-    self.emuticon.prefferedFootageOID = nil;
-    [EMRenderManager.sh renderingRequiredForEmu:self.emuticon info:info];
-    [self refreshEmu];
+    // TODO: Reimplement this.
+//    NSDictionary *info = @{
+//                           @"emuticonOID":self.emuticon.oid,
+//                           @"packageOID":self.emuticon.emuDef.package.oid
+//                           };
+//    self.emuticon.prefferedFootageOID = nil;
+//    [EMRenderManager2.sh renderingRequiredForEmu:self.emuticon info:info];
+//    [self refreshEmu];
 }
 
 #pragma mark - Analytics

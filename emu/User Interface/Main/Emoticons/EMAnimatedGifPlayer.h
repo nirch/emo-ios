@@ -13,6 +13,7 @@
 @property (nonatomic) NSURL *animatedGifURL;
 @property (nonatomic) BOOL locked;
 
+-(void)setAnimatedGifNamed:(NSString *)gifName;
 -(void)startActivity;
 -(void)stopAnimating;
 

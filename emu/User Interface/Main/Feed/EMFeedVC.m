@@ -33,7 +33,6 @@
 #import "EMCaches.h"
 #import "EMShareMail.h"
 
-#import "EMRenderManager.h"
 #import "EMRenderManager2.h"
 #import "EMDownloadsManager2.h"
 
@@ -828,8 +827,8 @@
     }
     if (anyEnqueued) {
         [EMRenderManager2.sh updatePriorities:prioritizedOID];
-        [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
-        [EMDownloadsManager2.sh manageQueue];
+//        [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
+//        [EMDownloadsManager2.sh manageQueue];
     }
 }
 
@@ -1114,6 +1113,19 @@
     [EMDB.sh save];
 }
 
+-(void)deleteAllAndCleanUp
+{
+    for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+        NSArray *emus = [Emuticon allEmuticonsInPackage:package];
+        for (Emuticon *emu in emus) {
+            [emu cleanUp:YES andRemoveResources:YES];
+        }
+        [package recountRenders];
+    }
+    [self.guiCollectionView reloadData];
+    [EMDB.sh save];
+}
+
 #pragma mark - Registering to notifications
 -(void)openAppSettingsWithReason:(NSString *)reason
 {
@@ -1224,6 +1236,7 @@
     } else if ([actionName isEqualToString:@"RELOAD_ALL"]) {
 
         // Reload data
+        [self deleteAllAndCleanUp];
         [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
                                                             object:self
                                                           userInfo:@{@"forced_reload":@YES}];

@@ -76,12 +76,6 @@
     if (self.userImagesPathsArray == nil && self.userImagesPath != nil) {
         userImages = [self imagesPathsInPath:self.userImagesPath
                                      numberOfFrames:self.numberOfFrames];
-
-        if (userImages.count > 0) {
-            REMOTE_LOG(@"user images count:%@ firstImageName: %@", @(userImages.count), userImages[0]);
-        } else {
-            REMOTE_LOG(@"user images empty?!");
-        }
     } else if (self.userImagesPathsArray) {
         userImages = self.userImagesPathsArray;
     }

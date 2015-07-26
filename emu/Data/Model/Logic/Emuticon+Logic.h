@@ -155,6 +155,13 @@
  */
 -(void)cleanUp;
 
+/**
+ *  Cleanup and/or delete all required resources of the related emuDef.
+ *
+ *  @param cleanUp         if set to YES, will clean rendered output files (and mark emu as not rendered)
+ *  @param removeResources if set to YES, will delete downloaded resources of the related emuDef.
+ */
+-(void)cleanUp:(BOOL)cleanUp andRemoveResources:(BOOL)removeResources;
 
 /**
  *  The preffered user footage oid for this emuticon.

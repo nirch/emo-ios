@@ -117,11 +117,7 @@
     }
     
     NSPredicate *predicate;
-    if (self.onlyRenderedPackages) {
-        predicate = [NSPredicate predicateWithFormat:@"showOnPacksBar=%@ AND rendersCount>%@ AND isActive=%@", @YES, @0, @YES];
-    } else {
-        predicate = [NSPredicate predicateWithFormat:@"showOnPacksBar=%@ AND isActive=%@", @YES, @YES];
-    }
+    predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;

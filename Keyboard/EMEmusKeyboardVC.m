@@ -15,6 +15,10 @@
 #import "EmuSectionReusableView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "EMPackagesVC.h"
+#import "NSNotificationCenter+Utils.h"
+
+#import "EMDownloadsManager2.h"
+#import "EMRenderManager2.h"
 
 #define TAG @"EMEmusKeyboardVC"
 
@@ -79,14 +83,77 @@
     if (self.isFullAccessGranted) {
         [self initData];
         [self initAnalytics];
-    } else {
+        [self initObservers];
     }
     [self updateGUI];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeObservers];
 }
 
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+}
+
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On background detection information received.
+    [nc addUniqueObserver:self
+                 selector:@selector(onEmuStateUpdated:)
+                     name:hmkRenderingFinished
+                   object:nil];
+    
+    // Backend downloaded (or failed to download) missing resources for emuticon.
+    [nc addUniqueObserver:self
+                 selector:@selector(onEmuStateUpdated:)
+                     name:hmkDownloadResourceFinished
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:hmkRenderingFinished];
+    [nc removeObserver:hmkDownloadResourceFinished];
+}
+
+#pragma mark - Observers handlers
+-(void)onEmuStateUpdated:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSIndexPath *indexPath = info[@"indexPath"];
+    NSString *oid = info[@"emuticonOID"];
+    
+    // Make sure indexpath is in the range of the fetched results controller.
+    if (indexPath.item >= self.fetchedResultsController.fetchedObjects.count) {
+        // Ignore if item out of range of the currently displayed data.
+        return;
+    }
+    
+    // ignore notifications not relating to emus visible on screen.
+    if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
+    
+    // ignore if the rendered emu isn't where expected.
+    Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (![emu.oid isEqualToString:oid])
+    {
+        return;
+    }
+    
+    // The cell is on screen, refresh it.
+    if ([self.guiCollectionView numberOfItemsInSection:0] == self.fetchedResultsController.fetchedObjects.count) {
+        [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+    } else {
+        [self.guiCollectionView reloadData];
+    }
 }
 
 #pragma mark - segues
@@ -172,7 +239,7 @@
         return _fetchedResultsController;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND wasRendered=%@", @NO, @YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@", @NO, @YES];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
@@ -258,18 +325,40 @@
         forIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSDictionary *info = @{
+                           @"for":@"emu",
+                           @"indexPath":indexPath,
+                           @"emuticonOID":emu.oid,
+                           @"packageOID":emu.emuDef.package.oid,
+                           };
+    
     cell.transform = CGAffineTransformIdentity;
     cell.alpha = 1;
     cell.backgroundColor = [UIColor clearColor];
     if (emu.wasRendered.boolValue) {
+        //
+        // Emu already rendered. Just display it.
+        // (Display thumb first and load animated gif in background thread)
+        //
+        NSURL *gifURL = [emu animatedGifURL];
+        cell.guiThumbView.image = [UIImage imageWithContentsOfFile:[emu thumbPath]];
+        cell.guiThumbView.hidden = NO;
+        cell.guiThumbView.alpha = 1;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.animatedGifURL = gifURL;
+        });
         [cell.guiActivity stopAnimating];
-        cell.animatedGifURL = [emu animatedGifURL];
     } else {
-        // TODO: support rendering in keyboard.
         [cell.guiActivity startAnimating];
         cell.animatedGifURL = nil;
+        
+        if ([emu.emuDef allResourcesAvailable]) {
+            // Not rendered, but all resources are available.
+            [EMRenderManager2.sh enqueueEmu:emu
+                                  indexPath:indexPath
+                                   userInfo:info];
+        }
     }
-    
 }
 
 -(void)configureHeader:(EmuSectionReusableView *)header

@@ -1,11 +1,13 @@
 //
-//  EMRenderManager.h
+//  EMRenderManager2.h
 //  emu
 //
 //  Created by Aviv Wolf on 2/23/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 @class Emuticon;
+@class EmuticonDef;
+@class UserFootage;
 
 // events
 
@@ -37,5 +39,27 @@
 
 #pragma mark - Queue management
 -(void)updatePriorities:(NSDictionary *)priorities;
+
+
+#pragma mark - Quick Renders
+/**
+ *  Render a preview emu for a specific emuDef, with a given footage.
+ *
+ *  @param footage The user's footage object.
+ *  @param emuDef  Emu definition.
+ */
+-(void)renderPreviewForFootage:(UserFootage *)footage
+                    withEmuDef:(EmuticonDef *)emuDef;
+
+/**
+ *  Render video for a given emu in a background thread.
+ *  Calls the passed success/failure blocks when done.
+ *  (video rendering also posts progress notifications that can be subscribed to)
+ */
+-(void)renderVideoForEmu:(Emuticon *)emu
+       requiresWaterMark:(BOOL)requiresWaterMark
+         completionBlock:(void (^)(void))completionBlock
+               failBlock:(void (^)(void))failBlock;
+
 
 @end
