@@ -26,17 +26,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
-    CGFloat expandedHeight = 240;
-    self.heightConstraint = [NSLayoutConstraint constraintWithItem: self.view
-                                                         attribute: NSLayoutAttributeHeight
-                                                         relatedBy: NSLayoutRelationEqual
-                                                            toItem: nil
-                                                         attribute: NSLayoutAttributeNotAnAttribute
-                                                        multiplier: 0.0
-                                                          constant: expandedHeight];
-    self.heightConstraint.priority = 998;
-    [self.view.inputView addConstraint: self.heightConstraint];
 }
 
 -(void)viewWillAppear:(BOOL)animated

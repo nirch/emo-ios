@@ -48,9 +48,6 @@
         // Read configuration
         [self initCFG];
         
-        // Crashlytics
-        [self initCrashlytics];
-        
         // Experiments
         [self initExperiments];
     }
@@ -68,7 +65,7 @@
     self.cfg = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
 }
 
--(void)initCrashlytics
+-(void)initCrashReports
 {
     [Fabric with:@[CrashlyticsKit]];
     Crashlytics *crashlytics = [Crashlytics sharedInstance];

@@ -19,6 +19,9 @@
 
 #import "EMDownloadsManager2.h"
 #import "EMRenderManager2.h"
+#import "AppManagement.h"
+#import <AWSS3.h>
+
 
 #define TAG @"EMEmusKeyboardVC"
 
@@ -37,6 +40,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiFullAccessInstructions;
 @property (weak, nonatomic) IBOutlet UIView *guiAlphaNumericKBContainer;
 
+@property (weak, nonatomic) IBOutlet UIButton *guiOptionsButton;
+@property (weak, nonatomic) IBOutlet UIView *guiOptionsDrawerContainer;
+
 @property (weak, nonatomic) EMPackagesVC *packagesVC;
 @property (nonatomic) Package *selectedPackage;
 @property (nonatomic) BOOL initializedData;
@@ -50,20 +56,29 @@
 
 @property (nonatomic, weak) EMAlphaNumericKeyboard *abKBVC;
 
+@property (nonatomic, readonly) AWSS3TransferManager *transferManager;
+
+@property (nonatomic) NSTimer *ticker;
+
+@property (atomic) BOOL isScrolling;
+
 @end
 
 @implementation EMEmusKeyboardVC
 
 @synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize transferManager = _transferManager;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.initializedData = NO;
+    self.isScrolling = NO;
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     _screenWidth = MIN(screenRect.size.width, screenRect.size.height);
     
+    [self initGUI];
     // Not hidden but alpha = 0
     self.guiAlphaNumericKBContainer.hidden = NO;
     [self hideAlphaNumericKBAnimated:NO];
@@ -84,6 +99,8 @@
         [self initData];
         [self initAnalytics];
         [self initObservers];
+        [self initKBBackend];
+        [self initTimers];
     }
     [self updateGUI];
 }
@@ -92,6 +109,7 @@
 {
     [super viewWillDisappear:animated];
     [self removeObservers];
+    [self invalidateTimers];
 }
 
 -(void)viewWillLayoutSubviews
@@ -99,6 +117,59 @@
     [super viewWillLayoutSubviews];
 }
 
+
+-(void)initKBBackend
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSString *bucketName = appCFG.bucketName;
+    if (bucketName == nil) bucketName = AppManagement.sh.isTestApp?@"homage-emu-test":@"homage-emu-prod";
+    EMDownloadsManager2.sh.bucketName = bucketName;
+    EMDownloadsManager2.sh.transferManager = self.transferManager;
+}
+
+-(AWSS3TransferManager *)transferManager
+{
+    if (_transferManager) return _transferManager;
+    AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_UPLOAD_ACCESS_KEY secretKey:S3_UPLOAD_SECRET_KEY];
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+    _transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    HMLOG(TAG, EM_DBG, @"Started s3 transfer manager");
+    return _transferManager;
+}
+
+#pragma mark - Timers
+-(void)initTimers
+{
+    [self invalidateTimers];
+    self.ticker = [NSTimer scheduledTimerWithTimeInterval:0.7
+                                                   target:self
+                                                 selector:@selector(onTick:)
+                                                 userInfo:nil
+                                                  repeats:YES];
+}
+
+-(void)invalidateTimers
+{
+    if (self.ticker) {
+        [self.ticker invalidate];
+    }
+}
+
+-(void)onTick:(NSTimer *)timer
+{
+    if (self.isScrolling) return;
+    NSInteger i=0;
+    for (EmuKBCell *cell in self.guiCollectionView.visibleCells) {
+        if (cell.pendingAnimatedGifURL) {
+            i++;
+            [cell showPendingGifURL];
+            if (i>=2 || self.isScrolling) {
+                return;
+            }
+        }
+    }
+}
 
 #pragma mark - Observers
 -(void)initObservers
@@ -175,7 +246,6 @@
 -(void)initAnalytics
 {
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
-    
     [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
     [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
     [HMPanel.sh reportSuperParameterKey:AK_S_DID_KEYBOARD_EVER_APPEAR value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
@@ -192,6 +262,7 @@
 #pragma mark - Initializations
 -(void)initGUI
 {
+    self.guiOptionsButton.layer.cornerRadius = 8.0;
 }
 
 -(void)updateGUI
@@ -289,6 +360,10 @@
     static NSString *cellIdentifier = @"emu kb cell";
     EmuKBCell *cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                                                       forIndexPath:indexPath];
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    [cell layoutIfNeeded];
+    
     [self configureCell:cell forIndexPath:indexPath];
     return cell;
 }
@@ -296,8 +371,8 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView
                  layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat width = self.screenWidth/3.0 - 25;
     CGFloat height = self.guiCollectionView.bounds.size.height/2.0;
+    CGFloat width = height;
 
     return CGSizeMake(width, height);
 }
@@ -335,6 +410,8 @@
     cell.transform = CGAffineTransformIdentity;
     cell.alpha = 1;
     cell.backgroundColor = [UIColor clearColor];
+    cell.animatedGifURL = nil;
+
     if (emu.wasRendered.boolValue) {
         //
         // Emu already rendered. Just display it.
@@ -344,13 +421,14 @@
         cell.guiThumbView.image = [UIImage imageWithContentsOfFile:[emu thumbPath]];
         cell.guiThumbView.hidden = NO;
         cell.guiThumbView.alpha = 1;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.animatedGifURL = gifURL;
-        });
+        cell.pendingAnimatedGifURL = gifURL;
         [cell.guiActivity stopAnimating];
     } else {
         [cell.guiActivity startAnimating];
         cell.animatedGifURL = nil;
+        cell.guiThumbView.hidden = YES;
+        cell.guiThumbView.alpha = 0;
+        cell.guiThumbView.image = nil;
         
         if ([emu.emuDef allResourcesAvailable]) {
             // Not rendered, but all resources are available.
@@ -593,6 +671,111 @@
     }
 }
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    self.isScrolling = NO;
+    [self handleVisibleCells];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.isScrolling = YES;
+    HMLOG(TAG, EM_VERBOSE, @"Begin scrolling");
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                 willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        // Will not decelerate after dragging, so scrolling just ended.
+        self.isScrolling = NO;
+        [self handleVisibleCells];
+    }
+}
+
+
+#pragma mark - Required downloads
+-(void)handleVisibleCells
+{
+    NSArray *visibleIndexPaths = self.guiCollectionView.indexPathsForVisibleItems;
+    BOOL anyEnqueued = NO;
+    NSMutableDictionary *prioritizedOID = [NSMutableDictionary new];
+    for (NSIndexPath *indexPath in visibleIndexPaths) {
+        Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        if (emu.wasRendered.boolValue) continue;
+        
+        // Handle unrendered emus:
+        NSDictionary *userInfo = @{
+                                   @"for":@"emu",
+                                   @"indexPath":indexPath,
+                                   @"emuticonOID":emu.oid,
+                                   @"packageOID":emu.emuDef.package.oid,
+                                   };
+        
+        prioritizedOID[emu.oid] = @YES;
+        NSArray *missingResourcesNames = [emu.emuDef allMissingResourcesNames];
+        if (missingResourcesNames.count>0) {
+            [EMDownloadsManager2.sh enqueueResourcesForOID:emu.oid
+                                                     names:missingResourcesNames
+                                                      path:emu.emuDef.package.name
+                                                  userInfo:userInfo];
+        }
+        anyEnqueued = YES;
+    }
+    if (anyEnqueued) {
+        [EMRenderManager2.sh updatePriorities:prioritizedOID];
+        [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
+        [EMDownloadsManager2.sh manageQueue];
+    }
+}
+
+#pragma mark - options drawer
+-(void)toggleOptionsDrawerAnimated:(BOOL)animated
+{
+    if ([self isOptionsDrawerOpen]) {
+        [self closeOptionsDrawerAnimated:animated];
+    } else {
+        [self openOptionsDrawerAnimated:animated];
+    }
+}
+
+-(BOOL)isOptionsDrawerOpen
+{
+    return !CGAffineTransformIsIdentity(self.guiOptionsButton.transform);
+}
+
+-(void)closeOptionsDrawerAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self closeOptionsDrawerAnimated:NO];
+        }];
+        return;
+    }
+    
+    CGAffineTransform t = CGAffineTransformIdentity;
+    self.guiOptionsDrawerContainer.transform = t;
+    self.guiOptionsButton.transform = t;
+    self.guiOptionsButton.selected = NO;
+    self.guiCollectionView.alpha = 1.0;
+}
+
+-(void)openOptionsDrawerAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self openOptionsDrawerAnimated:NO];
+        }];
+        return;
+    }
+    CGFloat h = self.guiOptionsDrawerContainer.bounds.size.height;
+    CGAffineTransform t = CGAffineTransformMakeTranslation(0, -h);
+    self.guiOptionsDrawerContainer.transform = t;
+    self.guiOptionsButton.transform = t;
+    self.guiOptionsButton.selected = YES;
+    self.guiCollectionView.alpha = 0.8;
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -613,6 +796,21 @@
 {
     [self.delegate keyboardShouldDeleteBackward];
     [HMPanel.sh analyticsEvent:AK_E_KB_USER_PRESSED_BACK_BUTTON];
+}
+
+- (IBAction)onPressedDrawerToggleButton:(UIButton *)sender
+{
+    [self toggleOptionsDrawerAnimated:YES];
+}
+
+- (IBAction)OnSwipeUp:(id)sender
+{
+    [self openOptionsDrawerAnimated:YES];
+}
+
+- (IBAction)onSwipeDown:(id)sender
+{
+    [self closeOptionsDrawerAnimated:YES];
 }
 
 @end

@@ -22,6 +22,7 @@
 +(HMPanel *)sharedInstance;
 +(HMPanel *)sh;
 -(void)initializeAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions;
+-(void)initCrashReports;
 
 #pragma mark - Remote logging
 #define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)

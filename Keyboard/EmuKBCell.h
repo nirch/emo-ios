@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
+@property (nonatomic) NSURL *pendingAnimatedGifURL;
 @property (nonatomic) NSURL *animatedGifURL;
+
+-(void)showPendingGifURL;
 
 @end

@@ -416,10 +416,6 @@
 		087BCFDC1B626BED00A7A930 /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005641A99483E008CD7DE /* HMImages.m */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
-		08819CDC1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
-		08819CDD1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
-		08819CDE1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
-		08819CDF1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */; };
 		08851DE61B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
 		08851DE71B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
 		08851DEA1B53E5D100DC9619 /* EMShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE91B53E5D100DC9619 /* EMShareFacebook.m */; };
@@ -983,8 +979,6 @@
 		087F20901A8F5A03002B1678 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
 		087F20921A8F5A28002B1678 /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
 		087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
-		08819CDA1B2CCC3100D2D77A /* EMDownloadsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDownloadsManager.h; sourceTree = "<group>"; };
-		08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDownloadsManager.m; sourceTree = "<group>"; };
 		08851DE41B53E32600DC9619 /* EMUploadAndShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUploadAndShare.h; sourceTree = "<group>"; };
 		08851DE51B53E32600DC9619 /* EMUploadAndShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUploadAndShare.m; sourceTree = "<group>"; };
 		08851DE81B53E5D100DC9619 /* EMShareFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFacebook.h; sourceTree = "<group>"; };
@@ -1919,8 +1913,6 @@
 		08819CD91B2CCBFB00D2D77A /* Downloads Manager */ = {
 			isa = PBXGroup;
 			children = (
-				08819CDA1B2CCC3100D2D77A /* EMDownloadsManager.h */,
-				08819CDB1B2CCC3100D2D77A /* EMDownloadsManager.m */,
 				08967C291B5BAEED000DDCF9 /* EMDownloadsManager2.h */,
 				08967C2A1B5BAEED000DDCF9 /* EMDownloadsManager2.m */,
 			);
@@ -2953,7 +2945,6 @@
 				08ED80001B1E026600B6856F /* HMExperiments.m in Sources */,
 				08658B431B4E598700EC4B19 /* AppCFG.m in Sources */,
 				08AC3E6A1AD15465005231B5 /* EMAlphaNumericKeyboard.m in Sources */,
-				08819CDD1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */,
 				08AC3E701AD2CC16005231B5 /* EmuBaseStyle.m in Sources */,
 				08CED0DA1AA5C7EF00C50D0C /* EMShareAppleMessage.m in Sources */,
 				087BCFD71B626BBD00A7A930 /* EMVideoMaker.mm in Sources */,
@@ -3037,7 +3028,6 @@
 				08ED80011B1E026600B6856F /* HMExperiments.m in Sources */,
 				08658B451B4E598700EC4B19 /* AppCFG.m in Sources */,
 				0867CA1A1B16602E00FF0E85 /* EMAlphaNumericKeyboard.m in Sources */,
-				08819CDF1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */,
 				0867CA1B1B16602E00FF0E85 /* EmuBaseStyle.m in Sources */,
 				0867CA1C1B16602E00FF0E85 /* EMShareAppleMessage.m in Sources */,
 				087BCFD81B626BBE00A7A930 /* EMVideoMaker.mm in Sources */,
@@ -3186,7 +3176,6 @@
 				08AA14A21B0BA658002E1B2F /* NSNotification+Utils.m in Sources */,
 				08AA14A41B0BA658002E1B2F /* ShaderUtilities.c in Sources */,
 				0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
-				08819CDE1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */,
 				08AA14A51B0BA658002E1B2F /* EMSilhouetteView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3301,7 +3290,6 @@
 				089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */,
 				08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */,
 				0869D8611B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
-				08819CDC1B2CCC3100D2D77A /* EMDownloadsManager.m in Sources */,
 				08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

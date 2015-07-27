@@ -219,7 +219,6 @@
     
     // Need to render but some resources are missing.
     // Download the required resources with high priority.
-    return;
     [self.gifPlayerVC setAnimatedGifNamed:@"downloading"];
     EMDownloadsManager2 *dm = EMDownloadsManager2.sh;
 

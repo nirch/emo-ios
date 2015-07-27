@@ -58,6 +58,9 @@
     // Initialize backend
     [EMBackend sharedInstance];
     
+    // Crash reports
+    [HMPanel.sh initCrashReports];
+    
     // Initialize analytics, set super parameters and report application launch.
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];
     [HMPanel.sh reportBuildInfo];
@@ -271,25 +274,10 @@
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)info fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     HMLOG(TAG, EM_DBG, @"APN: Background fetch requested");
-    NSString *packageOID = info[@"packageOID"];
-    
     if (application.applicationState == UIApplicationStateBackground) {
         [EMBackend.sh reloadPackagesInTheBackgroundWithNewDataHandler:^{
-            // Will try to download zipped resources for new package (if resources not available)
             completionHandler(UIBackgroundFetchResultNewData);
         } noNewDataHandler:^{
-            if (packageOID) {
-                HMLOG(TAG, EM_DBG, @"Checking package with id: %@", packageOID);
-                Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
-                if (package) {
-                    [EMBackend.sh bgDownloadZippedResourcesForPackage:package
-                                                    completionHandler:^{
-                                                        completionHandler(UIBackgroundFetchResultNewData);
-                                                    } failHandler:^{
-                                                        completionHandler(UIBackgroundFetchResultFailed);
-                                                    }];
-                }
-            }
             completionHandler(UIBackgroundFetchResultNoData);
         } failedFetchHandler:^{
             completionHandler(UIBackgroundFetchResultFailed);

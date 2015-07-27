@@ -608,7 +608,7 @@
                                               handler:^(UIAlertAction *action) {
                                                   [self stateRestart];
                                               }]];
-    alertVC.title = LS(@"NETWORK_PROBLEM");
+    alertVC.title = LS(@"NETWORK_PROBLEM_TITLE");
     alertVC.message = LS(@"ALERT_CHECK_INTERNET_MESSAGE");
     [self presentViewController:alertVC animated:YES completion:nil];
 }

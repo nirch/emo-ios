@@ -26,15 +26,6 @@
 #pragma mark - Uploading
 @property (nonatomic, readonly) AWSS3TransferManager *transferManager;
 
-
-#pragma mark - Downloading resources
--(void)downloadResourcesForEmu:(Emuticon *)emu info:(NSDictionary *)info;
--(void)downloadResourcesForEmuDef:(EmuticonDef *)emuDef info:(NSDictionary *)info;
--(void)downloadZippedResourcesForPackage:(Package *)package;
--(void)bgDownloadZippedResourcesForPackage:(Package *)package
-                         completionHandler:(void (^)())completionHandler
-                               failHandler:(void (^)())failHandler;
-
 #pragma mark - Background fetch
 -(void)reloadPackagesInTheBackgroundWithNewDataHandler:(void (^)())newDataHandler
                                       noNewDataHandler:(void (^)())noNewDataHandler

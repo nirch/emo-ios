@@ -72,7 +72,7 @@
 
 @property (nonatomic) Package *selectedPackage;
 
-@property (nonatomic) NSMutableDictionary *triedToReloadResourcesForEmuOID;
+@property (nonatomic) NSMutableDictionary *failedToDownloadResourcesForEmuOID;
 
 @property (nonatomic, weak) EMPackagesVC *packagesBarVC;
 
@@ -97,7 +97,7 @@
     
     self.guiInitialized = NO;
     self.refetchDataAttempted = NO;
-    self.triedToReloadResourcesForEmuOID = [NSMutableDictionary new];
+    self.failedToDownloadResourcesForEmuOID = [NSMutableDictionary new];
     
     dispatch_after(DTIME(2.5), dispatch_get_main_queue(), ^{
         [self.guiActivity stopAnimating];
@@ -290,6 +290,10 @@
     NSIndexPath *indexPath = info[@"indexPath"];
     NSString *oid = info[@"emuticonOID"];
     NSString *packageOID = info[@"packageOID"];
+    
+    if (notification.isReportingError) {
+        self.failedToDownloadResourcesForEmuOID[oid] = @YES;
+    }
     
     // Make sure this is related to the currently displayed package.
     // (skip check if in the mixed screen)s
@@ -680,7 +684,12 @@
     
     cell.guiDebugLabel.text = [SF:@"%@>>%@", @(indexPath.item), emu.emuDef.name];
     
-    if (emu.wasRendered.boolValue) {
+    if (self.failedToDownloadResourcesForEmuOID[emu.oid]) {
+        //
+        // Tried and failed to download resources for this emu.
+        //
+        [self failedCell:cell];
+    } else if (emu.wasRendered.boolValue) {
         //
         // Emu already rendered. Just display it.
         // (Display thumb first and load animated gif in background thread)
@@ -750,10 +759,13 @@
             Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
             if (emu == nil) return;
             
-            if (self.triedToReloadResourcesForEmuOID[emu.oid]) {
-                [self.triedToReloadResourcesForEmuOID removeAllObjects];
+            if (self.failedToDownloadResourcesForEmuOID[emu.oid]) {
+                [self.failedToDownloadResourcesForEmuOID removeAllObjects];
                 self.guiCollectionView.userInteractionEnabled = YES;
                 [self.guiCollectionView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self handleVisibleCells];
+                });
                 return;
             }
             
@@ -769,7 +781,6 @@
 #pragma mark - Scrolling
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    HMLOG(TAG, EM_VERBOSE, @"Finished scrolling (after deceleration)");
     [self handleVisibleCells];
 }
 
@@ -781,7 +792,6 @@
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    //self.isScrolling = YES;
     HMLOG(TAG, EM_VERBOSE, @"Begin scrolling");
 }
 
@@ -791,7 +801,6 @@
     if (!decelerate) {
         // Will not decelerate after dragging, so scrolling just ended.
         [self handleVisibleCells];
-        HMLOG(TAG, EM_VERBOSE, @"Finished scrolling A");
     }
 }
 
@@ -827,8 +836,8 @@
     }
     if (anyEnqueued) {
         [EMRenderManager2.sh updatePriorities:prioritizedOID];
-//        [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
-//        [EMDownloadsManager2.sh manageQueue];
+        [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
+        [EMDownloadsManager2.sh manageQueue];
     }
 }
 
@@ -1336,7 +1345,7 @@
 #pragma mark - EMPackageSelectionDelegate
 -(void)packageWasSelected:(Package *)package
 {
-    [self.triedToReloadResourcesForEmuOID removeAllObjects];
+    [self.failedToDownloadResourcesForEmuOID removeAllObjects];
     
     // If selected package is the same as current package, just reload.
     if ((self.selectedPackage == nil && package == nil) || [self.selectedPackage.oid isEqualToString:package.oid]) {

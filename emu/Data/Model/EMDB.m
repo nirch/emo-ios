@@ -44,35 +44,6 @@
 {
     self = [super init];
     if (self) {
-        NSString *testString = @"2015-03-25 10:54:00 UTC";
-        NSString *resultString;
-        HMParser *parser = [HMParser new];
-        NSDate *date = [parser parseDateOfString:testString];
-        NSString *msg;
-
-        self.timeStringForFileFormatter = [NSDateFormatter new];
-        self.timeStringForFileFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        self.timeStringForFileFormatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-        self.timeStringForFileFormatter.locale =  [NSLocale localeWithLocaleIdentifier:@"en_US"];
-        self.timeStringForFileFormatter.dateFormat = @"HHmmss";
-
-        // Test it
-        resultString = [self.timeStringForFileFormatter stringFromDate:date];
-        msg = [SF:@"Test time formatter: %@ %@ %@", testString, date, resultString];
-        REMOTE_LOG(@"%@", msg);
-        
-        
-        self.dateStringForFileFormatter = [NSDateFormatter new];
-        self.dateStringForFileFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        self.dateStringForFileFormatter.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-        self.dateStringForFileFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
-        self.dateStringForFileFormatter.dateFormat = @"yyyyMMdd";
-
-        // Test it
-        resultString = [self.dateStringForFileFormatter stringFromDate:date];
-        msg = [SF:@"Test time formatter: %@ %@ %@", testString, date, resultString];
-        REMOTE_LOG(@"%@", msg);
-        
         // Default store name
         _storeName = @"emu";
     }
