@@ -10,12 +10,17 @@
 #import "EMDB.h"
 #import "EmuKBCell.h"
 #import "EMShareCopy.h"
+#import "EMShareSaveToCameraRoll.h"
 #import "HMPanel.h"
 #import "EMAlphaNumericKeyboard.h"
 #import "EmuSectionReusableView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "EMPackagesVC.h"
 #import "NSNotificationCenter+Utils.h"
+
+#import "EMKBOptionsDrawer.h"
+#import "EMInterfaceDelegate.h"
+#import <Toast/UIView+Toast.h>
 
 #import "EMDownloadsManager2.h"
 #import "EMRenderManager2.h"
@@ -30,8 +35,12 @@
     UICollectionViewDelegate,
     EMShareDelegate,
     EMKeyboardContainerDelegate,
-    EMPackageSelectionDelegate
->
+    EMPackageSelectionDelegate,
+    EMInterfaceDelegate
+> {
+    CGFloat cellW;
+    CGFloat cellH;
+}
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 
@@ -43,10 +52,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiOptionsButton;
 @property (weak, nonatomic) IBOutlet UIView *guiOptionsDrawerContainer;
 
+@property (weak, nonatomic) IBOutlet UIView *guiHowToMessage;
+@property (weak, nonatomic) IBOutlet UIView *guiPackagesBarContainer;
+
+@property (nonatomic) BOOL shareVideoSupported;
+
 @property (weak, nonatomic) EMPackagesVC *packagesVC;
+@property (weak, nonatomic) EMKBOptionsDrawer *kbOptionsDrawer;
 @property (nonatomic) Package *selectedPackage;
 @property (nonatomic) BOOL initializedData;
-@property (nonatomic) EMShareCopy *sharer;
+@property (nonatomic) EMShare *sharer;
 @property (nonatomic) NSInteger focusedOnIndex;
 
 @property (nonatomic) BOOL isFullAccessGranted;
@@ -74,6 +89,7 @@
     [super viewDidLoad];
     self.initializedData = NO;
     self.isScrolling = NO;
+    self.shareVideoSupported = NO;
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     _screenWidth = MIN(screenRect.size.width, screenRect.size.height);
@@ -239,6 +255,9 @@
     } else if ([segue.identifier isEqualToString:@"embed packages bar segue"]) {
         self.packagesVC = segue.destinationViewController;
         self.packagesVC.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"kb options drawer segue"]) {
+        self.kbOptionsDrawer = segue.destinationViewController;
+        self.kbOptionsDrawer.delegate = self;
     }
 }
 
@@ -263,6 +282,18 @@
 -(void)initGUI
 {
     self.guiOptionsButton.layer.cornerRadius = 8.0;
+    
+    CALayer *l = self.guiOptionsDrawerContainer.layer;
+    l.shadowColor = [UIColor blackColor].CGColor;
+    l.shadowRadius = 2;
+    l.shadowOpacity = 0.15;
+    l.shadowOffset = CGSizeMake(0, -2);
+    l.shadowPath = [UIBezierPath bezierPathWithRect:l.bounds].CGPath;
+    
+    if (!self.shareVideoSupported) {
+        self.guiOptionsButton.hidden = YES;
+        self.guiOptionsDrawerContainer.hidden = YES;
+    }
 }
 
 -(void)updateGUI
@@ -280,7 +311,12 @@
 {
     if (!self.initializedData) {
         AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        
+        // Selected package.
         self.selectedPackage = [appCFG packageForOnboarding];
+        
+        // kb drawer options state.
+        [self.kbOptionsDrawer initializeState];
     }
     [self resetFetchedResultsController];
     [self.guiCollectionView reloadData];
@@ -314,7 +350,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.priority" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.priority" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.oid" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -368,13 +404,23 @@
     return cell;
 }
 
--(CGSize)collectionView:(UICollectionView *)collectionView
-                 layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+-(void)viewDidLayoutSubviews
 {
-    CGFloat height = self.guiCollectionView.bounds.size.height/2.0;
-    CGFloat width = height;
+    [super viewDidLayoutSubviews];
+    cellH = (self.view.bounds.size.height-self.guiPackagesBarContainer.bounds.size.height)/2.0;
+    
+    // lower limit
+    cellH = MAX(83, cellH);
 
-    return CGSizeMake(width, height);
+    cellW = cellH;
+}
+
+#pragma mark - Layout & Sizes
+-(CGSize)collectionView:(UICollectionView *)collectionView
+                 layout:(UICollectionViewLayout *)collectionViewLayout
+ sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(cellW, cellH);
 }
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
@@ -478,7 +524,10 @@
                              } completion:nil];
         }];
     }
-
+    
+    if ([self isOptionsDrawerOpen]) {
+        [self closeOptionsDrawerAnimated:YES];
+    }
 }
 
 #pragma mark - Analytics
@@ -497,12 +546,20 @@
 -(void)copyEmu:(Emuticon *)emu
 {
     if (emu == nil || self.sharer != nil) return;
-    
-    
+    if (self.kbOptionsDrawer.prefferedRenderMediaType == EMMediaDataTypeVideo && self.shareVideoSupported) {
+        [self saveVideoToCRForEmu:emu];
+    } else {
+        [self copyAnimatedGifForEmu:emu];
+    }
+}
+
+-(void)copyAnimatedGifForEmu:(Emuticon *)emu
+{
     // Info about the share
     HMParams *params = [self paramsForEmuticon:emu];
     [params addKey:AK_EP_SHARE_METHOD value:@"copy"];
     [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"keyboard"];
+    [params addKey:AK_EP_SHARED_MEDIA_TYPE value:@"gif"];
     [HMPanel.sh analyticsEvent:AK_E_KB_USER_PRESSED_ITEM info:params.dictionary];
     
     self.sharer = [EMShareCopy new];
@@ -510,10 +567,64 @@
     self.sharer.viewController = self;
     self.sharer.view = self.view;
     self.sharer.delegate = self;
+    self.sharer.shareOption = emkShareOptionAnimatedGif;
     self.sharer.info = [NSMutableDictionary dictionaryWithDictionary:params.dictionary];
     self.sharer.selectionMessage = LS(@"SHARE_TOAST_COPIED_KB");
     [self.sharer share];
 }
+
+-(void)saveVideoToCRForEmu:(Emuticon *)emu
+{
+    if (emu.videoURL) {
+        // We have the file. Save to CR.
+        [self _saveVideoToCRForEmu:emu];
+    } else {
+        // No video file? Render it!
+        [self renderVideoBeforeCopyForEmu:emu];
+    }
+}
+
+-(void)_saveVideoToCRForEmu:(Emuticon *)emu
+{
+    // Info about the share
+    HMParams *params = [self paramsForEmuticon:emu];
+    [params addKey:AK_EP_SHARE_METHOD value:@"savetocm"];
+    [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"keyboard"];
+    [params addKey:AK_EP_SHARED_MEDIA_TYPE value:@"video"];
+    [HMPanel.sh analyticsEvent:AK_E_KB_USER_PRESSED_ITEM info:params.dictionary];
+    
+    self.sharer = [EMShareSaveToCameraRoll new];
+    self.sharer.objectToShare = emu;
+    self.sharer.viewController = self;
+    self.sharer.view = self.view;
+    self.sharer.delegate = self;
+    self.sharer.shareOption = emkShareOptionVideo;
+    self.sharer.info = [NSMutableDictionary dictionaryWithDictionary:params.dictionary];
+    self.sharer.selectionMessage = LS(@"SHARE_TOAST_SAVED");
+    [self.sharer share];
+}
+
+-(void)renderVideoBeforeCopyForEmu:(Emuticon *)emu
+{
+    self.guiCollectionView.alpha = 0.4;
+    self.guiCollectionView.userInteractionEnabled = NO;
+    [EMRenderManager2.sh renderVideoForEmu:emu
+                         requiresWaterMark:YES
+                           completionBlock:^{
+                               // If we are here, emu.videoURL points to the rendered video.
+                               [self _saveVideoToCRForEmu:emu];
+                               self.guiCollectionView.alpha = 1;
+                               self.guiCollectionView.userInteractionEnabled = YES;
+                           } failBlock:^{
+                               // Failed :-(
+                               // No rendered video available.
+                               self.sharer = nil;
+                               [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+                               self.guiCollectionView.alpha = 1;
+                               self.guiCollectionView.userInteractionEnabled = YES;
+                           }];
+}
+
 
 #pragma mark - EMShareDelegate
 -(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
@@ -669,6 +780,10 @@
         [self.packagesVC selectPackageAtIndex:sectionIndex highlightOnly:YES];
         self.focusedOnIndex = sectionIndex;
     }
+    
+    if ([self isOptionsDrawerOpen]) {
+        [self closeOptionsDrawerAnimated:YES];
+    }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -758,6 +873,7 @@
     self.guiOptionsButton.transform = t;
     self.guiOptionsButton.selected = NO;
     self.guiCollectionView.alpha = 1.0;
+    self.guiCollectionView.transform = t;
 }
 
 -(void)openOptionsDrawerAnimated:(BOOL)animated
@@ -773,7 +889,47 @@
     self.guiOptionsDrawerContainer.transform = t;
     self.guiOptionsButton.transform = t;
     self.guiOptionsButton.selected = YES;
-    self.guiCollectionView.alpha = 0.8;
+    self.guiCollectionView.alpha = 0.6;
+    self.guiCollectionView.transform = CGAffineTransformMakeScale(0.95, 0.95);
+}
+
+#pragma mark - EMInterfaceDelegate
+-(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
+{
+    if ([actionName isEqualToString:@"ok"]) {
+        [self closeOptionsDrawerAnimated:YES];
+    } else if ([actionName isEqualToString:@"show whatsapp tutorial"]) {
+        [self showTutorialMessage];
+    }
+}
+
+
+#pragma mark - Tutorial message
+-(void)showTutorialMessage
+{
+    CGFloat height = self.view.bounds.size.height;
+    self.guiHowToMessage.alpha = 0;
+    self.guiHowToMessage.hidden = NO;
+    self.guiHowToMessage.transform = CGAffineTransformMakeTranslation(0, -height);
+    [UIView animateWithDuration:0.7
+                          delay:0
+         usingSpringWithDamping:0.44
+          initialSpringVelocity:0.8
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.guiHowToMessage.alpha = 1;
+                         self.guiHowToMessage.transform = CGAffineTransformIdentity;
+                     } completion:nil];
+
+}
+
+-(void)hideTutorialMessage
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiHowToMessage.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.guiHowToMessage.hidden = YES;
+    }];
 }
 
 #pragma mark - IB Actions
@@ -805,12 +961,19 @@
 
 - (IBAction)OnSwipeUp:(id)sender
 {
+    if ([self isOptionsDrawerOpen]) return;
     [self openOptionsDrawerAnimated:YES];
 }
 
 - (IBAction)onSwipeDown:(id)sender
 {
+    if (![self isOptionsDrawerOpen]) return;
     [self closeOptionsDrawerAnimated:YES];
+}
+
+- (IBAction)onMessageGotIt:(UIButton *)sender
+{
+    [self hideTutorialMessage];
 }
 
 @end

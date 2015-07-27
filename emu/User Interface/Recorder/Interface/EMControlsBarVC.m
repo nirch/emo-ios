@@ -374,15 +374,6 @@
         return;
     
     //
-    // Analytics
-    //
-    HMParams *params = [HMParams new];
-    [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
-    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD
-                             info:params.dictionary];
-
-    
-    //
     // Counting down
     //
     self.countDownNumber = number;
@@ -438,6 +429,14 @@
             [recordButton.delegate countDownDidFinish];
         }
         self.guiGoodMessageButton.alpha = 0;
+        
+        //
+        // Analytics
+        //
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
+        [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_EXT_USER_PRESSED_RECORD
+                              info:params.dictionary];
     }
 }
 

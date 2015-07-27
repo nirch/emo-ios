@@ -240,7 +240,8 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];
+
     fetchRequest.fetchBatchSize = 20;
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest

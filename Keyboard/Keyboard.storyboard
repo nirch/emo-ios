@@ -62,6 +62,7 @@
                                                                 </view>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="myG-Kw-uVA" userLabel="Emu Thumb Image">
                                                                     <rect key="frame" x="2" y="2" width="86" height="86"/>
+                                                                    <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                                                 </imageView>
                                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="tnZ-UQ-Odo">
                                                                     <rect key="frame" x="35" y="35" width="20" height="20"/>
@@ -69,7 +70,6 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="la8-wb-pv4" secondAttribute="bottom" constant="2" id="0Qg-xm-ewt"/>
                                                             <constraint firstItem="la8-wb-pv4" firstAttribute="leading" secondItem="NrH-gI-DET" secondAttribute="leading" id="46f-9b-Qzr"/>
@@ -179,6 +179,16 @@
                                             <constraint firstItem="i6M-Vb-0dP" firstAttribute="width" secondItem="w4i-6P-pJK" secondAttribute="width" id="pEz-7o-rQQ"/>
                                         </constraints>
                                     </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SP1-We-9w8" userLabel="Options Container">
+                                        <rect key="frame" x="0.0" y="171" width="320" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="thG-PW-LYG"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="NMh-BX-62W" kind="embed" identifier="kb options drawer segue" id="xTV-q0-2L8"/>
+                                        </connections>
+                                    </containerView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40d-HI-pw2" userLabel="Drawer open button">
                                         <rect key="frame" x="133" y="157" width="54" height="15"/>
                                         <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -194,16 +204,6 @@
                                             <action selector="onPressedDrawerToggleButton:" destination="sle-Gl-c4f" eventType="touchUpInside" id="K9t-jz-4TW"/>
                                         </connections>
                                     </button>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SP1-We-9w8" userLabel="Options Container">
-                                        <rect key="frame" x="0.0" y="171" width="320" height="60"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="thG-PW-LYG"/>
-                                        </constraints>
-                                        <connections>
-                                            <segue destination="NMh-BX-62W" kind="embed" id="xTV-q0-2L8"/>
-                                        </connections>
-                                    </containerView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNr-8w-li6" userLabel="Packages and tags conainer">
                                         <rect key="frame" x="0.0" y="170" width="320" height="50"/>
                                         <subviews>
@@ -302,13 +302,13 @@
                                         </variation>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keyboard full access is currently disabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gG-vl-lAY">
-                                        <rect key="frame" x="35" y="67" width="250" height="7.5"/>
+                                        <rect key="frame" x="35" y="67" width="250" height="8"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To enable, go to keyboard settings --&gt; &quot;Keyboard - Emu&quot; and allow full access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olV-CA-vK7">
-                                        <rect key="frame" x="33" y="84.5" width="255" height="50.5"/>
+                                        <rect key="frame" x="33" y="84" width="255" height="51"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -367,15 +367,75 @@
                                     <segue destination="ZPF-8x-QHm" kind="embed" identifier="embed alpha numeric keyboard" id="Qhp-Ia-NJ9"/>
                                 </connections>
                             </containerView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1u-MS-hFW" userLabel="How to message">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whatsapp" translatesAutoresizingMaskIntoConstraints="NO" id="dWl-9l-WaK">
+                                        <rect key="frame" x="146" y="8" width="28" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="1lF-vr-4yd"/>
+                                            <constraint firstAttribute="width" constant="28" id="J1P-te-cbE"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharing to WhatsApp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYY-iI-Jgl">
+                                        <rect key="frame" x="99" y="44" width="125" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSa-1q-94z">
+                                        <rect key="frame" x="20" y="70" width="280" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="Xo5-gs-ZxR"/>
+                                            <constraint firstAttribute="height" constant="80" id="ZyA-OD-HaM"/>
+                                        </constraints>
+                                        <string key="text">1. Render a video (it will be saved to device).
+2. Press ↑ in WhatsApp.
+3. Choose a video from your video library.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Zk-nM-y30">
+                                        <rect key="frame" x="111" y="182" width="99" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="99" id="AgJ-43-ypf"/>
+                                            <constraint firstAttribute="height" constant="30" id="yfa-Sg-hSR"/>
+                                        </constraints>
+                                        <state key="normal" title="Got it!">
+                                            <color key="titleColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onMessageGotIt:" destination="sle-Gl-c4f" eventType="touchUpInside" id="R5C-J1-8ed"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="iYY-iI-Jgl" firstAttribute="top" secondItem="dWl-9l-WaK" secondAttribute="bottom" constant="8" id="33M-oU-ZdK"/>
+                                    <constraint firstItem="dWl-9l-WaK" firstAttribute="centerX" secondItem="iYY-iI-Jgl" secondAttribute="centerX" constant="-0.5" id="4OV-Ua-NUr"/>
+                                    <constraint firstAttribute="centerX" secondItem="2Zk-nM-y30" secondAttribute="centerX" constant="-0.5" id="AMA-UU-pNl"/>
+                                    <constraint firstAttribute="centerY" secondItem="dWl-9l-WaK" secondAttribute="centerY" constant="88" id="QzG-8I-tIO"/>
+                                    <constraint firstAttribute="centerY" secondItem="eSa-1q-94z" secondAttribute="centerY" id="fq5-Hy-OBT"/>
+                                    <constraint firstAttribute="centerX" secondItem="eSa-1q-94z" secondAttribute="centerX" id="lIE-X1-XA5"/>
+                                    <constraint firstAttribute="bottom" secondItem="2Zk-nM-y30" secondAttribute="bottom" constant="8" id="tTZ-un-Ks9"/>
+                                    <constraint firstAttribute="centerX" secondItem="dWl-9l-WaK" secondAttribute="centerX" id="x3f-jX-poF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="xFh-aU-Vl3" secondAttribute="centerY" id="F2i-Ny-DLv"/>
+                            <constraint firstItem="d2j-CT-IOv" firstAttribute="top" secondItem="U1u-MS-hFW" secondAttribute="bottom" id="LxM-JW-hzj"/>
                             <constraint firstAttribute="height" secondItem="xFh-aU-Vl3" secondAttribute="height" id="QGE-jJ-8xb"/>
                             <constraint firstAttribute="centerX" secondItem="GE4-SU-6Qp" secondAttribute="centerX" id="T8V-q3-zIA"/>
                             <constraint firstAttribute="width" secondItem="xFh-aU-Vl3" secondAttribute="width" id="bAY-Fs-T32"/>
+                            <constraint firstItem="U1u-MS-hFW" firstAttribute="left" secondItem="QcT-D9-q3x" secondAttribute="left" id="cGj-cX-sgw"/>
                             <constraint firstItem="GE4-SU-6Qp" firstAttribute="height" secondItem="QcT-D9-q3x" secondAttribute="height" id="cJo-zu-ExR"/>
+                            <constraint firstAttribute="right" secondItem="U1u-MS-hFW" secondAttribute="right" id="dm8-1j-lTq"/>
                             <constraint firstAttribute="centerX" secondItem="xFh-aU-Vl3" secondAttribute="centerX" id="eJ9-X0-K46"/>
+                            <constraint firstItem="U1u-MS-hFW" firstAttribute="top" secondItem="own-yX-mts" secondAttribute="bottom" id="fOC-z8-8bk"/>
                             <constraint firstAttribute="centerY" secondItem="GE4-SU-6Qp" secondAttribute="centerY" id="gAZ-9s-W8Z"/>
                             <constraint firstItem="GE4-SU-6Qp" firstAttribute="width" secondItem="QcT-D9-q3x" secondAttribute="width" id="jxU-3Z-8Ys"/>
                         </constraints>
@@ -395,8 +455,10 @@
                         <outlet property="guiDisabledKBLogo" destination="WAM-y1-2FT" id="7bL-Lz-jtb"/>
                         <outlet property="guiFullAccessError" destination="7gG-vl-lAY" id="oBp-NS-7lm"/>
                         <outlet property="guiFullAccessInstructions" destination="olV-CA-vK7" id="xEX-Re-XZ0"/>
+                        <outlet property="guiHowToMessage" destination="U1u-MS-hFW" id="H4C-Ga-u10"/>
                         <outlet property="guiOptionsButton" destination="40d-HI-pw2" id="Z02-uR-bh3"/>
                         <outlet property="guiOptionsDrawerContainer" destination="SP1-We-9w8" id="1IF-dP-HAe"/>
+                        <outlet property="guiPackagesBarContainer" destination="yNr-8w-li6" id="2nx-CO-kUG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wmu-TR-v2G" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1252,12 +1314,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NRx-fX-Iko" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="224" y="733"/>
+            <point key="canvasLocation" x="224" y="738"/>
         </scene>
-        <!--View Controller-->
+        <!--Options Drawer-->
         <scene sceneID="Y2R-Rb-w7z">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="NMh-BX-62W" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="NMh-BX-62W" customClass="EMKBOptionsDrawer" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M6g-UQ-Ii1"/>
                         <viewControllerLayoutGuide type="bottom" id="p5Z-2O-2RO"/>
@@ -1273,31 +1335,46 @@
                                     <segment title="Videos"/>
                                 </segments>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="onPrefferedRenderTypeChanged:" destination="NMh-BX-62W" eventType="valueChanged" id="nm1-72-bMr"/>
+                                </connections>
                             </segmentedControl>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emuButton" translatesAutoresizingMaskIntoConstraints="NO" id="X2X-Km-QMU">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBG-XV-UVe" userLabel="okButton">
+                                <rect key="frame" x="274" y="15" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Haq-f2-Oav"/>
+                                    <constraint firstAttribute="height" constant="30" id="IJf-oB-FBT"/>
+                                </constraints>
+                                <state key="normal" image="okButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedOKButton:" destination="NMh-BX-62W" eventType="touchUpInside" id="Bd0-lQ-ePm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q8v-fw-xUY" userLabel="whatsapp help button">
                                 <rect key="frame" x="16" y="13" width="33" height="33"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="FYP-o6-etv"/>
-                                    <constraint firstAttribute="width" constant="33" id="VZ1-b9-yUM"/>
+                                    <constraint firstAttribute="width" constant="33" id="1O3-SV-RV2"/>
+                                    <constraint firstAttribute="height" constant="33" id="bRh-Nn-lWb"/>
                                 </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="okButton" translatesAutoresizingMaskIntoConstraints="NO" id="3FS-38-aLP" userLabel="okButton">
-                                <rect key="frame" x="274" y="14.5" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="R9e-SP-vYt"/>
-                                    <constraint firstAttribute="height" constant="30" id="zaV-Dv-ZaN"/>
-                                </constraints>
-                            </imageView>
+                                <state key="normal" image="whatsapp">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedTutorialMessage:" destination="NMh-BX-62W" eventType="touchUpInside" id="S29-SM-0Bt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="0.95000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="S7Q-Fk-c6S" secondAttribute="centerX" id="1r1-YC-2Fc"/>
-                            <constraint firstItem="3FS-38-aLP" firstAttribute="trailing" secondItem="MKb-Ck-nxX" secondAttribute="trailingMargin" id="E8r-RG-i1l"/>
-                            <constraint firstAttribute="centerY" secondItem="3FS-38-aLP" secondAttribute="centerY" constant="0.5" id="T3a-Cd-0qV"/>
-                            <constraint firstItem="X2X-Km-QMU" firstAttribute="leading" secondItem="MKb-Ck-nxX" secondAttribute="leadingMargin" id="WXP-Cm-1gw"/>
-                            <constraint firstAttribute="centerY" secondItem="X2X-Km-QMU" secondAttribute="centerY" constant="0.5" id="dmO-MY-X5A"/>
+                            <constraint firstItem="Q8v-fw-xUY" firstAttribute="leading" secondItem="MKb-Ck-nxX" secondAttribute="leadingMargin" id="6af-PE-qLV"/>
+                            <constraint firstAttribute="centerY" secondItem="NBG-XV-UVe" secondAttribute="centerY" id="ENC-BB-hN2"/>
                             <constraint firstAttribute="centerX" secondItem="S7Q-Fk-c6S" secondAttribute="centerX" constant="-0.5" id="fBI-8N-lQg"/>
                             <constraint firstAttribute="centerY" secondItem="S7Q-Fk-c6S" secondAttribute="centerY" id="g6Q-9A-GAZ"/>
+                            <constraint firstItem="NBG-XV-UVe" firstAttribute="right" secondItem="MKb-Ck-nxX" secondAttribute="rightMargin" id="hmE-E8-px2"/>
+                            <constraint firstAttribute="centerY" secondItem="Q8v-fw-xUY" secondAttribute="centerY" constant="0.5" id="oyD-ao-ZK2"/>
                             <constraint firstItem="p5Z-2O-2RO" firstAttribute="top" secondItem="S7Q-Fk-c6S" secondAttribute="bottom" constant="9" id="ttK-aX-dpu"/>
                         </constraints>
                         <variation key="default">
@@ -1308,14 +1385,16 @@
                         </variation>
                     </view>
                     <toolbarItems/>
+                    <connections>
+                        <outlet property="guiRenderingTypeSelector" destination="S7Q-Fk-c6S" id="ett-68-i5F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P3z-aO-P9D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="716" y="766"/>
+            <point key="canvasLocation" x="693" y="713"/>
         </scene>
     </scenes>
     <resources>
-        <image name="emuButton" width="105" height="105"/>
         <image name="emuDisabledLogo" width="60" height="59"/>
         <image name="emuKBIcon" width="20" height="20"/>
         <image name="kbBack" width="22" height="16"/>
@@ -1325,5 +1404,6 @@
         <image name="okButton" width="46" height="46"/>
         <image name="pullDownButton" width="12" height="7"/>
         <image name="pullUpButton" width="12" height="7"/>
+        <image name="whatsapp" width="57" height="56"/>
     </resources>
 </document>

@@ -293,6 +293,8 @@
 		084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
 		084AF53B1B3AA8900056FC34 /* EmuKBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF53A1B3AA8900056FC34 /* EmuKBCell.m */; };
 		084AF53C1B3AA8900056FC34 /* EmuKBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF53A1B3AA8900056FC34 /* EmuKBCell.m */; };
+		084DC0021B661A9200A67DD8 /* EMKBOptionsDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */; };
+		084DC0031B661A9200A67DD8 /* EMKBOptionsDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
 		0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
 		0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
@@ -893,6 +895,8 @@
 		084AF5361B3A14D00056FC34 /* EMShareTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareTwitter.m; sourceTree = "<group>"; };
 		084AF5391B3AA8900056FC34 /* EmuKBCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuKBCell.h; sourceTree = "<group>"; };
 		084AF53A1B3AA8900056FC34 /* EmuKBCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuKBCell.m; sourceTree = "<group>"; };
+		084DC0001B661A9200A67DD8 /* EMKBOptionsDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKBOptionsDrawer.h; sourceTree = "<group>"; };
+		084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKBOptionsDrawer.m; sourceTree = "<group>"; };
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
 		0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCell.m; sourceTree = "<group>"; };
 		0854EE2F1A9F93B700FD3833 /* EMShareDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareDelegate.h; sourceTree = "<group>"; };
@@ -1287,6 +1291,8 @@
 				08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */,
 				084AF5391B3AA8900056FC34 /* EmuKBCell.h */,
 				084AF53A1B3AA8900056FC34 /* EmuKBCell.m */,
+				084DC0001B661A9200A67DD8 /* EMKBOptionsDrawer.h */,
+				084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */,
 				080CB3391AA4B18800603E30 /* Supporting Files */,
 			);
 			path = Keyboard;
@@ -2974,6 +2980,7 @@
 				087BCFCF1B6269DB00A7A930 /* WaterMarkSource.mm in Sources */,
 				0874030E1B63971200866A74 /* NSNotification+Utils.m in Sources */,
 				087BCFBF1B625AE600A7A930 /* EMRenderManager2.m in Sources */,
+				084DC0021B661A9200A67DD8 /* EMKBOptionsDrawer.m in Sources */,
 				087BCFC91B6269C800A7A930 /* HrEffectRGBA.cpp in Sources */,
 				087BCFBD1B5FCFCA00A7A930 /* EmuticonDef.m in Sources */,
 				08AC3E6E1AD2C9A1005231B5 /* KBKeyButton.m in Sources */,
@@ -3057,6 +3064,7 @@
 				087BCFD01B6269DC00A7A930 /* WaterMarkSource.mm in Sources */,
 				0874030F1B63971300866A74 /* NSNotification+Utils.m in Sources */,
 				087BCFC01B625AE800A7A930 /* EMRenderManager2.m in Sources */,
+				084DC0031B661A9200A67DD8 /* EMKBOptionsDrawer.m in Sources */,
 				087BCFCA1B6269C900A7A930 /* HrEffectRGBA.cpp in Sources */,
 				087BCFBE1B5FCFCB00A7A930 /* EmuticonDef.m in Sources */,
 				0867CA301B16602E00FF0E85 /* KBKeyButton.m in Sources */,

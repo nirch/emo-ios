@@ -273,6 +273,7 @@
         source->AddEffect(maskGifEffect);
     }
     
+    
     //
     // Colors effects
     //
