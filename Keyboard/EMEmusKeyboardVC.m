@@ -330,7 +330,7 @@
     self.guiMessageTitle.text = LS(@"SHARE_WHATSAPP_INSTRUCTIONS_TITLE");
     self.guiMessageContent.text = LS(@"SHARE_WHATSAPP_INSTRUCTIONS");
     [self.guiMessageOKButton setTitle:LS(@"ALERT_OK_ACTION") forState:UIControlStateNormal];
-    
+    [self.guiMessageContent setTextAlignment:NSTextAlignmentNatural];
 }
 
 -(void)updateGUI
@@ -541,6 +541,8 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (emu.wasRendered.boolValue == NO) return;
+    
     [self copyEmu:emu];
     
     UICollectionViewCell *cell = [self.guiCollectionView cellForItemAtIndexPath:indexPath];

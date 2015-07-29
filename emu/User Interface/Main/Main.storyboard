@@ -1114,7 +1114,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="98" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXd-p2-rUU" customClass="EMLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXd-p2-rUU" customClass="EMLabel">
                                                     <rect key="frame" x="8" y="40" width="82" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="eLf-WJ-G7H"/>

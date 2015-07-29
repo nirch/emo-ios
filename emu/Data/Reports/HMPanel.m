@@ -224,7 +224,9 @@
                     contentName:contentName?contentName:@"unknown"
                     contentType:contentType?contentType:@"unknown"
                       contentId:contentId?contentId:@"unknown"
-               customAttributes:@{@"packageName":packageName?packageName:@"unknown"}];
+               customAttributes:@{
+                                  @"packageName":packageName?packageName:@"unknown"
+                                  }];
 }
 
 -(void)fabricAnswersShareAppEventWithInfo:(NSDictionary *)info

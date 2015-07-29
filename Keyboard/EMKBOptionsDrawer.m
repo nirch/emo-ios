@@ -44,16 +44,21 @@
     return prefferedRenderingType;
 }
 
+-(void)updatePrefferedRenderType
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    EMMediaDataType prefferedRenderingType = self.guiRenderingTypeSelector.selectedSegmentIndex == EMMediaDataTypeGIF?EMMediaDataTypeGIF:EMMediaDataTypeVideo;
+    appCFG.userPrefferedShareType = @(prefferedRenderingType);
+    [EMDB.sh save];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
 // ===========
 - (IBAction)onPrefferedRenderTypeChanged:(UISegmentedControl *)sender
 {
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    EMMediaDataType prefferedRenderingType = sender.selectedSegmentIndex == EMMediaDataTypeGIF?EMMediaDataTypeGIF:EMMediaDataTypeVideo;
-    appCFG.userPrefferedShareType = @(prefferedRenderingType);
-    [EMDB.sh save];
+    [self updatePrefferedRenderType];
 }
 
 - (IBAction)onPressedOKButton:(id)sender
@@ -63,6 +68,8 @@
 
 - (IBAction)onPressedTutorialMessage:(id)sender
 {
+    self.guiRenderingTypeSelector.selectedSegmentIndex = 1;
+    [self updatePrefferedRenderType];
     [self.delegate controlSentActionNamed:@"show whatsapp tutorial" info:nil];
 }
 
