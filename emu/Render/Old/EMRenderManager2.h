@@ -24,6 +24,7 @@
 #pragma mark - Resume/Pause
 -(void)resume;
 -(void)pause;
+-(void)clear;
 
 #pragma mark - Enqueue render jobs
 /**

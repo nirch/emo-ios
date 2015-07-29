@@ -31,11 +31,11 @@
     [self setTitleColor:[EmuStyle colorKBKeyText] forState:UIControlStateNormal];
     self.layer.borderWidth = 1;
     self.layer.borderColor = [EmuStyle colorKBKeyBG].CGColor;
-    self.layer.cornerRadius = 8;
+    self.layer.cornerRadius = 1;
 
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.layer.bounds].CGPath;
-    self.layer.shadowRadius = 6;
+    self.layer.shadowRadius = 3;
     self.layer.shadowOpacity = 0;
     
     
@@ -73,8 +73,8 @@
 // Scale up on button press
 -(void)buttonPress:(UIButton*)button {
     if (!self.unmovingKey) {
-        CGAffineTransform t = CGAffineTransformMakeScale(1.4, 1.4);
-        t = CGAffineTransformTranslate(t, 0, - button.bounds.size.height * 0.35);
+        CGAffineTransform t = CGAffineTransformMakeScale(1.2, 1.2);
+        t = CGAffineTransformTranslate(t, 0, - button.bounds.size.height * 0.25);
         button.transform = t;
     }
     button.layer.borderColor = [UIColor whiteColor].CGColor;

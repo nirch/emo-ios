@@ -930,6 +930,9 @@
 -(void)openRecorderForFlow:(EMRecorderFlowType)flowType
                       info:(NSDictionary *)info
 {
+    [EMRenderManager2.sh clear];
+    [EMDownloadsManager2.sh clear];
+    
     EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:flowType info:info];
     recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     recorderVC.delegate = self;

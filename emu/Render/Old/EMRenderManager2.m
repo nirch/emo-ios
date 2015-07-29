@@ -37,8 +37,9 @@
 @interface EMRenderManager2()
 
 //
-// Data structures.
+// Data structures & state
 //
+@property (atomic) BOOL paused;
 @property (atomic) NSDictionary *priorities;
 @property (nonatomic, readonly) NSInteger maxConcurrentRenders;
 @property (nonatomic, readonly) NSMutableDictionary *renderingPool;
@@ -92,6 +93,7 @@
 
 -(void)initDataStructures
 {
+    _paused = NO;
     _renderingPool = [NSMutableDictionary new];
     _readyPool = [NSMutableDictionary new];
     _userInfo = [NSMutableDictionary new];
@@ -133,14 +135,18 @@
 #pragma mark - Resume/Pause
 -(void)resume
 {
-    
 }
 
 -(void)pause
 {
-    
 }
 
+-(void)clear
+{
+    dispatch_async(self.renderingManagementQueue, ^{
+        _readyPool = [NSMutableDictionary new];
+    });
+}
 
 #pragma mark - Adding to the queue
 /**

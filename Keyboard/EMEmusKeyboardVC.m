@@ -53,9 +53,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiOptionsButton;
 @property (weak, nonatomic) IBOutlet UIView *guiOptionsDrawerContainer;
 
-@property (weak, nonatomic) IBOutlet UIView *guiHowToMessage;
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesBarContainer;
 @property (weak, nonatomic) IBOutlet UIProgressView *guiRenderProgress;
+
+
+@property (weak, nonatomic) IBOutlet UIView *guiHowToMessage;
+@property (weak, nonatomic) IBOutlet UIImageView *guiMessageIcon;
+@property (weak, nonatomic) IBOutlet UILabel *guiMessageTitle;
+@property (weak, nonatomic) IBOutlet UILabel *guiMessageContent;
+@property (weak, nonatomic) IBOutlet UIButton *guiMessageOKButton;
 
 @property (nonatomic) BOOL shareVideoSupported;
 
@@ -97,6 +103,7 @@
     _screenWidth = MIN(screenRect.size.width, screenRect.size.height);
     
     [self initGUI];
+    [self initLocalization];
     // Not hidden but alpha = 0
     self.guiAlphaNumericKBContainer.hidden = NO;
     [self hideAlphaNumericKBAnimated:NO];
@@ -316,6 +323,14 @@
     
     self.guiRenderProgress.progress = 0;
     self.guiRenderProgress.hidden = YES;
+}
+
+-(void)initLocalization
+{
+    self.guiMessageTitle.text = LS(@"SHARE_WHATSAPP_INSTRUCTIONS_TITLE");
+    self.guiMessageContent.text = LS(@"SHARE_WHATSAPP_INSTRUCTIONS");
+    [self.guiMessageOKButton setTitle:LS(@"ALERT_OK_ACTION") forState:UIControlStateNormal];
+    
 }
 
 -(void)updateGUI

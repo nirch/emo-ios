@@ -92,6 +92,7 @@
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleColor" value="colorText2"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="stringKey" value="EMUNIZING"/>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">

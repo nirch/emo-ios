@@ -445,6 +445,9 @@
 #pragma mark - Retake
 -(void)retake
 {
+    [EMRenderManager2.sh clear];
+    [EMDownloadsManager2.sh clear];
+
     NSDictionary *info = @{emkEmuticon:self.emuticon};
     EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:EMRecorderFlowTypeRetakeForSpecificEmuticons
                                                           info:info];
