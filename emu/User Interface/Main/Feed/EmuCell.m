@@ -35,8 +35,13 @@
     self.guiAnimGifView.animatedImage = nil;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        // Load the data in the background.
-        NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
+        // Load the data in the background and into virtual memory if possible.
+        NSError *error;
+        NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL options:NSDataReadingMappedIfSafe error:&error];
+        if (error || animGifData == nil) {
+            return;
+        }
+        
         FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
         __weak EmuCell *wSelf = self;
         wSelf.guiAnimGifView.hidden = NO;

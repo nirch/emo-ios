@@ -136,8 +136,6 @@
 #pragma mark - Observers handlers
 -(void)onRenderedEmu:(NSNotification *)notification
 {
-    // TODO: finish sampled results upload implementation
-
     // Upload samples only if enabled.
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     if (![appCFG shouldUploadSampledResults]) return;

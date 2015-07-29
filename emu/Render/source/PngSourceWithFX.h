@@ -14,5 +14,6 @@ public:
     virtual int	ReadFrame( int iFrame, image_type **im );
     virtual int Close();
 private:
-    NSArray *m_pngFiles;
+    NSArray *m_pngFiles;    
+    image_type *image;
 };

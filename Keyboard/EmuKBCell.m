@@ -36,11 +36,21 @@
     
     [self.guiAnimGifView stopAnimating];
     self.guiAnimGifView.animatedImage = nil;
+//    NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
+    // Load the data in the background and into virtual memory if possible.
+    NSError *error;
+    NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL options:NSDataReadingMappedIfSafe error:&error];
+    if (error || animGifData == nil) {
+        return;
+    }
 
-    NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
+    
+    // Create the animated gif image with the loaded data.
     FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
     self.guiAnimGifView.contentMode = UIViewContentModeScaleAspectFit;
     self.guiAnimGifView.animatedImage = animGif;
+    
+    // And show it on screen.
     [UIView animateWithDuration:0.2 animations:^{
         self.guiThumbView.alpha = 0;
     }];

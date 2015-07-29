@@ -34,7 +34,9 @@ int	SolidColorSource::ReadFrame( int iFrame, image_type **im )
 int SolidColorSource::Close()
 {
     // Destory the solid color image.
-    image_destroy(solidImage, 0);
+    if (solidImage != NULL) {
+        image_destroy(solidImage, 1);
+    }
     return 1;
 }
 

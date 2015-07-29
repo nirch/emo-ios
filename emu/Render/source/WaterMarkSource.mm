@@ -15,7 +15,7 @@ WaterMarkSource::WaterMarkSource(NSString *imageName)
 {
     UIImage *wmImage = [UIImage imageNamed:imageName];
     image = CVtool::DecomposeUIimage(wmImage);
-    image_bgr2rgb(image, image);
+//    image_bgr2rgb(image, image);
 }
 
 int	WaterMarkSource::ReadFrame( int iFrame, image_type **im )
@@ -28,7 +28,9 @@ int	WaterMarkSource::ReadFrame( int iFrame, image_type **im )
 int WaterMarkSource::Close()
 {
     // Destory the solid color image.
-    image_destroy(image, 0);
+    if (image != NULL) {
+        image_destroy(image, 1);
+    }
     return 1;
 }
 

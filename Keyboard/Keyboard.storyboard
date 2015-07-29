@@ -261,29 +261,43 @@
                                                     <constraint firstAttribute="height" constant="3" id="jqC-mD-uA5"/>
                                                 </constraints>
                                             </view>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xBe-Sf-Jb4">
+                                                <rect key="frame" x="0.0" y="1" width="320" height="2"/>
+                                                <color key="progressTintColor" red="0.99215686270000003" green="0.08235294118" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </progressView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" secondItem="dy8-ht-jla" secondAttribute="height" id="3ag-BR-Tqe"/>
+                                            <constraint firstItem="M0e-mz-C6x" firstAttribute="height" secondItem="xBe-Sf-Jb4" secondAttribute="height" id="90o-bP-nUn"/>
                                             <constraint firstItem="hbG-tw-7E2" firstAttribute="leading" secondItem="r65-z5-bYS" secondAttribute="trailing" id="AxO-G8-c4J"/>
                                             <constraint firstAttribute="height" secondItem="r65-z5-bYS" secondAttribute="height" id="B5Z-Cn-qp0"/>
                                             <constraint firstItem="M0e-mz-C6x" firstAttribute="top" secondItem="yNr-8w-li6" secondAttribute="top" id="BRy-wB-nge"/>
                                             <constraint firstAttribute="trailing" secondItem="hbG-tw-7E2" secondAttribute="trailing" id="Ckf-sa-VTx"/>
                                             <constraint firstAttribute="height" secondItem="hbG-tw-7E2" secondAttribute="height" id="Dma-E4-LUB"/>
+                                            <constraint firstItem="M0e-mz-C6x" firstAttribute="centerX" secondItem="xBe-Sf-Jb4" secondAttribute="centerX" id="F8w-1U-Ypa"/>
                                             <constraint firstItem="HdM-UP-bAp" firstAttribute="height" secondItem="yNr-8w-li6" secondAttribute="height" id="FLo-xb-wf4"/>
                                             <constraint firstAttribute="centerY" secondItem="hbG-tw-7E2" secondAttribute="centerY" id="Kiu-D8-Pls"/>
                                             <constraint firstItem="M0e-mz-C6x" firstAttribute="width" secondItem="yNr-8w-li6" secondAttribute="width" id="RnE-Lm-bk5"/>
                                             <constraint firstAttribute="centerY" secondItem="HdM-UP-bAp" secondAttribute="centerY" id="YNP-vp-4Gf"/>
                                             <constraint firstAttribute="height" constant="50" id="dH7-h5-wsB"/>
                                             <constraint firstItem="dy8-ht-jla" firstAttribute="leading" secondItem="HdM-UP-bAp" secondAttribute="trailing" id="fPY-a5-jnc"/>
+                                            <constraint firstItem="M0e-mz-C6x" firstAttribute="centerY" secondItem="xBe-Sf-Jb4" secondAttribute="centerY" id="kRm-EE-fOo"/>
                                             <constraint firstItem="r65-z5-bYS" firstAttribute="leading" secondItem="dy8-ht-jla" secondAttribute="trailing" id="lXL-pI-SRc"/>
                                             <constraint firstItem="HdM-UP-bAp" firstAttribute="width" secondItem="hbG-tw-7E2" secondAttribute="width" id="mI2-TC-Zdw"/>
                                             <constraint firstItem="hbG-tw-7E2" firstAttribute="width" secondItem="dy8-ht-jla" secondAttribute="width" id="mUG-OR-zzX"/>
                                             <constraint firstAttribute="centerY" secondItem="dy8-ht-jla" secondAttribute="centerY" id="o4N-QH-dhO"/>
                                             <constraint firstAttribute="centerX" secondItem="M0e-mz-C6x" secondAttribute="centerX" id="rup-6n-Pfg"/>
+                                            <constraint firstItem="M0e-mz-C6x" firstAttribute="width" secondItem="xBe-Sf-Jb4" secondAttribute="width" id="szJ-sU-K7k"/>
                                             <constraint firstAttribute="centerY" secondItem="r65-z5-bYS" secondAttribute="centerY" id="t1x-Dd-d4d"/>
                                             <constraint firstItem="HdM-UP-bAp" firstAttribute="leading" secondItem="yNr-8w-li6" secondAttribute="leading" id="yw7-rR-tEB"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="90o-bP-nUn"/>
+                                            </mask>
+                                        </variation>
                                     </view>
                                     <imageView userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" image="emuDisabledLogo" translatesAutoresizingMaskIntoConstraints="NO" id="WAM-y1-2FT">
                                         <rect key="frame" x="131" y="8" width="59" height="59"/>
@@ -378,7 +392,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharing to WhatsApp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYY-iI-Jgl">
-                                        <rect key="frame" x="99" y="44" width="125" height="16"/>
+                                        <rect key="frame" x="98" y="44" width="125" height="16"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -459,6 +473,7 @@
                         <outlet property="guiOptionsButton" destination="40d-HI-pw2" id="Z02-uR-bh3"/>
                         <outlet property="guiOptionsDrawerContainer" destination="SP1-We-9w8" id="1IF-dP-HAe"/>
                         <outlet property="guiPackagesBarContainer" destination="yNr-8w-li6" id="2nx-CO-kUG"/>
+                        <outlet property="guiRenderProgress" destination="xBe-Sf-Jb4" id="i6I-cs-pGD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wmu-TR-v2G" userLabel="First Responder" sceneMemberID="firstResponder"/>

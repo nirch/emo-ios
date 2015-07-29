@@ -457,14 +457,22 @@
 #pragma mark - Render
 -(void)resetEmu
 {
-    // TODO: Reimplement this.
-//    NSDictionary *info = @{
-//                           @"emuticonOID":self.emuticon.oid,
-//                           @"packageOID":self.emuticon.emuDef.package.oid
-//                           };
-//    self.emuticon.prefferedFootageOID = nil;
-//    [EMRenderManager2.sh renderingRequiredForEmu:self.emuticon info:info];
-//    [self refreshEmu];
+    if (self.emuticon == nil) return;
+    NSString *emuOID = self.emuticon.oid;
+    NSString *packOID = self.emuticon.emuDef.package.oid;
+    if (emuOID == nil || packOID == nil) return;
+    
+    NSDictionary *info = @{
+                           @"emuticonOID":emuOID,
+                           @"packageOID":packOID
+                           };
+    self.emuticon.prefferedFootageOID = nil;
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    [EMRenderManager2.sh updatePriorities:@{self.emuticon.oid:@YES}];
+    [EMRenderManager2.sh enqueueEmu:self.emuticon indexPath:indexPath userInfo:info];
+    [self.emuticon cleanUp];
+    [self refreshEmu];
 }
 
 #pragma mark - Analytics

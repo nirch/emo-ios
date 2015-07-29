@@ -792,7 +792,6 @@
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    HMLOG(TAG, EM_VERBOSE, @"Begin scrolling");
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView

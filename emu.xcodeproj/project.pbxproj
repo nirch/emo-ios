@@ -430,6 +430,11 @@
 		08875E111B19F51E00E6663C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08875E0F1B19F51200E6663C /* AVKit.framework */; };
 		08875E171B1AF25600E6663C /* ThumbOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08875E161B1AF25600E6663C /* ThumbOutput.mm */; };
 		08875E181B1AF25600E6663C /* ThumbOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08875E161B1AF25600E6663C /* ThumbOutput.mm */; };
+		088F313F1B67CF6B008FA3C1 /* meeow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08BD6A2F1B319A660001F614 /* meeow.jpg */; };
+		088F31401B67CF6C008FA3C1 /* meeow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08BD6A2F1B319A660001F614 /* meeow.jpg */; };
+		088F31421B67D776008FA3C1 /* meeowuser.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31411B67D776008FA3C1 /* meeowuser.png */; };
+		088F31431B67D776008FA3C1 /* meeowuser.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31411B67D776008FA3C1 /* meeowuser.png */; };
+		088F31441B67D777008FA3C1 /* meeowuser.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31411B67D776008FA3C1 /* meeowuser.png */; };
 		08967C021B57CCED000DDCF9 /* EMFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */; };
 		08967C031B57CCED000DDCF9 /* EMFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */; };
 		08967C041B57CCED000DDCF9 /* EmuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C001B57CCED000DDCF9 /* EmuCell.m */; };
@@ -992,6 +997,7 @@
 		08875E0F1B19F51200E6663C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		08875E151B1AF25600E6663C /* ThumbOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbOutput.h; sourceTree = "<group>"; };
 		08875E161B1AF25600E6663C /* ThumbOutput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ThumbOutput.mm; sourceTree = "<group>"; };
+		088F31411B67D776008FA3C1 /* meeowuser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meeowuser.png; sourceTree = "<group>"; };
 		08967BFB1B57CC72000DDCF9 /* EMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRecorderDelegate.h; sourceTree = "<group>"; };
 		08967BFD1B57CCED000DDCF9 /* EMFeedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeedVC.h; sourceTree = "<group>"; };
 		08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeedVC.m; sourceTree = "<group>"; };
@@ -1431,6 +1437,7 @@
 				08967C131B5AB884000DDCF9 /* output480.mov */,
 				08325AC71B31343700C6C5C8 /* packages_data_for_tests.json */,
 				0805ABC91B4B157E0099ECBE /* atomblast.gif */,
+				088F31411B67D776008FA3C1 /* meeowuser.png */,
 				08BD6A2F1B319A660001F614 /* meeow.jpg */,
 				08BD6A2D1B31990C0001F614 /* flames.gif */,
 				08325AC11B309C9400C6C5C8 /* gif-transp.gif */,
@@ -2554,6 +2561,7 @@
 				08967C161B5AE154000DDCF9 /* uniformBGParams.xml in Resources */,
 				08325AAE1B2EB6D800C6C5C8 /* audio_test.mp3 in Resources */,
 				08325AC01B30411300C6C5C8 /* expected-result.jpg in Resources */,
+				088F31441B67D777008FA3C1 /* meeowuser.png in Resources */,
 				08325AB21B2EB6D800C6C5C8 /* test-mask.jpg in Resources */,
 				08967C141B5AB884000DDCF9 /* output480.mov in Resources */,
 				08967C181B5AE21B000DDCF9 /* emuDefaultContour480.ctr in Resources */,
@@ -2578,6 +2586,7 @@
 				084AF4E31B383B810056FC34 /* meme-cage-fg.gif in Resources */,
 				084AF5071B383B810056FC34 /* wasted-buzzzzzed-fg.gif in Resources */,
 				086911D31B16D73100D5D29F /* Images.xcassets in Resources */,
+				088F31431B67D776008FA3C1 /* meeowuser.png in Resources */,
 				084AF4CB1B383B810056FC34 /* hearts-mask-v1.png in Resources */,
 				084AF4F71B383B810056FC34 /* snack-morning-bg.gif in Resources */,
 				084AF49F1B383B810056FC34 /* casual-whats-bg.gif in Resources */,
@@ -2615,6 +2624,7 @@
 				084AF4931B383B810056FC34 /* casual-thanks-bg.gif in Resources */,
 				084AF4E71B383B810056FC34 /* party-party-bg.gif in Resources */,
 				084AF4AF1B383B810056FC34 /* crap-bitch-fg.gif in Resources */,
+				088F31401B67CF6C008FA3C1 /* meeow.jpg in Resources */,
 				084AF5231B383B810056FC34 /* yeah-omg-bg.gif in Resources */,
 				084AF4D71B383B810056FC34 /* meme-baby-bg.gif in Resources */,
 				084AF51F1B383B810056FC34 /* yeah-no-fg.gif in Resources */,
@@ -2644,6 +2654,7 @@
 				084AF4761B383B810056FC34 /* 70s-peace-bg.gif in Resources */,
 				08AA14CE1B0BA658002E1B2F /* simpleSwipe.wav in Resources */,
 				08AA14D01B0BA658002E1B2F /* plasticClickSound.wav in Resources */,
+				088F31421B67D776008FA3C1 /* meeowuser.png in Resources */,
 				084AF4861B383B810056FC34 /* casual-lol-bg.gif in Resources */,
 				08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */,
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
@@ -2709,6 +2720,7 @@
 				084AF50A1B383B810056FC34 /* wasted-buzzzzzed-mask-v1.png in Resources */,
 				084AF4F61B383B810056FC34 /* snack-morning-bg.gif in Resources */,
 				08AA15091B0BA658002E1B2F /* passThrough.fsh in Resources */,
+				088F313F1B67CF6B008FA3C1 /* meeow.jpg in Resources */,
 				08AA150B1B0BA658002E1B2F /* onboarding_packages_prod.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

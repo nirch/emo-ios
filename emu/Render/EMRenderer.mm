@@ -244,8 +244,16 @@
     // Render!
     render->Process();
     
+    // Closing stuff & cleanup
+    if (userSource != NULL) userSource->Close();
+    if (waterMarkSource != NULL) waterMarkSource->Close();
+    if (solidBG != NULL) solidBG->Close();
+    if (videoOutput != NULL) videoOutput->Close();
+    if (thumbOutput != NULL) thumbOutput->Close();
+    
     // Done
     delete render;
+    
     
 //    gpMemory_leak_print(stdout);
 }

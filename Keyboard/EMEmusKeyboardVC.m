@@ -22,6 +22,7 @@
 #import "EMInterfaceDelegate.h"
 #import <Toast/UIView+Toast.h>
 
+#import "EMNotificationCenter.h"
 #import "EMDownloadsManager2.h"
 #import "EMRenderManager2.h"
 #import "AppManagement.h"
@@ -54,6 +55,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *guiHowToMessage;
 @property (weak, nonatomic) IBOutlet UIView *guiPackagesBarContainer;
+@property (weak, nonatomic) IBOutlet UIProgressView *guiRenderProgress;
 
 @property (nonatomic) BOOL shareVideoSupported;
 
@@ -89,7 +91,7 @@
     [super viewDidLoad];
     self.initializedData = NO;
     self.isScrolling = NO;
-    self.shareVideoSupported = NO;
+    self.shareVideoSupported = YES;
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     _screenWidth = MIN(screenRect.size.width, screenRect.size.height);
@@ -158,7 +160,7 @@
 -(void)initTimers
 {
     [self invalidateTimers];
-    self.ticker = [NSTimer scheduledTimerWithTimeInterval:0.7
+    self.ticker = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                    target:self
                                                  selector:@selector(onTick:)
                                                  userInfo:nil
@@ -175,14 +177,10 @@
 -(void)onTick:(NSTimer *)timer
 {
     if (self.isScrolling) return;
-    NSInteger i=0;
     for (EmuKBCell *cell in self.guiCollectionView.visibleCells) {
-        if (cell.pendingAnimatedGifURL) {
-            i++;
+        if (cell.pendingAnimatedGifURL && !cell.guiActivity.isAnimating) {
             [cell showPendingGifURL];
-            if (i>=2 || self.isScrolling) {
-                return;
-            }
+            return;
         }
     }
 }
@@ -203,6 +201,12 @@
                  selector:@selector(onEmuStateUpdated:)
                      name:hmkDownloadResourceFinished
                    object:nil];
+    
+    // Rendering progres.
+    [nc addUniqueObserver:self
+                 selector:@selector(onRenderingProgressReport:)
+                     name:emkUIRenderProgressReport
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -210,6 +214,7 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:hmkRenderingFinished];
     [nc removeObserver:hmkDownloadResourceFinished];
+    [nc removeObserver:emkUIRenderProgressReport];
 }
 
 #pragma mark - Observers handlers
@@ -236,12 +241,26 @@
     }
     
     // The cell is on screen, refresh it.
-    if ([self.guiCollectionView numberOfItemsInSection:0] == self.fetchedResultsController.fetchedObjects.count) {
+    NSInteger sectionNumber = indexPath.section;
+    NSInteger itemNumber = indexPath.item;
+    
+    if ([self.guiCollectionView numberOfItemsInSection:sectionNumber] > itemNumber) {
         [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
     } else {
         [self.guiCollectionView reloadData];
     }
 }
+
+-(void)onRenderingProgressReport:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSNumber *progressNumber = info[@"progress"];
+    if (progressNumber == nil) return;
+    
+    float progress = MIN(progressNumber.floatValue,1.0);
+    [self.guiRenderProgress setProgress:progress animated:YES];
+}
+
 
 #pragma mark - segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -294,6 +313,9 @@
         self.guiOptionsButton.hidden = YES;
         self.guiOptionsDrawerContainer.hidden = YES;
     }
+    
+    self.guiRenderProgress.progress = 0;
+    self.guiRenderProgress.hidden = YES;
 }
 
 -(void)updateGUI
@@ -606,8 +628,11 @@
 
 -(void)renderVideoBeforeCopyForEmu:(Emuticon *)emu
 {
+    self.guiRenderProgress.progress = 0;
+    self.guiRenderProgress.hidden = NO;
     self.guiCollectionView.alpha = 0.4;
     self.guiCollectionView.userInteractionEnabled = NO;
+    
     [EMRenderManager2.sh renderVideoForEmu:emu
                          requiresWaterMark:YES
                            completionBlock:^{
@@ -629,6 +654,9 @@
 #pragma mark - EMShareDelegate
 -(void)sharerDidShareObject:(id)sharedObject withInfo:(NSDictionary *)info
 {
+    self.guiRenderProgress.progress = 0;
+    self.guiRenderProgress.hidden = YES;
+    [self.sharer cleanUp];
     self.sharer = nil;
     
     // Analytics
@@ -795,7 +823,6 @@
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     self.isScrolling = YES;
-    HMLOG(TAG, EM_VERBOSE, @"Begin scrolling");
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
