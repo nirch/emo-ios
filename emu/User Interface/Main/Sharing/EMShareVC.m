@@ -14,6 +14,9 @@
 #import "EMShareCell.h"
 #import "EMLabel.h"
 #import "EMDB.h"
+#import "EMShareVC.h"
+#import "EMShareInputVC.h"
+#import "NSString+Utilities.h"
 
 // Share methods
 #import "EMShareCopy.h"
@@ -24,17 +27,21 @@
 #import "EMShareDocumentInteraction.h"
 #import "EMShareTwitter.h"
 #import "EMShareFacebook.h"
+#import "EMShareInstoosh.h"
 
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
+#import "iRate.h"
 
 #import <Toast/UIView+Toast.h>
 #import "EMRenderManager2.h"
+#import "EMShareInputDelegate.h"
 
 @interface EMShareVC () <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
-    EMShareDelegate
+    EMShareDelegate,
+    EMShareInputDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
@@ -48,6 +55,7 @@
 
 @property (nonatomic) NSArray *shareMethods;
 @property (nonatomic) NSDictionary *shareNames;
+@property (nonatomic) NSDictionary *shareColors;
 @property (nonatomic) NSDictionary *shareMethodsNames;
 @property (nonatomic) EMShare *sharer;
 @property (nonatomic) EMShare *previousSharer;
@@ -121,10 +129,10 @@
     }
 
     self.guiCollectionView.alpha = 1;
-    CGFloat x = self.view.bounds.size.width;
+    CGFloat width = self.view.bounds.size.width;
     self.guiCollectionView.transform = CGAffineTransformIdentity;
 
-    self.guiFBMButtonContainer.transform = CGAffineTransformMakeTranslation(-x, 0);
+    self.guiFBMButtonContainer.transform = CGAffineTransformMakeTranslation(-width, 0);
     self.guiFBMButtonContainer.alpha = 0;
 }
 
@@ -165,25 +173,26 @@
         // A priorized list of share methods for animated gifs.
         NSMutableArray *arr = [NSMutableArray new];
         [arr addObject:@(emkShareMethodFacebookMessanger)];
-        [arr addObject:@(emkShareMethodFacebook)];
         [arr addObject:@(emkShareMethodAppleMessages)];
+        [arr addObject:@(emkShareMethodFacebook)];
         [arr addObject:@(emkShareMethodTwitter)];
         [arr addObject:@(emkShareMethodMail)];
         [arr addObject:@(emkShareMethodSaveToCameraRoll)];
         [arr addObject:@(emkShareMethodCopy)];
         self.shareMethods = arr;
-
     } else {
         // A priorized list of share methods for video.
         NSMutableArray *arr = [NSMutableArray new];
         [arr addObject:@(emkShareMethodFacebookMessanger)];
         [arr addObject:@(emkShareMethodAppleMessages)];
         [arr addObject:@(emkShareMethodDocumentInteraction)];
+        [arr addObject:@(emkShareMethodInstagram)];
         [arr addObject:@(emkShareMethodMail)];
         [arr addObject:@(emkShareMethodSaveToCameraRoll)];
         [arr addObject:@(emkShareMethodCopy)];
         self.shareMethods = arr;
     }
+    
     [self.guiCollectionView reloadData];
 }
 
@@ -200,8 +209,15 @@
                         @(emkShareMethodMail):                  @"mail",
                         @(emkShareMethodSaveToCameraRoll):      @"savetocm",
                         @(emkShareMethodCopy):                  @"copy",
-                        @(emkShareMethodDocumentInteraction):   @"sharemisc"
+                        @(emkShareMethodDocumentInteraction):   @"sharemisc",
+                        @(emkShareMethodInstagram):             @"instagram"
                         };
+    
+    self.shareColors = @{
+                         @(emkShareMethodInstagram): [@"835A51FF" colorFromRGBAHexString],
+                         @(emkShareMethodTwitter): [@"1188A5FF" colorFromRGBAHexString],
+                         };
+    
     [self update];
 }
 
@@ -318,6 +334,9 @@
     // Only one share operation at a time.
     if (self.sharer) return;
     
+    NSMutableDictionary *shareInfo = [NSMutableDictionary dictionaryWithDictionary:info];
+    
+    // Choose a sharer class.
     if (method == emkShareMethodCopy) {
         
         //
@@ -373,7 +392,15 @@
         // Twitter
         //
         self.sharer = [EMShareTwitter new];
+        self.sharer.requiresUserInput = YES;
         
+    } else if (method == emkShareMethodInstagram) {
+    
+        //
+        // Instagram
+        //
+        self.sharer = [EMShareInstoosh new];
+
     } else {
         
         //
@@ -391,41 +418,80 @@
         
     }
     
+    //
+    // Set info for the sharer object
+    //
+    NSString *shareMethodName = self.shareNames[@(method)];
+    NSMutableDictionary *extraCFG = [NSMutableDictionary new];
+    UIColor *shareColor = self.shareColors[@(method)];
+    if (shareColor) extraCFG[@"color"] = shareColor;
+    UIImage *icon = [UIImage imageNamed:shareMethodName];
+    if (icon) extraCFG[@"icon"] = icon;
+    NSString *defaultHashTags = [emu.emuDef.package sharingHashTagsStringForShareMethodNamed:shareMethodName];
+    if (defaultHashTags) extraCFG[@"sharingHashTags"] = defaultHashTags;
     
-    //
-    // Share
-    //
-    self.sharer.info = [NSMutableDictionary dictionaryWithDictionary:info];
+    self.sharer.info = shareInfo;
+    self.sharer.extraCFG = extraCFG;
     self.sharer.objectToShare = emu;
     self.sharer.delegate = self;
     self.sharer.viewController = self;
     self.sharer.view = self.view;
-    
-    if (mediaDataType == EMMediaDataTypeGIF) {
+    self.sharer.shareOption = mediaDataType == EMMediaDataTypeGIF? emkShareOptionAnimatedGif:emkShareOptionVideo;
+    [self _shareEmuUsingCurrentSharer];
+}
 
-        //
-        // GIF
-        //
-        self.sharer.shareOption = emkShareOptionAnimatedGif;
-        [self.sharer share];
+-(void)_shareEmuUsingCurrentSharer
+{
+    // Make sure sharer exists and object to share is an Emu
+    if (self.sharer == nil || self.sharer.objectToShare == nil) return;
+    if (![self.sharer.objectToShare isKindOfClass:[Emuticon class]]) return;
+    Emuticon *emu = self.sharer.objectToShare;
 
-    } else {
-
-        //
-        // Video
-        //
-        self.sharer.shareOption = emkShareOptionVideo;
-        
-        // Check if rendered video available.
-        // (rendered video files are temp files)
-        if (emu.videoURL) {
-            [self.sharer share];
-        } else {
-            // No video file? Render it!
-            BOOL requiresWaterMark = (method != emkShareMethodFacebookMessanger);
+    //
+    // First, check if need to create video for this share.
+    //
+    if (self.sharer.shareOption == emkShareOptionVideo) {
+        if (emu.videoURL == nil) {
+            // Temp video file not created yet.
+            // Render it before sharing.
+            BOOL requiresWaterMark = YES;
+            if (emu.emuDef.package.preventVideoWaterMarks.boolValue) requiresWaterMark = NO;
+            if ([self.sharer isKindOfClass:[EMShareFBMessanger class]]) requiresWaterMark = NO;
             [self renderVideoBeforeShareForEmu:emu requiresWaterMark:requiresWaterMark];
+            return;
         }
+    }
+    
+    // We got the media we need. Share it.
+    [self _share];
+}
+
+-(void)_share
+{
+    Emuticon *emu = self.sharer.objectToShare;
+    if (![emu isKindOfClass:[Emuticon class]]) return;
+    
+    // Share (or request user input if required before sharing)
+    if (self.sharer.requiresUserInput) {
+        // Ask user for input before sharing.
+        EMShareInputVC *shareInputVC = [EMShareInputVC shareInputVCInParentVC:self.parentViewController];
         
+        // Title
+        shareInputVC.titleColor = self.sharer.extraCFG[@"color"];
+        shareInputVC.titleIcon = self.sharer.extraCFG[@"icon"];
+        NSURL *thumbURL = emu.thumbURL;
+        shareInputVC.sharedMediaIcon = thumbURL? [UIImage imageWithContentsOfFile:thumbURL.path] : nil;
+
+        // Delegation
+        shareInputVC.delegate = self;
+        
+        // Default hashtags (optional)
+        shareInputVC.defaultHashTags = self.sharer.extraCFG[@"sharingHashTags"];
+        
+        [shareInputVC updateUI];
+        [shareInputVC showAnimated:YES];
+    } else {
+        [self.sharer share];
     }
 }
 
@@ -443,7 +509,7 @@
                          requiresWaterMark:requiresWaterMark
                            completionBlock:^{
                                // If we are here, emu.videoURL points to the rendered video.
-                               [self.sharer share];
+                               [self _share];
                                self.guiRenderingView.hidden = YES;
                                self.guiCollectionView.hidden = NO;
                                self.guiFBMButtonContainer.hidden = NO;
@@ -499,6 +565,11 @@
     [params addKey:AK_PD_DID_EVER_SHARE_USING_APP value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
     [params addKey:AK_PD_NUMBER_OF_SHARES_USING_APP_COUNT value:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
     [HMPanel.sh personDetails:params.dictionary];
+    
+    // Update iRate
+    iRate *irate = [iRate sharedInstance];
+    NSInteger eventsCount = [irate eventCount];
+    [irate setEventCount:eventsCount+1];
 }
 
 -(void)sharerDidCancelWithInfo:(NSDictionary *)info
@@ -540,6 +611,22 @@
 -(void)sharerDidProgress:(float)progress info:(NSDictionary *)info
 {
     [self updateProgress:progress animated:YES];
+}
+
+#pragma mark - EMShareInputDelegate
+-(void)shareInputWasCanceled
+{
+    [self.sharer cleanUp];
+    self.sharer = nil;
+    [self.view makeToast:LS(@"SHARE_TOAST_CANCELED")];
+    // Analytics
+    [HMPanel.sh analyticsEvent:AK_E_SHARE_CANCELED info:self.sharer.info];
+}
+
+-(void)shareInputWasConfirmedWithText:(NSString *)text
+{
+    self.sharer.userInputText = text;
+    [self.sharer share];
 }
 
 #pragma mark - progress

@@ -15,8 +15,19 @@
 @synthesize viewController;
 @synthesize delegate;
 @synthesize info;
+@synthesize extraCFG;
 @synthesize objectToShare;
 @synthesize shareOption;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        self.requiresUserInput = NO;
+    }
+    return self;
+}
+
 
 /**
  *  Make sure to call [super share] if you override 

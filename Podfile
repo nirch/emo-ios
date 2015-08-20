@@ -23,6 +23,7 @@ pod 'Optimizely-iOS-SDK'
 
 # General
 pod 'RegExCategories', '~> 1.0'
+pod 'iRate', '~> 1.11'
 
 # Facebook
 pod 'FBSDKCoreKit', '~> 4.2'

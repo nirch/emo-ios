@@ -42,28 +42,7 @@
 -(void)shareAnimatedGif
 {
     [super shareAnimatedGif];
-    
-    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"Twitter"
-                                                                     message:nil
-                                                              preferredStyle:UIAlertControllerStyleAlert];
-
-    [alertVC addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.delegate = self;
-    }];
-
-    [alertVC addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL")
-                                                style:UIAlertActionStyleCancel
-                                              handler:^(UIAlertAction *action) {
-                                                  [self cancel];
-                                              }]];
-    [alertVC addAction:[UIAlertAction actionWithTitle:LS(@"POST")
-                                                style:UIAlertActionStyleDefault
-                                              handler:^(UIAlertAction *action) {
-                                                  UITextField *textField = [alertVC.textFields firstObject];
-                                                  [self _shareAnimatedGifWithText:textField.text];
-                                              }]];
-    
-    [self.viewController presentViewController:alertVC animated:YES completion:nil];
+    [self _shareAnimatedGifWithText:self.userInputText];
 }
 
 

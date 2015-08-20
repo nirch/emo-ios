@@ -42,6 +42,7 @@
 // Video processing
 @property (atomic, readwrite) id<HMVideoProcessingProtocol> videoProcessor;
 @property (atomic, readwrite) HMVideoProcessingState videoProcessingState;
+@property (nonatomic) NSInteger inspectFrameInterval;
 
 // Recording
 @property (readwrite, getter=isRecording) BOOL recording;
@@ -69,6 +70,7 @@
         referenceOrientation = AVCaptureVideoOrientationPortrait;
         backgroundDetectionEnabled = NO;
         extractCounter = 0;
+        self.inspectFrameInterval = 40;
         self.shouldDropAllFrames = NO;
         self.uuid = [[NSUUID UUID] UUIDString];
         self.prefferedCamera = AVCaptureDevicePositionFront;
@@ -250,8 +252,11 @@
     NSError *error;
     AVCaptureDevice *camera = [self videoDeviceWithPosition:self.prefferedCamera];
     videoIn = [[AVCaptureDeviceInput alloc] initWithDevice:camera error:&error];
-    HMLOG(TAG, EM_ERR, @"Camera error: %@", [error localizedDescription]);
-    REMOTE_LOG(@"Camera error in setupCaptureSession: %@", [error localizedDescription]);
+    
+    if (error) {
+        HMLOG(TAG, EM_ERR, @"Camera error: %@", [error localizedDescription]);
+        REMOTE_LOG(@"Camera error in setupCaptureSession: %@", [error localizedDescription]);
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.sessionDelegate sessionUsingCameraPosition:self.prefferedCamera];
@@ -324,7 +329,7 @@
     BOOL thisFrameShouldBeInspected = (state == HMVideoProcessingStateInspectFrames ||
                                        state == HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames ||
                                        state == HMVideoProcessingStateInspectAndProcessFrames) &&
-                                        (extractCounter % 20 == 0);
+                                        ((extractCounter % _inspectFrameInterval) == (_inspectFrameInterval-1));
     if (state == HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames) {
         // HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames
         // ==> HMVideoProcessingStateProcessFrames

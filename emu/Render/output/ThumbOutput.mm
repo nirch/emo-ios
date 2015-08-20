@@ -21,6 +21,16 @@ ThumbOutput::ThumbOutput(
     this->frameNumber = frameNumber;
 }
 
+//im = image_bgr2rgb(im, im);
+//UIImage *thumbImage = [HMImageTools createUIImageFromImageType:im withAlpha:NO];
+//NSData *imageData = UIImagePNGRepresentation(thumbImage);
+//NSError *error;
+//
+//NSURL *root = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+//NSURL *url = [root URLByAppendingPathComponent:[SF:@"src_%@.png", @(iFrame)]];
+//[imageData writeToURL:url options:NSDataWritingAtomic error:&error];
+
+
 int	ThumbOutput::WriteFrame( image_type *im , int iFrame)
 {
     if (iFrame != frameNumber) return 1;

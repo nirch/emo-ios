@@ -2,7 +2,7 @@
 //  EmuticonDef.h
 //  emu
 //
-//  Created by Aviv Wolf on 7/22/15.
+//  Created by Aviv Wolf on 8/20/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @interface EmuticonDef : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * disallowedForOnboardingPreview;
+@property (nonatomic, retain) NSNumber * dlProgress;
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) id effects;
 @property (nonatomic, retain) NSNumber * framesCount;
@@ -29,7 +30,7 @@
 @property (nonatomic, retain) NSString * sourceUserLayerMask;
 @property (nonatomic, retain) NSNumber * thumbnailFrameIndex;
 @property (nonatomic, retain) NSNumber * useForPreview;
-@property (nonatomic, retain) NSNumber * dlProgress;
+@property (nonatomic, retain) NSString * prefferedWaterMark;
 @property (nonatomic, retain) NSSet *emus;
 @property (nonatomic, retain) Package *package;
 @end

@@ -40,7 +40,9 @@
     pkg.requiredVersion = [info safeStringForKey:@"requiredVersion"];
     pkg.zipppedPackageFileName = [info safeStringForKey:@"zipped_package_file_name"];
     pkg.showOnPacksBar = @(!self.parseForOnboarding);
-
+    pkg.sharingHashtags = [info safeDictionaryForKey:@"sharing_tags" defaultValue:nil];
+    pkg.preventVideoWaterMarks = [info safeBoolNumberForKey:@"prevent_video_watermarks" defaultsValue:@NO];
+    
     NSNumber *shouldAutoDownload = [info safeBoolNumberForKey:@"should_auto_download"];
     pkg.shouldAutoDownload = shouldAutoDownload? shouldAutoDownload: @YES;
     pkg.priority = @0;

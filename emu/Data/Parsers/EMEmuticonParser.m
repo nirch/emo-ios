@@ -85,6 +85,7 @@
     emuDef.palette                          = [info safeStringForKey:@"palette" defaultsDictionary:defaults];
     emuDef.disallowedForOnboardingPreview   = [info safeBoolNumberForKey:@"disallowed_for_onboarding_preview" defaultsValue:@NO];
     emuDef.effects                          = [info safeDictionaryForKey:@"effects" defaultValue:nil];
+    emuDef.prefferedWaterMark               = [info safeStringForKey:@"preffered_watermark" defaultsDictionary:defaults];
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

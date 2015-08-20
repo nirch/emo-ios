@@ -20,7 +20,8 @@ typedef NS_ENUM(NSInteger, EMKShareMethod) {
     emkShareMethodOther                                 = 8000,
     emkShareMethodFile                                  = 9000,
     emkShareMethodDocumentInteraction                   = 10000,
-    emkShareMethodTwitter                               = 11000
+    emkShareMethodTwitter                               = 11000,
+    emkShareMethodInstagram                             = 12000,
 };
 
 // What to share?
@@ -52,6 +53,7 @@ typedef NS_ENUM(NSInteger, EMKShareOption) {
  *  Some info about the share.
  */
 @property (nonatomic) NSMutableDictionary *info;
+@property (nonatomic) NSMutableDictionary *extraCFG;
 
 
 @property (nonatomic, weak) UIViewController *viewController;

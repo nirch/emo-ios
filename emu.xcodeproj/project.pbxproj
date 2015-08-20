@@ -82,8 +82,6 @@
 		08325AC61B31336400C6C5C8 /* EmuParsersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08325AC51B31336400C6C5C8 /* EmuParsersTests.m */; };
 		08325AC81B31343700C6C5C8 /* packages_data_for_tests.json in Resources */ = {isa = PBXBuildFile; fileRef = 08325AC71B31343700C6C5C8 /* packages_data_for_tests.json */; };
 		0833189A1B049D3E000B8979 /* EMRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083318991B049D3E000B8979 /* EMRenderer.mm */; };
-		083319671B04D389000B8979 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
-		083319681B04D389000B8979 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
 		08331A381B069CA7000B8979 /* onboarding_packages_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 08331A371B069CA7000B8979 /* onboarding_packages_prod.json */; };
 		08331A391B069CA7000B8979 /* onboarding_packages_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 08331A371B069CA7000B8979 /* onboarding_packages_prod.json */; };
 		083334851A827D79008AC771 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083334841A827D79008AC771 /* HMCaptureSession.mm */; };
@@ -95,6 +93,28 @@
 		083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083E52641A9E1EB100A66FC8 /* EMEmuticonScreenVC.m */; };
 		08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08409E981AB1C69700EC0930 /* EMSplashVC.m */; };
 		08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08409E991AB1C69700EC0930 /* SplashView.xib */; };
+		084349B81B80FD78009A653F /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349B71B80FD78009A653F /* HMFileHash.m */; };
+		084349B91B80FD78009A653F /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349B71B80FD78009A653F /* HMFileHash.m */; };
+		084349BA1B80FD78009A653F /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349B71B80FD78009A653F /* HMFileHash.m */; };
+		084349BB1B80FD78009A653F /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349B71B80FD78009A653F /* HMFileHash.m */; };
+		084349BE1B8203C2009A653F /* EMShareInstoosh.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349BD1B8203C2009A653F /* EMShareInstoosh.m */; };
+		084349BF1B8203C2009A653F /* EMShareInstoosh.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349BD1B8203C2009A653F /* EMShareInstoosh.m */; };
+		084349C21B837B1C009A653F /* EMShareInputBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084349C11B837B1C009A653F /* EMShareInputBox.xib */; };
+		084349C31B837B1C009A653F /* EMShareInputBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084349C11B837B1C009A653F /* EMShareInputBox.xib */; };
+		084349C61B837EA0009A653F /* EMShareInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349C51B837EA0009A653F /* EMShareInputVC.m */; };
+		084349C71B837EA0009A653F /* EMShareInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349C51B837EA0009A653F /* EMShareInputVC.m */; };
+		084349D11B84999F009A653F /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D01B84999F009A653F /* NSString+Utilities.m */; };
+		084349D21B84999F009A653F /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D01B84999F009A653F /* NSString+Utilities.m */; };
+		084349D31B84999F009A653F /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D01B84999F009A653F /* NSString+Utilities.m */; };
+		084349D41B84999F009A653F /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D01B84999F009A653F /* NSString+Utilities.m */; };
+		084349D81B84F1A5009A653F /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D71B84F1A5009A653F /* Package.m */; };
+		084349D91B84F1A5009A653F /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D71B84F1A5009A653F /* Package.m */; };
+		084349DA1B84F1A5009A653F /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D71B84F1A5009A653F /* Package.m */; };
+		084349DB1B84F1A5009A653F /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D71B84F1A5009A653F /* Package.m */; };
+		084349DE1B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
+		084349DF1B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
+		084349E01B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
+		084349E11B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
 		084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4711B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
@@ -345,7 +365,6 @@
 		0867CA141B16602E00FF0E85 /* EMEmusKeyboardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080489E81AA5957A008CC885 /* EMEmusKeyboardVC.m */; };
 		0867CA151B16602E00FF0E85 /* EMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899B1A93B9E5008D9068 /* EMLabel.m */; };
 		0867CA161B16602E00FF0E85 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
-		0867CA171B16602E00FF0E85 /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
 		0867CA181B16602E00FF0E85 /* EmuSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */; };
 		0867CA191B16602E00FF0E85 /* NSManagedObject+FindAndCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */; };
 		0867CA1A1B16602E00FF0E85 /* EMAlphaNumericKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AC3E691AD15465005231B5 /* EMAlphaNumericKeyboard.m */; };
@@ -386,10 +405,6 @@
 		0874030F1B63971300866A74 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
 		087403101B63971D00866A74 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
 		087403111B63971E00866A74 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
-		087BCFBB1B5FC1E400A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
-		087BCFBC1B5FC1E400A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
-		087BCFBD1B5FCFCA00A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
-		087BCFBE1B5FCFCB00A7A930 /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */; };
 		087BCFBF1B625AE600A7A930 /* EMRenderManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C0D1B580AFE000DDCF9 /* EMRenderManager2.m */; };
 		087BCFC01B625AE800A7A930 /* EMRenderManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C0D1B580AFE000DDCF9 /* EMRenderManager2.m */; };
 		087BCFC11B625AEE00A7A930 /* EMDownloadsManager2.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C2A1B5BAEED000DDCF9 /* EMDownloadsManager2.m */; };
@@ -435,6 +450,8 @@
 		088F31421B67D776008FA3C1 /* meeowuser.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31411B67D776008FA3C1 /* meeowuser.png */; };
 		088F31431B67D776008FA3C1 /* meeowuser.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31411B67D776008FA3C1 /* meeowuser.png */; };
 		088F31441B67D777008FA3C1 /* meeowuser.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31411B67D776008FA3C1 /* meeowuser.png */; };
+		088F31481B694FCD008FA3C1 /* lebouf.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31471B694FCD008FA3C1 /* lebouf.png */; };
+		088F31491B69506D008FA3C1 /* lebouf.png in Resources */ = {isa = PBXBuildFile; fileRef = 088F31471B694FCD008FA3C1 /* lebouf.png */; };
 		08967C021B57CCED000DDCF9 /* EMFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */; };
 		08967C031B57CCED000DDCF9 /* EMFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */; };
 		08967C041B57CCED000DDCF9 /* EmuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08967C001B57CCED000DDCF9 /* EmuCell.m */; };
@@ -508,7 +525,6 @@
 		08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66DF1A937EC9007BC910 /* AppDelegate.m */; };
 		08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
 		08AA14711B0BA658002E1B2F /* EMShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89861A9B217D00224A38 /* EMShareVC.m */; };
-		08AA14721B0BA658002E1B2F /* Package.m in Sources */ = {isa = PBXBuildFile; fileRef = 083319661B04D389000B8979 /* Package.m */; };
 		08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D91A9CD18100224A38 /* EMunizingView.m */; };
 		08AA14751B0BA658002E1B2F /* AWFanOpeningLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD01A967906008A3E0A /* AWFanOpeningLayer.m */; };
 		08AA14761B0BA658002E1B2F /* EMOBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C674B1A937EC9007BC910 /* EMOBCell.m */; };
@@ -824,8 +840,6 @@
 		08325AC71B31343700C6C5C8 /* packages_data_for_tests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packages_data_for_tests.json; sourceTree = "<group>"; };
 		083318981B049D3E000B8979 /* EMRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRenderer.h; sourceTree = "<group>"; };
 		083318991B049D3E000B8979 /* EMRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EMRenderer.mm; sourceTree = "<group>"; };
-		083319651B04D389000B8979 /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
-		083319661B04D389000B8979 /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
 		08331A371B069CA7000B8979 /* onboarding_packages_prod.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_packages_prod.json; sourceTree = "<group>"; };
 		083334761A822E4D008AC771 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		083334831A827D79008AC771 /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
@@ -846,6 +860,21 @@
 		08409E971AB1C69700EC0930 /* EMSplashVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSplashVC.h; sourceTree = "<group>"; };
 		08409E981AB1C69700EC0930 /* EMSplashVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSplashVC.m; sourceTree = "<group>"; };
 		08409E991AB1C69700EC0930 /* SplashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashView.xib; sourceTree = "<group>"; };
+		084349B61B80FD78009A653F /* HMFileHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFileHash.h; sourceTree = "<group>"; };
+		084349B71B80FD78009A653F /* HMFileHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFileHash.m; sourceTree = "<group>"; };
+		084349BC1B8203C2009A653F /* EMShareInstoosh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareInstoosh.h; sourceTree = "<group>"; };
+		084349BD1B8203C2009A653F /* EMShareInstoosh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareInstoosh.m; sourceTree = "<group>"; };
+		084349C11B837B1C009A653F /* EMShareInputBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EMShareInputBox.xib; sourceTree = "<group>"; };
+		084349C41B837EA0009A653F /* EMShareInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareInputVC.h; sourceTree = "<group>"; };
+		084349C51B837EA0009A653F /* EMShareInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareInputVC.m; sourceTree = "<group>"; };
+		084349C81B83B7FD009A653F /* emu1_10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_10.xcdatamodel; sourceTree = "<group>"; };
+		084349CF1B84999F009A653F /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
+		084349D01B84999F009A653F /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
+		084349D51B84CCF6009A653F /* EMShareInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareInputDelegate.h; sourceTree = "<group>"; };
+		084349D61B84F1A5009A653F /* Package.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.h; sourceTree = "<group>"; };
+		084349D71B84F1A5009A653F /* Package.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.m; sourceTree = "<group>"; };
+		084349DC1B85D970009A653F /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
+		084349DD1B85D970009A653F /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMSDK.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-groovy-bg.gif"; sourceTree = "<group>"; };
 		084AF4381B383B810056FC34 /* 70s-peace-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-peace-bg.gif"; sourceTree = "<group>"; };
@@ -980,8 +1009,6 @@
 		0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareDocumentInteraction.m; sourceTree = "<group>"; };
 		087403121B63E41200866A74 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
-		087BCFB91B5FC1E400A7A930 /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
-		087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -998,6 +1025,7 @@
 		08875E151B1AF25600E6663C /* ThumbOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbOutput.h; sourceTree = "<group>"; };
 		08875E161B1AF25600E6663C /* ThumbOutput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ThumbOutput.mm; sourceTree = "<group>"; };
 		088F31411B67D776008FA3C1 /* meeowuser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meeowuser.png; sourceTree = "<group>"; };
+		088F31471B694FCD008FA3C1 /* lebouf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lebouf.png; sourceTree = "<group>"; };
 		08967BFB1B57CC72000DDCF9 /* EMRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRecorderDelegate.h; sourceTree = "<group>"; };
 		08967BFD1B57CCED000DDCF9 /* EMFeedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeedVC.h; sourceTree = "<group>"; };
 		08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeedVC.m; sourceTree = "<group>"; };
@@ -1436,6 +1464,7 @@
 				08967C171B5AE21B000DDCF9 /* emuDefaultContour480.ctr */,
 				08967C131B5AB884000DDCF9 /* output480.mov */,
 				08325AC71B31343700C6C5C8 /* packages_data_for_tests.json */,
+				088F31471B694FCD008FA3C1 /* lebouf.png */,
 				0805ABC91B4B157E0099ECBE /* atomblast.gif */,
 				088F31411B67D776008FA3C1 /* meeowuser.png */,
 				08BD6A2F1B319A660001F614 /* meeow.jpg */,
@@ -1517,6 +1546,26 @@
 				08409E981AB1C69700EC0930 /* EMSplashVC.m */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		084349B51B80FD78009A653F /* hash */ = {
+			isa = PBXGroup;
+			children = (
+				084349B61B80FD78009A653F /* HMFileHash.h */,
+				084349B71B80FD78009A653F /* HMFileHash.m */,
+			);
+			path = hash;
+			sourceTree = "<group>";
+		};
+		084349C01B837ACB009A653F /* Share User Input Box */ = {
+			isa = PBXGroup;
+			children = (
+				084349C11B837B1C009A653F /* EMShareInputBox.xib */,
+				084349D51B84CCF6009A653F /* EMShareInputDelegate.h */,
+				084349C41B837EA0009A653F /* EMShareInputVC.h */,
+				084349C51B837EA0009A653F /* EMShareInputVC.m */,
+			);
+			path = "Share User Input Box";
 			sourceTree = "<group>";
 		};
 		084AF4361B383B810056FC34 /* 70s */ = {
@@ -1661,6 +1710,8 @@
 				08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */,
 				084AF5351B3A14D00056FC34 /* EMShareTwitter.h */,
 				084AF5361B3A14D00056FC34 /* EMShareTwitter.m */,
+				084349BC1B8203C2009A653F /* EMShareInstoosh.h */,
+				084349BD1B8203C2009A653F /* EMShareInstoosh.m */,
 				08B9876A1B08CB3300EA0D73 /* EMShareDebuggingFile.h */,
 				08B9876B1B08CB3300EA0D73 /* EMShareDebuggingFile.m */,
 			);
@@ -1739,14 +1790,14 @@
 		085C66FE1A937EC9007BC910 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				087BCFB91B5FC1E400A7A930 /* EmuticonDef.h */,
-				087BCFBA1B5FC1E400A7A930 /* EmuticonDef.m */,
+				084349DC1B85D970009A653F /* EmuticonDef.h */,
+				084349DD1B85D970009A653F /* EmuticonDef.m */,
+				084349D61B84F1A5009A653F /* Package.h */,
+				084349D71B84F1A5009A653F /* Package.m */,
 				08658B401B4E598700EC4B19 /* AppCFG.h */,
 				08658B411B4E598700EC4B19 /* AppCFG.m */,
 				08ED7FED1B1C860E00B6856F /* Emuticon.h */,
 				08ED7FEE1B1C860E00B6856F /* Emuticon.m */,
-				083319651B04D389000B8979 /* Package.h */,
-				083319661B04D389000B8979 /* Package.m */,
 				085A784E1AEC2364003E9F97 /* UserFootage.h */,
 				085A784F1AEC2364003E9F97 /* UserFootage.m */,
 			);
@@ -1897,6 +1948,8 @@
 				08B589A11A93BB65008D9068 /* EmuBaseStyle.m */,
 				08B589A31A93BB7B008D9068 /* EmuStyle.h */,
 				08B589A41A93BB7B008D9068 /* EmuStyle.m */,
+				084349CF1B84999F009A653F /* NSString+Utilities.h */,
+				084349D01B84999F009A653F /* NSString+Utilities.m */,
 			);
 			path = "Style Kit";
 			sourceTree = "<group>";
@@ -2088,6 +2141,7 @@
 				08CB89861A9B217D00224A38 /* EMShareVC.m */,
 				0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */,
 				0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */,
+				084349C01B837ACB009A653F /* Share User Input Box */,
 				0854EE301A9FA6AA00FD3833 /* Share Methods */,
 			);
 			path = Sharing;
@@ -2201,9 +2255,9 @@
 				080CB34E1AA4DB7800603E30 /* emu.entitlements */,
 				086911D41B1740AB00D5D29F /* emubeta.entitlements */,
 				085C66DD1A937EC9007BC910 /* App */,
-				08CB898C1A9B2F9200224A38 /* Render */,
 				085C67251A937EC9007BC910 /* User Interface */,
 				08AA14271B08EDA1002E1B2F /* Localization */,
+				08CB898C1A9B2F9200224A38 /* Render */,
 				08271FAD1B01F5B90046F38E /* Local Resources */,
 				085C66E61A937EC9007BC910 /* Data */,
 				08D929F61A77E14400B6A68F /* Frameworks */,
@@ -2232,6 +2286,7 @@
 				084682291A7A3C04004235C7 /* HMSDK.h */,
 				08CE39CA1A912C5000B82DB9 /* HMError.h */,
 				08CE39CB1A912C5000B82DB9 /* HMError.m */,
+				084349B51B80FD78009A653F /* hash */,
 				083D54721A8CB0A10048604A /* images */,
 				089E78B11A780DEB00BC3479 /* notifications center */,
 				08D929F81A77EFBD00B6A68F /* camera and video processing */,
@@ -2563,6 +2618,7 @@
 				08325AC01B30411300C6C5C8 /* expected-result.jpg in Resources */,
 				088F31441B67D777008FA3C1 /* meeowuser.png in Resources */,
 				08325AB21B2EB6D800C6C5C8 /* test-mask.jpg in Resources */,
+				088F31481B694FCD008FA3C1 /* lebouf.png in Resources */,
 				08967C141B5AB884000DDCF9 /* output480.mov in Resources */,
 				08967C181B5AE21B000DDCF9 /* emuDefaultContour480.ctr in Resources */,
 			);
@@ -2650,6 +2706,7 @@
 				08AA14C11B0BA658002E1B2F /* passThrough.vsh in Resources */,
 				08AA14C51B0BA658002E1B2F /* pressedButton.wav in Resources */,
 				08AA14C61B0BA658002E1B2F /* clear480x480.png in Resources */,
+				084349C31B837B1C009A653F /* EMShareInputBox.xib in Resources */,
 				084AF49A1B383B810056FC34 /* casual-thanks-mask-v1.png in Resources */,
 				084AF4761B383B810056FC34 /* 70s-peace-bg.gif in Resources */,
 				08AA14CE1B0BA658002E1B2F /* simpleSwipe.wav in Resources */,
@@ -2669,6 +2726,7 @@
 				084AF52E1B383B810056FC34 /* yeah-yeah-fg-v1.gif in Resources */,
 				084AF50E1B383B810056FC34 /* wasted-ubercool-bg.gif in Resources */,
 				08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */,
+				088F31491B69506D008FA3C1 /* lebouf.png in Resources */,
 				084AF4E61B383B810056FC34 /* party-party-bg.gif in Resources */,
 				08967C281B5B9A9F000DDCF9 /* rendering.gif in Resources */,
 				084AF4F21B383B810056FC34 /* party-twerk-fg.gif in Resources */,
@@ -2758,6 +2816,7 @@
 				084AF52C1B383B810056FC34 /* yeah-yeah-fg-v1.gif in Resources */,
 				084AF50C1B383B810056FC34 /* wasted-ubercool-bg.gif in Resources */,
 				08A907191ACABB82008534F7 /* EMAlertsPermissionVC.xib in Resources */,
+				084349C21B837B1C009A653F /* EMShareInputBox.xib in Resources */,
 				08271FD91B01F5B90046F38E /* kbAllowAccessTutorial.mp4 in Resources */,
 				084AF4E41B383B810056FC34 /* party-party-bg.gif in Resources */,
 				08967C271B5B9A9F000DDCF9 /* rendering.gif in Resources */,
@@ -2948,15 +3007,18 @@
 				08851DEF1B540BD500DC9619 /* MongoID.m in Sources */,
 				08CED0D71AA5C7EF00C50D0C /* EMShareCopy.m in Sources */,
 				081EFF2D1AD89CE4001E0BA1 /* EMPackagesVC.m in Sources */,
+				084349B91B80FD78009A653F /* HMFileHash.m in Sources */,
 				08213B411ACC150500BE77E4 /* HMParser.m in Sources */,
+				084349D91B84F1A5009A653F /* Package.m in Sources */,
 				08CED1271AA79B7900C50D0C /* HMPanel.m in Sources */,
 				080489E91AA5957A008CC885 /* EMEmusKeyboardVC.m in Sources */,
+				084349DF1B85D970009A653F /* EmuticonDef.m in Sources */,
 				08AB68081AD567990092B62B /* EMLabel.m in Sources */,
 				087403111B63971E00866A74 /* NSNotificationCenter+Utils.m in Sources */,
 				080CB34C1AA4C11D00603E30 /* EmuticonDef+Logic.m in Sources */,
-				083319681B04D389000B8979 /* Package.m in Sources */,
 				087BCFDC1B626BED00A7A930 /* HMImages.m in Sources */,
 				087BCFCD1B6269D700A7A930 /* SolidColorSource.mm in Sources */,
+				084349D21B84999F009A653F /* NSString+Utilities.m in Sources */,
 				08BBBC701AD9758200D4AD1D /* EmuSectionReusableView.m in Sources */,
 				080CB3421AA4C10F00603E30 /* NSManagedObject+FindAndCreate.m in Sources */,
 				087BCFCB1B6269D200A7A930 /* PngSourceWithFX.mm in Sources */,
@@ -2994,7 +3056,6 @@
 				087BCFBF1B625AE600A7A930 /* EMRenderManager2.m in Sources */,
 				084DC0021B661A9200A67DD8 /* EMKBOptionsDrawer.m in Sources */,
 				087BCFC91B6269C800A7A930 /* HrEffectRGBA.cpp in Sources */,
-				087BCFBD1B5FCFCA00A7A930 /* EmuticonDef.m in Sources */,
 				08AC3E6E1AD2C9A1005231B5 /* KBKeyButton.m in Sources */,
 				080CB34B1AA4C11D00603E30 /* AppCFG+Logic.m in Sources */,
 				08CED1261AA7281B00C50D0C /* HMParams.m in Sources */,
@@ -3032,15 +3093,18 @@
 				08851DF11B540BD500DC9619 /* MongoID.m in Sources */,
 				0867CA101B16602E00FF0E85 /* EMShareCopy.m in Sources */,
 				0867CA111B16602E00FF0E85 /* EMPackagesVC.m in Sources */,
+				084349BB1B80FD78009A653F /* HMFileHash.m in Sources */,
 				0867CA121B16602E00FF0E85 /* HMParser.m in Sources */,
+				084349DB1B84F1A5009A653F /* Package.m in Sources */,
 				0867CA131B16602E00FF0E85 /* HMPanel.m in Sources */,
 				0867CA141B16602E00FF0E85 /* EMEmusKeyboardVC.m in Sources */,
+				084349E11B85D970009A653F /* EmuticonDef.m in Sources */,
 				0867CA151B16602E00FF0E85 /* EMLabel.m in Sources */,
 				087403101B63971D00866A74 /* NSNotificationCenter+Utils.m in Sources */,
 				0867CA161B16602E00FF0E85 /* EmuticonDef+Logic.m in Sources */,
-				0867CA171B16602E00FF0E85 /* Package.m in Sources */,
 				087BCFDB1B626BEC00A7A930 /* HMImages.m in Sources */,
 				087BCFCE1B6269D700A7A930 /* SolidColorSource.mm in Sources */,
+				084349D41B84999F009A653F /* NSString+Utilities.m in Sources */,
 				0867CA181B16602E00FF0E85 /* EmuSectionReusableView.m in Sources */,
 				0867CA191B16602E00FF0E85 /* NSManagedObject+FindAndCreate.m in Sources */,
 				087BCFCC1B6269D300A7A930 /* PngSourceWithFX.mm in Sources */,
@@ -3078,7 +3142,6 @@
 				087BCFC01B625AE800A7A930 /* EMRenderManager2.m in Sources */,
 				084DC0031B661A9200A67DD8 /* EMKBOptionsDrawer.m in Sources */,
 				087BCFCA1B6269C900A7A930 /* HrEffectRGBA.cpp in Sources */,
-				087BCFBE1B5FCFCB00A7A930 /* EmuticonDef.m in Sources */,
 				0867CA301B16602E00FF0E85 /* KBKeyButton.m in Sources */,
 				0867CA311B16602E00FF0E85 /* AppCFG+Logic.m in Sources */,
 				0867CA321B16602E00FF0E85 /* HMParams.m in Sources */,
@@ -3090,11 +3153,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084349DA1B84F1A5009A653F /* Package.m in Sources */,
 				08851DE71B53E32600DC9619 /* EMUploadAndShare.m in Sources */,
 				08AA14491B0BA658002E1B2F /* HMPanel.m in Sources */,
 				08AA144A1B0BA658002E1B2F /* EMCaches.m in Sources */,
 				08AA144B1B0BA658002E1B2F /* HMBackgroundRemovalDebugger.mm in Sources */,
 				08AA144D1B0BA658002E1B2F /* EMControlsBarVC.m in Sources */,
+				084349D31B84999F009A653F /* NSString+Utilities.m in Sources */,
 				08AA144E1B0BA658002E1B2F /* EMPackageParser.m in Sources */,
 				084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */,
 				08AA144F1B0BA658002E1B2F /* EMAppCFGParser.m in Sources */,
@@ -3115,6 +3180,7 @@
 				08AA145B1B0BA658002E1B2F /* HMServer+Packages.m in Sources */,
 				08AA145C1B0BA658002E1B2F /* HMBackgroundRemoval.mm in Sources */,
 				08ED7FF61B1DDD1600B6856F /* EMVideoSettingsPopover.m in Sources */,
+				084349C71B837EA0009A653F /* EMShareInputVC.m in Sources */,
 				08AA145D1B0BA658002E1B2F /* HMServer.m in Sources */,
 				08AA145E1B0BA658002E1B2F /* EMRenderer.mm in Sources */,
 				08AA145F1B0BA658002E1B2F /* NSDictionary+TypeSafeValues.m in Sources */,
@@ -3125,6 +3191,7 @@
 				08AA14621B0BA658002E1B2F /* EMShareAppleMessage.m in Sources */,
 				08AA14631B0BA658002E1B2F /* EMSplashVC.m in Sources */,
 				08AA14641B0BA658002E1B2F /* HMImages.m in Sources */,
+				084349BF1B8203C2009A653F /* EMShareInstoosh.m in Sources */,
 				08AA14651B0BA658002E1B2F /* AppCFG+Logic.m in Sources */,
 				08AA14661B0BA658002E1B2F /* EmuStyle.m in Sources */,
 				08AA14671B0BA658002E1B2F /* EMActionsArray.m in Sources */,
@@ -3139,13 +3206,12 @@
 				08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */,
 				08967C0F1B580AFE000DDCF9 /* EMRenderManager2.m in Sources */,
 				0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
-				087BCFBC1B5FC1E400A7A930 /* EmuticonDef.m in Sources */,
 				08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
 				08AA14711B0BA658002E1B2F /* EMShareVC.m in Sources */,
-				08AA14721B0BA658002E1B2F /* Package.m in Sources */,
 				08967C2C1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
 				08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */,
 				08ED7FBD1B1B52AF00B6856F /* HMExperiments.m in Sources */,
+				084349BA1B80FD78009A653F /* HMFileHash.m in Sources */,
 				08AA14751B0BA658002E1B2F /* AWFanOpeningLayer.m in Sources */,
 				08AA14761B0BA658002E1B2F /* EMOBCell.m in Sources */,
 				08AA14781B0BA658002E1B2F /* NSNotificationCenter+Utils.m in Sources */,
@@ -3170,6 +3236,7 @@
 				08D558B81B286114006BF723 /* EMDebugCell.m in Sources */,
 				08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
+				084349E01B85D970009A653F /* EmuticonDef.m in Sources */,
 				08AA148E1B0BA658002E1B2F /* EMBGFeedBackVC.m in Sources */,
 				0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
@@ -3204,11 +3271,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084349D81B84F1A5009A653F /* Package.m in Sources */,
 				08851DE61B53E32600DC9619 /* EMUploadAndShare.m in Sources */,
 				0806BD821AA37DC80078F14B /* HMPanel.m in Sources */,
 				082720C01B038CCB0046F38E /* EMCaches.m in Sources */,
 				08D9D4541AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
+				084349D11B84999F009A653F /* NSString+Utilities.m in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
 				084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */,
 				0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */,
@@ -3229,6 +3298,7 @@
 				080B05A11AB068C7003C19E7 /* HMServer+Packages.m in Sources */,
 				0833348D1A827D81008AC771 /* HMBackgroundRemoval.mm in Sources */,
 				08ED7FF51B1DDD1600B6856F /* EMVideoSettingsPopover.m in Sources */,
+				084349C61B837EA0009A653F /* EMShareInputVC.m in Sources */,
 				080B059D1AB064E2003C19E7 /* HMServer.m in Sources */,
 				0833189A1B049D3E000B8979 /* EMRenderer.mm in Sources */,
 				087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */,
@@ -3239,6 +3309,7 @@
 				0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */,
 				08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */,
 				086005651A99483E008CD7DE /* HMImages.m in Sources */,
+				084349BE1B8203C2009A653F /* EMShareInstoosh.m in Sources */,
 				085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */,
 				08B589A51A93BB7B008D9068 /* EmuStyle.m in Sources */,
 				089EAB831AE674D90074AD09 /* EMActionsArray.m in Sources */,
@@ -3253,13 +3324,12 @@
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				08967C0E1B580AFE000DDCF9 /* EMRenderManager2.m in Sources */,
 				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
-				087BCFBB1B5FC1E400A7A930 /* EmuticonDef.m in Sources */,
 				08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
 				08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */,
-				083319671B04D389000B8979 /* Package.m in Sources */,
 				08967C2B1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
 				08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */,
 				08ED7FBC1B1B52AF00B6856F /* HMExperiments.m in Sources */,
+				084349B81B80FD78009A653F /* HMFileHash.m in Sources */,
 				08CAEAD31A967906008A3E0A /* AWFanOpeningLayer.m in Sources */,
 				085C679B1A937EC9007BC910 /* EMOBCell.m in Sources */,
 				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
@@ -3284,6 +3354,7 @@
 				08D558B71B286114006BF723 /* EMDebugCell.m in Sources */,
 				08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */,
+				084349DE1B85D970009A653F /* EmuticonDef.m in Sources */,
 				085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */,
 				0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				085C67621A937EC9007BC910 /* main.m in Sources */,
@@ -4559,6 +4630,7 @@
 		08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				084349C81B83B7FD009A653F /* emu1_10.xcdatamodel */,
 				087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */,
 				0810C54C1B3F3E7E00BD8727 /* emu1_8.xcdatamodel */,
 				08AA143A1B0B341F002E1B2F /* emu1_6.xcdatamodel */,
@@ -4569,7 +4641,7 @@
 				08213B381ACC0A4600BE77E4 /* emu.xcdatamodel */,
 				08213B391ACC0A4600BE77E4 /* emu1_1.xcdatamodel */,
 			);
-			currentVersion = 087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */;
+			currentVersion = 084349C81B83B7FD009A653F /* emu1_10.xcdatamodel */;
 			path = emu.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

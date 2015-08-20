@@ -12,6 +12,7 @@
 #import "EMDB.h"
 #import "EMDB+Files.h"
 #import "AppManagement.h"
+#import "NSString+Utilities.h"
 
 @implementation Package (Logic)
 
@@ -180,115 +181,11 @@
     return [EMDB pathForDirectoryNamed:[SF:@"resources/%@", self.name]];
 }
 
-
-//-(BOOL)shouldDownloadZippedPackage
-//{
-//    // If already unzipped files for the package, don't download it.
-//    // (missing resources will be downloaded individually as needed)
-//    if (self.alreadyUnzipped.boolValue)
-//        return NO;
-//    
-//    BOOL pathExists = [EMDB pathExists:[self resourcesPath]];
-//    BOOL zippedPackageAvailableLocally = [self zippedPackageAvailableLocally];
-//
-//    #if defined(DEBUG)
-//    NSString *resourcesPath = [self resourcesPath];
-//    NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resourcesPath error:nil];
-//    HMLOG(TAG,
-//          EM_VERBOSE,
-//          @"Checking resources path:%@ exists:%@ availableLocally:%@ filesCount:%@",
-//          resourcesPath,
-//          @(pathExists),
-//          @(zippedPackageAvailableLocally),
-//          @(dirContents.count));
-//    #endif
-//    
-//    if (pathExists) return NO;
-//    if (zippedPackageAvailableLocally) return NO;
-//    return YES;
-//}
-
-
-//-(NSString *)zippedPackageResourcesFileName
-//{
-//    // Use the known file name provided by the server.
-//    NSString *fileName;
-//    fileName = self.zipppedPackageFileName;
-//    if (fileName != nil) return fileName;
-//    
-//    // Fallback to the old unreliable way it was done.
-//    // (Yes, the method of using dates on client side was stupid and unreliable).
-//    NSString *theDateString = [EMDB.sh.dateStringForFileFormatter stringFromDate:self.timeUpdated];
-//    NSString *theTimeString = [EMDB.sh.timeStringForFileFormatter stringFromDate:self.timeUpdated];
-//    theTimeString = [theTimeString stringByReplacingOccurrencesOfString:@":" withString:@""];
-//    
-//    fileName = [SF:@"package_%@_%@_%@.zip", self.name, theDateString, theTimeString];
-//    return fileName;
-//}
-
-//-(NSString *)zippedPackageResourcesFilePath
-//{
-//    NSString *path;
-//    NSString *fileName = [self zippedPackageResourcesFileName];
-//    
-//    // If available in bundle, return the path to the file in bundle.
-//    path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
-//    if (path) return path;
-//    
-//    // IF not available in bundle, check if available in temp directory.
-//    path = [self zippedPackageTempPath];
-//    if ([EMDB pathExists:path]) return path;
-//    
-//    // Zip file unavailable locally.
-//    return nil;
-//}
-
-
-//-(NSString *)zippedPackageTempPath
-//{
-//    NSString *fileName = [self zippedPackageResourcesFileName];
-//    return [SF:@"%@/%@", [EMDB pathForDirectoryNamed:@"temp"], fileName];
-//}
-
-
-//-(BOOL)zippedPackageAvailableLocally
-//{
-//    NSString *path = [self zippedPackageResourcesFilePath];
-//    if (path) {
-//        return [[NSFileManager defaultManager] fileExistsAtPath:path];
-//    }
-//    return NO;
-//}
-
-//-(BOOL)shouldUnzipZippedPackage
-//{
-//    // If already unzipped files for the package, don't do it again.
-//    // (missing resources will be downloaded individually as needed)
-//    if (self.alreadyUnzipped.boolValue)
-//        return NO;
-//    
-//    if ([self zippedPackageAvailableLocally]) return YES;
-//    return NO;
-//}
-
-//-(NSURL *)urlForZippedResources
-//{
-//    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
-//    NSString *urlString = [SF:@"%@/%@/zipped_packages/%@",
-//                           cfg.baseResourceURL,
-//                           cfg.bucketName,
-//                           [self zippedPackageResourcesFileName]];
-//    
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    return url;
-//}
-
 -(NSURL *)urlForResourceNamed:(NSString *)resourceName
 {
     NSURL *url = [[self urlForResources] URLByAppendingPathComponent:resourceName];
     return url;
 }
-
 
 -(NSURL *)urlForResources
 {
@@ -300,14 +197,6 @@
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }
-
-//-(NSURL *)localURLForZippedResources
-//{
-//    NSString *path = [self zippedPackageResourcesFilePath];
-//    if (path == nil) return nil;
-//    NSURL *url = [NSURL URLWithString:[SF:@"file://%@", path]];
-//    return url;
-//}
 
 -(NSURL *)urlForPackageIcon
 {
@@ -322,8 +211,6 @@
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }
-
-
 
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context
 {
@@ -340,7 +227,6 @@
     return nil;
 }
 
-
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
@@ -355,7 +241,6 @@
     }
     return nil;
 }
-
 
 -(NSString *)tagLabel
 {
@@ -400,6 +285,17 @@
     return NO;
 }
 
+-(NSString *)sharingHashTagsStringForShareMethodNamed:(NSString *)shareMethodName
+{
+    NSArray *tags = self.sharingHashtags[shareMethodName];
+    if (tags == nil || ![tags isKindOfClass:[NSArray class]] || tags.count == 0) return nil;
+
+    NSMutableString *s = [NSMutableString new];
+    for (NSString *tag in tags) {
+        [s appendString:[NSString stringWithFormat:@"#%@ ", [tag lowercaseString]]];
+    }
+    return [s stringWithATrim];
+}
 
 #pragma mark - Sampled results
 -(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID

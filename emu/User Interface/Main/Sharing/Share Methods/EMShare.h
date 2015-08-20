@@ -23,6 +23,8 @@
 
 @property (nonatomic) NSString *selectionTitle;
 @property (nonatomic) NSString *selectionMessage;
+@property (nonatomic) BOOL requiresUserInput;
+@property (nonatomic) NSString *userInputText;
 
 -(void)shareSelection;
 

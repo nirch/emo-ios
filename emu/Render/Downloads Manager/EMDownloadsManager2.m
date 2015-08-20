@@ -21,6 +21,14 @@
 #import "EMDownloadsManager2.h"
 #import "EMDB+Files.h"
 #import <AWSS3.h>
+#import "HMFileHash.h"
+#import "HMPanel.h"
+
+#include <errno.h>
+
+#define EMDownloadManagerErrorDomain @"EMDownloadsManager error"
+
+#define ERR_MD5_COMP_FAILED 10000
 
 @interface EMDownloadsManager2()
 
@@ -261,11 +269,17 @@
     AWSTask *downloadTask = [self newDownloadTaskForOID:oid resourceName:name];
     self.downloadingPool[jobID] = downloadTask;
     
+    
     // Download!
     __weak EMDownloadsManager2 *wSelf = self;
     [downloadTask continueWithBlock:^id(AWSTask *task) {
+        AWSS3TransferManagerDownloadOutput *output = task.result;
+        NSURL *downloadedFileURL = output.body;
+        NSFileManager *fm = [NSFileManager defaultManager];
+
         if (task.completed) {
             if (task.error) {
+                [fm removeItemAtURL:downloadedFileURL error:nil];
                 if (task.error.code == AWSS3TransferManagerErrorCancelled) {
                     HMLOG(TAG, EM_VERBOSE, @"Cancelled downloading resource: %@", name);
                     // Download failed
@@ -281,15 +295,77 @@
                 }
             } else {
                 HMLOG(TAG, EM_ERR, @"downloaded: %@", name);
-                // Download successful
-                dispatch_async(self.downloadingManagementQueue, ^{
-                    [wSelf _finishJobForOID:oid resourceName:name error:nil];
-                });
+                BOOL shouldValidateMD5 = YES;
+                BOOL md5Validated = NO;
+                NSString *expectedMD5 = [output.ETag stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                NSString *md5 = nil;
+                NSString *path = [downloadedFileURL path];
+                if (shouldValidateMD5) {
+                    md5 = [HMFileHash md5HashOfFileAtPath:path];
+                    md5Validated = [md5 isEqualToString:expectedMD5];
+                    if (!md5Validated) {
+                        REMOTE_LOG(@"MD5 validation failed for resource:%@ expected:%@ got:%@",
+                                   path,
+                                   expectedMD5,
+                                   md5);
+                    }
+                }
+                
+                if (!shouldValidateMD5 || md5Validated) {
+                    //
+                    // If didn't need to validate or validate succesfully,
+                    // we are in the money.
+                    // Rename the temp file to the resource name.
+                    //
+                    NSError *error=nil;
+                    NSURL *validatedFileURL = [self localURLForOID:oid resourceName:name asTempFile:NO];
+                    [fm removeItemAtURL:validatedFileURL error:nil];
+                    [fm moveItemAtURL:downloadedFileURL toURL:validatedFileURL error:&error];
+                    if (error) {
+                        // Error while renaming validate temp file to final position.
+                        dispatch_async(self.downloadingManagementQueue, ^{
+                            [wSelf _failedJobForOID:oid resourceName:name error:error];
+                        });
+                    } else {
+                        // All is well. Finish the job.
+                        dispatch_async(self.downloadingManagementQueue, ^{
+                            [wSelf _finishJobForOID:oid resourceName:name error:nil];
+                        });
+                    }
+                } else {
+                    //
+                    // Should have been validated and
+                    // downloaded file failed MD5 validation.
+                    // File is corrupted and can't be used.
+                    // Remove it from disk and report the error.
+                    //
+                    [fm removeItemAtURL:downloadedFileURL error:nil];
+                    NSError *error = [[NSError alloc] initWithDomain:EMDownloadManagerErrorDomain
+                                                                code:ERR_MD5_COMP_FAILED
+                                                            userInfo:@{NSLocalizedDescriptionKey:@"MD5 checksum failed. Probably corrupt file."}];
+                    dispatch_async(self.downloadingManagementQueue, ^{
+                        [wSelf _failedJobForOID:oid resourceName:name error:error];
+                    });
+                }
+                
             }
         }
         return nil;
     }];
 }
+
+//-(BOOL)validateFileAtPath:(NSString *)path withExpectedMD5:(NSString *)expectedMD5
+//{
+//    NSString *md5 = [HMFileHash md5HashOfFileAtPath:path];
+//    BOOL validated = [md5 isEqualToString:expectedMD5];
+//    if (!validated) {
+//        REMOTE_LOG(@"MD5 validation failed for resource:%@ expected:%@ got:%@",
+//                   path,
+//                   expectedMD5,
+//                   md5);
+//    }
+//    return validated;
+//}
 
 -(void)_cancelledJobForOID:(NSString *)oid resourceName:(NSString *)name
 {
@@ -303,6 +379,9 @@
 
 -(void)_finishJobForOID:(NSString *)oid resourceName:(NSString *)name error:(NSError *)error
 {
+    //BOOL resourceValidated = [];
+    
+    // Finish the job
     NSString *jobID = [self jobIDForOID:oid resourceName:name];
     [self.downloadingPool removeObjectForKey:jobID];
 
@@ -330,10 +409,11 @@
     return [SF:@"packages/%@/%@", path, name];
 }
 
--(NSURL *)localURLForOID:(NSString *)oid resourceName:(NSString *)name
+-(NSURL *)localURLForOID:(NSString *)oid resourceName:(NSString *)name asTempFile:(BOOL)asTempFile
 {
     NSString *path = self.pathByOID[oid];
     NSString *localPath = [SF:@"resources/%@", path];
+    if (asTempFile) localPath = [localPath stringByAppendingString:@".tmp"];
     NSURL *url = [self.rootURL URLByAppendingPathComponent:localPath];
 
     // Make sure required folder exists.
@@ -354,17 +434,29 @@
     return url;
 }
 
+
+
 -(AWSTask *)newDownloadTaskForOID:(NSString *)oid resourceName:(NSString *)name
 {
+    // Create a download request for specified bucket.
     AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
     downloadRequest.bucket = self.bucketName;
     
+    // The s3 key of the remote file.
     NSString *key = [self s3KeyForOID:oid resourceName:name];
     downloadRequest.key = key;
     
-    NSURL *localPathURL = [self localURLForOID:oid resourceName:name];
+    // Generate the destination local path.
+    NSURL *localPathURL = [self localURLForOID:oid resourceName:name asTempFile:YES];
+
+    // Make sure temp file doesn't already exist (remove it if it does)
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtURL:localPathURL error:nil];
+    
+    // Download to this local path.
     downloadRequest.downloadingFileURL = localPathURL;
 
+    // Get and return the download task.
     AWSTask *downloadTask = [self.transferManager download:downloadRequest];
     return downloadTask;
 }

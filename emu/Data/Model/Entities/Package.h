@@ -2,7 +2,7 @@
 //  Package.h
 //  emu
 //
-//  Created by Aviv Wolf on 5/14/15.
+//  Created by Aviv Wolf on 8/19/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
@@ -27,11 +27,13 @@
 @property (nonatomic, retain) NSString * requiredVersion;
 @property (nonatomic, retain) NSNumber * sampledEmuCount;
 @property (nonatomic, retain) NSString * sampledEmuResultOID;
+@property (nonatomic, retain) NSNumber * shouldAutoDownload;
 @property (nonatomic, retain) NSNumber * showOnPacksBar;
 @property (nonatomic, retain) NSDate * timeUpdated;
 @property (nonatomic, retain) NSNumber * viewedByUser;
 @property (nonatomic, retain) NSString * zipppedPackageFileName;
-@property (nonatomic, retain) NSNumber * shouldAutoDownload;
+@property (nonatomic, retain) NSNumber * preventVideoWaterMarks;
+@property (nonatomic, retain) id sharingHashtags;
 @property (nonatomic, retain) NSSet *emuDefs;
 @end
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EMShareInputVC">
+            <connections>
+                <outlet property="guiCancelButton" destination="dlf-yQ-RMe" id="bVN-qN-All"/>
+                <outlet property="guiShareButton" destination="GkN-AH-xaY" id="hSo-yk-c0X"/>
+                <outlet property="guiSharedMediaIcon" destination="5UK-k6-61q" id="LcH-Mg-JdH"/>
+                <outlet property="guiTextInputView" destination="zTw-nG-gHH" id="gpP-z4-LRD"/>
+                <outlet property="guiTitleBar" destination="NUz-eN-qBx" id="kGq-Pn-Z6K"/>
+                <outlet property="guiTitleImage" destination="23j-DR-sB7" id="cpg-8o-frU"/>
+                <outlet property="view" destination="iN0-l3-epB" id="U98-d7-HSR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Share input box">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NUz-eN-qBx" userLabel="Share title">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="instagram" translatesAutoresizingMaskIntoConstraints="NO" id="23j-DR-sB7" userLabel="share method icon">
+                            <rect key="frame" x="10" y="4" width="36" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="Zou-B7-uXw"/>
+                                <constraint firstAttribute="width" constant="36" id="uFT-XK-sZw"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emuButton" translatesAutoresizingMaskIntoConstraints="NO" id="5UK-k6-61q" userLabel="shared media icon">
+                            <rect key="frame" x="252" y="4" width="36" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="36" id="Oja-DC-YNZ"/>
+                                <constraint firstAttribute="height" constant="36" id="PSr-R3-xn7"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="OeL-Y5-fYp"/>
+                        <constraint firstAttribute="centerY" secondItem="5UK-k6-61q" secondAttribute="centerY" id="PuF-t7-WiL"/>
+                        <constraint firstAttribute="centerX" secondItem="23j-DR-sB7" secondAttribute="centerX" id="ZTE-HL-bhw"/>
+                        <constraint firstAttribute="centerY" secondItem="23j-DR-sB7" secondAttribute="centerY" id="ZpG-Ia-5pM"/>
+                        <constraint firstItem="23j-DR-sB7" firstAttribute="leading" secondItem="NUz-eN-qBx" secondAttribute="leading" constant="10" id="d8t-iT-FHT"/>
+                        <constraint firstAttribute="trailing" secondItem="5UK-k6-61q" secondAttribute="trailing" constant="12" id="wWe-yl-ByM"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ZTE-HL-bhw"/>
+                        </mask>
+                    </variation>
+                </view>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut " translatesAutoresizingMaskIntoConstraints="NO" id="zTw-nG-gHH">
+                    <rect key="frame" x="8" y="52" width="284" height="174"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zcl-Qq-8R5" userLabel="Share buttons bar">
+                    <rect key="frame" x="0.0" y="234" width="300" height="66"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlf-yQ-RMe" userLabel="Negative Button" customClass="EMFlowButton">
+                            <rect key="frame" x="8" y="11" width="138" height="44"/>
+                            <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="65" id="Bjd-cL-QEu"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="Bjd-cL-QEu"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <action selector="onPressedCancel:" destination="-1" eventType="touchUpInside" id="oA1-fL-1aV"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GkN-AH-xaY" userLabel="Positive Button" customClass="EMFlowButton">
+                            <rect key="frame" x="154" y="11" width="138" height="44"/>
+                            <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="65" id="FUX-m1-TbT"/>
+                                <constraint firstAttribute="height" constant="44" id="xBm-Mf-tq9"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Share">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="FUX-m1-TbT"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <action selector="onPressedShare:" destination="-1" eventType="touchUpInside" id="xKU-ml-B0X"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="dlf-yQ-RMe" firstAttribute="left" secondItem="Zcl-Qq-8R5" secondAttribute="left" constant="8" id="1EO-du-zo2"/>
+                        <constraint firstItem="dlf-yQ-RMe" firstAttribute="height" secondItem="GkN-AH-xaY" secondAttribute="height" id="1ET-FO-eX9"/>
+                        <constraint firstAttribute="centerY" secondItem="GkN-AH-xaY" secondAttribute="centerY" id="9uJ-U5-7wh"/>
+                        <constraint firstItem="GkN-AH-xaY" firstAttribute="leading" secondItem="Zcl-Qq-8R5" secondAttribute="leading" constant="154" id="XWe-LR-YnC"/>
+                        <constraint firstAttribute="centerY" secondItem="dlf-yQ-RMe" secondAttribute="centerY" id="Zim-Ph-55C"/>
+                        <constraint firstAttribute="height" constant="66" id="iBu-WT-cQz"/>
+                        <constraint firstItem="dlf-yQ-RMe" firstAttribute="width" secondItem="GkN-AH-xaY" secondAttribute="width" id="txa-VB-MyT"/>
+                        <constraint firstItem="GkN-AH-xaY" firstAttribute="leading" secondItem="dlf-yQ-RMe" secondAttribute="trailing" constant="8" id="uC7-cV-1iw"/>
+                        <constraint firstAttribute="right" secondItem="GkN-AH-xaY" secondAttribute="right" constant="8" id="wfq-0c-gzt"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="XWe-LR-YnC"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="0.95000000000000007" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="zTw-nG-gHH" firstAttribute="top" secondItem="NUz-eN-qBx" secondAttribute="bottom" constant="8" id="2Sz-Ld-rf9"/>
+                <constraint firstItem="zTw-nG-gHH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="63Y-9v-tGK"/>
+                <constraint firstItem="NUz-eN-qBx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="B0s-CR-hBF"/>
+                <constraint firstAttribute="trailing" secondItem="zTw-nG-gHH" secondAttribute="trailing" constant="8" id="Cd4-Uq-937"/>
+                <constraint firstAttribute="trailing" secondItem="Zcl-Qq-8R5" secondAttribute="trailing" id="FjO-wq-J77"/>
+                <constraint firstAttribute="bottom" secondItem="Zcl-Qq-8R5" secondAttribute="bottom" id="Q4b-l5-fGi"/>
+                <constraint firstItem="NUz-eN-qBx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Q9c-A6-k45"/>
+                <constraint firstItem="Zcl-Qq-8R5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="e1j-1N-Y82"/>
+                <constraint firstAttribute="trailing" secondItem="NUz-eN-qBx" secondAttribute="trailing" id="kD9-ga-pvB"/>
+                <constraint firstItem="Zcl-Qq-8R5" firstAttribute="top" secondItem="zTw-nG-gHH" secondAttribute="bottom" constant="8" id="wMr-fg-7iT"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="505" y="237"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="emuButton" width="105" height="105"/>
+        <image name="instagram" width="55" height="56"/>
+    </resources>
+</document>

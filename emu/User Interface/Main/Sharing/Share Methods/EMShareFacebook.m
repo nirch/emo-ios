@@ -54,6 +54,10 @@
     
     // Facebook composer
     SLComposeViewController *composer = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+    if (self.extraCFG[@"sharingHashTags"]) {
+        [composer setInitialText:[NSString stringWithFormat:@"\n\n%@", self.extraCFG[@"sharingHashTags"]]];
+    }
+    
     [composer addURL:[NSURL URLWithString:self.sharedLink]];
     [composer setCompletionHandler:^(SLComposeViewControllerResult result) {
         [self.viewController dismissViewControllerAnimated:YES completion:^{

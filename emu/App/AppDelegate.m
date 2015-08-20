@@ -21,6 +21,9 @@
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "EMUISound.h"
 #import "AppManagement.h"
+#import "iRate.h"
+#import "AppManagement.h"
+
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -60,6 +63,14 @@
     
     // Crash reports
     [HMPanel.sh initCrashReports];
+    
+    if (!AppManagement.sh.isTestApp) {
+        // Initialize iRate
+        iRate *irate = [iRate sharedInstance];
+        irate.daysUntilPrompt = 3;
+        irate.usesUntilPrompt = 7;
+        irate.eventsUntilPrompt = 3;
+    }
     
     // Initialize analytics, set super parameters and report application launch.
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];

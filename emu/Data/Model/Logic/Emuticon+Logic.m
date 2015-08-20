@@ -276,7 +276,6 @@
     [params addKey:@"renderCount" value:[self.rendersCount description]];
     [params addKey:@"deviceModel" value:[AppManagement deviceModelName]];
     [params addKey:@"deviceIdentifier" value:UIDevice.currentDevice.identifierForVendor.UUIDString];
-    [params addKey:@"deviceName" value:[[UIDevice currentDevice] name]];    
     return params.dictionary;
 }
 

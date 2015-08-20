@@ -287,9 +287,20 @@
 -(void)onEmuStateUpdated:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
+    if (info == nil) {
+        REMOTE_LOG(@"nil info in onEmuStateUpdated?");
+        return;
+    }
+    
     NSIndexPath *indexPath = info[@"indexPath"];
     NSString *oid = info[@"emuticonOID"];
     NSString *packageOID = info[@"packageOID"];
+
+    if (indexPath == nil || oid == nil || packageOID == nil) {
+        // Unexpected values;
+        // Finished render notification is not related to this screen.
+        return;
+    }
     
     if (notification.isReportingError) {
         self.failedToDownloadResourcesForEmuOID[oid] = @YES;
@@ -1133,7 +1144,6 @@
         }
         [package recountRenders];
     }
-    [self.guiCollectionView reloadData];
     [EMDB.sh save];
 }
 
@@ -1250,7 +1260,7 @@
         [self deleteAllAndCleanUp];
         [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
                                                             object:self
-                                                          userInfo:@{@"forced_reload":@YES}];
+                                                          userInfo:@{@"forced_reload":@YES, @"delete all and clean":@YES}];
 
     } else if ([actionName isEqualToString:@"DEBUG_SCREEN"]) {
         

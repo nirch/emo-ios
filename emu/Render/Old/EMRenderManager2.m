@@ -372,8 +372,13 @@
     renderer.paletteString = emuDef.palette;
     renderer.shouldOutputGif = NO;
     renderer.effects = emuDef.effects;
-    renderer.waterMarkName = requiresWaterMark?@"emuUglyWaterMark":nil;
-    
+    if (requiresWaterMark) {
+        renderer.waterMarkName = @"wmTL";
+        NSString *wm = emuDef.prefferedWaterMark;
+        if ([wm isEqualToString:@"wmTR"] || [wm isEqualToString:@"wmBR"] || [wm isEqualToString:@"wmBL"]) {
+            renderer.waterMarkName = wm;
+        }
+    }    
     
     // Should output a looping video to the temp folder.
     renderer.outputPath = NSTemporaryDirectory();
