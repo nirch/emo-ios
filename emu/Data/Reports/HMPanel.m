@@ -317,7 +317,9 @@
 
 -(BOOL)isFirstLaunch
 {
-    return [[self countedLaunches] integerValue]<=1;
+    NSNumber *countedLaunchesNumber = [self countedLaunches];
+    NSInteger countedLaunches = countedLaunchesNumber?countedLaunchesNumber.integerValue:0;
+    return countedLaunches<=1;
 }
 
 -(NSNumber *)sharesCount
