@@ -195,6 +195,16 @@
     [EMDB ensureRequiredDirectoriesExist];
 
     NSDictionary *info = notification.userInfo;
+    
+    // Used on test app. Debug option to delete all and clean.
+    if ([info[@"delete all and clean"] isEqualToNumber:@1]) {
+        [self.server fetchPackagesFullInfoWithInfo:notification.userInfo];
+        [EMDB.sh save];
+        return;
+    }
+    
+    // In some cases, the app will want to force an update request
+    // disregarding when the previous request happened.
     BOOL shouldForceRefresh = NO;
     if (info) {
         if ([info[@"forced_reload"] isEqualToNumber:@YES]) {
