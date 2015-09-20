@@ -19,6 +19,9 @@
 #pragma mark - Data updates
 #define emkDataUpdatedPackages @"emk data updated packages"
 
+// Notification of navigation events
+#define emkUINavigationTabSelected @"emk ui nav tab selected"
+
 // Notification of the backend to the UI
 #define emkUIDataRefreshPackages @"emk backend data refreshed packages"
 #define emkUIDownloadedResourcesForEmuticon @"emk backend downloaded resources for emuticon"

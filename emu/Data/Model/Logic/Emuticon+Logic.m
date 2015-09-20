@@ -269,6 +269,7 @@
 -(NSDictionary *)metaDataForUpload
 {
     HMParams *params = [HMParams new];
+    // TODO: add latest bg mark to meta data.
     [params addKey:@"emuticonDefOID" value:self.emuDef.oid];
     [params addKey:@"emuticonDefName" value:self.emuDef.name];
     [params addKey:@"packageOID" value:self.emuDef.package.oid];

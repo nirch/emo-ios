@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7Ne-zP-lAu">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--Nav BarVC-->
+        <scene sceneID="Vu5-KZ-8Wq">
+            <objects>
+                <viewController storyboardIdentifier="nav bar vc" id="7Ne-zP-lAu" customClass="EMNavBarVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2iW-AZ-wTg"/>
+                        <viewControllerLayoutGuide type="bottom" id="2U6-ou-acn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SC9-pV-XWP" userLabel="Navigation Bar">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5J-rg-2aJ" userLabel="Nav bar">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="err-UK-sEX" userLabel="sep">
+                                        <rect key="frame" x="0.0" y="43" width="600" height="1"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="XXT-F1-lBv"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="A7x-Pg-FyU"/>
+                                    <constraint firstAttribute="bottom" secondItem="err-UK-sEX" secondAttribute="bottom" id="Rdr-rV-VsO"/>
+                                    <constraint firstItem="err-UK-sEX" firstAttribute="left" secondItem="z5J-rg-2aJ" secondAttribute="left" id="kEd-TP-3Yf"/>
+                                    <constraint firstAttribute="right" secondItem="err-UK-sEX" secondAttribute="right" id="n8Z-3g-5ZK"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0wx-On-ZPR" userLabel="Emu Button BG">
+                                <rect key="frame" x="280" y="11" width="41" height="41"/>
+                                <color key="backgroundColor" red="1" green="0.68627452850000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="DgM-Zm-oKG"/>
+                                    <constraint firstAttribute="width" constant="41" id="yYV-1r-WXB"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofy-5Z-pnB" userLabel="emu logo button">
+                                <rect key="frame" x="278" y="10" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="sri-GO-Yh3"/>
+                                    <constraint firstAttribute="height" constant="44" id="t6Y-as-1Nw"/>
+                                </constraints>
+                                <state key="normal" image="emuLogoButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ofy-5Z-pnB" firstAttribute="top" secondItem="z5J-rg-2aJ" secondAttribute="top" constant="10" id="3F9-AY-Jsa"/>
+                            <constraint firstAttribute="right" secondItem="z5J-rg-2aJ" secondAttribute="right" id="K9U-1X-XJ3"/>
+                            <constraint firstItem="z5J-rg-2aJ" firstAttribute="top" secondItem="2iW-AZ-wTg" secondAttribute="bottom" id="NnN-dk-P9p"/>
+                            <constraint firstAttribute="centerX" secondItem="0wx-On-ZPR" secondAttribute="centerX" id="VAg-O5-dME"/>
+                            <constraint firstItem="Ofy-5Z-pnB" firstAttribute="centerX" secondItem="z5J-rg-2aJ" secondAttribute="centerX" id="ack-6O-e4G"/>
+                            <constraint firstItem="z5J-rg-2aJ" firstAttribute="centerX" secondItem="0wx-On-ZPR" secondAttribute="centerX" id="dEs-U4-1bM"/>
+                            <constraint firstItem="z5J-rg-2aJ" firstAttribute="left" secondItem="SC9-pV-XWP" secondAttribute="left" id="nOb-Gf-x8w"/>
+                            <constraint firstItem="z5J-rg-2aJ" firstAttribute="top" secondItem="0wx-On-ZPR" secondAttribute="top" constant="-11" id="uB7-mi-8ls"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="VAg-O5-dME"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="57"/>
+                    <connections>
+                        <outlet property="guiLogoButton" destination="Ofy-5Z-pnB" id="9iy-gR-ert"/>
+                        <outlet property="guiLogoButtonBG" destination="0wx-On-ZPR" id="BoX-FP-oxj"/>
+                        <outlet property="guiNavView" destination="z5J-rg-2aJ" id="Iyl-sl-8S9"/>
+                        <outlet property="guiSeparator" destination="err-UK-sEX" id="OY4-22-ia6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OYl-os-eMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="414" y="233.5"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="emuLogoButton" width="44" height="43"/>
+    </resources>
+</document>

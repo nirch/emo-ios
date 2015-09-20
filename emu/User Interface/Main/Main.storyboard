@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CKz-4p-446">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CKz-4p-446">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -258,7 +258,7 @@
                                     <action selector="onPressedEmuButton:" destination="hdW-YC-ZoO" eventType="touchUpInside" id="8p8-jX-GFX"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="989-sh-hZS" userLabel="Packages Bar Container">
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="989-sh-hZS" userLabel="Packages Bar Container">
                                 <rect key="frame" x="0.0" y="611" width="375" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -335,10 +335,10 @@
             </objects>
             <point key="canvasLocation" x="-340.5" y="137.5"/>
         </scene>
-        <!--Main NavigationVC-->
+        <!--Navigation Controller-->
         <scene sceneID="yeZ-Tc-k7I">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="CKz-4p-446" customClass="EMMainNavigationVC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="feed navigation vc" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="CKz-4p-446" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1264,7 +1264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="caQ-HF-2Li" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-340.5" y="699"/>
+            <point key="canvasLocation" x="-402.5" y="717"/>
         </scene>
         <!--TutorialVC-->
         <scene sceneID="wrE-wx-ocX">

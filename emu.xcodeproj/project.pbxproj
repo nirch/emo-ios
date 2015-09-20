@@ -37,8 +37,6 @@
 		080CB34D1AA4C11D00603E30 /* UserFootage+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670F1A937EC9007BC910 /* UserFootage+Logic.m */; };
 		080CB3531AA50D5300603E30 /* EMPackagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB3521AA50D5300603E30 /* EMPackagesVC.m */; };
 		080CB39B1AA51B6100603E30 /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; };
-		080DC0E01B242B9900953403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
-		080DC0E11B242B9900953403 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		081EFF2D1AD89CE4001E0BA1 /* EMPackagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB3521AA50D5300603E30 /* EMPackagesVC.m */; };
 		081EFF2E1AD89CE7001E0BA1 /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; };
 		08213B3A1ACC0A4600BE77E4 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */; };
@@ -115,6 +113,9 @@
 		084349DF1B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
 		084349E01B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
 		084349E11B85D970009A653F /* EmuticonDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349DD1B85D970009A653F /* EmuticonDef.m */; };
+		084898EC1BA935010026B25A /* kim.png in Resources */ = {isa = PBXBuildFile; fileRef = 084898EB1BA935010026B25A /* kim.png */; };
+		084898ED1BA935010026B25A /* kim.png in Resources */ = {isa = PBXBuildFile; fileRef = 084898EB1BA935010026B25A /* kim.png */; };
+		084898EE1BA935010026B25A /* kim.png in Resources */ = {isa = PBXBuildFile; fileRef = 084898EB1BA935010026B25A /* kim.png */; };
 		084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4711B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
@@ -397,8 +398,6 @@
 		0867CA5C1B16602E00FF0E85 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08AA14381B08F062002E1B2F /* Localizable.strings */; };
 		0867CA601B16602E00FF0E85 /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
 		0867CA671B16602E00FF0E85 /* kbAllowAccessTutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBE1B01F5B90046F38E /* kbAllowAccessTutorial.mp4 */; };
-		086911D21B16D73000D5D29F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
-		086911D31B16D73100D5D29F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
 		0869D8611B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */; };
 		0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */; };
 		0874030E1B63971200866A74 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
@@ -482,6 +481,32 @@
 		089E78B71A780DEB00BC3479 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */; };
 		089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
 		089EAB831AE674D90074AD09 /* EMActionsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 089EAB821AE674D90074AD09 /* EMActionsArray.m */; };
+		08A456D21B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */; };
+		08A456D31B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */; };
+		08A456DB1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */; };
+		08A456DC1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */; };
+		08A456DF1B9DB0B2001AB79E /* EMTabsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */; };
+		08A456E01B9DB0B2001AB79E /* EMTabsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */; };
+		08A456E31B9DC22A001AB79E /* EMTabsBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456E21B9DC22A001AB79E /* EMTabsBarVC.m */; };
+		08A456E41B9DC22A001AB79E /* EMTabsBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456E21B9DC22A001AB79E /* EMTabsBarVC.m */; };
+		08A456E71B9DDD41001AB79E /* EMTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456E61B9DDD41001AB79E /* EMTestVC.m */; };
+		08A456E81B9DDD41001AB79E /* EMTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456E61B9DDD41001AB79E /* EMTestVC.m */; };
+		08A456F31B9EF437001AB79E /* EMFeedNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456F21B9EF437001AB79E /* EMFeedNavigationVC.m */; };
+		08A456F41B9EF437001AB79E /* EMFeedNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456F21B9EF437001AB79E /* EMFeedNavigationVC.m */; };
+		08A456F61B9F2403001AB79E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
+		08A456F71B9F2404001AB79E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
+		08A456F81B9F2404001AB79E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
+		08A456F91B9F2405001AB79E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C67351A937EC9007BC910 /* Images.xcassets */; };
+		08A457041BA02844001AB79E /* EMPackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A457001BA02844001AB79E /* EMPackCell.m */; };
+		08A457051BA02844001AB79E /* EMPackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A457001BA02844001AB79E /* EMPackCell.m */; };
+		08A457061BA02844001AB79E /* EMPacksVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A457021BA02844001AB79E /* EMPacksVC.m */; };
+		08A457071BA02844001AB79E /* EMPacksVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A457021BA02844001AB79E /* EMPacksVC.m */; };
+		08A457081BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A457031BA02844001AB79E /* PacksAndFeatured.storyboard */; };
+		08A457091BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A457031BA02844001AB79E /* PacksAndFeatured.storyboard */; };
+		08A4570C1BA02F08001AB79E /* NavBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A4570B1BA02F08001AB79E /* NavBar.storyboard */; };
+		08A4570D1BA02F08001AB79E /* NavBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A4570B1BA02F08001AB79E /* NavBar.storyboard */; };
+		08A457101BA03948001AB79E /* EMNavBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4570F1BA03948001AB79E /* EMNavBarVC.m */; };
+		08A457111BA03948001AB79E /* EMNavBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A4570F1BA03948001AB79E /* EMNavBarVC.m */; };
 		08A907191ACABB82008534F7 /* EMAlertsPermissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */; };
 		08A9071C1ACABB9E008534F7 /* EMAlertsPermissionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A9071B1ACABB9E008534F7 /* EMAlertsPermissionVC.m */; };
 		08AA14351B08F062002E1B2F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08AA14381B08F062002E1B2F /* Localizable.strings */; };
@@ -876,6 +901,7 @@
 		084349DC1B85D970009A653F /* EmuticonDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuticonDef.h; sourceTree = "<group>"; };
 		084349DD1B85D970009A653F /* EmuticonDef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuticonDef.m; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMSDK.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		084898EB1BA935010026B25A /* kim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kim.png; sourceTree = "<group>"; };
 		084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-groovy-bg.gif"; sourceTree = "<group>"; };
 		084AF4381B383B810056FC34 /* 70s-peace-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-peace-bg.gif"; sourceTree = "<group>"; };
 		084AF43A1B383B810056FC34 /* attitude-coolstory-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "attitude-coolstory-bg.gif"; sourceTree = "<group>"; };
@@ -1056,6 +1082,26 @@
 		089E943C1AE3DFAB004BECAE /* emu1_ 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 4.xcdatamodel"; sourceTree = "<group>"; };
 		089EAB811AE674D90074AD09 /* EMActionsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMActionsArray.h; sourceTree = "<group>"; };
 		089EAB821AE674D90074AD09 /* EMActionsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMActionsArray.m; sourceTree = "<group>"; };
+		08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainNavigation.storyboard; sourceTree = "<group>"; };
+		08A456D71B9D97E6001AB79E /* emu-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "emu-Bridging-Header.h"; sourceTree = "<group>"; };
+		08A456D91B9DAF34001AB79E /* EMMainNavigationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMainNavigationVC.h; sourceTree = "<group>"; };
+		08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMainNavigationVC.m; sourceTree = "<group>"; };
+		08A456DD1B9DB0B2001AB79E /* EMTabsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTabsVC.h; sourceTree = "<group>"; };
+		08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTabsVC.m; sourceTree = "<group>"; };
+		08A456E11B9DC22A001AB79E /* EMTabsBarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTabsBarVC.h; sourceTree = "<group>"; };
+		08A456E21B9DC22A001AB79E /* EMTabsBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTabsBarVC.m; sourceTree = "<group>"; };
+		08A456E51B9DDD41001AB79E /* EMTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTestVC.h; sourceTree = "<group>"; };
+		08A456E61B9DDD41001AB79E /* EMTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTestVC.m; sourceTree = "<group>"; };
+		08A456F11B9EF437001AB79E /* EMFeedNavigationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeedNavigationVC.h; sourceTree = "<group>"; };
+		08A456F21B9EF437001AB79E /* EMFeedNavigationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeedNavigationVC.m; sourceTree = "<group>"; };
+		08A456FF1BA02844001AB79E /* EMPackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPackCell.h; sourceTree = "<group>"; };
+		08A457001BA02844001AB79E /* EMPackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPackCell.m; sourceTree = "<group>"; };
+		08A457011BA02844001AB79E /* EMPacksVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPacksVC.h; sourceTree = "<group>"; };
+		08A457021BA02844001AB79E /* EMPacksVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPacksVC.m; sourceTree = "<group>"; };
+		08A457031BA02844001AB79E /* PacksAndFeatured.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PacksAndFeatured.storyboard; sourceTree = "<group>"; };
+		08A4570B1BA02F08001AB79E /* NavBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NavBar.storyboard; sourceTree = "<group>"; };
+		08A4570E1BA03948001AB79E /* EMNavBarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMNavBarVC.h; sourceTree = "<group>"; };
+		08A4570F1BA03948001AB79E /* EMNavBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMNavBarVC.m; sourceTree = "<group>"; };
 		08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EMAlertsPermissionVC.xib; sourceTree = "<group>"; };
 		08A9071A1ACABB9E008534F7 /* EMAlertsPermissionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAlertsPermissionVC.h; sourceTree = "<group>"; };
 		08A9071B1ACABB9E008534F7 /* EMAlertsPermissionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAlertsPermissionVC.m; sourceTree = "<group>"; };
@@ -1465,6 +1511,7 @@
 				08967C131B5AB884000DDCF9 /* output480.mov */,
 				08325AC71B31343700C6C5C8 /* packages_data_for_tests.json */,
 				088F31471B694FCD008FA3C1 /* lebouf.png */,
+				084898EB1BA935010026B25A /* kim.png */,
 				0805ABC91B4B157E0099ECBE /* atomblast.gif */,
 				088F31411B67D776008FA3C1 /* meeowuser.png */,
 				08BD6A2F1B319A660001F614 /* meeow.jpg */,
@@ -1845,6 +1892,8 @@
 			children = (
 				085C67361A937EC9007BC910 /* LaunchScreen.xib */,
 				085C67351A937EC9007BC910 /* Images.xcassets */,
+				08A456D01B9D8D3D001AB79E /* Navigation */,
+				08A456FE1BA02844001AB79E /* PacksAndFeatured */,
 				08CB89631A9AA12A00224A38 /* Main */,
 				085C673B1A937EC9007BC910 /* Recorder */,
 				085C67371A937EC9007BC910 /* Media */,
@@ -1988,6 +2037,8 @@
 		08967BFC1B57CCED000DDCF9 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				08A456F11B9EF437001AB79E /* EMFeedNavigationVC.h */,
+				08A456F21B9EF437001AB79E /* EMFeedNavigationVC.m */,
 				08967BFD1B57CCED000DDCF9 /* EMFeedVC.h */,
 				08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */,
 				08967BFF1B57CCED000DDCF9 /* EmuCell.h */,
@@ -2041,6 +2092,55 @@
 			);
 			path = "notifications center";
 			sourceTree = "<group>";
+		};
+		08A456D01B9D8D3D001AB79E /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */,
+				08A456D91B9DAF34001AB79E /* EMMainNavigationVC.h */,
+				08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */,
+				08A456D81B9DA7AB001AB79E /* Tabs */,
+				08A4570A1BA02EDF001AB79E /* NavBar */,
+			);
+			name = Navigation;
+			path = emu/Navigation;
+			sourceTree = SOURCE_ROOT;
+		};
+		08A456D81B9DA7AB001AB79E /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				08A456DD1B9DB0B2001AB79E /* EMTabsVC.h */,
+				08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */,
+				08A456E11B9DC22A001AB79E /* EMTabsBarVC.h */,
+				08A456E21B9DC22A001AB79E /* EMTabsBarVC.m */,
+				08A456E51B9DDD41001AB79E /* EMTestVC.h */,
+				08A456E61B9DDD41001AB79E /* EMTestVC.m */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		08A456FE1BA02844001AB79E /* PacksAndFeatured */ = {
+			isa = PBXGroup;
+			children = (
+				08A457031BA02844001AB79E /* PacksAndFeatured.storyboard */,
+				08A457011BA02844001AB79E /* EMPacksVC.h */,
+				08A457021BA02844001AB79E /* EMPacksVC.m */,
+				08A456FF1BA02844001AB79E /* EMPackCell.h */,
+				08A457001BA02844001AB79E /* EMPackCell.m */,
+			);
+			path = PacksAndFeatured;
+			sourceTree = "<group>";
+		};
+		08A4570A1BA02EDF001AB79E /* NavBar */ = {
+			isa = PBXGroup;
+			children = (
+				08A4570B1BA02F08001AB79E /* NavBar.storyboard */,
+				08A4570E1BA03948001AB79E /* EMNavBarVC.h */,
+				08A4570F1BA03948001AB79E /* EMNavBarVC.m */,
+			);
+			name = NavBar;
+			path = emu/Navigation/NavBar;
+			sourceTree = SOURCE_ROOT;
 		};
 		08A907131ACAB2D2008534F7 /* AlertsPermission */ = {
 			isa = PBXGroup;
@@ -2107,6 +2207,7 @@
 			children = (
 				08967C081B57CD02000DDCF9 /* Main.storyboard */,
 				08967C0B1B57CD7A000DDCF9 /* EMInterfaceDelegate.h */,
+				08A456D71B9D97E6001AB79E /* emu-Bridging-Header.h */,
 				08967BFC1B57CCED000DDCF9 /* Feed */,
 				08BE1F9B1B28486500A34232 /* Debug */,
 				08409E961AB1C69700EC0930 /* Splash */,
@@ -2553,9 +2654,9 @@
 				084AF4751B383B810056FC34 /* 70s-peace-bg.gif in Resources */,
 				084AF4E11B383B810056FC34 /* meme-cage-fg.gif in Resources */,
 				084AF5051B383B810056FC34 /* wasted-buzzzzzed-fg.gif in Resources */,
-				080DC0E01B242B9900953403 /* Images.xcassets in Resources */,
 				084AF4C91B383B810056FC34 /* hearts-mask-v1.png in Resources */,
 				084AF4F51B383B810056FC34 /* snack-morning-bg.gif in Resources */,
+				08A456F71B9F2404001AB79E /* Images.xcassets in Resources */,
 				084AF49D1B383B810056FC34 /* casual-whats-bg.gif in Resources */,
 				084AF4F91B383B810056FC34 /* snack-morning-fg.gif in Resources */,
 				084AF5191B383B810056FC34 /* yeah-no-bg.gif in Resources */,
@@ -2619,6 +2720,7 @@
 				088F31441B67D777008FA3C1 /* meeowuser.png in Resources */,
 				08325AB21B2EB6D800C6C5C8 /* test-mask.jpg in Resources */,
 				088F31481B694FCD008FA3C1 /* lebouf.png in Resources */,
+				084898EE1BA935010026B25A /* kim.png in Resources */,
 				08967C141B5AB884000DDCF9 /* output480.mov in Resources */,
 				08967C181B5AE21B000DDCF9 /* emuDefaultContour480.ctr in Resources */,
 			);
@@ -2641,9 +2743,9 @@
 				084AF4771B383B810056FC34 /* 70s-peace-bg.gif in Resources */,
 				084AF4E31B383B810056FC34 /* meme-cage-fg.gif in Resources */,
 				084AF5071B383B810056FC34 /* wasted-buzzzzzed-fg.gif in Resources */,
-				086911D31B16D73100D5D29F /* Images.xcassets in Resources */,
 				088F31431B67D776008FA3C1 /* meeowuser.png in Resources */,
 				084AF4CB1B383B810056FC34 /* hearts-mask-v1.png in Resources */,
+				08A456F91B9F2405001AB79E /* Images.xcassets in Resources */,
 				084AF4F71B383B810056FC34 /* snack-morning-bg.gif in Resources */,
 				084AF49F1B383B810056FC34 /* casual-whats-bg.gif in Resources */,
 				084AF4FB1B383B810056FC34 /* snack-morning-fg.gif in Resources */,
@@ -2667,6 +2769,7 @@
 				084AF48F1B383B810056FC34 /* casual-lol-mask-v1.png in Resources */,
 				084AF4DF1B383B810056FC34 /* meme-cage-bg.gif in Resources */,
 				084AF4BF1B383B810056FC34 /* crap-shit-mask-v1.png in Resources */,
+				084898ED1BA935010026B25A /* kim.png in Resources */,
 				0867CA5C1B16602E00FF0E85 /* Localizable.strings in Resources */,
 				084AF4AB1B383B810056FC34 /* crap-bitch-bg.gif in Resources */,
 				084AF4FF1B383B810056FC34 /* snack-morning-mask-v1.png in Resources */,
@@ -2715,7 +2818,6 @@
 				084AF4861B383B810056FC34 /* casual-lol-bg.gif in Resources */,
 				08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */,
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
-				086911D21B16D73000D5D29F /* Images.xcassets in Resources */,
 				084AF5221B383B810056FC34 /* yeah-omg-bg.gif in Resources */,
 				084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */,
 				084AF48A1B383B810056FC34 /* casual-lol-fg.gif in Resources */,
@@ -2723,6 +2825,7 @@
 				084AF4C21B383B810056FC34 /* hearts-bg.gif in Resources */,
 				084AF5061B383B810056FC34 /* wasted-buzzzzzed-fg.gif in Resources */,
 				084AF4B61B383B810056FC34 /* crap-shit-bg.gif in Resources */,
+				08A4570D1BA02F08001AB79E /* NavBar.storyboard in Resources */,
 				084AF52E1B383B810056FC34 /* yeah-yeah-fg-v1.gif in Resources */,
 				084AF50E1B383B810056FC34 /* wasted-ubercool-bg.gif in Resources */,
 				08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */,
@@ -2758,15 +2861,18 @@
 				084AF47A1B383B810056FC34 /* attitude-coolstory-bg.gif in Resources */,
 				08AA14F61B0BA658002E1B2F /* SplashView.xib in Resources */,
 				084AF5161B383B810056FC34 /* wasted-ubercool-mask-v1.png in Resources */,
+				08A457091BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				084AF4E21B383B810056FC34 /* meme-cage-fg.gif in Resources */,
 				0896D5261B2D8D430094ED41 /* sil-1.png in Resources */,
 				084AF4C61B383B810056FC34 /* hearts-fg.gif in Resources */,
 				08AA14FA1B0BA658002E1B2F /* goodBG.wav in Resources */,
+				084898EC1BA935010026B25A /* kim.png in Resources */,
 				084AF5321B38A6BD0056FC34 /* focusing.wav in Resources */,
 				084AF4AA1B383B810056FC34 /* crap-bitch-bg.gif in Resources */,
 				084AF4FE1B383B810056FC34 /* snack-morning-mask-v1.png in Resources */,
 				084AF4BE1B383B810056FC34 /* crap-shit-mask-v1.png in Resources */,
 				085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */,
+				08A456D31B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
 				084AF51A1B383B810056FC34 /* yeah-no-bg.gif in Resources */,
 				084AF4DA1B383B810056FC34 /* meme-baby-fg.gif in Resources */,
 				084AF4AE1B383B810056FC34 /* crap-bitch-fg.gif in Resources */,
@@ -2774,6 +2880,7 @@
 				084AF4921B383B810056FC34 /* casual-thanks-bg.gif in Resources */,
 				084AF4FA1B383B810056FC34 /* snack-morning-fg.gif in Resources */,
 				08AA15081B0BA658002E1B2F /* onboarding_packages_test.json in Resources */,
+				08A456F81B9F2404001AB79E /* Images.xcassets in Resources */,
 				084AF4961B383B810056FC34 /* casual-thanks-fg.gif in Resources */,
 				084AF50A1B383B810056FC34 /* wasted-buzzzzzed-mask-v1.png in Resources */,
 				084AF4F61B383B810056FC34 /* snack-morning-bg.gif in Resources */,
@@ -2795,9 +2902,12 @@
 				08CAEAD81A9757BF008A3E0A /* SourceSansPro-Semibold.ttf in Resources */,
 				08967C091B57CD02000DDCF9 /* Main.storyboard in Resources */,
 				084AF5281B383B810056FC34 /* yeah-yeah-bg-v1.gif in Resources */,
+				08A4570C1BA02F08001AB79E /* NavBar.storyboard in Resources */,
+				08A457081BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				084AF4801B383B810056FC34 /* attitude-coolstory-mask.png in Resources */,
 				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
 				08271FD11B01F5B90046F38E /* pressedButton.wav in Resources */,
+				08A456F61B9F2403001AB79E /* Images.xcassets in Resources */,
 				08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */,
 				084AF4981B383B810056FC34 /* casual-thanks-mask-v1.png in Resources */,
 				084AF4741B383B810056FC34 /* 70s-peace-bg.gif in Resources */,
@@ -2836,6 +2946,7 @@
 				08271FD71B01F5B90046F38E /* startRecording.wav in Resources */,
 				084AF4A41B383B810056FC34 /* casual-whats-mask-v1.png in Resources */,
 				0827C6D91A8608E200B14294 /* uniformBGParams.xml in Resources */,
+				08A456D21B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
 				08AA14351B08F062002E1B2F /* Localizable.strings in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
 				08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */,
@@ -2859,7 +2970,6 @@
 				084AF4BC1B383B810056FC34 /* crap-shit-mask-v1.png in Resources */,
 				084AF5181B383B810056FC34 /* yeah-no-bg.gif in Resources */,
 				084AF4D81B383B810056FC34 /* meme-baby-fg.gif in Resources */,
-				080DC0E11B242B9900953403 /* Images.xcassets in Resources */,
 				084AF4AC1B383B810056FC34 /* crap-bitch-fg.gif in Resources */,
 				084AF4B81B383B810056FC34 /* crap-shit-fg.gif in Resources */,
 				084AF4901B383B810056FC34 /* casual-thanks-bg.gif in Resources */,
@@ -3167,11 +3277,13 @@
 				08658B441B4E598700EC4B19 /* AppCFG.m in Sources */,
 				08AA14511B0BA658002E1B2F /* VideoOutput.mm in Sources */,
 				08AA14521B0BA658002E1B2F /* EMEmuticonScreenVC.m in Sources */,
+				08A456E41B9DC22A001AB79E /* EMTabsBarVC.m in Sources */,
 				08AA14531B0BA658002E1B2F /* HMParser.m in Sources */,
 				08AA14541B0BA658002E1B2F /* HMImageTools.mm in Sources */,
 				08AA14551B0BA658002E1B2F /* HMGMError.m in Sources */,
 				08AA14561B0BA658002E1B2F /* EMPagerView.m in Sources */,
 				0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */,
+				08A456E81B9DDD41001AB79E /* EMTestVC.m in Sources */,
 				08AA14571B0BA658002E1B2F /* EmuBaseStyle.m in Sources */,
 				08AA14581B0BA658002E1B2F /* HMParams.m in Sources */,
 				08AA14591B0BA658002E1B2F /* EMMessageButton.m in Sources */,
@@ -3202,11 +3314,13 @@
 				08AA146C1B0BA658002E1B2F /* UserFootage.m in Sources */,
 				08AA146D1B0BA658002E1B2F /* EMShareFBMessanger.m in Sources */,
 				08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */,
+				08A456F41B9EF437001AB79E /* EMFeedNavigationVC.m in Sources */,
 				08851DF01B540BD500DC9619 /* MongoID.m in Sources */,
 				08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */,
 				08967C0F1B580AFE000DDCF9 /* EMRenderManager2.m in Sources */,
 				0867C9FC1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
+				08A457111BA03948001AB79E /* EMNavBarVC.m in Sources */,
 				08AA14711B0BA658002E1B2F /* EMShareVC.m in Sources */,
 				08967C2C1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
 				08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */,
@@ -3237,13 +3351,17 @@
 				08653CF51B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
 				084349E01B85D970009A653F /* EmuticonDef.m in Sources */,
+				08A457051BA02844001AB79E /* EMPackCell.m in Sources */,
 				08AA148E1B0BA658002E1B2F /* EMBGFeedBackVC.m in Sources */,
 				0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
 				08AA14901B0BA658002E1B2F /* AWFanOpeningView.m in Sources */,
 				08AA14911B0BA658002E1B2F /* HMCaptureSessionError.m in Sources */,
+				08A456E01B9DB0B2001AB79E /* EMTabsVC.m in Sources */,
 				08AA14921B0BA658002E1B2F /* EMShareMail.m in Sources */,
+				08A457071BA02844001AB79E /* EMPacksVC.m in Sources */,
 				08AA14931B0BA658002E1B2F /* EMFlowButton.m in Sources */,
+				08A456DC1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */,
 				08AA14941B0BA658002E1B2F /* BSONIdGenerator.m in Sources */,
 				08AA14951B0BA658002E1B2F /* HMError.m in Sources */,
 				08AA14961B0BA658002E1B2F /* EMEmuticonParser.m in Sources */,
@@ -3285,11 +3403,13 @@
 				08658B421B4E598700EC4B19 /* AppCFG.m in Sources */,
 				54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */,
 				083E52651A9E1EB100A66FC8 /* EMEmuticonScreenVC.m in Sources */,
+				08A456E31B9DC22A001AB79E /* EMTabsBarVC.m in Sources */,
 				087F20911A8F5A03002B1678 /* HMParser.m in Sources */,
 				083D54751A8CB0A10048604A /* HMImageTools.mm in Sources */,
 				0833348C1A827D81008AC771 /* HMGMError.m in Sources */,
 				083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */,
 				0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */,
+				08A456E71B9DDD41001AB79E /* EMTestVC.m in Sources */,
 				08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */,
 				08CED1251AA7281B00C50D0C /* HMParams.m in Sources */,
 				0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */,
@@ -3320,11 +3440,13 @@
 				085A78501AEC2364003E9F97 /* UserFootage.m in Sources */,
 				08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
+				08A456F31B9EF437001AB79E /* EMFeedNavigationVC.m in Sources */,
 				08851DEE1B540BD500DC9619 /* MongoID.m in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				08967C0E1B580AFE000DDCF9 /* EMRenderManager2.m in Sources */,
 				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
+				08A457101BA03948001AB79E /* EMNavBarVC.m in Sources */,
 				08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */,
 				08967C2B1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
 				08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */,
@@ -3355,13 +3477,17 @@
 				08653CF41B0CD8450016DC54 /* EMVideoMaker.mm in Sources */,
 				08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */,
 				084349DE1B85D970009A653F /* EmuticonDef.m in Sources */,
+				08A457041BA02844001AB79E /* EMPackCell.m in Sources */,
 				085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */,
 				0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				085C67621A937EC9007BC910 /* main.m in Sources */,
 				08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */,
 				08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */,
+				08A456DF1B9DB0B2001AB79E /* EMTabsVC.m in Sources */,
 				0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */,
+				08A457061BA02844001AB79E /* EMPacksVC.m in Sources */,
 				0860054C1A978AAB008CD7DE /* EMFlowButton.m in Sources */,
+				08A456DB1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */,
 				080B05991AB064E2003C19E7 /* BSONIdGenerator.m in Sources */,
 				08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */,
 				0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */,
