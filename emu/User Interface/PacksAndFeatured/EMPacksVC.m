@@ -10,7 +10,7 @@
 #import "EMPackCell.h"
 #import "EMNavBarVC.h"
 
-#define PACKS_CELLS_ASPECT_RATIO 3.6f
+#define PACKS_CELLS_ASPECT_RATIO 2.8f
 #define PACKS_PADDING_H 12.0f
 
 @interface EMPacksVC () <

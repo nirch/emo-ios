@@ -9,7 +9,6 @@
 
 #import "EMDebugViewController.h"
 #import "EMDebugCell.h"
-#import <ZipKit/ZKFileArchive.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "EMShareDebuggingFile.h"
 
@@ -182,37 +181,38 @@
 #pragma mark - Sharing
 -(void)shareFolderNamed:(NSString *)folderName
 {
-    // Update the UI for long process
-    HMLOG(TAG, EM_DBG, @"Share folder: %@", folderName);
-    [UIView animateWithDuration:0.3 animations:^{
-        self.guiTableView.alpha = 0.2;
-    }];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    // Zip and share
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // ZIP in the background
-        NSString *zipFilePath = [self.rootPath stringByAppendingPathComponent:[SF:@"%@.zip", folderName]];
-        ZKFileArchive *archive = [ZKFileArchive archiveWithArchivePath:zipFilePath];
-        NSString *folderPath = [self.rootPath stringByAppendingPathComponent:folderName];
-        NSInteger result = [archive deflateDirectory:folderPath relativeToPath:self.rootPath usingResourceFork:NO];
-        HMLOG(TAG, EM_DBG, @"Zip result: %@", @(result));
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Done
-            self.guiTableView.alpha = 1;
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            
-            // Share zipped file
-            if (result == 1) {
-                self.sharer = [EMShareDebuggingFile new];
-                NSURL *zipFileURL = [NSURL fileURLWithPath:zipFilePath];
-                self.sharer.objectToShare = zipFileURL;
-                self.sharer.viewController = self;
-                self.sharer.view = self.view;
-                [self.sharer share];
-            }
-        });
-    });
+    return;
+//    // Update the UI for long process
+//    HMLOG(TAG, EM_DBG, @"Share folder: %@", folderName);
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.guiTableView.alpha = 0.2;
+//    }];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    
+//    // Zip and share
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        // ZIP in the background
+//        NSString *zipFilePath = [self.rootPath stringByAppendingPathComponent:[SF:@"%@.zip", folderName]];
+//        ZKFileArchive *archive = [ZKFileArchive archiveWithArchivePath:zipFilePath];
+//        NSString *folderPath = [self.rootPath stringByAppendingPathComponent:folderName];
+//        NSInteger result = [archive deflateDirectory:folderPath relativeToPath:self.rootPath usingResourceFork:NO];
+//        HMLOG(TAG, EM_DBG, @"Zip result: %@", @(result));
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            // Done
+//            self.guiTableView.alpha = 1;
+//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            
+//            // Share zipped file
+//            if (result == 1) {
+//                self.sharer = [EMShareDebuggingFile new];
+//                NSURL *zipFileURL = [NSURL fileURLWithPath:zipFilePath];
+//                self.sharer.objectToShare = zipFileURL;
+//                self.sharer.viewController = self;
+//                self.sharer.view = self.view;
+//                [self.sharer share];
+//            }
+//        });
+//    });
 }
 
 #pragma mark - IB Actions

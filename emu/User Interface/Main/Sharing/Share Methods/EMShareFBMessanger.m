@@ -81,19 +81,23 @@
     
     AppDelegate *app = [[UIApplication sharedApplication] delegate];
     FBSDKMessengerContext *context = app.fbContext;
-    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityAnimatedGIF)
-    {
-        self.wasCanceled = NO;
-        FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
-        options.contextOverride = context;
-        
-        [FBSDKMessengerSharer shareAnimatedGIF:gifData withOptions:options];
-        [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
-    } else {
-        [self.delegate sharerDidFailWithInfo:self.info];
-        [self messengerMissingMessage];
-        return;
-    }
+    
+//    FBSDKMessengerPlatformCapability s = [FBSDKMessengerSharer messengerPlatformCapabilities];
+//    
+//    
+//    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityAnimatedGIF)
+//    {
+    self.wasCanceled = NO;
+    FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
+    options.contextOverride = context;
+
+    [FBSDKMessengerSharer shareAnimatedGIF:gifData withOptions:options];
+    [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
+//    } else {
+//        [self.delegate sharerDidFailWithInfo:self.info];
+//        [self messengerMissingMessage];
+//        return;
+//    }
 }
 
 
@@ -107,8 +111,8 @@
     AppDelegate *app = [[UIApplication sharedApplication] delegate];
     FBSDKMessengerContext *context = app.fbContext;
 
-    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityVideo) {
-        
+//    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityVideo) {
+    
         self.wasCanceled = NO;
         FBSDKMessengerShareOptions *options = [FBSDKMessengerShareOptions new];
         options.contextOverride = context;
@@ -116,11 +120,11 @@
         [FBSDKMessengerSharer shareVideo:videoData withOptions:options];
         [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
 
-    } else {
-        [self.delegate sharerDidFailWithInfo:self.info];
-        [self messengerMissingMessage];
-        return;
-    }
+//    } else {
+//        [self.delegate sharerDidFailWithInfo:self.info];
+//        [self messengerMissingMessage];
+//        return;
+//    }
 }
 
 

@@ -22,7 +22,6 @@
 #import "EMNotificationCenter.h"
 #import "EMDownloadsManager2.h"
 
-#import <zipzap.h>
 #import <AWSS3.h>
 
 @interface EMBackend()

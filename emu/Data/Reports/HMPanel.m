@@ -368,7 +368,7 @@
 
 -(void)personIdentifyWithIdentifier:(NSString *)identifier
 {
-    [self.mixPanel identify:identifier];
+//    [self.mixPanel identify:identifier];
 }
 
 -(void)reportPersonDetails

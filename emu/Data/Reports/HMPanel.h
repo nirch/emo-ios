@@ -3,7 +3,7 @@
 //
 
 // Currently, remote logging implementation uses crashlytics.
-#import <Crashlytics/Crashlytics.h>
+//#import <Crashlytics/Crashlytics.h>
 
 #import <Optimizely/Optimizely.h>
 #import "HMAnalyticsEvents.h"
@@ -25,7 +25,8 @@
 -(void)initCrashReports;
 
 #pragma mark - Remote logging
-#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
+//#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
+#define REMOTE_LOG(__FORMAT__, ...) 
 -(void)remoteKey:(NSString *)key value:(NSString *)value;
 
 #pragma mark - Tracking

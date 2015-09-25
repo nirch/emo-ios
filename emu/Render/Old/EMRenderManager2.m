@@ -270,7 +270,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:hmkRenderingFinished
                                                             object:self
                                                           userInfo:userInfo];
-
         
         // Finishup & clean up rendering management.
         __weak EMRenderManager2 *wSelf = self;

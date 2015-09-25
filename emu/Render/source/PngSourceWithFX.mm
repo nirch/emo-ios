@@ -25,8 +25,7 @@ int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
     {
         // Get the image
         NSString *imagePath = [m_pngFiles objectAtIndex:iFrame];
-        //UIImage* uiImage = [UIImage imageWithContentsOfFile:imagePath];
-        UIImage* uiImage = [UIImage imageNamed:@"kim"];
+        UIImage* uiImage = [UIImage imageWithContentsOfFile:imagePath];
         image = CVtool::UIimage_to_image(uiImage, image);
         *im = image;
 

@@ -406,9 +406,9 @@
 
 -(void)backToFBM
 {
-    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityOpen) {
-        [FBSDKMessengerSharer openMessenger];
-    }
+//    if ([FBSDKMessengerSharer messengerPlatformCapabilities] & FBSDKMessengerPlatformCapabilityOpen) {
+    [FBSDKMessengerSharer openMessenger];
+//    }
 }
 
 #pragma mark - The data
@@ -479,7 +479,7 @@
     [self.splashVC hideAnimated:YES];
     
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (!appCFG.onboardingPassed.boolValue && NO) {
+    if (!appCFG.onboardingPassed.boolValue) {
         // Try to fetch data from server at least once, before starting onboarding.
         if (!self.refetchDataAttempted) return;
         
