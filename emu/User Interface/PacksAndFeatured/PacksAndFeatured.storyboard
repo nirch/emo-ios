@@ -19,6 +19,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="b82-Ih-TTq">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7Oi-63-Jhd">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -103,10 +107,12 @@
                             </containerView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="b82-Ih-TTq" firstAttribute="centerX" secondItem="1SO-Mu-VwT" secondAttribute="centerX" id="2eh-bU-iEr"/>
                             <constraint firstItem="7Oi-63-Jhd" firstAttribute="top" secondItem="fHZ-iQ-FOp" secondAttribute="bottom" id="AbJ-oq-HRz"/>
                             <constraint firstItem="7Oi-63-Jhd" firstAttribute="left" secondItem="1SO-Mu-VwT" secondAttribute="left" id="CaV-ur-Tp5"/>
                             <constraint firstItem="jFR-LJ-zqv" firstAttribute="top" secondItem="fHZ-iQ-FOp" secondAttribute="bottom" constant="50" id="PbD-cX-H8i"/>
                             <constraint firstAttribute="right" secondItem="jFR-LJ-zqv" secondAttribute="right" id="R1Q-qn-GtU"/>
+                            <constraint firstItem="b82-Ih-TTq" firstAttribute="centerY" secondItem="1SO-Mu-VwT" secondAttribute="centerY" id="jWN-Ao-ksn"/>
                             <constraint firstItem="eJs-mx-G96" firstAttribute="top" secondItem="7Oi-63-Jhd" secondAttribute="bottom" id="qPf-fz-aAj"/>
                             <constraint firstAttribute="right" secondItem="7Oi-63-Jhd" secondAttribute="right" id="tYP-6S-7m8"/>
                             <constraint firstItem="jFR-LJ-zqv" firstAttribute="left" secondItem="1SO-Mu-VwT" secondAttribute="left" id="v7s-ty-aKd"/>
@@ -117,6 +123,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="guiActivity" destination="b82-Ih-TTq" id="0zp-sJ-eDT"/>
                         <outlet property="guiCollectionView" destination="7Oi-63-Jhd" id="khT-o8-zAW"/>
                         <outlet property="guiFeaturedPacksContainer" destination="jFR-LJ-zqv" id="GAW-Cp-R9k"/>
                     </connections>

@@ -60,6 +60,7 @@
 -(void)reset
 {
     _frc = nil;
+    [self frc];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -86,11 +87,16 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    self.packsCount = self.frc.fetchedObjects.count;
     self.lastWidePack = (self.packsCount%2==0)?2:3;
     return self.packsCount;
 }
 
+-(NSInteger)packsCount
+{
+    NSInteger count = self.frc.fetchedObjects.count;
+    _packsCount = count;
+    return count;
+}
 
 /**
  *  Configuring a cell for pack at index path.

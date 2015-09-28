@@ -1,7 +1,43 @@
 //
 //  EMMainVCViewController.m
 //  emu
+//  -----------------------------------------------------------------------
+//  This ugly-mega controller is responsible for too many things.
+//  Clearly it needs refactoring and to be taken apart.
 //
+//  Current responsibilities (should be refactored to the ideal listed under responsibilities):
+//      - It is the data source of the collection view.
+//      - It is the recorder delegate and handles recorder open/dismiss flow.
+//      - Recognize swipe gestures to navigate between packs
+//      - Embeds the packs tool bar for navigating between packs.
+//      - Packs navigation delegate.
+//      - Decides if emus can be displayed or need rendering/downloads
+//      - Calls updateLocalizedStrings on app management object and caches in memory localized strings.
+//      - Collects oid of failed to download resources (Ha?!)
+//      - Scroll gestures fixes.
+//      - Show splash screen after onboarding (not needed in new design).
+//      - Updates download/render managers about visible cells.
+//      - Shows keyboard tutorial after onboarding.
+//      - Retake options/flow.
+//      - Navigation bar.
+//      - Debug options
+//      - More app options and user options unrelated to the feed like: open settings, kb tutorial and more.
+//      - Share app options and sharer delegation.
+//      - About app screen (should be part of the settings screens).
+//      - Mix screen (deprecated in new design).
+//      - Asks user about
+//      - Back to FBM and FBM flow management.
+//
+//  Fix to these responsibilities only:
+//      - Display the emuticon cells in a collection view divided to sections by pack.
+//      - Sends notifications about prioritized emus (in visible cells).
+//      - Handles the layout of the cells and views in the collection view.
+//      - Pressing an emu posts a notification that such event happened.
+//      - Instantiate and use a seperate data source object for data.
+//      - Notifies about "required data fetch".
+//      - May notify that a recorder should be opened.
+//      - Emus selection UI (+ delegation for other objects that implement retake flow etc).
+//  -----------------------------------------------------------------------
 //  Created by Aviv Wolf on 2/25/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //

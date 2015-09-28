@@ -8,7 +8,9 @@
 
 #import "EMFeaturedVC.h"
 #import "EMFeaturedCell.h"
+#import "EMNotificationCenter.h"
 #import "EMDB.h"
+
 
 #define FEATURED_ASPECT_RATIO 1.75f
 #define CYCLYC_COUNT 20
@@ -39,7 +41,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self refreshFeaturedData];
+
+    // Init observers
+    [self initObservers];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -51,14 +55,42 @@
     CGFloat cellWidth = cellHeight*FEATURED_ASPECT_RATIO;
     self.cellSize = CGSizeMake(cellWidth, cellHeight);
     self.marginForCentering = (self.guiCollectionView.bounds.size.width - cellWidth) / 2.0f;
-    
-    // Reload data.
-    [self.guiCollectionView reloadData];
-    [self fixPage];
+    [self refreshUIWithLocalData];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeObservers];
+}
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On packages data refresh required.
+    [nc addUniqueObserver:self
+                 selector:@selector(onUpdatedData:)
+                     name:emkDataUpdatedPackages
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:emkDataUpdatedPackages];
+}
+
+#pragma mark - Observers handlers
+-(void)onUpdatedData:(NSNotification *)notification
+{
+    [self refreshUIWithLocalData];
+}
+
+
 #pragma mark - Data
--(void)refreshFeaturedData
+-(void)refreshUIWithLocalData
 {
     // Initialize the data
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
@@ -80,6 +112,10 @@
     }
     
     self.featuredData = data;
+
+    // Reload data.
+    [self.guiCollectionView reloadData];
+    [self fixPage];
 }
 
 #pragma mark - UICollectionViewDataSource

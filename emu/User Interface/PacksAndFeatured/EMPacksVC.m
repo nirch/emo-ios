@@ -33,6 +33,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiFeaturedPacksContainer;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 
 // UI initialization
 @property (nonatomic) BOOL alreadyInitializedGUIOnAppearance;
@@ -91,7 +92,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
+    // Init observers
+    [self initObservers];
+
     // Refresh data if required
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages object:self userInfo:nil];
 }
@@ -104,11 +108,16 @@
     [self refreshGUIWithLocalData];
 }
 
+/**
+ *  On view will disappear:
+ *      - Remove observers
+ *
+ */
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self removeObservers];
 }
-
 
 #pragma mark - Initializations
 /**
@@ -119,6 +128,7 @@
     // Set the data source.
     self.dataSource = [EMPacksDataSource new];
     self.guiCollectionView.dataSource = self.dataSource;
+    [self.dataSource reset];
 }
 
 /**
@@ -136,6 +146,10 @@
         navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeed]];
     }
     self.navBarVC = navBarVC;
+    
+    // Will fade in the collection view and the featured packs view later.
+    self.guiCollectionView.alpha = 0;
+    self.guiFeaturedPacksContainer.alpha = 0;
 }
 
 /**
@@ -164,7 +178,42 @@
             self.packsTopPosition = f.origin.y + 6;
             self.guiFeaturedPacksContainer.hidden = YES;
         }
+
+        if (self.dataSource.packsCount > 10 && self.guiCollectionView.alpha == 0) {
+            [self revealPacks];
+        } else {
+            [self.guiActivity startAnimating];
+        }
+
         self.alreadyInitializedGUIOnAppearance = YES;
+        
+    }
+}
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On packages data refresh required.
+    [nc addUniqueObserver:self
+                 selector:@selector(onUpdatedData:)
+                     name:emkDataUpdatedPackages
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:emkDataUpdatedPackages];
+}
+
+#pragma mark - Observers handlers
+-(void)onUpdatedData:(NSNotification *)notification
+{
+    [self refreshGUIWithLocalData];
+    if (self.guiCollectionView.alpha == 0) {
+        [self revealPacks];
     }
 }
 
@@ -180,6 +229,21 @@
 -(void)vcWasSelected
 {
     HMLOG(TAG, EM_DBG, @"Top vc selected: EMPacksVC");
+}
+
+#pragma mark - Show / Hide UI elements
+-(void)revealPacks
+{
+    [self.guiActivity stopAnimating];
+    self.guiFeaturedPacksContainer.transform = CGAffineTransformMakeScale(0.7, 0.7);
+    [UIView animateWithDuration:0.8 animations:^{
+        self.guiFeaturedPacksContainer.alpha = 1;
+        self.guiFeaturedPacksContainer.transform = CGAffineTransformIdentity;
+    }];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiCollectionView.alpha = 1;
+    }];
 }
 
 #pragma mark - Collection view layout
