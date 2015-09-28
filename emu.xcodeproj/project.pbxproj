@@ -446,6 +446,8 @@
 		08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 08D929FE1A77EFBD00B6A68F /* ShaderUtilities.c */; };
 		08D9D44E1AC2B0E4004A83F3 /* AppManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D44D1AC2B0E4004A83F3 /* AppManagement.m */; };
 		08D9D4541AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08D9D4531AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm */; };
+		08E30BA71BB98B0F009EDCFF /* EMEmusFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E30BA61BB98B0F009EDCFF /* EMEmusFeedVC.m */; settings = {ASSET_TAGS = (); }; };
+		08E30BA81BB98B0F009EDCFF /* EMEmusFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E30BA61BB98B0F009EDCFF /* EMEmusFeedVC.m */; settings = {ASSET_TAGS = (); }; };
 		08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E8F75B1AE5535000B27D2C /* EMHolySheet.m */; };
 		08E8F75F1AE5540D00B27D2C /* EMHolySheetSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E8F75E1AE5540D00B27D2C /* EMHolySheetSection.m */; };
 		08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */; };
@@ -913,6 +915,8 @@
 		08D9D44D1AC2B0E4004A83F3 /* AppManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppManagement.m; sourceTree = "<group>"; };
 		08D9D4501AC2C150004A83F3 /* HMBackgroundRemovalDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMBackgroundRemovalDebugger.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		08D9D4531AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = HMBackgroundRemovalDebugger.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		08E30BA51BB98B0F009EDCFF /* EMEmusFeedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmusFeedVC.h; sourceTree = "<group>"; };
+		08E30BA61BB98B0F009EDCFF /* EMEmusFeedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMEmusFeedVC.m; sourceTree = "<group>"; };
 		08E8F75A1AE5535000B27D2C /* EMHolySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMHolySheet.h; sourceTree = "<group>"; };
 		08E8F75B1AE5535000B27D2C /* EMHolySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMHolySheet.m; sourceTree = "<group>"; };
 		08E8F75D1AE5540D00B27D2C /* EMHolySheetSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMHolySheetSection.h; sourceTree = "<group>"; };
@@ -1739,6 +1743,8 @@
 			children = (
 				08A456F11B9EF437001AB79E /* EMFeedNavigationVC.h */,
 				08A456F21B9EF437001AB79E /* EMFeedNavigationVC.m */,
+				08E30BA51BB98B0F009EDCFF /* EMEmusFeedVC.h */,
+				08E30BA61BB98B0F009EDCFF /* EMEmusFeedVC.m */,
 				08967BFD1B57CCED000DDCF9 /* EMFeedVC.h */,
 				08967BFE1B57CCED000DDCF9 /* EMFeedVC.m */,
 				08967BFF1B57CCED000DDCF9 /* EmuCell.h */,
@@ -2659,6 +2665,7 @@
 				08AA148E1B0BA658002E1B2F /* EMBGFeedBackVC.m in Sources */,
 				0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
+				08E30BA81BB98B0F009EDCFF /* EMEmusFeedVC.m in Sources */,
 				0865788C1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */,
 				08AA14901B0BA658002E1B2F /* AWFanOpeningView.m in Sources */,
 				08AA14911B0BA658002E1B2F /* HMCaptureSessionError.m in Sources */,
@@ -2793,6 +2800,7 @@
 				085C67961A937EC9007BC910 /* EMBGFeedBackVC.m in Sources */,
 				0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				085C67621A937EC9007BC910 /* main.m in Sources */,
+				08E30BA71BB98B0F009EDCFF /* EMEmusFeedVC.m in Sources */,
 				0865788B1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */,
 				08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */,
 				08CE39CF1A91522700B82DB9 /* HMCaptureSessionError.m in Sources */,
