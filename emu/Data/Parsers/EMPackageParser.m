@@ -33,7 +33,6 @@
     pkg.name = [info safeStringForKey:@"name"];
     pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"last_update"]];
     pkg.firstPublishedOn = [self parseDateOfString:[info safeStringForKey:@"first_published_on"]];
-    pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
     pkg.notificationText = [info safeStringForKey:@"notification_text"];
     pkg.isActive = [info safeBoolNumberForKey:@"active" defaultsValue:@YES];
@@ -46,6 +45,16 @@
     NSNumber *shouldAutoDownload = [info safeBoolNumberForKey:@"should_auto_download"];
     pkg.shouldAutoDownload = shouldAutoDownload? shouldAutoDownload: @YES;
     pkg.priority = @0;
+    
+    // Featured packs
+    pkg.isFeatured = [info safeBoolNumberForKey:@"is_featured" defaultsValue:@NO];
+    
+    // Icons, banners and posters for the pack
+    pkg.iconName = [info safeStringForKey:@"icon_name"];
+    pkg.bannerName = [info safeStringForKey:@"banner_name"];
+    pkg.bannerWideName = [info safeStringForKey:@"banner_wide_name"];
+    pkg.posterName = [info safeStringForKey:@"poster_name"];
+    
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;

@@ -2,9 +2,8 @@
 //  EMPacksVC.h
 //  emu
 //
-//  Showing list of packs.
-//  When user selectes a pack, it will be shown to the user on the main feed.
-//  This VC can also embed the featured packs VC at the top (determined on instansciation).
+//  List of active packs (prioritized ones on top).
+//  May also embed featured packs vc.
 //
 //  Created by Aviv Wolf on 9/8/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
@@ -13,7 +12,6 @@
 @import UIKit;
 
 @interface EMPacksVC : UIViewController
-
 /**
  *  YES if the featured packs are embedded and shown at the top of the list.
  *  NO otherwise.

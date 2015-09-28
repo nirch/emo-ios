@@ -13,6 +13,7 @@
 #import "EmuStyle.h"
 #import "EMPacksVC.h"
 #import "EMFeedNavigationVC.h"
+#import "EMTopVCProtocol.h"
 
 @interface EMTabsVC ()
 
@@ -69,6 +70,12 @@
     NSNumber *newTabIndexNumber = info[@"newTabIndex"];
     NSInteger newTabIndex = [newTabIndexNumber integerValue];
     self.selectedIndex = newTabIndex;
+    
+    // Tell selected view controller it was chosen.
+    id<EMTopVCProtocol>selectedVC = self.childViewControllers[self.selectedIndex];
+    if ([selectedVC conformsToProtocol:@protocol(EMTopVCProtocol)]) {
+        [selectedVC vcWasSelected];
+    }
 }
 
 #pragma mark - initializations
@@ -91,12 +98,6 @@
     feedVC.title = @"Feed";
     [viewControllers addObject:feedVC];
 
-//    // Feed
-//    UIViewController *feedVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeFeed]];
-//    feedVC.title = @"Feed";
-//    [viewControllers addObject:feedVC];
-
-    
     // Search
     UIViewController *searchVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeSearch]];
     searchVC.title = @"Search";

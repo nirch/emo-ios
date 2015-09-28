@@ -3,11 +3,12 @@ platform :ios,          '8.1'
 
 # Networking and resources
 pod 'AFNetworking',     '~> 2.6.0'
-pod 'SDWebImage', '~> 3.7.0'
+pod 'FLAnimatedImage', '~> 1.0'
+pod 'SDWebImage', '~> 3.7'
+pod 'PINRemoteImage', '~> 1.2',                  :inhibit_warnings => true
 pod 'AWSS3', '~> 2.2',                  :inhibit_warnings => true
 
 # GUI & Players
-pod 'FLAnimatedImage', '~> 1.0'
 pod 'AFSoundManager',                   :inhibit_warnings => true
 pod 'Toast', '~> 2.4'
 pod 'JDFTooltips', '~> 1.0',            :inhibit_warnings => true

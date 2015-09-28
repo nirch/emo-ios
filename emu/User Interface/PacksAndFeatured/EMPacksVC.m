@@ -1,7 +1,14 @@
 //
-//  EMFeaturedVC.m
+//  EMPacksVC.h
 //  emu
-//
+//  -----------------------------------------------------------------------
+//  Responsibilities:
+//      - Showing list of packs.
+//      - When user selectes a pack,
+//        will broadcast a notification with info about the selected pack.
+//      - Sometimes notifies "requires data fetch"
+//        (lets someone else decide if a fetch actually required).
+//  -----------------------------------------------------------------------
 //  Created by Aviv Wolf on 9/8/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -9,28 +16,40 @@
 #import "EMPacksVC.h"
 #import "EMPackCell.h"
 #import "EMNavBarVC.h"
+#import "EMPacksDataSource.h"
+#import "EMTopVCProtocol.h"
+#import "EMNotificationCenter.h"
+
+#define TAG @"EMPacksVC"
 
 #define PACKS_CELLS_ASPECT_RATIO 2.8f
 #define PACKS_PADDING_H 12.0f
 
 @interface EMPacksVC () <
-    UICollectionViewDataSource,
     UICollectionViewDelegate,
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    EMTopVCProtocol
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiFeaturedPacksContainer;
 
+// UI initialization
+@property (nonatomic) BOOL alreadyInitializedGUIOnAppearance;
+
+// Navigation bar
 @property (weak, nonatomic) EMNavBarVC *navBarVC;
+
+// The data source.
+@property (nonatomic) EMPacksDataSource *dataSource;
+
+// YES/NO flag indicating if the featured packs are shown on this view controller.
 @property (nonatomic, readwrite) BOOL featuredPacksShown;
 
+// Layout info.
 @property (nonatomic) CGFloat packCellHeight;
 @property (nonatomic) CGFloat packCellWidth;
 @property (nonatomic) CGFloat packsTopPosition;
-
-@property (nonatomic) NSInteger packsCount;
-@property (nonatomic) NSInteger lastWidePack;
 
 @end
 
@@ -52,12 +71,64 @@
 }
 
 #pragma mark - VC lifecycle
+/**
+ *  On view did load:
+ *      - initialize the data source for this packs VC collection view.
+ *      - First, one time initialization of the UI.
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initDataSource];
+    [self initGUIOnLoad];
+}
+
+/**
+ *  On view appearance:
+ *      - Initialize observers.
+ *      - Broadcast a notification that a data fetch may be required.
+ */
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Refresh data if required
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages object:self userInfo:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    HMLOG(TAG, EM_DBG, @"View did appear");
+    [self initGUIOnAppearance];
+    [self refreshGUIWithLocalData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+
+#pragma mark - Initializations
+/**
+ *  Initialized the data source for the collection view of packs.
+ */
+-(void)initDataSource
+{
+    // Set the data source.
+    self.dataSource = [EMPacksDataSource new];
+    self.guiCollectionView.dataSource = self.dataSource;
+}
+
+/**
+ *  GUI initializations on first loading the UI.
+ */
+-(void)initGUIOnLoad
+{
+    // Initialize the UI
     self.guiCollectionView.backgroundColor = [UIColor clearColor];
     self.guiCollectionView.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-    
     EMNavBarVC *navBarVC;
     if (self.featuredPacksShown) {
         navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeatured]];
@@ -67,96 +138,100 @@
     self.navBarVC = navBarVC;
 }
 
--(void)viewWillAppear:(BOOL)animated
+/**
+ *  Further UI initializations after UI appearance.
+ *   - Some initializations will occur only on first appearance.
+ *   - Cells layout determind by screen size.
+ *   - Add space in layout if featured packs are shown.
+ *  Some initializations will happen when screen first appears.
+ */
+-(void)initGUIOnAppearance
 {
-    [super viewWillAppear:animated];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self initGUI];
-}
-
-
-#pragma mark - Initializations
--(void)initGUI
-{
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGSize size = screenRect.size;
-    
-    // Cells settings
-    self.packCellWidth = (CGFloat)(int)(size.width/2 - PACKS_PADDING_H) ;
-    self.packCellHeight = (CGFloat)(int)self.packCellWidth / PACKS_CELLS_ASPECT_RATIO;
-    
-    // Collection view settings
-    CGRect f = self.guiFeaturedPacksContainer.frame;
-    if (self.featuredPacksShown) {
-        self.packsTopPosition = f.origin.y + f.size.height + 6;
-        self.guiFeaturedPacksContainer.hidden = NO;
-    } else {
-        self.packsTopPosition = f.origin.y + 6;
-        self.guiFeaturedPacksContainer.hidden = YES;
+    if (!self.alreadyInitializedGUIOnAppearance) {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGSize size = screenRect.size;
+        
+        // Cells settings
+        self.packCellWidth = (CGFloat)(int)(size.width/2 - PACKS_PADDING_H) ;
+        self.packCellHeight = (CGFloat)(int)self.packCellWidth / PACKS_CELLS_ASPECT_RATIO;
+        
+        // Collection view settings
+        CGRect f = self.guiFeaturedPacksContainer.frame;
+        if (self.featuredPacksShown) {
+            self.packsTopPosition = f.origin.y + f.size.height + 6;
+            self.guiFeaturedPacksContainer.hidden = NO;
+        } else {
+            self.packsTopPosition = f.origin.y + 6;
+            self.guiFeaturedPacksContainer.hidden = YES;
+        }
+        self.alreadyInitializedGUIOnAppearance = YES;
     }
-    
+}
+
+#pragma mark - Data
+-(void)refreshGUIWithLocalData
+{
     // Reload the data in the collection view.
+    [self.dataSource reset];
     [self.guiCollectionView reloadData];
 }
 
-#pragma mark - UICollectionViewDataSource
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+#pragma mark - EMTopVCProtocol
+-(void)vcWasSelected
 {
-    return 1;
+    HMLOG(TAG, EM_DBG, @"Top vc selected: EMPacksVC");
 }
-
--(NSInteger)collectionView:(UICollectionView *)collectionView
-    numberOfItemsInSection:(NSInteger)section
-{
-    self.packsCount = 299;
-    self.lastWidePack = (self.packsCount%2==0)?2:3;
-    return self.packsCount;
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                 cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellIdentifier = @"pack cell";
-    EMPackCell *cell = [self.guiCollectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
-                                                                            forIndexPath:indexPath];
-    [self configureCell:cell forIndexPath:indexPath];
-    return cell;
-}
-
--(void)configureCell:(EMPackCell *)cell forIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-
 
 #pragma mark - Collection view layout
+/**
+ *  Determine the required layout for a cell in a given index path.
+ *
+ *  @param collectionView       The related collection view.
+ *  @param collectionViewLayout The layout.
+ *  @param indexPath            Index path of the cel.
+ *
+ *  @return CGSize required for the cell.
+ */
 -(CGSize)collectionView:(UICollectionView *)collectionView
                  layout:(UICollectionViewLayout *)collectionViewLayout
  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL shouldBeWideButton = indexPath.item < self.lastWidePack;
+    // Packs can be shown two or one per row.
+    BOOL shouldBeWideButton = indexPath.item < self.dataSource.lastWidePack;
     
     if (shouldBeWideButton) {
+        // A wide button for this pack.
         return CGSizeMake(self.packCellWidth * 2, self.packCellHeight);
     } else {
+        // A narrow button for this pack (two per row).
         return CGSizeMake(self.packCellWidth, self.packCellHeight);
     }
 }
 
+/**
+ *  Inset for a section. Just adding some padding to the collection view.
+ *
+ *  @param collectionView       The related collection view.
+ *  @param collectionViewLayout The collection view layout.
+ *  @param section              The section number.
+ *
+ *  @return The required insets (padding) for the provided section number.
+ */
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
                         layout:(UICollectionViewLayout*)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(self.packsTopPosition, PACKS_PADDING_H, 0, PACKS_PADDING_H);
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(self.packsTopPosition, PACKS_PADDING_H, 50, PACKS_PADDING_H);
+    return edgeInsets;
 }
 
 
 #pragma mark - Scrolling
+/**
+ *  Just a silly bounce/stretch effect on the featured packs view.
+ *
+ *  @param scrollView The scroll view.
+ */
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offset = scrollView.contentOffset.y;

@@ -131,7 +131,7 @@
                                                         object:self
                                                       userInfo:nil];
     
-    [self handleFlow];
+//    [self handleFlow];
     [self updateFBMessengerExperienceState];
 }
 
@@ -368,8 +368,8 @@
         [self debugCleanAndRender];
     }
     
-    // Handle the flow
-    [self handleFlow];
+//    // Handle the flow
+//    [self handleFlow];
 }
 
 -(void)onShouldShowPackage:(NSNotification *)notification
@@ -472,56 +472,56 @@
     }
 }
 
-#pragma mark - Flow
--(void)handleFlow
-{
-    // TODO: remove this.
-    [self.splashVC hideAnimated:YES];
-    
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (!appCFG.onboardingPassed.boolValue) {
-        // Try to fetch data from server at least once, before starting onboarding.
-        if (!self.refetchDataAttempted) return;
-        
-        /**
-         *  Open the recorder for the first time.
-         */
-        NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST
-                                          fallbackValue:nil];
-        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
-        
-        
-        if (emuticonDefForOnboarding == nil) {
-            REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
-        }
-        REMOTE_LOG(@"Opening recorder for the first time");
-        REMOTE_LOG(@"Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
-        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-                             info:@{
-                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
-                                    emkEmuticonDefName:emuticonDefForOnboarding.name
-                                    }];
-
-    } else {
-
-        /**
-         *  User finished onboarding in the past.
-         *  just show the main screen of the app.
-         */
-        
-        REMOTE_LOG(@"The main screen");
-        
-        // Refresh on first appearance
-        [self resetFetchedResultsController];
-        [self.guiCollectionView reloadData];
-        
-        // Never viewed the kb tutorial?
-        // It is time to show it.
-        if (!appCFG.userViewedKBTutorial.boolValue) {
-            [self showKBTutorial];
-        }
-    }
-}
+//#pragma mark - Flow
+//-(void)handleFlow
+//{
+//    // TODO: remove this.
+//    [self.splashVC hideAnimated:YES];
+//    
+//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//    if (!appCFG.onboardingPassed.boolValue) {
+//        // Try to fetch data from server at least once, before starting onboarding.
+//        if (!self.refetchDataAttempted) return;
+//        
+//        /**
+//         *  Open the recorder for the first time.
+//         */
+//        NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST
+//                                          fallbackValue:nil];
+//        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
+//        
+//        
+//        if (emuticonDefForOnboarding == nil) {
+//            REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
+//        }
+//        REMOTE_LOG(@"Opening recorder for the first time");
+//        REMOTE_LOG(@"Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
+//        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
+//                             info:@{
+//                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+//                                    emkEmuticonDefName:emuticonDefForOnboarding.name
+//                                    }];
+//
+//    } else {
+//
+//        /**
+//         *  User finished onboarding in the past.
+//         *  just show the main screen of the app.
+//         */
+//        
+//        REMOTE_LOG(@"The main screen");
+//        
+//        // Refresh on first appearance
+//        [self resetFetchedResultsController];
+//        [self.guiCollectionView reloadData];
+//        
+//        // Never viewed the kb tutorial?
+//        // It is time to show it.
+//        if (!appCFG.userViewedKBTutorial.boolValue) {
+//            [self showKBTutorial];
+//        }
+//    }
+//}
 
 
 -(void)epicFail:(NSString *)errorMessage
@@ -870,13 +870,13 @@
         }
     }];
         
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
-        [self _handleChangeToMixScreen];
-        [self showKBTutorial];
-    } else {
-        [self handleFlow];
-    }
+//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//    if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
+//        [self _handleChangeToMixScreen];
+//        [self showKBTutorial];
+//    } else {
+//        [self handleFlow];
+//    }
 }
 
 -(void)onboardingFinishedGoalsWithInfo:(NSDictionary *)info

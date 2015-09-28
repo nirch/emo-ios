@@ -130,9 +130,13 @@
  */
 -(NSURL *)urlForResources;
 
-
+/**
+ *  A list of emuticons with no set specific footage.
+ *
+ *  @return NSArray of such emu objects.
+ */
 -(NSArray *)emuticonsWithNoSpecificFootage;
--(NSURL *)urlForPackageIcon;
+
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 -(NSString *)tagLabel;
@@ -143,6 +147,37 @@
 -(NSString *)localizedLabel;
 
 -(NSString *)sharingHashTagsStringForShareMethodNamed:(NSString *)shareMethodName;
+
+#pragma mark - Package resources
+/**
+ *  The url of the (old and soon to be deprecated) package icon.
+ *
+ *  @return NSURL to the package icon.
+ */
+-(NSURL *)urlForPackageIcon;
+
+/**
+ *  The url of the package banner resource.
+ *
+ *  @return NSURL to the package banner resource.
+ */
+-(NSURL *)urlForPackageBanner;
+
+/**
+ *  The url of the package wide banner resource.
+ *
+ *  @return NSURL to the package wide banner resource.
+ */
+-(NSURL *)urlForPackageBannerWide;
+
+/**
+ *  The url of the big poster
+ *
+ *  @return NSURL to the package poster (may be png or animated gif).
+ */
+-(NSURL *)urlForPackagePoster;
+
+
 
 #pragma mark - Sampled results
 -(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID;

@@ -52,6 +52,7 @@
         
         // last update timestamp
         NSNumber *timestamp = packageInfo[@"data_update_time_stamp"];
+        if (![timestamp isKindOfClass:[NSNumber class]]) continue;
         if (timestamp && [latestTimestamp compare:timestamp] == NSOrderedAscending) {
             latestTimestamp = timestamp;
         }

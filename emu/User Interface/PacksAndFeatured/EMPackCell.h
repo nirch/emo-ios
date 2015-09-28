@@ -10,4 +10,13 @@
 
 @interface EMPackCell : UICollectionViewCell
 
+/**
+ *  The text that will be used on the label of the pack cell.
+ */
+@property (nonatomic) NSString *label;
+@property (nonatomic) NSURL *bannerURL;
+
+
+-(void)updateGUI;
+
 @end

@@ -31,8 +31,8 @@
 @implementation AppManagement
 
 @synthesize ioQueue = _ioQueue;
-
 @synthesize prefferedLanguages = _prefferedLanguages;
+@synthesize resourcesScaleString = _resourcesScaleString;
 
 #pragma mark - Initialization
 // A singleton
@@ -233,6 +233,15 @@ NSString* machineName()
     NSString *model = [NSString stringWithCString:systemInfo.machine
                                          encoding:NSUTF8StringEncoding];
     return model;
+}
+
+#pragma mark - device specific info
+-(NSString *)resourcesScaleString
+{
+    if (_resourcesScaleString) return _resourcesScaleString;
+    NSInteger screenScale = [[UIScreen mainScreen] scale];
+    _resourcesScaleString = [SF:@"@%@x", @(screenScale)];
+    return _resourcesScaleString;
 }
 
 #pragma mark - Localization

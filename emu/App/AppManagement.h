@@ -7,7 +7,7 @@
 //
 
 #define LSS(STRINGKEY, DEFSTRING) [AppManagement.sh serverSideLocalizedString:STRINGKEY defaultValue:DEFSTRING]
-
+#define RESOURCES_SCALE_STRING AppManagement.sh.resourcesScaleString
 #import <Foundation/Foundation.h>
 
 @interface AppManagement : NSObject
@@ -30,9 +30,10 @@
 // Is this user's results are (were) sampled by the server?
 -(BOOL)userSampledByServer;
 
-#pragma mark - info
+#pragma mark - device specific info
 +(NSString *)deviceModelName;
 +(NSNumber *)deviceGeneration;
+@property (nonatomic, readonly) NSString *resourcesScaleString;
 
 #pragma mark - Localization
 @property (nonatomic, readonly) NSString *prefferedLanguages;

@@ -44,7 +44,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.0.t</string>
+	<string>2.0.0.d</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -74,6 +74,8 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>akamaihd.net</key>
@@ -81,6 +83,24 @@
 				<key>NSExceptionRequiresForwardSecrecy</key>
 				<false/>
 				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>amazonaws.com</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>emu.im</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
 			<key>facebook.com</key>

@@ -198,6 +198,7 @@
     return url;
 }
 
+//TODO: need to deprecate/update this method.
 -(NSURL *)urlForPackageIcon
 {
     AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
@@ -206,11 +207,49 @@
                            cfg.bucketName,
                            self.name,
                            self.iconName,
-                           @"@2x"
+                           @"@3x"
                            ];
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }
+
+-(NSString *)nameForResourceNamed:(NSString *)name
+{
+    NSArray *nameParts = [name componentsSeparatedByString:@"."];
+    if (nameParts.count != 2) return name;
+    name = [SF:@"%@%@.%@", nameParts[0], RESOURCES_SCALE_STRING, nameParts[1]];
+    return name;
+}
+
+-(NSURL *)urlForPackageResourceNamed:(NSString *)name
+{
+    if (name == nil || name.length < 5) return nil;
+    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+    NSString *urlString = [SF:@"%@/%@/packages/%@/%@",
+                           cfg.baseResourceURL,
+                           cfg.bucketName,
+                           self.name,
+                           [self nameForResourceNamed:name]
+                           ];
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
+
+-(NSURL *)urlForPackageBannerWide
+{
+    return [self urlForPackageResourceNamed:self.bannerWideName];
+}
+
+-(NSURL *)urlForPackageBanner
+{
+    return [self urlForPackageResourceNamed:self.bannerName];
+}
+
+-(NSURL *)urlForPackagePoster
+{
+    return [self urlForPackageResourceNamed:self.posterName];
+}
+
 
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context
 {
