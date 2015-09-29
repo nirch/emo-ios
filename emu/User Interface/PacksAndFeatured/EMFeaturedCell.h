@@ -11,6 +11,7 @@
 @interface EMFeaturedCell : UICollectionViewCell
 
 @property (nonatomic) NSURL *posterURL;
+@property (nonatomic) NSURL *posterOverlayURL;
 @property (nonatomic) NSString *debugLabel;
 @property (nonatomic, readonly) BOOL isPosterAnimatedGif;
 

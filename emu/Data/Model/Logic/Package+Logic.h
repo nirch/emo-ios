@@ -173,9 +173,17 @@
 /**
  *  The url of the big poster
  *
- *  @return NSURL to the package poster (may be png or animated gif).
+ *  @return NSURL to the package poster (may be png or animated gif). May be nil.
  */
 -(NSURL *)urlForPackagePoster;
+
+/**
+ *  The url of the big poster overlay
+ *
+ *  @return NSURL to the package poster overlay (should be png with alpha). May be nil.
+ */
+-(NSURL *)urlForPackagePosterOverlay;
+
 
 
 

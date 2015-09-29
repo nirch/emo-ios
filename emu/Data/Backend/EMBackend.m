@@ -199,7 +199,7 @@
     NSDictionary *info = notification.userInfo;
     
     // Used on test app. Debug option to delete all and clean.
-    if ([info[@"delete all and clean"] isEqualToNumber:@1]) {
+    if ([info[@"delete all and clean"] isEqualToNumber:@YES]) {
         [self.server fetchPackagesFullInfoWithInfo:notification.userInfo];
         [EMDB.sh save];
         return;

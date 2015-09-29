@@ -176,6 +176,9 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="49k-Ni-2Pu" userLabel="Poster Gif" customClass="FLAnimatedImageView">
                                                     <rect key="frame" x="79" y="9" width="419" height="236"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q1f-vp-mNO" userLabel="Poster Overlay">
+                                                    <rect key="frame" x="79" y="9" width="419" height="236"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debug Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQV-u2-Uzn">
                                                     <rect key="frame" x="240" y="118" width="97" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -206,12 +209,16 @@
                                             <constraint firstItem="vQV-u2-Uzn" firstAttribute="centerY" secondItem="gdA-Uk-DK6" secondAttribute="centerY" id="Z9i-Ua-BnL"/>
                                             <constraint firstItem="2aC-rz-SdF" firstAttribute="leading" secondItem="gdA-Uk-DK6" secondAttribute="leadingMargin" constant="67" id="a1x-j9-w1a"/>
                                             <constraint firstItem="2aC-rz-SdF" firstAttribute="width" secondItem="buw-If-y4p" secondAttribute="width" constant="4" id="dZs-eC-yyf"/>
+                                            <constraint firstItem="Q1f-vp-mNO" firstAttribute="centerX" secondItem="2aC-rz-SdF" secondAttribute="centerX" id="fon-py-yrp"/>
                                             <constraint firstItem="buw-If-y4p" firstAttribute="top" secondItem="gdA-Uk-DK6" secondAttribute="topMargin" id="gTq-Tm-Ct3"/>
+                                            <constraint firstItem="Q1f-vp-mNO" firstAttribute="height" secondItem="2aC-rz-SdF" secondAttribute="height" id="icB-WG-KcM"/>
                                             <constraint firstItem="49k-Ni-2Pu" firstAttribute="height" secondItem="2aC-rz-SdF" secondAttribute="height" id="jyu-AU-cZa"/>
+                                            <constraint firstItem="Q1f-vp-mNO" firstAttribute="centerY" secondItem="2aC-rz-SdF" secondAttribute="centerY" id="kXS-7q-xY5"/>
                                             <constraint firstItem="buw-If-y4p" firstAttribute="leading" secondItem="gdA-Uk-DK6" secondAttribute="leadingMargin" constant="5" id="lBe-SZ-xRZ"/>
                                             <constraint firstItem="buw-If-y4p" firstAttribute="centerX" secondItem="gdA-Uk-DK6" secondAttribute="centerX" id="lJf-hx-xfK"/>
                                             <constraint firstItem="2aC-rz-SdF" firstAttribute="width" secondItem="buw-If-y4p" secondAttribute="width" constant="-3" id="lXH-Du-n6d"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="buw-If-y4p" secondAttribute="trailing" constant="5" id="qW2-DK-CuD"/>
+                                            <constraint firstItem="Q1f-vp-mNO" firstAttribute="width" secondItem="2aC-rz-SdF" secondAttribute="width" id="uAv-ue-dtM"/>
                                             <constraint firstItem="buw-If-y4p" firstAttribute="centerY" secondItem="gdA-Uk-DK6" secondAttribute="centerY" id="yfA-6g-3cM"/>
                                         </constraints>
                                         <variation key="default">
@@ -236,6 +243,7 @@
                                             <outlet property="guiDebugLabel" destination="vQV-u2-Uzn" id="nmT-d2-rdr"/>
                                             <outlet property="guiPosterGif" destination="49k-Ni-2Pu" id="DjP-VY-uav"/>
                                             <outlet property="guiPosterImage" destination="2aC-rz-SdF" id="YbF-zB-Sxv"/>
+                                            <outlet property="guiPosterOverlay" destination="Q1f-vp-mNO" id="5SY-LP-dHa"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -22,6 +22,9 @@
 
 #define TAG @"EMPacksVC"
 
+#import <PINRemoteImageManager.h>
+#import <PINCache.h>
+
 #define PACKS_CELLS_ASPECT_RATIO 2.8f
 #define PACKS_PADDING_H 12.0f
 
@@ -76,12 +79,14 @@
  *  On view did load:
  *      - initialize the data source for this packs VC collection view.
  *      - First, one time initialization of the UI.
+ *      - Add the navigation/actions bar.
  */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self initDataSource];
     [self initGUIOnLoad];
+    [self initNavigationBar];
 }
 
 /**
@@ -106,6 +111,7 @@
     HMLOG(TAG, EM_DBG, @"View did appear");
     [self initGUIOnAppearance];
     [self refreshGUIWithLocalData];
+    [self.navBarVC bounce];
 }
 
 /**
@@ -139,17 +145,19 @@
     // Initialize the UI
     self.guiCollectionView.backgroundColor = [UIColor clearColor];
     self.guiCollectionView.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-    EMNavBarVC *navBarVC;
-    if (self.featuredPacksShown) {
-        navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeatured]];
-    } else {
-        navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeed]];
-    }
-    self.navBarVC = navBarVC;
     
     // Will fade in the collection view and the featured packs view later.
     self.guiCollectionView.alpha = 0;
     self.guiFeaturedPacksContainer.alpha = 0;
+}
+
+-(void)initNavigationBar
+{
+    EMNavBarVC *navBarVC;
+    if (self.featuredPacksShown) {
+        navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeatured]];
+        self.navBarVC = navBarVC;
+    }
 }
 
 /**
@@ -200,12 +208,19 @@
                  selector:@selector(onUpdatedData:)
                      name:emkDataUpdatedPackages
                    object:nil];
+    
+    [nc addUniqueObserver:self
+                 selector:@selector(onDebug:)
+                     name:emkDataDebug
+                   object:nil];
+
 }
 
 -(void)removeObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataUpdatedPackages];
+    [nc removeObserver:emkDataDebug];
 }
 
 #pragma mark - Observers handlers
@@ -215,6 +230,23 @@
     if (self.guiCollectionView.alpha == 0) {
         [self revealPacks];
     }
+}
+
+-(void)onDebug:(NSNotification *)notification
+{
+    // Delete cache
+    self.guiCollectionView.alpha = 0;
+    self.guiFeaturedPacksContainer.alpha = 0;
+    [self.guiActivity startAnimating];
+    PINCache *cache = [PINRemoteImageManager sharedImageManager].cache;
+    [cache removeAllObjects:^(PINCache * _Nonnull cache) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Reload data
+            [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                                object:self
+                                                              userInfo:@{@"forced_reload":@YES, @"delete all and clean":@YES}];            
+        });
+    }];
 }
 
 #pragma mark - Data

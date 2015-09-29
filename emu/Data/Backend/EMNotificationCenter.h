@@ -12,6 +12,7 @@
 
 #pragma mark - UI data requirements
 // UI data requirements
+#define emkDataDebug @"emk data debug"
 
 // Notified backend that packages data should be refetched.
 #define emkDataRequiredPackages @"emk data required packages"
@@ -28,3 +29,4 @@
 #define emkUIMainShouldShowPackage @"emk ui main should show package"
 
 #define emkUIRenderProgressReport @"emk render progress report"
+

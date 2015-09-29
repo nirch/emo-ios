@@ -250,6 +250,11 @@
     return [self urlForPackageResourceNamed:self.posterName];
 }
 
+-(NSURL *)urlForPackagePosterOverlay
+{
+    return [self urlForPackageResourceNamed:self.posterOverlayName];
+}
+
 
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context
 {

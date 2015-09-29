@@ -1,6 +1,11 @@
 //
 //  EMMainVCViewController.m
 //  emu
+//
+//  >>>>>>> DEPRECATED! <<<<<<<<<
+//  Replaced with the EMEmusFeedVC for displaying the feed of emus.
+//  Other functionality and responsibilities moved
+//
 //  -----------------------------------------------------------------------
 //  This ugly-mega controller is responsible for too many things.
 //  Clearly it needs refactoring and to be taken apart.

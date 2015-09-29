@@ -33,4 +33,10 @@
 +(EMNavBarVC *)navBarVCInParentVC:(UIViewController *)parentVC
                        themeColor:(UIColor *)themeColor;
 
+/**
+ *  A short and simple bounce animation of the navigation bar,
+ *  for getting the user's attention.
+ */
+-(void)bounce;
+
 @end

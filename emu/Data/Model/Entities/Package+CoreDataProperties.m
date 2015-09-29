@@ -2,7 +2,7 @@
 //  Package+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 9/25/15.
+//  Created by Aviv Wolf on 9/28/15.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,13 +14,17 @@
 @implementation Package (CoreDataProperties)
 
 @dynamic alreadyUnzipped;
+@dynamic bannerName;
+@dynamic bannerWideName;
 @dynamic firstPublishedOn;
 @dynamic iconName;
 @dynamic isActive;
+@dynamic isFeatured;
 @dynamic label;
 @dynamic name;
 @dynamic notificationText;
 @dynamic oid;
+@dynamic posterName;
 @dynamic prefferedFootageOID;
 @dynamic preventVideoWaterMarks;
 @dynamic priority;
@@ -34,10 +38,7 @@
 @dynamic timeUpdated;
 @dynamic viewedByUser;
 @dynamic zipppedPackageFileName;
-@dynamic bannerName;
-@dynamic bannerWideName;
-@dynamic posterName;
-@dynamic isFeatured;
+@dynamic posterOverlayName;
 @dynamic emuDefs;
 
 @end

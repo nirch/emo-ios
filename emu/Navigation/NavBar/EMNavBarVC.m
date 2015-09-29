@@ -7,6 +7,10 @@
 //
 
 #import "EMNavBarVC.h"
+#import "EMNotificationCenter.h"
+
+#define ARC4RANDOM_MAX 0x100000000
+
 
 @interface EMNavBarVC ()
 
@@ -85,6 +89,28 @@
     }
 }
 
+#pragma mark - Animations
+-(void)bounce
+{
+    [UIView animateWithDuration:0.4 animations:^{
+        CGFloat dx =  ((float)arc4random() / ARC4RANDOM_MAX) * 0.3f;
+        CGFloat dy =  ((float)arc4random() / ARC4RANDOM_MAX) * 0.3f;
+        self.guiLogoButton.transform = CGAffineTransformMakeScale(1.0f+dx, 1.0f+dy);
+        self.guiLogoButtonBG.transform = CGAffineTransformMakeScale(1.0f+dx, 1.0f+dy);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+             usingSpringWithDamping:0.3
+              initialSpringVelocity:0.6
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             self.guiLogoButton.transform = CGAffineTransformIdentity;
+                             self.guiLogoButtonBG.transform = CGAffineTransformIdentity;
+                         } completion:nil];
+    }];
+}
+
+
 #pragma mark - Theme color
 -(void)updateThemeColor:(UIColor *)color animated:(BOOL)animated
 {
@@ -99,6 +125,11 @@
     _themeColor = color;
     self.guiLogoButtonBG.backgroundColor = color;
     self.guiNavView.backgroundColor = color;
+}
+
+- (IBAction)onPressedFaceButton:(UIButton *)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataDebug object:self userInfo:nil];
 }
 
 @end

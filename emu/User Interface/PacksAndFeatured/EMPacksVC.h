@@ -37,5 +37,4 @@
  */
 +(EMPacksVC *)packsVCWithFeaturedPacks;
 
-
 @end

@@ -10,6 +10,7 @@
 #import <PINRemoteImage/UIImageView+PINRemoteImage.h>
 #import <FLAnimatedImage.h>
 #import <FLAnimatedImageView.h>
+#import "UIView+MotionEffect.h"
 
 @interface EMFeaturedCell()
 
@@ -17,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiDebugLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiPosterImage;
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiPosterGif;
+@property (weak, nonatomic) IBOutlet UIImageView *guiPosterOverlay;
+
+@property (nonatomic) BOOL alreadyInitialized;
 
 @end
 
@@ -24,6 +28,11 @@
 
 -(void)updateGUI
 {
+    if (!self.alreadyInitialized) {
+        [self.guiPosterOverlay addMotionEffectWithAmount:10.0f];
+        self.alreadyInitialized = YES;
+    }
+    
     self.guiDebugLabel.text = self.debugLabel;
     self.guiDebugLabel.hidden = YES;
     [self updatePoster];
@@ -31,15 +40,22 @@
 
 -(void)updatePoster
 {
+    // Clear all.
     self.guiPosterGif.animatedImage = nil;
     [self.guiPosterGif stopAnimating];
-
     self.guiPosterImage.image = nil;
+    self.guiPosterOverlay.image = nil;
     
+    // Display the image or animated gif
     if ([self isPosterAnimatedGif]) {
         [self loadPosterAnimatedGif];
     } else {
         [self loadPosterImage];
+    }
+    
+    // If required, also show the overlay.
+    if (self.posterOverlayURL) {
+        [self loadPosterOverlay];
     }
 }
 
@@ -57,6 +73,11 @@
 -(void)loadPosterImage
 {
     [self.guiPosterImage pin_setImageFromURL:self.posterURL];
+}
+
+-(void)loadPosterOverlay
+{
+    [self.guiPosterOverlay pin_setImageFromURL:self.posterOverlayURL];
 }
 
 

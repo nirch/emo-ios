@@ -54,6 +54,7 @@
     pkg.bannerName = [info safeStringForKey:@"banner_name"];
     pkg.bannerWideName = [info safeStringForKey:@"banner_wide_name"];
     pkg.posterName = [info safeStringForKey:@"poster_name"];
+    pkg.posterOverlayName = [info safeStringForKey:@"poster_overlay_name"];
     
     
     // If package also include emuticon definitions, parse them all.

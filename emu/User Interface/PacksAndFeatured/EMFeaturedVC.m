@@ -29,6 +29,9 @@
 
 @property (nonatomic) NSArray *featuredData;
 
+@property (nonatomic) NSTimer *flippingTimer;
+@property (nonatomic) BOOL ignoreAutoFlipping;
+
 @end
 
 @implementation EMFeaturedVC
@@ -49,6 +52,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self startAutoFlipping];
 
     // Cells layout settings
     CGFloat cellHeight = self.guiCollectionView.bounds.size.height;
@@ -61,6 +66,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self stopAutoFlipping];
     [self removeObservers];
 }
 
@@ -80,6 +86,42 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataUpdatedPackages];
+}
+
+#pragma mark - Auto Flipping
+-(void)startAutoFlipping
+{
+    [self.flippingTimer invalidate];
+    self.flippingTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
+                                                          target:self
+                                                        selector:@selector(onFlipRequired:)
+                                                        userInfo:nil repeats:YES];
+}
+
+-(void)stopAutoFlipping
+{
+    [self.flippingTimer invalidate];
+    self.flippingTimer = nil;
+}
+
+-(void)onFlipRequired:(NSTimer *)timer
+{
+    if (self.ignoreAutoFlipping) return;
+    
+    NSInteger page = [self currentPage];
+    page = [self boundPageIndex:page+1];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:page inSection:0];
+    
+    
+    [UIView animateWithDuration:0.7
+                          delay:0
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         [self.guiCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+                     } completion:^(BOOL finished) {
+                         [self fixPage];
+                     }];
 }
 
 #pragma mark - Observers handlers
@@ -106,6 +148,7 @@
         
         // Gather the info
         info[@"posterURL"] = pack.urlForPackagePoster;
+        info[@"posterOverlayURL"] = pack.urlForPackagePosterOverlay;
         info[@"debugLabel"] = pack.label;
         info[@"packOID"] = pack.oid;
         [data addObject:info];
@@ -134,6 +177,7 @@
     
     // Configure the cell using info about the pack
     cell.posterURL = info[@"posterURL"];
+    cell.posterOverlayURL = info[@"posterOverlayURL"];
     cell.debugLabel = [info[@"debugLabel"] description];
         
     // Update the cell UI
@@ -181,6 +225,11 @@
     [self fixPage];
 }
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.ignoreAutoFlipping = YES;
+}
+
 #pragma mark - Paging
 -(void)fixPage
 {
@@ -191,6 +240,7 @@
     page = page % size + size * (CYCLYC_COUNT/2);
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:page inSection:0];
     [self.guiCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    self.ignoreAutoFlipping = NO;
 }
 
 -(NSInteger)currentPage
