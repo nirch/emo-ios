@@ -18,10 +18,24 @@
 #import "EMNavBarDelegate.h"
 #import "EMNavBarConfigurationSource.h"
 
+
 @interface EMNavBarVC : UIViewController
 
+/**
+ *  The state of the navigation bar (read only - determind by the delegate state).
+ */
+@property (nonatomic, readonly) NSInteger currentState;
+
+/**
+ *  The delegate (usually a related view controller).
+ */
 @property (nonatomic, weak) id<EMNavBarDelegate> delegate;
-@property (nonatomic, weak) id<EMNavBarDelegate> configurationSource;
+
+/**
+ *  A configuration source that controls the configuration of the navigation bar
+ *  according to current state.
+ */
+@property (nonatomic, weak) id<EMNavBarConfigurationSource> configurationSource;
 
 /**
  *  The current theme color of the navigation bar.
@@ -61,5 +75,11 @@
  *  @param title    The new title text
  */
 -(void)updateTitle:(NSString *)title;
+
+/**
+ *  Updates the UI of the navigation bar by current state.
+ *  uses the EMNavBarConfigurationSource on each call.
+ */
+-(void)updateUIByCurrentState;
 
 @end

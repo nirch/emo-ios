@@ -25,6 +25,7 @@
 #import "EMPacksVC.h"
 #import "EMUINotifications.h"
 #import "EMDB.h"
+#import "EMEmusFeedNavigationCFG.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -54,6 +55,8 @@
 
 @implementation EMEmusFeedVC
 
+@synthesize currentState = _currentState;
+
 #pragma mark - VC lifecycle
 /**
  *  On view did load:
@@ -64,6 +67,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initState];
     [self initDataSource];
     [self initGUIOnLoad];
     [self initNavigationBar];
@@ -107,6 +111,14 @@
 
 #pragma mark - Initializations
 /**
+ *  Initialize the feed to the browsing / normal state.
+ */
+-(void)initState
+{
+    [self updateState:EMEmusFeedStateBrowsing];
+}
+
+/**
  *  Initialized the data source for the collection view of packs.
  */
 -(void)initDataSource
@@ -128,11 +140,12 @@
 
 -(void)initNavigationBar
 {
-    EMNavBarVC *navBarVC;
-    navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeed]];
-    self.navBarVC = navBarVC;
+    self.navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeed]];
     self.navBarVC.delegate = self;
-    self.navBarVC.configurationSource = self;
+    
+    self.navBarCFG = [EMEmusFeedNavigationCFG new];
+    self.navBarVC.configurationSource = self.navBarCFG;
+    [self.navBarVC updateUIByCurrentState];
 }
 
 /**
@@ -192,6 +205,12 @@
         if (indexPath == nil) return;
         [self scrollToSection:indexPath.section animated:NO];
     }];
+}
+
+#pragma mark - State
+-(void)updateState:(NSInteger)newState
+{
+    _currentState = newState;
 }
 
 #pragma mark - Data

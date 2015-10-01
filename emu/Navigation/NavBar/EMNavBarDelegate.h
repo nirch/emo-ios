@@ -21,6 +21,11 @@
 @protocol EMNavBarDelegate <NSObject>
 
 /**
+ *  The state of the delegate.
+ */
+@property (nonatomic, readonly) NSInteger currentState;
+
+/**
  *  The user pressed the title button in the nav bar.
  *
  *  @param sender The UIButton pressed.

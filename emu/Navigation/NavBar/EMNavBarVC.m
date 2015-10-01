@@ -10,6 +10,7 @@
 #import "EMNotificationCenter.h"
 #import "EMUISound.h"
 
+#define TAG @"EMNavBarVC"
 #define ARC4RANDOM_MAX 0x100000000
 
 
@@ -24,8 +25,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiTitle;
 
 @property (weak, nonatomic) IBOutlet UIButton *guiActionButton1;
-@property (weak, nonatomic) IBOutlet UIButton *guiButton2;
+@property (weak, nonatomic) IBOutlet UIButton *guiActionButton2;
 
+@property (nonatomic) NSDictionary *cfg;
 
 @property (nonatomic) CGPoint logoButtonOriginalCenter;
 
@@ -78,6 +80,8 @@
 {
     self.alreadyInitializedUIOnApearance = NO;
     self.view.alpha = 0;
+    self.guiActionButton1.hidden = YES;
+    self.guiActionButton2.hidden = YES;
 }
 
 -(void)initGUIOnApearance
@@ -89,7 +93,7 @@
         // Title
         self.guiTitle.hidden = NO;
         [self hideTitleAnimated:NO];
-        
+                
         // Add subtle shadow to the navigation bar
         [self addSubtleShadowToLayer:self.guiNavView.layer boundPath:YES];
         
@@ -236,6 +240,88 @@
     }
 }
 
+#pragma mark - State
+-(NSInteger)currentState
+{
+    if (self.delegate == nil) return 0;
+    return [self.delegate currentState];
+}
+
+-(void)updateUIByCurrentState
+{
+    if (self.configurationSource == nil) return;
+    if (self.currentState == 0) return;
+    
+    // Get the new configuration for current state.
+    self.cfg = [self.configurationSource navBarConfigurationForState:self.currentState];
+    if (self.cfg == nil) {
+        HMLOG(TAG, EM_ERR, @"Unsupported state/configuration for navigation bar");
+        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{
+                                                        @"msg":@"Unsupported state/configuration for navigation bar",
+                                                        @"action":@"updateUIByCurrentState",
+                                                        @"state":@(self.currentState)
+                                                        }];
+        return;
+    }
+    [self updateUIWithCurrentCFG];
+}
+
+-(void)updateUIWithCurrentCFG
+{
+    // By default, hide the action buttons.
+    self.guiActionButton1.hidden = YES;
+    self.guiActionButton2.hidden = YES;
+    
+    // Config and show buttons as required, according to configuration.
+    
+    // Action button 1
+    [self _updateActionButton:self.guiActionButton1 withCFG:self.cfg[EMK_NAV_ACTION_1]];
+    
+    // Action button 2
+    [self _updateActionButton:self.guiActionButton2 withCFG:self.cfg[EMK_NAV_ACTION_2]];
+}
+
+-(void)_updateActionButton:(UIButton *)actionButton withCFG:(NSDictionary *)cfg
+{
+    if (actionButton == nil || cfg == nil) return;
+    
+    if (cfg[EMK_NAV_ACTION_ICON]) {
+        
+        // Set Icon
+        [actionButton setTitle:nil forState:UIControlStateNormal];
+        [actionButton setImage:[UIImage imageNamed:cfg[EMK_NAV_ACTION_ICON]] forState:UIControlStateNormal];
+        actionButton.hidden = NO;
+        
+    } else if (cfg[EMK_NAV_ACTION_TEXT]) {
+        
+        // Set Text
+        [actionButton setTitle:cfg[EMK_NAV_ACTION_TEXT] forState:UIControlStateNormal];
+        [actionButton setImage:nil forState:UIControlStateNormal];
+        actionButton.hidden = NO;
+        
+    }
+}
+
+#pragma mark - Actions
+-(void)executeActionWithActionCFG:(NSDictionary *)actionCFG sender:(id)sender
+{
+    if (actionCFG == nil || self.currentState == 0) {
+        HMLOG(TAG, EM_ERR, @"Unsupported action");
+        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{
+                                                        @"msg":@"Unsupported action",
+                                                        @"action":@"unrecognized",
+                                                        @"state":@(self.currentState)
+                                                        }];
+        return;
+    }
+    
+    // Tell the delegate to execute the action.
+    [self.delegate navBarOnUserActionNamed:actionCFG[@"name"]
+                                    sender:sender
+                                     state:self.currentState
+                                      info:actionCFG[@"info"]];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -245,12 +331,16 @@
     [self.delegate navBarOnTitleButtonPressed:sender];
 }
 
-- (IBAction)onButton1Pressed:(id)sender
+- (IBAction)onActionButton1Pressed:(id)sender
 {
+    NSDictionary *actionCFG = self.cfg[EMK_NAV_ACTION_1];
+    [self executeActionWithActionCFG:actionCFG sender:sender];
 }
 
-- (IBAction)onButton2Pressed:(id)sender
+- (IBAction)onActionButton2Pressed:(id)sender
 {
+    NSDictionary *actionCFG = self.cfg[EMK_NAV_ACTION_2];
+    [self executeActionWithActionCFG:actionCFG sender:sender];
 }
 
 

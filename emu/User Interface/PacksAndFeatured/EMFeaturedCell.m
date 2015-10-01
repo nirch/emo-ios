@@ -29,7 +29,7 @@
 -(void)updateGUI
 {
     if (!self.alreadyInitialized) {
-        [self.guiPosterOverlay addMotionEffectWithAmount:10.0f];
+        [self.guiPosterOverlay addMotionEffectWithAmount:17.0f];
         self.alreadyInitialized = YES;
     }
     
@@ -41,6 +41,8 @@
 -(void)updatePoster
 {
     // Clear all.
+    [self.guiPosterGif pin_cancelImageDownload];
+    [self.guiPosterImage pin_cancelImageDownload];
     self.guiPosterGif.animatedImage = nil;
     [self.guiPosterGif stopAnimating];
     self.guiPosterImage.image = nil;

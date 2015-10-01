@@ -21,11 +21,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1HK-BP-rnC" customClass="EMButton">
-                                        <rect key="frame" x="228" y="4" width="144" height="36"/>
+                                        <rect key="frame" x="208" y="4" width="184" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="StG-u9-hLB"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal" title="Title of the nav bar">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -46,16 +46,17 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onButton1Pressed:" destination="7Ne-zP-lAu" eventType="touchUpInside" id="Fff-IB-GnF"/>
+                                            <action selector="onActionButton1Pressed:" destination="7Ne-zP-lAu" eventType="touchUpInside" id="xUH-fQ-rHn"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-Cq-r0C" userLabel="second button" customClass="EMButton">
                                         <rect key="frame" x="533" y="7" width="59" height="30"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="Button 2">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onButton2Pressed:" destination="7Ne-zP-lAu" eventType="touchUpInside" id="Pez-wa-VsR"/>
+                                            <action selector="onActionButton2Pressed:" destination="7Ne-zP-lAu" eventType="touchUpInside" id="MUa-gj-n6E"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -117,7 +118,7 @@
                     <size key="freeformSize" width="600" height="52"/>
                     <connections>
                         <outlet property="guiActionButton1" destination="mXq-DG-r9o" id="qsc-8R-hMu"/>
-                        <outlet property="guiButton2" destination="UQc-Cq-r0C" id="Hev-Kx-XVQ"/>
+                        <outlet property="guiActionButton2" destination="UQc-Cq-r0C" id="Por-3N-GgC"/>
                         <outlet property="guiLogoButton" destination="Ofy-5Z-pnB" id="9iy-gR-ert"/>
                         <outlet property="guiLogoButtonBG" destination="0wx-On-ZPR" id="BoX-FP-oxj"/>
                         <outlet property="guiNavView" destination="z5J-rg-2aJ" id="Iyl-sl-8S9"/>
@@ -127,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OYl-os-eMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="233"/>
+            <point key="canvasLocation" x="436" y="201"/>
         </scene>
     </scenes>
     <resources>

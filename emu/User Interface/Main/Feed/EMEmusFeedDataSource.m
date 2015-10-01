@@ -93,10 +93,6 @@
 
 -(NSIndexPath *)indexPathForPackOID:(NSString *)packOID
 {
-    // TODO: currently O(n) where n is the number of packs/sections.
-    // TODO: consider how to do it in O(1)
-    Package *pack = [Package findWithID:packOID context:EMDB.sh.context];
-    
     for (NSInteger section=0; section<self.frc.sections.count;section++) {
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
         if ([sectionInfo numberOfObjects] < 1) continue;
