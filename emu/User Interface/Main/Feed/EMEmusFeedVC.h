@@ -6,8 +6,6 @@
 //  Copyright © 2015 Homage. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface EMEmusFeedVC : UIViewController
 
 @end

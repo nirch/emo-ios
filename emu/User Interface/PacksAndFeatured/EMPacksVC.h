@@ -37,4 +37,18 @@
  */
 +(EMPacksVC *)packsVCWithFeaturedPacks;
 
+/**
+ *  Scrolls (without animation) to a pack with provided OID
+ *  highlights it as the currently.
+ *  if pack not found, will do nothing.
+ *
+ *  @param packOID the oid of the pack to be highlighted.
+ */
+-(void)highlightPackWithOID:(NSString *)packOID;
+
+/**
+ *  Remove the highlight added by highlightPackByOID.
+ */
+-(void)removeHighlights;
+
 @end

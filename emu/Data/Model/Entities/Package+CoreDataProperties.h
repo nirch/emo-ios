@@ -2,7 +2,7 @@
 //  Package+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 9/28/15.
+//  Created by Aviv Wolf on 9/30/15.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -27,8 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *notificationText;
 @property (nullable, nonatomic, retain) NSString *oid;
 @property (nullable, nonatomic, retain) NSString *posterName;
+@property (nullable, nonatomic, retain) NSString *posterOverlayName;
 @property (nullable, nonatomic, retain) NSString *prefferedFootageOID;
 @property (nullable, nonatomic, retain) NSNumber *preventVideoWaterMarks;
+@property (nullable, nonatomic, retain) NSString *prioritizedIdentifier;
 @property (nullable, nonatomic, retain) NSNumber *priority;
 @property (nullable, nonatomic, retain) NSNumber *rendersCount;
 @property (nullable, nonatomic, retain) NSString *requiredVersion;
@@ -40,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSDate *timeUpdated;
 @property (nullable, nonatomic, retain) NSNumber *viewedByUser;
 @property (nullable, nonatomic, retain) NSString *zipppedPackageFileName;
-@property (nullable, nonatomic, retain) NSString *posterOverlayName;
 @property (nullable, nonatomic, retain) NSSet<EmuticonDef *> *emuDefs;
 
 @end

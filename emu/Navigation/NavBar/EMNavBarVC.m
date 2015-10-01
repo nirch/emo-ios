@@ -8,6 +8,7 @@
 
 #import "EMNavBarVC.h"
 #import "EMNotificationCenter.h"
+#import "EMUISound.h"
 
 #define ARC4RANDOM_MAX 0x100000000
 
@@ -20,8 +21,15 @@
 @property (weak, nonatomic) IBOutlet UIView *guiSeparator;
 @property (weak, nonatomic) IBOutlet UIView *guiLogoButtonBG;
 @property (weak, nonatomic) IBOutlet UIButton *guiLogoButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiTitle;
 
-@property (nonatomic) BOOL alreadyInitializedUI;
+@property (weak, nonatomic) IBOutlet UIButton *guiActionButton1;
+@property (weak, nonatomic) IBOutlet UIButton *guiButton2;
+
+
+@property (nonatomic) CGPoint logoButtonOriginalCenter;
+
+@property (nonatomic) BOOL alreadyInitializedUIOnApearance;
 
 @end
 
@@ -40,7 +48,7 @@
     // Add as a subview of the main view of the parent view controller.
     // Will fill the width of the parent and appear at the top.
     CGRect f = parentVC.view.bounds;
-    f.size.height = 57;
+    f.size.height = 52;
     vc.view.frame = f;
     [parentVC.view addSubview:vc.view];
     
@@ -48,23 +56,39 @@
     return vc;
 }
 
-#pragma mark -
+#pragma mark - VC lifecycle
 -(void)viewDidLoad {
     [super viewDidLoad];
-    self.alreadyInitializedUI = NO;
+    [self initGUIOnLoad];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self initGUI];
+    [super viewWillAppear:animated];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self initGUIOnApearance];
 }
 
 #pragma mark - Initializations
--(void)initGUI
+-(void)initGUIOnLoad
 {
-    if (!self.alreadyInitializedUI) {
+    self.alreadyInitializedUIOnApearance = NO;
+    self.view.alpha = 0;
+}
+
+-(void)initGUIOnApearance
+{
+    if (!self.alreadyInitializedUIOnApearance) {
         // Set the theme color.
         [self updateThemeColor:self.themeColor animated:NO];
+        
+        // Title
+        self.guiTitle.hidden = NO;
+        [self hideTitleAnimated:NO];
         
         // Add subtle shadow to the navigation bar
         [self addSubtleShadowToLayer:self.guiNavView.layer boundPath:YES];
@@ -72,9 +96,14 @@
         // Round logo button
         self.guiLogoButtonBG.layer.cornerRadius = self.guiLogoButtonBG.bounds.size.width / 2.0f;
         [self addSubtleShadowToLayer:self.guiLogoButtonBG.layer boundPath:NO];
+        self.logoButtonOriginalCenter = self.guiLogoButton.center;
+        
+        [UIView animateWithDuration:0.1 animations:^{
+            self.view.alpha = 1;
+        }];
         
         // Mark as already initialized
-        self.alreadyInitializedUI = YES;
+        self.alreadyInitializedUIOnApearance = YES;
     }
 }
 
@@ -131,5 +160,98 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataDebug object:self userInfo:nil];
 }
+
+#pragma mark - Title & Scrolling of child VC
+-(void)childVCDidScrollToOffset:(CGPoint)offset
+{
+    CGPoint center = self.logoButtonOriginalCenter;
+    center.y -= offset.y;
+    CGFloat dy = self.logoButtonOriginalCenter.y - center.y;
+    
+    if (dy <= 0) {
+        self.guiLogoButton.center = self.logoButtonOriginalCenter;
+        self.guiLogoButtonBG.center = self.logoButtonOriginalCenter;
+    } else {
+        self.guiLogoButton.center = center;
+        self.guiLogoButtonBG.center = center;
+    }
+    
+    if (dy < 20) {
+        if (self.guiTitle.alpha == 1) {
+            [self hideTitleAnimated:YES];
+        }
+    } else {
+        if (self.guiTitle.alpha == 0) {
+            [self showTitleAnimated:YES];
+        }
+    }
+    
+}
+
+-(void)hideTitleAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            [self hideTitleAnimated:NO];
+        } completion:nil];
+        return;
+    }
+    
+    self.guiLogoButton.alpha = 1;
+    self.guiLogoButtonBG.alpha = 1;
+    self.guiTitle.alpha = 0;
+    self.guiTitle.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+}
+
+-(void)showTitleAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.3 delay:0
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:0.4 options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             [self showTitleAnimated:NO];
+                         } completion:nil];
+        return;
+    }
+    
+    self.guiLogoButton.alpha = 0;
+    self.guiLogoButtonBG.alpha = 0;
+    self.guiTitle.alpha = 1;
+    self.guiTitle.transform = CGAffineTransformIdentity;
+    
+}
+
+-(void)updateTitle:(NSString *)title
+{
+    [UIView setAnimationsEnabled:NO];
+    [self.guiTitle setTitle:title forState:UIControlStateNormal];
+    [self.guiTitle layoutIfNeeded];
+    [UIView setAnimationsEnabled:YES];
+    
+    if (self.guiTitle.alpha != 0) {
+        self.guiTitle.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+        [EMUISound.sh playSoundNamed:SND_POP];
+        [self showTitleAnimated:YES];
+    }
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedTitleButton:(UIButton *)sender
+{
+    [self.delegate navBarOnTitleButtonPressed:sender];
+}
+
+- (IBAction)onButton1Pressed:(id)sender
+{
+}
+
+- (IBAction)onButton2Pressed:(id)sender
+{
+}
+
 
 @end

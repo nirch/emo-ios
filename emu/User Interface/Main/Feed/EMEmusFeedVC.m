@@ -4,7 +4,7 @@
 //  -----------------------------------------------------------------------
 //  Responsibilities:
 //      - Display the emuticon cells in a collection view divided to sections by pack + layout.
-//      - (data source logic handled in a seperate object).
+//      - Owns and uses data source object.
 //      - Sends notifications about prioritized emus (in visible cells).
 //      - Pressing an emu posts a notification that such event happened.
 //      - Notifies about "required data fetch".
@@ -20,11 +20,17 @@
 #import "EMNavBarVC.h"
 #import "EMNotificationCenter.h"
 #import "EMEmusFeedDataSource.h"
+#import "EMNavBarDelegate.h"
+#import "EMCustomPopoverVC.h"
+#import "EMPacksVC.h"
+#import "EMUINotifications.h"
+#import "EMDB.h"
 
 #define TAG @"EMEmusFeedVC"
 
 @interface EMEmusFeedVC() <
-    UICollectionViewDelegateFlowLayout
+    UICollectionViewDelegateFlowLayout,
+    EMNavBarDelegate
 >
 
 // The emus feed collection view.
@@ -35,9 +41,14 @@
 
 // Navigation bar
 @property (weak, nonatomic) EMNavBarVC *navBarVC;
+@property (weak, nonatomic) EMCustomPopoverVC *popoverController;
+@property (nonatomic) id<EMNavBarConfigurationSource> navBarCFG;
 
 // The data source.
 @property (nonatomic) EMEmusFeedDataSource *dataSource;
+
+// Current top section
+@property (nonatomic) NSInteger currentTopSection;
 
 @end
 
@@ -120,6 +131,8 @@
     EMNavBarVC *navBarVC;
     navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeed]];
     self.navBarVC = navBarVC;
+    self.navBarVC.delegate = self;
+    self.navBarVC.configurationSource = self;
 }
 
 /**
@@ -132,6 +145,8 @@
 -(void)initGUIOnAppearance
 {
     if (!self.alreadyInitializedGUIOnAppearance) {
+        [self setCurrentTopSection:0];
+        self.alreadyInitializedGUIOnAppearance = YES;
     }
 }
 
@@ -139,11 +154,16 @@
 -(void)initObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    
     // On packages data refresh required.
     [nc addUniqueObserver:self
                  selector:@selector(onUpdatedData:)
                      name:emkDataUpdatedPackages
+                   object:nil];
+    
+    // On user selected a pack
+    [nc addUniqueObserver:self
+                 selector:@selector(onUserSelectedAPack:)
+                     name:emkUIUserSelectedPack
                    object:nil];
 }
 
@@ -151,12 +171,27 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataUpdatedPackages];
+    [nc removeObserver:emkUIUserSelectedPack];
 }
 
 #pragma mark - Observers handlers
 -(void)onUpdatedData:(NSNotification *)notification
 {
     [self refreshGUIWithLocalData];
+}
+
+-(void)onUserSelectedAPack:(NSNotification *)notification
+{
+    // User pressed a pack in the packs popover.
+    // Dismiss the popover and scroll to the selected pack.
+    NSString *packOID = notification.userInfo[emkOID];
+    __weak EMEmusFeedVC *weakSelf = self;
+    [self.popoverController dismissViewControllerAnimated:YES completion:^{
+        if (packOID == nil) return;
+        NSIndexPath *indexPath = [weakSelf.dataSource indexPathForPackOID:packOID];
+        if (indexPath == nil) return;
+        [self scrollToSection:indexPath.section animated:NO];
+    }];
 }
 
 #pragma mark - Data
@@ -181,5 +216,85 @@
     CGFloat size = (self.view.bounds.size.width-10.0) / 2.0;
     return CGSizeMake(size, size);
 }
+
+-(void)setCurrentTopSection:(NSInteger)currentTopSection
+{
+    _currentTopSection = currentTopSection;
+    NSString *titleForSection = [self.dataSource titleForSection:_currentTopSection];
+    titleForSection = [SF:@"%@ ▼", titleForSection];
+    [self.navBarVC updateTitle:titleForSection];
+}
+
+#pragma mark - Scrolling
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGPoint offset = scrollView.contentOffset;
+    offset.y += scrollView.contentInset.top;
+    [self.navBarVC childVCDidScrollToOffset:offset];
+    
+    NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:CGPointMake(self.guiCollectionView.center.x, 52+scrollView.contentOffset.y)];
+    if (indexPath && self.currentTopSection != indexPath.section) {
+        // Top section changed.
+        self.currentTopSection = indexPath.section;
+    }
+}
+
+-(void)scrollToSection:(NSInteger)sectionIndex animated:(BOOL)animated
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:sectionIndex];
+    [self.guiCollectionView scrollToItemAtIndexPath:indexPath
+                                   atScrollPosition:UICollectionViewScrollPositionTop
+                                           animated:animated];
+}
+
+#pragma mark - Packs list popover
+-(void)showPacksListAsPopOver:(UIControl *)control
+{
+    EMCustomPopoverVC *popoverController;
+    popoverController = [[EMCustomPopoverVC alloc] init];
+    popoverController.popoverPresentationController.sourceView = control.superview; //The view containing the anchor rectangle for the popover.
+    popoverController.popoverPresentationController.sourceRect = control.frame; //The rectangle in the specified view in which to anchor the popover.
+    [self presentViewController:popoverController animated:YES completion:nil];
+    
+    NSString *topPackOID = [self.dataSource packOIDForSection:self.currentTopSection];
+    EMPacksVC *packsVC = [EMPacksVC packsVC];
+    [popoverController addChildViewController:packsVC];
+    [popoverController.view addSubview:packsVC.view];
+
+    // Highlight a pack
+    [packsVC highlightPackWithOID:topPackOID];
+    
+    // Store a weak reference to the popover
+    self.popoverController = popoverController;
+}
+
+#pragma mark - EMNavBarDelegate
+-(void)navBarOnTitleButtonPressed:(UIButton *)sender
+{
+    [self showPacksListAsPopOver:sender];
+}
+
+-(void)navBarOnUserActionNamed:(NSString *)actionName
+                        sender:(id)sender
+                         state:(NSInteger)state
+                          info:(NSDictionary *)info
+{
+    
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedPackSectionButton:(UIButton *)sender
+{
+    NSInteger sectionIndex = sender.tag;
+    
+    // Ensure section index is in bounds.
+    if (sectionIndex>0 && sectionIndex<[self.dataSource packsCount]) {
+        [self scrollToSection:sectionIndex animated:YES];
+    }
+}
+
 
 @end

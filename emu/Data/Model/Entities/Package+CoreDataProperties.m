@@ -2,7 +2,7 @@
 //  Package+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 9/28/15.
+//  Created by Aviv Wolf on 9/30/15.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -25,8 +25,10 @@
 @dynamic notificationText;
 @dynamic oid;
 @dynamic posterName;
+@dynamic posterOverlayName;
 @dynamic prefferedFootageOID;
 @dynamic preventVideoWaterMarks;
+@dynamic prioritizedIdentifier;
 @dynamic priority;
 @dynamic rendersCount;
 @dynamic requiredVersion;
@@ -38,7 +40,6 @@
 @dynamic timeUpdated;
 @dynamic viewedByUser;
 @dynamic zipppedPackageFileName;
-@dynamic posterOverlayName;
 @dynamic emuDefs;
 
 @end

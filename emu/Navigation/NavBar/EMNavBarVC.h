@@ -15,7 +15,13 @@
 
 @import UIKit;
 
+#import "EMNavBarDelegate.h"
+#import "EMNavBarConfigurationSource.h"
+
 @interface EMNavBarVC : UIViewController
+
+@property (nonatomic, weak) id<EMNavBarDelegate> delegate;
+@property (nonatomic, weak) id<EMNavBarDelegate> configurationSource;
 
 /**
  *  The current theme color of the navigation bar.
@@ -38,5 +44,22 @@
  *  for getting the user's attention.
  */
 -(void)bounce;
+
+#pragma mark - Title & Scrolling of child VC
+/**
+ *  A child view controller is reporting about scrolling.
+ *
+ *  @param offset CGPoint of the offset of the scroll.
+ */
+-(void)childVCDidScrollToOffset:(CGPoint)offset;
+
+
+/**
+ *  Updates the title with a new title text.
+ *  Possible to animate the transition between previous value and the new one.
+ *
+ *  @param title    The new title text
+ */
+-(void)updateTitle:(NSString *)title;
 
 @end

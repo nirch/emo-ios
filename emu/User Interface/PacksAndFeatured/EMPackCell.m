@@ -14,6 +14,7 @@
 @interface EMPackCell()
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiClippedImage;
+@property (weak, nonatomic) IBOutlet UIButton *guiButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiLabel;
 
 //@property (nonatomic) PINRemoteImageManagerImageProcessor
@@ -50,6 +51,7 @@
 {
     self.guiLabel.text = self.label;
     self.guiClippedImage.image = nil;
+    self.guiButton.tag = self.indexTag;
     
     if (self.bannerURL != nil) {
         [self.guiClippedImage pin_setImageFromURL:self.bannerURL

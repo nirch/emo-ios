@@ -58,7 +58,8 @@
                         SND_RECORDING_ENDED:@"endRecording.wav",
                         SND_SOFT_CLICK:@"plasticClickSound.wav",
                         SND_SWIPE:@"simpleSwipe.wav",
-                        SND_FOCUSING:@"focusing.wav"
+                        SND_FOCUSING:@"focusing.wav",
+                        SND_POP:@"pop.wav"
                         };
     
     // Load audio files from bundle.

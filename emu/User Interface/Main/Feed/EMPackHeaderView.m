@@ -21,6 +21,7 @@
 -(void)updateGUI
 {
     self.guiLabel.text = self.label;
+    self.guiHeaderButton.tag = self.sectionIndex;
 }
 
 @end

@@ -43,17 +43,20 @@
     
     // Configure the fetch request
     // (emus in active packs, divided to section by pack)
-    NSPredicate *predicate;
-    predicate = [NSPredicate predicateWithFormat:@"emuDef.package.isActive=%@", @YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@", @NO, @YES];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.priority" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];
+    
+    fetchRequest.sortDescriptors = @[
+                                     [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.prioritizedIdentifier" ascending:NO]
+                                     ];
+
     fetchRequest.fetchBatchSize = 20;
 
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
-                                                                            sectionNameKeyPath:@"emuDef.package.label"
-                                                                                     cacheName:@"Emus"];
+                                                                            sectionNameKeyPath:@"emuDef.package.prioritizedIdentifier"
+                                                                                     cacheName:@"emus by pack for feed"];
     _frc = frc;
     [_frc performFetch:nil];
     return _frc;
@@ -64,6 +67,48 @@
     _frc = nil;
     [self frc];
 }
+
+#pragma mark - Public questions about the data
+-(NSString *)titleForSection:(NSInteger)section
+{
+    Emuticon *emu = [self.frc objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+    Package *pack = emu.emuDef.package;
+    return pack.label;
+}
+
+-(NSString *)packOIDForSection:(NSInteger)section
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+    Package *pack = emu.emuDef.package;
+    return pack.oid;
+}
+
+-(NSInteger)packsCount
+{
+    NSInteger count = self.frc.sections.count;
+    _packsCount = count;
+    return count;
+}
+
+-(NSIndexPath *)indexPathForPackOID:(NSString *)packOID
+{
+    // TODO: currently O(n) where n is the number of packs/sections.
+    // TODO: consider how to do it in O(1)
+    Package *pack = [Package findWithID:packOID context:EMDB.sh.context];
+    
+    for (NSInteger section=0; section<self.frc.sections.count;section++) {
+        id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
+        if ([sectionInfo numberOfObjects] < 1) continue;
+        NSIndexPath *indexPath =[NSIndexPath indexPathForItem:0 inSection:section];
+        Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+        if (emu == nil) continue;
+        if ([emu.emuDef.package.oid isEqualToString:packOID]) return indexPath;
+    }
+    return nil;
+}
+
+
 
 #pragma mark - UICollectionViewDataSource
 /**
@@ -91,13 +136,6 @@
 {
     id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
     return [sectionInfo numberOfObjects];
-}
-
--(NSInteger)packsCount
-{
-    NSInteger count = self.frc.sections.count;
-    _packsCount = count;
-    return count;
 }
 
 /**
@@ -140,9 +178,10 @@
                                                                              forIndexPath:indexPath];
 
     // Configure
-    id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[indexPath.section];
-    headerView.label = [sectionInfo name];
-    
+    Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+    Package *pack = emu.emuDef.package;
+    headerView.label = pack.label;
+    headerView.sectionIndex = indexPath.section;
     
     // Update the UI
     [headerView updateGUI];

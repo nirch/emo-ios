@@ -48,13 +48,16 @@
                                                             <state key="normal" backgroundImage="packButton">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="onPressedPackButton:" destination="O1j-04-RAu" eventType="touchUpInside" id="ANZ-Vk-ju5"/>
+                                                            </connections>
                                                         </button>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ej-nL-P1z" userLabel="Cropped pack image">
                                                             <rect key="frame" x="3" y="2" width="245" height="88"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiT-Rv-Zo2" customClass="EMLabel">
-                                                            <rect key="frame" x="97" y="34" width="58" height="28"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                            <rect key="frame" x="100.5" y="35" width="51" height="24"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <nil key="highlightedColor"/>
                                                             <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <size key="shadowOffset" width="2" height="0.0"/>
@@ -86,6 +89,7 @@
                                         </constraints>
                                         <size key="customSize" width="255" height="100"/>
                                         <connections>
+                                            <outlet property="guiButton" destination="ENW-xx-iC1" id="0wq-9O-8bG"/>
                                             <outlet property="guiClippedImage" destination="7Ej-nL-P1z" id="BwM-S8-aP5"/>
                                             <outlet property="guiLabel" destination="TiT-Rv-Zo2" id="h1w-Xj-eNF"/>
                                         </connections>
@@ -180,9 +184,9 @@
                                                     <rect key="frame" x="79" y="9" width="419" height="236"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debug Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQV-u2-Uzn">
-                                                    <rect key="frame" x="240" y="118" width="97" height="21"/>
+                                                    <rect key="frame" x="240" y="118" width="97" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>

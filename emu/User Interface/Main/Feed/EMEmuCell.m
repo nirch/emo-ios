@@ -26,7 +26,7 @@
 
 -(void)updateStateWithEmu:(Emuticon *)emu forIndexPath:(NSIndexPath *)indexPath
 {
-    _label = emu.emuDef.name;
+    _label = [SF:@"%@ - %@", emu.emuDef.package.name, emu.emuDef.name];
 }
 
 -(void)updateGUI

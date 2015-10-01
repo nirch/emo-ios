@@ -19,6 +19,8 @@
 #import "EMPacksDataSource.h"
 #import "EMTopVCProtocol.h"
 #import "EMNotificationCenter.h"
+#import "EMUINotifications.h"
+#import "EMDB.h"
 
 #define TAG @"EMPacksVC"
 
@@ -40,6 +42,7 @@
 
 // UI initialization
 @property (nonatomic) BOOL alreadyInitializedGUIOnAppearance;
+@property (nonatomic) NSString *highlightedPackOnAppearance;
 
 // Navigation bar
 @property (weak, nonatomic) EMNavBarVC *navBarVC;
@@ -109,8 +112,8 @@
 {
     [super viewDidAppear:animated];
     HMLOG(TAG, EM_DBG, @"View did appear");
-    [self initGUIOnAppearance];
     [self refreshGUIWithLocalData];
+    [self initGUIOnAppearance];
     [self.navBarVC bounce];
 }
 
@@ -170,8 +173,8 @@
 -(void)initGUIOnAppearance
 {
     if (!self.alreadyInitializedGUIOnAppearance) {
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGSize size = screenRect.size;
+        CGRect containerRect = self.view.bounds;
+        CGSize size = containerRect.size;
         
         // Cells settings
         self.packCellWidth = (CGFloat)(int)(size.width/2 - PACKS_PADDING_H) ;
@@ -195,6 +198,10 @@
 
         self.alreadyInitializedGUIOnAppearance = YES;
         
+        if (self.highlightedPackOnAppearance) {
+            [self _highlightPackWithOID:self.highlightedPackOnAppearance];
+            self.highlightedPackOnAppearance = nil;
+        }
     }
 }
 
@@ -273,9 +280,49 @@
         self.guiFeaturedPacksContainer.transform = CGAffineTransformIdentity;
     }];
 
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.1 animations:^{
         self.guiCollectionView.alpha = 1;
     }];
+}
+
+#pragma mark - Highlighting
+-(void)removeHighlights
+{
+    
+}
+
+-(void)highlightPackWithOID:(NSString *)packOID
+{
+    if (self.alreadyInitializedGUIOnAppearance) {
+        [self _highlightPackWithOID:packOID];
+    } else {
+        self.highlightedPackOnAppearance = packOID;
+    }
+}
+
+-(void)_highlightPackWithOID:(NSString *)packOID
+{
+    NSIndexPath *indexPath = [self.dataSource indexPathByPackOID:packOID];
+    [self.guiCollectionView scrollToItemAtIndexPath:indexPath
+                                   atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                           animated:NO];
+    
+
+    __weak EMPacksVC *weakSelf = self;
+    dispatch_after(DTIME(0.5), dispatch_get_main_queue(), ^{
+        UICollectionViewCell *cell = [weakSelf.guiCollectionView cellForItemAtIndexPath:indexPath];
+        
+        // Repeating animation of the highlighted cell.
+        [UIView animateWithDuration:0.5
+                              delay:0
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:0.7
+                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionRepeat|UIViewAnimationOptionAutoreverse
+                         animations:^{
+                             cell.alpha = 0.85;
+                             cell.transform = CGAffineTransformMakeScale(1.08, 1.08);
+                         } completion:nil];
+    });
 }
 
 #pragma mark - Collection view layout
@@ -343,6 +390,23 @@
     CGAffineTransform t = CGAffineTransformMakeTranslation(0, -offset);
     if (scale > 1.0f) t = CGAffineTransformScale(t, scale, scale);
     self.guiFeaturedPacksContainer.transform = t;
+}
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onPressedPackButton:(UIButton *)sender
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+    NSString *packOID = [self.dataSource packOIDByIndexPath:indexPath];
+    if (packOID == nil) return;
+    
+    // Notify that a pack was selected.
+    NSDictionary *info = @{emkOID:packOID};
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserSelectedPack
+                                                        object:self
+                                                      userInfo:info];
 }
 
 

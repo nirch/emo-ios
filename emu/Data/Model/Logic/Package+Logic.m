@@ -81,12 +81,18 @@
     for (Package *package in packages) {
         NSNumber *priority = priorityInfo[package.oid];
         priority = priority? @(now + priority.integerValue) : @0;
+        [package updatePriority:priority];
         package.priority = priority;
     }
 }
 
 
-
+-(void)updatePriority:(NSNumber *)priority
+{
+    self.priority = priority;
+    unsigned long p = self.priority.integerValue;
+    self.prioritizedIdentifier = [SF:@"%015ld_%@", p, self.oid];
+}
 
 -(NSString *)jsonFileName
 {
@@ -290,6 +296,8 @@
 {
     return [SF:@"#%@", [self.label lowercaseString]];
 }
+
+
 
 -(NSString *)localizedLabel
 {

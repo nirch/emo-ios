@@ -45,9 +45,8 @@
     predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;
-    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];
+    fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"prioritizedIdentifier" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];
     fetchRequest.fetchBatchSize = 20;
-
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
@@ -64,18 +63,6 @@
 }
 
 #pragma mark - UICollectionViewDataSource
-///**
-// *  Only one section (of packs).
-// *
-// *  @param collectionView The related collection view.
-// *
-// *  @return Currently, 1 section is hard coded.
-// */
-//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-//{
-//    return 1;
-//}
-
 /**
  *  The number of packs.
  *
@@ -89,13 +76,6 @@
 {
     self.lastWidePack = (self.packsCount%2==0)?2:3;
     return self.packsCount;
-}
-
--(NSInteger)packsCount
-{
-    NSInteger count = self.frc.fetchedObjects.count;
-    _packsCount = count;
-    return count;
 }
 
 /**
@@ -118,11 +98,42 @@
     // Configure the cell using info about the pack
     cell.label = pack.label;
     cell.bannerURL = indexPath.item >= self.lastWidePack? [pack urlForPackageBanner] : [pack urlForPackageBannerWide];
+    cell.indexTag = indexPath.item;
     
     // Update the cell UI
     [cell updateGUI];
 
     return cell;
 }
+
+#pragma mark - Public info about the data
+-(NSIndexPath *)indexPathByPackOID:(NSString *)packOID
+{
+    NSInteger i = 0;
+    // TODO: check this. Currently O(n). Can it be done in O(1)?
+    for (Package *pack in self.frc.fetchedObjects) {
+        if ([pack.oid isEqualToString:packOID]) {
+            return [NSIndexPath indexPathForItem:i inSection:0];
+        }
+        i++;
+    }
+    return nil;
+}
+
+-(NSString *)packOIDByIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section>0) return nil;
+    if (indexPath.item>=self.frc.fetchedObjects.count) return nil;
+    Package *pack = [self.frc objectAtIndexPath:indexPath];
+    return pack.oid;
+}
+
+-(NSInteger)packsCount
+{
+    NSInteger count = self.frc.fetchedObjects.count;
+    _packsCount = count;
+    return count;
+}
+
 
 @end

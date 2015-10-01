@@ -44,7 +44,7 @@
     
     NSNumber *shouldAutoDownload = [info safeBoolNumberForKey:@"should_auto_download"];
     pkg.shouldAutoDownload = shouldAutoDownload? shouldAutoDownload: @YES;
-    pkg.priority = @0;
+    [pkg updatePriority:@0];
     
     // Featured packs
     pkg.isFeatured = [info safeBoolNumberForKey:@"is_featured" defaultsValue:@NO];
@@ -55,7 +55,6 @@
     pkg.bannerWideName = [info safeStringForKey:@"banner_wide_name"];
     pkg.posterName = [info safeStringForKey:@"poster_name"];
     pkg.posterOverlayName = [info safeStringForKey:@"poster_overlay_name"];
-    
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;

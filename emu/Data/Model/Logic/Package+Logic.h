@@ -146,6 +146,19 @@
 -(BOOL)hasEmusWithSpecificTakes;
 -(NSString *)localizedLabel;
 
+/**
+ *  Always update the priority field using this method.
+ *  it takes care of also 
+ */
+-(void)updatePriority:(NSNumber *)priority;
+
+/**
+ *
+ *
+ *  @param shareMethodName
+ *
+ *  @return
+ */
 -(NSString *)sharingHashTagsStringForShareMethodNamed:(NSString *)shareMethodName;
 
 #pragma mark - Package resources
