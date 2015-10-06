@@ -7,10 +7,10 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Main NavigationVC-->
+        <!--Navigation And FlowVC-->
         <scene sceneID="TR6-gH-X0n">
             <objects>
-                <viewController id="cfX-Dw-Hu5" customClass="EMMainNavigationVC" sceneMemberID="viewController">
+                <viewController id="cfX-Dw-Hu5" customClass="EMNavigationAndFlowVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="n2d-J4-t1X"/>
                         <viewControllerLayoutGuide type="bottom" id="Glz-7X-o0q"/>
@@ -32,7 +32,7 @@
                                     <constraint firstAttribute="height" constant="44" id="2FW-BY-osi"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="lQG-Ze-zvr" kind="embed" id="TnD-5l-8R0"/>
+                                    <segue destination="lQG-Ze-zvr" kind="embed" identifier="tabs bar segue" id="TnD-5l-8R0"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -48,6 +48,9 @@
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="guiTabsBar" destination="XnQ-yt-jzU" id="eMe-pf-4E7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VjU-rK-BbT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

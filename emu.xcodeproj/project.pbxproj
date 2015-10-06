@@ -183,6 +183,8 @@
 		084AF5321B38A6BD0056FC34 /* focusing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084AF5301B38A6BD0056FC34 /* focusing.wav */; };
 		084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
 		084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
+		0850A1651BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A1641BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m */; settings = {ASSET_TAGS = (); }; };
+		0850A1661BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A1641BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m */; settings = {ASSET_TAGS = (); }; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
 		0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
 		0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
@@ -264,8 +266,8 @@
 		089EAB831AE674D90074AD09 /* EMActionsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 089EAB821AE674D90074AD09 /* EMActionsArray.m */; };
 		08A456D21B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */; };
 		08A456D31B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */; };
-		08A456DB1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */; };
-		08A456DC1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */; };
+		08A456DB1B9DAF34001AB79E /* EMNavigationAndFlowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DA1B9DAF34001AB79E /* EMNavigationAndFlowVC.m */; };
+		08A456DC1B9DAF34001AB79E /* EMNavigationAndFlowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DA1B9DAF34001AB79E /* EMNavigationAndFlowVC.m */; };
 		08A456DF1B9DB0B2001AB79E /* EMTabsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */; };
 		08A456E01B9DB0B2001AB79E /* EMTabsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */; };
 		08A456E31B9DC22A001AB79E /* EMTabsBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A456E21B9DC22A001AB79E /* EMTabsBarVC.m */; };
@@ -379,7 +381,7 @@
 		08AA14AE1B0BA658002E1B2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EC1A77E0B000B6A68F /* AVFoundation.framework */; };
 		08AA14AF1B0BA658002E1B2F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929EA1A77E0A500B6A68F /* CoreGraphics.framework */; };
 		08AA14B01B0BA658002E1B2F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
-		08AA14B11B0BA658002E1B2F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
+		08AA14B11B0BA658002E1B2F /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		08AA14B41B0BA658002E1B2F /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD51A9757BF008A3E0A /* SourceSansPro-Regular.ttf */; };
 		08AA14BE1B0BA658002E1B2F /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD61A9757BF008A3E0A /* SourceSansPro-Semibold.ttf */; };
 		08AA14C11B0BA658002E1B2F /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AE1A77FD8600BC3479 /* passThrough.vsh */; };
@@ -477,7 +479,7 @@
 		08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08ED7FF71B1DE5B600B6856F /* EMVideoSettingsPopover.xib */; };
 		08EF7F511AC71B3800829825 /* PngSourceWithFX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */; };
 		54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
-		A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E28DB442779D1DF1167B33 /* libPods.a */; };
+		C6299F57CD0A76AD7D3A195D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 594DE828059C80499BD9E834 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -694,6 +696,8 @@
 		084AF53A1B3AA8900056FC34 /* EmuKBCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuKBCell.m; sourceTree = "<group>"; };
 		084DC0001B661A9200A67DD8 /* EMKBOptionsDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKBOptionsDrawer.h; sourceTree = "<group>"; };
 		084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKBOptionsDrawer.m; sourceTree = "<group>"; };
+		0850A1631BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeedSelectionsActionBarVC.h; sourceTree = "<group>"; };
+		0850A1641BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeedSelectionsActionBarVC.m; sourceTree = "<group>"; };
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
 		0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCell.m; sourceTree = "<group>"; };
 		0854EE2F1A9F93B700FD3833 /* EMShareDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareDelegate.h; sourceTree = "<group>"; };
@@ -822,8 +826,8 @@
 		089EAB821AE674D90074AD09 /* EMActionsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMActionsArray.m; sourceTree = "<group>"; };
 		08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainNavigation.storyboard; sourceTree = "<group>"; };
 		08A456D71B9D97E6001AB79E /* emu-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "emu-Bridging-Header.h"; sourceTree = "<group>"; };
-		08A456D91B9DAF34001AB79E /* EMMainNavigationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMainNavigationVC.h; sourceTree = "<group>"; };
-		08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMainNavigationVC.m; sourceTree = "<group>"; };
+		08A456D91B9DAF34001AB79E /* EMNavigationAndFlowVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMNavigationAndFlowVC.h; sourceTree = "<group>"; };
+		08A456DA1B9DAF34001AB79E /* EMNavigationAndFlowVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMNavigationAndFlowVC.m; sourceTree = "<group>"; };
 		08A456DD1B9DB0B2001AB79E /* EMTabsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTabsVC.h; sourceTree = "<group>"; };
 		08A456DE1B9DB0B2001AB79E /* EMTabsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTabsVC.m; sourceTree = "<group>"; };
 		08A456E11B9DC22A001AB79E /* EMTabsBarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTabsBarVC.h; sourceTree = "<group>"; };
@@ -966,9 +970,9 @@
 		08EF7F4F1AC71B3800829825 /* PngSourceWithFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PngSourceWithFX.h; sourceTree = "<group>"; };
 		08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PngSourceWithFX.mm; sourceTree = "<group>"; };
 		08F4EDF31BBCF39900F9ADEF /* EMUINotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUINotifications.h; sourceTree = "<group>"; };
+		594DE828059C80499BD9E834 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EBC61D3F02128F78B223F3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		79CFE9051A98F6D7D2C3BBED /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		A9E28DB442779D1DF1167B33 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -987,7 +991,7 @@
 				08AA14AE1B0BA658002E1B2F /* AVFoundation.framework in Frameworks */,
 				08AA14AF1B0BA658002E1B2F /* CoreGraphics.framework in Frameworks */,
 				08AA14B01B0BA658002E1B2F /* OpenGLES.framework in Frameworks */,
-				08AA14B11B0BA658002E1B2F /* libPods.a in Frameworks */,
+				08AA14B11B0BA658002E1B2F /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,7 +1007,7 @@
 				08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */,
 				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
 				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
-				A0B8EB6C9203ABDA1B739C9E /* libPods.a in Frameworks */,
+				C6299F57CD0A76AD7D3A195D /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1806,14 +1810,16 @@
 				08A456F21B9EF437001AB79E /* EMFeedNavigationVC.m */,
 				08E30BA51BB98B0F009EDCFF /* EMEmusFeedVC.h */,
 				08E30BA61BB98B0F009EDCFF /* EMEmusFeedVC.m */,
-				08BB7B7D1BBB062200EA247A /* EMEmusFeedNavigationCFG.h */,
-				08BB7B7E1BBB062200EA247A /* EMEmusFeedNavigationCFG.m */,
 				08E30BA91BB9A141009EDCFF /* EMEmusFeedDataSource.h */,
 				08E30BAA1BB9A141009EDCFF /* EMEmusFeedDataSource.m */,
+				08BB7B7D1BBB062200EA247A /* EMEmusFeedNavigationCFG.h */,
+				08BB7B7E1BBB062200EA247A /* EMEmusFeedNavigationCFG.m */,
 				08BB7B771BBAA91600EA247A /* EMPackHeaderView.h */,
 				08BB7B781BBAA91600EA247A /* EMPackHeaderView.m */,
 				08E30BAD1BB9B434009EDCFF /* EMEmuCell.h */,
 				08E30BAE1BB9B434009EDCFF /* EMEmuCell.m */,
+				0850A1631BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.h */,
+				0850A1641BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m */,
 				08E30BB11BB9B444009EDCFF /* Deprecated */,
 			);
 			path = Feed;
@@ -1869,8 +1875,8 @@
 			isa = PBXGroup;
 			children = (
 				08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */,
-				08A456D91B9DAF34001AB79E /* EMMainNavigationVC.h */,
-				08A456DA1B9DAF34001AB79E /* EMMainNavigationVC.m */,
+				08A456D91B9DAF34001AB79E /* EMNavigationAndFlowVC.h */,
+				08A456DA1B9DAF34001AB79E /* EMNavigationAndFlowVC.m */,
 				0865788D1BB947CC000DEDA7 /* EMTopVCProtocol.h */,
 				08A456D81B9DA7AB001AB79E /* Tabs */,
 				08A4570A1BA02EDF001AB79E /* NavBar */,
@@ -2254,7 +2260,7 @@
 				0896D5551B2E24D60094ED41 /* SystemConfiguration.framework */,
 				0896D5531B2E24C80094ED41 /* Security.framework */,
 				08875E0F1B19F51200E6663C /* AVKit.framework */,
-				A9E28DB442779D1DF1167B33 /* libPods.a */,
+				594DE828059C80499BD9E834 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2701,6 +2707,7 @@
 				08AA14541B0BA658002E1B2F /* HMImageTools.mm in Sources */,
 				081B08781BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */,
 				08AA14551B0BA658002E1B2F /* HMGMError.m in Sources */,
+				0850A1661BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m in Sources */,
 				08AA14561B0BA658002E1B2F /* EMPagerView.m in Sources */,
 				0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08A456E81B9DDD41001AB79E /* EMTestVC.m in Sources */,
@@ -2792,7 +2799,7 @@
 				08AA14921B0BA658002E1B2F /* EMShareMail.m in Sources */,
 				08A457071BA02844001AB79E /* EMPacksVC.m in Sources */,
 				08AA14931B0BA658002E1B2F /* EMFlowButton.m in Sources */,
-				08A456DC1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */,
+				08A456DC1B9DAF34001AB79E /* EMNavigationAndFlowVC.m in Sources */,
 				08AA14941B0BA658002E1B2F /* BSONIdGenerator.m in Sources */,
 				08AA14951B0BA658002E1B2F /* HMError.m in Sources */,
 				08AA14961B0BA658002E1B2F /* EMEmuticonParser.m in Sources */,
@@ -2843,6 +2850,7 @@
 				083D54751A8CB0A10048604A /* HMImageTools.mm in Sources */,
 				081B08771BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */,
 				0833348C1A827D81008AC771 /* HMGMError.m in Sources */,
+				0850A1651BC2B5EE0024299F /* EMFeedSelectionsActionBarVC.m in Sources */,
 				083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */,
 				0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08A456E71B9DDD41001AB79E /* EMTestVC.m in Sources */,
@@ -2934,7 +2942,7 @@
 				0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */,
 				08A457061BA02844001AB79E /* EMPacksVC.m in Sources */,
 				0860054C1A978AAB008CD7DE /* EMFlowButton.m in Sources */,
-				08A456DB1B9DAF34001AB79E /* EMMainNavigationVC.m in Sources */,
+				08A456DB1B9DAF34001AB79E /* EMNavigationAndFlowVC.m in Sources */,
 				080B05991AB064E2003C19E7 /* BSONIdGenerator.m in Sources */,
 				08CE39CC1A912C5000B82DB9 /* HMError.m in Sources */,
 				0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */,

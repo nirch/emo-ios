@@ -37,7 +37,7 @@
     stateCFG = @{
                  EMK_NAV_ACTION_1:@{
                          EMK_NAV_ACTION_NAME:EMK_NAV_ACTION_SELECT,
-                         EMK_NAV_ACTION_TEXT:LS(@"SELECT") // TODO: localize
+                         EMK_NAV_ACTION_TEXT:LS(@"SELECT")
                          },
                  EMK_NAV_ACTION_2:@{
                          EMK_NAV_ACTION_NAME:EMK_NAV_ACTION_RETAKE,
@@ -50,21 +50,20 @@
     // The cancel button and the clear button.
     stateCFG = @{
                  EMK_NAV_ACTION_1:@{
-                         EMK_NAV_ACTION_NAME:EMK_NAV_ACTION_SELECT,
-                         EMK_NAV_ACTION_TEXT:LS(@"SELECT") // TODO: localize
+                         EMK_NAV_ACTION_NAME:EMK_NAV_ACTION_CANCEL_SELECTION,
+                         EMK_NAV_ACTION_TEXT:LS(@"CANCEL")
                          },
                  EMK_NAV_ACTION_2:@{
-                         EMK_NAV_ACTION_NAME:EMK_NAV_ACTION_RETAKE,
-                         EMK_NAV_ACTION_ICON:@"retakeIcon4"
+                         EMK_NAV_ACTION_NAME:EMK_NAV_ACTION_SELECT_PACK,
+                         EMK_NAV_ACTION_TEXT:LS(@"SELECT_PACK")
                          }
                  };
-    self.cfgByState[@(EMEmusFeedStateBrowsing)] = stateCFG;    
+    self.cfgByState[@(EMEmusFeedStateSelecting)] = stateCFG;
 }
 
 -(NSDictionary *)navBarConfigurationForState:(NSInteger)state
 {
     return self.cfgByState[@(state)];
 }
-
 
 @end

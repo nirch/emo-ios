@@ -296,12 +296,12 @@
                      name:hmkDownloadResourceFinished
                    object:nil];
     
-    // Backend refreshed information about packages
-    [nc addUniqueObserver:self
-                 selector:@selector(onPackagesDataRefresh:)
-                     name:emkUIDataRefreshPackages
-                   object:nil];
-    
+//    // Backend refreshed information about packages
+//    [nc addUniqueObserver:self
+//                 selector:@selector(onPackagesDataRefresh:)
+//                     name:emkUIDataRefreshPackages
+//                   object:nil];
+
     // Need to choose another package
     [nc addUniqueObserver:self
                  selector:@selector(onShouldShowPackage:)
@@ -381,39 +381,39 @@
 }
 
 
--(void)onPackagesDataRefresh:(NSNotification *)notification
-{
-    // Cache in memory server side localized strings
-    // (if exist in local storage)
-    [AppManagement.sh updateLocalizedStrings];
-
-    // Did the refetch
-    self.refetchDataAttempted = YES;
-    
-    // Update UI
-    [self.packagesBarVC refresh];
-    if (self.guiCollectionView.alpha < 1) {
-        [self.guiActivity stopAnimating];
-        [UIView animateWithDuration:0.2 animations:^{
-            self.guiCollectionView.alpha = 1;
-        }];
-    }
-
-    // Update latest published package
-    Package *latestPublishedPackage = [Package latestPublishedPackageInContext:EMDB.sh.context];
-
-    if (latestPublishedPackage != nil) {
-        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-        appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
-    }
-    
-    if (notification.userInfo[@"forced_reload"]) {
-        [self debugCleanAndRender];
-    }
-    
-//    // Handle the flow
-//    [self handleFlow];
-}
+//-(void)onPackagesDataRefresh:(NSNotification *)notification
+//{
+//    // Cache in memory server side localized strings
+//    // (if exist in local storage)
+//    [AppManagement.sh updateLocalizedStrings];
+//
+//    // Did the refetch
+//    self.refetchDataAttempted = YES;
+//    
+//    // Update UI
+//    [self.packagesBarVC refresh];
+//    if (self.guiCollectionView.alpha < 1) {
+//        [self.guiActivity stopAnimating];
+//        [UIView animateWithDuration:0.2 animations:^{
+//            self.guiCollectionView.alpha = 1;
+//        }];
+//    }
+//
+//    // Update latest published package
+//    Package *latestPublishedPackage = [Package latestPublishedPackageInContext:EMDB.sh.context];
+//
+//    if (latestPublishedPackage != nil) {
+//        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//        appCFG.latestPackagePublishedOn = latestPublishedPackage.firstPublishedOn;
+//    }
+//    
+//    if (notification.userInfo[@"forced_reload"]) {
+//        [self debugCleanAndRender];
+//    }
+//    
+////    // Handle the flow
+////    [self handleFlow];
+//}
 
 -(void)onShouldShowPackage:(NSNotification *)notification
 {

@@ -14,7 +14,7 @@
 #define EMK_NAV_ACTION_RETAKE @"nav action:retake"
 
 #define EMK_NAV_ACTION_CANCEL_SELECTION @"nav action:cancel selection"
-#define EMK_NAV_ACTION_CLEAR_SELECTION  @"nav action:clear selection"
+#define EMK_NAV_ACTION_SELECT_PACK  @"nav action:select pack"
 
 @interface EMEmusFeedNavigationCFG : NSObject<
     EMNavBarConfigurationSource

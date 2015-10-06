@@ -22,6 +22,10 @@
  */
 @property (nonatomic, readonly) NSString *oid;
 
+/**
+ *  Indicates if cell is selectable or not.
+ */
+@property (nonatomic) BOOL selectable;
 
 /**
  *  The state of the cell according to the related emu.

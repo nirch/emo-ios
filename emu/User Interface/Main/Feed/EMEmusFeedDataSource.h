@@ -12,6 +12,8 @@
     UICollectionViewDataSource
 >
 
+
+
 /**
  *  The number of active packs / sections.
  */
@@ -21,6 +23,63 @@
  *  Resets the fetched results controller in reperforms the fetch using the context.
  */
 -(void)reset;
+
+#pragma mark - Selections
+@property (nonatomic, readonly) BOOL selectionsAllowed;
+
+/**
+ *  Allow selecting emus. (shows selection indicators)
+ */
+-(void)enableSelections;
+
+/**
+ *  Don't allow selecting emus. (hides selection indicators)
+ */
+-(void)disableSelections;
+
+/**
+ *  Remove all current selections.
+ */
+-(void)clearSelections;
+
+/**
+ *  Selects an emu at index path.
+ *
+ *  @param indexPath the index path of the Emu in current data source.
+ */
+-(void)selectEmuAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Unselects an emu at index path.
+ *
+ *  @param indexPath the index path of the Emu in current data source.
+ */
+-(void)unselectEmuAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Toggles selected/unselected for an emu at index path.
+ *
+ *  @param indexPath the index path of the Emu in current data source.
+ */
+-(void)toggleSelectionForEmuAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  If not all emus are selected for the pack in given section then
+ *  will select all the emus in that pack/section.
+ *  Otherwise will unselect all the emus in that pack/section.
+ *
+ *  @param section The index of the section of the pack.
+ */
+-(void)toggleSelectionForEmusAtSection:(NSInteger)section;
+
+/**
+ *  The number of emus selected.
+ *  Will return 0 if not in selections state.
+ *
+ *  @return NSInteger of the number of emus selected.
+ */
+-(NSInteger)selectionsCount;
+
 
 #pragma mark - Public data info
 /**

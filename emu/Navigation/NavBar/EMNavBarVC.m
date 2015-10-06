@@ -33,6 +33,8 @@
 
 @property (nonatomic) BOOL alreadyInitializedUIOnApearance;
 
+@property (nonatomic) BOOL ignoreActions;
+
 @end
 
 @implementation EMNavBarVC
@@ -82,6 +84,7 @@
     self.view.alpha = 0;
     self.guiActionButton1.hidden = YES;
     self.guiActionButton2.hidden = YES;
+    self.ignoreActions = NO;
 }
 
 -(void)initGUIOnApearance
@@ -316,11 +319,12 @@
     }
     
     // Tell the delegate to execute the action.
-    [self.delegate navBarOnUserActionNamed:actionCFG[@"name"]
+    [self.delegate navBarOnUserActionNamed:actionCFG[EMK_NAV_ACTION_NAME]
                                     sender:sender
                                      state:self.currentState
-                                      info:actionCFG[@"info"]];
+                                      info:actionCFG[EMK_NAV_ACTION_INFO]];
 }
+
 
 #pragma mark - IB Actions
 // ===========
@@ -333,14 +337,28 @@
 
 - (IBAction)onActionButton1Pressed:(id)sender
 {
+    if (self.ignoreActions) return;
+
     NSDictionary *actionCFG = self.cfg[EMK_NAV_ACTION_1];
     [self executeActionWithActionCFG:actionCFG sender:sender];
+    BOOL ignoreActions = self.ignoreActions;
+    self.ignoreActions = YES;
+    dispatch_after(DTIME(0.7), dispatch_get_main_queue(), ^{
+        self.ignoreActions = ignoreActions;
+    });    
 }
 
 - (IBAction)onActionButton2Pressed:(id)sender
 {
+    if (self.ignoreActions) return;
+    
     NSDictionary *actionCFG = self.cfg[EMK_NAV_ACTION_2];
     [self executeActionWithActionCFG:actionCFG sender:sender];
+    BOOL ignoreActions = self.ignoreActions;
+    self.ignoreActions = YES;
+    dispatch_after(DTIME(0.7), dispatch_get_main_queue(), ^{
+        self.ignoreActions = ignoreActions;
+    });
 }
 
 

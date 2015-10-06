@@ -97,7 +97,7 @@
     UIViewController *feedVC = [EMFeedNavigationVC feedNavigationVC];
     feedVC.title = @"Feed";
     [viewControllers addObject:feedVC];
-
+    
     // Search
     UIViewController *searchVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeSearch]];
     searchVC.title = @"Search";

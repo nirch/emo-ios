@@ -14,8 +14,13 @@
 #define EMK_NAV_ACTION_NAME @"nav action name"
 #define EMK_NAV_ACTION_ICON @"nav action icon"
 #define EMK_NAV_ACTION_TEXT @"nav action text"
+#define EMK_NAV_ACTION_INFO @"nav action info"
+
 
 
 -(NSDictionary *)navBarConfigurationForState:(NSInteger)state;
+
+@optional
+-(NSString *)textForActionName:(NSString *)actionName state:(NSInteger)state;
 
 @end

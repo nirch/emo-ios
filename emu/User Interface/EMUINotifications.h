@@ -9,6 +9,14 @@
 #ifndef EMUINotifications_h
 #define EMUINotifications_h
 
-#define emkUIUserSelectedPack @"UI User selected pack"
+#define emkUIUserSelectedPack              @"UI User selected pack"
+
+#define emkUIShouldHideTabsBar             @"UI Should hide tabs bar"
+#define emkUIShouldShowTabsBar             @"UI Should show tabs bar"
+
+#define emkUIAnimated                      @"UI animated flag"
+
+#define emkUIRecorderWillOpen              @"UI recorder will open"
+
 
 #endif /* EMUINotifications_h */

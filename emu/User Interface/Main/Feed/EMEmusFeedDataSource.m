@@ -19,14 +19,20 @@
 // The fetched results controller.
 @property (nonatomic) NSFetchedResultsController *frc;
 
+// Selections
+@property (nonatomic) NSMutableDictionary *selectedIndexPaths;
+
 @end
 
 @implementation EMEmusFeedDataSource
+
+@synthesize selectionsAllowed = _selectionsAllowed;
 
 -(id)init
 {
     self = [super init];
     if (self) {
+        self.selectedIndexPaths = [NSMutableDictionary new];
     }
     return self;
 }
@@ -62,6 +68,9 @@
     return _frc;
 }
 
+/**
+ *  Reset, recreate and reperform fetch.
+ */
 -(void)reset
 {
     _frc = nil;
@@ -104,7 +113,25 @@
     return nil;
 }
 
-
+#pragma mark - Private helpers
+/**
+ *  Array of all index paths of emus in a given section.
+ *
+ *  @param section NSInteger index of the section
+ *
+ *  @return An array of indexPaths for all emus in given section.
+ */
+-(NSArray *)indexPathsForSection:(NSInteger)section
+{
+    NSMutableArray *indexPaths = [NSMutableArray new];
+    id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
+    NSInteger emusCount = [sectionInfo numberOfObjects];
+    for (NSInteger i=0;i<emusCount;i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:section];
+        [indexPaths addObject:indexPath];
+    }
+    return indexPaths;
+}
 
 #pragma mark - UICollectionViewDataSource
 /**
@@ -155,6 +182,10 @@
     // Configure the cell with the emu object.
     [cell updateStateWithEmu:emu forIndexPath:indexPath];
     
+    // Further configuration according to state.
+    cell.selectable = self.selectionsAllowed;
+    cell.selected = [[self.selectedIndexPaths objectForKey:indexPath] isEqualToNumber:@YES];
+    
     // Update the cell UI according to current cell state.
     [cell updateGUI];
     
@@ -183,6 +214,75 @@
     [headerView updateGUI];
     
     return headerView;
+}
+
+#pragma mark - Selections
+-(void)enableSelections
+{
+    _selectionsAllowed = YES;
+}
+
+-(void)disableSelections
+{
+    _selectionsAllowed = NO;
+}
+
+-(void)clearSelections
+{
+    [self.selectedIndexPaths removeAllObjects];
+}
+
+-(void)toggleSelectionForEmusAtSection:(NSInteger)section
+{
+    // Check if all emus selected already in this section.
+    // If all selected, will unselect all.
+    // If not all selected should selected all remaining unselected ones.
+    NSArray *indexPaths = [self indexPathsForSection:section];
+    BOOL shouldSelect = NO;
+    for (NSIndexPath *indexPath in indexPaths) {
+        // Iterate all emus in section, if at least one is unselected
+        // mark all as need to be selected.
+        if (self.selectedIndexPaths[indexPath] == nil) {
+            shouldSelect = YES;
+            break;
+        }
+    }
+    
+    if (shouldSelect) {
+        // Select all emus in the pack related to the section.
+        for (NSIndexPath *indexPath in indexPaths)
+            [self selectEmuAtIndexPath:indexPath];
+    } else {
+        // Unselect all emus in the pack related to the section.
+        for (NSIndexPath *indexPath in indexPaths)
+            [self unselectEmuAtIndexPath:indexPath];
+    }
+}
+
+-(void)selectEmuAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedIndexPaths[indexPath] = @YES;
+}
+
+-(void)unselectEmuAtIndexPath:(NSIndexPath *)indexPath;
+{
+    if (self.selectedIndexPaths[indexPath] == nil) return;
+    [self.selectedIndexPaths removeObjectForKey:indexPath];
+}
+
+-(void)toggleSelectionForEmuAtIndexPath:(NSIndexPath *)indexPath;
+{
+    if (self.selectedIndexPaths[indexPath] == nil) {
+        [self selectEmuAtIndexPath:indexPath];
+    } else {
+        [self unselectEmuAtIndexPath:indexPath];
+    }
+}
+
+-(NSInteger)selectionsCount
+{
+    if (!self.selectionsAllowed) return 0;
+    return self.selectedIndexPaths.count;
 }
   
 @end
