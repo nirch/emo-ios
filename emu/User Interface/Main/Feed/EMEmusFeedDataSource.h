@@ -13,6 +13,10 @@
 >
 
 
+/**
+ *  A dictionary of failed emus by oid.
+ */
+@property (nonatomic, readonly) NSMutableDictionary *failedOIDS;
 
 /**
  *  The number of active packs / sections.
@@ -109,5 +113,7 @@
  */
 -(NSString *)titleForSection:(NSInteger)section;
 
+#pragma mark - Prioritize emus
+-(void)preferEmusAtIndexPaths:(NSArray *)indexPaths;
 
 @end

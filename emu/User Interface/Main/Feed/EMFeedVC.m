@@ -284,7 +284,7 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    // On background detection information received.
+    // On rendering events.
     [nc addUniqueObserver:self
                  selector:@selector(onEmuStateUpdated:)
                      name:hmkRenderingFinished
@@ -946,7 +946,7 @@
 -(void)showKBTutorial
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    //if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
+    if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
     appCFG.userViewedKBTutorial = @YES;
     [EMDB.sh save];
     
@@ -1330,7 +1330,7 @@
     } else if ([actionName isEqualToString:@"USER_CHOICE_ABOUT_KB"]) {
         
         // Show the keyboard tutorial again.
-        [self showKBTutorial];
+        //[self showKBTutorial];
         
     }
 }

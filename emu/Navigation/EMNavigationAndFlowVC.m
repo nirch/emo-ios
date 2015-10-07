@@ -9,6 +9,7 @@
 //      - Handles the flow of "First launch flow" / "After onboarding flow"
 //      - Show/hides tabs bar as needed (based on app wide notifications)
 //      - Opens and dimisses recorder when needed, according to flow state.
+//      - Shows kb tutorial after onboarding (should be deprecated after new onboarding implementation)
 //  -----------------------------------------------------------------------
 //
 //  Created by Aviv Wolf on 9/7/15.
@@ -22,10 +23,14 @@
 #import "EMNotificationCenter.h"
 #import "EMDB.h"
 #import "EMRecorderVC.h"
+#import "EMTutorialVC.h"
 
 #define TAG @"EMMainNavigationVC"
 
-@interface EMNavigationAndFlowVC ()
+@interface EMNavigationAndFlowVC () <
+    EMRecorderDelegate,
+    EMInterfaceDelegate
+>
 
 // IB Outlets
 @property (weak, nonatomic) IBOutlet UIView *guiTabsBar;
@@ -36,6 +41,9 @@
 
 // State
 @property (nonatomic) BOOL alreadyAttemptedDataRefetch;
+
+// Keyboard tutorial (should be deprecated after new onboarding implementation)
+@property (weak, nonatomic) EMTutorialVC *kbTutorialVC;
 
 @end
 
@@ -123,18 +131,35 @@
 }
 
 #pragma mark - Observers handlers
+/**
+ *  A notification was posted indicating that the tabs bar should be hidden.
+ *  hides the tabs bar.
+ *
+ *  @param notification the posted NSNotification
+ */
 -(void)onShouldHideTabs:(NSNotification *)notification
 {
     BOOL animated = [notification.userInfo[emkUIAnimated] isEqualToNumber:@YES];
     [self hideTabsBarAnimated:animated];
 }
 
+/**
+ *  A notification was posted indicating that the tabs bar should be shown.
+ *  show the tabs bar.
+ *
+ *  @param notification the posted NSNotification
+ */
 -(void)onShouldShowTabs:(NSNotification *)notification
 {
     BOOL animated = [notification.userInfo[emkUIAnimated] isEqualToNumber:@YES];
     [self showTabsBarAnimated:animated];
 }
 
+/**
+ *  A notification was 
+ *
+ *  @param notification <#notification description#>
+ */
 -(void)onPackagesDataRefresh:(NSNotification *)notification
 {
     // Mark that attempted a refetch.
@@ -178,37 +203,89 @@
 /**
  *  Handle current state (calls a state handler related to current state).
  *
+ *  States:
+ *      - SPLASH SCREEN
+ *      - USER IN CONTROL
+ *      - OPEN RECORDER ONBOARDING
+ *      - OPEN RECORDER NEW TAKE
+ *      - RECORDER DISMISSAL ONBOARDING
+ *      - RECORDER DISMISSAL NEW TAKE
+ *      -
+ *      -
+ *      -
+ *      -
+ *
+ *
  *  @param info NSDictionary with extra info about the state to handle..
  */
 -(void)handleFlowWithInfo:(NSDictionary *)info
 {
     if (self.flowState == EMNavFlowStateSplashScreen) {
         /**
+         *
+         *  --- SPLASH SCREEN ---
+         *
          *  The splash screen is still shown.
          */
+        REMOTE_LOG(@"Flow state: Splash screen");
         [self _stateSplashScreen];
+        
     } else if (self.flowState == EMNavFlowStateUserControlsNavigation) {
         /**
+         *
+         *  --- USER IN CONTROL ---
+         *
          *  User is in control of the app's navigation flow.
          *  no need to do anything.
          */
+        REMOTE_LOG(@"Flow state: User controls navigation");
+        
     } else if (self.flowState == EMNavFlowStateOpenRecorderForOnBoarding) {
         /**
+         *
+         *  --- OPEN RECORDER ONBOARDING ---
+         *
          *  Open the recorder for the first time
          */
+        REMOTE_LOG(@"Flow state: Will open recorder for onboarding");
         [self _stateOpenRecorderForOnboarding];
+        
     } else if (self.flowState == EMNavFlowStateOpenRecorderForNewTake) {
         /**
+         *
+         *  --- OPEN RECORDER NEW TAKE ---
+         *
          *  Open the recorder for a new take (with some info about what the new take is for).
          */
+        REMOTE_LOG(@"Flow state: Will open recorder for new take");
         [self _stateOpenRecorderForNewTakeWithInfo:info];
+
+    } else if (self.flowState == EMNavFlowStateWaitForRecorderDismissalAfterOnboarding) {
+        /**
+         *
+         *  --- RECORDER DISMISSAL ONBOARDING ---
+         *
+         *  Recorder dismissal after the recorder was opened for onboarding.
+         */
+        REMOTE_LOG(@"Flow state: Recorder dismissal after onboarding, will continue flow.");
+        [self _stateRecroderDismissalAfterOnboardingWithInfo:info];
+
+    } else if (self.flowState == EMNavFlowStateWaitForRecorderDismissalAfterNewTake) {
+        /**
+         *
+         *  --- RECORDER DISMISSAL NEW TAKE ---
+         *
+         *  Recorder dismissal after the recorder was opened for new take.
+         */
+        REMOTE_LOG(@"Flow state: Recorder dismissal after new take, will continue flow.");
+        [self _stateRecroderDismissalAfterNewTakeWithInfo:info];
+        
     } else {
         // This shouldn't happen!
         // If it does, it is a bug in the state machine of this VC.
         REMOTE_LOG(@"EMMainNavigationVC on wrong flow state %@", @(self.flowState));
-        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{
-                                                        @"flowState":@(self.flowState)
-                                                        }];
+        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{@"flowState":@(self.flowState)}];
+        
     }
 }
 
@@ -243,8 +320,14 @@
         [self updateFlowState:EMNavFlowStateUserControlsNavigation];
         [self.splashVC hideAnimated:YES];
     }
+    [self handleFlow];
 }
 
+/**
+ *  Open the recorder for onboarding.
+ *
+ *  EMNavFlowStateOpenRecorderForOnBoarding ==> EMNavFlowStateWaitForRecorderDismissalAfterOnboarding
+ */
 -(void)_stateOpenRecorderForOnboarding
 {
     /**
@@ -252,68 +335,51 @@
      */
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     
-    // Get preffered emus
+    // Get preffered emus and open the recorder
     NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
     EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
-    if (emuticonDefForOnboarding == nil) REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
-    REMOTE_LOG(@"Opening recorder for the first time");
-    REMOTE_LOG(@"Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
-    [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-                         info:@{
-                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
-                                emkEmuticonDefName:emuticonDefForOnboarding.name
-                                }];
+    REMOTE_LOG(@"Opening recorder for the first time. Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
+    [self openRecorderForFlow:EMRecorderFlowTypeOnboarding info:@{emkEmuticonDefOID:emuticonDefForOnboarding.oid, emkEmuticonDefName:emuticonDefForOnboarding.name}];
+
+    // Update the flow state
+    [self updateFlowState:EMNavFlowStateWaitForRecorderDismissalAfterOnboarding];
 }
 
 -(void)_stateOpenRecorderForNewTakeWithInfo:(NSDictionary *)info
 {
-    
+    // Update the flow state
+    [self updateFlowState:EMNavFlowStateWaitForRecorderDismissalAfterNewTake];
 }
 
-//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//    if (!appCFG.onboardingPassed.boolValue) {
-//        // Try to fetch data from server at least once, before starting onboarding.
-//        if (!self.refetchDataAttempted) return;
-//
-//        /**
-//         *  Open the recorder for the first time.
-//         */
-//        NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST
-//                                          fallbackValue:nil];
-//        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
-//
-//
-//        if (emuticonDefForOnboarding == nil) {
-//            REMOTE_LOG(@"CRITICAL ERROR: couldn't use onboarding data bundled on device!");
-//        }
-//        REMOTE_LOG(@"Opening recorder for the first time");
-//        REMOTE_LOG(@"Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
-//        [self openRecorderForFlow:EMRecorderFlowTypeOnboarding
-//                             info:@{
-//                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
-//                                    emkEmuticonDefName:emuticonDefForOnboarding.name
-//                                    }];
-//
-//    } else {
-//
-//        /**
-//         *  User finished onboarding in the past.
-//         *  just show the main screen of the app.
-//         */
-//
-//        REMOTE_LOG(@"The main screen");
-//
-//        // Refresh on first appearance
-//        [self resetFetchedResultsController];
-//        [self.guiCollectionView reloadData];
-//
-//        // Never viewed the kb tutorial?
-//        // It is time to show it.
-//        if (!appCFG.userViewedKBTutorial.boolValue) {
-//            [self showKBTutorial];
-//        }
-//    }
-//}
+
+/**
+ *  Handle the flow after the finishing recorder onboarding.
+ * 
+ *  - Navigates to the main feed screen.
+ *  - Currently will also display the keyboard tutorial (will be deprecated when app onboarding is implemented).
+ *
+ *  EMNavFlowStateWaitForRecorderDismissalAfterOnboarding ==> EMNavFlowStateUserControlsNavigation
+ *
+ *  @param info Info received from the recorder about recorder flow.
+ */
+-(void)_stateRecroderDismissalAfterOnboardingWithInfo:(NSDictionary *)info
+{
+    if (info == nil) return;
+
+    // Navigate to the main feed.
+    [self.tabsBarVC navigateToTabAtIndex:1 animated:NO];
+    
+    // Show KB tutorial
+    [self showKBTutorial];
+    
+    // Update the flow state
+    [self updateFlowState:EMNavFlowStateUserControlsNavigation];
+}
+
+-(void)_stateRecroderDismissalAfterNewTakeWithInfo:(NSDictionary *)info
+{
+    
+}
 
 #pragma mark - splash
 /**
@@ -327,6 +393,22 @@
     _splashVC = [EMSplashVC splashVCInParentVC:self];
     return _splashVC;
 }
+
+#pragma mark - KB Tutorial
+-(void)showKBTutorial
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    appCFG.userViewedKBTutorial = @YES;
+    [EMDB.sh save];
+    
+    if (self.kbTutorialVC == nil) {
+        EMTutorialVC *kbTutorialVC = [EMTutorialVC tutorialVCInParentVC:self];
+        self.kbTutorialVC = kbTutorialVC;
+        [self presentViewController:kbTutorialVC animated:YES completion:nil];
+        [self.kbTutorialVC start];
+    }
+}
+
 
 #pragma mark - Segues
 /**
@@ -389,10 +471,153 @@
     EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:flowType info:info];
     recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     recorderVC.delegate = self;
-    [self presentViewController:recorderVC animated:YES completion:^{
-        [self.splashVC hideAnimated:NO];
-    }];
+    [self presentViewController:recorderVC animated:YES completion:nil];
 }
+
+#pragma mark - EMInterfaceDelegate
+-(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
+{
+    if ([actionName isEqualToString:@"keyboard tutorial should be dismissed"]) {
+        [self.splashVC hideAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.kbTutorialVC = nil;
+        }];
+    }
+}
+
+#pragma mark - EMRecorderDelegate
+-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    // Dismiss the recorder
+    [self dismissViewControllerAnimated:YES completion:^{
+        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+        
+        if (flowType == EMRecorderFlowTypeOnboarding) {
+            // Onboarding finished goals
+            [self onboardingFinishedGoalsWithInfo:info];
+        } else {
+            [self retakeFinishedGoalWithInfo:info];
+        }
+    }];
+
+    // Continue the flow
+    [self handleFlowWithInfo:info];
+}
+
+-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    // Dismiss the recorder
+    [self dismissViewControllerAnimated:YES completion:^{
+        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+    }];
+    
+    // Continue the flow
+    [self handleFlowWithInfo:info];
+}
+
+#pragma mark - A/B testing goals
+-(void)onboardingFinishedGoalsWithInfo:(NSDictionary *)info
+{
+    [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED];
+    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
+    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
+        [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED_WITH_GOOD_BACKGROUND];
+    }
+}
+
+
+-(void)retakeFinishedGoalWithInfo:(NSDictionary *)info
+{
+    [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW];
+    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
+    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
+        [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW_WITH_GOOD_BACKGROUND];
+    }
+}
+
+//-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+//{
+//    // Dismiss the recorder
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        [self.splashVC hideAnimated:YES];
+//        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+//        
+//        if (flowType == EMRecorderFlowTypeOnboarding) {
+//            // Onboarding finished goals
+//            [self onboardingFinishedGoalsWithInfo:info];
+//        } else {
+//            [self retakeFinishedGoalWithInfo:info];
+//        }
+//    }];
+//    
+//    //    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//    //    if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
+//    //        [self _handleChangeToMixScreen];
+//    //        [self showKBTutorial];
+//    //    } else {
+//    //        [self handleFlow];
+//    //    }
+//}
+//
+//-(void)onboardingFinishedGoalsWithInfo:(NSDictionary *)info
+//{
+//    [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED];
+//    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
+//    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
+//        [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED_WITH_GOOD_BACKGROUND];
+//    }
+//}
+//
+//
+//-(void)retakeFinishedGoalWithInfo:(NSDictionary *)info
+//{
+//    [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW];
+//    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
+//    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
+//        [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW_WITH_GOOD_BACKGROUND];
+//    }
+//}
+//
+//
+//
+//-(void)showKBTutorial
+//{
+//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//    //if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
+//    appCFG.userViewedKBTutorial = @YES;
+//    [EMDB.sh save];
+//    
+//    if (self.kbTutorialVC == nil) {
+//        self.kbTutorialVC = [EMTutorialVC tutorialVCInParentVC:self];
+//        [self addChildViewController:self.kbTutorialVC];
+//        [self.guiTutorialContainer addSubview:self.kbTutorialVC.view];
+//        self.kbTutorialVC.view.frame = self.guiTutorialContainer.bounds;
+//    }
+//    
+//    self.guiPackagesSelectionContainer.hidden = YES;
+//    self.guiTutorialContainer.hidden = NO;
+//    self.guiTutorialContainer.alpha = 0;
+//    self.guiNavView.alpha = 0.3;
+//    self.guiNavView.userInteractionEnabled = NO;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.guiTutorialContainer.alpha = 1;
+//    } completion:^(BOOL finished) {
+//        [self.kbTutorialVC start];
+//    }];
+//    
+//}
+//
+//-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+//{
+//    // Dismiss the recorder
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        [self.splashVC hideAnimated:YES];
+//        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
+//    }];
+//    
+//    [self resetFetchedResultsController];
+//    [self.guiCollectionView reloadData];
+//}
 
 #pragma mark - IB Actions
 // ===========

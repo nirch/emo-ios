@@ -46,7 +46,6 @@
                          path:(NSString *)path
                      userInfo:(NSDictionary *)userInfo;
 
-
 #pragma mark - Queue management
 -(void)updatePriorities:(NSDictionary *)priorities;
 -(void)manageQueue;

@@ -12,6 +12,8 @@
 
 @interface EMEmuCell : UICollectionViewCell
 
+@property (nonatomic) NSString *inUI;
+
 /**
  *  The label of the emu (used for debugging).
  */
@@ -27,10 +29,16 @@
  */
 @property (nonatomic) BOOL selectable;
 
+
 /**
  *  The state of the cell according to the related emu.
  */
 typedef NS_ENUM(NSInteger, EMEmuCellState){
+    /**
+     *  Unset state. Calling updateGUI on this state will be ignored (and crash on test apps).
+     */
+    EMEmuCellStateUnset = 0,
+
     /**
      *  The remu requires rendering, but not all source resources are available
      *  the resources will need to be downloaded first, before moving to the next state.
@@ -47,14 +55,32 @@ typedef NS_ENUM(NSInteger, EMEmuCellState){
      *  The emu rendering result is available. This state indicates that the cell should display
      *  the rendered content to the user.
      */
-    EMEmuCellStateReady             = 30
+    EMEmuCellStateReady             = 30,
+    
+    /**
+     *  Indicates if the cell is in a "Failed" state.
+     *  (emu can't be presented or processed for some reason.
+     *  Failed downloads of resources / failed rendering or any other reason)
+     */
+    EMEmuCellStateFailed            = 40
 };
 
+/**
+ *  The state of the cell.
+ *  the state detemines how this cell should be presented to the user
+ *  (determines how updateGUI will configure the cell UI)
+ */
+@property (nonatomic, readonly) EMEmuCellState state;
 
 /**
  *  Update and process the state of the cell using info of an emu object.
  */
 -(void)updateStateWithEmu:(Emuticon *)emu forIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ *  Update the cell state to failed state (emu will not be presented).
+ */
+-(void)updateStateToFailed;
 
 /**
  *  Update the GUI elements according to the cell's current state.

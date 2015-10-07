@@ -8,9 +8,9 @@
 
 #import "EMEmusFeedDataSource.h"
 #import "EMDB.h"
-
 #import "EMEmuCell.h"
 #import "EMPackHeaderView.h"
+#import "Emuticon+DownloadsHelpers.h"
 
 @interface EMEmusFeedDataSource()
 
@@ -173,19 +173,27 @@
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"emu cell";
+    static NSString *originUI = @"feed";
     EMEmuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                                                  forIndexPath:indexPath];
+    cell.inUI = originUI;
     
     // Get the emu object.
     Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
     
     // Configure the cell with the emu object.
-    [cell updateStateWithEmu:emu forIndexPath:indexPath];
-    
-    // Further configuration according to state.
-    cell.selectable = self.selectionsAllowed;
-    cell.selected = [[self.selectedIndexPaths objectForKey:indexPath] isEqualToNumber:@YES];
-    
+    if (self.failedOIDS[emu.oid]) {
+        // Epic Fail!
+        [cell updateStateToFailed];
+    } else {
+        // Configure the cell according to emu state.
+        [cell updateStateWithEmu:emu forIndexPath:indexPath];
+
+        // Further configuration according to data source state.
+        cell.selectable = self.selectionsAllowed;
+        cell.selected = [[self.selectedIndexPaths objectForKey:indexPath] isEqualToNumber:@YES];
+    }
+        
     // Update the cell UI according to current cell state.
     [cell updateGUI];
     
@@ -284,5 +292,13 @@
     if (!self.selectionsAllowed) return 0;
     return self.selectedIndexPaths.count;
 }
-  
+
+#pragma mark - Prioritize emus
+-(void)preferEmusAtIndexPaths:(NSArray *)indexPaths
+{
+    [Emuticon enqueueRequiredDownloadsForIndexPaths:indexPaths
+                                                frc:self.frc
+                                              forUI:@"feed"];
+}
+
 @end

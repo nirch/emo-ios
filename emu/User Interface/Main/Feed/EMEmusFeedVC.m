@@ -160,6 +160,8 @@
 {
     [self hideSelectionsActionBarAnimated:NO];
     self.guiCollectionView.contentInset = UIEdgeInsetsMake(44,0,44,0);
+ 
+//    self.guiCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     
     // Long press gesture recognizer on cells.
     UILongPressGestureRecognizer *longpressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
@@ -211,6 +213,19 @@
                  selector:@selector(onUserSelectedAPack:)
                      name:emkUIUserSelectedPack
                    object:nil];
+    
+    // On rendering events.
+    [nc addUniqueObserver:self
+                 selector:@selector(onEmuStateUpdated:)
+                     name:hmkRenderingFinished
+                   object:nil];
+    
+    // Backend downloaded (or failed to download) missing resources for emuticon.
+    [nc addUniqueObserver:self
+                 selector:@selector(onEmuStateUpdated:)
+                     name:hmkDownloadResourceFinished
+                   object:nil];
+
 }
 
 -(void)removeObservers
@@ -218,6 +233,8 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataUpdatedPackages];
     [nc removeObserver:emkUIUserSelectedPack];
+    [nc removeObserver:hmkRenderingFinished];
+    [nc removeObserver:hmkDownloadResourceFinished];
 }
 
 #pragma mark - Observers handlers
@@ -239,6 +256,30 @@
         [self scrollToSection:indexPath.section animated:NO];
     }];
 }
+
+#pragma mark - Observers handlers
+-(void)onEmuStateUpdated:(NSNotification *)notification
+{
+    // Vaidate we have required info
+    NSDictionary *info = notification.userInfo;
+    if (info == nil) return;
+    NSIndexPath *indexPath = info[@"indexPath"];
+    NSString *oid = info[@"emuticonOID"];
+    NSString *packageOID = info[@"packageOID"];
+    if (indexPath == nil || oid == nil || packageOID == nil) return;
+    
+    // Check for errors.
+    if (notification.isReportingError)
+        self.dataSource.failedOIDS[oid] = @YES;
+    
+    // ignore notifications not relating to emus visible on screen.
+    if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
+
+    // Add some checks here that index path is in bounds.
+    [self.guiCollectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+}
+
+
 
 #pragma mark - State
 -(void)updateState:(NSInteger)newState info:(NSDictionary *)info
@@ -304,10 +345,11 @@
 
 -(void)setCurrentTopSection:(NSInteger)currentTopSection
 {
-    _currentTopSection = currentTopSection;
-    NSString *titleForSection = [self.dataSource titleForSection:_currentTopSection];
-    titleForSection = [SF:@"%@ ▼", titleForSection];
-    [self.navBarVC updateTitle:titleForSection];
+//    _currentTopSection = currentTopSection;
+//    NSString *titleForSection = [self.dataSource titleForSection:_currentTopSection];
+////    titleForSection = [SF:@"%@ ▼", titleForSection];
+//    titleForSection = @"Packs ▼";
+//    [self.navBarVC updateTitle:titleForSection];
 }
 
 #pragma mark - Collection View Delegate
@@ -328,16 +370,41 @@
 
 
 #pragma mark - Scrolling
+/**
+ *  When scrolling, check what is the top pack.
+ */
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    // Update the nav bar where did we scroll to.
     CGPoint offset = scrollView.contentOffset;
     offset.y += scrollView.contentInset.top;
     [self.navBarVC childVCDidScrollToOffset:offset];
-    
-    NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:CGPointMake(self.guiCollectionView.center.x, 52+scrollView.contentOffset.y)];
-    if (indexPath && self.currentTopSection != indexPath.section) {
-        // Top section changed.
-        self.currentTopSection = indexPath.section;
+
+//    [self.navBarVC updateTitle:@"More packs ▼"];
+//    // Get current index path.
+//    NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:CGPointMake(self.guiCollectionView.center.x, 52+scrollView.contentOffset.y)];
+//    if (indexPath && self.currentTopSection != indexPath.section) {
+//        // Top section changed.
+//        self.currentTopSection = indexPath.section;
+//    }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self handleVisibleCells];
+}
+
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    [self handleVisibleCells];
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                 willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        // Will not decelerate after dragging, so scrolling just ended.
+        [self handleVisibleCells];
     }
 }
 
@@ -347,6 +414,13 @@
     [self.guiCollectionView scrollToItemAtIndexPath:indexPath
                                    atScrollPosition:UICollectionViewScrollPositionTop
                                            animated:animated];
+}
+
+#pragma mark - Handle visible cell
+-(void)handleVisibleCells
+{
+    NSArray *visibleIndexPaths = self.guiCollectionView.indexPathsForVisibleItems;
+    [self.dataSource preferEmusAtIndexPaths:visibleIndexPaths];
 }
 
 #pragma mark - Packs list popover
@@ -533,7 +607,7 @@
     NSInteger sectionIndex = sender.tag;
     
     // Ensure section index is in bounds.
-    if (sectionIndex>0 && sectionIndex<[self.dataSource packsCount]) {
+    if (sectionIndex>0 && sectionIndex < [self.dataSource packsCount]) {
         [self scrollToSection:sectionIndex animated:YES];
     }
 }

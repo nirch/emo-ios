@@ -158,6 +158,23 @@
 
 }
 
+-(void)navigateToTabAtIndex:(NSInteger)index animated:(BOOL)animated
+{
+    // Broadcast that a tab was selected to whoever is interested.
+    NSDictionary *info = @{
+                           @"previousTabIndex":@(self.selectedTab),
+                           @"newTabIndex":@(index)
+                           };
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationTabSelected
+                                                        object:self
+                                                      userInfo:info];
+    
+    // Update animations.
+    self.selectedTab = index;
+    [self updateThemeAnimated:animated];
+    [self updateSelectorAnimated:animated];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -178,21 +195,8 @@
 
     // Click sound
     [EMUISound.sh playSoundNamed:SND_SOFT_CLICK];
-
-    // Broadcast that a tab was selected to whoever is interested.
-    NSDictionary *info = @{
-                           @"previousTabIndex":@(self.selectedTab),
-                           @"newTabIndex":@(index)
-                           };
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationTabSelected
-                                                        object:self
-                                                      userInfo:info];
-
-    // Update animations.
-    self.selectedTab = index;
-    [self updateThemeAnimated:YES];
+    [self navigateToTabAtIndex:index animated:YES];
     [self flickerButton:sender];
-    [self updateSelectorAnimated:YES];
 }
 
 

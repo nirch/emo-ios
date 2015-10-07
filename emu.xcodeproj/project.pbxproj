@@ -82,6 +82,10 @@
 		084349C71B837EA0009A653F /* EMShareInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349C51B837EA0009A653F /* EMShareInputVC.m */; };
 		084349D11B84999F009A653F /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D01B84999F009A653F /* NSString+Utilities.m */; };
 		084349D31B84999F009A653F /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 084349D01B84999F009A653F /* NSString+Utilities.m */; };
+		0845BDF31BC523AB00173B66 /* Tutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0845BDF21BC523AB00173B66 /* Tutorials.storyboard */; settings = {ASSET_TAGS = (); }; };
+		0845BDF41BC523AB00173B66 /* Tutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0845BDF21BC523AB00173B66 /* Tutorials.storyboard */; settings = {ASSET_TAGS = (); }; };
+		0845BDF91BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */; settings = {ASSET_TAGS = (); }; };
+		0845BDFA1BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */; settings = {ASSET_TAGS = (); }; };
 		084898EC1BA935010026B25A /* kim.png in Resources */ = {isa = PBXBuildFile; fileRef = 084898EB1BA935010026B25A /* kim.png */; };
 		084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
@@ -639,6 +643,9 @@
 		084349CF1B84999F009A653F /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		084349D01B84999F009A653F /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
 		084349D51B84CCF6009A653F /* EMShareInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareInputDelegate.h; sourceTree = "<group>"; };
+		0845BDF21BC523AB00173B66 /* Tutorials.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tutorials.storyboard; sourceTree = "<group>"; };
+		0845BDF71BC5607900173B66 /* Emuticon+DownloadsHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+DownloadsHelpers.h"; sourceTree = "<group>"; };
+		0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Emuticon+DownloadsHelpers.m"; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMSDK.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		084898EB1BA935010026B25A /* kim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kim.png; sourceTree = "<group>"; };
 		084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-groovy-bg.gif"; sourceTree = "<group>"; };
@@ -1370,6 +1377,24 @@
 			path = "Share User Input Box";
 			sourceTree = "<group>";
 		};
+		0845BDF11BC5238900173B66 /* Tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				0845BDF21BC523AB00173B66 /* Tutorials.storyboard */,
+			);
+			name = Tutorials;
+			path = "emu/User Interface/Tutorials";
+			sourceTree = SOURCE_ROOT;
+		};
+		0845BDF61BC5604000173B66 /* Data source helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0845BDF71BC5607900173B66 /* Emuticon+DownloadsHelpers.h */,
+				0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */,
+			);
+			path = "Data source helpers";
+			sourceTree = "<group>";
+		};
 		084AF4361B383B810056FC34 /* 70s */ = {
 			isa = PBXGroup;
 			children = (
@@ -1663,9 +1688,11 @@
 				08CB89631A9AA12A00224A38 /* Main */,
 				0838142B1BBBA69E004D902E /* Footage */,
 				085C673B1A937EC9007BC910 /* Recorder */,
+				0845BDF11BC5238900173B66 /* Tutorials */,
 				085C67371A937EC9007BC910 /* Media */,
 				085C67261A937EC9007BC910 /* Custom Views */,
 				085C67571A937EC9007BC910 /* Style Kit */,
+				0845BDF61BC5604000173B66 /* Data source helpers */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -2407,6 +2434,7 @@
 				08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */,
 				088F31491B69506D008FA3C1 /* lebouf.png in Resources */,
 				084AF4E61B383B810056FC34 /* party-party-bg.gif in Resources */,
+				0845BDF41BC523AB00173B66 /* Tutorials.storyboard in Resources */,
 				08967C281B5B9A9F000DDCF9 /* rendering.gif in Resources */,
 				084AF4F21B383B810056FC34 /* party-twerk-fg.gif in Resources */,
 				08AA14DC1B0BA658002E1B2F /* kbAllowAccessTutorial.mp4 in Resources */,
@@ -2496,6 +2524,7 @@
 				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
 				08ED7FF81B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				084AF5201B383B810056FC34 /* yeah-omg-bg.gif in Resources */,
+				0845BDF31BC523AB00173B66 /* Tutorials.storyboard in Resources */,
 				084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */,
 				084AF4881B383B810056FC34 /* casual-lol-fg.gif in Resources */,
 				084AF4C01B383B810056FC34 /* hearts-bg.gif in Resources */,
@@ -2712,6 +2741,7 @@
 				0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08A456E81B9DDD41001AB79E /* EMTestVC.m in Sources */,
 				08AA14571B0BA658002E1B2F /* EmuBaseStyle.m in Sources */,
+				0845BDFA1BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */,
 				08AA14581B0BA658002E1B2F /* HMParams.m in Sources */,
 				08BB7B801BBB062200EA247A /* EMEmusFeedNavigationCFG.m in Sources */,
 				08AA14591B0BA658002E1B2F /* EMMessageButton.m in Sources */,
@@ -2855,6 +2885,7 @@
 				0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08A456E71B9DDD41001AB79E /* EMTestVC.m in Sources */,
 				08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */,
+				0845BDF91BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */,
 				08CED1251AA7281B00C50D0C /* HMParams.m in Sources */,
 				08BB7B7F1BBB062200EA247A /* EMEmusFeedNavigationCFG.m in Sources */,
 				0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */,

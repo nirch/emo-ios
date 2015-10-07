@@ -31,6 +31,7 @@
 
 @property (nonatomic) CGPoint logoButtonOriginalCenter;
 
+@property (nonatomic) BOOL alreadyInitializedUIBeforeApearance;
 @property (nonatomic) BOOL alreadyInitializedUIOnApearance;
 
 @property (nonatomic) BOOL ignoreActions;
@@ -69,6 +70,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self initGUIBeforeApearance];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -81,15 +83,16 @@
 -(void)initGUIOnLoad
 {
     self.alreadyInitializedUIOnApearance = NO;
+    self.alreadyInitializedUIBeforeApearance = NO;
     self.view.alpha = 0;
     self.guiActionButton1.hidden = YES;
     self.guiActionButton2.hidden = YES;
     self.ignoreActions = NO;
 }
 
--(void)initGUIOnApearance
+-(void)initGUIBeforeApearance
 {
-    if (!self.alreadyInitializedUIOnApearance) {
+    if (!self.alreadyInitializedUIBeforeApearance) {
         // Set the theme color.
         [self updateThemeColor:self.themeColor animated:NO];
         
@@ -97,18 +100,27 @@
         self.guiTitle.hidden = NO;
         [self hideTitleAnimated:NO];
                 
+        // Round logo button
+        self.guiLogoButtonBG.layer.cornerRadius = self.guiLogoButtonBG.bounds.size.width / 2.0f;
+        [self addSubtleShadowToLayer:self.guiLogoButtonBG.layer boundPath:NO];
+
+        // Show it
+        self.view.alpha = 1;
+        
+        // Mark as already initialized
+        self.alreadyInitializedUIBeforeApearance = YES;
+    }
+}
+
+-(void)initGUIOnApearance
+{
+    if (!self.alreadyInitializedUIOnApearance) {
         // Add subtle shadow to the navigation bar
         [self addSubtleShadowToLayer:self.guiNavView.layer boundPath:YES];
         
         // Round logo button
-        self.guiLogoButtonBG.layer.cornerRadius = self.guiLogoButtonBG.bounds.size.width / 2.0f;
-        [self addSubtleShadowToLayer:self.guiLogoButtonBG.layer boundPath:NO];
         self.logoButtonOriginalCenter = self.guiLogoButton.center;
-        
-        [UIView animateWithDuration:0.1 animations:^{
-            self.view.alpha = 1;
-        }];
-        
+
         // Mark as already initialized
         self.alreadyInitializedUIOnApearance = YES;
     }
