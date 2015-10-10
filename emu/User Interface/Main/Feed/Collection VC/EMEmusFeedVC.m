@@ -29,8 +29,14 @@
 #import "EMDB.h"
 #import "EMEmusFeedNavigationCFG.h"
 #import "EMEmuCell.h"
+#import "EMPackHeaderView.h"
 #import "EMUISound.h"
 #import "EMFeedSelectionsActionBarVC.h"
+#import "EMHolySheet.h"
+#import "EMMajorRetakeOptionsSheet.h"
+#import "EMInterfaceDelegate.h"
+#import "EMRecorderDelegate.h"
+#import "EMFootagesVC.h"
 
 
 #define TAG @"EMEmusFeedVC"
@@ -38,7 +44,8 @@
 @interface EMEmusFeedVC() <
     UICollectionViewDelegateFlowLayout,
     EMNavBarDelegate,
-    UIGestureRecognizerDelegate
+    UIGestureRecognizerDelegate,
+    EMInterfaceDelegate
 >
 
 // The emus feed collection view.
@@ -51,6 +58,13 @@
 @property (weak, nonatomic) EMNavBarVC *navBarVC;
 @property (weak, nonatomic) EMCustomPopoverVC *popoverController;
 @property (nonatomic) id<EMNavBarConfigurationSource> navBarCFG;
+typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
+    EMEmusFeedTitleStateLogo                     = 0,
+    EMEmusFeedTitleStatePacks                    = 1,
+    EMEmusFeedTitleStateHint                     = 2
+};
+@property (nonatomic) EMEmusFeedTitleState titleState;
+
 
 // Selection actions bar
 @property (weak, nonatomic) IBOutlet UIView *guiSelectionActionsBar;
@@ -60,7 +74,10 @@
 @property (nonatomic) EMEmusFeedDataSource *dataSource;
 
 // Current top section
-@property (nonatomic) NSInteger currentTopSection;
+@property (nonatomic, readonly) NSInteger currentTopSection;
+
+// Footages VC
+@property (nonatomic, weak) EMFootagesVC *footagesVC;
 
 @end
 
@@ -98,6 +115,9 @@
     
     // Refresh data if required
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages object:self userInfo:nil];
+
+    // Data
+    [self refreshGUIWithLocalData];
 }
 
 
@@ -109,8 +129,18 @@
     [super viewDidAppear:animated];
     HMLOG(TAG, EM_DBG, @"View did appear");
     [self initGUIOnAppearance];
-    [self refreshGUIWithLocalData];
     [self.navBarVC bounce];
+    [self restoreState];
+    dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
+        [self handleVisibleCells];
+    });
+    
+    // Reveal
+    if (self.guiCollectionView.alpha == 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guiCollectionView.alpha = 1;
+        }];
+    }
 }
 
 /**
@@ -122,13 +152,40 @@
 {
     [super viewWillDisappear:animated];
     [self removeObservers];
+    [self storeState];
+}
+
+#pragma mark - Persisting state
+-(void)storeState
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    // Store offset.
+    CGFloat latestOffset = self.guiCollectionView.contentOffset.y;
+    [ud setObject:@(latestOffset) forKey:@"feedOffset"];
+
+    // Sync
+    [ud synchronize];
+}
+
+-(void)restoreState
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+
+    // Retore offset.
+    NSNumber *offsetNumber = [ud objectForKey:@"feedOffset"];
+    if (offsetNumber == nil) return;
+    CGPoint latestOffset = CGPointMake(0, offsetNumber.doubleValue);
+    [self.guiCollectionView setContentOffset:latestOffset];
+    [self.navBarVC childVCDidScrollToOffset:latestOffset];
 }
 
 #pragma mark - Segues
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"selection bar segue"]) {
+    if ([segue.identifier isEqualToString:@"selections action bar segue"]) {
         self.selectionsActionBarVC = segue.destinationViewController;
+        self.selectionsActionBarVC.delegate = self;
     }
 }
 
@@ -138,6 +195,7 @@
  */
 -(void)initState
 {
+    self.titleState = EMEmusFeedTitleStateLogo;
     [self updateState:EMEmusFeedStateBrowsing info:nil];
 }
 
@@ -160,8 +218,7 @@
 {
     [self hideSelectionsActionBarAnimated:NO];
     self.guiCollectionView.contentInset = UIEdgeInsetsMake(44,0,44,0);
- 
-//    self.guiCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
+    self.guiCollectionView.alpha = 0;
     
     // Long press gesture recognizer on cells.
     UILongPressGestureRecognizer *longpressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
@@ -193,8 +250,16 @@
 -(void)initGUIOnAppearance
 {
     if (!self.alreadyInitializedGUIOnAppearance) {
-        [self setCurrentTopSection:0];
         self.alreadyInitializedGUIOnAppearance = YES;
+        [self.navBarVC updateTitle:[SF:@"%@ %@", LS(@"PACKS"), @"▼"]];
+    }
+    
+    // ABTEST:Main feed deceleration speed.
+    BOOL fasterDeceleration = [HMPanel.sh boolForKey:VK_MAIN_FEED_SCROLL_DECELERATION_SPEED fallbackValue:NO];
+    if (fasterDeceleration) {
+        self.guiCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
+    } else {
+        self.guiCollectionView.decelerationRate = UIScrollViewDecelerationRateNormal;
     }
 }
 
@@ -325,7 +390,7 @@
 {
     // Reload the data in the collection view.
     [self.dataSource reset];
-    [self.guiCollectionView reloadData];
+    [self reload];
 }
 
 #pragma mark - EMTopVCProtocol
@@ -343,14 +408,36 @@
     return CGSizeMake(size, size);
 }
 
--(void)setCurrentTopSection:(NSInteger)currentTopSection
+-(NSInteger)currentTopSection
 {
-//    _currentTopSection = currentTopSection;
-//    NSString *titleForSection = [self.dataSource titleForSection:_currentTopSection];
-////    titleForSection = [SF:@"%@ ▼", titleForSection];
-//    titleForSection = @"Packs ▼";
-//    [self.navBarVC updateTitle:titleForSection];
+    NSInteger topSection = NSIntegerMax;
+    NSArray *headerViews = [self.guiCollectionView visibleSupplementaryViewsOfKind:UICollectionElementKindSectionHeader];
+    if (headerViews.count == 0) {
+        // Fallback when no header views currently shown on screen.
+        // Can happen on test apps with lots of emus per parck or smaller phones like iPhone 4s.
+        // This is a less optimized method.
+        UICollectionView *cv = self.guiCollectionView;
+        CGPoint p = CGPointMake(cv.center.x, 52+cv.contentOffset.y);
+        NSIndexPath *indexPath = [cv indexPathForItemAtPoint:p];
+        topSection = indexPath.section;
+    } else {
+        for (EMPackHeaderView *header in headerViews) {
+            topSection = MIN(topSection, header.sectionIndex);
+        }
+    }
+    return topSection < NSIntegerMax?topSection:0;
 }
+
+
+#pragma mark - Collection view
+-(void)reload
+{
+    [self.guiCollectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self handleVisibleCells];
+    });
+}
+
 
 #pragma mark - Collection View Delegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -369,24 +456,31 @@
 }
 
 
+-(void)updateTitleStateForOffset:(CGPoint)offset
+{
+    CGFloat y = offset.y;
+    HMLOG(TAG, EM_DBG, @"%@", @(y));
+    if (self.titleState == EMEmusFeedTitleStateLogo || self.titleState == EMEmusFeedTitleStatePacks) {
+        if (y>800) {
+            self.titleState = EMEmusFeedTitleStateHint;
+            [self.navBarVC updateTitle:@"▼"];
+            [self.navBarVC updateTitleAlpha:0.5];
+        }
+    } else if (self.titleState == EMEmusFeedTitleStateHint) {
+        if (y<800) {
+            self.titleState = EMEmusFeedTitleStatePacks;
+            [self.navBarVC updateTitleAlpha:1.0];
+        }
+    }
+}
+
 #pragma mark - Scrolling
-/**
- *  When scrolling, check what is the top pack.
- */
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // Update the nav bar where did we scroll to.
     CGPoint offset = scrollView.contentOffset;
     offset.y += scrollView.contentInset.top;
     [self.navBarVC childVCDidScrollToOffset:offset];
-
-//    [self.navBarVC updateTitle:@"More packs ▼"];
-//    // Get current index path.
-//    NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:CGPointMake(self.guiCollectionView.center.x, 52+scrollView.contentOffset.y)];
-//    if (indexPath && self.currentTopSection != indexPath.section) {
-//        // Top section changed.
-//        self.currentTopSection = indexPath.section;
-//    }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -397,6 +491,25 @@
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
     [self handleVisibleCells];
+}
+
+-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                    withVelocity:(CGPoint)velocity
+             targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    if (fabs(velocity.y) > 1.5f) {
+        // On high enough velocity, change the target to the top
+        // of a pack, so will decelerate to a position putting
+        // the header of that pack at the top of the screen.
+        // Result: when user flicks the scroll view, the end result
+        // is a pack positioned nicely on the screen.
+        CGPoint target = CGPointMake(20, targetContentOffset->y);
+        NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:target];
+        if (indexPath == nil) return;
+        NSInteger section = indexPath.section;
+        if (velocity.y>0) section++;
+        *targetContentOffset = [self offsetForHeaderForSection:section];
+    }
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView
@@ -410,10 +523,28 @@
 
 -(void)scrollToSection:(NSInteger)sectionIndex animated:(BOOL)animated
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:sectionIndex];
-    [self.guiCollectionView scrollToItemAtIndexPath:indexPath
-                                   atScrollPosition:UICollectionViewScrollPositionTop
-                                           animated:animated];
+    CGPoint newOffset = [self offsetForHeaderForSection:sectionIndex];
+    [self.guiCollectionView setContentOffset:newOffset animated:animated];
+    CGFloat delay = animated?0.7f:0.0f;
+    dispatch_after(DTIME(delay), dispatch_get_main_queue(), ^{
+        [self handleVisibleCells];
+    });
+}
+
+-(CGRect)frameForHeaderForSection:(NSInteger)section
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    UICollectionViewLayoutAttributes *attributes = [self.guiCollectionView layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect frameForFirstCell = attributes.frame;
+    CGFloat headerHeight = 39;
+    return CGRectOffset(frameForFirstCell, 0, -headerHeight);
+}
+
+-(CGPoint)offsetForHeaderForSection:(NSInteger)section
+{
+    CGRect rectOfHeader = [self frameForHeaderForSection:section];
+    CGPoint newOffset = CGPointMake(0, rectOfHeader.origin.y - self.guiCollectionView.contentInset.top);
+    return newOffset;
 }
 
 #pragma mark - Handle visible cell
@@ -450,6 +581,11 @@
     [self showPacksListAsPopOver:sender];
 }
 
+-(void)navBarOnLogoButtonPressed:(UIButton *)sender
+{
+    
+}
+
 -(void)navBarOnUserActionNamed:(NSString *)actionName
                         sender:(id)sender
                          state:(NSInteger)state
@@ -463,14 +599,18 @@
         
     } else if ([actionName isEqualToString:EMK_NAV_ACTION_RETAKE]) {
         
-        // Show the retake options
+        Package *pack = [self.dataSource packForSection:self.currentTopSection];
+        if (pack == nil) return;
+
+        // Sheet happens!
+        EMMajorRetakeOptionsSheet *sheet = [[EMMajorRetakeOptionsSheet alloc] initWithPackOID:pack.oid packLabel:pack.label packName:pack.name];
+        [sheet showModalOnTopAnimated:YES];
         
     } else if ([actionName isEqualToString:EMK_NAV_ACTION_CANCEL_SELECTION]) {
         
-        // Do nothing and change back to the
+        // Do nothing and change back to the browsing state.
         [self updateState:EMEmusFeedStateBrowsing info:nil];
         [self.navBarVC updateUIByCurrentState];
-        //[self.footagesBar hideAnimated:YES];
         
     } else if ([actionName isEqualToString:EMK_NAV_ACTION_SELECT_PACK]) {
         
@@ -547,7 +687,7 @@
     if (indexPath) [self.dataSource selectEmuAtIndexPath:indexPath];
     [self showSelectionsActionBarAnimated:YES];
     [self.selectionsActionBarVC setSelectedCount:self.dataSource.selectionsCount];
-    [self.guiCollectionView reloadData];
+    [self reload];
 }
 
 /**
@@ -558,7 +698,7 @@
     [self.dataSource disableSelections];
     [self.dataSource clearSelections];
     [self hideSelectionsActionBarAnimated:YES];
-    [self.guiCollectionView reloadData];
+    [self reload];
 }
 
 /**
@@ -568,7 +708,7 @@
 {
     [self.dataSource clearSelections];
     [self.selectionsActionBarVC setSelectedCount:self.dataSource.selectionsCount];
-    [self.guiCollectionView reloadData];
+    [self reload];
 }
 
 /**
@@ -579,8 +719,9 @@
     [self scrollToSection:self.currentTopSection animated:YES];
     [self.dataSource toggleSelectionForEmusAtSection:self.currentTopSection];
     [self.selectionsActionBarVC setSelectedCount:self.dataSource.selectionsCount];
-    [self.guiCollectionView reloadData];
+    [self reload];
 }
+
 
 #pragma mark - Gesture recognizer handlers
 -(void)onLongPress:(UILongPressGestureRecognizer *)recognizer
@@ -596,6 +737,90 @@
             [self.navBarVC updateUIByCurrentState];
         }
     }
+}
+
+#pragma mark - EMInterfaceDelegate
+-(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
+{
+    if ([actionName isEqualToString:emkSelectionsActionRetakeSelected]) {
+        // -------------------------------------------
+        // Open recorder for retaking selected emus.
+        //
+
+        // Must be in selections state
+        if (self.currentState != EMEmusFeedStateSelecting) return;
+        
+        // Must select at least one
+        if (self.dataSource.selectionsCount < 1) {
+            [self.selectionsActionBarVC communicateErrorToUser];
+            return;
+        }
+        
+        // Recorder should be opened to retake a whole pack.
+        NSMutableDictionary *requestInfo = [NSMutableDictionary new];
+        requestInfo[emkRetakeEmuticonsOID] = [self.dataSource selectionsOID];
+        
+        // Notify main navigation controller that the recorder should be opened.
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserRequestToOpenRecorder
+                                                            object:self
+                                                          userInfo:requestInfo];
+
+        // Change feed back to browsing state
+        [self updateState:EMEmusFeedStateBrowsing info:nil];
+        [self.navBarVC updateUIByCurrentState];
+    
+    } else if ([actionName isEqualToString:emkSelectionsActionReplaceSelected]) {
+        // -------------------------------------------
+        // Open takes screen for choosing a different take for selected emus.
+        //
+        
+        // Must be in selections state
+        if (self.currentState != EMEmusFeedStateSelecting) return;
+        
+        // Must select at least one
+        if (self.dataSource.selectionsCount < 1) {
+            [self.selectionsActionBarVC communicateErrorToUser];
+            return;
+        }
+
+        // Present the footages screen
+        EMFootagesVC *footagesVC = [EMFootagesVC footagesVCForFlow:EMFootagesFlowTypeChooseFootage];
+        footagesVC.delegate = self;
+        footagesVC.selectedEmusOID = self.dataSource.selectionsOID;
+        self.footagesVC = footagesVC;
+        [self presentViewController:footagesVC animated:YES completion:^{
+        }];
+        
+        // Change feed back to browsing state
+        [self updateState:EMEmusFeedStateBrowsing info:nil];
+        [self.navBarVC updateUIByCurrentState];
+
+    } else if ([actionName isEqualToString:emkUIFootageSelectionCancel]) {
+        // -------------------------------------------
+        // Footage selection canceled. Just dismiss.
+        //
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+        
+    } else if ([actionName isEqualToString:emkUIFootageSelectionApply]) {
+
+        NSString *footageOID = info[emkFootageOID];
+        NSArray *selectedEmusOID = info[emkEmuticonOID];
+        if (footageOID != nil || selectedEmusOID != nil) {
+            for (NSString *emuOID in selectedEmusOID) {
+                Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+                [emu cleanUp:YES andRemoveResources:NO];
+                emu.prefferedFootageOID = footageOID;
+            }
+        }
+        [EMDB.sh save];
+
+        // -------------------------------------------
+        // New footage applied to a list of selected emus.
+        //
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+
 }
 
 #pragma mark - IB Actions

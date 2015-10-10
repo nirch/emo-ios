@@ -10,6 +10,8 @@
 #import "EMCaches.h"
 #import "EMDB.h"
 #import <FLAnimatedImage.h>
+#import <PINRemoteImage/PINRemoteImage.h>
+#import <PINCache/PINCache.h>
 
 @implementation EMCaches
 
@@ -41,32 +43,27 @@
 }
 
 #pragma mark - Requested caching
--(void)cacheGifsForEmus:(NSArray *)emus
+-(void)clearCachedResultsForEmu:(Emuticon *)emu
 {
-    if (emus == nil || emus.count < 1) return;
-    for (Emuticon *emu in emus) {
-        NSURL *animatedGifURL = [emu animatedGifURL];
-        NSData *animGifData = [NSData dataWithContentsOfURL:animatedGifURL];
-        if (animGifData == nil) continue;
-        FLAnimatedImage *animGif = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-        if (animGif == nil) continue;
-        [EMCaches.sh.gifsDataCache setObject:animGif forKey:[animatedGifURL description]];
-        HMLOG(TAG, EM_DBG, @"Cached %@", emu.emuDef.name);
-    }
+    PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
+    
+    // Remove animated gif result from the cache
+    NSURL *animatedGifURL = emu.animatedGifURL;
+    NSString *gifKey = [animatedGifURL description];
+    [rm.cache removeObjectForKey:gifKey];
+    
+    // Remove thumb image
+    NSURL *thumbURL = emu.thumbURL;
+    NSString *thumbKey = [thumbURL description];
+    [rm.cache removeObjectForKey:thumbKey];
 }
 
--(void)removeCachedGifForEmu:(Emuticon *)emu
+-(void)clearAllCache
 {
-    if (emu == nil) return;
-    NSString *animatedGifURLKey = [[emu animatedGifURL] description];
-    if ([EMCaches.sh.gifsDataCache objectForKey:animatedGifURLKey]) {
-        [EMCaches.sh.gifsDataCache removeObjectForKey:animatedGifURLKey];
-    }
-}
-
--(void)clearCachedGifs
-{
-    [EMCaches.sh.gifsDataCache removeAllObjects];
+    PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
+    [rm.cache removeAllObjects:^(PINCache * _Nonnull cache) {
+        // Cleared all PINCache.
+    }];
 }
 
 @end

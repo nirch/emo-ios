@@ -95,7 +95,7 @@
 
 -(NSString *)thumbPath
 {
-    NSString *jpgName = [SF:@"%@.jpg", self.oid];
+    NSString *jpgName = [SF:@"%@.png", self.oid];
     NSString *outputPath = [EMDB outputPathForFileName:jpgName];
     return outputPath;
 }
@@ -176,7 +176,7 @@
         NSError *error;
         [fm removeItemAtPath:[self animatedGifPath] error:&error];
         [fm removeItemAtPath:[self videoPath] error:&error];
-        [EMCaches.sh removeCachedGifForEmu:self];
+        [EMCaches.sh clearCachedResultsForEmu:self];
         
         // Mark it as not rendered.
         self.wasRendered = @NO;
@@ -198,10 +198,8 @@
     // Specific to this emuticon
     NSString *oid = self.prefferedFootageOID;
     
-    if (oid == nil) {
-        // Specific to the related package
-        oid = self.emuDef.package.prefferedFootageOID;
-    }
+    // remark: deprecated package specific footage
+    // Footage can be related to a specific emu or default app wide is used.
     
     if (oid == nil) {
         // Preffered application wide

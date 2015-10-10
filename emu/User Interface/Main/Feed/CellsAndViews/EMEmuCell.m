@@ -116,8 +116,6 @@
     // Selections.
     self.guiSelectionIndicator.hidden = !self.selectable;
     self.guiSelectionIndicator.highlighted = self.selected;
-    CGAffineTransform selectionTransform = self.selectable && self.selected? CGAffineTransformMakeScale(0.9, 0.9) : CGAffineTransformIdentity;
-    self.guiThumbImage.transform = selectionTransform;
 
     if (self.state == EMEmuCellStateFailed) {
         [self updateGUIToFailedState];
@@ -158,6 +156,9 @@
     NSString *oid = self.oid;
     
     __weak EMEmuCell *wSelf = self;
+//    self.guiThumbImage.image = [UIImage imageWithContentsOfFile:self.thumbPath];
+//    self.guiThumbImage.hidden = NO;
+
     [self.guiThumbImage pin_setImageFromURL:[NSURL fileURLWithPath:self.thumbPath] completion:^(PINRemoteImageManagerResult *result) {
         if (![oid isEqualToString:wSelf.oid]) return;
         self.guiThumbImage.hidden = NO;

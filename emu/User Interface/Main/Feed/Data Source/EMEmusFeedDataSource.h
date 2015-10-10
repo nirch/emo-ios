@@ -8,6 +8,8 @@
 
 @import UIKit;
 
+@class Package;
+
 @interface EMEmusFeedDataSource : NSObject<
     UICollectionViewDataSource
 >
@@ -85,7 +87,23 @@
 -(NSInteger)selectionsCount;
 
 
+/**
+ *  Return an array of NSString OID of emus selected.
+ *
+ *  @return NSArray of NSStrings with OIDs of selected emus.
+ */
+-(NSArray *)selectionsOID;
+
 #pragma mark - Public data info
+/**
+ *  Return the pack related to a given section index.
+ *
+ *  @param section The section index.
+ *
+ *  @return The Package object.
+ */
+-(Package *)packForSection:(NSInteger)section;
+
 /**
  *  Return the pack OID related to a given section index.
  *
@@ -112,6 +130,16 @@
  *  @return NSString with the title of the section (nil if such section doesn't exist).
  */
 -(NSString *)titleForSection:(NSInteger)section;
+
+/**
+ *  The number of emus in the section at provided section index
+ *
+ *  @param section NSInteger The section index.
+ *
+ *  @return NSInteger of the number of emus in that section.
+ */
+-(NSInteger)numberOfObjectsForSection:(NSInteger)section;
+
 
 #pragma mark - Prioritize emus
 -(void)preferEmusAtIndexPaths:(NSArray *)indexPaths;

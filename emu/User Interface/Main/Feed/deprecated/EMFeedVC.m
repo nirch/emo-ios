@@ -987,15 +987,15 @@
 -(void)openRecorderForFlow:(EMRecorderFlowType)flowType
                       info:(NSDictionary *)info
 {
-    [EMRenderManager2.sh clear];
-    [EMDownloadsManager2.sh clear];
-    
-    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:flowType info:info];
-    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    recorderVC.delegate = self;
-    [self presentViewController:recorderVC animated:YES completion:^{
-        [self.splashVC hideAnimated:NO];
-    }];
+//    [EMRenderManager2.sh clear];
+//    [EMDownloadsManager2.sh clear];
+//    
+//    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:flowType info:info];
+//    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//    recorderVC.delegate = self;
+//    [self presentViewController:recorderVC animated:YES completion:^{
+//        [self.splashVC hideAnimated:NO];
+//    }];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -1042,7 +1042,6 @@
         [self cancelRetake];
     }];
     [sheet showInView:self.view animated:YES];
-
 }
 
 -(void)handleRetakeChoiceWithIndexPath:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping
@@ -1083,26 +1082,25 @@
 
 -(void)retakeAll
 {
-    /**
-     *  Open the recording for retaking all emuticons.
-     */
-    if (self.selectedPackage) {
-        [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
-                             info:@{emkPackage:self.selectedPackage}];
-        REMOTE_LOG(@"Retake all selected. selected package: %@", self.selectedPackage.name);
-        
-    } else {
-        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
-        [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
-                             info:@{
-                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
-                                    emkEmuticonDefName:emuticonDefForOnboarding.name
-                                    }];
-        REMOTE_LOG(@"Retake all selected (mixed screen). Preview emu named: %@", emuticonDefForOnboarding.name);
-        
-    }
-    
+//    /**
+//     *  Open the recording for retaking all emuticons.
+//     */
+//    if (self.selectedPackage) {
+//        [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+//                             info:@{emkPackage:self.selectedPackage}];
+//        REMOTE_LOG(@"Retake all selected. selected package: %@", self.selectedPackage.name);
+//        
+//    } else {
+//        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//        EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboarding];
+//        [self openRecorderForFlow:EMRecorderFlowTypeRetakeAll
+//                             info:@{
+//                                    emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+//                                    emkEmuticonDefName:emuticonDefForOnboarding.name
+//                                    }];
+//        REMOTE_LOG(@"Retake all selected (mixed screen). Preview emu named: %@", emuticonDefForOnboarding.name);
+//        
+//    }
     
 }
 
@@ -1114,9 +1112,9 @@
     /**
      *  Open the recording for retaking emuticons for current selected package.
      */
-    [self openRecorderForFlow:EMRecorderFlowTypeRetakeForPackage
-                         info:@{emkPackage:self.selectedPackage}];
-    REMOTE_LOG(@"Retake current package. selected package: %@", self.selectedPackage.name);
+//    [self openRecorderForFlow:EMRecorderFlowTypeRetakeForPackage
+//                         info:@{emkPackage:self.selectedPackage}];
+//    REMOTE_LOG(@"Retake current package. selected package: %@", self.selectedPackage.name);
 }
 
 -(void)cancelRetake

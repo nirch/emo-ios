@@ -24,7 +24,7 @@
 #import "EMDB.h"
 #import "EMRecorderVC.h"
 #import "EMTutorialVC.h"
-
+#import <PINRemoteImage/PINRemoteImageManager.h>
 #define TAG @"EMMainNavigationVC"
 
 @interface EMNavigationAndFlowVC () <
@@ -103,7 +103,7 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    // Should show the tabs bar
+    // Packages data refresh
     [nc addUniqueObserver:self
                  selector:@selector(onPackagesDataRefresh:)
                      name:emkUIDataRefreshPackages
@@ -120,6 +120,13 @@
                  selector:@selector(onShouldShowTabs:)
                      name:emkUIShouldShowTabsBar
                    object:nil];
+    
+    // A request from the user's UI to open recorder
+    // This will be ignored if the current state is not "user in control"
+    [nc addUniqueObserver:self
+                 selector:@selector(onRequestToOpenRecorder:)
+                     name:emkUIUserRequestToOpenRecorder
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -128,6 +135,7 @@
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIShouldHideTabsBar];
     [nc removeObserver:emkUIShouldShowTabsBar];
+    [nc removeObserver:emkUIUserRequestToOpenRecorder];
 }
 
 #pragma mark - Observers handlers
@@ -167,6 +175,19 @@
     
     // Handle the flow
     [self handleFlow];
+}
+
+
+-(void)onRequestToOpenRecorder:(NSNotification *)notification
+{
+    // User interaction with the UI resulted in a request to open
+    // the recorder. Will be ignored if the user is not currently in control
+    // of the application flow.
+    if (self.flowState != EMNavFlowStateUserControlsNavigation) return;
+    
+    // Update state and handle the opening of the recorder flow.
+    [self updateFlowState:EMNavFlowStateOpenRecorderForNewTake];
+    [self handleFlowWithInfo:notification.userInfo];
 }
 
 
@@ -339,7 +360,11 @@
     NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
     EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
     REMOTE_LOG(@"Opening recorder for the first time. Using emuticon named:%@ for onboarding.", emuticonDefForOnboarding.name);
-    [self openRecorderForFlow:EMRecorderFlowTypeOnboarding info:@{emkEmuticonDefOID:emuticonDefForOnboarding.oid, emkEmuticonDefName:emuticonDefForOnboarding.name}];
+    [self openRecorderWithConfigInfo:@{
+                                       emkFirstTake:@YES,
+                                       emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+                                       emkEmuticonDefName:emuticonDefForOnboarding.name
+                                       }];
 
     // Update the flow state
     [self updateFlowState:EMNavFlowStateWaitForRecorderDismissalAfterOnboarding];
@@ -347,6 +372,9 @@
 
 -(void)_stateOpenRecorderForNewTakeWithInfo:(NSDictionary *)info
 {
+    // Update the flow state
+    [self openRecorderWithConfigInfo:info];
+    
     // Update the flow state
     [self updateFlowState:EMNavFlowStateWaitForRecorderDismissalAfterNewTake];
 }
@@ -378,7 +406,8 @@
 
 -(void)_stateRecroderDismissalAfterNewTakeWithInfo:(NSDictionary *)info
 {
-    
+    // Update the flow state
+    [self updateFlowState:EMNavFlowStateUserControlsNavigation];
 }
 
 #pragma mark - splash
@@ -460,16 +489,10 @@
 }
 
 #pragma mark - Opening recorder
--(void)openRecorderForFlow:(EMRecorderFlowType)flowType
-                      info:(NSDictionary *)info
+-(void)openRecorderWithConfigInfo:(NSDictionary *)info
 {
-    // Notify that the recorder is about to be opened.
-    // Let the backend decide what to do with that info.
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkAppDidBecomeActive object:self userInfo:nil];
-
     // Open the recorder and make this VC the delegate of the recorder.
-    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:flowType info:info];
-    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:info];
     recorderVC.delegate = self;
     [self presentViewController:recorderVC animated:YES completion:nil];
 }

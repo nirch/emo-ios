@@ -19,6 +19,7 @@ ThumbOutput::ThumbOutput(
 {
     this->thumbOutputUrl = thumbOutputUrl;
     this->frameNumber = frameNumber;
+    this->thumbType = thumbType;
 }
 
 //im = image_bgr2rgb(im, im);
@@ -37,13 +38,15 @@ int	ThumbOutput::WriteFrame( image_type *im , int iFrame)
     
     // Create the thumb image
     im = image_bgr2rgb(im, im);
-    UIImage *thumbImage = [HMImageTools createUIImageFromImageType:im withAlpha:NO];
     
-    // Write it to a PNG file.
     NSData *imageData;
     if (thumbType == HM_THUMB_TYPE_PNG) {
+        // Write it to a PNG file.
+        UIImage *thumbImage = [HMImageTools createUIImageFromImageType:im withAlpha:YES];
         imageData = UIImagePNGRepresentation(thumbImage);
     } else {
+        // Write it to a JPG file.
+        UIImage *thumbImage = [HMImageTools createUIImageFromImageType:im withAlpha:NO];
         imageData = UIImageJPEGRepresentation(thumbImage, 1);
     }
     

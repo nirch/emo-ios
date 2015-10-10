@@ -169,9 +169,9 @@
             thumbFrame = self.numberOfFrames-1;
         }
         
-        NSString *outputThumbPath = [SF:@"%@/%@.jpg", self.outputPath, self.outputOID];;
+        NSString *outputThumbPath = [SF:@"%@/%@.png", self.outputPath, self.outputOID];;
         NSURL *thumbOutputURL = [NSURL fileURLWithPath:outputThumbPath];
-        thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_JPG);
+        thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_PNG);
         self.outputFiles[HM_K_OUTPUT_THUMB] = [thumbOutputURL path];
     }
     

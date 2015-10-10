@@ -192,6 +192,16 @@
 			<key>valueType</key>
 			<string>Number</string>
 		</dict>
+		<key>mainFeedScrollDecelerationSpeed</key>
+		<dict>
+			<key>description</key>
+			<string>&lt;Number&gt; - 0 - Normal. 1 - Faster deceleration.
+(number of loops, ping pong effect etc)</string>
+			<key>defaultValue</key>
+			<integer>0</integer>
+			<key>valueType</key>
+			<string>Number</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

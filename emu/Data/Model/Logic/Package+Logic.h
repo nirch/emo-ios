@@ -137,6 +137,15 @@
  */
 -(NSArray *)emuticonsWithNoSpecificFootage;
 
+
+/**
+ *  A list of all emuticons OIDs in this pack.
+ *  (preview temp emus are ignored)
+ *
+ *  @return NSArray of all OIDs of emuticons in the pack.
+ */
+-(NSArray *)emuticonsOIDS;
+
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 -(NSString *)tagLabel;

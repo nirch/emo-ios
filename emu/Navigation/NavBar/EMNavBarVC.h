@@ -77,10 +77,19 @@
 -(void)updateTitle:(NSString *)title;
 
 /**
+ *  Change the alpha of the title label.
+ *
+ *  @param alpha The new alpha value for the title label.
+ */
+-(void)updateTitleAlpha:(CGFloat)alpha;
+
+/**
  *  Updates the UI of the navigation bar by current state.
  *  uses the EMNavBarConfigurationSource on each call.
  */
 -(void)updateUIByCurrentState;
 
+-(void)showTitleAnimated:(BOOL)animated;
+-(void)hideTitleAnimated:(BOOL)animated;
 
 @end

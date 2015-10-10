@@ -27,21 +27,22 @@ typedef NS_ENUM(NSInteger, EMRecorderState) {
 @interface EMRecorderVC : UIViewController
 
 /**
- *  Instanciate a new recorder for the provided flow.
+ *  Instanciate a new recorder with some provided configuration info.
  *
- *  @param flowType The flow type of the recorder (see EMRecorderFlowType)
- *  @param info     Extra info provided to the recorder when presented.
+ *  @param info     Configuration info, defining the flow of the recorder.
+ *
+ *      Possible configurations:
+ *          @{emkFirstTake:@YES, emkEmuticonDefOID:"...", emkEmuticonDefName: "..."} - onboarding
+ *          @{emkRetakeAll:@YES} - The recorder will do a new retake for all emus.
+ *          @{emkRetakePackageOID:@"..."} - The recorder will retake all emus in a pack.
+ *          @{emkRetakeEmuticonsOID:@[@"",@"",...]} - The recorder will retake emus in the list of OIDs.
+ *          Otherwise: will just add a new take to the list of user takes.
  *
  *  @return A new EMRecorderVC instance.
  */
-+(EMRecorderVC *)recorderVCForFlow:(EMRecorderFlowType)flowType
-                              info:(NSDictionary *)info;
++(EMRecorderVC *)recorderVCWithConfigInfo:(NSDictionary *)info;
 
 @property (nonatomic) EMRecorderFlowType flowType;
-
-#define emkPackage @"package"
-#define emkEmuticon @"emuticon"
-#define emkEmuticonDef @"emuticonDef"
 
 @property (nonatomic) NSDictionary *info;
 

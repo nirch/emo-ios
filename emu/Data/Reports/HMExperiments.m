@@ -79,6 +79,18 @@ OptimizelyVariableKeyForNumber(logicBGRemovalBehavior, @0);
 
 /**
 ---------------------------------------
+mainFeedScrollDecelerationSpeed
+---------------------------------------
+value type: Number
+default values: 0
+description: <Number> - 0 - Normal. 1 - Faster deceleration.
+(number of loops, ping pong effect etc)
+*/
+OptimizelyVariableKeyForNumber(mainFeedScrollDecelerationSpeed, @0);
+
+
+/**
+---------------------------------------
 onboardingEmusForPreviewList
 ---------------------------------------
 value type: String
@@ -146,6 +158,7 @@ OptimizelyVariableKeyForString(textShareAppSubject, @"Emu - Selfie Stickers");
 			@"htmlShareAppBody":htmlShareAppBody,
 			@"iconNameNavRetake":iconNameNavRetake,
 			@"logicBGRemovalBehavior":logicBGRemovalBehavior,
+			@"mainFeedScrollDecelerationSpeed":mainFeedScrollDecelerationSpeed,
 			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList,
 			@"recorderRecordButtonCountdownFrom":recorderRecordButtonCountdownFrom,
 			@"recorderShowAdvancedCameraOptionsOnOnboarding":recorderShowAdvancedCameraOptionsOnOnboarding,

@@ -40,8 +40,8 @@
                                             <constraint firstAttribute="height" constant="1" id="XXT-F1-lBv"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXq-DG-r9o" userLabel="first button" customClass="EMButton">
-                                        <rect key="frame" x="8" y="7" width="57" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXq-DG-r9o" userLabel="first button" customClass="EMButton">
+                                        <rect key="frame" x="8" y="5" width="67" height="34"/>
                                         <state key="normal" title="Button 1">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -49,9 +49,8 @@
                                             <action selector="onActionButton1Pressed:" destination="7Ne-zP-lAu" eventType="touchUpInside" id="xUH-fQ-rHn"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-Cq-r0C" userLabel="second button" customClass="EMButton">
-                                        <rect key="frame" x="533" y="7" width="59" height="30"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-Cq-r0C" userLabel="second button" customClass="EMButton">
+                                        <rect key="frame" x="523" y="5" width="69" height="34"/>
                                         <state key="normal" title="Button 2">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -60,7 +59,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="1HK-BP-rnC" firstAttribute="centerX" secondItem="z5J-rg-2aJ" secondAttribute="centerX" id="0H9-j3-8hd"/>
                                     <constraint firstAttribute="height" constant="44" id="A7x-Pg-FyU"/>

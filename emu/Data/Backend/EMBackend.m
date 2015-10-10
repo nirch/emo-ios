@@ -259,6 +259,8 @@
         self.latestRefresh = [NSDate date];
     }
     
+    [AppManagement.sh updateLocalizedStrings];
+    
     // Notify the user interface about the updates.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
 }

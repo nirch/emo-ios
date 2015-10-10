@@ -52,9 +52,10 @@
 
 
 @property (nonatomic) Package *package;
+@property (nonatomic) NSArray *emuticonsOID;
+
 @property (nonatomic) NSString *emuticonDefOIDForPreview;
 @property (nonatomic) NSString *emuticonDefNameForPreview;
-@property (nonatomic) Emuticon *emuticonToUpdate;
 @property (nonatomic) Emuticon *previewEmuticon;
 @property (nonatomic) EmuticonDef *emuDefForPreviewLastUsed;
 
@@ -132,32 +133,73 @@
 
 @synthesize recorderState = _recorderState;
 
-+(EMRecorderVC *)recorderVCForFlow:(EMRecorderFlowType)flowType
-                              info:(NSDictionary *)info
+/**
+ *  Given info about the required retake, will return the flow type corresponding
+ *  to that recorder configuration info.
+ *
+ *  @param info A dictionary holding info about what to retake.
+ *
+ *  @return EMRecorderFlowType the flow type corresponding to the provided configuration info.
+ */
++(EMRecorderFlowType)chooseFlowTypeByProvidedInfo:(NSDictionary *)info
+{
+    // First take ever! - onboarding flow.
+    if ([info[emkFirstTake] isEqualToNumber:@YES]) return EMRecorderFlowTypeOnboarding;
+    
+    // Retake all flow
+    if ([info[emkRetakeAll] isEqualToNumber:@YES]) return EMRecorderFlowTypeRetakeAll;
+    
+    // Retake a list of emuticons (all in a given pack)
+    if (info[emkRetakePackageOID]) return EMRecorderFlowTypeRetakeForSpecificEmuticons;
+    
+    // Retake a list of emuticons
+    if (info[emkRetakeEmuticonsOID] != nil && [info[emkRetakeEmuticonsOID] count] > 0) return EMRecorderFlowTypeRetakeForSpecificEmuticons;
+
+    // Not related to any emuticons. Just a new take.
+    return EMRecorderFlowTypeNewTake;
+}
+
++(EMRecorderVC *)recorderVCWithConfigInfo:(NSDictionary *)info
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"EMRecorder" bundle:nil];
     EMRecorderVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"recorder vc"];
-    vc.flowType = flowType;
-    
-    if (info[emkEmuticon]) {
-        vc.emuticonToUpdate = info[emkEmuticon];
-        vc.package = vc.emuticonToUpdate.emuDef.package;
-    } else if (info[emkEmuticonDefOID]) {
-        vc.emuticonDefOIDForPreview = info[emkEmuticonDefOID];
-        vc.emuticonDefNameForPreview = info[emkEmuticonDefName];
-        if (flowType == EMRecorderFlowTypeOnboarding) {
-            [HMPanel.sh reportSuperParameterKey:AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING
-                                          value:info[emkEmuticonDefName]];
-            [HMPanel.sh personDetails:@{AK_PD_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING:info[emkEmuticonDefName]}];
-        }
-        
-    } else {
-        vc.package = info[emkPackage];
-    }
-    vc.info = info;
+    vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [vc configureWithInfo:info];
     [vc reportOpeningRecorder];
-    
     return vc;
+}
+
+-(void)configureWithInfo:(NSDictionary *)info
+{
+    self.flowType = [EMRecorderVC chooseFlowTypeByProvidedInfo:info];
+    self.info = info;
+    if (self.flowType == EMRecorderFlowTypeOnboarding) {
+        
+        // Configure for onboarding.
+        [self _configureForOnboarding];
+        
+    } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
+        
+        // Configure for a list of specific emus
+        [self _configureForRetakeEmuticons];
+        
+    }
+}
+
+-(void)_configureForOnboarding
+{
+    self.emuticonDefNameForPreview = self.info[emkEmuticonDefName];
+    self.emuticonDefOIDForPreview = self.info[emkEmuticonDefOID];
+}
+
+-(void)_configureForRetakeEmuticons
+{
+    self.emuticonsOID = self.info[emkRetakeEmuticonsOID];
+    if (self.info[emkRetakePackageOID]) {
+        self.package = [Package findWithID:self.info[emkRetakePackageOID]
+                                   context:EMDB.sh.context];
+        self.emuticonsOID = [self.package emuticonsOIDS];
+    }
 }
 
 -(void)reportOpeningRecorder
@@ -165,17 +207,9 @@
     self.dateTimeOpened = [NSDate date];
     HMParams *params = [HMParams new];
 
-    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticonToUpdate.emuDef.oid];
-    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticonToUpdate.emuDef.name];
-
-    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:self.emuticonDefOIDForPreview];
-    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:self.emuticonDefNameForPreview];
-    
-    [params addKey:AK_EP_PACKAGE_OID value:self.package.oid];
-    [params addKey:AK_EP_PACKAGE_NAME  value:self.package.name];
+    // TODO: analytics - AK_E_REC_OPENED
     [params addKey:AK_EP_FLOW_TYPE value:[self flowName]];
     [HMPanel.sh analyticsEvent:AK_E_REC_OPENED info:params.dictionary];
-    
     // We can also store this info, so it will be available later in the session
     self.recorderSessionAnalyticsParams = params;
 }
@@ -187,10 +221,10 @@
             return @"onboarding";
         case EMRecorderFlowTypeRetakeAll:
             return @"retakeAll";
-        case EMRecorderFlowTypeRetakeForPackage:
-            return @"retakePackage";
         case EMRecorderFlowTypeRetakeForSpecificEmuticons:
             return @"retakeEmoticon";
+        case EMRecorderFlowTypeNewTake:
+            return @"newTake";
         default:
             return @"";
     }
@@ -273,18 +307,9 @@
     // Set duration required for this take.
     //
     
-    // If retaking a specific emuticon, will take duration specific to that emu.
-    if (self.emuticonToUpdate) {
-        self.recordingDuration = self.emuticonToUpdate.emuDef.duration.doubleValue;
-    } else {
-        // Take the default of the package.
-        self.recordingDuration = self.package? [self.package defaultCaptureDuration]: 2.0;
-    }
-    
-    // If duration is 0, use 2 seconds as default.
-    if (self.recordingDuration == 0) {
-        self.recordingDuration = 2;
-    }
+    // Hard coded to two seconds.
+    // Until this will be well thought out.
+    self.recordingDuration = 2;
 }
 
 -(void)initGUI
@@ -707,23 +732,49 @@
     // Get an emuticon definition to be used for the preview.
     EmuticonDef *emuDefForPreview;
     if (self.emuDefForPreviewLastUsed) {
+        
+        // We have an emu def already to use?
         emuDefForPreview = self.emuDefForPreviewLastUsed;
-    } else if (self.emuticonToUpdate) {
-        emuDefForPreview = self.emuticonToUpdate.emuDef;
+        
+    } else if (self.emuticonsOID != nil && self.emuticonsOID.count > 0) {
+        
+        // Grab a random emu from the list of emus to use.
+        NSInteger rndIndex = arc4random() % self.emuticonsOID.count;
+        Emuticon *emu = [Emuticon findWithID:self.emuticonsOID[rndIndex] context:EMDB.sh.context];
+        emuDefForPreview = emu.emuDef;
+        
     } else if (self.emuticonDefOIDForPreview) {
+        
+        // A def oid was passed to be used for preview
+        // (probably on onboarding or new take flow)
         emuDefForPreview = [EmuticonDef findWithID:self.emuticonDefOIDForPreview context:EMDB.sh.context];
+
     } else {
+        
+        // If all else fails, try to grab one of the default on device emus to use for preview.
         emuDefForPreview = [self.package findEmuDefForPreviewInContext:EMDB.sh.context];
+        
     }
+    
+    // Ensure an emuDef for preview was selected
+    if (emuDefForPreview == nil) {
+        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{@"msg":[SF:@"Recorder: Failed selecting an emuDef for preview."]}];
+    }
+    
+    // Remmember the last use for preview emu def.
     self.emuDefForPreviewLastUsed = emuDefForPreview;
     
     // Check if all resources required for this render are available
     if ([emuDefForPreview allResourcesAvailable]) {
+        
         // Send the footage to preview rendering.
         [EMRenderManager2.sh renderPreviewForFootage:footage
                                           withEmuDef:emuDefForPreview];
+        
     } else {
+        
         // Some resources are missing.
+        // Will need to be downloaded first.
         NSString *oid =emuDefForPreview.oid;
         NSArray *resourcesNames = [emuDefForPreview allMissingResourcesNames];
         EMDownloadsManager2 *dm = EMDownloadsManager2.sh;
@@ -737,6 +788,7 @@
                                      @"footageOID":footage.oid
                                      }];
         [dm manageQueue];
+        
     }
 }
 
@@ -1260,48 +1312,35 @@
 
     } else if (self.flowType == EMRecorderFlowTypeRetakeAll) {
 
-        // Make the new footage, the master footage app wide
-        // and delete the old master footage.
-        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
-        UserFootage *oldFootage = [UserFootage masterFootage];
-        [oldFootage deleteAndCleanUp];
-        appCFG.prefferedFootageOID = newFootage.oid;
-        
-        // Clean up all emuticons that don't have their own specific footage
-        // In all packages.
-        // Create missing emuticons of current package.
-        [self.package createMissingEmuticonObjects];
-        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
-            [package cleanUpEmuticonsWithNoSpecificFootage];
-            [package recountRenders];
-        }
-        
-    } else if (self.flowType == EMRecorderFlowTypeRetakeForPackage) {
-        
-        // Make the new footage, the preffered footage for this package
-        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
-        if (self.package.prefferedFootageOID) {
-            UserFootage *oldFootage = [UserFootage findWithID:self.package.prefferedFootageOID context:EMDB.sh.context];
-            [oldFootage deleteAndCleanUp];
-        }
-        self.package.prefferedFootageOID = newFootage.oid;
-
-        // Clean up all emuticons that don't have their own specific footage.
-        // Create missing emuticons of current package.
-        [self.package createMissingEmuticonObjects];
-        [self.package cleanUpEmuticonsWithNoSpecificFootage];
-        [self.package recountRenders];
+//        // Make the new footage, the master footage app wide
+//        // and delete the old master footage.
+//        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
+//        UserFootage *oldFootage = [UserFootage masterFootage];
+//        [oldFootage deleteAndCleanUp];
+//        appCFG.prefferedFootageOID = newFootage.oid;
+//        
+//        // Clean up all emuticons that don't have their own specific footage
+//        // In all packages.
+//        // Create missing emuticons of current package.
+//        [self.package createMissingEmuticonObjects];
+//        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+//            [package cleanUpEmuticonsWithNoSpecificFootage];
+//            [package recountRenders];
+//        }
 
     } else if (self.flowType == EMRecorderFlowTypeRetakeForSpecificEmuticons) {
         
-        // Cleanup the specific emuticon related to this flow.
-        Emuticon *emu = self.emuticonToUpdate;
-        [emu cleanUp];
+        // The new footage.
+        UserFootage *newFootage = [self.previewEmuticon previewUserFootage];
         
-        // Set the new footage as the emuticon preffered footage.
-        emu.prefferedFootageOID = self.previewEmuticon.prefferedFootageOID;
-        
-        
+        // Cleanup the specific emuticons related to this flow.
+        // And set them to use the new take when re-rendered.
+        for (NSString *emuOID in self.emuticonsOID) {
+            Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+            if (emu == nil) continue;
+            [emu cleanUp];
+            emu.prefferedFootageOID = newFootage.oid;
+        }
     }
     
     // Delete the preview emuticon.

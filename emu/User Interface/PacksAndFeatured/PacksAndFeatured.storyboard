@@ -159,7 +159,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="featured cell" id="gdA-Uk-DK6" customClass="EMFeaturedCell">
-                                        <rect key="frame" x="0.0" y="5.5" width="576" height="257"/>
+                                        <rect key="frame" x="0.0" y="6" width="576" height="257"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="257"/>

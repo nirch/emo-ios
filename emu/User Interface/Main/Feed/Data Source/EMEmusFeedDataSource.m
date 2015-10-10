@@ -87,10 +87,16 @@
 
 -(NSString *)packOIDForSection:(NSInteger)section
 {
+    Package *pack = [self packForSection:section];
+    return pack.oid;
+}
+
+-(Package *)packForSection:(NSInteger)section
+{
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
     Package *pack = emu.emuDef.package;
-    return pack.oid;
+    return pack;
 }
 
 -(NSInteger)packsCount
@@ -98,6 +104,13 @@
     NSInteger count = self.frc.sections.count;
     _packsCount = count;
     return count;
+}
+
+-(NSInteger)numberOfObjectsForSection:(NSInteger)section
+{
+    id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
+    NSInteger emusCount = [sectionInfo numberOfObjects];
+    return emusCount;
 }
 
 -(NSIndexPath *)indexPathForPackOID:(NSString *)packOID
@@ -291,6 +304,18 @@
 {
     if (!self.selectionsAllowed) return 0;
     return self.selectedIndexPaths.count;
+}
+
+-(NSArray *)selectionsOID
+{
+    NSMutableArray *selections = [NSMutableArray new];
+    for (NSIndexPath *indexPath in self.selectedIndexPaths.allKeys) {
+        Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+        NSString *oid = emu.oid;
+        if (oid == nil) continue;
+        [selections addObject:oid];
+    }
+    return selections;
 }
 
 #pragma mark - Prioritize emus

@@ -70,12 +70,42 @@
  */
 -(NSString *)pathForUserImages;
 
+/**
+ *  NSURL to the first image of the footage.
+ *
+ *  @return NSURL of the first image in the footage or nil if missing.
+ */
+-(NSURL *)urlToThumbImage;
 
+/**
+ *  The path pattern for creating the paths to all images of the footage by index.
+ *
+ *  @return NSString that can be used in "NSString stringWithFormat"
+ *          The part of the string that can be used in format is: "img-%ld.png"
+ */
+-(NSString *)imagesPathPTN;
+
+
+/**
+ *  NSURL to the Nth image of the footage.
+ *
+ *  @param imageIndex The index of the image of the footage.
+ *
+ *  @return NSURL of the Nth image of the footage
+ */
+-(NSURL *)urlToImageWithIndex:(NSInteger)imageIndex;
 
 /**
  *  Cleans up the footage related files and deletes the object of the footage.
  */
 -(void)deleteAndCleanUp;
+
+
+-(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames;
+
++(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames
+                                            ptn:(NSString *)ptn
+                                           path:(NSString *)path;
 
 
 @end

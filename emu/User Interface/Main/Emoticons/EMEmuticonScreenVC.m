@@ -445,15 +445,16 @@
 #pragma mark - Retake
 -(void)retake
 {
-    [EMRenderManager2.sh clear];
-    [EMDownloadsManager2.sh clear];
-
-    NSDictionary *info = @{emkEmuticon:self.emuticon};
-    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:EMRecorderFlowTypeRetakeForSpecificEmuticons
-                                                          info:info];
-    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    recorderVC.delegate = self;
-    [self presentViewController:recorderVC animated:YES completion:nil];
+    // TODO: fix for using the new recorder allowed flow.
+//    [EMRenderManager2.sh clear];
+//    [EMDownloadsManager2.sh clear];
+//
+//    NSDictionary *info = @{emkEmuticon:self.emuticon};
+//    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:EMRecorderFlowTypeRetakeForSpecificEmuticons
+//                                                          info:info];
+//    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//    recorderVC.delegate = self;
+//    [self presentViewController:recorderVC animated:YES completion:nil];
 
 }
 

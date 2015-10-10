@@ -23,7 +23,7 @@
 #import "AppManagement.h"
 #import "iRate.h"
 #import "AppManagement.h"
-
+#import "EMCaches.h"
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -116,6 +116,7 @@
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     self.fbContext = nil;
     [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
+    [EMCaches.sh clearAllCache];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

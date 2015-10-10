@@ -18,5 +18,6 @@
 
 #define emkUIRecorderWillOpen              @"UI recorder will open"
 
+#define emkUIUserRequestToOpenRecorder     @"UI user request to open the recorder"
 
 #endif /* EMUINotifications_h */

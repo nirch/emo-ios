@@ -67,6 +67,70 @@
     return path;
 }
 
+-(NSURL *)urlToThumbImage
+{
+    return [self urlToImageWithIndex:1];
+}
+
+-(NSString *)imagesPathPTN
+{
+    NSMutableString *s = [NSMutableString new];
+    [s appendString:[self pathForUserImages]];
+    [s appendString:@"/img-%ld.png"];
+    return s;
+}
+
+-(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames
+{
+    NSString *ptn = [self imagesPathPTN];
+    NSString *path = [self pathForUserImages];
+    return [UserFootage imagesSequenceWithMaxNumberOfFrames:maxFrames
+                                                        ptn:ptn
+                                                       path:path];
+}
+
++(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames
+                                            ptn:(NSString *)ptn
+                                           path:(NSString *)path
+{
+    NSError *error;
+    
+    // Count the number of stored images.
+    NSArray *storedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
+    float storedImagesCount = storedImages.count;
+    
+    NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:maxFrames];
+    NSInteger previousFrame = 0;
+    for (float i = 0;i < maxFrames;i+=1.0) {
+        
+        // Skip frames as required to produce a list
+        // with the required max number of allowed frames.
+        // (will not repeat frames).
+        NSInteger sourceIndex = ((float)i/(float)maxFrames)*storedImagesCount+1;
+        if (sourceIndex == previousFrame) continue;
+        
+        // Just to be safe, Keep index in bounds.
+        sourceIndex = MIN(storedImagesCount,sourceIndex);
+        
+        // Populate the list with the paths to frames.
+        NSString *pathToImage = [SF:ptn, (long)sourceIndex];
+        UIImage *image = [UIImage imageWithContentsOfFile:pathToImage];
+        if (image != nil) images[(int)i] = image;
+        previousFrame = sourceIndex;
+    }
+    
+    // Return the list of frames.
+    return images;
+}
+
+
+-(NSURL *)urlToImageWithIndex:(NSInteger)imageIndex
+{
+    NSString *pathToImage = [SF:[self imagesPathPTN], (long)imageIndex];
+    NSURL *url = [NSURL fileURLWithPath:pathToImage];
+    return url;
+}
+
 -(void)deleteAndCleanUp
 {
     // Delete all footage files.

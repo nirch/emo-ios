@@ -8,7 +8,27 @@
 
 @protocol EMRecorderDelegate <NSObject>
 
+
+#define emkFirstTake @"firstTake"
+#define emkRetakeAll @"retakeAll"
+#define emkRetakePackageOID @"retakePackage"
+#define emkRetakeEmuticonsOID @"retakeEmuticonsOID"
+
+/**
+ * EMRecorderFlowTypeInvalid
+ * EMRecorderFlowTypeOnboarding
+ * EMRecorderFlowTypeRetakeAll
+ * EMRecorderFlowTypeRetakeForPackage (deprecated)
+ * EMRecorderFlowTypeRetakeForSpecificEmuticons - List of emus to retake.
+ * EMRecorderFlowTypeNewTake - No specific emu to retake (just add to list of user takes)
+ */
 typedef NS_ENUM(NSInteger, EMRecorderFlowType){
+    /**
+     *  Invalid flow type.
+     *  The recorder must have a valid defined flow type to function.
+     */
+    EMRecorderFlowTypeInvalid                     = 0,
+    
     /**
      *  Recorder was opened for the onboarding experience.
      *  (happens as long as the user didn't finish
@@ -41,26 +61,11 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      */
     EMRecorderFlowTypeRetakeAll                     = 2000,
 
+    // EMRecorderFlowTypeRetakeForPackage = 3000 (deprecated)
     
     /**
-     *  Recorder opened to retake a footage for a package.
-     *
-     *  In this flow:
-     *
-     *  - If recorder dismissed before footage approved,
-     *    will delete the footage and will do nothing after
-     *    dismissing the recorder.
-     *
-     *  - If new footage approved, will delete package specific
-     *    old footage and clean all emuticons using that old footage.
-     *    (cleans emuticons will be rendered again with the new footage)
-     *
-     */
-    EMRecorderFlowTypeRetakeForPackage               = 3000,
-
-    
-    /**
-     *  Recorder opened to retake a footage for a specific emuticon.
+     *  Recorder opened to retake a footage for a list of specific emuticons.
+     *  (remark: this flow is also good for retake for a single emu)
      *
      *  In this flow:
      *
@@ -73,7 +78,13 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *    again anyway).
      *
      */
-    EMRecorderFlowTypeRetakeForSpecificEmuticons     = 4000
+    EMRecorderFlowTypeRetakeForSpecificEmuticons     = 4000,
+    
+    /**
+     *  Recorder opened to add a new take.
+     */
+    EMRecorderFlowTypeNewTake                        = 5000
+    
 };
 
 

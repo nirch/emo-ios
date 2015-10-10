@@ -118,8 +118,14 @@
         // Add subtle shadow to the navigation bar
         [self addSubtleShadowToLayer:self.guiNavView.layer boundPath:YES];
         
-        // Round logo button
-        self.logoButtonOriginalCenter = self.guiLogoButton.center;
+        // Round logo button position
+        // Yeah yeah, I know. position should be taken from containing view
+        // and not from screen size. Just a hack for now.
+        // Got more important thing to take care of.
+        // TODO: fix this.
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        self.logoButtonOriginalCenter = CGPointMake(screenWidth/2.0f, 32);
 
         // Mark as already initialized
         self.alreadyInitializedUIOnApearance = YES;
@@ -254,6 +260,12 @@
         [self showTitleAnimated:YES];
     }
 }
+
+-(void)updateTitleAlpha:(CGFloat)alpha
+{
+    self.guiTitle.alpha = alpha;
+}
+
 
 #pragma mark - State
 -(NSInteger)currentState
