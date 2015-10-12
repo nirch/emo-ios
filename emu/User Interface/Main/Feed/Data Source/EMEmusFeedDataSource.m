@@ -199,6 +199,7 @@
     EMEmuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                                                  forIndexPath:indexPath];
     cell.inUI = originUI;
+    cell.sectionIndex = indexPath.section;
     
     // Get the emu object.
     Emuticon *emu = [self.frc objectAtIndexPath:indexPath];

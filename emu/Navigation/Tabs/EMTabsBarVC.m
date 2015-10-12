@@ -160,19 +160,32 @@
 
 -(void)navigateToTabAtIndex:(NSInteger)index animated:(BOOL)animated
 {
+    [self navigateToTabAtIndex:index animated:animated info:nil];
+}
+
+-(void)navigateToTabAtIndex:(NSInteger)index animated:(BOOL)animated info:(NSDictionary *)info
+{
     // Broadcast that a tab was selected to whoever is interested.
-    NSDictionary *info = @{
-                           @"previousTabIndex":@(self.selectedTab),
-                           @"newTabIndex":@(index)
-                           };
+    NSMutableDictionary *passedInfo = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                      @"previousTabIndex":@(self.selectedTab),
+                                                                                      @"newTabIndex":@(index)
+                                                                                      }];
+    if (info) [passedInfo addEntriesFromDictionary:info];
+    
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationTabSelected
                                                         object:self
-                                                      userInfo:info];
+                                                      userInfo:passedInfo];
     
     // Update animations.
     self.selectedTab = index;
     [self updateThemeAnimated:animated];
     [self updateSelectorAnimated:animated];
+}
+
+-(NSInteger)currentTabIndex
+{
+    return self.selectedTab;
 }
 
 #pragma mark - IB Actions

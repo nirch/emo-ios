@@ -265,7 +265,7 @@
 }
 
 #pragma mark - EMTopVCProtocol
--(void)vcWasSelected
+-(void)vcWasSelectedWithInfo:(NSDictionary *)info
 {
     HMLOG(TAG, EM_DBG, @"Top vc selected: EMPacksVC");
 }

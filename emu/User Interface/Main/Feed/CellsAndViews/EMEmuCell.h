@@ -12,6 +12,8 @@
 
 @interface EMEmuCell : UICollectionViewCell
 
+@property (nonatomic) NSInteger sectionIndex;
+
 @property (nonatomic) NSString *inUI;
 
 /**

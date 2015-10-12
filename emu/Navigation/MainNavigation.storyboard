@@ -301,16 +301,16 @@
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="height" secondItem="lDB-Gj-JAs" secondAttribute="height" id="YdW-Mc-VNE"/>
                             <constraint firstAttribute="centerY" secondItem="Utc-RI-HiA" secondAttribute="centerY" id="cVe-J1-Rv4"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="Utc-RI-HiA" secondAttribute="width" id="f6L-Ek-Nko"/>
-                            <constraint firstItem="YOl-5O-aNu" firstAttribute="leading" secondItem="xg3-RC-PcF" secondAttribute="trailing" id="g1o-nF-5Sy"/>
+                            <constraint firstItem="YOl-5O-aNu" firstAttribute="left" secondItem="xg3-RC-PcF" secondAttribute="right" id="g1o-nF-5Sy"/>
                             <constraint firstItem="xg3-RC-PcF" firstAttribute="width" secondItem="nbH-vK-wmq" secondAttribute="width" id="hnL-dU-1iG"/>
                             <constraint firstItem="nm0-rV-6iL" firstAttribute="height" secondItem="fgl-Ud-ATd" secondAttribute="height" id="iLm-6S-CO8"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="Utc-RI-HiA" secondAttribute="height" id="kvI-Il-9cW"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="left" secondItem="lDB-Gj-JAs" secondAttribute="left" id="psD-qW-VOb"/>
                             <constraint firstItem="nyU-X8-UEl" firstAttribute="height" secondItem="K1F-md-Nn0" secondAttribute="height" id="v6k-xs-sET"/>
                             <constraint firstAttribute="centerX" secondItem="BKx-Tg-YD9" secondAttribute="centerX" id="wvC-KG-LBU"/>
-                            <constraint firstItem="Utc-RI-HiA" firstAttribute="leading" secondItem="nbH-vK-wmq" secondAttribute="trailing" id="x5e-2N-3XK"/>
-                            <constraint firstItem="bdK-Yw-ita" firstAttribute="leading" secondItem="Utc-RI-HiA" secondAttribute="trailing" id="z23-Fa-3Gz"/>
-                            <constraint firstItem="xg3-RC-PcF" firstAttribute="leading" secondItem="bdK-Yw-ita" secondAttribute="trailing" id="zZs-Ew-VoF"/>
+                            <constraint firstItem="Utc-RI-HiA" firstAttribute="left" secondItem="nbH-vK-wmq" secondAttribute="right" id="x5e-2N-3XK"/>
+                            <constraint firstItem="bdK-Yw-ita" firstAttribute="left" secondItem="Utc-RI-HiA" secondAttribute="right" id="z23-Fa-3Gz"/>
+                            <constraint firstItem="xg3-RC-PcF" firstAttribute="left" secondItem="bdK-Yw-ita" secondAttribute="right" id="zZs-Ew-VoF"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

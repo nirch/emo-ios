@@ -419,7 +419,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 }
 
 #pragma mark - EMTopVCProtocol
--(void)vcWasSelected
+-(void)vcWasSelectedWithInfo:(NSDictionary *)info
 {
     HMLOG(TAG, EM_DBG, @"Top vc selected: EMEmusFeedVC");
 }
@@ -436,21 +436,21 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(NSInteger)currentTopSection
 {
     NSInteger topSection = NSIntegerMax;
-    NSArray *headerViews = [self.guiCollectionView visibleSupplementaryViewsOfKind:UICollectionElementKindSectionHeader];
-    if (headerViews.count == 0) {
-        // Fallback when no header views currently shown on screen.
-        // Can happen on test apps with lots of emus per parck or smaller phones like iPhone 4s.
-        // This is a less optimized method.
+    NSArray *visibleCells = [self.guiCollectionView visibleCells];
+    if (visibleCells == 0) {
+        // Not likely, probably will never happen, but just in case (on test apps for example)
         UICollectionView *cv = self.guiCollectionView;
         CGPoint p = CGPointMake(cv.center.x, 52+cv.contentOffset.y);
         NSIndexPath *indexPath = [cv indexPathForItemAtPoint:p];
         topSection = indexPath.section;
     } else {
-        for (EMPackHeaderView *header in headerViews) {
-            topSection = MIN(topSection, header.sectionIndex);
+        for (EMEmuCell *cell in visibleCells) {
+            topSection = MIN(topSection, cell.sectionIndex);
         }
     }
-    return topSection < NSIntegerMax?topSection:0;
+    topSection = topSection < NSIntegerMax?topSection:0;
+    topSection ++;
+    return topSection;
 }
 
 

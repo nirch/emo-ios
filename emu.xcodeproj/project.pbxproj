@@ -245,6 +245,7 @@
 		0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0869D8601B1E53E800A5E2F5 /* EMShareDocumentInteraction.m */; };
 		086FFB691BB55EB40097CA45 /* EMPacksDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 086FFB681BB55EB40097CA45 /* EMPacksDataSource.m */; settings = {ASSET_TAGS = (); }; };
 		086FFB6A1BB55EB40097CA45 /* EMPacksDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 086FFB681BB55EB40097CA45 /* EMPacksDataSource.m */; settings = {ASSET_TAGS = (); }; };
+		087C5D3D1BCBF8B3004B3121 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 087C5D3C1BCBF8B3004B3121 /* libPods.a */; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		0881F0B61BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */; settings = {ASSET_TAGS = (); }; };
@@ -823,6 +824,7 @@
 		086FFB681BB55EB40097CA45 /* EMPacksDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPacksDataSource.m; sourceTree = "<group>"; };
 		087403121B63E41200866A74 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
+		087C5D3C1BCBF8B3004B3121 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -1043,6 +1045,7 @@
 				08AA14AE1B0BA658002E1B2F /* AVFoundation.framework in Frameworks */,
 				08AA14AF1B0BA658002E1B2F /* CoreGraphics.framework in Frameworks */,
 				08AA14B01B0BA658002E1B2F /* OpenGLES.framework in Frameworks */,
+				087C5D3D1BCBF8B3004B3121 /* libPods.a in Frameworks */,
 				08AA14B11B0BA658002E1B2F /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2398,6 +2401,7 @@
 		F818AC31536FB92317D788B6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				087C5D3C1BCBF8B3004B3121 /* libPods.a */,
 				0896D5551B2E24D60094ED41 /* SystemConfiguration.framework */,
 				0896D5531B2E24C80094ED41 /* Security.framework */,
 				08875E0F1B19F51200E6663C /* AVKit.framework */,
@@ -3197,6 +3201,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -3301,6 +3306,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (

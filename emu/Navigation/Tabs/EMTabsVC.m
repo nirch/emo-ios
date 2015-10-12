@@ -15,6 +15,7 @@
 #import "EMFeedNavigationVC.h"
 #import "EMMeNavigationVC.h"
 #import "EMTopVCProtocol.h"
+#import "EMUINotifications.h"
 
 @interface EMTabsVC ()
 
@@ -63,6 +64,7 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkUINavigationTabSelected];
+    [nc removeObserver:emkUIUserSelectedPack];
 }
 
 #pragma mark - Observers handlers
@@ -76,7 +78,7 @@
     // Tell selected view controller it was chosen.
     id<EMTopVCProtocol>selectedVC = self.childViewControllers[self.selectedIndex];
     if ([selectedVC conformsToProtocol:@protocol(EMTopVCProtocol)]) {
-        [selectedVC vcWasSelected];
+        [selectedVC vcWasSelectedWithInfo:info];
     }
 }
 

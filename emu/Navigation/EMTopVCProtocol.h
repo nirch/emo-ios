@@ -13,9 +13,11 @@
 /**
  *  Inform the view controller that it was selected by the user and about
  *  to appear on the user's screen.
- *  Good place to start refreshing data and/or handle state/flow.
+ *  Good place to configure the navigated to VC.
+ *
+ *  @param info NSDictionary (optional) info to the navigated to VC.
  */
--(void)vcWasSelected;
+-(void)vcWasSelectedWithInfo:(NSDictionary *)info;
 
 
 @end

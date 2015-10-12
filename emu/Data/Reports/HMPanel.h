@@ -10,6 +10,7 @@
 #import "HMParams.h"
 #import <MPTweakInline.h>
 #import "HMExperiments.h"
+#import <Crashlytics.h>
 
 #define VK_FEATURE_VIDEO_RENDER @"featureVideoRender"
 #define VK_FEATURE_VIDEO_RENDER_WITH_AUDIO @"featureVideoRenderWithAudio"
@@ -25,8 +26,7 @@
 -(void)initCrashReports;
 
 #pragma mark - Remote logging
-//#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
-#define REMOTE_LOG(__FORMAT__, ...) 
+#define REMOTE_LOG(__FORMAT__, ...) CLS_LOG(__FORMAT__, ##__VA_ARGS__)
 -(void)remoteKey:(NSString *)key value:(NSString *)value;
 
 #pragma mark - Tracking

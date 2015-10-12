@@ -57,6 +57,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // -----------------------------------------------------------
+    // Hack for now until implementing RTL navigation correctly
+    // Force LTR navigation on iOS9+
+    //
+    if(([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) && [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){9, 0, 0}]){
+        [[UIView appearance] setSemanticContentAttribute:UISemanticContentAttributeForceLeftToRight];}
+    // -----------------------------------------------------------
+
+    
     [self.splashVC showAnimated:NO];
     [self initFlowState];
 }
@@ -127,6 +137,12 @@
                  selector:@selector(onRequestToOpenRecorder:)
                      name:emkUIUserRequestToOpenRecorder
                    object:nil];
+    
+    // On user selected pack
+    [nc addUniqueObserver:self
+                 selector:@selector(onUserSelectedPack:)
+                     name:emkUIUserSelectedPack
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -136,6 +152,7 @@
     [nc removeObserver:emkUIShouldHideTabsBar];
     [nc removeObserver:emkUIShouldShowTabsBar];
     [nc removeObserver:emkUIUserRequestToOpenRecorder];
+    [nc removeObserver:emkUIUserSelectedPack];
 }
 
 #pragma mark - Observers handlers
@@ -189,6 +206,17 @@
     [self updateFlowState:EMNavFlowStateOpenRecorderForNewTake];
     [self handleFlowWithInfo:notification.userInfo];
 }
+
+-(void)onUserSelectedPack:(NSNotification *)notification
+{
+    if ([self.tabsBarVC currentTabIndex] == EMTabNameFeatured) {
+        // If user selects a pack in the featured packs tab bar,
+        // will navigte to the feed and show that pack.
+        NSString *packOID = notification.userInfo[emkOID];
+        [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:YES];
+    }
+}
+
 
 #pragma mark - Flow & State
 /**
