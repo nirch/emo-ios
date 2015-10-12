@@ -11,8 +11,11 @@
 
 #define emkUIFootageSelectionCancel @"UI footage selection cancel"
 #define emkUIFootageSelectionApply @"UI footage selection apply"
+#define emkUIFootagesManageDone @"UI footages manage done"
 
 @interface EMFootagesVC : UIViewController
+
+@property (nonatomic) UIColor *themeColor;
 
 /**
  *  Interface delegate to get info and actions back from this VC.

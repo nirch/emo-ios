@@ -86,6 +86,16 @@
  */
 +(NSArray *)allEmuticonsInPackage:(Package *)package;
 
+/**
+ *  Fetches all emuticons that were set to preffer a specific footage (ignores emuticons marked as preview)
+ *
+ *  @param footageOID NSString The footage oid.
+ *  @param context    NSManagedObjectContext
+ *
+ *  @return <#return value description#>
+ */
++(NSArray *)allEmuticonsUsingFootageOID:(NSString *)footageOID inContext:(NSManagedObjectContext *)context;
+
 
 -(NSURL *)thumbURL;
 -(NSString *)thumbPath;

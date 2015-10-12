@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
 @property (weak, nonatomic) IBOutlet UIImageView *guiAnimatedImages;
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimatedGif;
+@property (weak, nonatomic) IBOutlet UIView *guiIsDefaultIndicator;
 
 
 @property (nonatomic) NSString *oid;
@@ -79,6 +80,7 @@
     self.guiThumbImage.image = nil;
     [self.guiThumbImage stopAnimating];
     self.guiThumbImage.animationImages = nil;
+    self.guiIsDefaultIndicator.hidden = YES;
     
     CALayer *l = self.guiContainer.layer;
     UIImage *dottedPattern = [UIImage imageNamed:@"dashedBorder"];
@@ -97,7 +99,8 @@
     if (self.oid == nil) return;
     
     self.guiContainer.backgroundColor = [UIColor whiteColor];
-    
+    if (self.isDefault) self.guiIsDefaultIndicator.hidden = NO;
+
     [self.guiThumbImage pin_setImageFromURL:self.thumbURL];
 }
 

@@ -85,6 +85,16 @@
     return emus;
 }
 
++(NSArray *)allEmuticonsUsingFootageOID:(NSString *)footageOID inContext:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND prefferedFootageOID=%@", @NO, footageOID];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:EMDB.sh.context];
+    return emus;
+    
+}
+
 
 -(NSURL *)thumbURL
 {

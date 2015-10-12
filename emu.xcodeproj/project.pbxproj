@@ -249,6 +249,8 @@
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		0881F0B61BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */; settings = {ASSET_TAGS = (); }; };
 		0881F0B71BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */; settings = {ASSET_TAGS = (); }; };
+		088360041BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */; settings = {ASSET_TAGS = (); }; };
+		088360051BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */; settings = {ASSET_TAGS = (); }; };
 		08851DE61B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
 		08851DE71B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
 		08851DEA1B53E5D100DC9619 /* EMShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE91B53E5D100DC9619 /* EMShareFacebook.m */; };
@@ -829,6 +831,8 @@
 		087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
 		0881F0B41BC67A2E005A7323 /* UIView+CommonAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CommonAnimations.h"; sourceTree = "<group>"; };
 		0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CommonAnimations.m"; sourceTree = "<group>"; };
+		088360021BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFootagesNavigationCFG.h; sourceTree = "<group>"; };
+		088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFootagesNavigationCFG.m; sourceTree = "<group>"; };
 		08851DE41B53E32600DC9619 /* EMUploadAndShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUploadAndShare.h; sourceTree = "<group>"; };
 		08851DE51B53E32600DC9619 /* EMUploadAndShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUploadAndShare.m; sourceTree = "<group>"; };
 		08851DE81B53E5D100DC9619 /* EMShareFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareFacebook.h; sourceTree = "<group>"; };
@@ -1385,6 +1389,8 @@
 				08357F311BC932F200C302AA /* EMFootagesDataSource.m */,
 				08357F341BC9331000C302AA /* EMFootageCell.h */,
 				08357F351BC9331000C302AA /* EMFootageCell.m */,
+				088360021BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.h */,
+				088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */,
 			);
 			path = Footage;
 			sourceTree = "<group>";
@@ -2837,6 +2843,7 @@
 				08AA144B1B0BA658002E1B2F /* HMBackgroundRemovalDebugger.mm in Sources */,
 				08AA144D1B0BA658002E1B2F /* EMControlsBarVC.m in Sources */,
 				084349D31B84999F009A653F /* NSString+Utilities.m in Sources */,
+				088360051BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */,
 				08AA144E1B0BA658002E1B2F /* EMPackageParser.m in Sources */,
 				086578881BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */,
 				084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */,
@@ -2989,6 +2996,7 @@
 				08D9D4541AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
 				084349D11B84999F009A653F /* NSString+Utilities.m in Sources */,
+				088360041BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
 				086578871BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */,
 				084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */,

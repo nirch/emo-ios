@@ -6,16 +6,23 @@
 //  Copyright © 2015 Homage. All rights reserved.
 //
 
+@import AudioToolbox;
+
 #import "EMFootagesVC.h"
 #import "EMFootagesDataSource.h"
 #import "EMNavBarVC.h"
 #import "EMFlowButton.h"
 #import "EMUISound.h"
 #import "EMFootageCell.h"
+#import "EMFootagesNavigationCFG.h"
+#import "EMUINotifications.h"
+#import "UIView+CommonAnimations.h"
+#import "EMRecorderVC.h"
 #import "EMDB.h"
 
 @interface EMFootagesVC () <
-    EMNavBarDelegate
+    EMNavBarDelegate,
+    EMRecorderDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
@@ -23,12 +30,21 @@
 @property (weak, nonatomic) IBOutlet EMFlowButton *guiPositiveButton;
 @property (weak, nonatomic) IBOutlet UIView *guiBlurredView;
 
+@property (weak, nonatomic) IBOutlet UIView *guiManageTakesBar;
+@property (weak, nonatomic) IBOutlet UIView *guiApplyChoiceBar;
+
+@property (weak, nonatomic) IBOutlet UIImageView *guiAddIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *guiDeleteIcon;
+@property (weak, nonatomic) IBOutlet EMButton *guiSetAsDefaultButton;
+
+
 @property (nonatomic, readwrite) EMFootagesFlowType flowType;
 
 @property (nonatomic) BOOL alreadyInitializedOnAppearance;
 
 // Navigation bar
 @property (weak, nonatomic) EMNavBarVC *navBarVC;
+@property (nonatomic) id<EMNavBarConfigurationSource> navBarCFG;
 
 @property (nonatomic) EMFootagesDataSource *dataSource;
 
@@ -55,13 +71,20 @@
     [self initNavigationBar];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self initGUIOnAppearance];
-    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
-        [self.navBarVC showTitleAnimated:YES];
-    });
 }
 
 #pragma mark - Initializations
@@ -74,22 +97,50 @@
 -(void)initGUIOnLoad
 {
     self.guiNegativeButton.positive = NO;
-    self.guiPositiveButton.alpha = 0.5;
-    self.guiPositiveButton.userInteractionEnabled = NO;
+    [self.navBarVC hideTitleAnimated:NO];
+    if (self.currentState == EMFootagesFlowTypeChooseFootage) {
+        self.guiPositiveButton.alpha = 0.2;
+        self.guiPositiveButton.userInteractionEnabled = NO;
+        self.guiApplyChoiceBar.hidden = NO;
+        self.guiManageTakesBar.hidden = YES;
+    } else if (self.currentState == EMFootagesFlowTypeMangementScreen) {
+        self.guiApplyChoiceBar.hidden = YES;
+        self.guiManageTakesBar.hidden = NO;
+    }
 }
 
 -(void)initGUIOnAppearance
 {
-    if (!self.alreadyInitializedOnAppearance) {        
+    if (!self.alreadyInitializedOnAppearance) {
         self.alreadyInitializedOnAppearance = YES;
+    } else {
+        [self.dataSource reset];
+        [self.guiCollectionView reloadData];
     }
 }
 
 -(void)initNavigationBar
 {
-    self.navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeFeed]];
+    UIColor *navBarColor = self.themeColor?self.themeColor:[EmuStyle colorThemeFeed];
+    self.navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:navBarColor];
     self.navBarVC.delegate = self;
-    [self.navBarVC updateTitle:@"Choose a take"];
+    
+    // Configure the nav bar
+    if (self.currentState == EMFootagesFlowTypeChooseFootage) {
+        [self.navBarVC updateTitle:LS(@"TAKES_CHOOSE_TAKE")];
+        dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+            [self.navBarVC showTitleAnimated:YES];
+        });
+    }
+    
+    self.navBarCFG = [EMFootagesNavigationCFG new];
+    self.navBarVC.configurationSource = self.navBarCFG;
+    [self.navBarVC updateUIByCurrentState];
+}
+
+-(NSInteger)currentState
+{
+    return self.flowType;
 }
 
 #pragma mark - Collection view Layout
@@ -125,10 +176,16 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
                     inCollectionView:collectionView];
     
     if (self.flowType == EMFootagesFlowTypeChooseFootage) {
-        // Chosen a take.
+        
+        // Chosen a take and allow to apply it.
         [self.navBarVC hideTitleAnimated:YES];
         self.guiPositiveButton.alpha = 1;
         self.guiPositiveButton.userInteractionEnabled = YES;
+        
+    } else if (self.flowType == EMFootagesFlowTypeMangementScreen) {
+        
+        [self.navBarVC hideTitleAnimated:YES];
+        
     }
 }
 
@@ -143,6 +200,69 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
                          state:(NSInteger)state
                           info:(NSDictionary *)info
 {
+    if ([actionName isEqualToString:EMK_NAV_ACTION_FOOTAGES_DONE]) {
+        [self.delegate controlSentActionNamed:emkUIFootagesManageDone info:nil];
+    }
+}
+
+-(void)noneSelected
+{
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    [self.navBarVC showTitleAnimated:YES];
+    [self.navBarVC updateTitle:LS(@"TAKES_CHOOSE_TAKE")];
+}
+
+#pragma mark - EMRecorderDelegate
+-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.dataSource reset];
+        [self.guiCollectionView reloadData];
+    }];
+}
+
+-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
+#pragma mark - Footage operations
+-(void)chooseSelectedAsDefaultFootage
+{
+    NSString *footageOID = [self.dataSource selectedFootageOID];
+    
+    if (footageOID) {
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        appCFG.prefferedFootageOID = footageOID;
+    }
+    
+    [self.dataSource unselect];
+    [self.dataSource reset];
+    [self.guiCollectionView reloadData];
+}
+
+-(void)deleteSelectedFootage
+{
+    NSString *footageOID = [self.dataSource selectedFootageOID];
+    NSArray *emus = [Emuticon allEmuticonsUsingFootageOID:footageOID inContext:EMDB.sh.context];
+    for (Emuticon *emu in emus) {
+        emu.prefferedFootageOID = nil;
+    }
+    UserFootage *footageToRemove = [UserFootage findWithID:footageOID context:EMDB.sh.context];
+    [EMDB.sh.context deleteObject:footageToRemove];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiCollectionView.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        [EMDB.sh save];
+        [self.dataSource reset];
+        [self.guiCollectionView reloadData];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.guiCollectionView.alpha = 1;
+        }];
+    }];
     
 }
 
@@ -169,9 +289,56 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     
     // Send the info about the selection to the delegate.
     [self.delegate controlSentActionNamed:emkUIFootageSelectionApply info:info];
-    
 }
 
+- (IBAction)onAddButtonPressed:(id)sender
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
+    EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
+    
+    NSDictionary *configInfo =@{
+                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+                                emkEmuticonDefName:emuticonDefForOnboarding.name
+                                };
+    
+    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:configInfo];
+    recorderVC.delegate = self;
+    [self presentViewController:recorderVC animated:YES completion:nil];
+
+    [self.guiAddIcon animateQuickPopIn];
+
+}
+
+- (IBAction)onDefaultButtonPressed:(id)sender
+{
+    if (self.dataSource.selectedIndexPath == nil) {
+        [self noneSelected];
+        return;
+    }
+    [self.guiSetAsDefaultButton animateQuickPopIn];
+    [self chooseSelectedAsDefaultFootage];
+}
+
+- (IBAction)onDeleteButtonPressed:(id)sender
+{
+    if (self.dataSource.selectedIndexPath == nil) {
+        [self noneSelected];
+        return;
+    }
+    
+    NSString *footageOID = [self.dataSource selectedFootageOID];
+    NSString *masterFootageOID = [UserFootage masterFootage].oid;
+    if ([footageOID isEqualToString:masterFootageOID]) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        [self.navBarVC showTitleAnimated:YES];
+        [self.navBarVC updateTitle:LS(@"TAKES_CANNOT_DELETE_DEFAULT_FOOTAGE")];
+        return;
+    }
+    
+    [self.guiDeleteIcon animateQuickPopIn];
+    [self deleteSelectedFootage];
+}
 
 
 @end

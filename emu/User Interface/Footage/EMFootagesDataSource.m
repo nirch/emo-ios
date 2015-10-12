@@ -13,6 +13,7 @@
 @interface EMFootagesDataSource()
 
 @property (nonatomic, readonly) NSFetchedResultsController *frc;
+@property (nonatomic, readonly) NSString *masterFootageOID;
 
 @end
 
@@ -31,13 +32,9 @@
     if (_frc != nil) return _frc;
     
     // Configure the fetch request
-    // (emus in active packs, divided to section by pack)
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"", @NO, @YES];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_USER_FOOTAGE];
-//    fetchRequest.predicate = predicate;
-    
     fetchRequest.sortDescriptors = @[
-                                     [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:NO]
+                                      [NSSortDescriptor sortDescriptorWithKey:@"timeTaken" ascending:YES]
                                      ];
     fetchRequest.fetchBatchSize = 20;
     
@@ -47,6 +44,7 @@
                                                                                      cacheName:nil];
     _frc = frc;
     [_frc performFetch:nil];
+    _masterFootageOID = [UserFootage masterFootage].oid;
     return _frc;
 }
 
@@ -96,6 +94,7 @@
         footage = [self.frc objectAtIndexPath:indexPath];
     }
     [cell updateStateWithFootage:footage];
+    cell.isDefault = [footage.oid isEqualToString:self.masterFootageOID];
     
     // Update the cell UI
     [cell updateGUI];
@@ -134,5 +133,9 @@
     return self.frc.fetchedObjects.count;
 }
 
+-(void)unselect
+{
+    _selectedIndexPath = nil;
+}
 
 @end

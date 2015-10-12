@@ -301,13 +301,8 @@
     // Get the new configuration for current state.
     self.cfg = [self.configurationSource navBarConfigurationForState:self.currentState];
     if (self.cfg == nil) {
+        self.cfg = @{};
         HMLOG(TAG, EM_ERR, @"Unsupported state/configuration for navigation bar");
-        [HMPanel.sh explodeOnTestApplicationsWithInfo:@{
-                                                        @"msg":@"Unsupported state/configuration for navigation bar",
-                                                        @"action":@"updateUIByCurrentState",
-                                                        @"state":@(self.currentState)
-                                                        }];
-        return;
     }
     [self updateUIWithCurrentCFG];
 }

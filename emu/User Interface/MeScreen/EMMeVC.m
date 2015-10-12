@@ -13,6 +13,7 @@
 #import "EMDB.h"
 #import "EMEmuticonScreenVC.h"
 #import "EMUINotifications.h"
+#import "EMFootagesVC.h"
 
 @interface EMMeVC () <
     EMNavBarDelegate,
@@ -26,6 +27,9 @@
 // Navigation bar
 @property (weak, nonatomic) EMNavBarVC *navBarVC;
 @property (nonatomic) id<EMNavBarConfigurationSource> navBarCFG;
+
+// Footages VC
+@property (nonatomic, weak) EMFootagesVC *footagesVC;
 
 @property (nonatomic) BOOL alreadyInitializedOnAppearance;
 
@@ -50,15 +54,25 @@
 #pragma mark - Initializations
 -(void)initGUIOnAppearance
 {
+    UserFootage *masterFootage = [UserFootage masterFootage];
+    UIImage *thumb = [masterFootage thumbImage];
+
     if (!self.alreadyInitializedOnAppearance) {
         // init here stuff to be initialized only on first appearance.
         self.alreadyInitializedOnAppearance = YES;
+        dispatch_after(DTIME(2.0), dispatch_get_main_queue(), ^{
+            if (thumb) [self.navBarVC showImageAsLogo:thumb];
+        });
+
     } else {
         [self.favoritesListVC refreshLocalData];
         [self.recentlySharedListVC refreshLocalData];
         [self.recentlyViewedListVC refreshLocalData];
+        if (thumb) [self.navBarVC showImageAsLogo:thumb];
     }
 
+
+    
     // Show the tabs
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                         object:self
@@ -76,12 +90,6 @@
     self.navBarCFG = [EMMeNavigationCFG new];
     self.navBarVC.configurationSource = self.navBarCFG;
     [self.navBarVC updateUIByCurrentState];
-    
-    UserFootage *masterFootage = [UserFootage masterFootage];
-    UIImage *thumb = [masterFootage thumbImage];    
-    dispatch_after(DTIME(2.0), dispatch_get_main_queue(), ^{
-        if (thumb) [self.navBarVC showImageAsLogo:thumb];
-    });
 }
 
 -(void)initState
@@ -128,7 +136,7 @@
     }
 }
 
-#pragma mark - Navigate to
+#pragma mark - Other screens / VC
 -(void)navigateToEmuticonOID:(NSString *)emuticonOID
 {
     if (emuticonOID == nil) return;
@@ -138,6 +146,17 @@
     EMEmuticonScreenVC *vc = [EMEmuticonScreenVC emuticonScreenForEmuticonOID:emuticonOID];
     vc.themeColor = [EmuBaseStyle colorThemeMe];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)openFooatgesScreen
+{
+    // Present the footages screen
+    EMFootagesVC *footagesVC = [EMFootagesVC footagesVCForFlow:EMFootagesFlowTypeMangementScreen];
+    footagesVC.delegate = self;
+    footagesVC.themeColor = self.navBarVC.themeColor;
+    self.footagesVC = footagesVC;
+    [self presentViewController:footagesVC animated:YES completion:^{
+    }];
 }
 
 #pragma mark - EMNavigationBarDelegate
@@ -151,7 +170,9 @@
                          state:(NSInteger)state
                           info:(NSDictionary *)info
 {
-    
+    if ([actionName isEqualToString:EMK_NAV_ACTION_MY_TAKES]) {
+        [self openFooatgesScreen];
+    }
 }
 
 #pragma mark - EMInterfaceDelegate
@@ -164,6 +185,9 @@
             [self navigateToEmuticonOID:emuticonOID];
             self.view.userInteractionEnabled = YES;
         });
+    } else if ([actionName isEqualToString:emkUIFootagesManageDone]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
     }
 }
 

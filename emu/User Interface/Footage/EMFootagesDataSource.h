@@ -20,4 +20,8 @@
 
 -(NSString *)selectedFootageOID;
 
+-(void)reset;
+
+-(void)unselect;
+
 @end

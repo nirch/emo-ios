@@ -183,6 +183,10 @@
         // Configure for a list of specific emus
         [self _configureForRetakeEmuticons];
         
+    } else if (self.flowType == EMRecorderFlowTypeNewTake) {
+        
+        
+        [self _configureForNewTake];
     }
 }
 
@@ -191,6 +195,15 @@
     self.emuticonDefNameForPreview = self.info[emkEmuticonDefName];
     self.emuticonDefOIDForPreview = self.info[emkEmuticonDefOID];
 }
+
+-(void)_configureForNewTake
+{
+    // TODO: The API is like this because of historical reasons.
+    // TODO: make this internal/encapsulated in the recorder and make the API simpler.
+    self.emuticonDefNameForPreview = self.info[emkEmuticonDefName];
+    self.emuticonDefOIDForPreview = self.info[emkEmuticonDefOID];
+}
+
 
 -(void)_configureForRetakeEmuticons
 {
@@ -1341,6 +1354,10 @@
             [emu cleanUp];
             emu.prefferedFootageOID = newFootage.oid;
         }
+    } else if (self.flowType == EMRecorderFlowTypeNewTake) {
+        
+        // Just storing the new take. No need to do anything.
+        
     }
     
     // Delete the preview emuticon.

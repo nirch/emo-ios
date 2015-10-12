@@ -43,7 +43,7 @@
                          EMK_NAV_ACTION_TEXT:LS(@"TAKES_ME_SCREEN_BUTTON")
                          }
                  };
-    self.cfgByState[@(EMMeStateNormal)] = stateCFG;
+    self.cfgByState[@(EMMeStateNormal)] = stateCFG;    
 }
 
 -(NSDictionary *)navBarConfigurationForState:(NSInteger)state

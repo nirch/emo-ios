@@ -12,6 +12,8 @@
 
 @interface EMFootageCell : UICollectionViewCell
 
+@property (nonatomic) BOOL isDefault;
+
 -(void)updateStateWithFootage:(UserFootage *)footage;
 -(void)updateGUI;
 
