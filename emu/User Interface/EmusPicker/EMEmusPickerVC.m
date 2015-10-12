@@ -102,6 +102,9 @@
 {
     [self.dataSource resetFRC];
     [self.guiCollectionView reloadData];
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        [self handleVisibleCells];
+    });
 }
 
 #pragma mark - Observers

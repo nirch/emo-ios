@@ -7,7 +7,6 @@
 //
 @import MediaPlayer;
 @import AVFoundation;
-
 #define TAG @"EMEmuticonScreen"
 
 #import <Toast/UIView+Toast.h>
@@ -26,11 +25,15 @@
 #import "EMNotificationCenter.h"
 #import "EMVideoSettingsPopover.h"
 #import "EMUINotifications.h"
+#import "EMFootagesVC.h"
+#import "EMInterfaceDelegate.h"
+
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
     EMRecorderDelegate,
-    MPMediaPickerControllerDelegate
+    MPMediaPickerControllerDelegate,
+    EMInterfaceDelegate
 >
 
 #define AUDIO_DURATION 20.0f
@@ -73,6 +76,11 @@
 
 @property (nonatomic) NSString *playIdentifier;
 @property (nonatomic) AVPlayer *player;
+
+@property (nonatomic) BOOL alreadyInitializedGUIOnAppearance;
+
+// Footages screen
+@property (weak, nonatomic) EMFootagesVC *footagesVC;
 
 @end
 
@@ -134,6 +142,12 @@
         self.emuticon.lastTimeViewed = [NSDate date];
     }
     [EMDB.sh save];
+    
+    if (!self.alreadyInitializedGUIOnAppearance) {
+        self.alreadyInitializedGUIOnAppearance = YES;
+    } else {
+        [self refreshEmu];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -478,38 +492,42 @@
 #pragma mark - Retake
 -(void)retake
 {
-    // TODO: fix for using the new recorder allowed flow.
-//    [EMRenderManager2.sh clear];
-//    [EMDownloadsManager2.sh clear];
-//
-//    NSDictionary *info = @{emkEmuticon:self.emuticon};
-//    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCForFlow:EMRecorderFlowTypeRetakeForSpecificEmuticons
-//                                                          info:info];
-//    recorderVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-//    recorderVC.delegate = self;
-//    [self presentViewController:recorderVC animated:YES completion:nil];
+    // Recorder should be opened to retake this specific emu.
+    NSMutableDictionary *requestInfo = [NSMutableDictionary new];
+    requestInfo[emkRetakeEmuticonsOID] = @[self.emuticonOID];
+    
+    // Notify main navigation controller that the recorder should be opened.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserRequestToOpenRecorder
+                                                        object:self
+                                                      userInfo:requestInfo];
+}
+
+#pragma mark - Replace take
+-(void)replaceTakeForEmu
+{
+    // Present the footages screen
+    EMFootagesVC *footagesVC = [EMFootagesVC footagesVCForFlow:EMFootagesFlowTypeChooseFootage];
+    footagesVC.delegate = self;
+    footagesVC.selectedEmusOID = @[self.emuticonOID];
+    self.footagesVC = footagesVC;
+    [self presentViewController:footagesVC animated:YES completion:^{
+    }];
 
 }
 
-#pragma mark - Render
--(void)resetEmu
+-(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
 {
-    if (self.emuticon == nil) return;
-    NSString *emuOID = self.emuticon.oid;
-    NSString *packOID = self.emuticon.emuDef.package.oid;
-    if (emuOID == nil || packOID == nil) return;
-    
-    NSDictionary *info = @{
-                           @"emuticonOID":emuOID,
-                           @"packageOID":packOID
-                           };
-    self.emuticon.prefferedFootageOID = nil;
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    [EMRenderManager2.sh updatePriorities:@{self.emuticon.oid:@YES}];
-    [EMRenderManager2.sh enqueueEmu:self.emuticon indexPath:indexPath userInfo:info];
-    [self.emuticon cleanUp];
-    [self refreshEmu];
+    if ([actionName isEqualToString:emkUIFootageSelectionApply]) {
+        NSString *footageOID = info[emkFootageOID];
+        [self.emuticon cleanUp:YES andRemoveResources:NO];
+        self.emuticon.prefferedFootageOID = footageOID;
+        [EMDB.sh save];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self refreshEmu];
+        }];
+    } else if ([actionName isEqualToString:emkUIFootageSelectionCancel]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Analytics
@@ -609,16 +627,14 @@
     } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RETAKE_EMU"]) {
 
         // Retake
-//        [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
-//        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
-//        [self retake];
+        [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
+        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+        [self retake];
         
-    } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RESET_EMU"]) {
+    } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_REPLACE_TAKE"]) {
         
         // Replace take
-//        [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
-//        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
-//        [self resetEmu];
+        [self replaceTakeForEmu];
         
     } else {
         

@@ -37,7 +37,7 @@
     //
     NSString *title = LS(@"RETAKE_CHOICE_TITLE");
     [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:[SF:@"%@ (%@)", LS(@"RETAKE_CHOICE_PACKAGE"),self.currentPackLabel] section:0];
-    [actionsMapping addAction:@"RETAKE_CHOICE_ALL" text:LS(@"RETAKE_CHOICE_ALL") section:0];
+//    [actionsMapping addAction:@"RETAKE_CHOICE_ALL" text:LS(@"RETAKE_CHOICE_ALL") section:0];
     EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
     
     //
