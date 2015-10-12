@@ -60,6 +60,14 @@
     return userFootage;
 }
 
++(BOOL)multipleAvailableInContext:(NSManagedObjectContext *)context
+{
+    NSInteger count = [EMDB countEntityNamed:E_USER_FOOTAGE
+                                   predicate:nil
+                                   inContext:context];
+    return count > 1;
+}
+
 -(NSString *)pathForUserImages
 {
     NSString *footagesPath = [EMDB footagesPath];
@@ -70,6 +78,12 @@
 -(NSURL *)urlToThumbImage
 {
     return [self urlToImageWithIndex:1];
+}
+
+-(UIImage *)thumbImage
+{
+    UIImage *image = [UIImage imageWithContentsOfFile:[[self urlToThumbImage] path]];
+    return image;
 }
 
 -(NSString *)imagesPathPTN

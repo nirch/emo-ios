@@ -493,7 +493,6 @@
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = sortDescriptors;
     fetchRequest.fetchBatchSize = 20;
-//    fetchRequest.fetchLimit = 40;
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil

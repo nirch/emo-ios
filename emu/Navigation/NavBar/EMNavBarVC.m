@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiSeparator;
 @property (weak, nonatomic) IBOutlet UIView *guiLogoButtonBG;
 @property (weak, nonatomic) IBOutlet UIButton *guiLogoButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiLogoAlternateButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiTitle;
 
 @property (weak, nonatomic) IBOutlet UIButton *guiActionButton1;
@@ -88,6 +89,14 @@
     self.guiActionButton1.hidden = YES;
     self.guiActionButton2.hidden = YES;
     self.ignoreActions = NO;
+    
+    CALayer *l = self.guiLogoAlternateButton.layer;
+    l.cornerRadius = l.bounds.size.width/2.0f;
+    l.borderColor = [UIColor whiteColor].CGColor;
+    l.borderWidth = 3.0f;
+    self.guiLogoAlternateButton.backgroundColor = [UIColor clearColor];
+    self.guiLogoAlternateButton.alpha = 0;
+    self.guiLogoAlternateButton.clipsToBounds = YES;
 }
 
 -(void)initGUIBeforeApearance
@@ -151,6 +160,7 @@
         CGFloat dy =  ((float)arc4random() / ARC4RANDOM_MAX) * 0.3f;
         self.guiLogoButton.transform = CGAffineTransformMakeScale(1.0f+dx, 1.0f+dy);
         self.guiLogoButtonBG.transform = CGAffineTransformMakeScale(1.0f+dx, 1.0f+dy);
+        self.guiLogoAlternateButton.transform = CGAffineTransformMakeScale(1.0f+dx, 1.0f+dy);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.5
                               delay:0.0
@@ -160,6 +170,7 @@
                          animations:^{
                              self.guiLogoButton.transform = CGAffineTransformIdentity;
                              self.guiLogoButtonBG.transform = CGAffineTransformIdentity;
+                             self.guiLogoAlternateButton.transform = CGAffineTransformIdentity;
                          } completion:nil];
     }];
 }
@@ -179,11 +190,6 @@
     _themeColor = color;
     self.guiLogoButtonBG.backgroundColor = color;
     self.guiNavView.backgroundColor = color;
-}
-
-- (IBAction)onPressedFaceButton:(UIButton *)sender
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataDebug object:self userInfo:nil];
 }
 
 #pragma mark - Title & Scrolling of child VC
@@ -245,6 +251,19 @@
     self.guiTitle.alpha = 1;
     self.guiTitle.transform = CGAffineTransformIdentity;
     
+}
+
+-(void)showImageAsLogo:(UIImage *)image
+{
+    [self.guiLogoAlternateButton setImage:image forState:UIControlStateNormal];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiLogoButton.alpha = 0;
+        self.guiLogoButton.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        self.guiLogoAlternateButton.alpha = 1;
+    } completion:^(BOOL finished) {
+        self.guiLogoButton.hidden = YES;
+        [self bounce];
+    }];
 }
 
 -(void)updateTitle:(NSString *)title
@@ -357,6 +376,10 @@
 - (IBAction)onPressedTitleButton:(UIButton *)sender
 {
     [self.delegate navBarOnTitleButtonPressed:sender];
+}
+
+- (IBAction)onPressedFaceButton:(UIButton *)sender
+{
 }
 
 - (IBAction)onActionButton1Pressed:(id)sender

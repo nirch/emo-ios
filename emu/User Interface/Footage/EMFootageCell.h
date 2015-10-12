@@ -16,6 +16,5 @@
 -(void)updateGUI;
 
 -(void)startPlayingFootage:(UserFootage *)footage;
--(void)stopPlayingFootageAndClean;
 
 @end

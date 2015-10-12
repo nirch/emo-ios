@@ -534,7 +534,9 @@
     self.sharer = nil;
     NSString *emuOID = info[AK_EP_EMUTICON_INSTANCE_OID];
     Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-
+    emu.lastTimeShared = [NSDate date];
+    [EMDB.sh save];
+    
     // Goals acheived!
     [HMPanel.sh experimentGoalEvent:GK_SHARED];
     if ([info[AK_EP_SHARED_MEDIA_TYPE] isEqualToString:@"gif"]) [HMPanel.sh experimentGoalEvent:GK_SHARED_GIF];

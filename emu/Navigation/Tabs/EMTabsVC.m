@@ -13,6 +13,7 @@
 #import "EmuStyle.h"
 #import "EMPacksVC.h"
 #import "EMFeedNavigationVC.h"
+#import "EMMeNavigationVC.h"
 #import "EMTopVCProtocol.h"
 
 @interface EMTabsVC ()
@@ -34,6 +35,7 @@
     [super viewWillAppear:animated];
     if (!self.initializedViewControllers) {
         [self initViewControllers];
+        self.initializedViewControllers = YES;
     }
     
     [self initObservers];
@@ -98,13 +100,13 @@
     feedVC.title = @"Feed";
     [viewControllers addObject:feedVC];
     
-    // Search
-    UIViewController *searchVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeSearch]];
-    searchVC.title = @"Search";
-    [viewControllers addObject:searchVC];
+//    // Search
+//    UIViewController *searchVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeSearch]];
+//    searchVC.title = @"Search";
+//    [viewControllers addObject:searchVC];
     
     // Me screen
-    UIViewController *meVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeMe]];
+    UIViewController *meVC = [EMMeNavigationVC meNavigationVC];
     meVC.title = @"Me";
     [viewControllers addObject:meVC];
     

@@ -37,6 +37,7 @@
 #import "EMInterfaceDelegate.h"
 #import "EMRecorderDelegate.h"
 #import "EMFootagesVC.h"
+#import "EMEmuticonScreenVC.h"
 
 
 #define TAG @"EMEmusFeedVC"
@@ -135,6 +136,12 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [self handleVisibleCells];
     });
     
+    // Show the tabs
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
+                                                        object:self
+                                                      userInfo:@{emkUIAnimated:@YES}];
+
+    
     // Reveal
     if (self.guiCollectionView.alpha == 0) {
         [UIView animateWithDuration:0.3 animations:^{
@@ -186,6 +193,24 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     if ([segue.identifier isEqualToString:@"selections action bar segue"]) {
         self.selectionsActionBarVC = segue.destinationViewController;
         self.selectionsActionBarVC.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"emuticon screen segue"]) {
+        
+        // Get the emuticon object we want to see.
+        NSString *emuOID = (NSString *)sender;
+        Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        
+        // Pass the emuticon oid to the destination view controller.
+        EMEmuticonScreenVC *vc = segue.destinationViewController;
+        vc.emuticonOID = emu.oid;
+        
+        
+        // Analytics
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emu.emuDef.name];
+        [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
+        [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
+        [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
+        [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
     }
 }
 
@@ -445,9 +470,25 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     [EMUISound.sh playSoundNamed:SND_SOFT_CLICK];
 
     if (self.currentState == EMEmusFeedStateBrowsing) {
+        // -------------------------------------------------------
+        // Tapped emu when browsing.
+        //
         // When browsing, selection of an emu will navigate to the emu screen.
-        return;
+        // Also post a notification that the tabs bar (if shown) should be hidden.
+        NSString *emuOID = [self.dataSource emuOIDAtIndexPath:indexPath];
+        if (emuOID == nil) return;
+        
+        self.guiCollectionView.userInteractionEnabled = NO;
+        dispatch_after(DTIME(0.3), dispatch_get_main_queue(), ^{
+            [self performSegueWithIdentifier:@"emuticon screen segue" sender:emuOID];
+            self.guiCollectionView.userInteractionEnabled = YES;
+        });
+
     } else if (self.currentState == EMEmusFeedStateSelecting) {
+        // -------------------------------------------------------
+        // Tapped emu when in selections mode.
+        //
+        
         // When on selection state, will select/unselect the emu when tapping an emu.
         [self.dataSource toggleSelectionForEmuAtIndexPath:indexPath];
         [self.selectionsActionBarVC setSelectedCount:self.dataSource.selectionsCount];

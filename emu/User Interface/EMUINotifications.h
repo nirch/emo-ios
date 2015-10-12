@@ -20,4 +20,6 @@
 
 #define emkUIUserRequestToOpenRecorder     @"UI user request to open the recorder"
 
+#define emkUIUserWantsToSeeEmuScreen       @"UI user wants to see emu screen"
+
 #endif /* EMUINotifications_h */

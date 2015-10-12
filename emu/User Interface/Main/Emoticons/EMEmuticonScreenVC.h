@@ -10,6 +10,9 @@
 
 @interface EMEmuticonScreenVC : UIViewController
 
++(EMEmuticonScreenVC *)emuticonScreenForEmuticonOID:(NSString *)emuticonOID;
+
 @property (nonatomic) NSString *emuticonOID;
+@property (nonatomic) UIColor *themeColor;
 
 @end

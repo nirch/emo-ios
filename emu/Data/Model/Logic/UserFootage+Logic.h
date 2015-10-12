@@ -64,6 +64,15 @@
 
 
 /**
+ *  Check if more than a single footage exist.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return YES if footages count > 1. NO otherwise.
+ */
++(BOOL)multipleAvailableInContext:(NSManagedObjectContext *)context;
+
+/**
  *  The path to the stored images of the footage.
  *
  *  @return A string path to the user images. nil if missing.
@@ -76,6 +85,13 @@
  *  @return NSURL of the first image in the footage or nil if missing.
  */
 -(NSURL *)urlToThumbImage;
+
+/**
+ *  UIImage of the thumb image for this footage.
+ *
+ *  @return UIImage of the thumb image of this footage.
+ */
+-(UIImage *)thumbImage;
 
 /**
  *  The path pattern for creating the paths to all images of the footage by index.

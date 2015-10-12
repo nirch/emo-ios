@@ -126,6 +126,15 @@
     return nil;
 }
 
+-(NSString *)emuOIDAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section >= [self packsCount]) return nil;
+    if (indexPath.item >= [self numberOfObjectsForSection:indexPath.section]) return nil;
+    
+    Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+    return emu.oid;
+}
+
 #pragma mark - Private helpers
 /**
  *  Array of all index paths of emus in a given section.
@@ -175,7 +184,7 @@
 }
 
 /**
- *  A cell for pack at index path.
+ *  A cell for emu at index path.
  *
  *  @param collectionView related collection view.
  *  @param indexPath      related indexpath of cell/object.

@@ -30,6 +30,7 @@
 #define emkResourcesLocalPath       @"resources local path"
 #define emkResourcesRemoteURL       @"resources remote url"
 #define emkIndexPath                @"indexPath"
+#define emkSender                   @"sender"
 #define emkOID                      @"oid"
 #define emkEmuticonOID              @"emuticon oid"
 #define emkEmuticonDefOID           @"emuticon definition oid"
@@ -64,6 +65,10 @@ typedef NS_ENUM(NSInteger, EMMediaDataType) {
 -(void)initFakeDBNamed:(NSString *)name;
 -(void)deleteStoreWithError:(NSError **)error;
 
+#pragma mark - Counting
++(NSInteger)countEntityNamed:(NSString *)entityName
+                   predicate:(NSPredicate *)predicate
+                   inContext:(NSManagedObjectContext *)context;
 
 #pragma mark - Initialization
 +(EMDB *)sharedInstance;

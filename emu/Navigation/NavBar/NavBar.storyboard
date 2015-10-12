@@ -94,15 +94,23 @@
                                     <action selector="onPressedFaceButton:" destination="7Ne-zP-lAu" eventType="touchUpInside" id="NOc-8L-xH4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LO7-vt-UV6" userLabel="emu alternate button">
+                                <rect key="frame" x="278" y="10" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="LO7-vt-UV6" firstAttribute="centerX" secondItem="Ofy-5Z-pnB" secondAttribute="centerX" id="31o-9o-NbB"/>
                             <constraint firstItem="Ofy-5Z-pnB" firstAttribute="top" secondItem="z5J-rg-2aJ" secondAttribute="top" constant="10" id="3F9-AY-Jsa"/>
                             <constraint firstAttribute="right" secondItem="z5J-rg-2aJ" secondAttribute="right" id="K9U-1X-XJ3"/>
                             <constraint firstItem="z5J-rg-2aJ" firstAttribute="top" secondItem="2iW-AZ-wTg" secondAttribute="bottom" id="NnN-dk-P9p"/>
+                            <constraint firstItem="LO7-vt-UV6" firstAttribute="width" secondItem="Ofy-5Z-pnB" secondAttribute="width" id="Orm-sJ-btp"/>
                             <constraint firstAttribute="centerX" secondItem="0wx-On-ZPR" secondAttribute="centerX" id="VAg-O5-dME"/>
+                            <constraint firstItem="LO7-vt-UV6" firstAttribute="centerY" secondItem="Ofy-5Z-pnB" secondAttribute="centerY" id="YFr-eV-m8b"/>
                             <constraint firstItem="Ofy-5Z-pnB" firstAttribute="centerX" secondItem="z5J-rg-2aJ" secondAttribute="centerX" id="ack-6O-e4G"/>
                             <constraint firstItem="z5J-rg-2aJ" firstAttribute="centerX" secondItem="0wx-On-ZPR" secondAttribute="centerX" id="dEs-U4-1bM"/>
+                            <constraint firstItem="LO7-vt-UV6" firstAttribute="height" secondItem="Ofy-5Z-pnB" secondAttribute="height" id="msN-pq-HYn"/>
                             <constraint firstItem="z5J-rg-2aJ" firstAttribute="left" secondItem="SC9-pV-XWP" secondAttribute="left" id="nOb-Gf-x8w"/>
                             <constraint firstItem="z5J-rg-2aJ" firstAttribute="top" secondItem="0wx-On-ZPR" secondAttribute="top" constant="-11" id="uB7-mi-8ls"/>
                         </constraints>
@@ -118,6 +126,7 @@
                     <connections>
                         <outlet property="guiActionButton1" destination="mXq-DG-r9o" id="qsc-8R-hMu"/>
                         <outlet property="guiActionButton2" destination="UQc-Cq-r0C" id="Por-3N-GgC"/>
+                        <outlet property="guiLogoAlternateButton" destination="LO7-vt-UV6" id="IgS-jW-trC"/>
                         <outlet property="guiLogoButton" destination="Ofy-5Z-pnB" id="9iy-gR-ert"/>
                         <outlet property="guiLogoButtonBG" destination="0wx-On-ZPR" id="BoX-FP-oxj"/>
                         <outlet property="guiNavView" destination="z5J-rg-2aJ" id="Iyl-sl-8S9"/>

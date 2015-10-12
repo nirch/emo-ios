@@ -91,10 +91,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbH-vK-wmq" userLabel="tab 1">
-                                <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DCL-xE-Q4x">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconFeatured">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -104,7 +104,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyU-X8-UEl" userLabel="Sep H">
-                                        <rect key="frame" x="119" y="5" width="1" height="34"/>
+                                        <rect key="frame" x="149" y="5" width="1" height="34"/>
                                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="xPn-k6-fCv"/>
@@ -133,10 +133,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Utc-RI-HiA" userLabel="tab 2">
-                                <rect key="frame" x="120" y="-38" width="120" height="120"/>
+                                <rect key="frame" x="150" y="-53" width="150" height="150"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-Sz-KPX">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconFeed">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -146,7 +146,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nm0-rV-6iL" userLabel="Sep H">
-                                        <rect key="frame" x="119" y="43" width="1" height="34"/>
+                                        <rect key="frame" x="149" y="58" width="1" height="34"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="gXW-Kc-K5h"/>
@@ -169,11 +169,11 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdK-Yw-ita" userLabel="tab 3">
-                                <rect key="frame" x="240" y="0.0" width="120" height="44"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdK-Yw-ita" userLabel="tab 3 (disabled for now)">
+                                <rect key="frame" x="300" y="0.0" width="0.0" height="44"/>
                                 <subviews>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0h-ez-jZ8">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconSearch">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -183,7 +183,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgl-Ud-ATd" userLabel="Sep H">
-                                        <rect key="frame" x="119" y="5" width="1" height="34"/>
+                                        <rect key="frame" x="-1" y="5" width="1" height="34"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="495-jg-V0N"/>
@@ -195,6 +195,7 @@
                                     <constraint firstAttribute="right" secondItem="fgl-Ud-ATd" secondAttribute="right" id="0kW-kp-Sg1"/>
                                     <constraint firstItem="h0h-ez-jZ8" firstAttribute="leading" secondItem="bdK-Yw-ita" secondAttribute="leading" id="64h-6B-fTV"/>
                                     <constraint firstAttribute="trailing" secondItem="h0h-ez-jZ8" secondAttribute="trailing" id="Bxm-sm-BCy"/>
+                                    <constraint firstAttribute="width" id="iFq-R0-xNP"/>
                                     <constraint firstItem="h0h-ez-jZ8" firstAttribute="top" secondItem="bdK-Yw-ita" secondAttribute="top" id="mbG-ON-0LR"/>
                                     <constraint firstAttribute="bottom" secondItem="h0h-ez-jZ8" secondAttribute="bottom" id="mj8-i0-YwB"/>
                                     <constraint firstAttribute="height" secondItem="fgl-Ud-ATd" secondAttribute="height" multiplier="0.8" id="q54-cU-NM1"/>
@@ -207,10 +208,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xg3-RC-PcF" userLabel="tab 4">
-                                <rect key="frame" x="360" y="0.0" width="120" height="44"/>
+                                <rect key="frame" x="300" y="0.0" width="150" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wer-SY-n9P">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wer-SY-n9P">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconMe">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -220,7 +221,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K1F-md-Nn0" userLabel="Sep H">
-                                        <rect key="frame" x="119" y="5" width="1" height="34"/>
+                                        <rect key="frame" x="149" y="5" width="1" height="34"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="0NA-8d-042"/>
@@ -244,10 +245,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOl-5O-aNu" userLabel="tab 5">
-                                <rect key="frame" x="480" y="0.0" width="120" height="44"/>
+                                <rect key="frame" x="450" y="0.0" width="150" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mV-Zn-5et">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mV-Zn-5et">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconSettings">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -257,7 +258,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Yo-Uv-Cnv" userLabel="Sep H">
-                                        <rect key="frame" x="119" y="5" width="1" height="34"/>
+                                        <rect key="frame" x="149" y="5" width="1" height="34"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="6BX-C9-qsn"/>
@@ -294,7 +295,7 @@
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="bdK-Yw-ita" secondAttribute="width" id="Ouo-Vc-2Ja"/>
                             <constraint firstAttribute="centerY" secondItem="nbH-vK-wmq" secondAttribute="centerY" id="PwD-Gz-rSx"/>
                             <constraint firstItem="BKx-Tg-YD9" firstAttribute="top" secondItem="TIP-Ed-NUZ" secondAttribute="bottom" id="SEA-GX-ee3"/>
-                            <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="lDB-Gj-JAs" secondAttribute="width" multiplier="0.2" id="UOF-PY-Rwc"/>
+                            <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="lDB-Gj-JAs" secondAttribute="width" multiplier="0.25" id="UOF-PY-Rwc"/>
                             <constraint firstAttribute="centerY" secondItem="xg3-RC-PcF" secondAttribute="centerY" id="Vbe-Ba-LPF"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="YOl-5O-aNu" secondAttribute="width" id="WKG-Gg-J4K"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="height" secondItem="lDB-Gj-JAs" secondAttribute="height" id="YdW-Mc-VNE"/>
@@ -311,6 +312,11 @@
                             <constraint firstItem="bdK-Yw-ita" firstAttribute="leading" secondItem="Utc-RI-HiA" secondAttribute="trailing" id="z23-Fa-3Gz"/>
                             <constraint firstItem="xg3-RC-PcF" firstAttribute="leading" secondItem="bdK-Yw-ita" secondAttribute="trailing" id="zZs-Ew-VoF"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ouo-Vc-2Ja"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <connections>

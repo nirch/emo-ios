@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, EMEmuCellState){
      *  Unset state. Calling updateGUI on this state will be ignored (and crash on test apps).
      */
     EMEmuCellStateUnset = 0,
-
+    
     /**
      *  The remu requires rendering, but not all source resources are available
      *  the resources will need to be downloaded first, before moving to the next state.
@@ -62,7 +62,13 @@ typedef NS_ENUM(NSInteger, EMEmuCellState){
      *  (emu can't be presented or processed for some reason.
      *  Failed downloads of resources / failed rendering or any other reason)
      */
-    EMEmuCellStateFailed            = 40
+    EMEmuCellStateFailed            = 40,
+    
+    
+    /**
+     *  Empty cell. Sometimes we want cells to represent "no content".
+     */
+    EMEmuCellStateEmpty = 666,
 };
 
 /**
@@ -78,9 +84,14 @@ typedef NS_ENUM(NSInteger, EMEmuCellState){
 -(void)updateStateWithEmu:(Emuticon *)emu forIndexPath:(NSIndexPath *)indexPath;
 
 /**
- *  Update the cell state to failed state (emu will not be presented).
+ *  Update the cell state to failed state (emu cell will be presented with some kind of "failed" indicator).
  */
 -(void)updateStateToFailed;
+
+/**
+ *  Update the cell state to empty state (emu cell will be presented as empty).
+ */
+-(void)updateStateToEmpty;
 
 /**
  *  Update the GUI elements according to the cell's current state.

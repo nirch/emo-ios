@@ -140,6 +140,14 @@
  */
 -(NSInteger)numberOfObjectsForSection:(NSInteger)section;
 
+/**
+ *  Emuticon oid at provided index path.
+ *
+ *  @param indexPath The indexPath of the object in the fetched results controller results.
+ *
+ *  @return NSString of the emu's oid (nil if not found).
+ */
+-(NSString *)emuOIDAtIndexPath:(NSIndexPath *)indexPath;
 
 #pragma mark - Prioritize emus
 -(void)preferEmusAtIndexPaths:(NSArray *)indexPaths;

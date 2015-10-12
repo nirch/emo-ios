@@ -190,7 +190,6 @@
     [self handleFlowWithInfo:notification.userInfo];
 }
 
-
 #pragma mark - Flow & State
 /**
  *  Initialize the state machine.

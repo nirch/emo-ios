@@ -92,4 +92,11 @@
 -(void)showTitleAnimated:(BOOL)animated;
 -(void)hideTitleAnimated:(BOOL)animated;
 
+/**
+ *  Show for a few seconds the provided image instead of the emu logo.
+ *
+ *  @param image UIImage to show.
+ */
+-(void)showImageAsLogo:(UIImage *)image;
+
 @end

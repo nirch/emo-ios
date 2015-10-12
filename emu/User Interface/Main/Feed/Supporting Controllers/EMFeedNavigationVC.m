@@ -21,4 +21,9 @@
     return vc;
 }
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+}
+
 @end

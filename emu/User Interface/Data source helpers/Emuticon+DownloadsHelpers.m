@@ -20,6 +20,9 @@
 {
     NSMutableDictionary *enqueued = [NSMutableDictionary new];
     for (NSIndexPath *indexPath in indexPaths) {
+        if (indexPath.section >= frc.sections.count) continue;
+        if (indexPath.item >= [[frc.sections[indexPath.section] objects] count]) continue;
+        
         Emuticon *emu = [frc objectAtIndexPath:indexPath];
         
         NSDictionary *info =     @{

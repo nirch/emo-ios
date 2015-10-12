@@ -25,6 +25,7 @@
 #import "AppDelegate.h"
 #import "EMNotificationCenter.h"
 #import "EMVideoSettingsPopover.h"
+#import "EMUINotifications.h"
 
 @interface EMEmuticonScreenVC () <
     EMShareDelegate,
@@ -52,6 +53,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRetakeButton;
 @property (weak, nonatomic) IBOutlet UIView *guiShareContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiShareMainIconPosition;
+@property (weak, nonatomic) IBOutlet UIButton *guiFavButton;
 
 // Tutorial
 @property (strong, nonatomic) JDFSequentialTooltipManager *tooltipManager;
@@ -76,6 +78,15 @@
 
 @implementation EMEmuticonScreenVC
 
++(EMEmuticonScreenVC *)emuticonScreenForEmuticonOID:(NSString *)emuticonOID
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EMEmuticonScreenVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"emuticon vc"];
+    vc.emuticonOID = emuticonOID;
+    return vc;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -90,6 +101,12 @@
 {
     [super viewWillAppear:animated];
 
+    // Also post a notification that the tabs bar (if shown) should be hidden.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldHideTabsBar
+                                                        object:self
+                                                      userInfo:@{emkUIAnimated:@YES}];
+
+    
     // Experiments
     [self initExperiments];
     
@@ -112,6 +129,11 @@
         [self showEmuTutorial];
         appCFG.userViewedEmuScreenTutorial = @YES;
     }
+    
+    if (self.emuticon) {
+        self.emuticon.lastTimeViewed = [NSDate date];
+    }
+    [EMDB.sh save];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -135,9 +157,14 @@
 -(void)initGUI
 {
     self.guiInitialized = NO;
+    
+    // Audtio trim slider
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateNormal];
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateHighlighted];
 
+    // Theme color (if not set, default color is used)
+    if (self.themeColor) self.guiNavView.backgroundColor = self.themeColor;
+    
     //
     // Enable / disable render to video
     // According to tweak or experiment.
@@ -194,10 +221,16 @@
 
 -(void)refreshEmu
 {
+    // Favorite YES/NO
+    if (self.emuticon.isFavorite.boolValue) {
+        [self.guiFavButton setImage:[UIImage imageNamed:@"fav"] forState:UIControlStateNormal];
+    } else {
+        [self.guiFavButton setImage:[UIImage imageNamed:@"unfav"] forState:UIControlStateNormal];
+    }
+    
     if (self.emuticon.wasRendered.boolValue) {
         // Was rendered.
         NSURL *url = [self.emuticon animatedGifURL];
-        self.gifPlayerVC.locked = self.emuticon.prefferedFootageOID != nil;
         self.gifPlayerVC.animatedGifURL = url;
         return;
     }
@@ -499,23 +532,43 @@
     //
     // Emu options
     //
-    [actionsMapping addAction:@"EMU_SCREEN_CHOICE_RETAKE_EMU" text:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU") section:0];
-    // Retake footage.
-    if (self.emuticon.prefferedFootageOID) {
-        [actionsMapping addAction:@"EMU_SCREEN_CHOICE_RESET_EMU" text:LS(@"EMU_SCREEN_CHOICE_RESET_EMU") section:0];
+    
+    // ---------
+    // Favorites
+    // ---------
+    
+    // Toggle Add to favorites / Remove from favorites
+    if (self.emuticon.isFavorite.boolValue) {
+        [actionsMapping addAction:@"EMU_SCREEN_CHOICE_REMOVE_FROM_FAV" text:LS(@"REMOVE_FROM_FAVORITES") section:0];
+    } else {
+        [actionsMapping addAction:@"EMU_SCREEN_CHOICE_ADD_TO_FAV" text:LS(@"ADD_TO_FAVORITES") section:0];
     }
     EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
+
+
     
+    // ------------------------
+    // Retakes / Replace takes
+    // ------------------------
+    
+    // Always allow a new retake
+    [actionsMapping addAction:@"EMU_SCREEN_CHOICE_RETAKE_EMU" text:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU") section:1];
+    // If atleast two avaiable footages
+    if ([UserFootage multipleAvailableInContext:EMDB.sh.context]) {
+        [actionsMapping addAction:@"EMU_SCREEN_CHOICE_REPLACE_TAKE" text:LS(@"EMU_SCREEN_CHOICE_REPLACE_TAKE") section:1];
+    }
+    EMHolySheetSection *section2 = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:[actionsMapping textsForSection:1] buttonStyle:JGActionSheetButtonStyleDefault];
     
     //
     // Cancel
     //
     EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
     
+    
     //
     // Sections
     //
-    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, cancelSection]];
+    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, section2, cancelSection]];
     
     //
     // Holy sheet
@@ -542,20 +595,30 @@
 
     NSString *actionName = [actionsMapping actionNameForIndexPath:indexPath];
     if (actionName == nil) return;
-    
-    if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RETAKE_EMU"]) {
+
+    if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_ADD_TO_FAV"]) {
+
+        self.emuticon.isFavorite = @YES;
+        [self refreshEmu];
+
+    } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_REMOVE_FROM_FAV"]) {
+
+        self.emuticon.isFavorite = @NO;
+        [self refreshEmu];
+        
+    } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RETAKE_EMU"]) {
 
         // Retake
-        [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
-        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
-        [self retake];
+//        [params addKey:AK_EP_CHOICE_TYPE value:@"retake"];
+//        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+//        [self retake];
         
     } else if ([actionName isEqualToString:@"EMU_SCREEN_CHOICE_RESET_EMU"]) {
         
-        // Reset
-        [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
-        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
-        [self resetEmu];
+        // Replace take
+//        [params addKey:AK_EP_CHOICE_TYPE value:@"reset"];
+//        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_CHOICE info:params.dictionary];
+//        [self resetEmu];
         
     } else {
         
@@ -949,6 +1012,16 @@
     po.permittedArrowDirections = UIPopoverArrowDirectionDown;
 
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (IBAction)onPressedFavButton:(id)sender
+{
+    if (self.emuticon.isFavorite.boolValue) {
+        self.emuticon.isFavorite = @NO;
+    } else {
+        self.emuticon.isFavorite = @YES;
+    }
+    [self refreshEmu];
 }
 
 @end

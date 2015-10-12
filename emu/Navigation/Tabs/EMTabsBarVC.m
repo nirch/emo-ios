@@ -71,7 +71,7 @@
     self.tabsThemeColors = @[
                              [EmuStyle colorThemeFeatured],
                              [EmuStyle colorThemeFeed],
-                             [EmuStyle colorThemeSearch],
+//                             [EmuStyle colorThemeSearch],
                              [EmuStyle colorThemeMe],
                              [EmuStyle colorThemeSettings]
                              ];

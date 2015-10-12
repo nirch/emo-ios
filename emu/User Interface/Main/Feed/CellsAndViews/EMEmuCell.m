@@ -16,6 +16,10 @@
 
 @interface EMEmuCell()
 
+
+@property (weak, nonatomic) IBOutlet UIButton *guiBGButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiEmptyButton;
+
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimatedGif;
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
@@ -55,6 +59,11 @@
 
 -(void)updateStateWithEmu:(Emuticon *)emu forIndexPath:(NSIndexPath *)indexPath
 {
+    if (emu == nil) {
+        [self updateStateToEmpty];
+        return;
+    }
+    
     _label = [SF:@"%@ - %@", emu.emuDef.package.name, emu.emuDef.name];
     _oid = emu.oid;
     
@@ -108,6 +117,13 @@
     _state = EMEmuCellStateFailed;
 }
 
+-(void)updateStateToEmpty
+{
+    _label = nil;
+    _oid = nil;
+    _state = EMEmuCellStateEmpty;
+}
+
 -(void)updateGUI
 {
     // Just for debugging.
@@ -125,9 +141,20 @@
         [self updateGUIToSentForRendering];
     } else if (self.state == EMEmuCellStateReady) {
         [self updateGUIToReady];
+    } else if (self.state == EMEmuCellStateEmpty) {
+        [self updateGUIEmpty];
     } else {
         [HMPanel.sh explodeOnTestApplicationsWithInfo:@{@"msg":[SF:@"Unset state for cell!"]}];
     }
+}
+
+-(void)updateGUIEmpty
+{
+    [self clear];
+    self.guiEmptyButton.hidden = NO;
+
+    self.guiBGButton.hidden = YES;
+    self.guiBGImage.hidden = YES;
 }
 
 -(void)updateGUIToFailedState
@@ -153,23 +180,29 @@
     // Clear the animated gif.
     [self clear];
 
+    // Capture the oid, so we can use it later in the async blocks below.
     NSString *oid = self.oid;
     
+    // First load async the thumb nail image.
+    // Wait a few moments after thumb image loads, before trying to load the animated gif.
+    // Reason: we sometimes really don't need the overhead of loading big animated gifs from disk/cache
+    // because the user just scrolls through lots of emus.
     __weak EMEmuCell *wSelf = self;
-//    self.guiThumbImage.image = [UIImage imageWithContentsOfFile:self.thumbPath];
-//    self.guiThumbImage.hidden = NO;
-
     [self.guiThumbImage pin_setImageFromURL:[NSURL fileURLWithPath:self.thumbPath] completion:^(PINRemoteImageManagerResult *result) {
         if (![oid isEqualToString:wSelf.oid]) return;
         self.guiThumbImage.hidden = NO;
         dispatch_after(DTIME(0.7), dispatch_get_main_queue(), ^{
+            
+            // Ensure still related to the same emu.
+            // If not, move along there is nothing to see here.
             if (![oid isEqualToString:wSelf.oid]) return;
-            // Ensure still related to the same emu,
-            // before loading the animated gif.
+            
+            // Async load the anim gif.
             [wSelf.guiAnimatedGif pin_setImageFromURL:self.gifURL
                                            completion:^(PINRemoteImageManagerResult *result) {
                                                wSelf.guiThumbImage.hidden = YES;
                                            }];
+        
         });
     }];
 }
@@ -190,6 +223,10 @@
     [self.guiAnimatedGif pin_cancelImageDownload];
     [self.guiThumbImage pin_cancelImageDownload];
     
+    // The background buttons and images
+    self.guiBGImage.hidden = NO;
+    self.guiBGButton.hidden = NO;
+    self.guiEmptyButton.hidden = YES;
 }
 
 -(void)loadAnimatedGifNamed:(NSString *)gifName
