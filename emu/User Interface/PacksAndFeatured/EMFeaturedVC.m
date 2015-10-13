@@ -10,6 +10,7 @@
 #import "EMFeaturedCell.h"
 #import "EMNotificationCenter.h"
 #import "EMDB.h"
+#import "EMUINotifications.h"
 
 
 #define FEATURED_ASPECT_RATIO 1.75f
@@ -267,6 +268,22 @@
 {
     CGPoint offset = CGPointMake(page*self.cellSize.width-self.marginForCentering, 0);
     return offset;
+}
+
+#pragma mark - Selection
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *info = [self dataAtCycilcIndex:indexPath.item];
+    NSString *packageOID = info[@"packOID"];
+    
+    if (packageOID) {
+        // Notify that a pack was selected.
+        NSDictionary *info = @{emkPackageOID:packageOID};
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserSelectedPack
+                                                            object:self
+                                                          userInfo:info];
+        
+    }
 }
 
 @end

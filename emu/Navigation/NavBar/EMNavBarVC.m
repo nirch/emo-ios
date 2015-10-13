@@ -9,6 +9,7 @@
 #import "EMNavBarVC.h"
 #import "EMNotificationCenter.h"
 #import "EMUISound.h"
+#import "AppManagement.h"
 
 #define TAG @"EMNavBarVC"
 #define ARC4RANDOM_MAX 0x100000000
@@ -375,6 +376,9 @@
 
 - (IBAction)onPressedFaceButton:(UIButton *)sender
 {
+    if (AppManagement.sh.isTestApp) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkDataDebug object:self userInfo:nil];
+    }
 }
 
 - (IBAction)onActionButton1Pressed:(id)sender

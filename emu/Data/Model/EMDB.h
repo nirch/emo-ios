@@ -32,6 +32,7 @@
 #define emkIndexPath                @"indexPath"
 #define emkSender                   @"sender"
 #define emkOID                      @"oid"
+#define emkPackageOID               @"package oid"
 #define emkEmuticonOID              @"emuticon oid"
 #define emkEmuticonDefOID           @"emuticon definition oid"
 #define emkEmuticonDefName          @"emuticon definition name"

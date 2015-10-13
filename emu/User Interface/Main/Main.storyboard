@@ -213,10 +213,10 @@
             </objects>
             <point key="canvasLocation" x="-394.5" y="93.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Feed NavigationVC-->
         <scene sceneID="yeZ-Tc-k7I">
             <objects>
-                <navigationController storyboardIdentifier="feed navigation vc" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="CKz-4p-446" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="feed navigation vc" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="CKz-4p-446" customClass="EMFeedNavigationVC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -799,7 +799,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="84S-s6-uj6" id="HgQ-Yc-bic">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-g1-GqX">

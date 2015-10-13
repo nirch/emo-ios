@@ -7,6 +7,8 @@
 //
 
 #import "EMFeedNavigationVC.h"
+#import "EMEmusFeedVC.h"
+#import "EMDB.h"
 
 @interface EMFeedNavigationVC ()
 
@@ -24,6 +26,15 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+-(void)vcWasSelectedWithInfo:(NSDictionary *)info
+{
+    EMEmusFeedVC *feedVC = self.childViewControllers.firstObject;
+    NSString *requestedPackageOID = info[emkPackageOID];
+    if (requestedPackageOID != nil && feedVC != nil) {
+        feedVC.requestsPackageOID = requestedPackageOID;
+    }
 }
 
 @end

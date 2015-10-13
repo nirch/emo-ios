@@ -236,7 +236,10 @@
 {
     NSArray *nameParts = [name componentsSeparatedByString:@"."];
     if (nameParts.count != 2) return name;
-    name = [SF:@"%@%@.%@", nameParts[0], RESOURCES_SCALE_STRING, nameParts[1]];
+    // TODO: add support for smaller images on older devices
+    // (@3x, @2x and non retina)
+//    name = [SF:@"%@%@.%@", nameParts[0], RESOURCES_SCALE_STRING, nameParts[1]];
+    name = [SF:@"%@.%@", nameParts[0], nameParts[1]];
     return name;
 }
 

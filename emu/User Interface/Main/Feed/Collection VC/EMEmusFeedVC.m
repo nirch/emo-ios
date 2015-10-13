@@ -177,6 +177,16 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 -(void)restoreState
 {
+    if (self.requestsPackageOID) {
+        NSIndexPath *indexPath = [self.dataSource indexPathForPackOID:self.requestsPackageOID];
+        if (indexPath) {
+            [self scrollToSection:indexPath.section animated:NO];
+        }
+        self.requestsPackageOID = nil;
+        return;
+    }
+    
+    
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
     // Retore offset.

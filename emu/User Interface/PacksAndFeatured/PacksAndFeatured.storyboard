@@ -165,7 +165,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="257"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buw-If-y4p">
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buw-If-y4p">
                                                     <rect key="frame" x="77" y="8" width="422" height="241"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="buw-If-y4p" secondAttribute="height" multiplier="7:4" id="ryp-Xp-X05"/>

@@ -212,8 +212,7 @@
     if ([self.tabsBarVC currentTabIndex] == EMTabNameFeatured) {
         // If user selects a pack in the featured packs tab bar,
         // will navigte to the feed and show that pack.
-        NSString *packOID = notification.userInfo[emkOID];
-        [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:YES];
+        [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:YES info:notification.userInfo];
     }
 }
 

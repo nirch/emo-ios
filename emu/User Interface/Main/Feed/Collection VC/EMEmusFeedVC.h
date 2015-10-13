@@ -39,4 +39,6 @@ typedef NS_ENUM(NSInteger, EMEmusFeedState){
     EMEmusFeedStateSelecting                    = 2000
 };
 
+@property (nonatomic) NSString *requestsPackageOID;
+
 @end

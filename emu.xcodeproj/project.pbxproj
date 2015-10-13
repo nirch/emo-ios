@@ -246,6 +246,8 @@
 		086FFB691BB55EB40097CA45 /* EMPacksDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 086FFB681BB55EB40097CA45 /* EMPacksDataSource.m */; settings = {ASSET_TAGS = (); }; };
 		086FFB6A1BB55EB40097CA45 /* EMPacksDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 086FFB681BB55EB40097CA45 /* EMPacksDataSource.m */; settings = {ASSET_TAGS = (); }; };
 		087C5D3D1BCBF8B3004B3121 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 087C5D3C1BCBF8B3004B3121 /* libPods.a */; };
+		087C5D401BCC4F9F004B3121 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
+		087C5D411BCC4F9F004B3121 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */; settings = {ASSET_TAGS = (); }; };
 		087F20911A8F5A03002B1678 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20901A8F5A03002B1678 /* HMParser.m */; };
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		0881F0B61BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */; settings = {ASSET_TAGS = (); }; };
@@ -825,6 +827,7 @@
 		087403121B63E41200866A74 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
 		087C5D3C1BCBF8B3004B3121 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
 		087F204E1A8CB80A002B1678 /* backupCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backupCode.m; sourceTree = "<group>"; };
 		087F208F1A8F5A03002B1678 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
@@ -1769,6 +1772,7 @@
 				0838142B1BBBA69E004D902E /* Footage */,
 				08357F381BC9EBE600C302AA /* MeScreen */,
 				08357F4C1BCA04C100C302AA /* EmusPicker */,
+				087C5D3E1BCC4F86004B3121 /* SettingsScreen */,
 				085C673B1A937EC9007BC910 /* Recorder */,
 				0845BDF11BC5238900173B66 /* Tutorials */,
 				085C67371A937EC9007BC910 /* Media */,
@@ -1892,6 +1896,14 @@
 			name = Progress;
 			path = "emu/User Interface/Custom Views/Progress";
 			sourceTree = SOURCE_ROOT;
+		};
+		087C5D3E1BCC4F86004B3121 /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */,
+			);
+			path = SettingsScreen;
+			sourceTree = "<group>";
 		};
 		087F208E1A8F5A03002B1678 /* data */ = {
 			isa = PBXGroup;
@@ -2605,6 +2617,7 @@
 				084AF4921B383B810056FC34 /* casual-thanks-bg.gif in Resources */,
 				08357F3B1BC9EC0400C302AA /* Me.storyboard in Resources */,
 				084AF4FA1B383B810056FC34 /* snack-morning-fg.gif in Resources */,
+				087C5D411BCC4F9F004B3121 /* Settings.storyboard in Resources */,
 				08AA15081B0BA658002E1B2F /* onboarding_packages_test.json in Resources */,
 				08A456F81B9F2404001AB79E /* Images.xcassets in Resources */,
 				084AF4961B383B810056FC34 /* casual-thanks-fg.gif in Resources */,
@@ -2647,6 +2660,7 @@
 				08ED7FF81B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				084AF5201B383B810056FC34 /* yeah-omg-bg.gif in Resources */,
 				0845BDF31BC523AB00173B66 /* Tutorials.storyboard in Resources */,
+				087C5D401BCC4F9F004B3121 /* Settings.storyboard in Resources */,
 				084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */,
 				084AF4881B383B810056FC34 /* casual-lol-fg.gif in Resources */,
 				084AF4C01B383B810056FC34 /* hearts-bg.gif in Resources */,

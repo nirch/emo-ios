@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EMTopVCProtocol.h"
 
-@interface EMFeedNavigationVC : UIViewController
+@interface EMFeedNavigationVC : UINavigationController <
+    EMTopVCProtocol
+>
 
 /**
  *  Instantiates a new instance of the feed screen navigation control

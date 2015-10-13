@@ -403,7 +403,7 @@
     if (packOID == nil) return;
     
     // Notify that a pack was selected.
-    NSDictionary *info = @{emkOID:packOID};
+    NSDictionary *info = @{emkPackageOID:packOID};
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserSelectedPack
                                                         object:self
                                                       userInfo:info];
