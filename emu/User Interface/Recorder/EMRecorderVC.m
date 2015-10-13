@@ -688,7 +688,7 @@
     //
     NSError *error;
     HMBackgroundRemoval *br = [HMBackgroundRemoval backgroundRemovalWithBGImageFileName:@"clear480x480"
-                                                         contourFileName:@"emuDefaultContour480"
+                                                         contourFileName:@"emuDefaultContour480_OCT_13"
                                                                    error:&error];
     NSNumber *bVariant = [HMPanel.sh numberForKey:VK_LOGIC_BG_REMOVAL_BEHAVIOR fallbackValue:@0];
     [HMPanel.sh remoteKey:@"bg detection logic variant" value:bVariant.stringValue];
@@ -1623,10 +1623,10 @@
 -(void)refocusOnPoint:(CGPoint)normalizedPoint originUI:(NSString *)originUI
 {
     if (self.currentlyAutoFocusing) return;
+    if (self.recorderState != EMRecorderStateFGExtractionInProgress) return;
 
     self.currentlyAutoFocusing = YES;
     [EMUISound.sh playSoundNamed:SND_FOCUSING];
-
     [self.previewVC showFocusViewOnPoint:normalizedPoint];
     
     // Refocus
@@ -1635,6 +1635,7 @@
     dispatch_after(DTIME(2.6), dispatch_get_main_queue(), ^{
         self.currentlyAutoFocusing = NO;
         [self.captureSession autoFocusOnPoint:normalizedPoint];
+        if (self.recorderState != EMRecorderStateFGExtractionInProgress) return;
         [self.captureSession setVideoProcessingState:HMVideoProcessingStateInspectSingleNextFrameAndProcessFrames
                                                 info:nil];
     });

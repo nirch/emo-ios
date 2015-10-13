@@ -347,7 +347,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 {
     // User pressed a pack in the packs popover.
     // Dismiss the popover and scroll to the selected pack.
-    NSString *packOID = notification.userInfo[emkOID];
+    NSString *packOID = notification.userInfo[emkPackageOID];
     __weak EMEmusFeedVC *weakSelf = self;
     [self.popoverController dismissViewControllerAnimated:YES completion:^{
         if (packOID == nil) return;

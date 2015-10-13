@@ -451,7 +451,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XkM-q0-Vob" userLabel="Fav button">
-                                <rect key="frame" x="174" y="396" width="27" height="27"/>
+                                <rect key="frame" x="324" y="396" width="27" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="EIE-94-HCF"/>
                                     <constraint firstAttribute="width" constant="27" id="fAf-kD-sWp"/>
@@ -473,11 +473,13 @@
                             <constraint firstItem="jbF-Vd-eWa" firstAttribute="leading" secondItem="goj-wz-5hX" secondAttribute="leading" id="4eO-4z-qee"/>
                             <constraint firstItem="DTt-Hy-ZEY" firstAttribute="trailing" secondItem="CaI-JM-cM2" secondAttribute="trailing" id="4fU-BN-mIq"/>
                             <constraint firstItem="kSW-18-HdN" firstAttribute="centerY" secondItem="HlW-V9-20u" secondAttribute="centerY" id="4mA-sq-CdY"/>
+                            <constraint firstItem="XkM-q0-Vob" firstAttribute="trailing" secondItem="goj-wz-5hX" secondAttribute="trailing" constant="-8" id="7cj-9p-Uc2"/>
                             <constraint firstItem="goj-wz-5hX" firstAttribute="width" secondItem="DTt-Hy-ZEY" secondAttribute="width" id="7ku-c5-zMN"/>
                             <constraint firstItem="jbF-Vd-eWa" firstAttribute="centerY" secondItem="fau-bn-TfM" secondAttribute="centerY" id="BFs-Qu-cWW"/>
                             <constraint firstItem="fau-bn-TfM" firstAttribute="leading" secondItem="jbF-Vd-eWa" secondAttribute="trailing" constant="8" id="BQn-u9-f9G"/>
                             <constraint firstItem="goj-wz-5hX" firstAttribute="centerY" secondItem="DTt-Hy-ZEY" secondAttribute="centerY" id="BfA-OF-8gy"/>
                             <constraint firstItem="Q47-Mq-Qsa" firstAttribute="height" secondItem="CaI-JM-cM2" secondAttribute="height" id="Crw-VD-hXP"/>
+                            <constraint firstItem="XkM-q0-Vob" firstAttribute="leading" secondItem="goj-wz-5hX" secondAttribute="trailing" constant="-38" id="DHp-lQ-bzC"/>
                             <constraint firstItem="CaI-JM-cM2" firstAttribute="leading" secondItem="fau-bn-TfM" secondAttribute="leading" constant="208" id="Eov-C6-mKY"/>
                             <constraint firstItem="XkM-q0-Vob" firstAttribute="right" secondItem="DTt-Hy-ZEY" secondAttribute="right" constant="16" id="F2u-mf-ovm"/>
                             <constraint firstItem="kSW-18-HdN" firstAttribute="width" secondItem="HlW-V9-20u" secondAttribute="width" id="FFb-Tq-9Dg"/>
@@ -520,6 +522,7 @@
                             <constraint firstItem="CaI-JM-cM2" firstAttribute="leading" secondItem="DTt-Hy-ZEY" secondAttribute="trailing" constant="-65" id="huV-y0-pVF"/>
                             <constraint firstItem="fau-bn-TfM" firstAttribute="leading" secondItem="VoS-PS-Xnz" secondAttribute="trailing" constant="8" id="iiQ-Hw-8Af"/>
                             <constraint firstItem="CaI-JM-cM2" firstAttribute="leading" secondItem="fau-bn-TfM" secondAttribute="trailing" constant="8" symbolic="YES" id="lty-Ww-JFp"/>
+                            <constraint firstItem="XkM-q0-Vob" firstAttribute="leading" secondItem="goj-wz-5hX" secondAttribute="trailing" constant="-38" id="luy-kf-bYA"/>
                             <constraint firstItem="l1T-UB-AV6" firstAttribute="centerX" secondItem="Voh-xn-DcO" secondAttribute="centerX" id="nhE-5i-RDJ"/>
                             <constraint firstItem="fau-bn-TfM" firstAttribute="centerY" secondItem="Q47-Mq-Qsa" secondAttribute="centerY" constant="-2" id="nr2-dd-xt3"/>
                             <constraint firstItem="CaI-JM-cM2" firstAttribute="top" secondItem="RfO-Jc-wDZ" secondAttribute="top" id="owc-vg-aTq"/>
@@ -548,7 +551,6 @@
                             <mask key="constraints">
                                 <exclude reference="2pk-cp-29y"/>
                                 <exclude reference="4fU-BN-mIq"/>
-                                <exclude reference="F2u-mf-ovm"/>
                                 <exclude reference="1Nk-72-741"/>
                                 <exclude reference="4eO-4z-qee"/>
                                 <exclude reference="IDD-Sw-w1n"/>
@@ -559,6 +561,10 @@
                                 <exclude reference="cvn-i8-2nV"/>
                                 <exclude reference="nr2-dd-xt3"/>
                                 <exclude reference="soE-A3-UCC"/>
+                                <exclude reference="DHp-lQ-bzC"/>
+                                <exclude reference="F2u-mf-ovm"/>
+                                <exclude reference="IFF-ZA-fz8"/>
+                                <exclude reference="luy-kf-bYA"/>
                                 <exclude reference="Eov-C6-mKY"/>
                                 <exclude reference="HYg-Ir-hEf"/>
                                 <exclude reference="Mcq-WG-0HP"/>
@@ -799,7 +805,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="84S-s6-uj6" id="HgQ-Yc-bic">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-g1-GqX">

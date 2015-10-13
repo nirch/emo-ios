@@ -104,6 +104,8 @@
 		0845BDF41BC523AB00173B66 /* Tutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0845BDF21BC523AB00173B66 /* Tutorials.storyboard */; settings = {ASSET_TAGS = (); }; };
 		0845BDF91BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */; settings = {ASSET_TAGS = (); }; };
 		0845BDFA1BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */; settings = {ASSET_TAGS = (); }; };
+		0847E5641BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 0847E5631BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr */; settings = {ASSET_TAGS = (); }; };
+		0847E5651BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */ = {isa = PBXBuildFile; fileRef = 0847E5631BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr */; settings = {ASSET_TAGS = (); }; };
 		084898EC1BA935010026B25A /* kim.png in Resources */ = {isa = PBXBuildFile; fileRef = 084898EB1BA935010026B25A /* kim.png */; };
 		084AF4701B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
 		084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */; };
@@ -690,6 +692,7 @@
 		0845BDF71BC5607900173B66 /* Emuticon+DownloadsHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+DownloadsHelpers.h"; sourceTree = "<group>"; };
 		0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Emuticon+DownloadsHelpers.m"; sourceTree = "<group>"; };
 		084682291A7A3C04004235C7 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HMSDK.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		0847E5631BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emuDefaultContour480_OCT_13.ctr; sourceTree = "<group>"; };
 		084898EB1BA935010026B25A /* kim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kim.png; sourceTree = "<group>"; };
 		084AF4371B383B810056FC34 /* 70s-groovy-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-groovy-bg.gif"; sourceTree = "<group>"; };
 		084AF4381B383B810056FC34 /* 70s-peace-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "70s-peace-bg.gif"; sourceTree = "<group>"; };
@@ -1676,6 +1679,7 @@
 		085C66E71A937EC9007BC910 /* Contours */ = {
 			isa = PBXGroup;
 			children = (
+				0847E5631BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr */,
 				08CF07A71B4C122900034BB5 /* emuDefaultContour480.ctr */,
 			);
 			path = Contours;
@@ -2569,6 +2573,7 @@
 				084AF4F21B383B810056FC34 /* party-twerk-fg.gif in Resources */,
 				08AA14DC1B0BA658002E1B2F /* kbAllowAccessTutorial.mp4 in Resources */,
 				08D500681BC825C200239687 /* deprecated.txt in Resources */,
+				0847E5651BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				08AA14DD1B0BA658002E1B2F /* endRecording.wav in Resources */,
 				084AF4EE1B383B810056FC34 /* party-twerk-bg.gif in Resources */,
 				084AF48E1B383B810056FC34 /* casual-lol-mask-v1.png in Resources */,
@@ -2703,6 +2708,7 @@
 				08967C251B5B9A9F000DDCF9 /* downloading.gif in Resources */,
 				084AF4B01B383B810056FC34 /* crap-bitch-mask-v1.png in Resources */,
 				084AF4781B383B810056FC34 /* attitude-coolstory-bg.gif in Resources */,
+				0847E5641BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				0896D5241B2D8D430094ED41 /* sil-1.png in Resources */,
 				084AF5141B383B810056FC34 /* wasted-ubercool-mask-v1.png in Resources */,
 				084AF4E01B383B810056FC34 /* meme-cage-fg.gif in Resources */,

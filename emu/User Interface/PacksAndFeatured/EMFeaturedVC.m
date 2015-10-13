@@ -92,12 +92,11 @@
 #pragma mark - Auto Flipping
 -(void)startAutoFlipping
 {
-//    
-//    [self.flippingTimer invalidate];
-//    self.flippingTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
-//                                                          target:self
-//                                                        selector:@selector(onFlipRequired:)
-//                                                        userInfo:nil repeats:YES];
+    [self.flippingTimer invalidate];
+    self.flippingTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
+                                                          target:self
+                                                        selector:@selector(onFlipRequired:)
+                                                        userInfo:nil repeats:YES];
 }
 
 -(void)stopAutoFlipping
@@ -225,11 +224,12 @@
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self fixPage];
+    [self startAutoFlipping];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    self.ignoreAutoFlipping = YES;
+    [self stopAutoFlipping];
 }
 
 #pragma mark - Paging
