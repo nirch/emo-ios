@@ -109,6 +109,7 @@
         [vc configureForFavoriteEmus];
         vc.identifier = emkUIFavorites;
         vc.delegate = self;
+        vc.placeHolderMessageWhenEmpty = LS(@"ME_NO_FAVORITES");
         self.favoritesListVC = vc;
         
     } else if ([segue.identifier isEqualToString:@"recently shared segue"]) {
@@ -120,6 +121,7 @@
         [vc configureForRecentlySharedEmus];
         vc.identifier = emkUIRecentlyShared;
         vc.delegate = self;
+        vc.placeHolderMessageWhenEmpty = LS(@"ME_NO_RECENT_SHARED");
         self.recentlySharedListVC = vc;
         
     } else if ([segue.identifier isEqualToString:@"recently viewed segue"]) {
@@ -131,6 +133,7 @@
         [vc configureForRecentlyViewedEmus];
         vc.identifier = emkUIRecentlyViewed;
         vc.delegate = self;
+        vc.placeHolderMessageWhenEmpty = LS(@"ME_NO_FAVORITES");
         self.recentlyViewedListVC = vc;
         
     }

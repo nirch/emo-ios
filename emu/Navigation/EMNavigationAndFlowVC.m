@@ -65,8 +65,6 @@
     if(([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) && [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){9, 0, 0}]){
         [[UIView appearance] setSemanticContentAttribute:UISemanticContentAttributeForceLeftToRight];}
     // -----------------------------------------------------------
-
-    
     [self.splashVC showAnimated:NO];
     [self initFlowState];
 }

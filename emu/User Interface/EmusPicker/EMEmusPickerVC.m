@@ -16,6 +16,7 @@
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
+@property (weak, nonatomic) IBOutlet UILabel *guiPlaceHolderLabel;
 
 
 @property (nonatomic) NSDictionary *cfg;
@@ -37,6 +38,8 @@
 
     // Init observers
     [self initObservers];
+
+    [self checkIfNeedToDisplayPlaceHolderImage];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -104,7 +107,23 @@
     [self.guiCollectionView reloadData];
     dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
         [self handleVisibleCells];
+        [self checkIfNeedToDisplayPlaceHolderImage];
     });
+}
+
+-(void)checkIfNeedToDisplayPlaceHolderImage
+{
+    if (self.dataSource.emusCount == 0) {
+        if (self.placeHolderMessageWhenEmpty != nil) {
+            self.guiPlaceHolderLabel.hidden = NO;
+            self.guiPlaceHolderLabel.text = self.placeHolderMessageWhenEmpty;
+            self.guiCollectionView.alpha = 0;
+        }
+    } else {
+        self.guiPlaceHolderLabel.hidden = YES;
+        self.guiCollectionView.alpha = 1;
+    }
+
 }
 
 #pragma mark - Observers

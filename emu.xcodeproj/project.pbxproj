@@ -207,6 +207,16 @@
 		084AF5321B38A6BD0056FC34 /* focusing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084AF5301B38A6BD0056FC34 /* focusing.wav */; };
 		084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
 		084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
+		085348BB1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348BD1BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B71BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348BE1BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B71BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348BF1BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B81BCD9A3B008BBBF9 /* love-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348C01BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B81BCD9A3B008BBBF9 /* love-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348C11BCD9A3B008BBBF9 /* ouch-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B91BCD9A3B008BBBF9 /* ouch-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348C21BCD9A3B008BBBF9 /* ouch-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B91BCD9A3B008BBBF9 /* ouch-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348C31BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348BA1BCD9A3B008BBBF9 /* party-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
+		085348C41BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348BA1BCD9A3B008BBBF9 /* party-thumb.jpg */; settings = {ASSET_TAGS = (); }; };
 		0854EE2E1A9F5CB300FD3833 /* EMShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */; };
 		0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE321A9FA6CE00FD3833 /* EMShareCopy.m */; };
 		0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE351A9FA6F900FD3833 /* EMShare.m */; };
@@ -749,6 +759,11 @@
 		084AF53A1B3AA8900056FC34 /* EmuKBCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuKBCell.m; sourceTree = "<group>"; };
 		084DC0001B661A9200A67DD8 /* EMKBOptionsDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKBOptionsDrawer.h; sourceTree = "<group>"; };
 		084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKBOptionsDrawer.m; sourceTree = "<group>"; };
+		085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "70s-thumb.jpg"; sourceTree = "<group>"; };
+		085348B71BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blackandwhite-thumb.jpg"; sourceTree = "<group>"; };
+		085348B81BCD9A3B008BBBF9 /* love-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "love-thumb.jpg"; sourceTree = "<group>"; };
+		085348B91BCD9A3B008BBBF9 /* ouch-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ouch-thumb.jpg"; sourceTree = "<group>"; };
+		085348BA1BCD9A3B008BBBF9 /* party-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "party-thumb.jpg"; sourceTree = "<group>"; };
 		0854EE2C1A9F5CB300FD3833 /* EMShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareCell.h; sourceTree = "<group>"; };
 		0854EE2D1A9F5CB300FD3833 /* EMShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareCell.m; sourceTree = "<group>"; };
 		0854EE2F1A9F93B700FD3833 /* EMShareDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareDelegate.h; sourceTree = "<group>"; };
@@ -1199,6 +1214,7 @@
 		08271FAD1B01F5B90046F38E /* Local Resources */ = {
 			isa = PBXGroup;
 			children = (
+				085348B51BCD9A3B008BBBF9 /* posters */,
 				08967C221B5B9A9F000DDCF9 /* gifs */,
 				08CF07AE1B4D65CC00034BB5 /* html */,
 				0896D5191B2D8D430094ED41 /* pngs */,
@@ -1597,6 +1613,18 @@
 				084AF46F1B383B810056FC34 /* yeah-yeah-fg-v1.gif */,
 			);
 			path = yeah;
+			sourceTree = "<group>";
+		};
+		085348B51BCD9A3B008BBBF9 /* posters */ = {
+			isa = PBXGroup;
+			children = (
+				085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */,
+				085348B71BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg */,
+				085348B81BCD9A3B008BBBF9 /* love-thumb.jpg */,
+				085348B91BCD9A3B008BBBF9 /* ouch-thumb.jpg */,
+				085348BA1BCD9A3B008BBBF9 /* party-thumb.jpg */,
+			);
+			path = posters;
 			sourceTree = "<group>";
 		};
 		0854EE301A9FA6AA00FD3833 /* Share Methods */ = {
@@ -2550,13 +2578,16 @@
 				084AF49A1B383B810056FC34 /* casual-thanks-mask-v1.png in Resources */,
 				084AF4761B383B810056FC34 /* 70s-peace-bg.gif in Resources */,
 				08AA14CE1B0BA658002E1B2F /* simpleSwipe.wav in Resources */,
+				085348C21BCD9A3B008BBBF9 /* ouch-thumb.jpg in Resources */,
 				08AA14D01B0BA658002E1B2F /* plasticClickSound.wav in Resources */,
 				088F31421B67D776008FA3C1 /* meeowuser.png in Resources */,
 				084AF4861B383B810056FC34 /* casual-lol-bg.gif in Resources */,
 				08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */,
+				085348C41BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
 				084AF5221B383B810056FC34 /* yeah-omg-bg.gif in Resources */,
 				084AF4721B383B810056FC34 /* 70s-groovy-bg.gif in Resources */,
+				085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
 				084AF48A1B383B810056FC34 /* casual-lol-fg.gif in Resources */,
 				08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				084AF4C21B383B810056FC34 /* hearts-bg.gif in Resources */,
@@ -2604,6 +2635,7 @@
 				08A457091BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				084AF4E21B383B810056FC34 /* meme-cage-fg.gif in Resources */,
 				0896D5261B2D8D430094ED41 /* sil-1.png in Resources */,
+				085348BE1BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg in Resources */,
 				084AF4C61B383B810056FC34 /* hearts-fg.gif in Resources */,
 				08AA14FA1B0BA658002E1B2F /* goodBG.wav in Resources */,
 				084898EC1BA935010026B25A /* kim.png in Resources */,
@@ -2615,6 +2647,7 @@
 				084AF4BE1B383B810056FC34 /* crap-shit-mask-v1.png in Resources */,
 				085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */,
 				08A456D31B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
+				085348C01BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */,
 				084AF51A1B383B810056FC34 /* yeah-no-bg.gif in Resources */,
 				084AF4DA1B383B810056FC34 /* meme-baby-fg.gif in Resources */,
 				084AF4AE1B383B810056FC34 /* crap-bitch-fg.gif in Resources */,
@@ -2642,6 +2675,7 @@
 				084AF4DC1B383B810056FC34 /* meme-cage-bg.gif in Resources */,
 				084AF4A01B383B810056FC34 /* casual-whats-fg.gif in Resources */,
 				084AF51C1B383B810056FC34 /* yeah-no-fg.gif in Resources */,
+				085348BD1BCD9A3B008BBBF9 /* blackandwhite-thumb.jpg in Resources */,
 				084AF4E81B383B810056FC34 /* party-party-fg.gif in Resources */,
 				08CAEAD81A9757BF008A3E0A /* SourceSansPro-Semibold.ttf in Resources */,
 				08357F2A1BC9328F00C302AA /* Footages.storyboard in Resources */,
@@ -2652,6 +2686,7 @@
 				084AF4801B383B810056FC34 /* attitude-coolstory-mask.png in Resources */,
 				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
 				08271FD11B01F5B90046F38E /* pressedButton.wav in Resources */,
+				085348BF1BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */,
 				08A456F61B9F2403001AB79E /* Images.xcassets in Resources */,
 				08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */,
 				084AF4981B383B810056FC34 /* casual-thanks-mask-v1.png in Resources */,
@@ -2687,6 +2722,7 @@
 				08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */,
 				08CF07A81B4C122900034BB5 /* emuDefaultContour480.ctr in Resources */,
 				084AF4C81B383B810056FC34 /* hearts-mask-v1.png in Resources */,
+				085348C11BCD9A3B008BBBF9 /* ouch-thumb.jpg in Resources */,
 				084AF4D41B383B810056FC34 /* meme-baby-bg.gif in Resources */,
 				080B05A41AB06E85003C19E7 /* ServerCFG.plist in Resources */,
 				084AF4D01B383B810056FC34 /* hot-mask-v1.png in Resources */,
@@ -2711,6 +2747,7 @@
 				0847E5641BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				0896D5241B2D8D430094ED41 /* sil-1.png in Resources */,
 				084AF5141B383B810056FC34 /* wasted-ubercool-mask-v1.png in Resources */,
+				085348C31BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
 				084AF4E01B383B810056FC34 /* meme-cage-fg.gif in Resources */,
 				083814291BBB33EB004D902E /* popQ.wav in Resources */,
 				084AF4C41B383B810056FC34 /* hearts-fg.gif in Resources */,
@@ -2727,6 +2764,7 @@
 				084AF4901B383B810056FC34 /* casual-thanks-bg.gif in Resources */,
 				084AF4F81B383B810056FC34 /* snack-morning-fg.gif in Resources */,
 				08271FE21B0203820046F38E /* onboarding_packages_test.json in Resources */,
+				085348BB1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
 				084AF4941B383B810056FC34 /* casual-thanks-fg.gif in Resources */,
 				084AF5081B383B810056FC34 /* wasted-buzzzzzed-mask-v1.png in Resources */,
 				084AF4F41B383B810056FC34 /* snack-morning-bg.gif in Resources */,
@@ -3221,7 +3259,6 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -3326,7 +3363,6 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (

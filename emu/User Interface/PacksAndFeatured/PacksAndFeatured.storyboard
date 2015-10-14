@@ -45,7 +45,7 @@
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENW-xx-iC1">
                                                             <rect key="frame" x="0.0" y="0.0" width="251" height="94"/>
-                                                            <state key="normal" backgroundImage="packButton">
+                                                            <state key="normal" backgroundImage="cellStretchingBG">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                             <connections>
@@ -55,27 +55,44 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ej-nL-P1z" userLabel="Cropped pack image">
                                                             <rect key="frame" x="3" y="2" width="245" height="88"/>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiT-Rv-Zo2" customClass="EMLabel">
-                                                            <rect key="frame" x="100" y="35" width="51" height="24"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="TiT-Rv-Zo2" customClass="EMLabel">
+                                                            <rect key="frame" x="62" y="37" width="151" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="highlightedColor"/>
-                                                            <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="shadowOffset" width="2" height="0.0"/>
+                                                            <size key="shadowOffset" width="1" height="0.0"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BLB-fe-RBs">
+                                                            <rect key="frame" x="20" y="32" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="e2h-7a-kwX"/>
+                                                                <constraint firstAttribute="height" constant="30" id="tAt-a1-BXc"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="7Ej-nL-P1z" firstAttribute="top" secondItem="qhf-1r-7ch" secondAttribute="top" constant="2" id="3L3-by-Uaa"/>
+                                                        <constraint firstItem="BLB-fe-RBs" firstAttribute="centerY" secondItem="qhf-1r-7ch" secondAttribute="centerY" id="4MV-TM-bDX"/>
                                                         <constraint firstAttribute="trailing" secondItem="ENW-xx-iC1" secondAttribute="trailing" id="7ch-Xe-taY"/>
+                                                        <constraint firstItem="TiT-Rv-Zo2" firstAttribute="centerY" secondItem="qhf-1r-7ch" secondAttribute="centerY" id="CCV-Rf-tUx"/>
                                                         <constraint firstItem="ENW-xx-iC1" firstAttribute="leading" secondItem="qhf-1r-7ch" secondAttribute="leading" id="KaM-PV-9iC"/>
+                                                        <constraint firstItem="TiT-Rv-Zo2" firstAttribute="leading" secondItem="BLB-fe-RBs" secondAttribute="trailing" constant="12" id="L7x-bu-OqP"/>
                                                         <constraint firstItem="ENW-xx-iC1" firstAttribute="top" secondItem="qhf-1r-7ch" secondAttribute="top" id="TiG-Cf-szx"/>
                                                         <constraint firstItem="TiT-Rv-Zo2" firstAttribute="centerX" secondItem="qhf-1r-7ch" secondAttribute="centerX" id="btl-Yi-lHM"/>
                                                         <constraint firstItem="TiT-Rv-Zo2" firstAttribute="centerY" secondItem="qhf-1r-7ch" secondAttribute="centerY" id="cff-g3-c1v"/>
                                                         <constraint firstAttribute="bottom" secondItem="ENW-xx-iC1" secondAttribute="bottom" id="gfG-ua-sWn"/>
                                                         <constraint firstAttribute="bottom" secondItem="7Ej-nL-P1z" secondAttribute="bottom" constant="4" id="jOl-pY-dTz"/>
+                                                        <constraint firstAttribute="trailing" secondItem="TiT-Rv-Zo2" secondAttribute="trailing" constant="38" id="sDi-uO-UWz"/>
                                                         <constraint firstAttribute="trailing" secondItem="7Ej-nL-P1z" secondAttribute="trailing" constant="3" id="saw-gF-0Jl"/>
                                                         <constraint firstItem="7Ej-nL-P1z" firstAttribute="leading" secondItem="qhf-1r-7ch" secondAttribute="leading" constant="3" id="wch-LV-J4I"/>
+                                                        <constraint firstItem="BLB-fe-RBs" firstAttribute="leading" secondItem="qhf-1r-7ch" secondAttribute="leading" constant="20" id="wtN-UB-6Tv"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="btl-Yi-lHM"/>
+                                                            <exclude reference="cff-g3-c1v"/>
+                                                        </mask>
+                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -91,6 +108,7 @@
                                         <connections>
                                             <outlet property="guiButton" destination="ENW-xx-iC1" id="0wq-9O-8bG"/>
                                             <outlet property="guiClippedImage" destination="7Ej-nL-P1z" id="BwM-S8-aP5"/>
+                                            <outlet property="guiIcon" destination="BLB-fe-RBs" id="oSJ-4h-AUq"/>
                                             <outlet property="guiLabel" destination="TiT-Rv-Zo2" id="h1w-Xj-eNF"/>
                                         </connections>
                                     </collectionViewCell>
@@ -99,9 +117,8 @@
                                     <outlet property="delegate" destination="O1j-04-RAu" id="tsn-aL-nXf"/>
                                 </connections>
                             </collectionView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFR-LJ-zqv" userLabel="Featured packs container">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFR-LJ-zqv" userLabel="Featured packs container">
                                 <rect key="frame" x="0.0" y="50" width="600" height="268"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jFR-LJ-zqv" secondAttribute="height" multiplier="56:25" id="ZjI-ZK-Qm2"/>
                                 </constraints>
@@ -129,7 +146,7 @@
                     <connections>
                         <outlet property="guiActivity" destination="b82-Ih-TTq" id="0zp-sJ-eDT"/>
                         <outlet property="guiCollectionView" destination="7Oi-63-Jhd" id="khT-o8-zAW"/>
-                        <outlet property="guiFeaturedPacksContainer" destination="jFR-LJ-zqv" id="GAW-Cp-R9k"/>
+                        <outlet property="guiFeaturedPacksContainer" destination="jFR-LJ-zqv" id="qGd-MP-2yw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1wp-hv-h8w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -159,7 +176,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="featured cell" id="gdA-Uk-DK6" customClass="EMFeaturedCell">
-                                        <rect key="frame" x="0.0" y="5.5" width="576" height="257"/>
+                                        <rect key="frame" x="0.0" y="6" width="576" height="257"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="576" height="257"/>
@@ -174,6 +191,12 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RH6-2H-fBf" userLabel="Place golder label" customClass="EMLabel">
+                                                    <rect key="frame" x="252" y="111" width="73" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                    <color key="textColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2aC-rz-SdF" userLabel="Poster Image">
                                                     <rect key="frame" x="79" y="9" width="419" height="236"/>
                                                 </imageView>
@@ -210,8 +233,10 @@
                                             <constraint firstAttribute="trailingMargin" secondItem="2aC-rz-SdF" secondAttribute="trailing" constant="67" id="UpD-Rn-SSC"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="2aC-rz-SdF" secondAttribute="bottom" constant="4" id="Uph-tQ-Dt1"/>
                                             <constraint firstItem="49k-Ni-2Pu" firstAttribute="width" secondItem="2aC-rz-SdF" secondAttribute="width" id="VlM-MX-CTT"/>
+                                            <constraint firstItem="RH6-2H-fBf" firstAttribute="centerX" secondItem="gdA-Uk-DK6" secondAttribute="centerX" id="Wi4-N5-ZEx"/>
                                             <constraint firstItem="vQV-u2-Uzn" firstAttribute="centerY" secondItem="gdA-Uk-DK6" secondAttribute="centerY" id="Z9i-Ua-BnL"/>
                                             <constraint firstItem="2aC-rz-SdF" firstAttribute="leading" secondItem="gdA-Uk-DK6" secondAttribute="leadingMargin" constant="67" id="a1x-j9-w1a"/>
+                                            <constraint firstItem="RH6-2H-fBf" firstAttribute="centerY" secondItem="gdA-Uk-DK6" secondAttribute="centerY" id="ctY-0l-971"/>
                                             <constraint firstItem="2aC-rz-SdF" firstAttribute="width" secondItem="buw-If-y4p" secondAttribute="width" constant="4" id="dZs-eC-yyf"/>
                                             <constraint firstItem="Q1f-vp-mNO" firstAttribute="centerX" secondItem="2aC-rz-SdF" secondAttribute="centerX" id="fon-py-yrp"/>
                                             <constraint firstItem="buw-If-y4p" firstAttribute="top" secondItem="gdA-Uk-DK6" secondAttribute="topMargin" id="gTq-Tm-Ct3"/>
@@ -245,6 +270,7 @@
                                         <connections>
                                             <outlet property="guiButton" destination="buw-If-y4p" id="4U2-Mj-uJC"/>
                                             <outlet property="guiDebugLabel" destination="vQV-u2-Uzn" id="nmT-d2-rdr"/>
+                                            <outlet property="guiLabel" destination="RH6-2H-fBf" id="xhd-xB-vYM"/>
                                             <outlet property="guiPosterGif" destination="49k-Ni-2Pu" id="DjP-VY-uav"/>
                                             <outlet property="guiPosterImage" destination="2aC-rz-SdF" id="YbF-zB-Sxv"/>
                                             <outlet property="guiPosterOverlay" destination="Q1f-vp-mNO" id="5SY-LP-dHa"/>
@@ -276,6 +302,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cellStretchingBG" width="17" height="21"/>
         <image name="packButton" width="113" height="18"/>
     </resources>
 </document>

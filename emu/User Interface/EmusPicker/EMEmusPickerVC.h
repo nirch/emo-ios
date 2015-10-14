@@ -15,6 +15,7 @@
 
 @property (nonatomic, weak) id<EMInterfaceDelegate> delegate;
 @property (nonatomic) NSString *identifier;
+@property (nonatomic) NSString *placeHolderMessageWhenEmpty;
 
 #pragma mark - helper configurators
 

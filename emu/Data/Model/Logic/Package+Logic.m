@@ -272,6 +272,17 @@
     return [self urlForPackageResourceNamed:self.posterName];
 }
 
+-(NSURL *)urlForAnimatedPosterThumb
+{
+    NSString *posterURLString = [[self urlForPackagePoster] absoluteString];
+    if (![posterURLString hasSuffix:@".gif"]) return nil;
+    
+    // replace "-poster" with "-thumb"
+    NSString *thumbURLString = [posterURLString stringByReplacingOccurrencesOfString:@"-poster" withString:@"-thumb"];
+    thumbURLString = [thumbURLString stringByReplacingOccurrencesOfString:@".gif" withString:@".jpg"];
+    return [NSURL URLWithString:thumbURLString];
+}
+
 -(NSURL *)urlForPackagePosterOverlay
 {
     return [self urlForPackageResourceNamed:self.posterOverlayName];

@@ -94,6 +94,12 @@
     return emu.oid;
 }
 
+-(NSInteger)emusCount
+{
+    return self.frc.fetchedObjects.count;
+}
+
+
 -(BOOL)isIndexPathOutOfBounds:(NSIndexPath *)indexPath
 {
     if (indexPath.item>=self.frc.fetchedObjects.count) return YES;

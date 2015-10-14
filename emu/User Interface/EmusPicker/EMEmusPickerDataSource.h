@@ -67,6 +67,15 @@
  */
 -(NSString *)emuticonOIDAtIndexPath:(NSIndexPath *)indexPath;
 
+
+/**
+ *  The number of emus in the collection.
+ *
+ *  @return NSInteger with the number of emus in the collection.
+ */
+-(NSInteger)emusCount;
+
+
 #pragma mark - Emus
 -(void)preferEmusAtIndexPaths:(NSArray *)indexPaths;
 

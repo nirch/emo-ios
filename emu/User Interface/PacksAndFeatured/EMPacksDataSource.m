@@ -96,8 +96,11 @@
     Package *pack = [self.frc objectAtIndexPath:indexPath];
     
     // Configure the cell using info about the pack
+    BOOL isBanner = indexPath.item < self.lastWidePack;
+    cell.iconURL = isBanner? nil:[pack urlForPackageIcon];
     cell.label = pack.label;
-    cell.bannerURL = indexPath.item >= self.lastWidePack? [pack urlForPackageBanner] : [pack urlForPackageBannerWide];
+    cell.bannerURL = isBanner ? [pack urlForPackageBannerWide] : nil;
+    cell.isBanner = isBanner;
     cell.indexTag = indexPath.item;
     
     // Update the cell UI

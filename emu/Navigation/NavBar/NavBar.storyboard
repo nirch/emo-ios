@@ -41,7 +41,8 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXq-DG-r9o" userLabel="first button" customClass="EMButton">
-                                        <rect key="frame" x="8" y="5" width="67" height="34"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="87" height="44"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Button 1">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -50,7 +51,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-Cq-r0C" userLabel="second button" customClass="EMButton">
-                                        <rect key="frame" x="523" y="5" width="69" height="34"/>
+                                        <rect key="frame" x="511" y="0.0" width="89" height="44"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Button 2">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -63,14 +65,16 @@
                                 <constraints>
                                     <constraint firstItem="1HK-BP-rnC" firstAttribute="centerX" secondItem="z5J-rg-2aJ" secondAttribute="centerX" id="0H9-j3-8hd"/>
                                     <constraint firstAttribute="height" constant="44" id="A7x-Pg-FyU"/>
-                                    <constraint firstAttribute="trailing" secondItem="UQc-Cq-r0C" secondAttribute="trailing" constant="8" id="EFY-YB-V7c"/>
+                                    <constraint firstAttribute="trailing" secondItem="UQc-Cq-r0C" secondAttribute="trailing" id="EFY-YB-V7c"/>
                                     <constraint firstItem="1HK-BP-rnC" firstAttribute="centerY" secondItem="z5J-rg-2aJ" secondAttribute="centerY" id="Fye-I0-Q7j"/>
                                     <constraint firstAttribute="bottom" secondItem="err-UK-sEX" secondAttribute="bottom" id="Rdr-rV-VsO"/>
-                                    <constraint firstItem="mXq-DG-r9o" firstAttribute="leading" secondItem="z5J-rg-2aJ" secondAttribute="leading" constant="8" id="UPq-SE-NEE"/>
+                                    <constraint firstItem="mXq-DG-r9o" firstAttribute="leading" secondItem="z5J-rg-2aJ" secondAttribute="leading" id="UPq-SE-NEE"/>
+                                    <constraint firstItem="mXq-DG-r9o" firstAttribute="height" secondItem="z5J-rg-2aJ" secondAttribute="height" id="bTQ-RY-Cng"/>
                                     <constraint firstItem="mXq-DG-r9o" firstAttribute="centerY" secondItem="z5J-rg-2aJ" secondAttribute="centerY" id="bir-bu-QMZ"/>
                                     <constraint firstItem="UQc-Cq-r0C" firstAttribute="centerY" secondItem="z5J-rg-2aJ" secondAttribute="centerY" id="d2e-AF-G6Q"/>
                                     <constraint firstItem="err-UK-sEX" firstAttribute="left" secondItem="z5J-rg-2aJ" secondAttribute="left" id="kEd-TP-3Yf"/>
                                     <constraint firstAttribute="right" secondItem="err-UK-sEX" secondAttribute="right" id="n8Z-3g-5ZK"/>
+                                    <constraint firstItem="UQc-Cq-r0C" firstAttribute="height" secondItem="z5J-rg-2aJ" secondAttribute="height" id="owR-AV-1Ty"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0wx-On-ZPR" userLabel="Emu Button BG">

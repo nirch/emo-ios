@@ -110,6 +110,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.guiCollectionView.alpha = 0;
     
     // Init observers
     [self initObservers];

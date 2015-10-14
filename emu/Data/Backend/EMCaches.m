@@ -38,6 +38,10 @@
     self = [super init];
     if (self) {
         _gifsDataCache = [NSCache new];
+        
+        // Limit on disk cache to 20MB
+        PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
+        rm.cache.diskCache.byteLimit = 15000000;
     }
     return self;
 }
@@ -58,11 +62,25 @@
     [rm.cache removeObjectForKey:thumbKey];
 }
 
+-(void)checkCacheStatus
+{
+    PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
+    NSInteger memoryCacheCost = rm.cache.memoryCache.totalCost;
+    memoryCacheCost += 0;
+    HMLOG(TAG, EM_DBG, @"memory cache cost:%@", @(memoryCacheCost));
+
+    [rm.cache.diskCache synchronouslyLockFileAccessWhileExecutingBlock:^(PINDiskCache *diskCache) {
+        NSUInteger byteCount = diskCache.byteCount;
+        byteCount += 0;
+        HMLOG(TAG, EM_DBG, @"disk cache bytes count:%@", @(byteCount));
+    }];
+
+}
+
 -(void)clearAllCache
 {
     PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
     [rm.cache removeAllObjects:^(PINCache * _Nonnull cache) {
-        // Cleared all PINCache.
     }];
 }
 

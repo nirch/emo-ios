@@ -7,6 +7,7 @@
 //
 
 #import "EMButton.h"
+#import "UIView+CommonAnimations.h"
 
 @implementation EMButton
 

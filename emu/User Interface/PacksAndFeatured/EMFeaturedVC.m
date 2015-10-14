@@ -11,7 +11,7 @@
 #import "EMNotificationCenter.h"
 #import "EMDB.h"
 #import "EMUINotifications.h"
-
+#import <PINRemoteImageManager.h>
 
 #define FEATURED_ASPECT_RATIO 1.75f
 #define CYCLYC_COUNT 20
@@ -112,7 +112,7 @@
     NSInteger page = [self currentPage];
     page = [self boundPageIndex:page+1];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:page inSection:0];
-    
+    if (indexPath == nil) return;
     
     [UIView animateWithDuration:0.7
                           delay:0
@@ -144,26 +144,45 @@
     // Get the info about the packs
     NSMutableArray *data = [NSMutableArray new];
     for (Package *pack in packs) {
-        NSMutableDictionary *info = [NSMutableDictionary new];
         if (pack.posterName == nil || pack.label == nil) continue;
         
         // Gather the info
-        info[@"posterURL"] = pack.urlForPackagePoster;
-        info[@"posterOverlayURL"] = pack.urlForPackagePosterOverlay;
-        info[@"debugLabel"] = pack.label;
-        info[@"packOID"] = pack.oid;
-        [data addObject:info];
+        HMParams *params = [HMParams new];
+        [params addKey:@"posterURL" valueIfNotNil:[pack urlForPackagePoster]];
+        [params addKey:@"thumbForAnimatedPosterURL" valueIfNotNil:[pack urlForAnimatedPosterThumb]];
+        [params addKey:@"posterOverlayURL" valueIfNotNil:[pack urlForPackagePosterOverlay]];
+        [params addKey:@"debugLabel" valueIfNotNil:[pack urlForPackagePoster]];
+        [params addKey:@"packOID" valueIfNotNil:pack.oid];
+        [params addKey:@"packLabel" valueIfNotNil:pack.label];
+        [params addKey:@"packName" valueIfNotNil:pack.name];
+        [data addObject:params.dictionary];
     }
     
     self.featuredData = data;
 
+    // Prefetch thumbs
+    [self prefetchThumbs];
+    
     // Reload data.
     [self.guiCollectionView reloadData];
     [self fixPage];
 }
 
+-(void)prefetchThumbs
+{
+    NSMutableArray *thumbs = [NSMutableArray new];
+    PINRemoteImageManager *pinRemoteManager = [PINRemoteImageManager sharedImageManager];
+    for (NSDictionary *packInfo in self.featuredData) {
+        if (packInfo[@"thumbForAnimatedPosterURL"] == nil) continue;
+        NSURL *thumbURL = packInfo[@"thumbForAnimatedPosterURL"];
+        if (thumbURL) [thumbs addObject:thumbURL];
+    }
+    [pinRemoteManager prefetchImagesWithURLs:thumbs];
+}
+
 #pragma mark - UICollectionViewDataSource
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+-(NSInteger)collectionView:(UICollectionView *)collectionView
+    numberOfItemsInSection:(NSInteger)section
 {
     return self.featuredData.count*CYCLYC_COUNT;
 }
@@ -178,8 +197,11 @@
     
     // Configure the cell using info about the pack
     cell.posterURL = info[@"posterURL"];
+    cell.animatedPosterThumbURL = info[@"thumbForAnimatedPosterURL"];
     cell.posterOverlayURL = info[@"posterOverlayURL"];
     cell.debugLabel = [info[@"debugLabel"] description];
+    cell.label = info[@"packLabel"];
+    cell.name = info[@"packName"];
         
     // Update the cell UI
     [cell updateGUI];
@@ -188,9 +210,14 @@
 
 }
 
+-(NSInteger)cyclicIndex:(NSInteger)index
+{
+    return index % self.featuredData.count;
+}
+
 -(NSDictionary *)dataAtCycilcIndex:(NSInteger)cyclicIndex
 {
-    NSInteger index = cyclicIndex % self.featuredData.count;
+    NSInteger index = [self cyclicIndex:cyclicIndex];
     return self.featuredData[index];
 }
 
@@ -271,19 +298,22 @@
 }
 
 #pragma mark - Selection
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+-(void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *info = [self dataAtCycilcIndex:indexPath.item];
     NSString *packageOID = info[@"packOID"];
+    if (packageOID == nil) return;
     
-    if (packageOID) {
+    self.guiCollectionView.userInteractionEnabled = NO;
+    dispatch_after(DTIME(0.3), dispatch_get_main_queue(), ^{
+        self.guiCollectionView.userInteractionEnabled = YES;
         // Notify that a pack was selected.
         NSDictionary *info = @{emkPackageOID:packageOID};
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserSelectedPack
                                                             object:self
                                                           userInfo:info];
-        
-    }
+    });
 }
 
 @end

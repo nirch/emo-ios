@@ -54,11 +54,12 @@
     
     // Add as a subview of the main view of the parent view controller.
     // Will fill the width of the parent and appear at the top.
+    [parentVC.view addSubview:vc.view];
+
     CGRect f = parentVC.view.bounds;
     f.size.height = 52;
     vc.view.frame = f;
-    [parentVC.view addSubview:vc.view];
-    
+
     // Ready. Return the new VC instance.
     return vc;
 }
@@ -79,6 +80,11 @@
 {
     [super viewDidAppear:animated];
     [self initGUIOnApearance];
+    
+    // Force hard coded to be 52 height.
+    CGRect f = self.view.frame;
+    f.size.height = 52;
+    self.view.frame = f;
 }
 
 #pragma mark - Initializations

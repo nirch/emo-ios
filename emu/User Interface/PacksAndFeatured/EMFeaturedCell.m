@@ -19,12 +19,32 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiPosterImage;
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiPosterGif;
 @property (weak, nonatomic) IBOutlet UIImageView *guiPosterOverlay;
+@property (weak, nonatomic) IBOutlet UILabel *guiLabel;
 
 @property (nonatomic) BOOL alreadyInitialized;
 
 @end
 
 @implementation EMFeaturedCell
+
+-(void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    [self setNeedsDisplay];
+    
+    // Add some spring animation on clicked on cells.
+    self.transform = CGAffineTransformMakeScale(0.9, 0.9);
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+         usingSpringWithDamping:0.3
+          initialSpringVelocity:0.6
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.transform = CGAffineTransformIdentity;
+                     } completion:nil];
+}
+
+
 
 -(void)updateGUI
 {
@@ -43,10 +63,15 @@
     // Clear all.
     [self.guiPosterGif pin_cancelImageDownload];
     [self.guiPosterImage pin_cancelImageDownload];
-    self.guiPosterGif.animatedImage = nil;
+    [self.guiPosterOverlay pin_cancelImageDownload];
     [self.guiPosterGif stopAnimating];
+    self.guiPosterGif.animatedImage = nil;
     self.guiPosterImage.image = nil;
     self.guiPosterOverlay.image = nil;
+    self.guiLabel.text = self.label;
+    self.guiPosterImage.alpha = 1.0;
+    self.guiLabel.alpha = 1.0;
+
     
     // Display the image or animated gif
     if ([self isPosterAnimatedGif]) {
@@ -69,11 +94,24 @@
 
 -(void)loadPosterAnimatedGif
 {
-    [self.guiPosterGif pin_setImageFromURL:self.posterURL];
+    self.guiPosterImage.alpha = 0.1;
+    self.guiLabel.alpha = 0;
+    self.guiPosterOverlay.alpha = 0;
+    NSString *localThumbName = [self.animatedPosterThumbURL lastPathComponent];
+    [self.guiPosterImage pin_setImageFromURL:self.animatedPosterThumbURL
+                            placeholderImage:[UIImage imageNamed:localThumbName]
+                                  completion:^(PINRemoteImageManagerResult *result) {
+                                      self.guiPosterImage.alpha = 1.0f;
+                                      // Load the big animated gif poster
+                                      [self.guiPosterGif pin_setImageFromURL:self.posterURL completion:^(PINRemoteImageManagerResult *result) {
+                                          if (result.error == nil) self.guiPosterOverlay.alpha = 1;
+                                      }];
+    }];
 }
 
 -(void)loadPosterImage
 {
+    self.guiPosterImage.alpha = 1.0;
     [self.guiPosterImage pin_setImageFromURL:self.posterURL];
 }
 

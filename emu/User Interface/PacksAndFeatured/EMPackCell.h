@@ -15,7 +15,9 @@
  */
 @property (nonatomic) NSString *label;
 @property (nonatomic) NSURL *bannerURL;
+@property (nonatomic) NSURL *iconURL;
 @property (nonatomic) NSInteger indexTag;
+@property (nonatomic) BOOL isBanner;
 
 
 -(void)updateGUI;

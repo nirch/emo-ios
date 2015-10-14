@@ -11,9 +11,12 @@
 @interface EMFeaturedCell : UICollectionViewCell
 
 @property (nonatomic) NSURL *posterURL;
+@property (nonatomic) NSURL *animatedPosterThumbURL;
 @property (nonatomic) NSURL *posterOverlayURL;
 @property (nonatomic) NSString *debugLabel;
 @property (nonatomic, readonly) BOOL isPosterAnimatedGif;
+@property (nonatomic) NSString *label;
+@property (nonatomic) NSString *name;
 
 /**
  *  Update the UI of the cell according to current set properties.

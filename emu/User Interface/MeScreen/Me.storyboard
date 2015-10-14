@@ -311,6 +311,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r84-Le-g3c" customClass="EMLabel">
+                                <rect key="frame" x="90" y="46" width="420" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sV3-mM-AZS">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="110"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -407,13 +413,17 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="sV3-mM-AZS" secondAttribute="bottom" id="5xU-Uz-Wfh"/>
+                            <constraint firstItem="r84-Le-g3c" firstAttribute="centerX" secondItem="Kha-bW-Cy4" secondAttribute="centerX" id="HxO-6G-N4Z"/>
                             <constraint firstItem="sV3-mM-AZS" firstAttribute="left" secondItem="Kha-bW-Cy4" secondAttribute="left" id="ZRM-As-nB5"/>
+                            <constraint firstItem="r84-Le-g3c" firstAttribute="width" secondItem="Kha-bW-Cy4" secondAttribute="width" multiplier="0.7" id="cvy-3T-PgC"/>
                             <constraint firstAttribute="topMargin" secondItem="sV3-mM-AZS" secondAttribute="top" id="n9f-Kz-htX"/>
                             <constraint firstAttribute="right" secondItem="sV3-mM-AZS" secondAttribute="right" id="o6F-iK-uLA"/>
+                            <constraint firstItem="r84-Le-g3c" firstAttribute="centerY" secondItem="Kha-bW-Cy4" secondAttribute="centerY" id="xL4-uo-nP7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="guiCollectionView" destination="sV3-mM-AZS" id="hM4-dE-mTD"/>
+                        <outlet property="guiPlaceHolderLabel" destination="r84-Le-g3c" id="HQE-91-xwU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBA-I2-Tzd" userLabel="First Responder" sceneMemberID="firstResponder"/>

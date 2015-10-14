@@ -20,6 +20,7 @@
 
 #pragma mark - Emus gifs cache.
 -(void)clearCachedResultsForEmu:(Emuticon *)emu;
+-(void)checkCacheStatus;
 -(void)clearAllCache;
 
 @end

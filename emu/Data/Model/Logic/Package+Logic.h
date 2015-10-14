@@ -200,6 +200,15 @@
 -(NSURL *)urlForPackagePoster;
 
 /**
+ * if poster url exists and the poster is an animted gif
+ * this will point to a smaller thumb jpg image of the animated gif.
+ * otherwise this will return nil.
+ *
+ *  @return NSURL to a thumb of animated gif or nil.
+ */
+-(NSURL *)urlForAnimatedPosterThumb;
+
+/**
  *  The url of the big poster overlay
  *
  *  @return NSURL to the package poster overlay (should be png with alpha). May be nil.
