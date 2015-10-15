@@ -108,6 +108,7 @@
 -(void)onFlipRequired:(NSTimer *)timer
 {
     if (self.ignoreAutoFlipping) return;
+    if (self.featuredData.count == 0) return;
     
     NSInteger page = [self currentPage];
     page = [self boundPageIndex:page+1];
@@ -119,6 +120,7 @@
          usingSpringWithDamping:0.6
           initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveLinear
                      animations:^{
+                         if (indexPath == nil) return;
                          [self.guiCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
                      } completion:^(BOOL finished) {
                          [self fixPage];

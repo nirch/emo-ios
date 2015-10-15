@@ -43,13 +43,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General &gt; Keyboard &gt; Keyboards &gt; Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACn-FA-ZyG" customClass="EMLabel">
-                                <rect key="frame" x="9" y="354" width="303" height="21"/>
+                                <rect key="frame" x="9" y="353" width="303" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.27479079369999998" green="0.5571715236" blue="0.89757764340000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use your Emu from your keyboard. Add the keyboard from settings and allow full access:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3vC-8c-tUS" customClass="EMLabel">
-                                <rect key="frame" x="9" y="265" width="302" height="80"/>
+                                <rect key="frame" x="9" y="264" width="302" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="302" id="2gG-Qm-iDS"/>
                                     <constraint firstAttribute="height" constant="80" id="bGK-A0-KgM"/>

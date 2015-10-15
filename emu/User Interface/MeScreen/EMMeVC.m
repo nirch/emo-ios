@@ -45,6 +45,14 @@
     [self initNavigationBar];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.favoritesListVC refreshLocalData];
+    [self.recentlySharedListVC refreshLocalData];
+    [self.recentlyViewedListVC refreshLocalData];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -65,9 +73,6 @@
         });
 
     } else {
-        [self.favoritesListVC refreshLocalData];
-        [self.recentlySharedListVC refreshLocalData];
-        [self.recentlyViewedListVC refreshLocalData];
         if (thumb) [self.navBarVC showImageAsLogo:thumb];
     }
 
@@ -133,7 +138,7 @@
         [vc configureForRecentlyViewedEmus];
         vc.identifier = emkUIRecentlyViewed;
         vc.delegate = self;
-        vc.placeHolderMessageWhenEmpty = LS(@"ME_NO_FAVORITES");
+        vc.placeHolderMessageWhenEmpty = LS(@"ME_NO_RECENT_VIEWED");
         self.recentlyViewedListVC = vc;
         
     }

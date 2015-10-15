@@ -247,6 +247,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     NSString *footageOID = [self.dataSource selectedFootageOID];
     NSArray *emus = [Emuticon allEmuticonsUsingFootageOID:footageOID inContext:EMDB.sh.context];
     for (Emuticon *emu in emus) {
+        [emu cleanUp:YES andRemoveResources:NO];
         emu.prefferedFootageOID = nil;
     }
     UserFootage *footageToRemove = [UserFootage findWithID:footageOID context:EMDB.sh.context];

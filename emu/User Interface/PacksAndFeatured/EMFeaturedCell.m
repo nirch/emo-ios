@@ -69,7 +69,6 @@
     self.guiPosterImage.image = nil;
     self.guiPosterOverlay.image = nil;
     self.guiLabel.text = self.label;
-    self.guiPosterImage.alpha = 1.0;
     self.guiLabel.alpha = 1.0;
 
     
@@ -94,24 +93,26 @@
 
 -(void)loadPosterAnimatedGif
 {
-    self.guiPosterImage.alpha = 0.1;
+    HMLOG(@"XXX", EM_DBG, @">>>> %@", [self.posterURL description]);
+    
     self.guiLabel.alpha = 0;
     self.guiPosterOverlay.alpha = 0;
     NSString *localThumbName = [self.animatedPosterThumbURL lastPathComponent];
     [self.guiPosterImage pin_setImageFromURL:self.animatedPosterThumbURL
                             placeholderImage:[UIImage imageNamed:localThumbName]
                                   completion:^(PINRemoteImageManagerResult *result) {
-                                      self.guiPosterImage.alpha = 1.0f;
                                       // Load the big animated gif poster
                                       [self.guiPosterGif pin_setImageFromURL:self.posterURL completion:^(PINRemoteImageManagerResult *result) {
-                                          if (result.error == nil) self.guiPosterOverlay.alpha = 1;
+                                          if (result.error == nil) {
+                                              self.guiPosterOverlay.alpha = 1;   
+                                          }
                                       }];
     }];
 }
 
 -(void)loadPosterImage
 {
-    self.guiPosterImage.alpha = 1.0;
+
     [self.guiPosterImage pin_setImageFromURL:self.posterURL];
 }
 

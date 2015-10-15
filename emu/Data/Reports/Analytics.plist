@@ -198,6 +198,16 @@ or
 			<key>description</key>
 			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard</string>
 		</dict>
+		<key>markedAsFavCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user added an emu to the fav list (unfav an emu doesn&apos;t subtract from this value)</string>
+		</dict>
+		<key>didEverMarkedAnyEmuAsFav</key>
+		<dict>
+			<key>description</key>
+			<string>true if the user ever marked an emu as fav</string>
+		</dict>
 	</dict>
 	<key>personDetails</key>
 	<dict>
@@ -994,17 +1004,6 @@ or
 			<string>1.0.8</string>
 			<key>description</key>
 			<string>User selected a specific emu from the feed (item details screen will be opened)</string>
-		</dict>
-		<key>ItemDetails:userPressedBackButton</key>
-		<dict>
-			<key>deprecated_ios</key>
-			<string>2.0.5</string>
-			<key>av</key>
-			<string>1.0.0</string>
-			<key>v</key>
-			<string>1.0.8</string>
-			<key>description</key>
-			<string></string>
 			<key>params</key>
 			<dict>
 				<key>emuticonName</key>
@@ -1015,6 +1014,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedRetakeButton</key>
@@ -1037,6 +1038,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedShareButton</key>
@@ -1063,6 +1066,8 @@ or
 				<string>&lt;string&gt; - the oid of the related package</string>
 				<key>sharedMediaType</key>
 				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedEmu</key>
@@ -1083,6 +1088,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userChoice</key>
@@ -1105,6 +1112,26 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>ItemDetails:favorite</key>
+		<dict>
+			<key>v</key>
+			<string>2.0.8</string>
+			<key>description</key>
+			<string>User added emu to favorites</string>
+			<key>params</key>
+			<dict>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>Share:success</key>

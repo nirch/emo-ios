@@ -279,6 +279,17 @@
     
     [AppManagement.sh updateLocalizedStrings];
     
+    // One time migration, deprecated footage per package.
+    // (reset such emus to default footage)
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (appCFG.deprecatedFootageForPack.boolValue == NO) {
+        for (Package *pack in [Package allPackagesInContext:EMDB.sh.context]) {
+            pack.prefferedFootageOID = nil;
+        }
+        appCFG.deprecatedFootageForPack = @YES;
+        [EMDB.sh save];
+    }
+    
     // Notify the user interface about the updates.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
 }

@@ -34,6 +34,7 @@
 
 // IB Outlets
 @property (weak, nonatomic) IBOutlet UIView *guiTabsBar;
+@property (weak, nonatomic) IBOutlet UIView *guiTutorialContainer;
 
 // Child VC
 @property (nonatomic, weak) EMTabsBarVC *tabsBarVC;
@@ -435,9 +436,6 @@
     // Navigate to the main feed.
     [self.tabsBarVC navigateToTabAtIndex:1 animated:NO];
     
-    // Show KB tutorial
-    [self showKBTutorial];
-    
     // Update the flow state
     [self updateFlowState:EMNavFlowStateUserControlsNavigation];
 }
@@ -467,13 +465,9 @@
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     appCFG.userViewedKBTutorial = @YES;
     [EMDB.sh save];
-    
-    if (self.kbTutorialVC == nil) {
-        EMTutorialVC *kbTutorialVC = [EMTutorialVC tutorialVCInParentVC:self];
-        self.kbTutorialVC = kbTutorialVC;
-        [self presentViewController:kbTutorialVC animated:YES completion:nil];
-        [self.kbTutorialVC start];
-    }
+
+    self.guiTutorialContainer.hidden = NO;
+    [self.kbTutorialVC start];
 }
 
 
@@ -488,6 +482,9 @@
 {
     if ([segue.identifier isEqualToString:@"tabs bar segue"]) {
         self.tabsBarVC = segue.destinationViewController;
+    } else if ([segue.identifier isEqualToString:@"kb tutorial segue"]) {
+        self.kbTutorialVC = segue.destinationViewController;
+        self.kbTutorialVC.delegate = self;
     }
 }
 
@@ -532,17 +529,17 @@
     // Open the recorder and make this VC the delegate of the recorder.
     EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:info];
     recorderVC.delegate = self;
-    [self presentViewController:recorderVC animated:YES completion:nil];
+    [self presentViewController:recorderVC animated:YES completion:^{
+        [self.splashVC hideAnimated:NO];
+    }];
 }
 
 #pragma mark - EMInterfaceDelegate
 -(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
 {
     if ([actionName isEqualToString:@"keyboard tutorial should be dismissed"]) {
-        [self.splashVC hideAnimated:YES];
-        [self dismissViewControllerAnimated:YES completion:^{
-            self.kbTutorialVC = nil;
-        }];
+        self.guiTutorialContainer.hidden = YES;
+        [self.kbTutorialVC removeFromParentViewController];
     }
 }
 
@@ -595,6 +592,11 @@
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
 {
+    if (flowType == EMRecorderFlowTypeOnboarding) {
+        // Show KB tutorial
+        [self showKBTutorial];
+    }
+    
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
@@ -641,90 +643,6 @@
         [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW_WITH_GOOD_BACKGROUND];
     }
 }
-
-//-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
-//{
-//    // Dismiss the recorder
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        [self.splashVC hideAnimated:YES];
-//        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
-//        
-//        if (flowType == EMRecorderFlowTypeOnboarding) {
-//            // Onboarding finished goals
-//            [self onboardingFinishedGoalsWithInfo:info];
-//        } else {
-//            [self retakeFinishedGoalWithInfo:info];
-//        }
-//    }];
-//    
-//    //    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//    //    if (flowType == EMRecorderFlowTypeOnboarding && !appCFG.userViewedKBTutorial.boolValue) {
-//    //        [self _handleChangeToMixScreen];
-//    //        [self showKBTutorial];
-//    //    } else {
-//    //        [self handleFlow];
-//    //    }
-//}
-//
-//-(void)onboardingFinishedGoalsWithInfo:(NSDictionary *)info
-//{
-//    [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED];
-//    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
-//    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
-//        [HMPanel.sh experimentGoalEvent:GK_ONBOARDING_FINISHED_WITH_GOOD_BACKGROUND];
-//    }
-//}
-//
-//
-//-(void)retakeFinishedGoalWithInfo:(NSDictionary *)info
-//{
-//    [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW];
-//    NSNumber *latestBackgroundMark = info[AK_EP_LATEST_BACKGROUND_MARK];
-//    if ([latestBackgroundMark isKindOfClass:[NSNumber class]] && latestBackgroundMark.integerValue == 1) {
-//        [HMPanel.sh experimentGoalEvent:GK_RETAKE_NEW_WITH_GOOD_BACKGROUND];
-//    }
-//}
-//
-//
-//
-//-(void)showKBTutorial
-//{
-//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//    //if (self.kbTutorialVC == nil || appCFG.userViewedKBTutorial.boolValue) return;
-//    appCFG.userViewedKBTutorial = @YES;
-//    [EMDB.sh save];
-//    
-//    if (self.kbTutorialVC == nil) {
-//        self.kbTutorialVC = [EMTutorialVC tutorialVCInParentVC:self];
-//        [self addChildViewController:self.kbTutorialVC];
-//        [self.guiTutorialContainer addSubview:self.kbTutorialVC.view];
-//        self.kbTutorialVC.view.frame = self.guiTutorialContainer.bounds;
-//    }
-//    
-//    self.guiPackagesSelectionContainer.hidden = YES;
-//    self.guiTutorialContainer.hidden = NO;
-//    self.guiTutorialContainer.alpha = 0;
-//    self.guiNavView.alpha = 0.3;
-//    self.guiNavView.userInteractionEnabled = NO;
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.guiTutorialContainer.alpha = 1;
-//    } completion:^(BOOL finished) {
-//        [self.kbTutorialVC start];
-//    }];
-//    
-//}
-//
-//-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
-//{
-//    // Dismiss the recorder
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        [self.splashVC hideAnimated:YES];
-//        [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];
-//    }];
-//    
-//    [self resetFetchedResultsController];
-//    [self.guiCollectionView reloadData];
-//}
 
 #pragma mark - IB Actions
 // ===========

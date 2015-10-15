@@ -11,6 +11,8 @@
     EMTopVCProtocol
 >
 
+@property (nonatomic) NSString *originUI;
+
 /**
  *  The feed UI states.
  */

@@ -14,5 +14,6 @@
 
 @property (nonatomic) NSString *emuticonOID;
 @property (nonatomic) UIColor *themeColor;
+@property (nonatomic) NSString *originUI;
 
 @end

@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 02:59:23 10/15/15 IDT
+//  Created by build script on 17:48:18 10/15/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -79,6 +79,11 @@
 #define AK_S_DID_EVER_FINISH_A_RETAKE @"didEverFinishARetake"
 
 
+/** The number of times the user added an emu to the fav list (unfav an
+    emu doesn't subtract from this value) **/
+#define AK_S_MARKED_AS_FAV_COUNT @"markedAsFavCount"
+
+
 /** The name of the emu used on the preview stage in the recorder
     onboarding flow (when user opened app for the first time) **/
 #define AK_S_EMU_NAME_USED_FOR_PREVIEW_ON_ONBOARDING @"emuNameUsedForPreviewOnOnboarding"
@@ -128,6 +133,10 @@
     within the app and the user also played around with video settings
     like numner pf loops and loop type. **/
 #define AK_S_NUMBER_OF_ENGAGED_VIDEO_SHARES_USING_APP_COUNT @"numberOfEngagedVideoSharesUsingAppCount"
+
+
+/** true if the user ever marked an emu as fav **/
+#define AK_S_DID_EVER_MARKED_ANY_EMU_AS_FAV @"didEverMarkedAnyEmuAsFav"
 
 
 /** A mnemonic name of the application. Currently: "Emu iOS". Used in case
@@ -420,6 +429,27 @@ User dismissed the takes screen
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User added emu to favorites
+**/
+#define AK_E_ITEM_DETAILS_FAVORITE @"ItemDetails:favorite"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - the screen it happened in **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 User selected an option
 **/
 #define AK_E_ITEM_DETAILS_USER_CHOICE @"ItemDetails:userChoice"
@@ -453,6 +483,9 @@ User tapped the Emu
 
 /** Param:emuticonName --> <string> - the name of the related emoticon **/
 #define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - the screen it happened in **/
+#define AK_EP_ORIGIN_UI @"originUI"
 
 /** Param:packageOID --> <string> - the oid of the related package **/
 #define AK_EP_PACKAGE_OID @"packageOID"
@@ -546,6 +579,22 @@ User selected a specific emu from the feed (item details screen will
     be opened)
 **/
 #define AK_E_ITEMS_USER_SELECTED_ITEM @"Items:userSelectedItem"
+
+/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
+#define AK_EP_EMUTICON_OID @"emuticonOID"
+
+/** Param:packageName --> <string> - the name of the related package **/
+#define AK_EP_PACKAGE_NAME @"packageName"
+
+/** Param:emuticonName --> <string> - the name of the related emoticon **/
+#define AK_EP_EMUTICON_NAME @"emuticonName"
+
+/** Param:originUI --> <string> - the screen it happened in **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:packageOID --> <string> - the oid of the related package **/
+#define AK_EP_PACKAGE_OID @"packageOID"
+
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 User opened the alpha numeric keyboard

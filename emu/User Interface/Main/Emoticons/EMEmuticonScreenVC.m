@@ -1024,6 +1024,19 @@
         self.emuticon.isFavorite = @NO;
     } else {
         self.emuticon.isFavorite = @YES;
+
+        // Analytics
+        Emuticon *emu = self.emuticon;
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emu.emuDef.name];
+        [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
+        [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
+        [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
+        [params addKey:AK_EP_ORIGIN_UI valueIfNotNil:self.originUI];
+        [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_FAVORITE info:params.dictionary];
+
+        [HMPanel.sh reportCountedSuperParameterForKey:AK_S_MARKED_AS_FAV_COUNT];
+        [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_MARKED_ANY_EMU_AS_FAV value:@YES];
     }
     [self refreshEmu];
 }

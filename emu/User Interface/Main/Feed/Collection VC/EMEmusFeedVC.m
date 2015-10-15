@@ -213,7 +213,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // Pass the emuticon oid to the destination view controller.
         EMEmuticonScreenVC *vc = segue.destinationViewController;
         vc.emuticonOID = emu.oid;
-        
+        vc.originUI = @"feed";
         
         // Analytics
         HMParams *params = [HMParams new];
@@ -221,6 +221,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
         [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
         [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
+        [params addKey:AK_EP_ORIGIN_UI value:@"feed"];
         [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
     }
 }

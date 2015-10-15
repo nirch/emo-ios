@@ -206,6 +206,17 @@
                            emkSender:self.identifier
                            };
     
+    // Analytics
+    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    HMParams *params = [HMParams new];
+    [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emu.emuDef.name];
+    [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
+    [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
+    [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
+    [params addKey:AK_EP_ORIGIN_UI value:self.identifier];
+    [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
+
+    
     [self.delegate controlSentActionNamed:emkUIActionPickedEmu
                                      info:info];
 }
