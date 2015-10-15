@@ -30,7 +30,7 @@
     appCFG.bucketName = [info safeStringForKey:@"bucket_name"];
     appCFG.clientName = [info safeStringForKey:@"client_name"];
     appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
-    
+    appCFG.dataVersionForcedFetch = [info safeNumberForKey:@"data_version"];
     
     //
     // Localization

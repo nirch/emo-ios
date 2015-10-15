@@ -41,7 +41,6 @@
 		081B08881BB5C7AB003AFF16 /* AppCFG+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08741BB5C7AB003AFF16 /* AppCFG+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		081B08891BB5C7AB003AFF16 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08761BB5C7AB003AFF16 /* AppCFG.m */; settings = {ASSET_TAGS = (); }; };
 		081B088A1BB5C7AB003AFF16 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08761BB5C7AB003AFF16 /* AppCFG.m */; settings = {ASSET_TAGS = (); }; };
-		08213B3A1ACC0A4600BE77E4 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */; };
 		08271FC91B01F5B90046F38E /* cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB51B01F5B90046F38E /* cancel.wav */; };
 		08271FCB1B01F5B90046F38E /* endRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB61B01F5B90046F38E /* endRecording.wav */; };
 		08271FCD1B01F5B90046F38E /* goodBG.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB71B01F5B90046F38E /* goodBG.wav */; };
@@ -134,7 +133,6 @@
 		085348E61BCF34E2008BBBF9 /* EmuKBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF53A1B3AA8900056FC34 /* EmuKBCell.m */; settings = {ASSET_TAGS = (); }; };
 		085348E71BCF34E5008BBBF9 /* EMKBOptionsDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */; settings = {ASSET_TAGS = (); }; };
 		085348E91BCF354A008BBBF9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085348E81BCF354A008BBBF9 /* libPods.a */; };
-		085348EA1BCF361E008BBBF9 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		085348EB1BCF362C008BBBF9 /* EMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89CC1A9B92AD00224A38 /* EMDB.m */; settings = {ASSET_TAGS = (); }; };
 		085348EC1BCF3630008BBBF9 /* NSManagedObject+FindAndCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */; settings = {ASSET_TAGS = (); }; };
 		085348ED1BCF3633008BBBF9 /* MongoID.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DED1B540BD500DC9619 /* MongoID.m */; settings = {ASSET_TAGS = (); }; };
@@ -353,7 +351,6 @@
 		08AA14761B0BA658002E1B2F /* EMOBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C674B1A937EC9007BC910 /* EMOBCell.m */; };
 		08AA14781B0BA658002E1B2F /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */; };
 		08AA14791B0BA658002E1B2F /* EMShareDebuggingFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9876B1B08CB3300EA0D73 /* EMShareDebuggingFile.m */; };
-		08AA147A1B0BA658002E1B2F /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */; };
 		08AA147C1B0BA658002E1B2F /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; };
 		08AA147D1B0BA658002E1B2F /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
 		08AA147E1B0BA658002E1B2F /* EMRecordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67471A937EC9007BC910 /* EMRecordButton.m */; };
@@ -453,7 +450,6 @@
 		08CA99A61BCFC6E3004A5A02 /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083D54741A8CB0A10048604A /* HMImageTools.mm */; settings = {ASSET_TAGS = (); }; };
 		08CA99A71BCFC6E3004A5A02 /* ThumbOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08875E161B1AF25600E6663C /* ThumbOutput.mm */; settings = {ASSET_TAGS = (); }; };
 		08CA99A81BCFC6E3004A5A02 /* PngSourceWithFX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08EF7F501AC71B3800829825 /* PngSourceWithFX.mm */; settings = {ASSET_TAGS = (); }; };
-		08CA99A91BCFC6E3004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		08CA99AA1BCFC6E3004A5A02 /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; settings = {ASSET_TAGS = (); }; };
 		08CA99AB1BCFC6E3004A5A02 /* EmuBaseStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A11A93BB65008D9068 /* EmuBaseStyle.m */; settings = {ASSET_TAGS = (); }; };
 		08CA99AC1BCFC6E3004A5A02 /* EmuSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */; settings = {ASSET_TAGS = (); }; };
@@ -595,6 +591,10 @@
 		08CA9A961BCFE843004A5A02 /* party-twerk-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A4D1BCFE842004A5A02 /* party-twerk-bg.gif */; settings = {ASSET_TAGS = (); }; };
 		08CA9A971BCFE843004A5A02 /* party-twerk-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A4E1BCFE842004A5A02 /* party-twerk-fg.gif */; settings = {ASSET_TAGS = (); }; };
 		08CA9A981BCFE843004A5A02 /* party-twerk-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A4E1BCFE842004A5A02 /* party-twerk-fg.gif */; settings = {ASSET_TAGS = (); }; };
+		08CA9AA41BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		08CA9AA51BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		08CA9AA61BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		08CA9AA71BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */; };
 		08CAEAD31A967906008A3E0A /* AWFanOpeningLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD01A967906008A3E0A /* AWFanOpeningLayer.m */; };
 		08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */; };
@@ -758,8 +758,6 @@
 		080CB3A81AA52C7300603E30 /* EMPackageSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPackageSelectionDelegate.h; sourceTree = "<group>"; };
 		080DC0E21B242C6E00953403 /* Keyboard.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keyboard.plist; sourceTree = "<group>"; };
 		080DC0E31B242C6E00953403 /* KeyboardBeta.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KeyboardBeta.plist; sourceTree = "<group>"; };
-		0810C54C1B3F3E7E00BD8727 /* emu1_8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_8.xcdatamodel; sourceTree = "<group>"; };
-		081B08521BB5BC2B003AFF16 /* emu2_0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu2_0.xcdatamodel; sourceTree = "<group>"; };
 		081B08631BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+CoreDataProperties.h"; sourceTree = "<group>"; };
 		081B08641BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Emuticon+CoreDataProperties.m"; sourceTree = "<group>"; };
 		081B08651BB5C7AB003AFF16 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
@@ -776,9 +774,6 @@
 		081B08741BB5C7AB003AFF16 /* AppCFG+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppCFG+CoreDataProperties.m"; sourceTree = "<group>"; };
 		081B08751BB5C7AB003AFF16 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
 		081B08761BB5C7AB003AFF16 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
-		08213B381ACC0A4600BE77E4 /* emu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu.xcdatamodel; sourceTree = "<group>"; };
-		08213B391ACC0A4600BE77E4 /* emu1_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_1.xcdatamodel; sourceTree = "<group>"; };
-		08213B3C1ACC0A9D00BE77E4 /* emu1_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_2.xcdatamodel; sourceTree = "<group>"; };
 		08271FB51B01F5B90046F38E /* cancel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cancel.wav; sourceTree = "<group>"; };
 		08271FB61B01F5B90046F38E /* endRecording.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = endRecording.wav; sourceTree = "<group>"; };
 		08271FB71B01F5B90046F38E /* goodBG.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = goodBG.wav; sourceTree = "<group>"; };
@@ -792,7 +787,6 @@
 		082720BF1B038CCB0046F38E /* EMCaches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCaches.m; sourceTree = "<group>"; };
 		0827C6D81A8608E200B14294 /* uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = uniformBGParams.xml; sourceTree = "<group>"; };
 		082902721AFA7ACF004DE369 /* s3-2006-03-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "s3-2006-03-01.json"; sourceTree = "<group>"; };
-		082B282A1AFFC84B00E25323 /* emu1_4_12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_4_12.xcdatamodel; sourceTree = "<group>"; };
 		08325A931B2EAE5A00C6C5C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08325A9B1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmuTestsAppDelegate.h; path = "Supporting Files/EmuTestsAppDelegate.h"; sourceTree = "<group>"; };
 		08325A9C1B2EAF1E00C6C5C8 /* EmuTestsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmuTestsAppDelegate.m; path = "Supporting Files/EmuTestsAppDelegate.m"; sourceTree = "<group>"; };
@@ -868,7 +862,6 @@
 		084349C11B837B1C009A653F /* EMShareInputBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EMShareInputBox.xib; sourceTree = "<group>"; };
 		084349C41B837EA0009A653F /* EMShareInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareInputVC.h; sourceTree = "<group>"; };
 		084349C51B837EA0009A653F /* EMShareInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareInputVC.m; sourceTree = "<group>"; };
-		084349C81B83B7FD009A653F /* emu1_10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_10.xcdatamodel; sourceTree = "<group>"; };
 		084349CF1B84999F009A653F /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		084349D01B84999F009A653F /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
 		084349D51B84CCF6009A653F /* EMShareInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareInputDelegate.h; sourceTree = "<group>"; };
@@ -974,7 +967,6 @@
 		086FFB671BB55EB40097CA45 /* EMPacksDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPacksDataSource.h; sourceTree = "<group>"; };
 		086FFB681BB55EB40097CA45 /* EMPacksDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPacksDataSource.m; sourceTree = "<group>"; };
 		087403121B63E41200866A74 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
-		087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
 		087C5D3C1BCBF8B3004B3121 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		087F204D1A8CB80A002B1678 /* backupCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backupCode.h; sourceTree = "<group>"; };
@@ -1020,7 +1012,6 @@
 		089E78B41A780DEB00BC3479 /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
 		089E78B51A780DEB00BC3479 /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
 		089E78B61A780DEB00BC3479 /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
-		089E943C1AE3DFAB004BECAE /* emu1_ 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 4.xcdatamodel"; sourceTree = "<group>"; };
 		089EAB811AE674D90074AD09 /* EMActionsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMActionsArray.h; sourceTree = "<group>"; };
 		089EAB821AE674D90074AD09 /* EMActionsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMActionsArray.m; sourceTree = "<group>"; };
 		08A456D11B9D8D5A001AB79E /* MainNavigation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainNavigation.storyboard; sourceTree = "<group>"; };
@@ -1046,7 +1037,6 @@
 		08A9071B1ACABB9E008534F7 /* EMAlertsPermissionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAlertsPermissionVC.m; sourceTree = "<group>"; };
 		08AA14371B08F062002E1B2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08AA14391B08F069002E1B2F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		08AA143A1B0B341F002E1B2F /* emu1_6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_6.xcdatamodel; sourceTree = "<group>"; };
 		08AA15131B0BA658002E1B2F /* emubeta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emubeta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08AA15151B0BA73A002E1B2F /* emubeta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "emubeta-Info.plist"; sourceTree = "<group>"; };
 		08AB68051AD5629C0092B62B /* TagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagCell.h; sourceTree = "<group>"; };
@@ -1077,7 +1067,6 @@
 		08BBBC6F1AD9758200D4AD1D /* EmuSectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuSectionReusableView.m; sourceTree = "<group>"; };
 		08BBBC711AD9B15F00D4AD1D /* Package+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Package+Logic.h"; sourceTree = "<group>"; };
 		08BBBC721AD9B15F00D4AD1D /* Package+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Package+Logic.m"; sourceTree = "<group>"; };
-		08BBBC791ADA6E9E00D4AD1D /* emu1_ 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 3.xcdatamodel"; sourceTree = "<group>"; };
 		08BD6A2D1B31990C0001F614 /* flames.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flames.gif; sourceTree = "<group>"; };
 		08BD6A2F1B319A660001F614 /* meeow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = meeow.jpg; sourceTree = "<group>"; };
 		08BE1F9C1B28487C00A34232 /* EMDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDebugViewController.h; sourceTree = "<group>"; };
@@ -1121,6 +1110,17 @@
 		08CA9A4C1BCFE842004A5A02 /* party-trippy-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "party-trippy-fg.gif"; sourceTree = "<group>"; };
 		08CA9A4D1BCFE842004A5A02 /* party-twerk-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "party-twerk-bg.gif"; sourceTree = "<group>"; };
 		08CA9A4E1BCFE842004A5A02 /* party-twerk-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "party-twerk-fg.gif"; sourceTree = "<group>"; };
+		08CA9A9A1BD05302004A5A02 /* emu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu.xcdatamodel; sourceTree = "<group>"; };
+		08CA9A9B1BD05302004A5A02 /* emu1_ 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 3.xcdatamodel"; sourceTree = "<group>"; };
+		08CA9A9C1BD05302004A5A02 /* emu1_ 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 4.xcdatamodel"; sourceTree = "<group>"; };
+		08CA9A9D1BD05302004A5A02 /* emu1_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_1.xcdatamodel; sourceTree = "<group>"; };
+		08CA9A9E1BD05302004A5A02 /* emu1_10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_10.xcdatamodel; sourceTree = "<group>"; };
+		08CA9A9F1BD05302004A5A02 /* emu1_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_2.xcdatamodel; sourceTree = "<group>"; };
+		08CA9AA01BD05302004A5A02 /* emu1_4_12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_4_12.xcdatamodel; sourceTree = "<group>"; };
+		08CA9AA11BD05302004A5A02 /* emu1_6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_6.xcdatamodel; sourceTree = "<group>"; };
+		08CA9AA21BD05302004A5A02 /* emu1_8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_8.xcdatamodel; sourceTree = "<group>"; };
+		08CA9AA31BD05302004A5A02 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
+		08CA9AA81BD05362004A5A02 /* emu2_0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu2_0.xcdatamodel; sourceTree = "<group>"; };
 		08CAEAC11A95E202008A3E0A /* EMSilhouetteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSilhouetteView.h; sourceTree = "<group>"; };
 		08CAEAC21A95E202008A3E0A /* EMSilhouetteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSilhouetteView.m; sourceTree = "<group>"; };
 		08CAEACF1A967906008A3E0A /* AWFanOpeningLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWFanOpeningLayer.h; sourceTree = "<group>"; };
@@ -1787,7 +1787,7 @@
 		085C66FB1A937EC9007BC910 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */,
+				08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */,
 				08CB89CB1A9B92AD00224A38 /* EMDB.h */,
 				08CB89CC1A9B92AD00224A38 /* EMDB.m */,
 				085C67101A937EC9007BC910 /* NSManagedObject+FindAndCreate.h */,
@@ -3118,7 +3118,6 @@
 				085349301BCF4BD9008BBBF9 /* HMImageTools.mm in Sources */,
 				0853492D1BCF4BB7008BBBF9 /* ThumbOutput.mm in Sources */,
 				085349211BCF3BAE008BBBF9 /* PngSourceWithFX.mm in Sources */,
-				085348EA1BCF361E008BBBF9 /* emu.xcdatamodeld in Sources */,
 				0853490D1BCF36E6008BBBF9 /* EMPackageCell.m in Sources */,
 				0853491E1BCF3B2D008BBBF9 /* EmuBaseStyle.m in Sources */,
 				085348E51BCF34DE008BBBF9 /* EmuSectionReusableView.m in Sources */,
@@ -3154,6 +3153,7 @@
 				085348F31BCF364B008BBBF9 /* UserFootage.m in Sources */,
 				085349261BCF3C32008BBBF9 /* HrEffectRGBA.cpp in Sources */,
 				085349041BCF36BE008BBBF9 /* EMShareSaveToCameraRoll.m in Sources */,
+				08CA9AA71BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
 				085348E71BCF34E5008BBBF9 /* EMKBOptionsDrawer.m in Sources */,
 				085348FD1BCF364B008BBBF9 /* UserFootage+Logic.m in Sources */,
 				085348E11BCF34CF008BBBF9 /* EMEmusKeyboardVC.m in Sources */,
@@ -3257,7 +3257,6 @@
 				08AA14761B0BA658002E1B2F /* EMOBCell.m in Sources */,
 				08AA14781B0BA658002E1B2F /* NSNotificationCenter+Utils.m in Sources */,
 				08AA14791B0BA658002E1B2F /* EMShareDebuggingFile.m in Sources */,
-				08AA147A1B0BA658002E1B2F /* emu.xcdatamodeld in Sources */,
 				08AA147C1B0BA658002E1B2F /* EMPackageCell.m in Sources */,
 				08FB195D1BC7C45F00F227C6 /* EMEmusFeedNavigationCFG.m in Sources */,
 				08AA147D1B0BA658002E1B2F /* EmuticonDef+Logic.m in Sources */,
@@ -3326,6 +3325,7 @@
 				08AA14A51B0BA658002E1B2F /* EMSilhouetteView.m in Sources */,
 				08357F501BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,
 				08FB19611BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */,
+				08CA9AA61BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3349,7 +3349,6 @@
 				08CA99A61BCFC6E3004A5A02 /* HMImageTools.mm in Sources */,
 				08CA99A71BCFC6E3004A5A02 /* ThumbOutput.mm in Sources */,
 				08CA99A81BCFC6E3004A5A02 /* PngSourceWithFX.mm in Sources */,
-				08CA99A91BCFC6E3004A5A02 /* emu.xcdatamodeld in Sources */,
 				08CA99AA1BCFC6E3004A5A02 /* EMPackageCell.m in Sources */,
 				08CA99AB1BCFC6E3004A5A02 /* EmuBaseStyle.m in Sources */,
 				08CA99AC1BCFC6E3004A5A02 /* EmuSectionReusableView.m in Sources */,
@@ -3385,6 +3384,7 @@
 				08CA99CA1BCFC6E3004A5A02 /* UserFootage.m in Sources */,
 				08CA99CB1BCFC6E3004A5A02 /* HrEffectRGBA.cpp in Sources */,
 				08CA99CC1BCFC6E3004A5A02 /* EMShareSaveToCameraRoll.m in Sources */,
+				08CA9AA51BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
 				08CA99CD1BCFC6E3004A5A02 /* EMKBOptionsDrawer.m in Sources */,
 				08CA99CE1BCFC6E3004A5A02 /* UserFootage+Logic.m in Sources */,
 				08CA99CF1BCFC6E3004A5A02 /* EMEmusKeyboardVC.m in Sources */,
@@ -3488,7 +3488,6 @@
 				085C679B1A937EC9007BC910 /* EMOBCell.m in Sources */,
 				089E78B81A780DEB00BC3479 /* NSNotificationCenter+Utils.m in Sources */,
 				08B9876C1B08CB3300EA0D73 /* EMShareDebuggingFile.m in Sources */,
-				08213B3A1ACC0A4600BE77E4 /* emu.xcdatamodeld in Sources */,
 				080CB39B1AA51B6100603E30 /* EMPackageCell.m in Sources */,
 				08FB195C1BC7C45F00F227C6 /* EMEmusFeedNavigationCFG.m in Sources */,
 				08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */,
@@ -3557,6 +3556,7 @@
 				08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */,
 				08357F4F1BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,
 				08FB19601BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */,
+				08CA9AA41BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4683,22 +4683,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		08213B371ACC0A4600BE77E4 /* emu.xcdatamodeld */ = {
+		08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				081B08521BB5BC2B003AFF16 /* emu2_0.xcdatamodel */,
-				084349C81B83B7FD009A653F /* emu1_10.xcdatamodel */,
-				087BCFB81B5FC18500A7A930 /* emu1_9.xcdatamodel */,
-				0810C54C1B3F3E7E00BD8727 /* emu1_8.xcdatamodel */,
-				08AA143A1B0B341F002E1B2F /* emu1_6.xcdatamodel */,
-				082B282A1AFFC84B00E25323 /* emu1_4_12.xcdatamodel */,
-				089E943C1AE3DFAB004BECAE /* emu1_ 4.xcdatamodel */,
-				08BBBC791ADA6E9E00D4AD1D /* emu1_ 3.xcdatamodel */,
-				08213B3C1ACC0A9D00BE77E4 /* emu1_2.xcdatamodel */,
-				08213B381ACC0A4600BE77E4 /* emu.xcdatamodel */,
-				08213B391ACC0A4600BE77E4 /* emu1_1.xcdatamodel */,
+				08CA9AA81BD05362004A5A02 /* emu2_0.xcdatamodel */,
+				08CA9A9A1BD05302004A5A02 /* emu.xcdatamodel */,
+				08CA9A9B1BD05302004A5A02 /* emu1_ 3.xcdatamodel */,
+				08CA9A9C1BD05302004A5A02 /* emu1_ 4.xcdatamodel */,
+				08CA9A9D1BD05302004A5A02 /* emu1_1.xcdatamodel */,
+				08CA9A9E1BD05302004A5A02 /* emu1_10.xcdatamodel */,
+				08CA9A9F1BD05302004A5A02 /* emu1_2.xcdatamodel */,
+				08CA9AA01BD05302004A5A02 /* emu1_4_12.xcdatamodel */,
+				08CA9AA11BD05302004A5A02 /* emu1_6.xcdatamodel */,
+				08CA9AA21BD05302004A5A02 /* emu1_8.xcdatamodel */,
+				08CA9AA31BD05302004A5A02 /* emu1_9.xcdatamodel */,
 			);
-			currentVersion = 081B08521BB5BC2B003AFF16 /* emu2_0.xcdatamodel */;
+			currentVersion = 08CA9AA81BD05362004A5A02 /* emu2_0.xcdatamodel */;
 			path = emu.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

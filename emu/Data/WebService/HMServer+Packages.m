@@ -27,7 +27,14 @@
 
 -(void)fetchPackagesUpdatesSince:(NSNumber *)timestamp withInfo:(NSDictionary *)info
 {
-    if (timestamp == nil ||
+    BOOL forcedToFetchAll = NO;
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if ([appCFG.dataVersionForcedFetch compare:@2] == NSOrderedAscending) {
+        forcedToFetchAll = YES;
+    }
+
+    if (forcedToFetchAll ||
+        timestamp == nil ||
         ![timestamp isKindOfClass:[NSNumber class]] ||
         [timestamp isEqualToNumber:@0]) {
         // Fetch it all.

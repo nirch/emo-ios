@@ -38,7 +38,7 @@
 #import "EMRecorderDelegate.h"
 #import "EMFootagesVC.h"
 #import "EMEmuticonScreenVC.h"
-
+#import "EMAlertsPermissionVC.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -79,6 +79,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 // Footages VC
 @property (nonatomic, weak) EMFootagesVC *footagesVC;
+
+// Ask user about alerts permission
+@property (nonatomic, weak) EMAlertsPermissionVC *alertsPermissionVC;
 
 @end
 
@@ -364,6 +367,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         if (indexPath == nil) return;
         [self scrollToSection:indexPath.section animated:NO];
     }
+    
+    Package *pack = [Package findWithID:packOID context:EMDB.sh.context];
+    [self _handleChangeToPackage:pack];
 }
 
 #pragma mark - Observers handlers
@@ -890,6 +896,57 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 
+}
+
+#pragma mark - Handle change to package
+/**
+ *  Some logic that happens when user navigate to a specific package
+ *  by choosing it with a button.
+ *
+ *  (this code will not run if the user just scrolls to a pack)
+ *
+ *  @param package The package to handle
+ */
+-(void)_handleChangeToPackage:(Package *)package
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSInteger numberOfViewedPackagesBeforeAlertsQuestion = [AppCFG tweakedInteger:@"number_of_viewed_packages_before_alerts_question" defaultValue:0];
+    NSInteger numberOfViewedPackages = [Package countNumberOfViewedPackagesInContext:EMDB.sh.context];
+    if (!appCFG.userAskedInMainScreenAboutAlerts.boolValue) {
+        // Never asked.
+        // Ask the user if interested in background fetches / auto updates.
+        if (numberOfViewedPackages >= numberOfViewedPackagesBeforeAlertsQuestion)
+            [self askUserAboutAlerts];
+    }
+    
+    // If package never viewed before by the user, count the event.
+    if (!package.viewedByUser.boolValue) {
+        [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED];
+        [HMPanel.sh reportSuperParameterKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:@YES];
+    }
+    
+    // Mark package as viewed.
+    package.viewedByUser = @YES;
+    [EMDB.sh save];
+}
+
+#pragma mark - Alerts question
+-(void)showAlertsPermissionScreenAnimated:(BOOL)animated
+{
+    if (self.alertsPermissionVC == nil) {
+        self.alertsPermissionVC = [EMAlertsPermissionVC alertsPermissionVCInParentVC:self];
+    }
+    [self.alertsPermissionVC showAnimated:animated];
+}
+
+-(void)askUserAboutAlerts
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    appCFG.userAskedInMainScreenAboutAlerts = @YES;
+    [EMDB.sh save];
+    dispatch_after(DTIME(2), dispatch_get_main_queue(), ^{
+        [self showAlertsPermissionScreenAnimated:YES];
+    });
 }
 
 #pragma mark - IB Actions
