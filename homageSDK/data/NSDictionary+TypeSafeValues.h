@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
+@import UIKit;
+@import Foundation;
+
 @interface NSDictionary (TypeSafeValues)
 
 -(NSString *)safeStringForKey:(id)key;

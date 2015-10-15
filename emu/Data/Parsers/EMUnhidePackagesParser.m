@@ -8,6 +8,7 @@
 
 #import "EMUnhidePackagesParser.h"
 #import "EMDB.h"
+#import "HMParams.h"
 
 @implementation EMUnhidePackagesParser
 
