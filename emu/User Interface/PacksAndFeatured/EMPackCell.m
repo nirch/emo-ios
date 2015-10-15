@@ -47,6 +47,8 @@
 #pragma mark - Update the UI of the cell
 -(void)updateGUI
 {
+    [self.guiIcon pin_cancelImageDownload];
+    [self.guiClippedImage pin_cancelImageDownload];
     self.guiLabel.text = nil;
     self.guiClippedImage.image = nil;
     self.guiButton.tag = self.indexTag;

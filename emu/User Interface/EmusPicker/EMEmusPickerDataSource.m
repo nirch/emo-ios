@@ -43,6 +43,7 @@
                                  sortBy:sortBy
                                   limit:limit];
         _minimumCellsCount = minimumCellsCount?minimumCellsCount.integerValue:0;
+        _failedOIDS = [NSMutableDictionary new];
     }
     return self;
 }

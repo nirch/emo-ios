@@ -160,6 +160,7 @@
 -(void)updateGUIToFailedState
 {
     [self clear];
+    self.guiFailedImage.hidden = NO;
 }
 
 -(void)updateGUIToRequiresResources
@@ -209,6 +210,9 @@
 
 -(void)clear
 {
+    // Clear indicators
+    self.guiFailedImage.hidden = YES;
+    
     // Clear animated gif
     [self.guiAnimatedGif stopAnimating];
     self.guiAnimatedGif.animatedImage = nil;

@@ -377,8 +377,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     if (indexPath == nil || oid == nil || packageOID == nil) return;
     
     // Check for errors.
-    if (notification.isReportingError)
+    if (notification.isReportingError) {
         self.dataSource.failedOIDS[oid] = @YES;
+    }
     
     // ignore notifications not relating to emus visible on screen.
     if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
@@ -486,7 +487,15 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [EMUISound.sh playSoundNamed:SND_SOFT_CLICK];
-
+    if (indexPath == nil) return;
+    
+    NSString *oid = [self.dataSource emuOIDAtIndexPath:indexPath];
+    if (self.dataSource.failedOIDS[oid]) {
+        [self.dataSource.failedOIDS removeAllObjects];
+        [self refreshGUIWithLocalData];
+        return;
+    }
+    
     if (self.currentState == EMEmusFeedStateBrowsing) {
         // -------------------------------------------------------
         // Tapped emu when browsing.

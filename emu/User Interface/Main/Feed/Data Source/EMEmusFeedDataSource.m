@@ -33,6 +33,7 @@
     self = [super init];
     if (self) {
         self.selectedIndexPaths = [NSMutableDictionary new];
+        _failedOIDS = [NSMutableDictionary new];
     }
     return self;
 }

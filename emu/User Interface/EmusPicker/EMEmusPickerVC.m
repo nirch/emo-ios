@@ -163,8 +163,9 @@
     if (indexPath == nil || oid == nil || packageOID == nil) return;
     
     // Check for errors.
-    if (notification.isReportingError)
+    if (notification.isReportingError) {
         self.dataSource.failedOIDS[oid] = @YES;
+    }
     
     // ignore notifications not relating to emus visible on screen.
     if (![[self.guiCollectionView indexPathsForVisibleItems] containsObject:indexPath]) return;
@@ -191,6 +192,13 @@
     
     NSString *emuOID = [self.dataSource emuticonOIDAtIndexPath:indexPath];
     if (emuOID == nil) return;
+    
+    if (self.dataSource.failedOIDS[emuOID]) {
+        [self.dataSource.failedOIDS removeAllObjects];
+        [self refreshLocalData];
+        return;
+    }
+
     
     NSDictionary *info = @{
                            emkEmuticonOID:emuOID,
