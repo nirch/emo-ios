@@ -154,56 +154,7 @@
 -(void)onRenderedEmu:(NSNotification *)notification
 {
     // Deprecated
-    // TODO: Remove this code before merge to master.
     return;
-//    // Upload samples only if enabled.
-//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//    if (![appCFG shouldUploadSampledResults]) return;
-//    
-//    // Get related package to sample.
-//    NSDictionary *info = notification.userInfo;
-//    NSString *packageOID = info[@"packageOID"];
-//    NSString *emuOID = info[@"emuticonOID"];
-//    if (packageOID == nil || emuOID == nil) return;
-//    
-//    // Check if package needs to be sampled.
-//    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
-//    if (![package resultNeedToBeSampledForEmuOID:emuOID]) return;
-//    
-//    // Get the sampled emu in this package.
-//    Emuticon *emuToSample = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-//    if (emuToSample == nil) return;
-//    
-//    // Upload the animated gif generated for this emu.
-//    // Increase the uploaded samples count by 1.
-//    // Mark package as "already sampled" if max number of samples reached.
-//    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-//    uploadRequest.bucket = appCFG.bucketName;
-//
-//    NSString *key = [emuToSample s3KeyForSampledResult];
-//    uploadRequest.key = key;
-//    
-//    NSURL *localURL = [emuToSample animatedGifURL];
-//    uploadRequest.body = localURL;
-//    
-//    uploadRequest.contentType = @"image/gif";
-//    uploadRequest.metadata = [emuToSample metaDataForUpload];
-//    
-//    AWSTask *uploadTask = [self.transferManager upload:uploadRequest];
-//    [uploadTask continueWithExecutor:[AWSExecutor defaultExecutor] withBlock:^id(AWSTask *task) {
-//        HMLOG(TAG, EM_DBG, @"upload task: %@", task);
-//        if (task.completed && task.error == nil) {
-//            NSInteger count = emuToSample.emuDef.package.sampledEmuCount.integerValue;
-//            count++;
-//            emuToSample.emuDef.package.sampledEmuCount = @(count);
-//            emuToSample.renderedSampleUploaded = @YES;
-//        }
-//        
-//        if (task.error) {
-//            HMLOG(TAG, EM_DBG, @"Error while uploading sampled result.");
-//        }
-//        return nil;
-//    }];
 }
 
 /**
