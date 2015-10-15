@@ -106,6 +106,9 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
+    // --------------------
+    // Packages updates
+    
     // On packages data refresh required.
     [nc addUniqueObserver:self
                  selector:@selector(onPackagesDataRequired:)
@@ -117,6 +120,21 @@
                  selector:@selector(onPackagesDataUpdated:)
                      name:emkDataUpdatedPackages
                    object:nil];
+
+    
+    // ---------------------------
+    // Unhiding packages requests
+    //
+
+    // On unhide packages reqest to server required.
+    [nc addUniqueObserver:self
+                 selector:@selector(onUnhidePackagesRequestRequired:)
+                     name:emkDataRequiredUnhidePackages
+                   object:nil];
+    
+    // --------------------
+    // Rendering notifications
+    //
     
     // Notifications about newly rendered content
     [nc addUniqueObserver:self
@@ -263,6 +281,13 @@
     
     // Notify the user interface about the updates.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
+}
+
+-(void)onUnhidePackagesRequestRequired:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *code = info[@"code"];
+    [self.server unhideUsingCode:code withInfo:info];
 }
 
 #pragma mark - Background fetch

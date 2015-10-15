@@ -288,6 +288,44 @@ or
 	</dict>
 	<key>events</key>
 	<dict>
+		<key>DeepLink:code</key>
+		<dict>
+			<key>v</key>
+			<string>2.0.6</string>
+			<key>description</key>
+			<string>User opened the app using a deep link with a code, initiating some action in the app.</string>
+			<key>params</key>
+			<dict>
+				<key>linkType</key>
+				<string>&lt;string&gt; - the type of link and related action:
+
+	unhide packages - user opened a deep link with a code for requesting server to unhide one or more hidden packages</string>
+				<key>code</key>
+				<string>&lt;string&gt; - the code passed with the link</string>
+			</dict>
+			<key>fabric</key>
+			<true/>
+		</dict>
+		<key>DeepLink:alertUserChoice</key>
+		<dict>
+			<key>v</key>
+			<string>2.0.6</string>
+			<key>description</key>
+			<string>After a user opened the app using a deep link, a choice was presented and the user chose an option.</string>
+			<key>params</key>
+			<dict>
+				<key>linkType</key>
+				<string>&lt;string&gt; - the type of link and related action:
+
+	unhide packages - user opened a deep link with a code for requesting server to unhide one or more hidden packages</string>
+				<key>code</key>
+				<string>&lt;string&gt; - the code passed with the link</string>
+				<key>userChoice</key>
+				<string>&lt;string&gt; - user choice</string>
+			</dict>
+			<key>fabric</key>
+			<true/>
+		</dict>
 		<key>Migration:hasPrefferedFootageAndCacheDirExists</key>
 		<dict>
 			<key>av</key>
@@ -356,6 +394,8 @@ or
 		</dict>
 		<key>App:versionUpdated</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.8</string>
 			<key>v</key>
@@ -622,6 +662,8 @@ or
 		</dict>
 		<key>Rec:stageAlignStarted</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -631,6 +673,8 @@ or
 		</dict>
 		<key>Rec:stageAlignUserPressedContinueWithBadBackground</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -645,6 +689,8 @@ or
 		</dict>
 		<key>Rec:stageAlignGoodBackgroundSatisfied</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>av</key>
@@ -669,6 +715,8 @@ or
 			<dict>
 				<key>timePassedSinceRecorderOpened</key>
 				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>goodBackgroundSatisfied</key>
+				<string>&lt;boolean&gt; - true if good background satisfied and extraction started automatically. false if user pressed &quot;continue anyway&quot;.</string>
 			</dict>
 		</dict>
 		<key>Rec:stageExtUserPressedRecord</key>
@@ -696,6 +744,8 @@ or
 		</dict>
 		<key>Rec:stageRecordingDidStart</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -726,6 +776,8 @@ or
 		</dict>
 		<key>Rec:stageRecordingDidFinish</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -945,6 +997,8 @@ or
 		</dict>
 		<key>ItemDetails:userPressedBackButton</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -965,6 +1019,8 @@ or
 		</dict>
 		<key>ItemDetails:userPressedRetakeButton</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -985,6 +1041,8 @@ or
 		</dict>
 		<key>ItemDetails:userPressedShareButton</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1296,6 +1354,8 @@ or
 		</dict>
 		<key>BE:zippedPackageDownloadSuccess</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1312,6 +1372,8 @@ or
 		</dict>
 		<key>BE:zippedPackageDownloadFailed</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1330,6 +1392,8 @@ or
 		</dict>
 		<key>BE:zippedPackageUnzipSuccess</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1346,6 +1410,8 @@ or
 		</dict>
 		<key>BE:zippedPackageUnzipFailed</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1543,6 +1609,10 @@ or
 		<string>Keyboard</string>
 		<key>BE</key>
 		<string>Back end events</string>
+		<key>DeepLink</key>
+		<string>Deep links related events</string>
+		<key>ME</key>
+		<string>Me screen</string>
 	</dict>
 </dict>
 </plist>

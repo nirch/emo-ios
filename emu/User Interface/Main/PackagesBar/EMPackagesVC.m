@@ -117,7 +117,7 @@
     }
     
     NSPredicate *predicate;
-    predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
+    predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND (isHidden=nil OR isHidden=%@)", @YES, @NO];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;

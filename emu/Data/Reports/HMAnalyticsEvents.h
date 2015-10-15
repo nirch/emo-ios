@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 17:37:07 09/21/15 IDT
+//  Created by build script on 02:59:23 10/15/15 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -226,19 +226,6 @@ The application was launched by the user.
 #define AK_E_APP_LAUNCHED @"App:launched"
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The application was launched with a higher version than the version it
-    was launched with previously.
-**/
-#define AK_E_APP_VERSION_UPDATED @"App:versionUpdated"
-
-/** Param:previousVersion --> <string> - the previous version the app was launched with **/
-#define AK_EP_PREVIOUS_VERSION @"previousVersion"
-
-/** Param:currentVersion --> <string> - the current version the app was launched with **/
-#define AK_EP_CURRENT_VERSION @"currentVersion"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Background fetch
 **/
 #define AK_E_BE_BACKGROUND_FETCH @"BE:backgroundFetch"
@@ -257,59 +244,36 @@ Background fetch
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-A zip file with resources for a package (that wasn't bundled with the
-    app) failed to download to the device
+After a user opened the app using a deep link, a choice was presented
+    and the user chose an option.
 **/
-#define AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_FAILED @"BE:zippedPackageDownloadFailed"
+#define AK_E_DEEP_LINK_ALERT_USER_CHOICE @"DeepLink:alertUserChoice"
 
-/** Param:error --> <string> - description of the error **/
-#define AK_EP_ERROR @"error"
+/** Param:linkType --> <string> - the type of link and related action:
 
-/** Param:remoteURL --> <string> - the web url the file was downloaded from. **/
-#define AK_EP_REMOTE_URL @"remoteURL"
+	unhide packages - user opened a deep link with a code for requesting server to unhide one or more hidden packages **/
+#define AK_EP_LINK_TYPE @"linkType"
 
-/** Param:localFileName --> <string> - the local file name. **/
-#define AK_EP_LOCAL_FILE_NAME @"localFileName"
+/** Param:userChoice --> <string> - user choice **/
+#define AK_EP_USER_CHOICE @"userChoice"
+
+/** Param:code --> <string> - the code passed with the link **/
+#define AK_EP_CODE @"code"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-A zip file with resources for a package (that wasn't bundled with the
-    app) downloaded to the device successfully
+User opened the app using a deep link with a code, initiating some
+    action in the app.
 **/
-#define AK_E_BE_ZIPPED_PACKAGE_DOWNLOAD_SUCCESS @"BE:zippedPackageDownloadSuccess"
+#define AK_E_DEEP_LINK_CODE @"DeepLink:code"
 
-/** Param:remoteURL --> <string> - the web url the file was downloaded from. **/
-#define AK_EP_REMOTE_URL @"remoteURL"
+/** Param:linkType --> <string> - the type of link and related action:
 
-/** Param:localFileName --> <string> - the local file name. **/
-#define AK_EP_LOCAL_FILE_NAME @"localFileName"
+	unhide packages - user opened a deep link with a code for requesting server to unhide one or more hidden packages **/
+#define AK_EP_LINK_TYPE @"linkType"
 
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-A zip file with resources for a package failed to unzip
-**/
-#define AK_E_BE_ZIPPED_PACKAGE_UNZIP_FAILED @"BE:zippedPackageUnzipFailed"
-
-/** Param:packageName --> <string> - the name of the package **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:error --> <string> - description of the error **/
-#define AK_EP_ERROR @"error"
-
-/** Param:localFileName --> <string> - the local file name. **/
-#define AK_EP_LOCAL_FILE_NAME @"localFileName"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-A zip file with resources for a package was unzipped successfully
-**/
-#define AK_E_BE_ZIPPED_PACKAGE_UNZIP_SUCCESS @"BE:zippedPackageUnzipSuccess"
-
-/** Param:packageName --> <string> - the name of the package **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:localFileName --> <string> - the local file name. **/
-#define AK_EP_LOCAL_FILE_NAME @"localFileName"
+/** Param:code --> <string> - the code passed with the link **/
+#define AK_EP_CODE @"code"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -477,24 +441,6 @@ User selected an option
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-**/
-#define AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON @"ItemDetails:userPressedBackButton"
-
-/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
-#define AK_EP_EMUTICON_OID @"emuticonOID"
-
-/** Param:packageName --> <string> - the name of the related package **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:emuticonName --> <string> - the name of the related emoticon **/
-#define AK_EP_EMUTICON_NAME @"emuticonName"
-
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 User tapped the Emu
 **/
 #define AK_E_ITEM_DETAILS_USER_PRESSED_EMU @"ItemDetails:userPressedEmu"
@@ -528,48 +474,6 @@ When user clicks replace footage button
 
 /** Param:packageOID --> <string> - the oid of the related package **/
 #define AK_EP_PACKAGE_OID @"packageOID"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-**/
-#define AK_E_ITEM_DETAILS_USER_PRESSED_RETAKE_BUTTON @"ItemDetails:userPressedRetakeButton"
-
-/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
-#define AK_EP_EMUTICON_OID @"emuticonOID"
-
-/** Param:packageName --> <string> - the name of the related package **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:emuticonName --> <string> - the name of the related emoticon **/
-#define AK_EP_EMUTICON_NAME @"emuticonName"
-
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-User pressed one of the share buttons in the emoticon screen.
-**/
-#define AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON @"ItemDetails:userPressedShareButton"
-
-/** Param:packageOID --> <string> - the oid of the related package **/
-#define AK_EP_PACKAGE_OID @"packageOID"
-
-/** Param:shareMethod --> <string> - the name of the method of sharing (application name, save to camera roll etc) **/
-#define AK_EP_SHARE_METHOD @"shareMethod"
-
-/** Param:emuticonOID --> <string> - the oid of the related emoticon **/
-#define AK_EP_EMUTICON_OID @"emuticonOID"
-
-/** Param:packageName --> <string> - the name of the related package **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:emuticonName --> <string> - the name of the related emoticon **/
-#define AK_EP_EMUTICON_NAME @"emuticonName"
-
-/** Param:sharedMediaType --> <string> - the media type that was shared: gif, video etc. **/
-#define AK_EP_SHARED_MEDIA_TYPE @"sharedMediaType"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -834,38 +738,13 @@ User requested to refocus + detect exposure + redetect background
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-A threshold of good background was reached and fg extraction should
-    start
-**/
-#define AK_E_REC_STAGE_ALIGN_GOOD_BACKGROUND_SATISFIED @"Rec:stageAlignGoodBackgroundSatisfied"
-
-/** Param:timePassedSinceRecorderOpened --> <interval> - the time interval passed since the Rec:opened event. **/
-#define AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED @"timePassedSinceRecorderOpened"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The background detection feedback UI is presented to the user. User is
-    asked to align to silhoutte and gets feedback about bad
-    background.
-**/
-#define AK_E_REC_STAGE_ALIGN_STARTED @"Rec:stageAlignStarted"
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The background detection feedback UI is presented to the user. User is
-    asked to align to silhoutte and gets feedback about bad
-    background.
-**/
-#define AK_E_REC_STAGE_ALIGN_USER_PRESSED_CONTINUE_WITH_BAD_BACKGROUND @"Rec:stageAlignUserPressedContinueWithBadBackground"
-
-/** Param:timePassedSinceRecorderOpened --> <interval> - the time interval passed since the Rec:opened event. **/
-#define AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED @"timePassedSinceRecorderOpened"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The FG extraction stage has started. BG detection UI is dismissed.
     User can use a record button when ready.
 **/
 #define AK_E_REC_STAGE_EXT_STARTED @"Rec:stageExtStarted"
+
+/** Param:goodBackgroundSatisfied --> <boolean> - true if good background satisfied and extraction started automatically. false if user pressed "continue anyway". **/
+#define AK_EP_GOOD_BACKGROUND_SATISFIED @"goodBackgroundSatisfied"
 
 /** Param:timePassedSinceRecorderOpened --> <interval> - the time interval passed since the Rec:opened event. **/
 #define AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED @"timePassedSinceRecorderOpened"
@@ -885,68 +764,6 @@ User pressed the record button while real time extraction was in
 
 /** Param:latestBackgroundMark --> <int> - The latest background detection mark before user pressed the record button. **/
 #define AK_EP_LATEST_BACKGROUND_MARK @"latestBackgroundMark"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Recording did finish.
-**/
-#define AK_E_REC_STAGE_RECORDING_DID_FINISH @"Rec:stageRecordingDidFinish"
-
-/** Param:packageOID --> <string> - the oid of the related package (sent even in onboarding according to the used package set in AppCFG) **/
-#define AK_EP_PACKAGE_OID @"packageOID"
-
-/** Param:emuticonOID --> <string> - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow) **/
-#define AK_EP_EMUTICON_OID @"emuticonOID"
-
-/** Param:packageName --> <string> - the name of the related package (sent even in onboarding according to the used package set in AppCFG) **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:emuticonName --> <string> - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow) **/
-#define AK_EP_EMUTICON_NAME @"emuticonName"
-
-/** Param:timePassedSinceRecorderOpened --> <interval> - the time interval passed since the Rec:opened event. **/
-#define AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED @"timePassedSinceRecorderOpened"
-
-/** Param:latestBackgroundMark --> <int> - The latest background detection mark before user pressed the record button. **/
-#define AK_EP_LATEST_BACKGROUND_MARK @"latestBackgroundMark"
-
-/** Param:flowType --> <string> - the flow type definition the recorder was opened with. Possible values: 
- 'onboarding' - recorder on boarding when app launched for the first time.
- 'retakeAll' - user wanted to retake and use the footage to all unlocked emoticons
- 'retakePackage' - user wanted to retake and use the footage to all unlocked emoticons in a package.
- 'retakeEmoticon' - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon. **/
-#define AK_EP_FLOW_TYPE @"flowType"
-
-
-/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Recording did start.
-**/
-#define AK_E_REC_STAGE_RECORDING_DID_START @"Rec:stageRecordingDidStart"
-
-/** Param:packageOID --> <string> - the oid of the related package (sent even in onboarding according to the used package set in AppCFG) **/
-#define AK_EP_PACKAGE_OID @"packageOID"
-
-/** Param:emuticonOID --> <string> - the oid of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow) **/
-#define AK_EP_EMUTICON_OID @"emuticonOID"
-
-/** Param:packageName --> <string> - the name of the related package (sent even in onboarding according to the used package set in AppCFG) **/
-#define AK_EP_PACKAGE_NAME @"packageName"
-
-/** Param:emuticonName --> <string> - the name of the related emoticon (optional. only if recorder opened in the retakeEmoticon flow) **/
-#define AK_EP_EMUTICON_NAME @"emuticonName"
-
-/** Param:timePassedSinceRecorderOpened --> <interval> - the time interval passed since the Rec:opened event. **/
-#define AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED @"timePassedSinceRecorderOpened"
-
-/** Param:latestBackgroundMark --> <int> - The latest background detection mark before user pressed the record button. **/
-#define AK_EP_LATEST_BACKGROUND_MARK @"latestBackgroundMark"
-
-/** Param:flowType --> <string> - the flow type definition the recorder was opened with. Possible values: 
- 'onboarding' - recorder on boarding when app launched for the first time.
- 'retakeAll' - user wanted to retake and use the footage to all unlocked emoticons
- 'retakePackage' - user wanted to retake and use the footage to all unlocked emoticons in a package.
- 'retakeEmoticon' - user wanted to retake and lock an emoticon to a specific footage taken for that emoticon. **/
-#define AK_EP_FLOW_TYPE @"flowType"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

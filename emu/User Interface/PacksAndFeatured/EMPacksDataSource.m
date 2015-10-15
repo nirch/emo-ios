@@ -42,7 +42,7 @@
     // Configure the fetch request
     // (active packs, ordered by priority)
     NSPredicate *predicate;
-    predicate = [NSPredicate predicateWithFormat:@"isActive=%@", @YES];
+    predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND (isHidden=nil OR isHidden=%@)", @YES, @NO];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"prioritizedIdentifier" ascending:NO], [NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES] ];

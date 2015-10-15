@@ -137,7 +137,7 @@
 {
     // Initialize the data
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND isFeatured=%@", @YES, @YES];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND isFeatured=%@ AND (isHidden=nil OR isHidden=%@)", @YES, @YES, @NO];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"oid" ascending:YES]];
     NSArray *packs = [EMDB.sh.context executeFetchRequest:fetchRequest error:nil];
     

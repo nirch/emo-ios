@@ -279,10 +279,6 @@
         // Check if it was an upgrade
         if ([AppManagement.sh.applicationBuild compare:previousBuildLaunched options:NSNumericSearch] == NSOrderedDescending) {
             // A newer app build was installed. Track this event.
-            HMParams *params = [HMParams new];
-            [params addKey:AK_EP_CURRENT_VERSION value:AppManagement.sh.applicationBuild];
-            [params addKey:AK_EP_PREVIOUS_VERSION value:previousBuildLaunched];
-            [self analyticsEvent:AK_E_APP_VERSION_UPDATED info:params.dictionary];
             wasUpdated = YES;
         }
     }

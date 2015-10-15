@@ -48,8 +48,8 @@
     if (_frc != nil) return _frc;
     
     // Configure the fetch request
-    // (emus in active packs, divided to section by pack)
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@", @NO, @YES];
+    // (emus in active unhidden packs, divided to section by pack)
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@ AND (emuDef.package.isHidden=nil OR emuDef.package.isHidden=%@)", @NO, @YES, @NO];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
     

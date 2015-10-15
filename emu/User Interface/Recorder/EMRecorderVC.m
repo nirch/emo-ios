@@ -1055,11 +1055,6 @@
 -(void)_stateStartBGDetection
 {
     //
-    // Analytics
-    //
-    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_STARTED];
-    
-    //
     // Capture session and video processing.
     //
 
@@ -1102,10 +1097,6 @@
     // Info provided indicates that a good background threshold was satisfied.
     // It is time to stop the background detection sampling and start
     // the foreground extraction algorithm.
-    HMParams *params = [HMParams new];
-    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_GOOD_BACKGROUND_SATISFIED info:params.dictionary];
-    
     [self handleStateWithInfo:info
                     nextState:@(EMRecorderStateFGExtractionShouldStart)];
 }
@@ -1188,15 +1179,6 @@
 -(void)_stateShouldStartRecording
 {
     //
-    // Analytics
-    //
-    HMParams *params = self.recorderSessionAnalyticsParams;
-    [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
-    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_START
-                             info:params.dictionary];
-
-    //
     // Capture session and video processing.
     //
     
@@ -1237,16 +1219,6 @@
 
 -(void)_stateUserShouldWaitWhileFinishingUp
 {
-    //
-    // Analytics
-    //
-    HMParams *params = self.recorderSessionAnalyticsParams;
-    [params addKey:AK_EP_LATEST_BACKGROUND_MARK valueIfNotNil:@(self.latestBGMark)];
-    [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-    [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_RECORDING_DID_FINISH
-                             info:params.dictionary];
-
-    
     //
     // Recorder and UI state.
     //
@@ -1450,20 +1422,12 @@
 {
     if (action == EMRecorderControlsActionContinueWithBadBackground &&
         self.recorderState == EMRecorderStateBGDetectionInProgress) {
-
-        //
-        // Analytics
-        //
-        HMParams *params = [HMParams new];
-        [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
-        [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_ALIGN_USER_PRESSED_CONTINUE_WITH_BAD_BACKGROUND
-                                 info:params.dictionary];
         
         //
         // User pressed to continue with bad background while bg detection is in progress
         // Should start FG extraction anyway.
         //
-        [self handleStateWithInfo:nil
+        [self handleStateWithInfo:@{}
                         nextState:@(EMRecorderStateFGExtractionShouldStart)];
         
     } else if (action == EMRecorderControlsActionStartRecording &&

@@ -2,7 +2,7 @@
 //  Package+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 9/30/15.
+//  Created by Aviv Wolf on 10/14/15.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -40,6 +40,7 @@
 @dynamic timeUpdated;
 @dynamic viewedByUser;
 @dynamic zipppedPackageFileName;
+@dynamic isHidden;
 @dynamic emuDefs;
 
 @end

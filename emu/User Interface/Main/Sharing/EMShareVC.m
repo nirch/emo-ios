@@ -315,10 +315,6 @@
     [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"shareVC"];
     [params addKey:AK_EP_SHARED_MEDIA_TYPE value:mediaDataTypeName];
     
-    // Analytics
-    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON
-                          info:params.dictionary];
-
     // Share
     [self shareEmuticon:emu
           mediaDataType:mediaDataTypeToShare

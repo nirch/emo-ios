@@ -42,6 +42,16 @@
 				<string>optly2898251091</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>it.homage.ios.emubeta</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>emubetacodes</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2.0.5.t</string>

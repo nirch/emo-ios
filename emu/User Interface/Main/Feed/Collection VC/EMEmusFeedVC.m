@@ -350,12 +350,19 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     // Dismiss the popover and scroll to the selected pack.
     NSString *packOID = notification.userInfo[emkPackageOID];
     __weak EMEmusFeedVC *weakSelf = self;
-    [self.popoverController dismissViewControllerAnimated:YES completion:^{
-        if (packOID == nil) return;
+    
+    if (self.popoverController) {
+        [self.popoverController dismissViewControllerAnimated:YES completion:^{
+            if (packOID == nil) return;
+            NSIndexPath *indexPath = [weakSelf.dataSource indexPathForPackOID:packOID];
+            if (indexPath == nil) return;
+            [self scrollToSection:indexPath.section animated:NO];
+        }];
+    } else {
         NSIndexPath *indexPath = [weakSelf.dataSource indexPathForPackOID:packOID];
         if (indexPath == nil) return;
         [self scrollToSection:indexPath.section animated:NO];
-    }];
+    }
 }
 
 #pragma mark - Observers handlers

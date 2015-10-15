@@ -141,6 +141,13 @@
                  selector:@selector(onUserSelectedPack:)
                      name:emkUIUserSelectedPack
                    object:nil];
+
+    // On update about unhiding packs (success or failure)
+    [nc addUniqueObserver:self
+                 selector:@selector(onHidingPackagesUpdate:)
+                     name:emkDataUpdatedUnhidePackages
+                   object:nil];
+
 }
 
 -(void)removeObservers
@@ -207,13 +214,20 @@
 
 -(void)onUserSelectedPack:(NSNotification *)notification
 {
-    if ([self.tabsBarVC currentTabIndex] == EMTabNameFeatured) {
-        // If user selects a pack in the featured packs tab bar,
+    if ([self.tabsBarVC currentTabIndex] != EMTabNameFeed) {
+        // If user selects a pack,
         // will navigte to the feed and show that pack.
         [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:YES info:notification.userInfo];
     }
 }
 
+-(void)onHidingPackagesUpdate:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if (info[@"message"]) {
+        [self showUnhideMessageToUserWithInfo:info];
+    }
+}
 
 #pragma mark - Flow & State
 /**
@@ -531,6 +545,52 @@
         }];
     }
 }
+
+#pragma mark - Unhiding packs
+-(void)showUnhideMessageToUserWithInfo:(NSDictionary *)info
+{
+    NSString *code = info[@"code"];
+    NSString *message = info[@"message"];
+    NSString *title = info[@"title"];
+    if (message == nil || title == nil) return;
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:title
+                                                                message:message
+                                                         preferredStyle:UIAlertControllerStyleAlert];
+    
+    NSDictionary *packagesInfo = info[@"packagesInfo"];
+
+    for (NSDictionary *packOID in packagesInfo.allKeys) {
+        NSDictionary *packInfo = packagesInfo[packOID];
+        [ac addAction:[UIAlertAction actionWithTitle:packInfo[@"label"]?packInfo[@"label"]:packInfo[@"name"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            // Analytics
+            HMParams *params = [HMParams new];
+            [params addKey:AK_EP_CODE valueIfNotNil:code];
+            [params addKey:AK_EP_USER_CHOICE valueIfNotNil:packInfo[@"name"]];
+            [params addKey:AK_EP_LINK_TYPE valueIfNotNil:@"unhide packs"];
+            [HMPanel.sh analyticsEvent:AK_E_DEEP_LINK_ALERT_USER_CHOICE info:params.dictionary];
+            
+            // Notify that a pack was selected.
+            NSDictionary *info = @{emkPackageOID:packOID};
+            [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserSelectedPack
+                                                                object:self
+                                                              userInfo:info];
+        }]];
+    }
+
+    [ac addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // Analytics
+        HMParams *params = [HMParams new];
+        [params addKey:AK_EP_CODE valueIfNotNil:code];
+        [params addKey:AK_EP_USER_CHOICE valueIfNotNil:@"cancel"];
+        [params addKey:AK_EP_LINK_TYPE valueIfNotNil:@"unhide packs"];
+        [HMPanel.sh analyticsEvent:AK_E_DEEP_LINK_ALERT_USER_CHOICE info:params.dictionary];
+    }]];
+    
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        [self presentViewController:ac animated:NO completion:nil];
+    });
+}
+
 
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info

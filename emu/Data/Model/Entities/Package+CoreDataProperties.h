@@ -2,7 +2,7 @@
 //  Package+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 9/30/15.
+//  Created by Aviv Wolf on 10/14/15.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSDate *timeUpdated;
 @property (nullable, nonatomic, retain) NSNumber *viewedByUser;
 @property (nullable, nonatomic, retain) NSString *zipppedPackageFileName;
+@property (nullable, nonatomic, retain) NSNumber *isHidden;
 @property (nullable, nonatomic, retain) NSSet<EmuticonDef *> *emuDefs;
 
 @end

@@ -56,6 +56,16 @@
     pkg.posterName = [info safeStringForKey:@"poster_name"];
     pkg.posterOverlayName = [info safeStringForKey:@"poster_overlay_name"];
     
+    // Hidden packages.
+    // Some packages:
+    //  - are hidden by default (hidden_by_default=YES)
+    //  - will be set to hidden=YES (if hidden field never set before)
+    //  - will not appear until some process will set the local field to hidden=NO
+    NSNumber *isHiddenByDefault = [info safeBoolNumberForKey:@"hidden_by_default"];
+    if (pkg.isHidden == nil && isHiddenByDefault != nil && isHiddenByDefault.boolValue) {
+        pkg.isHidden = @YES;
+    }
+    
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;
     NSArray *emus = info[@"emuticons"];

@@ -22,6 +22,8 @@
 		<string>emuapi/packages/meta</string>
 		<key>packages update</key>
 		<string>emuapi/packages/update</string>
+		<key>packages unhide</key>
+		<string>emuapi/unhide/packages</string>
 	</dict>
 </dict>
 </plist>

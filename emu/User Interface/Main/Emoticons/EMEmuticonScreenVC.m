@@ -915,30 +915,18 @@
 // ===========
 - (IBAction)onPressedBackButton:(UIButton *)sender
 {
-    // Analytics
-    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
-                             info:[self paramsForCurrentEmuticon].dictionary];
-    
     // Go back
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)onPressedRetakeButton:(id)sender
 {
-    // Analytics
-    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_RETAKE_BUTTON
-                             info:[self paramsForCurrentEmuticon].dictionary];
-
     // Retake
     [self retake];
 }
 
 - (IBAction)onSwipedRight:(id)sender
 {
-    // Analytics
-    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_BACK_BUTTON
-                             info:[self paramsForCurrentEmuticon].dictionary];
-    
     // Go back
     [self.navigationController popViewControllerAnimated:YES];
 }

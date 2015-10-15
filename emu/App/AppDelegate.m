@@ -24,12 +24,14 @@
 #import "iRate.h"
 #import "AppManagement.h"
 #import "EMCaches.h"
+#import "EMURLSchemeHandler.h"
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
 >
 
 @property (nonatomic) FBSDKMessengerURLHandler *messengerUrlHandler;
+@property (nonatomic) EMURLSchemeHandler *emuURLHandler;
 
 @end
 
@@ -174,8 +176,20 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
 {
+    // Emu codes url schemes.
+    if ([EMURLSchemeHandler canHandleURL:url]) {
+        self.emuURLHandler = [EMURLSchemeHandler new];
+        return [self.emuURLHandler application:application
+                                       openURL:url
+                             sourceApplication:sourceApplication
+                                    annotation:annotation];
+    }
+    
     // Experiments (currently uses optimizely)
     if([HMPanel.sh handleOpenURL:url]) {
         return YES;

@@ -16,9 +16,11 @@
 
 // Notified backend that packages data should be refetched.
 #define emkDataRequiredPackages @"emk data required packages"
+#define emkDataRequiredUnhidePackages @"emk data required unhide packages"
 
 #pragma mark - Data updates
 #define emkDataUpdatedPackages @"emk data updated packages"
+#define emkDataUpdatedUnhidePackages @"emk data updated unhide packages"
 
 // Notification of navigation events
 #define emkUINavigationTabSelected @"emk ui nav tab selected"

@@ -8,6 +8,7 @@
 
 #import "HMServer+Packages.h"
 #import "EMPackagesParser.h"
+#import "EMUnhidePackagesParser.h"
 #import "EMNotificationCenter.h"
 #import "EMDB.h"
 
@@ -42,5 +43,20 @@
                        parser:parser];
 }
 
+
+-(void)unhideUsingCode:(NSString *)code withInfo:(NSDictionary *)info
+{
+    // Build the url using the passed code.
+    NSString *url = [self relativeURLNamed:@"packages unhide"];
+    url = [SF: @"%@/%@", url, code];
+    
+    // Do the GET request with the code, asking server permission to unhide packages.
+    EMUnhidePackagesParser *parser = [EMUnhidePackagesParser new];
+    [self getRelativeURL:url
+              parameters:nil
+        notificationName:emkDataUpdatedUnhidePackages
+                    info:info
+                  parser:parser];
+}
 
 @end
