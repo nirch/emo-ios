@@ -1103,11 +1103,14 @@
 
 -(void)_stateShouldStartFGExtraction:(NSDictionary *)info
 {
+    BOOL goodBGSatisfied = [info[hmkInfoGoodBGSatisfied] isEqualToNumber:@YES];
+    
     //
     // Analytics
     //
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_TIME_PASSED_SINCE_RECORDER_OPENED valueIfNotNil:@([self timePassedSinceRecorderOpened])];
+    [params addKey:AK_EP_GOOD_BACKGROUND_SATISFIED value:@(goodBGSatisfied)];
     [HMPanel.sh analyticsEvent:AK_E_REC_STAGE_EXT_STARTED
                              info:params.dictionary];
 
