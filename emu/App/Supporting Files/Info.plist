@@ -42,9 +42,19 @@
 				<string>optly2898251091</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>it.homage.ios.emu</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>emucodes</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.12</string>
+	<string>2.0.15</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

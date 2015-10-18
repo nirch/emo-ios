@@ -475,7 +475,8 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         }
     }
     topSection = topSection < NSIntegerMax?topSection:0;
-    topSection ++;
+    CGFloat offsetY = self.guiCollectionView.contentOffset.y;
+    if (offsetY > 0) topSection ++;
     return topSection;
 }
 
