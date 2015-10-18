@@ -52,6 +52,12 @@
                                                                 <action selector="onPressedPackButton:" destination="O1j-04-RAu" eventType="touchUpInside" id="ANZ-Vk-ju5"/>
                                                             </connections>
                                                         </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="107-fO-YyU" customClass="EMLabel">
+                                                            <rect key="frame" x="104" y="37" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ej-nL-P1z" userLabel="Cropped pack image">
                                                             <rect key="frame" x="3" y="2" width="245" height="88"/>
                                                         </imageView>
@@ -78,10 +84,12 @@
                                                         <constraint firstItem="ENW-xx-iC1" firstAttribute="leading" secondItem="qhf-1r-7ch" secondAttribute="leading" id="KaM-PV-9iC"/>
                                                         <constraint firstItem="TiT-Rv-Zo2" firstAttribute="leading" secondItem="BLB-fe-RBs" secondAttribute="trailing" constant="12" id="L7x-bu-OqP"/>
                                                         <constraint firstItem="ENW-xx-iC1" firstAttribute="top" secondItem="qhf-1r-7ch" secondAttribute="top" id="TiG-Cf-szx"/>
+                                                        <constraint firstItem="107-fO-YyU" firstAttribute="centerY" secondItem="qhf-1r-7ch" secondAttribute="centerY" id="WdQ-oA-VMt"/>
                                                         <constraint firstItem="TiT-Rv-Zo2" firstAttribute="centerX" secondItem="qhf-1r-7ch" secondAttribute="centerX" id="btl-Yi-lHM"/>
                                                         <constraint firstItem="TiT-Rv-Zo2" firstAttribute="centerY" secondItem="qhf-1r-7ch" secondAttribute="centerY" id="cff-g3-c1v"/>
                                                         <constraint firstAttribute="bottom" secondItem="ENW-xx-iC1" secondAttribute="bottom" id="gfG-ua-sWn"/>
                                                         <constraint firstAttribute="bottom" secondItem="7Ej-nL-P1z" secondAttribute="bottom" constant="4" id="jOl-pY-dTz"/>
+                                                        <constraint firstItem="107-fO-YyU" firstAttribute="centerX" secondItem="qhf-1r-7ch" secondAttribute="centerX" id="s06-pQ-F0j"/>
                                                         <constraint firstAttribute="trailing" secondItem="TiT-Rv-Zo2" secondAttribute="trailing" constant="38" id="sDi-uO-UWz"/>
                                                         <constraint firstAttribute="trailing" secondItem="7Ej-nL-P1z" secondAttribute="trailing" constant="3" id="saw-gF-0Jl"/>
                                                         <constraint firstItem="7Ej-nL-P1z" firstAttribute="leading" secondItem="qhf-1r-7ch" secondAttribute="leading" constant="3" id="wch-LV-J4I"/>
@@ -110,6 +118,7 @@
                                             <outlet property="guiClippedImage" destination="7Ej-nL-P1z" id="BwM-S8-aP5"/>
                                             <outlet property="guiIcon" destination="BLB-fe-RBs" id="oSJ-4h-AUq"/>
                                             <outlet property="guiLabel" destination="TiT-Rv-Zo2" id="h1w-Xj-eNF"/>
+                                            <outlet property="guiPlaceHolderLabel" destination="107-fO-YyU" id="QwE-Vx-vzx"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

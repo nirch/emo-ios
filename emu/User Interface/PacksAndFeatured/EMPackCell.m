@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiIcon;
+@property (weak, nonatomic) IBOutlet UILabel *guiPlaceHolderLabel;
 
 @end
 
@@ -54,6 +55,8 @@
     self.guiButton.tag = self.indexTag;
     self.guiLabel.textColor = [UIColor darkGrayColor];
     self.guiIcon.image = nil;
+    self.guiPlaceHolderLabel.text = self.label;
+    self.guiPlaceHolderLabel.hidden = YES;
     
     if (!self.isBanner) {
         
@@ -68,7 +71,7 @@
     } else {
         
         // Loading wide banners.
-        
+        self.guiPlaceHolderLabel.hidden = NO;
         if (self.bannerURL != nil) {
             [self.guiClippedImage pin_setImageFromURL:self.bannerURL
                                          processorKey:@"rounded"

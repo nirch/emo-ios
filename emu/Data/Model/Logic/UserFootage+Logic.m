@@ -110,30 +110,34 @@
     NSError *error;
     
     // Count the number of stored images.
+    NSMutableArray *images = [NSMutableArray new];
     NSArray *storedImages = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
     float storedImagesCount = storedImages.count;
     
-    NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:maxFrames];
-    NSInteger previousFrame = 0;
-    for (float i = 0;i < maxFrames;i+=1.0) {
-        
-        // Skip frames as required to produce a list
-        // with the required max number of allowed frames.
-        // (will not repeat frames).
-        NSInteger sourceIndex = ((float)i/(float)maxFrames)*storedImagesCount+1;
-        if (sourceIndex == previousFrame) continue;
-        
-        // Just to be safe, Keep index in bounds.
-        sourceIndex = MIN(storedImagesCount,sourceIndex);
-        
-        // Populate the list with the paths to frames.
-        NSString *pathToImage = [SF:ptn, (long)sourceIndex];
-        UIImage *image = [UIImage imageWithContentsOfFile:pathToImage];
-        if (image != nil) images[(int)i] = image;
-        previousFrame = sourceIndex;
+    if (storedImages.count <= maxFrames) {
+        // Just load all stored images and return them.
+        images = [NSMutableArray new];
+        for (int i=0;i<storedImages.count;i++) {
+            NSString *pathToImage = [SF:ptn, i];
+            UIImage *image = [UIImage imageWithContentsOfFile:pathToImage];
+            if (image != nil) [images addObject:image];
+        }
+    } else {
+        // Skip frames if we got too many. Allow only up to the max number of frames.
+        images = [NSMutableArray new];
+        float i = 0;
+        NSInteger previousFrame = 0;
+        while (i<maxFrames) {
+            i+=1.0f;
+            NSInteger sourceIndex = ((float)i/(float)maxFrames)*storedImagesCount+1;
+            if (sourceIndex == previousFrame) continue;
+            sourceIndex = MIN(storedImagesCount,sourceIndex);
+            NSString *pathToImage = [SF:ptn, (long)sourceIndex];
+            UIImage *image = [UIImage imageWithContentsOfFile:pathToImage];
+            if (image != nil) [images addObject:image];
+            previousFrame = sourceIndex;
+        }
     }
-    
-    // Return the list of frames.
     return images;
 }
 
