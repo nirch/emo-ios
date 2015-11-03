@@ -39,6 +39,7 @@
 #import "EMFootagesVC.h"
 #import "EMEmuticonScreenVC.h"
 #import "EMAlertsPermissionVC.h"
+#import "AppManagement.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -455,8 +456,14 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
                  layout:(UICollectionViewLayout *)collectionViewLayout
  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat size = (self.view.bounds.size.width-10.0) / 2.0;
-    return CGSizeMake(size, size);
+    CGFloat aspectRatio = [self.dataSource aspectRatioForItemAtIndexPath:indexPath];
+    CGFloat width = (self.view.bounds.size.width-10.0) / 2.0;
+    CGFloat height = width;
+    if (aspectRatio != 1.0) {
+        width = (self.view.bounds.size.width-10.0);
+        height = width / aspectRatio;
+    }
+    return CGSizeMake(width, height);
 }
 
 -(NSInteger)currentTopSection
@@ -619,7 +626,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(CGPoint)offsetForHeaderForSection:(NSInteger)section
 {
     CGRect rectOfHeader = [self frameForHeaderForSection:section];
-    CGPoint newOffset = CGPointMake(0, rectOfHeader.origin.y - self.guiCollectionView.contentInset.top);
+    CGPoint newOffset = CGPointMake(0, rectOfHeader.origin.y - self.guiCollectionView.contentInset.top - 7);
     return newOffset;
 }
 
@@ -659,7 +666,12 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 -(void)navBarOnLogoButtonPressed:(UIButton *)sender
 {
+    if (AppManagement.sh.isTestApp) {
+        [self showPacksListAsPopOver:sender];
+        return;
+    }
     
+    [self showPacksListAsPopOver:sender];
 }
 
 -(void)navBarOnUserActionNamed:(NSString *)actionName

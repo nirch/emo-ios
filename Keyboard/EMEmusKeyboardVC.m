@@ -517,7 +517,8 @@
             // Not rendered, but all resources are available.
             [EMRenderManager2.sh enqueueEmu:emu
                                   indexPath:indexPath
-                                   userInfo:info];
+                                   userInfo:info
+                                       inHD:NO];
         }
     }
 }
@@ -664,7 +665,8 @@
                                [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
                                self.guiCollectionView.alpha = 1;
                                self.guiCollectionView.userInteractionEnabled = YES;
-                           }];
+                           }
+                                      inHD:NO];
 }
 
 

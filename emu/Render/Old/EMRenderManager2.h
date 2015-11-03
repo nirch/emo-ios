@@ -28,15 +28,16 @@
 
 #pragma mark - Enqueue render jobs
 /**
- *  <#Description#>
  *
  *  @param emu          - An Emu Object that requires rendering.
  *  @param indexPath    - (optional) IndexPath
  *  @param userInfo     - (optional) extra info about the task.
+ *  @param inHD         - Indicates if need to render the emu in HD.
  */
 -(void)enqueueEmu:(Emuticon *)emu
         indexPath:(NSIndexPath *)indexPath
-         userInfo:(NSDictionary *)userInfo;
+         userInfo:(NSDictionary *)userInfo
+             inHD:(BOOL)inHD;
 
 #pragma mark - Queue management
 -(void)updatePriorities:(NSDictionary *)priorities;
@@ -60,7 +61,8 @@
 -(void)renderVideoForEmu:(Emuticon *)emu
        requiresWaterMark:(BOOL)requiresWaterMark
          completionBlock:(void (^)(void))completionBlock
-               failBlock:(void (^)(void))failBlock;
+               failBlock:(void (^)(void))failBlock
+                    inHD:(BOOL)inHD;
 
 
 @end

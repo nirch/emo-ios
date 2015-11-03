@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiFailedImage;
 @property (weak, nonatomic) IBOutlet UILabel *guiDebugLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiSelectionIndicator;
+@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiDownloadingAnimatedGif;
+@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiRenderingAnimatedGif;
 
 @property (nonatomic) NSString *thumbPath;
 @property (nonatomic) NSURL *gifURL;
@@ -93,13 +95,16 @@
             [self updateStateToFailed];
             return;
         }
-        [EMRenderManager2.sh enqueueEmu:emu indexPath:nil userInfo:@{
-                                                                     @"for":@"emu",
-                                                                     @"indexPath":indexPath,
-                                                                     @"emuticonOID":emu.oid,
-                                                                     @"packageOID":emu.emuDef.package.oid,
-                                                                     @"inUI":self.inUI
-                                                                     }];
+        [EMRenderManager2.sh enqueueEmu:emu
+                              indexPath:nil
+                               userInfo:@{
+                                          @"for":@"emu",
+                                          @"indexPath":indexPath,
+                                          @"emuticonOID":emu.oid,
+                                          @"packageOID":emu.emuDef.package.oid,
+                                          @"inUI":self.inUI
+                                          }
+                                   inHD:NO];
         _state = EMEmuCellStateSentForRendering;
         
     } else {
@@ -166,14 +171,17 @@
 -(void)updateGUIToRequiresResources
 {
     [self clear];
-    self.guiAnimatedGif.alpha = 0.3;
-    [self loadAnimatedGifNamed:@"downloading"];
+    self.guiDownloadingAnimatedGif.hidden = NO;
+    [self.guiDownloadingAnimatedGif startAnimating];
+//    [self loadAnimatedGifNamed:@"downloading"];
 }
 
 -(void)updateGUIToSentForRendering
 {
     [self clear];
-    [self loadAnimatedGifNamed:@"rendering"];
+    self.guiRenderingAnimatedGif.hidden = NO;
+    [self.guiRenderingAnimatedGif startAnimating];
+//    [self loadAnimatedGifNamed:@"rendering"];
 }
 
 -(void)updateGUIToReady
@@ -213,6 +221,19 @@
     // Clear indicators
     self.guiFailedImage.hidden = YES;
     
+    if (self.guiDownloadingAnimatedGif.animatedImage == nil) {
+        [self loadAnimatedGifNamed:@"downloading"
+               inAnimatedImageView:self.guiDownloadingAnimatedGif];
+    }
+
+    if (self.guiRenderingAnimatedGif.animatedImage == nil) {
+        [self loadAnimatedGifNamed:@"rendering"
+               inAnimatedImageView:self.guiRenderingAnimatedGif];
+    }
+    
+    self.guiDownloadingAnimatedGif.hidden = YES;
+    self.guiRenderingAnimatedGif.hidden = YES;
+    
     // Clear animated gif
     [self.guiAnimatedGif stopAnimating];
     self.guiAnimatedGif.animatedImage = nil;
@@ -233,11 +254,19 @@
     self.guiEmptyButton.hidden = YES;
 }
 
--(void)loadAnimatedGifNamed:(NSString *)gifName
+-(void)loadAnimatedGifNamed:(NSString *)gifName inAnimatedImageView:(FLAnimatedImageView *)imageView
 {
     NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
-    self.guiAnimatedGif.contentMode = UIViewContentModeScaleAspectFit;
-    [self.guiAnimatedGif pin_setImageFromURL:gifURL];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    NSData *animGifData = [EMCaches.sh.gifsDataCache objectForKey:gifName];
+    if (animGifData == nil) {
+        animGifData = [NSData dataWithContentsOfURL:gifURL options:NSDataReadingMappedIfSafe error:nil];
+        [EMCaches.sh.gifsDataCache setObject:animGifData forKey:gifName];
+    }
+    
+    FLAnimatedImage *animatedImage = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+    imageView.animatedImage = animatedImage;
 }
 
 @end

@@ -495,6 +495,7 @@
 -(void)renderVideoBeforeShareForEmu:(Emuticon *)emu
                   requiresWaterMark:(BOOL)requiresWaterMark
 {
+    BOOL inHD = [emu shouldItRenderInHD];
     self.guiCollectionView.hidden = YES;
     self.guiFBMButtonContainer.hidden = YES;
     self.guiRenderingView.hidden = NO;
@@ -517,7 +518,7 @@
                                self.guiRenderingView.hidden = YES;
                                self.guiCollectionView.hidden = NO;
                                self.guiFBMButtonContainer.hidden = NO;
-                           }];
+                           } inHD:inHD];
 }
 
 

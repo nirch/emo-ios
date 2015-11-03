@@ -27,6 +27,8 @@
  *          if YES: bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaLast
  *          if NO : bitmapInfo = kCGBitmapByteOrderDefault
  *
+ *  @param targetSize - CGSize (optional) rescale the image to target size.
+ *
  *  @return newly created UIImage object. 
  *
  *      Creates image with the following settings:
@@ -75,5 +77,8 @@
        compressionQuality:(CGFloat)compressionQuality;
 
 
+
++(UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
++(UIImage *)image:(UIImage *)sourceImage scaledProportionallyToSize:(CGSize)targetSize;
 
 @end

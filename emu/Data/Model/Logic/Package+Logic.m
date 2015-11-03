@@ -64,6 +64,22 @@
     return results;
 }
 
++(NSArray *)allPremiumPackagesInContext:(NSManagedObjectContext *)context
+{
+    // All active packs that have hdProductID set.
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND hdProductID!=nil", @YES];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
+    fetchRequest.predicate = predicate;
+    
+    // Fetch the packs.
+    NSError *error;
+    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) return @[];
+    
+    // Return the packs.
+    return results;
+}
+
 
 +(void)prioritizePackagesWithInfo:(NSDictionary *)priorityInfo context:(NSManagedObjectContext *)context
 {

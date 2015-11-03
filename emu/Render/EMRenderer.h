@@ -52,6 +52,10 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
 @property (nonatomic) NSURL *audioFileURL;
 @property (nonatomic) NSTimeInterval audioStartTime;
 @property (nonatomic) NSDictionary *effects;
+@property (nonatomic) CGFloat positioningScale;
+
+@property (nonatomic) NSInteger outputWidth;
+@property (nonatomic) NSInteger outputHeight;
 
 
 /**

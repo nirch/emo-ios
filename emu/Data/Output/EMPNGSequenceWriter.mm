@@ -24,7 +24,7 @@
 #import "Gpw/Vtool/Vtool.h"
 
 @interface EMPNGSequenceWriter() {
-    image_type *resampled_image;
+//    image_type *resampled_image;
     
     vTime_type firstFrameTimeStamp;
     vTime_type previousFrameTimeStamp;
@@ -122,10 +122,9 @@
     }
     
     image_type *output_image = (image_type *)image;
-    resampled_image = image_sample2(output_image, resampled_image);
-    
+    //resampled_image = image_sample2(output_image, resampled_image);
     vTime_type currentFrameTimeStamp = output_image->timeStamp;
-    resampled_image->timeStamp = currentFrameTimeStamp;
+//    resampled_image->timeStamp = currentFrameTimeStamp;
     
     // HMLOG(TAG, DBG, @"Frame time stamp:%@", @(currentFrameTimeStamp));
     
@@ -153,7 +152,7 @@
     self.framesCount++;
 
     // Convert the image passed as image_type to UIImage.
-    UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image withAlpha:YES];
+    UIImage *png = [HMImageTools createUIImageFromImageType:output_image withAlpha:YES];
     [self.pngs addObject:png];
     previousFrameTimeStamp = currentFrameTimeStamp;
 }

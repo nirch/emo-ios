@@ -8,6 +8,9 @@
 
 #define E_EMU_DEF @"EmuticonDef"
 
+#define EMU_DEFAULT_WIDTH 240
+#define EMU_DEFAULT_HEIGHT 240
+
 #import "EmuticonDef.h"
 
 @interface EmuticonDef (Logic)
@@ -53,6 +56,13 @@
 -(Emuticon *)spawn;
 
 /**
+ *  The aspect ratio of the emu (1.0f if square, ~1.777 for 16/9 etc)
+ *
+ *  @return CGFloat of the width divided by height.
+ */
+-(CGFloat)aspectRatio;
+
+/**
  *  An array of all related emuticons
  *  excluding preview emuticons.
  *
@@ -60,17 +70,33 @@
  */
 -(NSArray *)nonPreviewEmuticons;
 
-
-
+#pragma mark - Resources Paths
 -(NSString *)pathForUserLayerMask;
--(NSString *)pathForBackLayer;
--(NSString *)pathForFrontLayer;
--(NSString *)pathForUserLayerDynamicMask;
+-(NSString *)pathForUserLayerMaskInHD:(BOOL)inHD;
 
+-(NSString *)pathForUserLayerDynamicMask;
+-(NSString *)pathForUserLayerDynamicMaskInHD:(BOOL)inHD;
+
+-(NSString *)pathForBackLayer;
+-(NSString *)pathForBackLayerInHD:(BOOL)inHD;
+
+-(NSString *)pathForFrontLayer;
+-(NSString *)pathForFrontLayerInHD:(BOOL)inHD;
+
+#pragma mark - Resources required
 -(NSInteger)requiredResourcesCount;
+-(NSInteger)requiredResourcesCountInHD:(BOOL)inHD;
+
 -(BOOL)allResourcesAvailable;
+-(BOOL)allResourcesAvailableInHD:(BOOL)inHD;
+
 -(NSArray *)allMissingResourcesNames;
+-(NSArray *)allMissingResourcesNamesInHD:(BOOL)inHD;
+
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName;
+
+#pragma mark - Removing resources
 -(void)removeAllResources;
+-(void)removeAllHDResources;
 
 @end

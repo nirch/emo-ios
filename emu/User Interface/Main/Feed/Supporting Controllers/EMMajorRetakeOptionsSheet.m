@@ -9,6 +9,7 @@
 #import "EMMajorRetakeOptionsSheet.h"
 #import "EMUINotifications.h"
 #import "EMRecorderDelegate.h"
+#import "AppManagement.h"
 
 @implementation EMMajorRetakeOptionsSheet
 
@@ -29,6 +30,7 @@
 
 -(NSArray *)configuredSections
 {
+    NSInteger sectionIndex = 0;
     EMActionsArray *actionsMapping = [EMActionsArray new];
     self.actionsMapping = actionsMapping;
     
@@ -36,19 +38,33 @@
     // Retake options
     //
     NSString *title = LS(@"RETAKE_CHOICE_TITLE");
-    [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:[SF:@"%@ (%@)", LS(@"RETAKE_CHOICE_PACKAGE"),self.currentPackLabel] section:0];
-//    [actionsMapping addAction:@"RETAKE_CHOICE_ALL" text:LS(@"RETAKE_CHOICE_ALL") section:0];
-    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
+    [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:[SF:@"%@ (%@)", LS(@"RETAKE_CHOICE_PACKAGE"),self.currentPackLabel] section:sectionIndex];
+    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:sectionIndex] buttonStyle:JGActionSheetButtonStyleDefault];
+    
+    //
+    // Debug options (only in test applications)
+    //
+    EMHolySheetSection *debugSection = nil;
+    if (AppManagement.sh.isTestApp) {
+        sectionIndex++;
+        NSString *title = @"DEBUG OPTIONS";
+        [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:[SF:@"%@ (%@)", LS(@"RETAKE_CHOICE_PACKAGE"),self.currentPackLabel] section:sectionIndex];
+        debugSection = [EMHolySheetSection sectionWithTitle:title message:@"Test app only options" buttonTitles:[actionsMapping textsForSection:sectionIndex] buttonStyle:JGActionSheetButtonStyleDefault];
+    }
     
     //
     // Cancel
     //
+    sectionIndex++;
     EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
     
     //
     // Sections
     //
-    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, cancelSection]];
+    NSMutableArray *sections = [NSMutableArray new];
+    [sections addObject:section1];
+    if (debugSection) [sections addObject:debugSection];
+    [sections addObject:cancelSection];
     return sections;
 }
 

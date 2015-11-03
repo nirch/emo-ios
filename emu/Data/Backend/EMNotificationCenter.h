@@ -22,6 +22,10 @@
 #define emkDataUpdatedPackages @"emk data updated packages"
 #define emkDataUpdatedUnhidePackages @"emk data updated unhide packages"
 
+// Store
+#define emkDataProductsInfoUpdated  @"emk data products info updated"
+#define emkDataProductsHandledTransactions  @"emk data products handled transactions"
+
 // Notification of navigation events
 #define emkUINavigationTabSelected @"emk ui nav tab selected"
 

@@ -66,6 +66,11 @@
         pkg.isHidden = @YES;
     }
     
+    // Premium and HD content.
+    pkg.hdAvailable = [info safeBoolNumberForKey:@"hd_available" defaultsValue:@NO];
+    pkg.hdProductID = [info safeStringForKey:@"hd_product_id"];
+    if (pkg.hdUnlocked == nil) pkg.hdUnlocked = @NO;
+    
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;
     NSArray *emus = info[@"emuticons"];

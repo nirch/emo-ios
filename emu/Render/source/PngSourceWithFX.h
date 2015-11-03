@@ -10,10 +10,11 @@
 class PngSourceWithFX : public CHrSourceI
 {
 public:
-    PngSourceWithFX(NSArray *pngFiles);
+    PngSourceWithFX(NSArray *pngFiles, CGSize targetSize);
     virtual int	ReadFrame( int iFrame, image_type **im );
     virtual int Close();
 private:
-    NSArray *m_pngFiles;    
-    image_type *image;
+    NSArray *_pngFiles;
+    image_type *_image;
+    CGSize _targetSize;
 };

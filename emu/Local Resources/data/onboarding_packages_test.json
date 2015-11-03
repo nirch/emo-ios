@@ -2,25 +2,154 @@
     "_id": {
         "$oid": "55004ba2646174ef6e230000"
     },
+    "data_version": 2,
     "base_resource_url": "http://s3.amazonaws.com",
     "bucket_name": "homage-emu-test",
     "client_name": "Emu iOS",
     "config_type": "bundled local in app resources",
-    "config_updated_on": "2015-03-18T13:46:48.276Z",
+    "config_updated_on": "2015-10-15T16:20:48.276Z",
     "default_output_video_max_fps": 15,
-    "mixed_screen": {},
+    "mixed_screen": {
+        "_id": {
+            "$oid": "554f6d8264617400b0000024"
+        },
+        "client_name": "Emu iOS",
+        "config_type": "mixed screen",
+        "emus": [
+                 {
+                 "oid": "54f8371b13ac4910154f6355"
+                 },
+                 {
+                 "oid": "54f8543e13ac4910154f6356"
+                 },
+                 {
+                 "oid": "54f8544613ac4910154f6357"
+                 },
+                 {
+                 "oid": "54f8545113ac4910154f6358"
+                 },
+                 {
+                 "oid": "54f8545f13ac4910154f6359"
+                 },
+                 {
+                 "oid": "54f8546813ac4910154f635a"
+                 },
+                 ],
+        "enabled": true,
+        "last_updated_on": "2015-05-10T14:40:19.767Z",
+        "prioritized_emus": []
+    },
     "onboarding_using_package": "54f826de64617400ae140000",
-    "packages": [], 
-    "packages_count": 10, 
+    "packages":[
+                {
+                "_id" : {
+                "$oid" : "54f826de64617400ae140000"
+                },
+                "active" : true,
+                "banner_name" : "love-small.jpg",
+                "banner_wide_name" : "love-big.jpg",
+                "blocked_country_code" : [],
+                "cms_first_published" : "2015-06-21T10:30:01.000Z",
+                "cms_icon_2x" : "love_icon@2x.png",
+                "cms_icon_3x" : "love_icon@3x.png",
+                "cms_last_published" : "2015-06-21T10:30:01.000Z",
+                "cms_proccessing" : true,
+                "cms_state" : "save",
+                "country_code" : [
+                                  "any"
+                                  ],
+                "dev_only" : false,
+                "emuticons" : [
+                               {
+                               "_id" : {
+                               "$oid" : "54f8371b13ac4910154f6355"
+                               },
+                               "name" : "green-love",
+                               "patched_on" : "2015-06-21T09:09:08.000Z",
+                               "source_back_layer" : "green-love-bg.gif",
+                               "source_front_layer" : "green-love-fg.gif",
+                               "source_user_layer_mask" : "green-love-mask-v1.png",
+                               "tags" : "love,happy,i,love,you,fun",
+                               "use_for_preview" : false
+                               },
+                               {
+                               "_id" : {
+                               "$oid" : "54f8543e13ac4910154f6356"
+                               },
+                               "name" : "hearts",
+                               "patched_on" : "2015-06-21T09:11:58.000Z",
+                               "source_back_layer" : "hearts-bg.gif",
+                               "source_front_layer" : "hearts-fg.gif",
+                               "source_user_layer_mask" : "hearts-mask-v1.png",
+                               "tags" : "love,heart,hearts,luv,i,love,you",
+                               "use_for_preview" : false
+                               },
+                               {
+                               "_id" : {
+                               "$oid" : "54f8544613ac4910154f6357"
+                               },
+                               "name" : "kiss",
+                               "patched_on" : "2015-06-21T09:12:42.000Z",
+                               "source_back_layer" : "kiss-bg.gif",
+                               "source_user_layer_mask" : "kiss-mask-v1.png",
+                               "tags" : "love,kiss,rainbow,i,love,you,luv",
+                               "use_for_preview" : true
+                               },
+                               {
+                               "_id" : {
+                               "$oid" : "54f8545113ac4910154f6358"
+                               },
+                               "name" : "teddies",
+                               "patched_on" : "2015-06-21T09:13:08.000Z",
+                               "source_back_layer" : "teddies-bg.gif",
+                               "source_front_layer" : "teddies-fg.gif",
+                               "source_user_layer_mask" : "teddies-mask-v1.png",
+                               "tags" : "teddy,bear,love,cute,fun,happy",
+                               "use_for_preview" : false
+                               },
+                               {
+                               "_id" : {
+                               "$oid" : "54f8545f13ac4910154f6359"
+                               },
+                               "name" : "hot",
+                               "patched_on" : "2015-06-21T09:13:40.000Z",
+                               "source_back_layer" : "hot-bg.gif",
+                               "source_user_layer_mask" : "hot-mask-v1.png",
+                               "tags" : "sexy,hot,4,u,for,you,fun,",
+                               "use_for_preview" : false
+                               },
+                               {
+                               "_id" : {
+                               "$oid" : "54f8546813ac4910154f635a"
+                               },
+                               "name" : "angel",
+                               "patched_on" : "2015-06-21T09:14:19.000Z",
+                               "source_back_layer" : "angel-bg.gif",
+                               "source_front_layer" : "angel-fg.gif",
+                               "source_user_layer_mask" : "angel-mask-v1.png",
+                               "tags" : "angel,wings,i,am,love,holy",
+                               "use_for_preview" : false
+                               }
+                               ],
+                "emuticons_defaults" : {
+                "duration" : 2,
+                "frames_count" : 24,
+                "thumbnail_frame_index" : 23
+                },
+                "icon_name" : "love_icon",
+                "is_featured" : true,
+                "label" : "Love",
+                "last_update" : "2015-06-21T10:29:54.000Z",
+                "meta_data_last_update" : "2015-06-21T10:29:45.000Z",
+                "name" : "love",
+                "poster_name" : "love-poster.gif",
+                "zipped_package_file_name" : "package_love_20150621_102954.zip"
+                },
+                ],
+    "packages_count": 1,
     "prioritized_packages": [
                              {
-                             "$oid": "557eec84d1ff72313b000001"
-                             }, 
-                             {
-                             "$oid": "557d92c0d1ff72622f000002"
-                             }, 
-                             {
-                             "$oid": "556dde3aeeb90925ab000007"
-                             }, 
+                             "$oid": "54f826de64617400ae140000"
+                             }
                              ]
 }

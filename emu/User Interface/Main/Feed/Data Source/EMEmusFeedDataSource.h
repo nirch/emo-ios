@@ -96,6 +96,16 @@
 
 #pragma mark - Public data info
 /**
+ *  Return the aspect ratio of the emu needed to be presented.
+ *
+ *  @param indexPath The index path of the emu object.
+ *
+ *  @return CGFloat of the aspect ratio (width divided by height. For example for 16/9 aspect ratio ~1.777 is returned)
+ */
+-(CGFloat)aspectRatioForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+
+/**
  *  Return the pack related to a given section index.
  *
  *  @param section The section index.

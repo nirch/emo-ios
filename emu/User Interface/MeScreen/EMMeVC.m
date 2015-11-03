@@ -156,7 +156,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)openFooatgesScreen
+-(void)openFootagesScreen
 {
     // Present the footages screen
     EMFootagesVC *footagesVC = [EMFootagesVC footagesVCForFlow:EMFootagesFlowTypeMangementScreen];
@@ -173,13 +173,18 @@
     
 }
 
+-(void)navBarOnLogoButtonPressed:(UIButton *)sender
+{
+    
+}
+
 -(void)navBarOnUserActionNamed:(NSString *)actionName
                         sender:(id)sender
                          state:(NSInteger)state
                           info:(NSDictionary *)info
 {
     if ([actionName isEqualToString:EMK_NAV_ACTION_MY_TAKES]) {
-        [self openFooatgesScreen];
+        [self openFootagesScreen];
     }
 }
 

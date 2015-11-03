@@ -212,8 +212,8 @@
  */
 -(NSURL *)audioFileURL;
 
-
-
+-(BOOL)shouldItRenderInHD;
+-(void)toggleShouldRenderAsHDIfAvailable;
 
 // Info for uploaded content.
 -(NSString *)generateOIDForUpload;
@@ -241,8 +241,14 @@
 #define rkOutputPath            @"outputPath"
 #define rkShouldOutputGif       @"shouldOutputGif"
 #define rkEffects               @"effects"
+#define rkPositioningScale      @"positioningScale"
+#define rkOutputResolutionWidth       @"outputResolutionWidth"
+#define rkOutputResolutionHeight       @"outputResolutionHeight"
 
--(NSDictionary *)infoForGifRender;
+-(NSDictionary *)infoForGifRenderInHD:(BOOL)inHD;
+-(NSDictionary *)infoForVideoRenderInHD:(BOOL)inHD;
 
+-(CGSize)size;
+-(NSString *)resolutionLabel;
 
 @end

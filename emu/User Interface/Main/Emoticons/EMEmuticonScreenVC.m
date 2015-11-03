@@ -24,9 +24,11 @@
 #import "AppDelegate.h"
 #import "EMNotificationCenter.h"
 #import "EMVideoSettingsPopover.h"
+#import "EMProductPopover.h"
 #import "EMUINotifications.h"
 #import "EMFootagesVC.h"
 #import "EMInterfaceDelegate.h"
+#import "EMBackend+AppStore.h"
 
 
 @interface EMEmuticonScreenVC () <
@@ -47,6 +49,7 @@
 @property (weak, nonatomic) IBOutlet UIView *guiEmuContainer;
 @property (weak, nonatomic) EMAnimatedGifPlayer *gifPlayerVC;
 @property (weak, nonatomic) EMShareVC *shareVC;
+@property (weak, nonatomic) IBOutlet UILabel *guiResolutionLabel;
 
 // Layout
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintPlayerLeft;
@@ -56,7 +59,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiRetakeButton;
 @property (weak, nonatomic) IBOutlet UIView *guiShareContainer;
 @property (weak, nonatomic) IBOutlet UIView *guiShareMainIconPosition;
+
+// Options bar buttons
 @property (weak, nonatomic) IBOutlet UIButton *guiFavButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiHDToggleButton;
+@property (weak, nonatomic) IBOutlet UIView *guiEmuOptionsBar;
+
 
 // Tutorial
 @property (strong, nonatomic) JDFSequentialTooltipManager *tooltipManager;
@@ -179,25 +187,7 @@
     // Theme color (if not set, default color is used)
     if (self.themeColor) self.guiNavView.backgroundColor = self.themeColor;
     
-    //
-    // Enable / disable render to video
-    // According to tweak or experiment.
-    BOOL isVideoRenderingAllowed = [HMPanel.sh boolForKey:VK_FEATURE_VIDEO_RENDER fallbackValue:NO];
-    if (isVideoRenderingAllowed) {
-        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-        EMMediaDataType predderedRenderingType = appCFG.userPrefferedShareType.integerValue;
-        
-        // Allow rendering selection.
-        self.guiRenderingTypeSelector.hidden = NO;
-        self.guiRenderingTypeSelector.enabled = YES;
-        self.guiRenderingTypeSelector.selectedSegmentIndex = predderedRenderingType==0?0:1;
-        [self.shareVC update];
-
-    } else {
-        self.guiRenderingTypeSelector.hidden = YES;
-        self.guiRenderingTypeSelector.enabled = NO;
-        self.guiRenderingTypeSelector.selectedSegmentIndex = 0;
-    }
+    [self updateEmuOptionsBar];
 }
 
 #pragma mark - GUI init
@@ -232,35 +222,73 @@
                                  context:EMDB.sh.context];
 }
 
+-(void)showEmuOptionsBar
+{
+    self.guiEmuOptionsBar.userInteractionEnabled = YES;
+    if (self.guiEmuOptionsBar.alpha < 1.0 || !CGAffineTransformIsIdentity(self.guiEmuOptionsBar.transform)) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiEmuOptionsBar.alpha = 1.0;
+            self.guiEmuOptionsBar.transform = CGAffineTransformIdentity;
+        }];
+    }
+}
+
+-(void)hideEmuOptionsBar
+{
+    if (self.guiEmuOptionsBar.alpha > 0.2) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.guiEmuOptionsBar.alpha = 0.2;
+            self.guiEmuOptionsBar.transform = CGAffineTransformMakeScale(0.95, 0.95);
+        }];
+    }
+    self.guiEmuOptionsBar.userInteractionEnabled = NO;
+}
 
 -(void)refreshEmu
 {
+    Emuticon *emu = self.emuticon;
+    if (emu == nil) return;
+
+    // Resolution (showed only when the aspect ratio is not 1:1
+    if ([emu.emuDef aspectRatio] != 1.0f) {
+        self.guiResolutionLabel.hidden = NO;
+        self.guiResolutionLabel.text = [emu resolutionLabel];
+    } else {
+        self.guiResolutionLabel.hidden = YES;
+    }
+    
     // Favorite YES/NO
     if (self.emuticon.isFavorite.boolValue) {
-        [self.guiFavButton setImage:[UIImage imageNamed:@"fav"] forState:UIControlStateNormal];
+        [self.guiFavButton setImage:[UIImage imageNamed:@"favIconOn"] forState:UIControlStateNormal];
     } else {
-        [self.guiFavButton setImage:[UIImage imageNamed:@"unfav"] forState:UIControlStateNormal];
+        [self.guiFavButton setImage:[UIImage imageNamed:@"favIconOff"] forState:UIControlStateNormal];
     }
     
     if (self.emuticon.wasRendered.boolValue) {
         // Was rendered.
         NSURL *url = [self.emuticon animatedGifURL];
         self.gifPlayerVC.animatedGifURL = url;
+        [self showEmuOptionsBar];
         return;
+    } else {
+        [self hideEmuOptionsBar];
     }
     
-    Emuticon *emu = self.emuticon;
-    if (emu == nil) return;
 
+    // HD or not
+    BOOL inHD = [self.emuticon shouldItRenderInHD];
+    
     // Not rendered yet.
-    if ([self.emuticon.emuDef allResourcesAvailable]) {
+    BOOL allResourcesAvailableForRequiredResolution = [self.emuticon.emuDef allResourcesAvailableInHD:inHD];
+    if (allResourcesAvailableForRequiredResolution) {
         // Send for rendering (with highest priority)
         [self.gifPlayerVC setAnimatedGifNamed:@"rendering"];
         EMRenderManager2 *rm = EMRenderManager2.sh;
         [rm updatePriorities:@{emu.oid:@YES}];
         [rm enqueueEmu:emu
              indexPath:[NSIndexPath indexPathForItem:0 inSection:0]
-              userInfo:@{@"emuticonOID":emu.oid}];
+              userInfo:@{@"emuticonOID":emu.oid, @"inHD":@(inHD)}
+                  inHD:inHD];
         return;
     }
     
@@ -273,10 +301,32 @@
     [dm clear];
     [dm updatePriorities:@{emu.oid:@YES}];
     [dm enqueueResourcesForOID:emu.oid
-                         names:[emuDef allMissingResourcesNames]
+                         names:[emuDef allMissingResourcesNamesInHD:inHD]
                           path:emuDef.package.name
                       userInfo:@{@"emuticonOID":emu.oid}];
     [dm manageQueue];
+}
+
+#pragma mark - Emu options bar
+-(void)updateEmuOptionsBar
+{
+    // HD button (show only if HD available)
+    BOOL hdAvailable = self.emuticon.emuDef.hdAvailable?self.emuticon.emuDef.hdAvailable.boolValue:NO;
+    self.guiHDToggleButton.hidden = !hdAvailable;
+    if (hdAvailable) {
+        BOOL shouldRenderAsHD = self.emuticon.shouldRenderAsHDIfAvailable?self.emuticon.shouldRenderAsHDIfAvailable.boolValue:NO;
+        if (shouldRenderAsHD) {
+            [self.guiHDToggleButton setImage:[UIImage imageNamed:@"hdOptionOn"] forState:UIControlStateNormal];
+        } else {
+            [self.guiHDToggleButton setImage:[UIImage imageNamed:@"hdOptionOff"] forState:UIControlStateNormal];
+        }
+    }
+    
+    // Gif / Video
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    EMMediaDataType predderedRenderingType = appCFG.userPrefferedShareType.integerValue;
+    self.guiRenderingTypeSelector.selectedSegmentIndex = predderedRenderingType==0?0:1;
+    [self.shareVC update];
 }
 
 #pragma mark - Tutorial
@@ -333,6 +383,15 @@
                  selector:@selector(onRenderingProgressReport:)
                      name:emkUIRenderProgressReport
                    object:nil];
+    
+
+    // Store transactions handled.
+    [nc addUniqueObserver:self
+                 selector:@selector(onHandledStoreTransactions:)
+                     name:emkDataProductsHandledTransactions
+                   object:nil];
+
+    
 }
 
 -(void)removeObservers
@@ -378,6 +437,10 @@
     [self updateFBMessengerExperienceState];
 }
 
+-(void)onHandledStoreTransactions:(NSNotification *)notification
+{
+    [self refreshEmu];
+}
 
 -(void)onRenderingProgressReport:(NSNotification *)notification
 {
@@ -474,7 +537,8 @@
     // Will need to send the emuticon to rendering
     [EMRenderManager2.sh enqueueEmu:self.emuticon
                           indexPath:[NSIndexPath indexPathForItem:0 inSection:0]
-                           userInfo:@{@"emuticonOID":self.emuticon.oid}];
+                           userInfo:@{@"emuticonOID":self.emuticon.oid}
+                               inHD:NO];
 
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -527,6 +591,8 @@
         }];
     } else if ([actionName isEqualToString:emkUIFootageSelectionCancel]) {
         [self dismissViewControllerAnimated:YES completion:nil];
+    } else if ([actionName isEqualToString:emkUIPurchaseHDContent]) {
+        [self purchaseHDContent];
     }
 }
 
@@ -908,6 +974,13 @@
     [self playSelectedAudio];
 }
 
+#pragma mark - Buy content
+-(void)purchaseHDContent
+{
+    [self hideEmuOptionsBar];
+    Package *package = self.emuticon.emuDef.package;
+    [EMBackend.sh buyProductWithIdentifier:package.hdProductID];
+}
 
 #pragma mark - IB Actions
 // ===========
@@ -1040,5 +1113,32 @@
     }
     [self refreshEmu];
 }
+
+- (IBAction)onHDToggleButtonPressed:(UIButton *)sender
+{
+    Package *package = self.emuticon.emuDef.package;
+    if (package.hdUnlocked.boolValue || package.hdProductID == nil) {
+        // Already unlocked this product.
+        // User can toggle HD on or off at will.
+        [self.emuticon toggleShouldRenderAsHDIfAvailable];
+        [self.emuticon cleanUp];
+        [self updateEmuOptionsBar];
+        [self refreshEmu];
+    } else if (package.hdProductValidated.boolValue) {
+        // User still didn't unlock the HD feature of this pack.
+        // And the product is a validated one.
+        EMProductPopover *vc = [[EMProductPopover alloc] init];
+        vc.preferredContentSize = CGSizeMake(240, 240);
+        vc.packageOID = package.oid;
+        vc.delegate = self;
+        
+        UIPopoverPresentationController *po = vc.popoverPresentationController;
+        po.sourceView = sender;
+        po.sourceRect = sender.bounds;
+        po.permittedArrowDirections = UIPopoverArrowDirectionDown;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+}
+
 
 @end

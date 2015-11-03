@@ -55,6 +55,16 @@
 +(NSArray *)allPackagesPrioritizedInContext:(NSManagedObjectContext *)context;
 
 
+
+/**
+ *  Fetches all the active packages info found in local storage, that have any kind of premium product id.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return An array of packages objects.
+ */
++(NSArray *)allPremiumPackagesInContext:(NSManagedObjectContext *)context;
+
 /**
  *  Reorders packages in local storage, given new priority info.
  *

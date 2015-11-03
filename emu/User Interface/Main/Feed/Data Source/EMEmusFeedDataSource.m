@@ -55,7 +55,8 @@
     fetchRequest.predicate = predicate;
     
     fetchRequest.sortDescriptors = @[
-                                     [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.prioritizedIdentifier" ascending:NO]
+                                     [NSSortDescriptor sortDescriptorWithKey:@"emuDef.package.prioritizedIdentifier" ascending:NO],
+                                     [NSSortDescriptor sortDescriptorWithKey:@"emuDef.order" ascending:YES]
                                      ];
 
     fetchRequest.fetchBatchSize = 20;
@@ -79,6 +80,22 @@
 }
 
 #pragma mark - Public questions about the data
+-(CGFloat)aspectRatioForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+    CGFloat width = emu.emuDef.emuWidth?emu.emuDef.emuWidth.floatValue:EMU_DEFAULT_WIDTH;
+    CGFloat height = emu.emuDef.emuHeight?emu.emuDef.emuHeight.floatValue:EMU_DEFAULT_HEIGHT;
+    
+    // If width and height are the same or value is invalid, return 1.0f aspect ratio.
+    if (width == height || width < 1.0f || height < 1.0f) return 1.0f;
+    
+    // Return the aspect ratio.
+    // 16/9 ~ 1.777
+    // 4/3 ~ 1.333
+    return width/height;
+}
+
+
 -(NSString *)titleForSection:(NSInteger)section
 {
     Emuticon *emu = [self.frc objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
@@ -241,6 +258,11 @@
     Package *pack = emu.emuDef.package;
     headerView.label = pack.label;
     headerView.sectionIndex = indexPath.section;
+
+    headerView.hdAvailable = pack.hdAvailable.boolValue;
+    headerView.hdProductValided = pack.hdProductValidated.boolValue;
+    headerView.hdUnlocked = pack.hdUnlocked.boolValue;
+    headerView.hdPriceLabel = pack.hdPriceLabel;
     
     // Update the UI
     [headerView updateGUI];

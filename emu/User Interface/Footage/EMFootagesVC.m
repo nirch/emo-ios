@@ -205,12 +205,19 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     }
 }
 
+
+-(void)navBarOnLogoButtonPressed:(UIButton *)sender
+{
+    
+}
+
 -(void)noneSelected
 {
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     [self.navBarVC showTitleAnimated:YES];
     [self.navBarVC updateTitle:LS(@"TAKES_CHOOSE_TAKE")];
 }
+
 
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info

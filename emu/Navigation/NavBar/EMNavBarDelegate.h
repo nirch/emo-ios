@@ -33,6 +33,13 @@
 -(void)navBarOnTitleButtonPressed:(UIButton *)sender;
 
 /**
+ *  The user pressed the logo button in the nav bar.
+ *
+ *  @param sender The UIButton pressed.
+ */
+-(void)navBarOnLogoButtonPressed:(UIButton *)sender;
+
+/**
  *  The user pressed some action button in the navigation bar.
  *  this method will pass the sender button, the current state of
  *  the nav bar and (optional) configuration info about the action.

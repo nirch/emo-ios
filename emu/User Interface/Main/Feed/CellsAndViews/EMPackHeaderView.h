@@ -21,6 +21,14 @@
 @property (nonatomic) NSInteger sectionIndex;
 
 /**
+ *  Is hd content available for this pack.
+ */
+@property (nonatomic) BOOL hdAvailable;
+@property (nonatomic) BOOL hdProductValided;
+@property (nonatomic) BOOL hdUnlocked;
+@property (nonatomic) NSString *hdPriceLabel;
+
+/**
  *  Update UI of the header according to current state.
  */
 -(void)updateGUI;

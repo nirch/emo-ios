@@ -11,27 +11,30 @@
 #import "Gpw/Vtool/Vtool.h"
 #import "ImageType/ImageTool.h"
 #import "ImageType/ImageType.h"
+#import "HMImageTools.h"
 
 
-PngSourceWithFX::PngSourceWithFX(NSArray *pngFiles)
+PngSourceWithFX::PngSourceWithFX(NSArray *pngFiles, CGSize targetSize)
 {
-    m_pngFiles = pngFiles;
-    image = NULL;
+    _pngFiles = pngFiles;
+    _image = NULL;
+    _targetSize = targetSize;
 }
 
 int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
 {
-    if (iFrame < m_pngFiles.count)
+    if (iFrame < _pngFiles.count)
     {
         // Get the image
-        NSString *imagePath = [m_pngFiles objectAtIndex:iFrame];
+        NSString *imagePath = [_pngFiles objectAtIndex:iFrame];
         UIImage* uiImage = [UIImage imageWithContentsOfFile:imagePath];
-        image = CVtool::UIimage_to_image(uiImage, image);
-        *im = image;
-
-        // Reverse channels on the image
-        image_bgr2rgb(*im, *im);
         
+        // Need to scale image to requested target size.
+        uiImage = [HMImageTools image:uiImage scaledProportionallyToSize:_targetSize];
+        
+        _image = CVtool::UIimage_to_image(uiImage, _image);
+        *im = _image;
+
         // Process effects for the image.
         ProcessEffect(*im, iFrame, im);
 
@@ -46,8 +49,8 @@ int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
 
 int PngSourceWithFX::Close()
 {
-    if (image != NULL) {
-        image_destroy(image, 1);
+    if (_image != NULL) {
+        image_destroy(_image, 1);
     }
     return 1;
 }

@@ -382,9 +382,7 @@
 
 - (IBAction)onPressedFaceButton:(UIButton *)sender
 {
-    if (AppManagement.sh.isTestApp) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:emkDataDebug object:self userInfo:nil];
-    }
+    [self.delegate navBarOnLogoButtonPressed:sender];
 }
 
 - (IBAction)onActionButton1Pressed:(id)sender

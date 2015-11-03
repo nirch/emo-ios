@@ -21,6 +21,7 @@
 #import "HMPanel.h"
 #import "EMNotificationCenter.h"
 #import "EMDownloadsManager2.h"
+#import "EMBackend+AppStore.h"
 
 #import <AWSS3.h>
 
@@ -37,6 +38,8 @@
 @implementation EMBackend
 
 @synthesize transferManager = _transferManager;
+@synthesize productsByPID = _productsByPID;
+@synthesize productsRequest = _productsRequest;
 
 #pragma mark - Initialization
 // A singleton
@@ -240,6 +243,9 @@
         appCFG.deprecatedFootageForPack = @YES;
         [EMDB.sh save];
     }
+    
+    // Premium content updates
+    [self storeRefreshProductsInfo];
     
     // Notify the user interface about the updates.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];

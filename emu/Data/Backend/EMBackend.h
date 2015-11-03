@@ -12,6 +12,7 @@
 @class Package;
 @class AWSS3TransferManager;
 
+#import <StoreKit/StoreKit.h>
 #import <Foundation/Foundation.h>
 
 @interface EMBackend : NSObject
@@ -25,6 +26,12 @@
 
 #pragma mark - Uploading
 @property (nonatomic, readonly) AWSS3TransferManager *transferManager;
+
+#pragma mark - In App Purchases
+@property (nonatomic) SKProductsRequest *productsRequest;
+@property (nonatomic) NSMutableDictionary *productsByPID;
+@property (nonatomic) NSMutableDictionary *packOIDByPID;
+@property (nonatomic) BOOL isAlreadyListeningToTransactions;
 
 #pragma mark - Background fetch
 -(void)reloadPackagesInTheBackgroundWithNewDataHandler:(void (^)())newDataHandler

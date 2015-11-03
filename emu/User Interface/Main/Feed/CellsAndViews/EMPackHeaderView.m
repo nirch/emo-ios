@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *guiHeaderButton;
 @property (weak, nonatomic) IBOutlet UILabel *guiLabel;
+@property (weak, nonatomic) IBOutlet UIButton *guiPriceButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiHDButton;
 
 
 @end
@@ -22,6 +24,15 @@
 {
     self.guiLabel.text = self.label;
     self.guiHeaderButton.tag = self.sectionIndex;
+    self.guiHDButton.hidden = !self.hdAvailable;
+    self.guiPriceButton.hidden = YES;
+    
+    if (self.hdProductValided && self.hdAvailable && !self.hdUnlocked) {
+        // HD Product is available, validated and still locked.
+        // Offer it for sale.
+        self.guiPriceButton.hidden = NO;
+        [self.guiPriceButton setTitle:self.hdPriceLabel forState:UIControlStateNormal];
+    }
 }
 
 @end
