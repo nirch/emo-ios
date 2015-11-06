@@ -222,7 +222,6 @@
     
     //
     // Pick next thing to render.
-    // TODO: prioritize.
     //
     NSString *oid = [self _chooseOID];
     NSDictionary *renderInfo = self.readyPool[oid];
@@ -237,7 +236,7 @@
         // Render
         EMRenderer *renderer = [EMRenderer rendererWithInfo:renderInfo];
         [renderer render];
-        [wSelf finishedRendering:oid];
+        [wSelf finishedRendering:oid withInfo:renderInfo];
     });
 }
 
@@ -253,17 +252,22 @@
     return  self.readyPool.allKeys.lastObject;
 }
 
--(void)finishedRendering:(NSString *)oid
+-(void)finishedRendering:(NSString *)oid withInfo:(NSDictionary *)renderInfo
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         // Update model on the main thread.
         Emuticon *emu = [Emuticon findWithID:oid context:EMDB.sh.context];
-        emu.wasRendered = @YES;
+        BOOL inHD = renderInfo[rkRenderInHD]?[renderInfo[rkRenderInHD] boolValue]:NO;
+        if (inHD) {
+            emu.wasRenderedInHD = @YES;
+        } else {
+            emu.wasRendered = @YES;
+            NSInteger count = emu.emuDef.package.rendersCount.integerValue;
+            emu.emuDef.package.rendersCount = @(count+1);
+            count = emu.rendersCount.integerValue;
+            emu.rendersCount = @(count+1);
+        }
         emu.renderedSampleUploaded = @NO;
-        NSInteger count = emu.emuDef.package.rendersCount.integerValue;
-        emu.emuDef.package.rendersCount = @(count+1);
-        count = emu.rendersCount.integerValue;
-        emu.rendersCount = @(count+1);
         [EMDB.sh save];
         
         // Post to the UI that a render was finished.

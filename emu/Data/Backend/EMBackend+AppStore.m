@@ -90,6 +90,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataProductsInfoUpdated object:nil userInfo:nil];
 }
 
+
+
 -(NSString *)priceAsStringForProduct:(SKProduct *)product
 {
     if ([[product price] isEqualToNumber:@0]) {
@@ -109,6 +111,8 @@
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
     BOOL finishedAnyTransaction = NO;
+    NSInteger restoredCount = 0;
+    
     for (SKPaymentTransaction * transaction in transactions) {
         // Gather some info about this transaction.
         NSString *productIdentifier = transaction.payment.productIdentifier;
@@ -138,6 +142,7 @@
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 [self purchasedProductWithIdentifier:productIdentifier];
                 finishedAnyTransaction = YES;
+                restoredCount++;
                 break;
             default:
                 break;
@@ -145,9 +150,24 @@
     }
 
     // Notify the user interface about the transactions.
-    if (finishedAnyTransaction)
-        [[NSNotificationCenter defaultCenter] postNotificationName:emkDataProductsHandledTransactions object:nil userInfo:nil];
+    if (finishedAnyTransaction) {
+        if (restoredCount > 0) {
+            NSDictionary *info = @{@"restoredCount":@(restoredCount)};
+            [[NSNotificationCenter defaultCenter] postNotificationName:emkDataProductsRestoredPurchases object:nil userInfo:info];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:emkDataProductsHandledTransactions object:nil userInfo:nil];
+        }
+    }
 }
+
+// Sent when an error is encountered while adding transactions from the user's purchase history back to the queue.
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    HMParams *info = [HMParams new];
+    [info addKey:@"error" valueIfNotNil:error];
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataProductsError object:nil userInfo:info.dictionary];
+}
+
 
 -(void)purchasedProductWithIdentifier:productIdentifier
 {
@@ -160,6 +180,16 @@
     package.hdUnlocked = @YES;
 }
 
+#pragma mark - Restore
+-(void)restorePurchases
+{
+    if (!self.isAlreadyListeningToTransactions) {
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+        self.isAlreadyListeningToTransactions = YES;
+    }
+    
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
 
 #pragma mark - Clean up
 -(void)cleanup

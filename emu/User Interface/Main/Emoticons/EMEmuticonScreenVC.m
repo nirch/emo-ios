@@ -29,6 +29,7 @@
 #import "EMFootagesVC.h"
 #import "EMInterfaceDelegate.h"
 #import "EMBackend+AppStore.h"
+#import "EMFullScreenGifPlayer.h"
 
 
 @interface EMEmuticonScreenVC () <
@@ -50,6 +51,7 @@
 @property (weak, nonatomic) EMAnimatedGifPlayer *gifPlayerVC;
 @property (weak, nonatomic) EMShareVC *shareVC;
 @property (weak, nonatomic) IBOutlet UILabel *guiResolutionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *guiFullScreenButton;
 
 // Layout
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintPlayerLeft;
@@ -172,6 +174,7 @@
 
 -(void)dealloc
 {
+    [self deleteUnrequiredHDContentAndResources];
     [self audioStop];
 }
 
@@ -252,9 +255,11 @@
     // Resolution (showed only when the aspect ratio is not 1:1
     if ([emu.emuDef aspectRatio] != 1.0f) {
         self.guiResolutionLabel.hidden = NO;
+        self.guiFullScreenButton.hidden = NO;
         self.guiResolutionLabel.text = [emu resolutionLabel];
     } else {
         self.guiResolutionLabel.hidden = YES;
+        self.guiFullScreenButton.hidden = YES;
     }
     
     // Favorite YES/NO
@@ -264,19 +269,18 @@
         [self.guiFavButton setImage:[UIImage imageNamed:@"favIconOff"] forState:UIControlStateNormal];
     }
     
-    if (self.emuticon.wasRendered.boolValue) {
+    // HD or not
+    BOOL inHD = [self.emuticon shouldItRenderInHD];
+    if ([self.emuticon boolWasRenderedInHD:inHD]) {
         // Was rendered.
-        NSURL *url = [self.emuticon animatedGifURL];
+        NSURL *url = [self.emuticon animatedGifURLInHD:inHD];
         self.gifPlayerVC.animatedGifURL = url;
         [self showEmuOptionsBar];
         return;
     } else {
+        self.guiFullScreenButton.hidden = YES;
         [self hideEmuOptionsBar];
     }
-    
-
-    // HD or not
-    BOOL inHD = [self.emuticon shouldItRenderInHD];
     
     // Not rendered yet.
     BOOL allResourcesAvailableForRequiredResolution = [self.emuticon.emuDef allResourcesAvailableInHD:inHD];
@@ -482,6 +486,13 @@
       
         self.shareVC = segue.destinationViewController;
         self.shareVC.delegate = self;
+        
+    } else if ([segue.identifier isEqualToString:@"full screen gif player segue"]) {
+        
+        BOOL inHD = [self.emuticon shouldItRenderInHD];
+        NSURL *gifURL = [self.emuticon animatedGifURLInHD:inHD];
+        EMFullScreenGifPlayer *vc = segue.destinationViewController;
+        vc.gifURL = gifURL;
         
     }
 }
@@ -982,6 +993,19 @@
     [EMBackend.sh buyProductWithIdentifier:package.hdProductID];
 }
 
+#pragma mark - Cleanup
+-(void)deleteUnrequiredHDContentAndResources
+{
+    if (self.emuticon.emuDef.hdAvailable.boolValue) {
+        // Always delete the HD resources. Will be redownloaded if required.
+        [self.emuticon.emuDef removeAllHDResources];
+        if (![self.emuticon shouldItRenderInHD]) {
+            [self.emuticon cleanUpHDOutputGif];
+        }
+    }
+}
+
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -1121,7 +1145,6 @@
         // Already unlocked this product.
         // User can toggle HD on or off at will.
         [self.emuticon toggleShouldRenderAsHDIfAvailable];
-        [self.emuticon cleanUp];
         [self updateEmuOptionsBar];
         [self refreshEmu];
     } else if (package.hdProductValidated.boolValue) {
@@ -1140,5 +1163,12 @@
     }
 }
 
+- (IBAction)onPressedFullScreenButton:(UIButton *)sender
+{
+    BOOL inHD = [self.emuticon shouldItRenderInHD];
+    if ([self.emuticon boolWasRenderedInHD:inHD]) {
+        [self performSegueWithIdentifier:@"full screen gif player segue" sender:sender];
+    }
+}
 
 @end

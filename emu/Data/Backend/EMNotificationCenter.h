@@ -24,7 +24,9 @@
 
 // Store
 #define emkDataProductsInfoUpdated  @"emk data products info updated"
-#define emkDataProductsHandledTransactions  @"emk data products handled transactions"
+#define emkDataProductsError  @"emk data products error"
+#define emkDataProductsHandledTransactions @"emk data products handled transaction"
+#define emkDataProductsRestoredPurchases  @"emk data products restored purchases"
 
 // Notification of navigation events
 #define emkUINavigationTabSelected @"emk ui nav tab selected"

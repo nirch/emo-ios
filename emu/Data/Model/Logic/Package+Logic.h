@@ -156,6 +156,14 @@
  */
 -(NSArray *)emuticonsOIDS;
 
+/**
+ *  A list of emuticons in this pack.
+ *  (preview temp emus are ignored)
+ *
+ *  @return NSArray of all (none preview) emuticons in the pack.
+ */
+-(NSArray *)emuticons;
+
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 -(NSString *)tagLabel;

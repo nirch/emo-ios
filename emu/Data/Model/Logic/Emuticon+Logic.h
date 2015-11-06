@@ -86,6 +86,14 @@
  */
 +(NSArray *)allEmuticonsInPackage:(Package *)package;
 
+
+/**
+ *  Fetches a list of emu objects that are marked as render in HD.
+ *
+ *  @return NSArray of emus rendered in HD
+ */
++(NSArray *)allEmuticonsRenderedInHD;
+
 /**
  *  Fetches all emuticons that were set to preffer a specific footage (ignores emuticons marked as preview)
  *
@@ -106,6 +114,7 @@
  *  @return NSURL pointing to the rendered animated gif.
  */
 -(NSURL *)animatedGifURL;
+-(NSURL *)animatedGifURLInHD:(BOOL)inHD;
 
 
 /**
@@ -114,6 +123,7 @@
  *  @return NSString of the path to the rendered animated gif.
  */
 -(NSString *)animatedGifPath;
+-(NSString *)animatedGifPathInHD:(BOOL)inHD;
 
 
 /**
@@ -122,7 +132,7 @@
  *  @return NSData of the raw data of the animated gif.
  */
 -(NSData *)animatedGifData;
-
+-(NSData *)animatedGifDataInHD:(BOOL)inHD;
 
 /**
  *  The path to the video rendered for this emuticon object;
@@ -158,6 +168,10 @@
  */
 -(void)deleteAndCleanUp;
 
+/**
+ *  Just remove the HD output gif file (if exists)
+ */
+-(void)cleanUpHDOutputGif;
 
 /**
  *  Cleans up the emuticon rendered files and marks it as not rendered
@@ -227,28 +241,30 @@
 
 
 // Converting info to none core data object
-#define rkEmuticonDefOID        @"emuticonDefOID"
-#define rkFootageOID            @"footageOID"
-#define rkBackLayerPath         @"backLayerPath"
-#define rkUserImagesPath        @"userImagesPath"
-#define rkUserMaskPath          @"userMaskPath"
-#define rkUserDynamicMaskPath   @"userDynamicMaskPath"
-#define rkFrontLayerPath        @"frontLayerPath"
-#define rkNumberOfFrames        @"numberOfFrames"
-#define rkDuration              @"duration"
-#define rkOutputOID             @"outputOID"
-#define rkPaletteString         @"paletteString"
-#define rkOutputPath            @"outputPath"
-#define rkShouldOutputGif       @"shouldOutputGif"
-#define rkEffects               @"effects"
-#define rkPositioningScale      @"positioningScale"
-#define rkOutputResolutionWidth       @"outputResolutionWidth"
-#define rkOutputResolutionHeight       @"outputResolutionHeight"
+#define rkEmuticonDefOID            @"emuticonDefOID"
+#define rkFootageOID                @"footageOID"
+#define rkBackLayerPath             @"backLayerPath"
+#define rkUserImagesPath            @"userImagesPath"
+#define rkUserMaskPath              @"userMaskPath"
+#define rkUserDynamicMaskPath       @"userDynamicMaskPath"
+#define rkFrontLayerPath            @"frontLayerPath"
+#define rkNumberOfFrames            @"numberOfFrames"
+#define rkDuration                  @"duration"
+#define rkOutputOID                 @"outputOID"
+#define rkPaletteString             @"paletteString"
+#define rkOutputPath                @"outputPath"
+#define rkShouldOutputGif           @"shouldOutputGif"
+#define rkEffects                   @"effects"
+#define rkPositioningScale          @"positioningScale"
+#define rkOutputResolutionWidth     @"outputResolutionWidth"
+#define rkOutputResolutionHeight    @"outputResolutionHeight"
+#define rkRenderInHD                @"renderInHD"
 
 -(NSDictionary *)infoForGifRenderInHD:(BOOL)inHD;
 -(NSDictionary *)infoForVideoRenderInHD:(BOOL)inHD;
 
 -(CGSize)size;
 -(NSString *)resolutionLabel;
+-(BOOL)boolWasRenderedInHD:(BOOL)inHD;
 
 @end

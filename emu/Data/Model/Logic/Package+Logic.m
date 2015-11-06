@@ -189,12 +189,18 @@
     return emus;
 }
 
--(NSArray *)emuticonsOIDS
+-(NSArray *)emuticons
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"emuDef.package=%@ AND isPreview=%@", self, @NO];
     NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
                                         withPredicate:predicate
                                             inContext:self.managedObjectContext];
+    return emus;
+}
+
+-(NSArray *)emuticonsOIDS
+{
+    NSArray *emus = [self emuticons];
     NSMutableArray *emusOIDS = [NSMutableArray new];
     for (Emuticon *emu in emus) {
         [emusOIDS addObject:emu.oid];

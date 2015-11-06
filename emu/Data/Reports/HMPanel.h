@@ -10,7 +10,7 @@
 #import "HMParams.h"
 #import <MPTweakInline.h>
 #import "HMExperiments.h"
-#import <Crashlytics.h>
+#import <Crashlytics/Crashlytics.h>
 
 #define VK_FEATURE_VIDEO_RENDER @"featureVideoRender"
 #define VK_FEATURE_VIDEO_RENDER_WITH_AUDIO @"featureVideoRenderWithAudio"

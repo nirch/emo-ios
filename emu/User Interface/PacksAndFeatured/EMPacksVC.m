@@ -294,7 +294,7 @@
 -(void)highlightPackWithOID:(NSString *)packOID
 {
     if (self.alreadyInitializedGUIOnAppearance) {
-        [self _highlightPackWithOID:packOID];
+        if (packOID != nil) [self _highlightPackWithOID:packOID];
     } else {
         self.highlightedPackOnAppearance = packOID;
     }

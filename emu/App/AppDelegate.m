@@ -10,6 +10,7 @@
 
 #define TAG @"AppDelegate"
 
+#import <objc/message.h>
 #import "AppDelegate.h"
 #import "EMDB.h"
 #import "EMBackend.h"
@@ -56,7 +57,6 @@
 #pragma mark - App Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
     // Initialize Logging
     [self initLogging];
     
@@ -127,6 +127,10 @@
     [HMPanel.sh analyticsEvent:AK_E_APP_ENTERED_BACKGROUND];
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     [EMDB.sh save];
+}
+
+-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

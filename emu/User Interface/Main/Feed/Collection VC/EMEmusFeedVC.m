@@ -616,6 +616,17 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 -(CGRect)frameForHeaderForSection:(NSInteger)section
 {
+    // Check if not empty data
+    if (self.dataSource.packsCount < 1) {
+        return CGRectMake(0,0,1,1);
+    }
+    
+    // Make sure section is in bound
+    if (section >= self.dataSource.packsCount) {
+        section = self.dataSource.packsCount-1;
+    }
+    if (section < 0) section = 0;
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     UICollectionViewLayoutAttributes *attributes = [self.guiCollectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect frameForFirstCell = attributes.frame;

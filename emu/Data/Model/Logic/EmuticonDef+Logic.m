@@ -84,10 +84,6 @@
     return [EMDB pathForResourceNamed:path path:[self.package resourcesPath]];
 }
 
-
-
-
-
 +(NSArray *)createMissingEmuticonsForEmuDefs:(NSArray *)emuDefs
 {
     NSMutableArray *emus = [NSMutableArray new];

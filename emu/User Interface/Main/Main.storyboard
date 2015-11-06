@@ -416,7 +416,7 @@
                                 </connections>
                             </containerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1024 x 768" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mK-Dg-evw" customClass="EMLabel">
-                                <rect key="frame" x="152" y="399" width="72" height="17"/>
+                                <rect key="frame" x="152" y="96" width="72" height="17"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -430,6 +430,18 @@
                                 </state>
                                 <connections>
                                     <action selector="onPressedEmuButton:" destination="rnG-vP-eU5" eventType="touchUpInside" id="McX-w9-hCS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DbK-sS-qwn" userLabel="Full screen button">
+                                <rect key="frame" x="24" y="379" width="44" height="44"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="FN5-9H-aJS"/>
+                                    <constraint firstAttribute="height" constant="44" id="vsX-ev-HlI"/>
+                                </constraints>
+                                <state key="normal" image="fullScreenIcon"/>
+                                <connections>
+                                    <action selector="onPressedFullScreenButton:" destination="rnG-vP-eU5" eventType="touchUpInside" id="PxA-tc-pqQ"/>
                                 </connections>
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Voh-xn-DcO" userLabel="Share Container View">
@@ -703,6 +715,8 @@
                             <constraint firstItem="6OK-A8-yVv" firstAttribute="top" secondItem="Voh-xn-DcO" secondAttribute="bottom" id="WFY-9h-N6i"/>
                             <constraint firstItem="DTt-Hy-ZEY" firstAttribute="trailing" secondItem="Ppi-hu-ZiR" secondAttribute="trailingMargin" id="cjp-4H-5hy" userLabel="Gif player right margin"/>
                             <constraint firstItem="4mK-Dg-evw" firstAttribute="bottom" secondItem="goj-wz-5hX" secondAttribute="bottom" constant="-15" id="e95-He-jMH"/>
+                            <constraint firstItem="4mK-Dg-evw" firstAttribute="top" secondItem="DTt-Hy-ZEY" secondAttribute="top" constant="8" id="fdk-Q2-b1x"/>
+                            <constraint firstItem="DbK-sS-qwn" firstAttribute="left" secondItem="DTt-Hy-ZEY" secondAttribute="left" constant="8" id="g47-Ay-KhX"/>
                             <constraint firstItem="DTt-Hy-ZEY" firstAttribute="top" secondItem="fTt-oM-iaE" secondAttribute="bottom" constant="44" id="gUb-sE-OAE" userLabel="Gif player top margin"/>
                             <constraint firstItem="Voh-xn-DcO" firstAttribute="top" secondItem="bEL-eU-Udx" secondAttribute="bottom" id="k4v-He-CPr"/>
                             <constraint firstItem="8Kg-YO-bbJ" firstAttribute="width" secondItem="goj-wz-5hX" secondAttribute="width" id="lJa-eh-dcx"/>
@@ -710,12 +724,20 @@
                             <constraint firstItem="fTt-oM-iaE" firstAttribute="width" secondItem="Ppi-hu-ZiR" secondAttribute="width" id="p1n-Du-wlr"/>
                             <constraint firstItem="Voh-xn-DcO" firstAttribute="leading" secondItem="Ppi-hu-ZiR" secondAttribute="leading" id="p6M-Y0-FGo"/>
                             <constraint firstItem="DTt-Hy-ZEY" firstAttribute="leading" secondItem="Ppi-hu-ZiR" secondAttribute="leadingMargin" id="rqX-hJ-8Kt" userLabel="Gif player left margin"/>
+                            <constraint firstItem="4mK-Dg-evw" firstAttribute="centerY" secondItem="DbK-sS-qwn" secondAttribute="centerY" id="srF-1z-T7j"/>
+                            <constraint firstItem="DbK-sS-qwn" firstAttribute="bottom" secondItem="DTt-Hy-ZEY" secondAttribute="bottom" constant="-8" id="xuT-Du-Woa"/>
                             <constraint firstAttribute="trailing" secondItem="Voh-xn-DcO" secondAttribute="trailing" id="y75-ng-tCA"/>
                             <constraint firstItem="fTt-oM-iaE" firstAttribute="top" secondItem="2jC-9S-6vE" secondAttribute="bottom" id="yTA-FF-Ltj"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
                         </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="e95-He-jMH"/>
+                                <exclude reference="srF-1z-T7j"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="LoY-QT-WpU" appends="YES" id="TcM-Jd-TEI"/>
                         </connections>
@@ -732,6 +754,7 @@
                         <outlet property="guiEmuContainer" destination="DTt-Hy-ZEY" id="idz-NZ-TJv"/>
                         <outlet property="guiEmuOptionsBar" destination="bEL-eU-Udx" id="7rv-0B-PsO"/>
                         <outlet property="guiFavButton" destination="XkM-q0-Vob" id="p6H-oe-jsp"/>
+                        <outlet property="guiFullScreenButton" destination="DbK-sS-qwn" id="Dsf-g4-Fvy"/>
                         <outlet property="guiHDToggleButton" destination="2x5-cg-Qcc" id="Bfn-Pu-j9c"/>
                         <outlet property="guiNavView" destination="fTt-oM-iaE" id="om7-cx-FCz"/>
                         <outlet property="guiRenderingTypeSelector" destination="fau-bn-TfM" id="q0O-Vc-r3y"/>
@@ -740,6 +763,7 @@
                         <outlet property="guiShareContainer" destination="Voh-xn-DcO" id="iMQ-4L-MsT"/>
                         <outlet property="guiShareMainIconPosition" destination="l1T-UB-AV6" id="bZh-lR-zSn"/>
                         <outlet property="guiVideoSettingsButton" destination="VoS-PS-Xnz" id="XYJ-gc-cku"/>
+                        <segue destination="rtJ-RZ-fZ3" kind="presentation" identifier="full screen gif player segue" modalTransitionStyle="crossDissolve" id="258-1p-LMK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KsB-Oz-cKV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -923,6 +947,125 @@
             </objects>
             <point key="canvasLocation" x="663.5" y="332"/>
         </scene>
+        <!--Full Screen Gif Player-->
+        <scene sceneID="Ubi-Bl-geD">
+            <objects>
+                <viewController id="rtJ-RZ-fZ3" customClass="EMFullScreenGifPlayer" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IHU-EV-eLi"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZUZ-GB-HnI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="v8H-VZ-FFf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="0Zz-Ea-6uV" customClass="FLAnimatedImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0Zz-Ea-6uV" secondAttribute="height" multiplier="1:1" id="203-Rl-6bO"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="203-Rl-6bO"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="llH-oE-9FW" userLabel="Big B">
+                                <rect key="frame" x="20" y="0.0" width="560" height="600"/>
+                                <animations/>
+                                <connections>
+                                    <action selector="onPressedToggleActionBarButton:" destination="rtJ-RZ-fZ3" eventType="touchUpInside" id="5AP-zs-K5b"/>
+                                </connections>
+                            </button>
+                            <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="gm4-TV-4bc" userLabel="Bottom bar">
+                                <rect key="frame" x="0.0" y="561" width="600" height="39"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZJ-dT-UFZ" userLabel="blurry view">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfN-Mh-aL2" userLabel="V separator">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="oHc-zp-VbW"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="muK-cr-kxo" customClass="EMButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="39"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="WbA-UN-rug"/>
+                                        </constraints>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onDoneButtonPressed:" destination="rtJ-RZ-fZ3" eventType="touchUpInside" id="LJ7-fl-GG5"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1920 x 1080" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="5FY-O8-cul" customClass="EMLabel">
+                                        <rect key="frame" x="480" y="0.0" width="120" height="39"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="NhD-j3-BjB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.27380502223968506" green="0.51280605792999268" blue="0.35326987504959106" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="3pe-ls-V0n"/>
+                                    <constraint firstItem="rZJ-dT-UFZ" firstAttribute="leading" secondItem="gm4-TV-4bc" secondAttribute="leading" id="4xR-Zc-Jux"/>
+                                    <constraint firstAttribute="bottom" secondItem="muK-cr-kxo" secondAttribute="bottom" id="8J7-ip-WDn"/>
+                                    <constraint firstAttribute="trailing" secondItem="5FY-O8-cul" secondAttribute="trailing" id="Dq1-Un-mr2"/>
+                                    <constraint firstAttribute="trailing" secondItem="rZJ-dT-UFZ" secondAttribute="trailing" id="HWk-bO-dAJ"/>
+                                    <constraint firstItem="5FY-O8-cul" firstAttribute="top" secondItem="gm4-TV-4bc" secondAttribute="top" id="Lmk-TM-1of"/>
+                                    <constraint firstAttribute="bottom" secondItem="5FY-O8-cul" secondAttribute="bottom" id="VC1-ze-1pe"/>
+                                    <constraint firstAttribute="bottom" secondItem="rZJ-dT-UFZ" secondAttribute="bottom" id="VYM-GZ-jin"/>
+                                    <constraint firstAttribute="centerX" secondItem="kfN-Mh-aL2" secondAttribute="centerX" id="hNv-yX-ySB"/>
+                                    <constraint firstItem="muK-cr-kxo" firstAttribute="top" secondItem="gm4-TV-4bc" secondAttribute="top" id="nKA-0E-1xw"/>
+                                    <constraint firstAttribute="width" secondItem="kfN-Mh-aL2" secondAttribute="width" id="ny0-xY-5fN"/>
+                                    <constraint firstItem="kfN-Mh-aL2" firstAttribute="top" secondItem="gm4-TV-4bc" secondAttribute="top" id="pRK-A2-0Dw"/>
+                                    <constraint firstItem="rZJ-dT-UFZ" firstAttribute="top" secondItem="gm4-TV-4bc" secondAttribute="top" id="pca-LT-2ed"/>
+                                    <constraint firstItem="muK-cr-kxo" firstAttribute="leading" secondItem="gm4-TV-4bc" secondAttribute="leading" id="y5q-cb-paf"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0Zz-Ea-6uV" firstAttribute="top" secondItem="IHU-EV-eLi" secondAttribute="bottom" id="1qX-WK-fGs"/>
+                            <constraint firstItem="ZUZ-GB-HnI" firstAttribute="top" secondItem="llH-oE-9FW" secondAttribute="bottom" id="75h-bR-l76"/>
+                            <constraint firstAttribute="trailing" secondItem="0Zz-Ea-6uV" secondAttribute="trailing" id="BaB-6c-W75"/>
+                            <constraint firstItem="ZUZ-GB-HnI" firstAttribute="top" secondItem="gm4-TV-4bc" secondAttribute="bottom" id="D57-SK-aR8"/>
+                            <constraint firstItem="llH-oE-9FW" firstAttribute="top" secondItem="IHU-EV-eLi" secondAttribute="bottom" id="G7K-WW-g3i"/>
+                            <constraint firstItem="0Zz-Ea-6uV" firstAttribute="leading" secondItem="v8H-VZ-FFf" secondAttribute="leading" id="ZTK-eq-DWm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="llH-oE-9FW" secondAttribute="trailing" id="boP-Lm-EoL"/>
+                            <constraint firstItem="llH-oE-9FW" firstAttribute="leading" secondItem="v8H-VZ-FFf" secondAttribute="leadingMargin" id="dcx-kK-Uu0"/>
+                            <constraint firstAttribute="trailing" secondItem="gm4-TV-4bc" secondAttribute="trailing" id="ona-yZ-wes"/>
+                            <constraint firstItem="ZUZ-GB-HnI" firstAttribute="top" secondItem="0Zz-Ea-6uV" secondAttribute="bottom" id="w5V-AM-dHe"/>
+                            <constraint firstItem="gm4-TV-4bc" firstAttribute="leading" secondItem="v8H-VZ-FFf" secondAttribute="leading" id="zk1-7G-HIr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="animatedGifImage" destination="0Zz-Ea-6uV" id="ysW-SK-dPR"/>
+                        <outlet property="guiActionBar" destination="gm4-TV-4bc" id="YdK-8d-YHd"/>
+                        <outlet property="guiActionBarBlurryBG" destination="rZJ-dT-UFZ" id="gbR-ia-wlr"/>
+                        <outlet property="guiResolutionLabel" destination="5FY-O8-cul" id="Xqy-fr-DYD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xmH-ru-QKP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="601" y="913"/>
+        </scene>
         <!--Debug View Controller-->
         <scene sceneID="14t-Oj-Ogx">
             <objects>
@@ -944,7 +1087,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="84S-s6-uj6" id="HgQ-Yc-bic">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-g1-GqX">
@@ -1300,6 +1443,7 @@
         <image name="emuNavLogo" width="60" height="59"/>
         <image name="facebook" width="57" height="56"/>
         <image name="favIconOff" width="44" height="44"/>
+        <image name="fullScreenIcon" width="44" height="44"/>
         <image name="hdOptionOff" width="44" height="44"/>
         <image name="retakeIcon" width="25" height="24"/>
         <image name="retakeIcon4" width="25" height="24"/>

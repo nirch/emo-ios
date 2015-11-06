@@ -2,7 +2,7 @@
 //  Emuticon+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 30/10/2015.
+//  Created by Aviv Wolf on 04/11/2015.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -23,11 +23,12 @@
 @dynamic prefferedFootageOID;
 @dynamic renderedSampleUploaded;
 @dynamic rendersCount;
+@dynamic shouldRenderAsHDIfAvailable;
 @dynamic usageCount;
 @dynamic videoLoopsCount;
 @dynamic videoLoopsEffect;
 @dynamic wasRendered;
-@dynamic shouldRenderAsHDIfAvailable;
+@dynamic wasRenderedInHD;
 @dynamic emuDef;
 
 @end

@@ -252,12 +252,15 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 -(void)deleteSelectedFootage
 {
     NSString *footageOID = [self.dataSource selectedFootageOID];
+    if (footageOID == nil) return;
+    
     NSArray *emus = [Emuticon allEmuticonsUsingFootageOID:footageOID inContext:EMDB.sh.context];
     for (Emuticon *emu in emus) {
         [emu cleanUp:YES andRemoveResources:NO];
         emu.prefferedFootageOID = nil;
     }
     UserFootage *footageToRemove = [UserFootage findWithID:footageOID context:EMDB.sh.context];
+    
     [EMDB.sh.context deleteObject:footageToRemove];
 
     [UIView animateWithDuration:0.3 animations:^{

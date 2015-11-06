@@ -159,6 +159,7 @@
     [nc removeObserver:emkUIShouldShowTabsBar];
     [nc removeObserver:emkUIUserRequestToOpenRecorder];
     [nc removeObserver:emkUIUserSelectedPack];
+    [nc removeObserver:emkDataUpdatedUnhidePackages];
 }
 
 #pragma mark - Observers handlers
@@ -229,6 +230,18 @@
         [self showUnhideMessageToUserWithInfo:info];
     }
 }
+
+#pragma mark - Orientations
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 
 #pragma mark - Flow & State
 /**

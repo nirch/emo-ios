@@ -679,6 +679,17 @@
     self.captureSession = nil;
 }
 
+#pragma mark - Orientations
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - Video processing
 -(void)initVideoProcessing
 {

@@ -85,6 +85,15 @@
     return emus;
 }
 
++(NSArray *)allEmuticonsRenderedInHD
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.hdAvailable=%@ AND wasRenderedInHD=%@", @NO, @YES, @YES];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:EMDB.sh.context];
+    return emus;
+}
+
 +(NSArray *)allEmuticonsUsingFootageOID:(NSString *)footageOID inContext:(NSManagedObjectContext *)context
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND prefferedFootageOID=%@", @NO, footageOID];
@@ -110,26 +119,38 @@
     return outputPath;
 }
 
-
 -(NSURL *)animatedGifURL
 {
-    NSString *outputPath = [self animatedGifPath];
+    return [self animatedGifURLInHD:NO];
+}
+
+-(NSURL *)animatedGifURLInHD:(BOOL)inHD
+{
+    NSString *outputPath = [self animatedGifPathInHD:inHD];
     NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
     return url;
 }
 
-
 -(NSString *)animatedGifPath
 {
-    NSString *gifName = [SF:@"%@.gif", self.oid];
+    return [self animatedGifPathInHD:NO];
+}
+
+-(NSString *)animatedGifPathInHD:(BOOL)inHD
+{
+    NSString *gifName = [SF:@"%@%@.gif", self.oid, inHD?@"_2x":@""];
     NSString *outputPath = [EMDB outputPathForFileName:gifName];
     return outputPath;
 }
 
-
 -(NSData *)animatedGifData
 {
-    NSString *path = [self animatedGifPath];
+    return [self animatedGifDataInHD:NO];
+}
+
+-(NSData *)animatedGifDataInHD:(BOOL)inHD
+{
+    NSString *path = [self animatedGifPathInHD:inHD];
     NSData *data = [[NSData alloc] initWithContentsOfFile:path];
     return data;
 }
@@ -178,18 +199,28 @@
     [self cleanUp:YES andRemoveResources:NO];
 }
 
+-(void)cleanUpHDOutputGif
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:[self animatedGifPathInHD:YES] error:nil];
+    
+    // Mark it as not rendered in HD.
+    self.wasRenderedInHD = @NO;
+}
+
 -(void)cleanUp:(BOOL)cleanUp andRemoveResources:(BOOL)removeResources
 {
     // Delete rendered output files
     NSFileManager *fm = [NSFileManager defaultManager];
     if (cleanUp) {
-        NSError *error;
-        [fm removeItemAtPath:[self animatedGifPath] error:&error];
-        [fm removeItemAtPath:[self videoPath] error:&error];
+        [fm removeItemAtPath:[self animatedGifPathInHD:YES] error:nil];
+        [fm removeItemAtPath:[self animatedGifPathInHD:NO] error:nil];
+        [fm removeItemAtPath:[self videoPath] error:nil];
         [EMCaches.sh clearCachedResultsForEmu:self];
         
         // Mark it as not rendered.
         self.wasRendered = @NO;
+        self.wasRenderedInHD = @NO;
         self.renderedSampleUploaded = @NO;
     }
 
@@ -328,10 +359,10 @@
     [params addKey:rkPaletteString          valueIfNotNil:emuDef.palette];
     [params addKey:rkOutputPath             valueIfNotNil:[EMDB outputPath]];
     [params addKey:rkEffects                valueIfNotNil:emuDef.effects];
-    [params addKey:rkPositioningScale value:inHD?@(2.0f):@(1.0f)];
+    [params addKey:rkPositioningScale       value:inHD?@(2.0f):@(1.0f)];
     [params addKey:rkOutputResolutionWidth  value:inHD?@(baseWidth*2):@(baseWidth)];
-    [params addKey:rkOutputResolutionHeight  value:inHD?@(baseHeight*2):@(baseHeight)];
-    
+    [params addKey:rkOutputResolutionHeight value:inHD?@(baseHeight*2):@(baseHeight)];
+    [params addKey:rkRenderInHD             value:inHD?@YES:@NO];
     return params;
 }
 
@@ -381,6 +412,15 @@
 {
     CGSize size = [self size];
     return [SF:@"%@ x %@", @((int)size.width), @((int)size.height)];
+}
+
+-(BOOL)boolWasRenderedInHD:(BOOL)inHD
+{
+    if (inHD) {
+        return self.wasRenderedInHD.boolValue;
+    } else {
+        return self.wasRendered.boolValue;
+    }
 }
 
 @end

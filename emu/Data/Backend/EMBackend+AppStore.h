@@ -13,12 +13,10 @@
     SKPaymentTransactionObserver
 >
 
-/**
- *  Refreshes all products info from app store to local storage.
- */
 -(void)storeRefreshProductsInfo;
 -(void)refreshProductInfoForPack:(Package *)package;
 -(void)refreshInfoForPacksWithProductsPIDS:(NSSet *)premiumPIDS;
 -(void)buyProductWithIdentifier:(NSString *)productIdentifier;
+-(void)restorePurchases;
 
 @end

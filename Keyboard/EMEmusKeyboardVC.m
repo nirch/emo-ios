@@ -290,18 +290,18 @@
 #pragma mark - Analytics
 -(void)initAnalytics
 {
-    [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
-    [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
-    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
-    [HMPanel.sh reportSuperParameterKey:AK_S_DID_KEYBOARD_EVER_APPEAR value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
-    [HMPanel.sh personDetails:@{
-                                AK_PD_DID_KEYBOARD_EVER_APPEAR:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT],
-                                AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]
-                                }];
-    [HMPanel.sh analyticsForceSend];
-
-    // Experiments Goal
-    [HMPanel.sh experimentGoalEvent:GK_KEYBOARD_OPENED];
+//    [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
+//    [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
+//    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
+//    [HMPanel.sh reportSuperParameterKey:AK_S_DID_KEYBOARD_EVER_APPEAR value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
+//    [HMPanel.sh personDetails:@{
+//                                AK_PD_DID_KEYBOARD_EVER_APPEAR:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT],
+//                                AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]
+//                                }];
+//    [HMPanel.sh analyticsForceSend];
+//
+//    // Experiments Goal
+//    [HMPanel.sh experimentGoalEvent:GK_KEYBOARD_OPENED];
 }
 
 #pragma mark - Initializations

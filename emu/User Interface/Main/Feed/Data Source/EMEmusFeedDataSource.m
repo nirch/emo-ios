@@ -111,6 +111,11 @@
 
 -(Package *)packForSection:(NSInteger)section
 {
+    // In bounds validation.
+    if (self.frc.sections.count < 1) return nil;
+    if (section >= self.frc.sections.count) section = self.frc.sections.count-1;
+
+    // Get the object.
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
     Package *pack = emu.emuDef.package;

@@ -54,7 +54,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.1.0.t</string>
+	<string>2.1.1.t</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -142,7 +142,7 @@
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>TheLaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>MainNavigation</string>
 	<key>UIRequiredDeviceCapabilities</key>

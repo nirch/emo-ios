@@ -14,6 +14,7 @@
 #import "EMPacksVC.h"
 #import "EMFeedNavigationVC.h"
 #import "EMMeNavigationVC.h"
+#import "EMSettingsNavigationVCViewController.h"
 #import "EMTopVCProtocol.h"
 #import "EMUINotifications.h"
 
@@ -88,8 +89,6 @@
  */
 -(void)initViewControllers
 {
-    CGRect f = self.view.frame;
-    
     NSMutableArray *viewControllers = [NSMutableArray new];
     
     // Featured
@@ -113,7 +112,7 @@
     [viewControllers addObject:meVC];
     
     // Settings
-    UIViewController *settingsVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeSettings]];
+    UIViewController *settingsVC = [EMSettingsNavigationVCViewController settingsNavVC];
     settingsVC.title = @"Settings";
     [viewControllers addObject:settingsVC];
     

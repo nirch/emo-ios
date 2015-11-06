@@ -60,9 +60,10 @@
     r.outputPath =              renderInfo[rkOutputPath];
     r.shouldOutputGif =         renderInfo[rkShouldOutputGif]?[renderInfo[rkShouldOutputGif] boolValue]:NO;
     r.effects =                 renderInfo[rkEffects];
-    r.positioningScale =        renderInfo[rkPositioningScale]?[renderInfo[rkPositioningScale] floatValue]:1.0f;
     r.outputWidth =             renderInfo[rkOutputResolutionWidth]?[renderInfo[rkOutputResolutionWidth] integerValue]:EMU_DEFAULT_WIDTH;
-    r.outputHeight =             renderInfo[rkOutputResolutionHeight]?[renderInfo[rkOutputResolutionHeight] integerValue]:EMU_DEFAULT_HEIGHT;
+    r.outputHeight =            renderInfo[rkOutputResolutionHeight]?[renderInfo[rkOutputResolutionHeight] integerValue]:EMU_DEFAULT_HEIGHT;
+    r.positioningScale =        renderInfo[rkPositioningScale]?[renderInfo[rkPositioningScale] floatValue]:1.0f;
+    r.inHD =                    renderInfo[rkRenderInHD]?[renderInfo[rkRenderInHD] boolValue]:NO;
     return r;
 }
 
@@ -168,7 +169,7 @@
     //
     CHrOutputGif *gifOutput = NULL;
     if (self.shouldOutputGif) {
-        NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];
+        NSString *outputGifPath = [SF:@"%@/%@%@.gif", self.outputPath, self.outputOID, self.inHD?@"_2x":@""];
         self.outputFiles[HM_K_OUTPUT_GIF] = outputGifPath;
         gifOutput = new CHrOutputGif();
         gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
