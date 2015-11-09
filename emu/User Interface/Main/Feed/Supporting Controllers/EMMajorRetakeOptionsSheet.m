@@ -42,17 +42,6 @@
     EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:nil buttonTitles:[actionsMapping textsForSection:sectionIndex] buttonStyle:JGActionSheetButtonStyleDefault];
     
     //
-    // Debug options (only in test applications)
-    //
-    EMHolySheetSection *debugSection = nil;
-    if (AppManagement.sh.isTestApp) {
-        sectionIndex++;
-        NSString *title = @"DEBUG OPTIONS";
-        [actionsMapping addAction:@"RETAKE_CHOICE_PACKAGE" text:[SF:@"%@ (%@)", LS(@"RETAKE_CHOICE_PACKAGE"),self.currentPackLabel] section:sectionIndex];
-        debugSection = [EMHolySheetSection sectionWithTitle:title message:@"Test app only options" buttonTitles:[actionsMapping textsForSection:sectionIndex] buttonStyle:JGActionSheetButtonStyleDefault];
-    }
-    
-    //
     // Cancel
     //
     sectionIndex++;
@@ -63,7 +52,6 @@
     //
     NSMutableArray *sections = [NSMutableArray new];
     [sections addObject:section1];
-    if (debugSection) [sections addObject:debugSection];
     [sections addObject:cancelSection];
     return sections;
 }

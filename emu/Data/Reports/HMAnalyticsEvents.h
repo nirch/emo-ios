@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 17:48:18 10/15/15 IDT
+//  Created by build script on 11:39:18 11/09/15 IST
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -426,6 +426,87 @@ User dismissed the takes screen
 
 /** Param:packageName --> <string> - (optional) name of a package, if user opened the screen from a context of a pack. **/
 #define AK_EP_PACKAGE_NAME @"packageName"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Purchase details presented to the user
+**/
+#define AK_E_IAP_PRODUCT_PRESENTED @"IAPProductPresented"
+
+/** Param:price --> <number> - the amount of the transaction (can be in different currencies. check the currency param) **/
+#define AK_EP_PRICE @"price"
+
+/** Param:productName --> <string> - some human readable name of the product. Can be a package name etc. **/
+#define AK_EP_PRODUCT_NAME @"productName"
+
+/** Param:currency --> <string> - the currency code of the amount stated in the price parameter. **/
+#define AK_EP_CURRENCY @"currency"
+
+/** Param:originUI --> <string> - the origin user interface for this event **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:productType --> <string> - the type of product purchased. Currently only support "hdPackContent" but more options will be available in the future **/
+#define AK_EP_PRODUCT_TYPE @"productType"
+
+/** Param:productID --> <string> - the identifier of the product in itunes connect **/
+#define AK_EP_PRODUCT_ID @"productID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User pressed a "purchase product" button.
+**/
+#define AK_E_IAP_PRODUCT_USER_PRESSED_PURCHASE_BUTTON @"IAPProductUserPressedPurchaseButton"
+
+/** Param:price --> <number> - the amount of the transaction (can be in different currencies. check the currency param) **/
+#define AK_EP_PRICE @"price"
+
+/** Param:productName --> <string> - some human readable name of the product. Can be a package name etc. **/
+#define AK_EP_PRODUCT_NAME @"productName"
+
+/** Param:currency --> <string> - the currency code of the amount stated in the price parameter. **/
+#define AK_EP_CURRENCY @"currency"
+
+/** Param:originUI --> <string> - the origin user interface for this event **/
+#define AK_EP_ORIGIN_UI @"originUI"
+
+/** Param:productType --> <string> - the type of product purchased. Currently only support "hdPackContent" but more options will be available in the future **/
+#define AK_EP_PRODUCT_TYPE @"productType"
+
+/** Param:productID --> <string> - the identifier of the product in itunes connect **/
+#define AK_EP_PRODUCT_ID @"productID"
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+User successfully purchased a product
+**/
+#define AK_E_IAP_TRANSACTION @"IAPTransaction"
+
+/** Param:success --> <bool> - transaction successful or not **/
+#define AK_EP_SUCCESS @"success"
+
+/** Param:errorDescription --> <string> - error description if any (only when success == NO) **/
+#define AK_EP_ERROR_DESCRIPTION @"errorDescription"
+
+/** Param:price --> <number> - the amount of the transaction (can be in different currencies. check the currency param) **/
+#define AK_EP_PRICE @"price"
+
+/** Param:productName --> <string> - some human readable name of the product. Can be a package name etc. **/
+#define AK_EP_PRODUCT_NAME @"productName"
+
+/** Param:currency --> <string> - the currency code of the amount stated in the price parameter. **/
+#define AK_EP_CURRENCY @"currency"
+
+/** Param:restoredPurchase --> <bool> - YES on restored purchase event. **/
+#define AK_EP_RESTORED_PURCHASE @"restoredPurchase"
+
+/** Param:productType --> <string> - the type of product purchased. Currently only support "hdPackContent" but more options will be available in the future **/
+#define AK_EP_PRODUCT_TYPE @"productType"
+
+/** Param:transactionID --> <string> - the id of the transaction **/
+#define AK_EP_TRANSACTION_ID @"transactionID"
+
+/** Param:productID --> <string> - the identifier of the product in itunes connect **/
+#define AK_EP_PRODUCT_ID @"productID"
 
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

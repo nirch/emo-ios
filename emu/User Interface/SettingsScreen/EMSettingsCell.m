@@ -7,6 +7,7 @@
 //
 
 #import "EMSettingsCell.h"
+#import "EMDB.h"
 
 @interface EMSettingsCell()
 
@@ -55,6 +56,21 @@
         self.guiActivity.alpha = 1.0;
     } else {
         self.guiActivity.alpha = 0.0;
+    }
+    
+    if (self.itemInfo[@"appCFGBoolFieldName"]) {
+        NSString *fieldName = self.itemInfo[@"appCFGBoolFieldName"];
+        [self updateSwitchValueByCFGFieldNamed:fieldName];
+    }
+}
+
+-(void)updateSwitchValueByCFGFieldNamed:(NSString *)fieldName
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    
+    // Will allow only specific field names in AppCFG
+    if ([fieldName isEqualToString:@"playUISounds"]) {
+        self.guiSwitch.on = appCFG.playUISounds.boolValue;
     }
 }
 

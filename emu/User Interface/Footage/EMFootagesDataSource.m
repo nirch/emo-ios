@@ -34,9 +34,12 @@
     // Configure the fetch request
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_USER_FOOTAGE];
     fetchRequest.sortDescriptors = @[
-                                      [NSSortDescriptor sortDescriptorWithKey:@"timeTaken" ascending:YES]
+                                      [NSSortDescriptor sortDescriptorWithKey:@"timeTaken" ascending:NO]
                                      ];
     fetchRequest.fetchBatchSize = 20;
+    if (self.hdFootagesOnly) {
+        fetchRequest.predicate = [UserFootage predicateForHD];
+    }
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
@@ -95,6 +98,7 @@
     }
     [cell updateStateWithFootage:footage];
     cell.isDefault = [footage.oid isEqualToString:self.masterFootageOID];
+    cell.isHD = [footage isHD];
     
     // Update the cell UI
     [cell updateGUI];

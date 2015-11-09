@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
 @property (weak, nonatomic) IBOutlet EMButton *guiHeaderButton;
 
+@property (nonatomic) NSDictionary *productInfo;
 
 @end
 
@@ -87,6 +88,14 @@
 #pragma mark - Observers handlers
 -(void)onUpdatedProductInfo:(NSNotification *)notification
 {
+    Package *package = [Package findWithID:self.packageOID context:EMDB.sh.context];
+    NSString *productIdentifier = package.hdProductID;
+    if (productIdentifier) {
+        NSDictionary *info = notification.userInfo;
+        if (info[productIdentifier]) {
+            self.productInfo = info[productIdentifier];
+        }
+    }
     [self updateUI];
 }
 
@@ -119,6 +128,21 @@
     
     NSString *buttonText = [SF:@"Get for %@", package.hdPriceLabel];
     [self.guiPurchaseButton setTitle:buttonText forState:UIControlStateNormal];
+    
+    // Analytics
+    HMParams *params = [HMParams new];
+    [self addProductInfoToParams:params];
+    [params addKey:AK_EP_ORIGIN_UI valueIfNotNil:self.originUI];
+    [HMPanel.sh analyticsEvent:AK_E_IAP_PRODUCT_PRESENTED info:params.dictionary];
+}
+
+-(void)addProductInfoToParams:(HMParams *)params
+{
+    [params addKey:AK_EP_PRODUCT_ID valueIfNotNil:self.productInfo[AK_EP_PRODUCT_ID]];
+    [params addKey:AK_EP_PRODUCT_NAME valueIfNotNil:self.productInfo[AK_EP_PRODUCT_NAME]];
+    [params addKey:AK_EP_PRODUCT_TYPE valueIfNotNil:self.productInfo[AK_EP_PRODUCT_TYPE]];
+    [params addKey:AK_EP_PRICE valueIfNotNil:self.productInfo[AK_EP_PRICE]];
+    [params addKey:AK_EP_CURRENCY valueIfNotNil:self.productInfo[AK_EP_CURRENCY]];
 }
 
 #pragma mark - IB Actions
@@ -128,7 +152,10 @@
 - (IBAction)onPressedBuyButton:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate controlSentActionNamed:emkUIPurchaseHDContent info:nil];
+        HMParams *info = [HMParams new];
+        [info addKey:emkPackageOID valueIfNotNil:self.packageOID];
+        [self addProductInfoToParams:info];
+        [self.delegate controlSentActionNamed:emkUIPurchaseHDContent info:info.dictionary];
     }];
 }
 

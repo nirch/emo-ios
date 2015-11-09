@@ -52,12 +52,41 @@
     NSNumber *duration          = info[emkDuration];
     NSDate *date                = info[emkDate];
     
-    UserFootage *userFootage = [self findOrCreateWithID:oid
-                                                context:context];
+    // Find existing footage
+    UserFootage *userFootage = [self findWithID:oid context:context];
+    if (userFootage == nil) {
+        // Doesn't exist yet, create new one.
+         userFootage = [self findOrCreateWithID:oid context:context];
+
+        // In older version, the default was 240x240
+        // In newer versions, the default is 480x480
+        userFootage.footageWidth = @(480);
+        userFootage.footageHeight = @(480);
+    }
     userFootage.framesCount = numberOfFrames;
     userFootage.duration = duration;
     userFootage.timeTaken = date;
     return userFootage;
+}
+
+-(BOOL)isHD
+{
+    if (self.footageWidth == nil) return NO;
+    if (self.footageWidth.integerValue <= 240) return NO;
+    return YES;
+}
+
++(NSPredicate *)predicateForHD
+{
+    return [NSPredicate predicateWithFormat:@"footageWidth>%@",@(EMU_DEFAULT_WIDTH)];
+}
+
++(BOOL)anyHDFootageExistsInContext:(NSManagedObjectContext *)context
+{
+    NSInteger count = [EMDB countEntityNamed:E_USER_FOOTAGE
+                                   predicate:[UserFootage predicateForHD]
+                                   inContext:context];
+    return count > 0;
 }
 
 +(BOOL)multipleAvailableInContext:(NSManagedObjectContext *)context

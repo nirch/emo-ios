@@ -825,7 +825,9 @@
     UserFootage *footage = [UserFootage userFootageWithInfo:info context:EMDB.sh.context];
     [EMDB.sh save];
     
-    [self showPreviewForFootage:footage];
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        [self showPreviewForFootage:footage];        
+    });
 }
 
 
@@ -1361,9 +1363,14 @@
     }
     
     // Tell delegate to dismiss the recorder.
-    [self.recorderSessionAnalyticsParams addKey:AK_EP_FINISHED_FLOW valueIfNotNil:@1];
+    HMParams *params = [HMParams paramsWithDictionary:self.recorderSessionAnalyticsParams.dictionary];
+    [params addKey:AK_EP_FINISHED_FLOW value:@1];
+    if ([self.info[emkRetakeForHDEmu] boolValue]) {
+        [params addKey:emkRetakeForHDEmu valueIfNotNil:@YES];
+        [params addKey:emkEmuticonOID valueIfNotNil:self.emuticonsOID.firstObject];
+    }
     [self.delegate recorderWantsToBeDismissedAfterFlow:self.flowType
-                                                  info:self.recorderSessionAnalyticsParams.dictionary];
+                                                  info:params.dictionary];
 }
 
 #pragma mark - Result Show/Hide

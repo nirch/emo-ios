@@ -31,22 +31,22 @@
     
     NSString *code = [url host];
     if (code == nil || code.length<4) NO;
+    [self redeemCode:code];
+    return YES;
+}
 
-    // Analytics
+-(void)redeemCode:(NSString *)code
+{
     HMParams *params = [HMParams new];
     [params addKey:AK_EP_CODE valueIfNotNil:code];
     [params addKey:AK_EP_LINK_TYPE valueIfNotNil:@"unhide packages"];
     [HMPanel.sh analyticsEvent:AK_E_DEEP_LINK_CODE info:params.dictionary];
-
+    
     // Tell backend that a  'unhide packages' request is required.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredUnhidePackages
                                                         object:nil
                                                       userInfo:params.dictionary];
-    
-    
-    return YES;
+
 }
-
-
 
 @end

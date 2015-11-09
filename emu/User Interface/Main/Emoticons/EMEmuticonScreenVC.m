@@ -109,10 +109,10 @@
 {
     [super viewDidLoad];
     [self initData];
-    [self refreshEmu];
     [self initGUI];
     [self initLocalization];
     [self updateAudioSelectionUI];
+    [self refreshEmu];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -156,6 +156,7 @@
     if (!self.alreadyInitializedGUIOnAppearance) {
         self.alreadyInitializedGUIOnAppearance = YES;
     } else {
+        [self updateEmuOptionsBar];
         [self refreshEmu];
     }
 }
@@ -186,10 +187,7 @@
     // Audtio trim slider
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateNormal];
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateHighlighted];
-
-    // Theme color (if not set, default color is used)
-    if (self.themeColor) self.guiNavView.backgroundColor = self.themeColor;
-    
+    self.guiNavView.backgroundColor = self.themeColor;    
     [self updateEmuOptionsBar];
 }
 
@@ -228,9 +226,11 @@
 -(void)showEmuOptionsBar
 {
     self.guiEmuOptionsBar.userInteractionEnabled = YES;
+    self.guiShareContainer.userInteractionEnabled = YES;
     if (self.guiEmuOptionsBar.alpha < 1.0 || !CGAffineTransformIsIdentity(self.guiEmuOptionsBar.transform)) {
         [UIView animateWithDuration:0.2 animations:^{
             self.guiEmuOptionsBar.alpha = 1.0;
+            self.guiShareContainer.alpha = 1.0f;
             self.guiEmuOptionsBar.transform = CGAffineTransformIdentity;
         }];
     }
@@ -238,20 +238,34 @@
 
 -(void)hideEmuOptionsBar
 {
+    self.guiEmuOptionsBar.userInteractionEnabled = NO;
+    self.guiShareContainer.userInteractionEnabled = NO;
     if (self.guiEmuOptionsBar.alpha > 0.2) {
         [UIView animateWithDuration:0.2 animations:^{
             self.guiEmuOptionsBar.alpha = 0.2;
+            self.guiShareContainer.alpha = 0.2;
             self.guiEmuOptionsBar.transform = CGAffineTransformMakeScale(0.95, 0.95);
         }];
     }
-    self.guiEmuOptionsBar.userInteractionEnabled = NO;
 }
 
 -(void)refreshEmu
 {
     Emuticon *emu = self.emuticon;
     if (emu == nil) return;
+    BOOL inHD = [self.emuticon shouldItRenderInHD];
 
+    EMMediaDataType mediaToShare = [self sharerDataTypeToShare];
+    if (mediaToShare == EMMediaDataTypeVideo) {
+        // Must have all resources, if not, mark emu as not rendered.
+        if (![self.emuticon.emuDef allResourcesAvailableInHD:inHD]) {
+            [self.emuticon cleanUp:YES andRemoveResources:NO];
+            
+            // Will need to redownload resources before allowing to
+            // render and share this emu as video.
+        }
+    }
+    
     // Resolution (showed only when the aspect ratio is not 1:1
     if ([emu.emuDef aspectRatio] != 1.0f) {
         self.guiResolutionLabel.hidden = NO;
@@ -269,8 +283,7 @@
         [self.guiFavButton setImage:[UIImage imageNamed:@"favIconOff"] forState:UIControlStateNormal];
     }
     
-    // HD or not
-    BOOL inHD = [self.emuticon shouldItRenderInHD];
+    // Rendered or not?
     if ([self.emuticon boolWasRenderedInHD:inHD]) {
         // Was rendered.
         NSURL *url = [self.emuticon animatedGifURLInHD:inHD];
@@ -430,7 +443,8 @@
     // Update and render.
     __weak EMEmuticonScreenVC *weakSelf = self;
     dispatch_after(DTIME(0.2), dispatch_get_main_queue(), ^{
-        if ([weakSelf.emuticon.emuDef allResourcesAvailable])
+        BOOL inHD = [self.emuticon shouldItRenderInHD];
+        if ([weakSelf.emuticon.emuDef allResourcesAvailableInHD:inHD])
             [weakSelf refreshEmu];
     });
 }
@@ -443,7 +457,12 @@
 
 -(void)onHandledStoreTransactions:(NSNotification *)notification
 {
-    [self refreshEmu];
+    NSDictionary *info = notification.userInfo;
+    if ([info[@"anyTransactionSuccessful"] boolValue]) {
+        [self toggleHD];
+    } else {
+        [self refreshEmu];
+    }
 }
 
 -(void)onRenderingProgressReport:(NSNotification *)notification
@@ -565,11 +584,12 @@
 
 
 #pragma mark - Retake
--(void)retake
+-(void)retakeForHD:(BOOL)forHD
 {
     // Recorder should be opened to retake this specific emu.
     NSMutableDictionary *requestInfo = [NSMutableDictionary new];
     requestInfo[emkRetakeEmuticonsOID] = @[self.emuticonOID];
+    if (forHD) requestInfo[emkRetakeForHDEmu] = @(forHD);
     
     // Notify main navigation controller that the recorder should be opened.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserRequestToOpenRecorder
@@ -577,34 +597,67 @@
                                                       userInfo:requestInfo];
 }
 
+-(void)retake
+{
+    [self retakeForHD:NO];
+}
+
 #pragma mark - Replace take
--(void)replaceTakeForEmu
+-(void)replaceTakeLimitToHD:(BOOL)inHD
 {
     // Present the footages screen
     EMFootagesVC *footagesVC = [EMFootagesVC footagesVCForFlow:EMFootagesFlowTypeChooseFootage];
     footagesVC.delegate = self;
     footagesVC.selectedEmusOID = @[self.emuticonOID];
+    footagesVC.hdFootagesOnly = inHD;
     self.footagesVC = footagesVC;
     [self presentViewController:footagesVC animated:YES completion:^{
     }];
+}
 
+-(void)replaceTakeForEmu
+{
+    [self replaceTakeLimitToHD:NO];
 }
 
 -(void)controlSentActionNamed:(NSString *)actionName info:(NSDictionary *)info
 {
     if ([actionName isEqualToString:emkUIFootageSelectionApply]) {
+        
+        //
+        // Apply selected footage to emu.
+        //
         NSString *footageOID = info[emkFootageOID];
         [self.emuticon cleanUp:YES andRemoveResources:NO];
         self.emuticon.prefferedFootageOID = footageOID;
+        
+        if ([info[@"renderEmuInHD"] boolValue] &&
+            [self.emuticon.emuDef.hdAvailable boolValue]) {
+            self.emuticon.shouldRenderAsHDIfAvailable = @YES;
+        }
+        
         [EMDB.sh save];
         [self dismissViewControllerAnimated:YES completion:^{
+            [self updateEmuOptionsBar];
             [self refreshEmu];
         }];
+        
     } else if ([actionName isEqualToString:emkUIFootageSelectionCancel]) {
+        
+        //
+        // Footage selection canceled
+        //
         [self dismissViewControllerAnimated:YES completion:nil];
+        
+        
     } else if ([actionName isEqualToString:emkUIPurchaseHDContent]) {
+        
+        //
+        // Purchase HD content
+        //
         [self purchaseHDContent];
     }
+    
 }
 
 #pragma mark - Analytics
@@ -732,6 +785,104 @@
     }
 }
 
+#pragma mark - Toggle HD
+-(void)toggleHD
+{
+    // Always allow to return to low definition emus.
+    if ([self.emuticon shouldItRenderInHD]) {
+        [self.emuticon toggleShouldRenderAsHDIfAvailable];
+        [self updateEmuOptionsBar];
+        [self refreshEmu];
+        return;
+    }
+
+    // We want to switch to HD emu.
+    
+    // First, check if preffered footage of the emu is in HD or not
+    UserFootage *footage = [self.emuticon mostPrefferedUserFootage];
+    
+    if (footage.isHD) {
+        // No problem, the footage is in HD. Just toggle.
+        [self.emuticon toggleShouldRenderAsHDIfAvailable];
+        [self updateEmuOptionsBar];
+        [self refreshEmu];
+        return;
+    }
+    
+    // Footage is not in HD. Give the user options and recommend using an HD footage.
+    [self recommendHDRetakeToUser];
+}
+
+-(void)recommendHDRetakeToUser
+{
+    [self showEmuOptionsBar];
+    EMActionsArray *actionsMapping = [EMActionsArray new];
+    
+    //
+    // Retake options
+    //
+    NSString *title = LS(@"HD_TAKE_REQUIRED_TITLE");
+    NSString *message = LS(@"HD_TAKE_REQUIRED_MESSAGE");
+    
+    // Retake in HD
+    [actionsMapping addAction:@"HD_REQUIRED_RETAKE" text:LS(@"HD_TAKE_REQUIRED_OPTION_RETAKE") section:0];
+    
+    // Choose hd footage (if any exists)
+    if ([UserFootage anyHDFootageExistsInContext:EMDB.sh.context])
+        [actionsMapping addAction:@"HD_REQUIRED_REPLACE_TAKE" text:LS(@"HD_TAKE_REQUIRED_OPTION_REPLACE") section:0];
+    
+    // Just use low definition footage
+    [actionsMapping addAction:@"HD_REQUIRED_USE_LD" text:LS(@"HD_TAKE_REQUIRED_OPTION_USE_LD") section:0];
+    
+    
+    EMHolySheetSection *section1 = [EMHolySheetSection sectionWithTitle:title message:message buttonTitles:[actionsMapping textsForSection:0] buttonStyle:JGActionSheetButtonStyleDefault];
+    
+    //
+    // Cancel
+    //
+    EMHolySheetSection *cancelSection = [EMHolySheetSection sectionWithTitle:nil message:nil buttonTitles:@[LS(@"CANCEL")] buttonStyle:JGActionSheetButtonStyleCancel];
+    
+    //
+    // Sections
+    //
+    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[section1, cancelSection]];
+    
+    //
+    // Holy sheet
+    //
+    EMHolySheet *sheet = [EMHolySheet actionSheetWithSections:sections];
+    [sheet setButtonPressedBlock:^(JGActionSheet *sender, NSIndexPath *indexPath) {
+        [sender dismissAnimated:YES];
+        [self handleRetakeHDOptionAtIndexPath:indexPath actionsMapping:actionsMapping];
+    }];
+    [sheet setOutsidePressBlock:^(JGActionSheet *sender) {
+        [sender dismissAnimated:YES];
+    }];
+    [sheet showInView:self.view animated:YES];
+}
+
+-(void)handleRetakeHDOptionAtIndexPath:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping
+{
+    NSString *actionName = [actionsMapping actionNameForIndexPath:indexPath];
+    if (actionName == nil) return;
+    
+    if ([actionName isEqualToString:@"HD_REQUIRED_RETAKE"]) {
+        
+        // Retake and toggle to emu to HD when new HD footage
+        // is ready.
+        [self retakeForHD:YES];
+        
+    } else if ([actionName isEqualToString:@"HD_REQUIRED_REPLACE_TAKE"]) {
+        
+        [self replaceTakeLimitToHD:YES];
+        
+    } else if ([actionName isEqualToString:@"HD_REQUIRED_USE_LD"]) {
+        // Well just use low def take and goggle HD anyway.
+        [self.emuticon toggleShouldRenderAsHDIfAvailable];
+        [self updateEmuOptionsBar];
+        [self refreshEmu];
+    }
+}
 
 #pragma mark - Audio & Video
 -(void)updateAudioSelectionUI
@@ -764,6 +915,8 @@
         self.guiRenderingTypeSelector.hidden = YES;
         self.guiAudioView.hidden = NO;
         self.guiAudioTrimSlider.hidden = NO;
+        self.guiFavButton.hidden = YES;
+        self.guiHDToggleButton.hidden = YES;
         [self updateAudioTrimmingSlider];
     } else {
         // Hide audio trimming UI (return to displaying the rendering type selector (GIF/Video)
@@ -775,6 +928,13 @@
         self.guiAudioTrimSlider.hidden = YES;
         self.guiAudioButton.selected = self.emuticon.audioFileURL? YES:NO;
         self.guiVideoSettingsButton.hidden = !isVideoExtraSettingsAllowed;
+        
+        // HD toggle button
+        BOOL hdAvailable = NO;
+        if (self.emuticon.emuDef.hdAvailable) {
+            hdAvailable = self.emuticon.emuDef.hdAvailable.boolValue;
+        }
+        self.guiHDToggleButton.hidden = !hdAvailable;
     }
 }
 
@@ -821,7 +981,9 @@
     });
     
     // Play seek indicator animation
-    [self restartPlaySeekAnimation];
+    dispatch_after(DTIME(0.2), dispatch_get_main_queue(), ^{
+        [self restartPlaySeekAnimation];
+    });
 }
 
 
@@ -903,7 +1065,7 @@
     EMActionsArray *actionsMapping = [EMActionsArray new];
     
     //
-    // Retake options
+    // Audio options
     //
     NSString *title = LS(@"AUDIO_OPTIONS_TITLE");
     [actionsMapping addAction:@"AUDIO_REMOVE" text:LS(@"AUDIO_REMOVE") section:0];
@@ -1071,6 +1233,9 @@
     // Store user preference
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     appCFG.userPrefferedShareType = @([self renderingType]);
+
+    // Refresh Emu
+    [self refreshEmu];
 }
 
 
@@ -1144,15 +1309,14 @@
     if (package.hdUnlocked.boolValue || package.hdProductID == nil) {
         // Already unlocked this product.
         // User can toggle HD on or off at will.
-        [self.emuticon toggleShouldRenderAsHDIfAvailable];
-        [self updateEmuOptionsBar];
-        [self refreshEmu];
+        [self toggleHD];
     } else if (package.hdProductValidated.boolValue) {
         // User still didn't unlock the HD feature of this pack.
         // And the product is a validated one.
         EMProductPopover *vc = [[EMProductPopover alloc] init];
         vc.preferredContentSize = CGSizeMake(240, 240);
         vc.packageOID = package.oid;
+        vc.originUI = @"itemDetails";
         vc.delegate = self;
         
         UIPopoverPresentationController *po = vc.popoverPresentationController;

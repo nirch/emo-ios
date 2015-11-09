@@ -116,6 +116,29 @@
  */
 -(void)deleteAndCleanUp;
 
+/**
+ *  Is captured in 480p or above?
+ *
+ *  @return BOOL value indicating if footage taken in 480x480 or above or not.
+ */
+-(BOOL)isHD;
+
+/**
+ *  Predicate for filtering in only footages in HD.
+ *
+ *  @return NSPredicate for hd (>240p) footages.
+ */
++(NSPredicate *)predicateForHD;
+
+/**
+ *  Indicates if any footage taken in higher definition.
+ *
+ *  @param context NSManagedObjectContext the context.
+ *
+ *  @return YES if at least one footage was take in > 240p.
+ */
++(BOOL)anyHDFootageExistsInContext:(NSManagedObjectContext *)context;
+
 
 -(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames;
 

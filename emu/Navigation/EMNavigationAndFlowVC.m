@@ -68,6 +68,7 @@
     // -----------------------------------------------------------
     [self.splashVC showAnimated:NO];
     [self initFlowState];
+    self.view.backgroundColor = [EmuStyle colorThemeFeatured];
 }
 
 /**
@@ -130,6 +131,13 @@
                      name:emkUIShouldShowTabsBar
                    object:nil];
     
+    // Should show the tabs bar
+    [nc addUniqueObserver:self
+                 selector:@selector(onTabSelected:)
+                     name:emkUINavigationTabSelected
+                   object:nil];
+    
+    
     // A request from the user's UI to open recorder
     // This will be ignored if the current state is not "user in control"
     [nc addUniqueObserver:self
@@ -157,6 +165,7 @@
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIShouldHideTabsBar];
     [nc removeObserver:emkUIShouldShowTabsBar];
+    [nc removeObserver:emkUINavigationTabSelected];
     [nc removeObserver:emkUIUserRequestToOpenRecorder];
     [nc removeObserver:emkUIUserSelectedPack];
     [nc removeObserver:emkDataUpdatedUnhidePackages];
@@ -185,6 +194,15 @@
 {
     BOOL animated = [notification.userInfo[emkUIAnimated] isEqualToNumber:@YES];
     [self showTabsBarAnimated:animated];
+}
+
+-(void)onTabSelected:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    UIColor *themeColor = info[@"themeColor"];
+    if (themeColor) {
+        self.view.backgroundColor = themeColor;
+    }
 }
 
 /**
@@ -455,6 +473,16 @@
 
 -(void)_stateRecroderDismissalAfterNewTakeWithInfo:(NSDictionary *)info
 {
+    if ([info[emkRetakeForHDEmu] boolValue]) {
+        // Retake was taken specifically for hd emu
+        // Update the emu and mark that it should be rendered in HD.
+        NSString *emuticonOID = info[emkEmuticonOID];
+        Emuticon *emu = [Emuticon findWithID:emuticonOID context:EMDB.sh.context];
+        if (emu != nil && [emu.emuDef.hdAvailable boolValue]) {
+            emu.shouldRenderAsHDIfAvailable = @YES;
+        }
+    }
+    
     // Update the flow state
     [self updateFlowState:EMNavFlowStateUserControlsNavigation];
 }
@@ -533,7 +561,11 @@
 #pragma mark - Status bar
 -(BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - Opening recorder

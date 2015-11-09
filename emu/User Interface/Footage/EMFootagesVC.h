@@ -23,6 +23,7 @@
 @property (nonatomic, weak) id<EMInterfaceDelegate> delegate;
 
 @property (nonatomic) NSArray *selectedEmusOID;
+@property (nonatomic) BOOL hdFootagesOnly;
 
 typedef NS_ENUM(NSInteger, EMFootagesFlowType)
 {

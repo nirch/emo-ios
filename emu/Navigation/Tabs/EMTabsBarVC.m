@@ -172,7 +172,7 @@
                                                                                       }];
     if (info) [passedInfo addEntriesFromDictionary:info];
     
-    
+    passedInfo[@"themeColor"] = [self themeColorForIndex:index];
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationTabSelected
                                                         object:self
                                                       userInfo:passedInfo];
@@ -186,6 +186,18 @@
 -(NSInteger)currentTabIndex
 {
     return self.selectedTab;
+}
+
+-(UIColor *)themeColorForIndex:(NSInteger)index
+{
+    NSArray *themeColors = @[
+                             [EmuStyle colorThemeFeatured],
+                             [EmuStyle colorThemeFeed],
+                             [EmuStyle colorThemeMe],
+                             [EmuStyle colorThemeSettings]
+                             ];
+    if (index < 0 || index >= themeColors.count) index = 0;
+    return themeColors[index];
 }
 
 #pragma mark - IB Actions

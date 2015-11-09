@@ -24,6 +24,8 @@
 {
     self.guiLabel.text = self.label;
     self.guiHeaderButton.tag = self.sectionIndex;
+    self.guiPriceButton.tag = self.sectionIndex;
+    self.guiHDButton.tag = self.sectionIndex;
     self.guiHDButton.hidden = !self.hdAvailable;
     self.guiPriceButton.hidden = YES;
     

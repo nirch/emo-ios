@@ -15,10 +15,7 @@
 #import "EMUINotifications.h"
 #import "EMFootagesVC.h"
 
-@interface EMMeVC () <
-    EMNavBarDelegate,
-    EMInterfaceDelegate
->
+@interface EMMeVC ()
 
 @property (nonatomic, weak) EMEmusPickerVC *favoritesListVC;
 @property (nonatomic, weak) EMEmusPickerVC *recentlySharedListVC;
@@ -186,6 +183,11 @@
     if ([actionName isEqualToString:EMK_NAV_ACTION_MY_TAKES]) {
         [self openFootagesScreen];
     }
+}
+
+-(UIColor *)navBarThemeColor
+{
+    return self.navBarVC.themeColor;
 }
 
 #pragma mark - EMInterfaceDelegate

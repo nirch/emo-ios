@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EMNavBarDelegate.h"
+#import "EMInterfaceDelegate.h"
 
 #define emkUIFavorites @"UI favorites"
 #define emkUIRecentlyShared @"UI recently shared"
 #define emkUIRecentlyViewed @"UI recently viewed"
 
-@interface EMMeVC : UIViewController
+@interface EMMeVC : UIViewController<
+    EMNavBarDelegate,
+    EMInterfaceDelegate
+>
+
 
 /**
  *  The feed UI states.

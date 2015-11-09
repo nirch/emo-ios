@@ -40,6 +40,8 @@
 #import "EMEmuticonScreenVC.h"
 #import "EMAlertsPermissionVC.h"
 #import "AppManagement.h"
+#import "EMProductPopover.h"
+#import "EMBackend+AppStore.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -206,8 +208,10 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"selections action bar segue"]) {
+        
         self.selectionsActionBarVC = segue.destinationViewController;
         self.selectionsActionBarVC.delegate = self;
+        
     } else if ([segue.identifier isEqualToString:@"emuticon screen segue"]) {
         
         // Get the emuticon object we want to see.
@@ -218,6 +222,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         EMEmuticonScreenVC *vc = segue.destinationViewController;
         vc.emuticonOID = emu.oid;
         vc.originUI = @"feed";
+        vc.themeColor = self.navBarVC.themeColor;
         
         // Analytics
         HMParams *params = [HMParams new];
@@ -308,7 +313,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)initObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    // On packages data refresh required.
+    // On packages data updated.
     [nc addUniqueObserver:self
                  selector:@selector(onUpdatedData:)
                      name:emkDataUpdatedPackages
@@ -331,7 +336,12 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
                  selector:@selector(onEmuStateUpdated:)
                      name:hmkDownloadResourceFinished
                    object:nil];
-
+    
+    // Store transactions handled.
+    [nc addUniqueObserver:self
+                 selector:@selector(onHandledStoreTransactions:)
+                     name:emkDataProductsHandledTransactions
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -341,9 +351,16 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     [nc removeObserver:emkUIUserSelectedPack];
     [nc removeObserver:hmkRenderingFinished];
     [nc removeObserver:hmkDownloadResourceFinished];
+    [nc removeObserver:emkDataProductsHandledTransactions];
 }
 
 #pragma mark - Observers handlers
+-(void)onHandledStoreTransactions:(NSNotification *)notification
+{
+    [self.guiCollectionView reloadData];
+}
+
+
 -(void)onUpdatedData:(NSNotification *)notification
 {
     [self refreshGUIWithLocalData];
@@ -718,6 +735,11 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     }
 }
 
+-(UIColor *)navBarThemeColor
+{
+    return self.navBarVC.themeColor;
+}
+
 #pragma mark - Selections action bar
 /**
  *  Show the selections action bar.
@@ -918,6 +940,15 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // New footage applied to a list of selected emus.
         //
         [self dismissViewControllerAnimated:YES completion:nil];
+    } else if ([actionName isEqualToString:emkUIPurchaseHDContent]) {
+        NSString *packageOID = info[emkPackageOID];
+        
+        // User pressed the purchase button
+        [HMPanel.sh analyticsEvent:AK_E_IAP_PRODUCT_USER_PRESSED_PURCHASE_BUTTON info:info];
+        
+        if (packageOID) {
+            [self purchaseHDContentForPackageOID:packageOID withInfo:info];
+        }
     }
 
 }
@@ -973,6 +1004,44 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     });
 }
 
+#pragma mark - Purchases
+-(void)productPopoverForSectionIndex:(NSInteger)sectionIndex sender:(UIView *)sender
+{
+    // If
+    // package not found OR
+    // package is not related to an HD product for sale OR
+    // package is a product for sale but it was already unlocked
+    // then ignore this event. Move along, nothing to see here.
+    Package *package = [self.dataSource packForSection:sectionIndex];
+    if (package == nil ||
+        package.hdProductID == nil ||
+        package.hdUnlocked.boolValue) return;
+    
+    // User still didn't unlock the HD feature of this pack.
+    // And the product is a validated one.
+    EMProductPopover *vc = [[EMProductPopover alloc] init];
+    vc.preferredContentSize = CGSizeMake(240, 240);
+    vc.packageOID = package.oid;
+    vc.originUI = @"feed";
+    vc.delegate = self;
+    
+    // Show the popover with the in app purchases info.
+    UIPopoverPresentationController *po = vc.popoverPresentationController;
+    po.sourceView = sender;
+    po.sourceRect = sender.bounds;
+    po.permittedArrowDirections = UIPopoverArrowDirectionDown | UIPopoverArrowDirectionUp;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+-(void)purchaseHDContentForPackageOID:(NSString *)packageOID withInfo:(NSDictionary *)info
+{
+    if (packageOID == nil) return;
+    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
+    if (package == nil || package.hdAvailable == nil || !package.hdAvailable.boolValue) return;
+    if (package.hdProductID == nil) return;
+    [EMBackend.sh buyProductWithIdentifier:package.hdProductID];
+}
+
 #pragma mark - IB Actions
 // ===========
 // IB Actions.
@@ -987,5 +1056,20 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     }
 }
 
+- (IBAction)onPressedPackSectionPriceButton:(UIButton *)sender
+{
+    NSInteger sectionIndex = sender.tag;
+    if (sectionIndex>=0 && sectionIndex < [self.dataSource packsCount]) {
+        [self productPopoverForSectionIndex:sectionIndex sender:sender];
+    }
+}
+
+- (IBAction)onPressedPackSectionHDButton:(UIButton *)sender
+{
+    NSInteger sectionIndex = sender.tag;
+    if (sectionIndex>=0 && sectionIndex < [self.dataSource packsCount]) {
+        [self productPopoverForSectionIndex:sectionIndex sender:sender];
+    }
+}
 
 @end

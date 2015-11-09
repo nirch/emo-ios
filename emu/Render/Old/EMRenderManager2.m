@@ -304,7 +304,6 @@
     BOOL allResourcesAvailable = [emuDef allResourcesAvailable];
     if (allResourcesAvailable) {
         // Create a render object.
-        
         EMRenderer *renderer = [EMRenderer new];
         renderer.emuticonDefOID = emuDef.oid;
         renderer.footageOID = footage.oid;
@@ -322,6 +321,8 @@
         renderer.effects = emuDef.effects;
         renderer.outputWidth = emuDef.emuWidth?emuDef.emuWidth.integerValue:EMU_DEFAULT_WIDTH;
         renderer.outputHeight = emuDef.emuHeight?emuDef.emuHeight.integerValue:EMU_DEFAULT_HEIGHT;
+        renderer.inHD = NO;
+        renderer.positioningScale = 1.0f;
         
         dispatch_async(self.renderingQueue, ^(void){
             // Render in a background thread.

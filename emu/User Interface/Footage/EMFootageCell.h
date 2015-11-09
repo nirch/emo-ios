@@ -13,6 +13,7 @@
 @interface EMFootageCell : UICollectionViewCell
 
 @property (nonatomic) BOOL isDefault;
+@property (nonatomic) BOOL isHD;
 
 -(void)updateStateWithFootage:(UserFootage *)footage;
 -(void)updateGUI;

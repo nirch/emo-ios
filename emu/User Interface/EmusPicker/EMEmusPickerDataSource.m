@@ -107,6 +107,13 @@
     return NO;
 }
 
+-(CGFloat)aspectRatioAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self isIndexPathOutOfBounds:indexPath]) return 1.0f;
+    Emuticon *emu = [self.frc objectAtIndexPath:indexPath];
+    return [emu.emuDef aspectRatio];
+}
+
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView

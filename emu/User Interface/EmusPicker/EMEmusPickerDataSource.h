@@ -75,6 +75,14 @@
  */
 -(NSInteger)emusCount;
 
+/**
+ *  The apect ratio of the emu found at given indexPath
+ *
+ *  @param indexPath NSIndexPath of the emu
+ *
+ *  @return CGFloat value of the aspect ratio (width/height)
+ */
+-(CGFloat)aspectRatioAtIndexPath:(NSIndexPath *)indexPath;
 
 #pragma mark - Emus
 -(void)preferEmusAtIndexPaths:(NSArray *)indexPaths;

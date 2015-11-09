@@ -14,6 +14,7 @@
 
 #pragma mark - Selections
 @property (nonatomic, readonly) NSIndexPath *selectedIndexPath;
+@property (nonatomic) BOOL hdFootagesOnly;
 
 -(void)selectIndexPath:(NSIndexPath *)indexPath
       inCollectionView:(UICollectionView *)collectionView;

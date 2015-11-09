@@ -13,6 +13,7 @@
 #define emkRetakeAll @"retakeAll"
 #define emkRetakePackageOID @"retakePackage"
 #define emkRetakeEmuticonsOID @"retakeEmuticonsOID"
+#define emkRetakeForHDEmu @"retakeForHDEmu"
 
 /**
  * EMRecorderFlowTypeInvalid

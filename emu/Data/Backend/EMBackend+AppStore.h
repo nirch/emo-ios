@@ -13,6 +13,8 @@
     SKPaymentTransactionObserver
 >
 
+#define emkProductTypeHDPackage @"hdPackContent"
+
 -(void)storeRefreshProductsInfo;
 -(void)refreshProductInfoForPack:(Package *)package;
 -(void)refreshInfoForPacksWithProductsPIDS:(NSSet *)premiumPIDS;

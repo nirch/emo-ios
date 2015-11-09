@@ -15,6 +15,8 @@
 
 
 #pragma mark - Converting to UIImage
++(NSData *)createNSDataFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha;
+
 /**
  *  Given an image_type object, creates and returns a UIImage object.
  *

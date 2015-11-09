@@ -207,6 +207,9 @@
     } else if ([event isEqualToString:AK_E_SHARE_APP]) {
         [self fabricAnswersShareAppEventWithInfo:info];
         return;
+    } else if ([event isEqualToString:AK_E_IAP_TRANSACTION]) {
+        [self fabricAnswersPurchaseEventWithInfo:info];
+        return;
     }
     
     // Custom events.
@@ -234,6 +237,23 @@
     NSString *method = info[AK_EP_SHARE_METHOD];
     [Answers logInviteWithMethod:method?method:@"unknown"
                 customAttributes:nil];
+}
+
+-(void)fabricAnswersPurchaseEventWithInfo:(NSDictionary *)info
+{
+    // Don't report to fabric failed transactions or restored purchases
+    if (info[AK_EP_SUCCESS] && ![info[AK_EP_SUCCESS] boolValue]) return;
+    if (info[AK_EP_RESTORED_PURCHASE] && [info[AK_EP_RESTORED_PURCHASE] boolValue]) return;
+    
+    // A new purchase. Show it on fabric answers.
+    NSDecimalNumber *price = [NSDecimalNumber decimalNumberWithString:info[AK_EP_PRICE]?info[AK_EP_PRICE]:@"0.0"];
+    [Answers logPurchaseWithPrice:price
+                         currency:info[AK_EP_CURRENCY]?info[AK_EP_CURRENCY]:@"?"
+                          success:info[AK_EP_SUCCESS]?info[AK_EP_SUCCESS]:@NO
+                         itemName:info[AK_EP_PRODUCT_NAME]?info[AK_EP_PRODUCT_NAME]:@"unknown"
+                         itemType:info[AK_EP_PRODUCT_TYPE]?info[AK_EP_PRODUCT_TYPE]:@"unknown"
+                           itemId:info[AK_EP_PRODUCT_ID]?info[AK_EP_PRODUCT_ID]:@"unknown"
+                 customAttributes:@{}];
 }
 
 -(void)reportBuildInfo

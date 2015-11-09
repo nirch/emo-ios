@@ -91,6 +91,7 @@
 -(void)initDataSource
 {
     self.dataSource = [EMFootagesDataSource new];
+    self.dataSource.hdFootagesOnly = self.hdFootagesOnly;
     self.guiCollectionView.dataSource = self.dataSource;
 }
 
@@ -142,6 +143,18 @@
 {
     return self.flowType;
 }
+
+#pragma mark - Orientations
+-(BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 
 #pragma mark - Collection view Layout
 -(CGSize)collectionView:(UICollectionView *)collectionView
@@ -218,6 +231,10 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [self.navBarVC updateTitle:LS(@"TAKES_CHOOSE_TAKE")];
 }
 
+-(UIColor *)navBarThemeColor
+{
+    return self.navBarVC.themeColor;
+}
 
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
@@ -291,15 +308,17 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 - (IBAction)onPressedPositiveButton:(id)sender
 {
     if (self.dataSource.selectedIndexPath == nil) return;
-    
-    // Gather info about selected footage.
-    NSMutableDictionary *info = [NSMutableDictionary new];
+
     NSString *selectedOID = [self.dataSource selectedFootageOID];
-    if (selectedOID) info[emkFootageOID] = selectedOID;
-    if (self.selectedEmusOID) info[emkEmuticonOID] = self.selectedEmusOID;
+
+    // Gather info about selected footage.
+    HMParams *params = [HMParams new];
+    [params addKey:emkFootageOID valueIfNotNil:selectedOID];
+    [params addKey:@"renderEmuInHD" valueIfNotNil:@(self.hdFootagesOnly)];
+    [params addKey:emkEmuticonOID value:self.selectedEmusOID];
     
     // Send the info about the selection to the delegate.
-    [self.delegate controlSentActionNamed:emkUIFootageSelectionApply info:info];
+    [self.delegate controlSentActionNamed:emkUIFootageSelectionApply info:params.dictionary];
 }
 
 - (IBAction)onAddButtonPressed:(id)sender

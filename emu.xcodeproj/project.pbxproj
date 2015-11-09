@@ -129,6 +129,8 @@
 		084AF5321B38A6BD0056FC34 /* focusing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 084AF5301B38A6BD0056FC34 /* focusing.wav */; };
 		084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
 		084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 084AF5361B3A14D00056FC34 /* EMShareTwitter.m */; };
+		084DAC0C1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */ = {isa = PBXBuildFile; fileRef = 084DAC0B1BEEA5D100FC9FE2 /* EMSoundPlayback.m */; };
+		084DAC0D1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */ = {isa = PBXBuildFile; fileRef = 084DAC0B1BEEA5D100FC9FE2 /* EMSoundPlayback.m */; };
 		085348BB1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */; };
 		085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */; };
 		085348BF1BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 085348B81BCD9A3B008BBBF9 /* love-thumb.jpg */; };
@@ -907,6 +909,8 @@
 		084AF5361B3A14D00056FC34 /* EMShareTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareTwitter.m; sourceTree = "<group>"; };
 		084AF5391B3AA8900056FC34 /* EmuKBCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmuKBCell.h; sourceTree = "<group>"; };
 		084AF53A1B3AA8900056FC34 /* EmuKBCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmuKBCell.m; sourceTree = "<group>"; };
+		084DAC0A1BEEA5D100FC9FE2 /* EMSoundPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSoundPlayback.h; sourceTree = "<group>"; };
+		084DAC0B1BEEA5D100FC9FE2 /* EMSoundPlayback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSoundPlayback.m; sourceTree = "<group>"; };
 		084DC0001B661A9200A67DD8 /* EMKBOptionsDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKBOptionsDrawer.h; sourceTree = "<group>"; };
 		084DC0011B661A9200A67DD8 /* EMKBOptionsDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKBOptionsDrawer.m; sourceTree = "<group>"; };
 		085348B61BCD9A3B008BBBF9 /* 70s-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "70s-thumb.jpg"; sourceTree = "<group>"; };
@@ -1953,6 +1957,8 @@
 			children = (
 				086005561A98B153008CD7DE /* EMUISound.h */,
 				086005571A98B153008CD7DE /* EMUISound.m */,
+				084DAC0A1BEEA5D100FC9FE2 /* EMSoundPlayback.h */,
+				084DAC0B1BEEA5D100FC9FE2 /* EMSoundPlayback.m */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -3383,6 +3389,7 @@
 				08357F431BC9F0F800C302AA /* EMMeNavigationVC.m in Sources */,
 				08AA14A41B0BA658002E1B2F /* ShaderUtilities.c in Sources */,
 				083814341BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */,
+				084DAC0D1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */,
 				0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
 				08AA14A51B0BA658002E1B2F /* EMSilhouetteView.m in Sources */,
 				08357F501BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,
@@ -3624,6 +3631,7 @@
 				08357F421BC9F0F800C302AA /* EMMeNavigationVC.m in Sources */,
 				08D92A021A77EFBD00B6A68F /* ShaderUtilities.c in Sources */,
 				083814331BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */,
+				084DAC0C1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */,
 				0869D8611B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
 				08CAEAC31A95E202008A3E0A /* EMSilhouetteView.m in Sources */,
 				08357F4F1BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,

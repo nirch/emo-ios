@@ -11,23 +11,32 @@
 
 @implementation HMImageTools
 
-#pragma mark - UIImage
-+(UIImage *)createUIImageFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha
+#pragma mark - NSData
++(NSData *)createNSDataFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha
 {
-    
     // Get the data
     unsigned char *pixels        = imageData->data;
     
     // Info about the image.
     int channelsCount = imageData->channel;
     int size = imageData->width * imageData->height * channelsCount;
+
+    // Creation of a new CGImage object.
+    NSData* newPixelData = [NSData dataWithBytes:pixels length:size];
+    return newPixelData;
+}
+
+#pragma mark - UIImage
++(UIImage *)createUIImageFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha
+{
     size_t width                    = imageData->width;
     size_t height                   = imageData->height;
     size_t bitsPerComponent         = 8;
+    int channelsCount = imageData->channel;
     size_t bitsPerPixel             = bitsPerComponent * channelsCount;
     size_t bytesPerRow              = imageData->width * channelsCount;
     CGColorSpaceRef colorspace      = CGColorSpaceCreateDeviceRGB();
-    
+
     CGBitmapInfo bitmapInfo;
     if (withAlpha) {
         bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaLast;
@@ -35,8 +44,7 @@
         bitmapInfo = kCGBitmapByteOrderDefault;
     }
     
-    // Creation of a new CGImage object.
-    NSData* newPixelData = [NSData dataWithBytes:pixels length:size];
+    NSData *newPixelData = [HMImageTools createNSDataFromImageType:imageData withAlpha:withAlpha];
     CFDataRef imgData = (__bridge CFDataRef)newPixelData;
     CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData(imgData);
     CGImageRef newImageRef = CGImageCreate (

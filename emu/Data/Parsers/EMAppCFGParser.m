@@ -79,6 +79,11 @@
         appCFG.mixedScreenPrioritizedEmus = nil;
     }
     
+    //
+    // Misc. App Settings
+    //
+    if (appCFG.playUISounds == nil) appCFG.playUISounds = @YES;
+    
     HMLOG(TAG, EM_DBG, @"App cfg parsed:%@", [appCFG description]);
     REMOTE_LOG(@"Parsed app cfg:%@", [appCFG description]);
 }

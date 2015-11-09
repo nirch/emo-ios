@@ -33,4 +33,11 @@
          annotation:(id)annotation;
 
 
+/**
+ *  Directly redeem a code from within the app (no url scheme)
+ *
+ *  @param code NSString of the code to redeem.
+ */
+-(void)redeemCode:(NSString *)code;
+
 @end

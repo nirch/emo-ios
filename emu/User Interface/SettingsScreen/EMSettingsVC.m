@@ -22,7 +22,10 @@
 #import <UIView+Toast.h>
 #import "EMDB.h"
 #import "EMBlockingProgressVC.h"
+#import "EMURLSchemeHandler.h"
 #import "EMCaches.h"
+#import "EMUISound.h"
+#import "AppManagement.h"
 
 @interface EMSettingsVC () <
     UITableViewDataSource,
@@ -88,6 +91,18 @@
                  selector:@selector(onAppStoreError:)
                      name:emkDataProductsError
                    object:nil];
+    
+    // On app store errors
+    [nc addUniqueObserver:self
+                 selector:@selector(onRedeemCodeUpdate:)
+                     name:emkDataUpdatedUnhidePackages
+                   object:nil];
+    
+    // On packages data updated.
+    [nc addUniqueObserver:self
+                 selector:@selector(onUpdatedData:)
+                     name:emkDataUpdatedPackages
+                   object:nil];
 }
 
 -(void)removeObservers
@@ -95,6 +110,7 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataProductsRestoredPurchases];
     [nc removeObserver:emkDataProductsError];
+    [nc removeObserver:emkDataUpdatedUnhidePackages];
 }
 
 #pragma mark - Observers handlers
@@ -131,12 +147,45 @@
     [self.guiTableView reloadData];
 }
 
+-(void)onRedeemCodeUpdate:(NSNotification *)notification
+{
+    if (notification.isReportingError) {
+        [self.view makeToast:LS(@"FAILED")
+                    duration:3.5
+                    position:CSToastPositionCenter];
+    }
+    [self.guiTableView reloadData];
+}
+
+-(void)onUpdatedData:(NSNotification *)notification
+{
+    [self.blockingProgressVC updateTitle:@"Done"];
+    [self.blockingProgressVC updateProgress:1.0 animated:YES];
+    [self.blockingProgressVC done];
+
+    if (notification.isReportingError) {
+        [self.view makeToast:LS(@"FAILED")
+                    duration:3.5
+                    position:CSToastPositionCenter];
+        return;
+    }
+    
+    [self.view makeToast:@"Groovy baby!"
+                duration:3.5
+                position:CSToastPositionCenter];
+
+    [self.guiTableView reloadData];
+}
+
 #pragma mark - Initializations
 -(void)initData
 {
     NSDictionary *sectionInfo;
     self.settings = [NSMutableArray new];
 
+    /**
+     *  About
+     */
     sectionInfo = @{
                     @"title":LS(@"SETTINGS_ABOUT_HEADER"),
                     @"items":@[
@@ -149,15 +198,32 @@
                     };
     [self.settings addObject:sectionInfo];
 
+
+    if (AppManagement.sh.isTestApp) {
+        sectionInfo = @{
+                        @"title":@"Debugging options",
+                        @"items":@[
+                                @{@"actionText":@"Clear all and refetch all", @"actionName":@"debugClearAllAndRefetch",@"async":@YES},
+                                ]
+                        };
+        [self.settings addObject:sectionInfo];
+    }
     
+    /**
+     *  In App Purchases
+     */
     sectionInfo = @{
                 @"title":LS(@"SETTINGS_IN_APP_PURCHASES_TITLE"),
                 @"items":@[
                         @{@"actionText":LS(@"SETTINGS_ACTION_RESTORE_PURCHASES"), @"icon":@"settingsIconRestorePurchases", @"actionName":@"restorePurchases", @"async":@YES},
+                        @{@"actionText":LS(@"SETTINGS_ACTION_REDEEM_CODE"), @"icon":@"settingsIconRedeemCode", @"actionName":@"redeemCode", @"async":@YES},
                         ]
                 };
     [self.settings addObject:sectionInfo];
 
+    /**
+     *  Cache
+     */
     sectionInfo = @{
                     @"title":LS(@"SETTINGS_CACHE_TITLE"),
                     @"items":@[
@@ -167,10 +233,13 @@
                     };
     [self.settings addObject:sectionInfo];
 
+    /**
+     *  Misc.
+     */
     sectionInfo = @{
                     @"title":LS(@"SETTINGS_MISC_TITLE"),
                     @"items":@[
-                            @{@"actionText":LS(@"SETTINGS_UI_SOUND_EFFECTS"), @"icon":@"settingsIconUISound", @"actionName":@"toggleSoundFX", @"boolSettingName":@"uiSoundFX"},
+                            @{@"actionText":LS(@"SETTINGS_UI_SOUND_EFFECTS"), @"icon":@"settingsIconUISound", @"actionName":@"toggleUISound", @"boolSettingName":@"uiSoundFX", @"appCFGBoolFieldName":@"playUISounds"},
                             ]
                     };
     [self.settings addObject:sectionInfo];
@@ -287,12 +356,44 @@
             [self _clearAllCache];
         });
         
+    } else if ([actionName isEqualToString:@"redeemCode"]) {
+        
+        [self _redeemCode];
+        
+    } else if ([actionName isEqualToString:@"debugClearAllAndRefetch"]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self _deleteAllAndRefetch];
+        });
+    }
+}
+
+-(void)doActionAtIndexPath:(NSIndexPath *)indexPath withSwitchValue:(BOOL)switchValue
+{
+    NSString *actionName = [self actionNameAtIndexPath:indexPath];
+    if ([actionName isEqualToString:@"toggleUISound"]) {
+        [self _settingPlayUISounds:switchValue];
     }
 }
 
 -(void)_restorePurchases
 {
     [EMBackend.sh restorePurchases];
+}
+
+-(void)_redeemCode
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:LS(@"SETTINGS_ACTION_REDEEM_CODE") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:nil];
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"SEND") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *code = alert.textFields.firstObject.text;
+        code = [self trimmedString:code];
+        EMURLSchemeHandler *handler = [EMURLSchemeHandler new];
+        [handler redeemCode:code];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:LS(@"CANCEL") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self.guiTableView reloadData];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)_clearHDContent
@@ -333,6 +434,31 @@
     });
 }
 
+-(void)_deleteAllAndRefetch
+{
+    [self showBlockingProgressVC];
+    [self.blockingProgressVC updateTitle:@"Exterminate!!!"];
+    dispatch_after(DTIME(0.1), dispatch_get_main_queue(), ^{
+        [self.blockingProgressVC updateProgress:0.2 animated:YES];
+        for (Package *package in [Package allPackagesInContext:EMDB.sh.context]) {
+            NSArray *emus = [Emuticon allEmuticonsInPackage:package];
+            for (Emuticon *emu in emus) {
+                [emu cleanUp:YES andRemoveResources:YES];
+            }
+            [package recountRenders];
+        }
+        dispatch_after(DTIME(0.1), dispatch_get_main_queue(), ^{
+            [self.blockingProgressVC updateTitle:@"Refetching..."];
+            [self.blockingProgressVC updateProgress:0.7 animated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                                object:self
+                                                              userInfo:@{@"forced_reload":@YES, @"delete all and clean":@YES}];
+        });
+    });
+    [EMDB.sh save];
+
+}
+
 -(void)_clearAllCachedFilesForPack:(Package *)package
 {
     NSArray *emus = [package emuticons];
@@ -340,6 +466,18 @@
         [emu.emuDef removeAllResources];
     }
     [EMCaches.sh clearAllCache];
+}
+
+-(void)_settingPlayUISounds:(BOOL)flag
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    appCFG.playUISounds = @(flag);
+    [EMUISound.sh updateConfig];
+}
+
+-(NSString *)trimmedString:(NSString *)str
+{
+    return [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
 #pragma mark - Blocking progress VC
@@ -377,5 +515,11 @@
     [self doActionAtIndexPath:cell.indexPath];
 }
 
+- (IBAction)onSettingSwitchValueChanged:(UISwitch *)sender
+{
+    EMSettingsCell *cell = (EMSettingsCell *)[sender viewFindAncestorOfKind:[EMSettingsCell class]];
+    if (cell == nil) return;
+    [self doActionAtIndexPath:cell.indexPath withSwitchValue:sender.on];
+}
 
 @end

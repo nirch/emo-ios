@@ -15,5 +15,6 @@
 
 @property (nonatomic, weak) id<EMInterfaceDelegate>delegate;
 @property (nonatomic) NSString *packageOID;
+@property (nonatomic) NSString *originUI;
 
 @end

@@ -9,7 +9,7 @@
 //       / ^ \
 //    {}/\\ //\
 //    __\ " " /__
-//   (____/^\____) Nav Bar Nav!
+//   (____/^\____) Nav Bar Nav! (Homage's inside joke)
 //
 //  Delegation protocol for communication between the navigation bar and
 //  its delegate view controller.
@@ -53,5 +53,12 @@
                         sender:(id)sender
                          state:(NSInteger)state
                           info:(NSDictionary *)info;
+
+/**
+ *  The nav bar chosen theme color.
+ *
+ *  @return <#return value description#>
+ */
+-(UIColor *)navBarThemeColor;
 
 @end

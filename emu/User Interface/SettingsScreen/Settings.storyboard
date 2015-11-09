@@ -30,16 +30,16 @@
                                         <rect key="frame" x="0.0" y="44" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y8C-zx-nG2" id="mEb-cS-U1C">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P1F-7O-oHl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2a-Cd-bAQ" customClass="EMLabel">
-                                                    <rect key="frame" x="28" y="8" width="47" height="44"/>
+                                                    <rect key="frame" x="28" y="8" width="47" height="43"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
                                                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -76,7 +76,7 @@
                                         <rect key="frame" x="0.0" y="104" width="600" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Pu-uE-To7" id="pMl-pB-kbv">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="159.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emu - Animated Selfie Stickers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GhH-OB-HzE">
@@ -94,14 +94,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© HOMAGE 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bph-MW-MvK">
-                                                    <rect key="frame" x="38" y="116" width="105" height="16"/>
+                                                    <rect key="frame" x="38" y="115" width="105" height="16"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homageLogo" translatesAutoresizingMaskIntoConstraints="NO" id="z6q-P7-JVc">
-                                                    <rect key="frame" x="468" y="28" width="104" height="104"/>
+                                                    <rect key="frame" x="469" y="28" width="103" height="103"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="z6q-P7-JVc" secondAttribute="height" multiplier="1:1" id="9SI-Iv-Ek8"/>
@@ -144,11 +144,11 @@
                                         <rect key="frame" x="0.0" y="264" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nJg-iZ-bjS" id="ppT-Gk-clj">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YBt-7D-tBD">
-                                                    <rect key="frame" x="8" y="8" width="584" height="64"/>
+                                                    <rect key="frame" x="8" y="8" width="584" height="63"/>
                                                     <animations/>
                                                     <state key="normal" backgroundImage="cellStretchingBG">
                                                         <color key="titleColor" red="1" green="0.68627452850000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -158,7 +158,7 @@
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconPlaceHolder" translatesAutoresizingMaskIntoConstraints="NO" id="1gz-AE-loA">
-                                                    <rect key="frame" x="24" y="28" width="25" height="25"/>
+                                                    <rect key="frame" x="24" y="27" width="25" height="25"/>
                                                     <animations/>
                                                     <color key="tintColor" red="1" green="0.68627452850000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -167,7 +167,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2E-mp-eqG">
-                                                    <rect key="frame" x="65" y="30" width="42" height="21"/>
+                                                    <rect key="frame" x="65" y="29" width="42" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.68627452850000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -177,6 +177,9 @@
                                                     <rect key="frame" x="523" y="24" width="51" height="31"/>
                                                     <animations/>
                                                     <color key="onTintColor" red="1" green="0.68627452850000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="onSettingSwitchValueChanged:" destination="6Fo-k8-4Xn" eventType="valueChanged" id="ETq-Aa-cmT"/>
+                                                    </connections>
                                                 </switch>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="PjU-2s-1Ls">
                                                     <rect key="frame" x="529" y="21" width="37" height="37"/>

@@ -181,8 +181,10 @@
                  layout:(UICollectionViewLayout *)collectionViewLayout
  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat size = self.view.bounds.size.height;
-    return CGSizeMake(size, size);
+    CGFloat aspectRatio = [self.dataSource aspectRatioAtIndexPath:indexPath];
+    CGFloat height = self.view.bounds.size.height;
+    CGFloat width = height*aspectRatio;
+    return CGSizeMake(width, height);
 }
 
 #pragma mark - UICollectionViewDelegate

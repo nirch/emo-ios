@@ -22,6 +22,7 @@
 #pragma mark - Initialization
 +(EMUISound *)sharedInstance;
 +(EMUISound *)sh;
+-(void)updateConfig;
 
 #pragma mark - playing
 -(void)playSoundNamed:(NSString *)soundName;
