@@ -325,32 +325,39 @@
 -(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
 {
     NSString *packageOID = info[@"packageOID"];
+    
+    [params addKey:AK_EP_PACKAGE_OID value:packageOID];
     if (packageOID != nil) {
         Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
         if (package) {
-            [self handleNavigateToPackage:package];
-            [params addKey:AK_EP_PACKAGE_OID value:packageOID];
             [params addKey:AK_EP_PACKAGE_NAME value:package.name];
         }
     }
     [params addKey:AK_EP_TEXT valueIfNotNil:info[@"alert"]];
     [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
+
+    if (packageOID != nil) {
+        [self handleNavigateToPackageOID:packageOID];
+    }
 }
 
 
--(void)handleNavigateToPackage:(Package *)package
+-(void)handleNavigateToPackageOID:(NSString *)packOID
 {
-    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
-        // If not on first screen, pop back to the main screen (with no animation).
-        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
-        [nc popToRootViewControllerAnimated:NO];
-        if (nc.presentedViewController) {
-            [nc dismissViewControllerAnimated:NO completion:nil];
-        }
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIMainShouldShowPackage
-                                                        object:self
-                                                      userInfo:@{@"packageOID":package.oid}];
+    // Block the UI until finishing the flow of opening the pack
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShowBlockingProgress
+                                                        object:nil
+                                                      userInfo:@{@"title":LS(@"PROGRESS_OPENING_PACK_TITLE")}];
+    
+    
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        HMParams *params = [HMParams new];
+        [params addKey:emkPackageOID value:packOID];
+        [params addKey:@"autoNavigateToPack" value:@YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequestToOpenPackage
+                                                            object:nil
+                                                          userInfo:params.dictionary];
+    });
 }
 
 #pragma mark - Background fetches

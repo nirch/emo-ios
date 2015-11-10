@@ -127,17 +127,15 @@
         fgSource->Init((char*)self.frontLayerPath.UTF8String);
     }
     
-    
+
+
     //
     // Watermark source
     //
     WaterMarkSource *waterMarkSource = NULL;
-//    if (self.waterMarkName) {
-//        waterMarkSource = new WaterMarkSource(self.waterMarkName);
-//    }
-    
-    
-    
+    if (self.waterMarkName) {
+        waterMarkSource = new WaterMarkSource(self.waterMarkName, (int)self.outputWidth, (int)self.outputHeight);
+    }
     
     //
     // Dimensions.
@@ -145,6 +143,7 @@
     CMVideoDimensions dimensions;
     dimensions.width = (int)self.outputWidth;
     dimensions.height = (int)self.outputHeight;
+
     
     //
     // Output thumb

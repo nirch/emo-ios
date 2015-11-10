@@ -184,19 +184,11 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 -(void)restoreState
 {
-    if (self.requestsPackageOID) {
-        NSIndexPath *indexPath = [self.dataSource indexPathForPackOID:self.requestsPackageOID];
-        if (indexPath) {
-            [self scrollToSection:indexPath.section animated:NO];
-        }
-        self.requestsPackageOID = nil;
-        return;
-    }
-    
+    if (self.requestsPackageOID) [self consumeRequestsPackageOID];
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
-    // Retore offset.
+    // Restore offset.
     NSNumber *offsetNumber = [ud objectForKey:@"feedOffset"];
     if (offsetNumber == nil) return;
     CGPoint latestOffset = CGPointMake(0, offsetNumber.doubleValue);
@@ -460,6 +452,23 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     // Reload the data in the collection view.
     [self.dataSource reset];
     [self reload];
+    if (self.requestsPackageOID) [self consumeRequestsPackageOID];
+}
+
+-(void)consumeRequestsPackageOID
+{
+    if (self.requestsPackageOID) {
+        Package *package = [Package findWithID:self.requestsPackageOID context:EMDB.sh.context];
+        [self _handleChangeToPackage:package];
+        NSIndexPath *indexPath = [self.dataSource indexPathForPackOID:self.requestsPackageOID];
+        if (indexPath) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self scrollToSection:indexPath.section animated:NO];
+            });
+        }
+        self.requestsPackageOID = nil;
+        return;
+    }
 }
 
 #pragma mark - EMTopVCProtocol
@@ -964,6 +973,8 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
  */
 -(void)_handleChangeToPackage:(Package *)package
 {
+    if (package == nil) return;
+    
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     NSInteger numberOfViewedPackagesBeforeAlertsQuestion = [AppCFG tweakedInteger:@"number_of_viewed_packages_before_alerts_question" defaultValue:0];
     NSInteger numberOfViewedPackages = [Package countNumberOfViewedPackagesInContext:EMDB.sh.context];

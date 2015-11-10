@@ -34,6 +34,7 @@
 {
     [super viewDidLoad];
     self.view.alpha = 0;
+    self.guiProgressView.alpha = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -41,7 +42,7 @@
     [super viewWillAppear:animated];
     [self.guiEmunizingView setup];
     [self.guiEmunizingView startAnimating];
-    [self updateProgress:0 animated:NO];
+    self.guiProgressView.progress = 0;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -86,6 +87,7 @@
 -(void)updateProgress:(CGFloat)progress animated:(BOOL)animated
 {
     [self.guiProgressView setProgress:progress animated:animated];
+    self.guiProgressView.alpha = 1.0f;
 }
 
 -(void)updateTitle:(NSString *)title

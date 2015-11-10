@@ -17,6 +17,7 @@
 // Notified backend that packages data should be refetched.
 #define emkDataRequiredPackages @"emk data required packages"
 #define emkDataRequiredUnhidePackages @"emk data required unhide packages"
+#define emkDataRequestToOpenPackage @"emk data request to open package"
 
 #pragma mark - Data updates
 #define emkDataUpdatedPackages @"emk data updated packages"
@@ -30,6 +31,7 @@
 
 // Notification of navigation events
 #define emkUINavigationTabSelected @"emk ui nav tab selected"
+#define emkUINavigationShowBlockingProgress @"emk ui show blocking progress"
 
 // Notification of the backend to the UI
 #define emkUIDataRefreshPackages @"emk backend data refreshed packages"

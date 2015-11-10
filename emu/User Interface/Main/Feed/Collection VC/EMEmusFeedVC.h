@@ -43,4 +43,6 @@ typedef NS_ENUM(NSInteger, EMEmusFeedState){
 
 @property (nonatomic) NSString *requestsPackageOID;
 
+-(void)restoreState;
+
 @end

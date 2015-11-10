@@ -52,9 +52,19 @@
 				<string>emucodes</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>it.homage.ios.emu.open</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>emuopen</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.1.4</string>
+	<string>2.1.7</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

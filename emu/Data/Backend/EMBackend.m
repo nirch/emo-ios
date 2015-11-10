@@ -135,6 +135,16 @@
                      name:emkDataRequiredUnhidePackages
                    object:nil];
     
+    // ---------------------------
+    // Request to open a package
+    //
+    
+    [nc addUniqueObserver:self
+                 selector:@selector(onOpenPackageRequest:)
+                     name:emkDataRequestToOpenPackage
+                   object:nil];
+    
+    
     // --------------------
     // Rendering notifications
     //
@@ -151,6 +161,9 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataRequiredPackages];
     [nc removeObserver:emkDataUpdatedPackages];
+    [nc removeObserver:emkDataRequiredUnhidePackages];
+    [nc removeObserver:emkDataRequestToOpenPackage];
+    [nc removeObserver:hmkRenderingFinished];
 }
 
 #pragma mark - Observers handlers
@@ -256,6 +269,27 @@
     NSDictionary *info = notification.userInfo;
     NSString *code = info[@"code"];
     [self.server unhideUsingCode:code withInfo:info];
+}
+
+-(void)onOpenPackageRequest:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if (info[emkPackageOID] == nil) return;
+    
+    // First check if pack already exists locally on the device.
+    Package *package = [Package findWithID:info[emkPackageOID] context:EMDB.sh.context];
+    BOOL packAlreadyOnDevice = package != nil;
+    // Tell backend that data update is required.
+    // Also pass info about the pack the app needs to navigate to
+    // after it gets the required data of the pack.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                        object:self
+                                                      userInfo:@{
+                                                                 @"forced_reload":@YES,
+                                                                 emkDataAlreadyExists:@(packAlreadyOnDevice),
+                                                                 emkPackageOID:info[emkPackageOID],
+                                                                 @"autoNavigateToPack":@YES
+                                                                 }];
 }
 
 #pragma mark - Background fetch

@@ -42,6 +42,7 @@
 #define emkDuration                 @"duration"
 #define emkDate                     @"date"
 #define emkDebug                    @"debug"
+#define emkDataAlreadyExists        @"data already exists"
 
 typedef NS_ENUM(NSInteger, EMMediaDataType) {
     EMMediaDataTypeGIF      = 0,

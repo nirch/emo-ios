@@ -16,6 +16,9 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define TAG @"EMMainNavigationVC"
+
+
 #import "EMNavigationAndFlowVC.h"
 #import "EMTabsBarVC.h"
 #import "EMUINotifications.h"
@@ -25,7 +28,8 @@
 #import "EMRecorderVC.h"
 #import "EMTutorialVC.h"
 #import <PINRemoteImage/PINRemoteImageManager.h>
-#define TAG @"EMMainNavigationVC"
+#import "EMBlockingProgressVC.h"
+#import <UIView+Toast.h>
 
 @interface EMNavigationAndFlowVC () <
     EMRecorderDelegate,
@@ -46,9 +50,14 @@
 // Keyboard tutorial (should be deprecated after new onboarding implementation)
 @property (weak, nonatomic) EMTutorialVC *kbTutorialVC;
 
+// Blocking progress VC
+@property (weak, nonatomic, readonly) EMBlockingProgressVC *blockingProgressVC;
+
 @end
 
 @implementation EMNavigationAndFlowVC
+
+@synthesize blockingProgressVC = _blockingProgressVC;
 
 #pragma mark - VC lifecycle
 /**
@@ -156,6 +165,13 @@
                  selector:@selector(onHidingPackagesUpdate:)
                      name:emkDataUpdatedUnhidePackages
                    object:nil];
+    
+    // On blocking progress modal view need to be shown
+    [nc addUniqueObserver:self
+                 selector:@selector(onNeedToShowBlockingProgress:)
+                     name:emkUINavigationShowBlockingProgress
+                   object:nil];
+    
 
 }
 
@@ -215,10 +231,39 @@
     // Mark that attempted a refetch.
     self.alreadyAttemptedDataRefetch = YES;
     
+    // If need to navigate to a package, navigate to it (if possible).
+    if (notification.isReportingError) {
+        if (self.blockingProgressVC) [self.blockingProgressVC done];
+    } else {
+        NSDictionary *info = notification.userInfo;
+        if (info[emkPackageOID] != nil && [info[@"autoNavigateToPack"] boolValue]) {
+            [self navigateIfPossibleToPackWithInfo:info];
+        }
+    }
+    
     // Handle the flow
     [self handleFlow];
 }
 
+-(void)navigateIfPossibleToPackWithInfo:(NSDictionary *)info
+{
+    NSString *packOID = info[emkPackageOID];
+    Package *package = [Package findWithID:packOID context:EMDB.sh.context];
+    if (package == nil) {
+        if (self.blockingProgressVC) {
+            [self.blockingProgressVC done];
+        }
+        return;
+    }
+    
+    [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:NO info:info];
+    
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        if (self.blockingProgressVC) {
+            [self.blockingProgressVC done];
+        }        
+    });
+}
 
 -(void)onRequestToOpenRecorder:(NSNotification *)notification
 {
@@ -247,6 +292,14 @@
     if (info[@"message"]) {
         [self showUnhideMessageToUserWithInfo:info];
     }
+}
+
+-(void)onNeedToShowBlockingProgress:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    [self showBlockingProgressVC];
+    NSString *title = info[@"title"];
+    [self.blockingProgressVC updateTitle:title];
 }
 
 #pragma mark - Orientations
@@ -498,6 +551,26 @@
     if (_splashVC) return _splashVC;
     _splashVC = [EMSplashVC splashVCInParentVC:self];
     return _splashVC;
+}
+
+#pragma mark - Blocking progress VC
+-(EMBlockingProgressVC *)blockingProgressVC
+{
+    // Put it on top of everything.
+    if (_blockingProgressVC) return _blockingProgressVC;
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    UIViewController *rootVC = window.rootViewController;
+    EMBlockingProgressVC *vc = [EMBlockingProgressVC blockingProgressVCInParentVC:rootVC];
+    _blockingProgressVC = vc;
+    return vc;
+}
+
+-(void)showBlockingProgressVC
+{
+    [self.splashVC hideAnimated:NO];
+    if (_blockingProgressVC) [_blockingProgressVC done];
+    _blockingProgressVC = nil;
+    [self.blockingProgressVC showAnimated:YES];
 }
 
 #pragma mark - KB Tutorial
