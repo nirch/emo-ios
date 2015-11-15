@@ -30,7 +30,7 @@
 
 +(EMTutorialVC *)tutorialVCInParentVC:(UIViewController<EMInterfaceDelegate>*)parentVC
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Tutorials" bundle:nil];
     EMTutorialVC *vc = [storyboard instantiateViewControllerWithIdentifier:@"keyboard tutorial"];
     vc.view.frame = parentVC.view.bounds;
     vc.delegate = parentVC;

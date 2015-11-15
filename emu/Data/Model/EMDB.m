@@ -183,5 +183,21 @@
     return [self managedObjectContext];
 }
 
+#pragma mark - Counting
++(NSInteger)countEntityNamed:(NSString *)entityName
+                   predicate:(NSPredicate *)predicate
+                   inContext:(NSManagedObjectContext *)context
+{
+    NSError *error;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    fetchRequest.predicate = predicate;
+    
+    NSError *err;
+    NSUInteger count = [context countForFetchRequest:fetchRequest error:&err];
+    if(count == NSNotFound || error != nil) {
+        return 0;
+    }
+    return count;
+}
 
 @end

@@ -1,19 +1,18 @@
 //
-//  emutests.m
-//  emutests
+//  EmuTests.m
+//  EmuTests
 //
-//  Created by Aviv Wolf on 6/15/15.
-//  Copyright (c) 2015 Homage. All rights reserved.
+//  Created by Aviv Wolf on 28/10/2015.
+//  Copyright © 2015 Homage. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface emutests : XCTestCase
+@interface EmuTests : XCTestCase
 
 @end
 
-@implementation emutests
+@implementation EmuTests
 
 - (void)setUp {
     [super setUp];
@@ -27,7 +26,7 @@
 
 - (void)testExample {
     // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+    // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
 - (void)testPerformanceExample {

@@ -75,9 +75,14 @@
 
     // Emu definitions and resources
     emuDef.sourceBackLayer                  = [info safeStringForKey:@"source_back_layer" defaultsDictionary:defaults];
+    emuDef.sourceBackLayer2X                  = [info safeStringForKey:@"source_back_layer_2x" defaultsDictionary:defaults];
     emuDef.sourceFrontLayer                 = [info safeStringForKey:@"source_front_layer" defaultsDictionary:defaults];
+    emuDef.sourceFrontLayer2X                 = [info safeStringForKey:@"source_front_layer_2x" defaultsDictionary:defaults];
     emuDef.sourceUserLayerMask              = [info safeStringForKey:@"source_user_layer_mask" defaultsDictionary:defaults];
+    emuDef.sourceUserLayerMask2X              = [info safeStringForKey:@"source_user_layer_mask_2x" defaultsDictionary:defaults];
     emuDef.sourceUserLayerDynamicMask       = [info safeStringForKey:@"source_user_dynamic_mask" defaultsDictionary:defaults];
+    emuDef.sourceUserLayerDynamicMask2X       = [info safeStringForKey:@"source_user_dynamic_mask_2x" defaultsDictionary:defaults];
+
     emuDef.useForPreview                    = [info safeBoolNumberForKey:@"use_for_preview" defaultsDictionary:defaults];
     emuDef.duration                         = [info safeDecimalNumberForKey:@"duration" defaultsDictionary:defaults];
     emuDef.framesCount                      = [info safeNumberForKey:@"frames_count" defaultsDictionary:defaults];
@@ -86,6 +91,9 @@
     emuDef.disallowedForOnboardingPreview   = [info safeBoolNumberForKey:@"disallowed_for_onboarding_preview" defaultsValue:@NO];
     emuDef.effects                          = [info safeDictionaryForKey:@"effects" defaultValue:nil];
     emuDef.prefferedWaterMark               = [info safeStringForKey:@"preffered_watermark" defaultsDictionary:defaults];
+    emuDef.hdAvailable                      = [info safeBoolNumberForKey:@"hd_available" defaultsValue:@NO];
+    emuDef.emuWidth                         = [info safeNumberForKey:@"emu_width" defaultsDictionary:defaults];
+    emuDef.emuHeight                         = [info safeNumberForKey:@"emu_height" defaultsDictionary:defaults];
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

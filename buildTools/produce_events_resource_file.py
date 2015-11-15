@@ -103,6 +103,11 @@ def write_analytics_events(f, cfg):
         k = "e%s" % key
         val = events[key]
 
+        # deprecated event will be skipped
+        if val.get("deprecated_ios") is not None:
+            continue
+        
+
         text = "\n".join(textwrap.wrap(
             val["description"],
             subsequent_indent=INDENT)

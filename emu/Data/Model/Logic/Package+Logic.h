@@ -55,6 +55,16 @@
 +(NSArray *)allPackagesPrioritizedInContext:(NSManagedObjectContext *)context;
 
 
+
+/**
+ *  Fetches all the active packages info found in local storage, that have any kind of premium product id.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return An array of packages objects.
+ */
++(NSArray *)allPremiumPackagesInContext:(NSManagedObjectContext *)context;
+
 /**
  *  Reorders packages in local storage, given new priority info.
  *
@@ -130,9 +140,30 @@
  */
 -(NSURL *)urlForResources;
 
-
+/**
+ *  A list of emuticons with no set specific footage.
+ *
+ *  @return NSArray of such emu objects.
+ */
 -(NSArray *)emuticonsWithNoSpecificFootage;
--(NSURL *)urlForPackageIcon;
+
+
+/**
+ *  A list of all emuticons OIDs in this pack.
+ *  (preview temp emus are ignored)
+ *
+ *  @return NSArray of all OIDs of emuticons in the pack.
+ */
+-(NSArray *)emuticonsOIDS;
+
+/**
+ *  A list of emuticons in this pack.
+ *  (preview temp emus are ignored)
+ *
+ *  @return NSArray of all (none preview) emuticons in the pack.
+ */
+-(NSArray *)emuticons;
+
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context;
 +(Package *)latestPublishedPackageInContext:(NSManagedObjectContext *)context;
 -(NSString *)tagLabel;
@@ -142,7 +173,68 @@
 -(BOOL)hasEmusWithSpecificTakes;
 -(NSString *)localizedLabel;
 
+/**
+ *  Always update the priority field using this method.
+ *  it takes care of also 
+ */
+-(void)updatePriority:(NSNumber *)priority;
+
+/**
+ *
+ *
+ *  @param shareMethodName
+ *
+ *  @return
+ */
 -(NSString *)sharingHashTagsStringForShareMethodNamed:(NSString *)shareMethodName;
+
+#pragma mark - Package resources
+/**
+ *  The url of the (old and soon to be deprecated) package icon.
+ *
+ *  @return NSURL to the package icon.
+ */
+-(NSURL *)urlForPackageIcon;
+
+/**
+ *  The url of the package banner resource.
+ *
+ *  @return NSURL to the package banner resource.
+ */
+-(NSURL *)urlForPackageBanner;
+
+/**
+ *  The url of the package wide banner resource.
+ *
+ *  @return NSURL to the package wide banner resource.
+ */
+-(NSURL *)urlForPackageBannerWide;
+
+/**
+ *  The url of the big poster
+ *
+ *  @return NSURL to the package poster (may be png or animated gif). May be nil.
+ */
+-(NSURL *)urlForPackagePoster;
+
+/**
+ * if poster url exists and the poster is an animted gif
+ * this will point to a smaller thumb jpg image of the animated gif.
+ * otherwise this will return nil.
+ *
+ *  @return NSURL to a thumb of animated gif or nil.
+ */
+-(NSURL *)urlForAnimatedPosterThumb;
+
+/**
+ *  The url of the big poster overlay
+ *
+ *  @return NSURL to the package poster overlay (should be png with alpha). May be nil.
+ */
+-(NSURL *)urlForPackagePosterOverlay;
+
+
+
 
 #pragma mark - Sampled results
 -(BOOL)resultNeedToBeSampledForEmuOID:(NSString *)emuOID;

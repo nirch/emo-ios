@@ -10,7 +10,7 @@
 class WaterMarkSource : public CHrSourceI
 {
 public:
-    WaterMarkSource(NSString *imageName);
+    WaterMarkSource(NSString *imageName, NSInteger width, NSInteger height);
     virtual int	ReadFrame( int iFrame, image_type **im );
     virtual int Close();
 private:

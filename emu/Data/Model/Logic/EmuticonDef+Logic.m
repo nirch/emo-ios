@@ -34,27 +34,54 @@
 }
 
 
+#pragma mark - Resources Paths
+
+// User layer mask
 -(NSString *)pathForUserLayerMask
 {
-    return [EMDB pathForResourceNamed:self.sourceUserLayerMask path:[self.package resourcesPath]];
+    return [self pathForUserLayerMaskInHD:NO];
 }
 
-
--(NSString *)pathForBackLayer
+-(NSString *)pathForUserLayerMaskInHD:(BOOL)inHD
 {
-    return [EMDB pathForResourceNamed:self.sourceBackLayer path:[self.package resourcesPath]];
+    NSString *path = inHD?self.sourceUserLayerMask2X:self.sourceUserLayerMask;
+    return [EMDB pathForResourceNamed:path path:[self.package resourcesPath]];
 }
 
-
--(NSString *)pathForFrontLayer
-{
-    return [EMDB pathForResourceNamed:self.sourceFrontLayer path:[self.package resourcesPath]];
-}
-
-
+// User layer dynamic mask
 -(NSString *)pathForUserLayerDynamicMask
 {
-    return [EMDB pathForResourceNamed:self.sourceUserLayerDynamicMask path:[self.package resourcesPath]];
+    return [self pathForUserLayerDynamicMaskInHD:NO];
+}
+
+-(NSString *)pathForUserLayerDynamicMaskInHD:(BOOL)inHD
+{
+    NSString *path = inHD?self.sourceUserLayerDynamicMask2X:self.sourceUserLayerDynamicMask;
+    return [EMDB pathForResourceNamed:path path:[self.package resourcesPath]];
+}
+
+// Back layer
+-(NSString *)pathForBackLayer
+{
+    return [self pathForBackLayerInHD:NO];
+}
+
+-(NSString *)pathForBackLayerInHD:(BOOL)inHD
+{
+    NSString *path = inHD?self.sourceBackLayer2X:self.sourceBackLayer;
+    return [EMDB pathForResourceNamed:path path:[self.package resourcesPath]];
+}
+
+// Front layer
+-(NSString *)pathForFrontLayer
+{
+    return [self pathForFrontLayerInHD:NO];
+}
+
+-(NSString *)pathForFrontLayerInHD:(BOOL)inHD
+{
+    NSString *path = inHD?self.sourceFrontLayer2X:self.sourceFrontLayer;
+    return [EMDB pathForResourceNamed:path path:[self.package resourcesPath]];
 }
 
 +(NSArray *)createMissingEmuticonsForEmuDefs:(NSArray *)emuDefs
@@ -74,6 +101,14 @@
     return emu;
 }
 
+-(CGFloat)aspectRatio
+{
+    CGFloat w = self.emuWidth?self.emuWidth.floatValue:EMU_DEFAULT_WIDTH;
+    CGFloat h = self.emuHeight?self.emuHeight.floatValue:EMU_DEFAULT_HEIGHT;
+    if (h==0 || w==h) return 1.0f;
+    return w/h;
+}
+
 
 -(NSArray *)nonPreviewEmuticons
 {
@@ -85,34 +120,73 @@
     return emus;
 }
 
--(BOOL)allResourcesAvailable
-{
-    if (self.sourceBackLayer && [self isMissingResourceNamed:self.sourceBackLayer]) return NO;
-    if (self.sourceFrontLayer && [self isMissingResourceNamed:self.sourceFrontLayer]) return NO;
-    if (self.sourceUserLayerMask && [self isMissingResourceNamed:self.sourceUserLayerMask]) return NO;
-    if (self.sourceUserLayerDynamicMask && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) return NO;
-    return YES;
-}
-
+#pragma mark - Resources required
 -(NSInteger)requiredResourcesCount
 {
+    return [self requiredResourcesCountInHD:NO];
+}
+
+-(NSInteger)requiredResourcesCountInHD:(BOOL)inHD
+{
     NSInteger count;
-    if (self.sourceBackLayer) count++;
-    if (self.sourceFrontLayer) count++;
-    if (self.sourceUserLayerMask) count++;
-    if (self.sourceUserLayerDynamicMask) count++;
+    if (inHD) {
+        if (self.sourceBackLayer2X) count++;
+        if (self.sourceFrontLayer2X) count++;
+        if (self.sourceUserLayerMask2X) count++;
+        if (self.sourceUserLayerDynamicMask2X) count++;
+    } else {
+        if (self.sourceBackLayer) count++;
+        if (self.sourceFrontLayer) count++;
+        if (self.sourceUserLayerMask) count++;
+        if (self.sourceUserLayerDynamicMask) count++;
+    }
     return count;
 }
 
 -(NSArray *)allMissingResourcesNames
 {
+    return [self allMissingResourcesNamesInHD:NO];
+}
+
+-(NSArray *)allMissingResourcesNamesInHD:(BOOL)inHD
+{
     NSMutableArray *resourcesNames = [NSMutableArray new];
-    if (self.sourceBackLayer && [self isMissingResourceNamed:self.sourceBackLayer]) [resourcesNames addObject:self.sourceBackLayer];
-    if (self.sourceFrontLayer && [self isMissingResourceNamed:self.sourceFrontLayer]) [resourcesNames addObject:self.sourceFrontLayer];
-    if (self.sourceUserLayerMask && [self isMissingResourceNamed:self.sourceUserLayerMask]) [resourcesNames addObject:self.sourceUserLayerMask];
-    if (self.sourceUserLayerDynamicMask && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) [resourcesNames addObject:self.sourceUserLayerDynamicMask];
+    if (inHD) {
+        if (self.sourceBackLayer2X && [self isMissingResourceNamed:self.sourceBackLayer2X]) [resourcesNames addObject:self.sourceBackLayer2X];
+        if (self.sourceFrontLayer2X && [self isMissingResourceNamed:self.sourceFrontLayer2X]) [resourcesNames addObject:self.sourceFrontLayer2X];
+        if (self.sourceUserLayerMask2X && [self isMissingResourceNamed:self.sourceUserLayerMask2X]) [resourcesNames addObject:self.sourceUserLayerMask2X];
+        if (self.sourceUserLayerDynamicMask2X && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask2X]) [resourcesNames addObject:self.sourceUserLayerDynamicMask2X];
+    } else {
+        if (self.sourceBackLayer && [self isMissingResourceNamed:self.sourceBackLayer]) [resourcesNames addObject:self.sourceBackLayer];
+        if (self.sourceFrontLayer && [self isMissingResourceNamed:self.sourceFrontLayer]) [resourcesNames addObject:self.sourceFrontLayer];
+        if (self.sourceUserLayerMask && [self isMissingResourceNamed:self.sourceUserLayerMask]) [resourcesNames addObject:self.sourceUserLayerMask];
+        if (self.sourceUserLayerDynamicMask && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) [resourcesNames addObject:self.sourceUserLayerDynamicMask];
+    }
     return resourcesNames;
 }
+
+-(BOOL)allResourcesAvailable
+{
+    return [self allResourcesAvailableInHD:NO];
+}
+
+-(BOOL)allResourcesAvailableInHD:(BOOL)inHD
+{
+    if (inHD) {
+        if (self.sourceBackLayer2X && [self isMissingResourceNamed:self.sourceBackLayer2X]) return NO;
+        if (self.sourceFrontLayer2X && [self isMissingResourceNamed:self.sourceFrontLayer2X]) return NO;
+        if (self.sourceUserLayerMask2X && [self isMissingResourceNamed:self.sourceUserLayerMask2X]) return NO;
+        if (self.sourceUserLayerDynamicMask2X && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask2X]) return NO;
+        return YES;        
+    } else {
+        if (self.sourceBackLayer && [self isMissingResourceNamed:self.sourceBackLayer]) return NO;
+        if (self.sourceFrontLayer && [self isMissingResourceNamed:self.sourceFrontLayer]) return NO;
+        if (self.sourceUserLayerMask && [self isMissingResourceNamed:self.sourceUserLayerMask]) return NO;
+        if (self.sourceUserLayerDynamicMask && [self isMissingResourceNamed:self.sourceUserLayerDynamicMask]) return NO;
+        return YES;
+    }
+}
+
 
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName
 {
@@ -128,21 +202,23 @@
     return resourcePath;
 }
 
-
 -(void)removeAllResources
 {
-    if (self.sourceBackLayer)
-        [self removeResourceNamed:self.sourceBackLayer];
-    
-    if (self.sourceFrontLayer)
-        [self removeResourceNamed:self.sourceFrontLayer];
-    
-    if (self.sourceUserLayerMask)
-        [self removeResourceNamed:self.sourceUserLayerMask];
-    
-    if (self.sourceUserLayerDynamicMask)
-        [self removeResourceNamed:self.sourceUserLayerDynamicMask];
+    if (self.sourceBackLayer) [self removeResourceNamed:self.sourceBackLayer];
+    if (self.sourceFrontLayer) [self removeResourceNamed:self.sourceFrontLayer];
+    if (self.sourceUserLayerMask) [self removeResourceNamed:self.sourceUserLayerMask];
+    if (self.sourceUserLayerDynamicMask) [self removeResourceNamed:self.sourceUserLayerDynamicMask];
+    [self removeAllHDResources];
 }
+
+-(void)removeAllHDResources
+{
+    if (self.sourceBackLayer2X) [self removeResourceNamed:self.sourceBackLayer2X];
+    if (self.sourceFrontLayer2X) [self removeResourceNamed:self.sourceFrontLayer2X];
+    if (self.sourceUserLayerMask2X) [self removeResourceNamed:self.sourceUserLayerMask2X];
+    if (self.sourceUserLayerDynamicMask2X) [self removeResourceNamed:self.sourceUserLayerDynamicMask2X];
+}
+
 
 -(void)removeResourceNamed:(NSString *)resourceName
 {

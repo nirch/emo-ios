@@ -14,7 +14,7 @@
 #define SND_SOFT_CLICK      @"soft click"
 #define SND_SWIPE           @"swipe"
 #define SND_FOCUSING        @"focusing"
-
+#define SND_POP             @"pop"
 
 
 @interface EMUISound : NSObject
@@ -22,6 +22,7 @@
 #pragma mark - Initialization
 +(EMUISound *)sharedInstance;
 +(EMUISound *)sh;
+-(void)updateConfig;
 
 #pragma mark - playing
 -(void)playSoundNamed:(NSString *)soundName;

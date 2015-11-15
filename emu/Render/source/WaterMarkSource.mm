@@ -10,12 +10,14 @@
 #import <UIKit/UIKit.h>
 #import "Gpw/Vtool/Vtool.h"
 #import "ImageType/ImageTool.h"
+#import "HMImageTools.h"
 
-WaterMarkSource::WaterMarkSource(NSString *imageName)
+WaterMarkSource::WaterMarkSource(NSString *imageName, NSInteger width, NSInteger height)
 {
     UIImage *wmImage = [UIImage imageNamed:imageName];
+    CGSize size = CGSizeMake(width, height);
+    wmImage = [HMImageTools imageWithImage:wmImage scaledToSize:size];
     image = CVtool::DecomposeUIimage(wmImage);
-//    image_bgr2rgb(image, image);
 }
 
 int	WaterMarkSource::ReadFrame( int iFrame, image_type **im )

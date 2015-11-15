@@ -197,6 +197,8 @@ const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback
 {
     CVPixelBufferRef pb = CVtool::CVPixelBufferRef_from_image(image);
     CFArrayAppendValue(_pbArray, pb);
+//    UIImage *uiImage = [HMImageTools createUIImageFromImageType:image withAlpha:NO];
+//    NSData *data = UIImagePNGRepresentation(uiImage);
 }
 
 

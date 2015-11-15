@@ -19,8 +19,8 @@
 +(EMCaches *)sh;
 
 #pragma mark - Emus gifs cache.
--(void)cacheGifsForEmus:(NSArray *)emus;
--(void)removeCachedGifForEmu:(Emuticon *)emu;
--(void)clearCachedGifs;
+-(void)clearCachedResultsForEmu:(Emuticon *)emu;
+-(void)checkCacheStatus;
+-(void)clearAllCache;
 
 @end

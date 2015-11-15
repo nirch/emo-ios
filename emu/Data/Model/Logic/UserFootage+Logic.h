@@ -64,18 +64,87 @@
 
 
 /**
+ *  Check if more than a single footage exist.
+ *
+ *  @param context The managed object context.
+ *
+ *  @return YES if footages count > 1. NO otherwise.
+ */
++(BOOL)multipleAvailableInContext:(NSManagedObjectContext *)context;
+
+/**
  *  The path to the stored images of the footage.
  *
  *  @return A string path to the user images. nil if missing.
  */
 -(NSString *)pathForUserImages;
 
+/**
+ *  NSURL to the first image of the footage.
+ *
+ *  @return NSURL of the first image in the footage or nil if missing.
+ */
+-(NSURL *)urlToThumbImage;
 
+/**
+ *  UIImage of the thumb image for this footage.
+ *
+ *  @return UIImage of the thumb image of this footage.
+ */
+-(UIImage *)thumbImage;
+
+/**
+ *  The path pattern for creating the paths to all images of the footage by index.
+ *
+ *  @return NSString that can be used in "NSString stringWithFormat"
+ *          The part of the string that can be used in format is: "img-%ld.png"
+ */
+-(NSString *)imagesPathPTN;
+
+
+/**
+ *  NSURL to the Nth image of the footage.
+ *
+ *  @param imageIndex The index of the image of the footage.
+ *
+ *  @return NSURL of the Nth image of the footage
+ */
+-(NSURL *)urlToImageWithIndex:(NSInteger)imageIndex;
 
 /**
  *  Cleans up the footage related files and deletes the object of the footage.
  */
 -(void)deleteAndCleanUp;
+
+/**
+ *  Is captured in 480p or above?
+ *
+ *  @return BOOL value indicating if footage taken in 480x480 or above or not.
+ */
+-(BOOL)isHD;
+
+/**
+ *  Predicate for filtering in only footages in HD.
+ *
+ *  @return NSPredicate for hd (>240p) footages.
+ */
++(NSPredicate *)predicateForHD;
+
+/**
+ *  Indicates if any footage taken in higher definition.
+ *
+ *  @param context NSManagedObjectContext the context.
+ *
+ *  @return YES if at least one footage was take in > 240p.
+ */
++(BOOL)anyHDFootageExistsInContext:(NSManagedObjectContext *)context;
+
+
+-(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames;
+
++(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames
+                                            ptn:(NSString *)ptn
+                                           path:(NSString *)path;
 
 
 @end

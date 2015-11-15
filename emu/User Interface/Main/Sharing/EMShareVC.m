@@ -315,10 +315,6 @@
     [params addKey:AK_EP_SENDER_UI valueIfNotNil:@"shareVC"];
     [params addKey:AK_EP_SHARED_MEDIA_TYPE value:mediaDataTypeName];
     
-    // Analytics
-    [HMPanel.sh analyticsEvent:AK_E_ITEM_DETAILS_USER_PRESSED_SHARE_BUTTON
-                          info:params.dictionary];
-
     // Share
     [self shareEmuticon:emu
           mediaDataType:mediaDataTypeToShare
@@ -499,6 +495,7 @@
 -(void)renderVideoBeforeShareForEmu:(Emuticon *)emu
                   requiresWaterMark:(BOOL)requiresWaterMark
 {
+    BOOL inHD = [emu shouldItRenderInHD];
     self.guiCollectionView.hidden = YES;
     self.guiFBMButtonContainer.hidden = YES;
     self.guiRenderingView.hidden = NO;
@@ -521,7 +518,7 @@
                                self.guiRenderingView.hidden = YES;
                                self.guiCollectionView.hidden = NO;
                                self.guiFBMButtonContainer.hidden = NO;
-                           }];
+                           } inHD:inHD];
 }
 
 
@@ -534,7 +531,9 @@
     self.sharer = nil;
     NSString *emuOID = info[AK_EP_EMUTICON_INSTANCE_OID];
     Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-
+    emu.lastTimeShared = [NSDate date];
+    [EMDB.sh save];
+    
     // Goals acheived!
     [HMPanel.sh experimentGoalEvent:GK_SHARED];
     if ([info[AK_EP_SHARED_MEDIA_TYPE] isEqualToString:@"gif"]) [HMPanel.sh experimentGoalEvent:GK_SHARED_GIF];

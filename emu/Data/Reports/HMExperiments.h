@@ -32,6 +32,10 @@
 (number of loops, ping pong effect etc)  */
 #define VK_LOGIC_BG_REMOVAL_BEHAVIOR @"logicBGRemovalBehavior" 
 
+/** mainFeedScrollDecelerationSpeed : <Number> - 0 - Normal. 1 - Faster deceleration.
+(number of loops, ping pong effect etc)  */
+#define VK_MAIN_FEED_SCROLL_DECELERATION_SPEED @"mainFeedScrollDecelerationSpeed" 
+
 /** onboardingEmusForPreviewList : <String> - A list of preffered emus oids to use for preview in the onboarding stage (given as a comma delimited string)  */
 #define VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST @"onboardingEmusForPreviewList" 
 

@@ -28,5 +28,6 @@ private:
     NSInteger frameNumber;
     BOOL thumbWasCreated;
     NSInteger thumbType;
+    image_type *referenceToLatestFrame;
 };
 

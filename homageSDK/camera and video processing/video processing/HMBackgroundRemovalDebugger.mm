@@ -8,7 +8,6 @@
 #define TAG @"HMBackgroundRemovalDebugger"
 
 #import "HMBackgroundRemovalDebugger.h"
-#import <ZipKit/ZKFileArchive.h>
 
 @interface HMBackgroundRemovalDebugger()
 

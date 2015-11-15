@@ -156,6 +156,7 @@
 -(void)enqueueEmu:(Emuticon *)emu
         indexPath:(NSIndexPath *)indexPath
          userInfo:(NSDictionary *)userInfo
+             inHD:(BOOL)inHD
 {
     #if DEBUG
     NSAssert([NSThread isMainThread], @"%s should be called on the main thread", __PRETTY_FUNCTION__);
@@ -178,13 +179,13 @@
     // It is not the responsibility of the render manager
     // to manage fetching these resources.
     // Just ignore this enqueue request.
-    if (![emu.emuDef allResourcesAvailable]) return;
+    if (![emu.emuDef allResourcesAvailableInHD:inHD]) return;
 
     //
     // We should and can render this emu.
     // Enqueue it for rendering with all required information.
     __weak EMRenderManager2 *wSelf = self;
-    NSDictionary *renderInfo = [emu infoForGifRender];
+    NSDictionary *renderInfo = [emu infoForGifRenderInHD:inHD];
     dispatch_async(self.renderingManagementQueue, ^{
         wSelf.oidByIndexPath[indexPath] = oid;
         wSelf.readyPool[oid] = renderInfo;
@@ -221,7 +222,6 @@
     
     //
     // Pick next thing to render.
-    // TODO: prioritize.
     //
     NSString *oid = [self _chooseOID];
     NSDictionary *renderInfo = self.readyPool[oid];
@@ -236,7 +236,7 @@
         // Render
         EMRenderer *renderer = [EMRenderer rendererWithInfo:renderInfo];
         [renderer render];
-        [wSelf finishedRendering:oid];
+        [wSelf finishedRendering:oid withInfo:renderInfo];
     });
 }
 
@@ -252,17 +252,22 @@
     return  self.readyPool.allKeys.lastObject;
 }
 
--(void)finishedRendering:(NSString *)oid
+-(void)finishedRendering:(NSString *)oid withInfo:(NSDictionary *)renderInfo
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         // Update model on the main thread.
         Emuticon *emu = [Emuticon findWithID:oid context:EMDB.sh.context];
-        emu.wasRendered = @YES;
+        BOOL inHD = renderInfo[rkRenderInHD]?[renderInfo[rkRenderInHD] boolValue]:NO;
+        if (inHD) {
+            emu.wasRenderedInHD = @YES;
+        } else {
+            emu.wasRendered = @YES;
+            NSInteger count = emu.emuDef.package.rendersCount.integerValue;
+            emu.emuDef.package.rendersCount = @(count+1);
+            count = emu.rendersCount.integerValue;
+            emu.rendersCount = @(count+1);
+        }
         emu.renderedSampleUploaded = @NO;
-        NSInteger count = emu.emuDef.package.rendersCount.integerValue;
-        emu.emuDef.package.rendersCount = @(count+1);
-        count = emu.rendersCount.integerValue;
-        emu.rendersCount = @(count+1);
         [EMDB.sh save];
         
         // Post to the UI that a render was finished.
@@ -270,7 +275,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:hmkRenderingFinished
                                                             object:self
                                                           userInfo:userInfo];
-
         
         // Finishup & clean up rendering management.
         __weak EMRenderManager2 *wSelf = self;
@@ -315,6 +319,10 @@
         renderer.outputPath = [EMDB outputPath];
         renderer.shouldOutputGif = YES;
         renderer.effects = emuDef.effects;
+        renderer.outputWidth = emuDef.emuWidth?emuDef.emuWidth.integerValue:EMU_DEFAULT_WIDTH;
+        renderer.outputHeight = emuDef.emuHeight?emuDef.emuHeight.integerValue:EMU_DEFAULT_HEIGHT;
+        renderer.inHD = NO;
+        renderer.positioningScale = 1.0f;
         
         dispatch_async(self.renderingQueue, ^(void){
             // Render in a background thread.
@@ -349,9 +357,9 @@
        requiresWaterMark:(BOOL)requiresWaterMark
          completionBlock:(void (^)(void))completionBlock
                failBlock:(void (^)(void))failBlock
+                    inHD:(BOOL)inHD
 {
     EmuticonDef *emuDef = emu.emuDef;
-    UserFootage *footage = [emu mostPrefferedUserFootage];
     HMLOG(TAG,
           EM_DBG,
           @"Starting to render temp video file for emu named:%@. %@ frames.",
@@ -359,19 +367,8 @@
           emuDef.framesCount
           );
     
-    EMRenderer *renderer = [EMRenderer new];
-    renderer.emuticonDefOID = emuDef.oid;
-    renderer.footageOID = footage.oid;
-    renderer.backLayerPath = [emuDef pathForBackLayer];
-    renderer.userImagesPath = [footage pathForUserImages];
-    renderer.userMaskPath = [emuDef pathForUserLayerMask];
-    renderer.userDynamicMaskPath = [emuDef pathForUserLayerDynamicMask];
-    renderer.frontLayerPath = [emuDef pathForFrontLayer];
-    renderer.numberOfFrames = [emuDef.framesCount integerValue];
-    renderer.duration = emuDef.duration.doubleValue;
-    renderer.paletteString = emuDef.palette;
-    renderer.shouldOutputGif = NO;
-    renderer.effects = emuDef.effects;
+    NSDictionary *renderInfo = [emu infoForVideoRenderInHD:inHD];
+    EMRenderer *renderer = [EMRenderer rendererWithInfo:renderInfo];
     if (requiresWaterMark) {
         renderer.waterMarkName = @"wmTL";
         NSString *wm = emuDef.prefferedWaterMark;
@@ -385,11 +382,9 @@
     renderer.outputOID = emu.oid;
     renderer.shouldOutputVideo = YES;
     
-    
     // Audio track (optional)
     renderer.audioFileURL = emu.audioFileURL;
     renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
-    
     
     // Video settings (optional, use defaults if not defined)
     renderer.videoFXLoopsCount = emu.videoLoopsCount && emu.videoLoopsCount.integerValue>0? emu.videoLoopsCount.integerValue : EMU_DEFAULT_VIDEO_LOOPS_COUNT;

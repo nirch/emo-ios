@@ -3,13 +3,14 @@
 //
 
 // Currently, remote logging implementation uses crashlytics.
-#import <Crashlytics/Crashlytics.h>
+//#import <Crashlytics/Crashlytics.h>
 
 #import <Optimizely/Optimizely.h>
 #import "HMAnalyticsEvents.h"
 #import "HMParams.h"
 #import <MPTweakInline.h>
 #import "HMExperiments.h"
+#import <Crashlytics/Crashlytics.h>
 
 #define VK_FEATURE_VIDEO_RENDER @"featureVideoRender"
 #define VK_FEATURE_VIDEO_RENDER_WITH_AUDIO @"featureVideoRenderWithAudio"

@@ -10,11 +10,10 @@
 #import <UIKit/UIKit.h>
 #import "Gpw/Vtool/Vtool.h"
 
-SolidColorSource::SolidColorSource(UIColor *color)
+SolidColorSource::SolidColorSource(UIColor *color, CGSize targetSize)
 {
-    CGSize size = CGSizeMake(240, 240);
-    UIGraphicsBeginImageContext(size);
-    UIBezierPath* rPath = [UIBezierPath bezierPathWithRect:CGRectMake(0., 0., size.width, size.height)];
+    UIGraphicsBeginImageContext(targetSize);
+    UIBezierPath* rPath = [UIBezierPath bezierPathWithRect:CGRectMake(0., 0., targetSize.width, targetSize.height)];
     [color setFill];
     [rPath fill];
     UIImage *solidColorImage = UIGraphicsGetImageFromCurrentImageContext();

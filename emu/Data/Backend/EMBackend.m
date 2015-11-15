@@ -21,8 +21,8 @@
 #import "HMPanel.h"
 #import "EMNotificationCenter.h"
 #import "EMDownloadsManager2.h"
+#import "EMBackend+AppStore.h"
 
-#import <zipzap.h>
 #import <AWSS3.h>
 
 @interface EMBackend()
@@ -38,6 +38,8 @@
 @implementation EMBackend
 
 @synthesize transferManager = _transferManager;
+@synthesize productsByPID = _productsByPID;
+@synthesize productsRequest = _productsRequest;
 
 #pragma mark - Initialization
 // A singleton
@@ -107,6 +109,9 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
+    // --------------------
+    // Packages updates
+    
     // On packages data refresh required.
     [nc addUniqueObserver:self
                  selector:@selector(onPackagesDataRequired:)
@@ -118,6 +123,31 @@
                  selector:@selector(onPackagesDataUpdated:)
                      name:emkDataUpdatedPackages
                    object:nil];
+
+    
+    // ---------------------------
+    // Unhiding packages requests
+    //
+
+    // On unhide packages reqest to server required.
+    [nc addUniqueObserver:self
+                 selector:@selector(onUnhidePackagesRequestRequired:)
+                     name:emkDataRequiredUnhidePackages
+                   object:nil];
+    
+    // ---------------------------
+    // Request to open a package
+    //
+    
+    [nc addUniqueObserver:self
+                 selector:@selector(onOpenPackageRequest:)
+                     name:emkDataRequestToOpenPackage
+                   object:nil];
+    
+    
+    // --------------------
+    // Rendering notifications
+    //
     
     // Notifications about newly rendered content
     [nc addUniqueObserver:self
@@ -131,59 +161,16 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkDataRequiredPackages];
     [nc removeObserver:emkDataUpdatedPackages];
+    [nc removeObserver:emkDataRequiredUnhidePackages];
+    [nc removeObserver:emkDataRequestToOpenPackage];
+    [nc removeObserver:hmkRenderingFinished];
 }
 
 #pragma mark - Observers handlers
 -(void)onRenderedEmu:(NSNotification *)notification
 {
-    // Upload samples only if enabled.
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (![appCFG shouldUploadSampledResults]) return;
-    
-    // Get related package to sample.
-    NSDictionary *info = notification.userInfo;
-    NSString *packageOID = info[@"packageOID"];
-    NSString *emuOID = info[@"emuticonOID"];
-    if (packageOID == nil || emuOID == nil) return;
-    
-    // Check if package needs to be sampled.
-    Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
-    if (![package resultNeedToBeSampledForEmuOID:emuOID]) return;
-    
-    // Get the sampled emu in this package.
-    Emuticon *emuToSample = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-    if (emuToSample == nil) return;
-    
-    // Upload the animated gif generated for this emu.
-    // Increase the uploaded samples count by 1.
-    // Mark package as "already sampled" if max number of samples reached.
-    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-    uploadRequest.bucket = appCFG.bucketName;
-
-    NSString *key = [emuToSample s3KeyForSampledResult];
-    uploadRequest.key = key;
-    
-    NSURL *localURL = [emuToSample animatedGifURL];
-    uploadRequest.body = localURL;
-    
-    uploadRequest.contentType = @"image/gif";
-    uploadRequest.metadata = [emuToSample metaDataForUpload];
-    
-    AWSTask *uploadTask = [self.transferManager upload:uploadRequest];
-    [uploadTask continueWithExecutor:[AWSExecutor defaultExecutor] withBlock:^id(AWSTask *task) {
-        HMLOG(TAG, EM_DBG, @"upload task: %@", task);
-        if (task.completed && task.error == nil) {
-            NSInteger count = emuToSample.emuDef.package.sampledEmuCount.integerValue;
-            count++;
-            emuToSample.emuDef.package.sampledEmuCount = @(count);
-            emuToSample.renderedSampleUploaded = @YES;
-        }
-        
-        if (task.error) {
-            HMLOG(TAG, EM_DBG, @"Error while uploading sampled result.");
-        }
-        return nil;
-    }];
+    // Deprecated
+    return;
 }
 
 /**
@@ -197,7 +184,7 @@
     NSDictionary *info = notification.userInfo;
     
     // Used on test app. Debug option to delete all and clean.
-    if ([info[@"delete all and clean"] isEqualToNumber:@1]) {
+    if ([info[@"delete all and clean"] isEqualToNumber:@YES]) {
         [self.server fetchPackagesFullInfoWithInfo:notification.userInfo];
         [EMDB.sh save];
         return;
@@ -257,8 +244,52 @@
         self.latestRefresh = [NSDate date];
     }
     
+    [AppManagement.sh updateLocalizedStrings];
+    
+    // One time migration, deprecated footage per package.
+    // (reset such emus to default footage)
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (appCFG.deprecatedFootageForPack.boolValue == NO) {
+        for (Package *pack in [Package allPackagesInContext:EMDB.sh.context]) {
+            pack.prefferedFootageOID = nil;
+        }
+        appCFG.deprecatedFootageForPack = @YES;
+        [EMDB.sh save];
+    }
+    
+    // Premium content updates
+    [self storeRefreshProductsInfo];
+    
     // Notify the user interface about the updates.
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil userInfo:info];
+}
+
+-(void)onUnhidePackagesRequestRequired:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *code = info[@"code"];
+    [self.server unhideUsingCode:code withInfo:info];
+}
+
+-(void)onOpenPackageRequest:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    if (info[emkPackageOID] == nil) return;
+    
+    // First check if pack already exists locally on the device.
+    Package *package = [Package findWithID:info[emkPackageOID] context:EMDB.sh.context];
+    BOOL packAlreadyOnDevice = package != nil;
+    // Tell backend that data update is required.
+    // Also pass info about the pack the app needs to navigate to
+    // after it gets the required data of the pack.
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
+                                                        object:self
+                                                      userInfo:@{
+                                                                 @"forced_reload":@YES,
+                                                                 emkDataAlreadyExists:@(packAlreadyOnDevice),
+                                                                 emkPackageOID:info[emkPackageOID],
+                                                                 @"autoNavigateToPack":@YES
+                                                                 }];
 }
 
 #pragma mark - Background fetch

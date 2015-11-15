@@ -30,7 +30,7 @@
     appCFG.bucketName = [info safeStringForKey:@"bucket_name"];
     appCFG.clientName = [info safeStringForKey:@"client_name"];
     appCFG.configUpdatedOn = [self parseDateOfString:[info safeStringForKey:@"config_updated_on"]];
-    
+    appCFG.dataVersionForcedFetch = [info safeNumberForKey:@"data_version"];
     
     //
     // Localization
@@ -78,6 +78,11 @@
         appCFG.mixedScreenEmus = nil;
         appCFG.mixedScreenPrioritizedEmus = nil;
     }
+    
+    //
+    // Misc. App Settings
+    //
+    if (appCFG.playUISounds == nil) appCFG.playUISounds = @YES;
     
     HMLOG(TAG, EM_DBG, @"App cfg parsed:%@", [appCFG description]);
     REMOTE_LOG(@"Parsed app cfg:%@", [appCFG description]);

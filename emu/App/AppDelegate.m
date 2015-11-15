@@ -10,6 +10,7 @@
 
 #define TAG @"AppDelegate"
 
+#import <objc/message.h>
 #import "AppDelegate.h"
 #import "EMDB.h"
 #import "EMBackend.h"
@@ -23,13 +24,15 @@
 #import "AppManagement.h"
 #import "iRate.h"
 #import "AppManagement.h"
-
+#import "EMCaches.h"
+#import "EMURLSchemeHandler.h"
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
 >
 
 @property (nonatomic) FBSDKMessengerURLHandler *messengerUrlHandler;
+@property (nonatomic) EMURLSchemeHandler *emuURLHandler;
 
 @end
 
@@ -54,7 +57,6 @@
 #pragma mark - App Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
     // Initialize Logging
     [self initLogging];
     
@@ -116,6 +118,7 @@
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     self.fbContext = nil;
     [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@NO];
+    [EMCaches.sh checkCacheStatus];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -124,6 +127,10 @@
     [HMPanel.sh analyticsEvent:AK_E_APP_ENTERED_BACKGROUND];
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     [EMDB.sh save];
+}
+
+-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -173,8 +180,20 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
 {
+    // Emu codes url schemes.
+    if ([EMURLSchemeHandler canHandleURL:url]) {
+        self.emuURLHandler = [EMURLSchemeHandler new];
+        return [self.emuURLHandler application:application
+                                       openURL:url
+                             sourceApplication:sourceApplication
+                                    annotation:annotation];
+    }
+    
     // Experiments (currently uses optimizely)
     if([HMPanel.sh handleOpenURL:url]) {
         return YES;
@@ -226,11 +245,13 @@
     self.fbContext = context;
     [self.currentFBMSharer onFBMReply];
     
-    // If not on first screen, pop back to the main screen (with no animation).
-    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
-        [nc popToRootViewControllerAnimated:NO];
-    }
+//    // If not on first screen, pop back to the main screen (with no animation).
+//    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+//        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
+//        [nc popToRootViewControllerAnimated:NO];
+//    }
+    
+    
     
     // Analytics
     [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
@@ -304,32 +325,39 @@
 -(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
 {
     NSString *packageOID = info[@"packageOID"];
+    
+    [params addKey:AK_EP_PACKAGE_OID value:packageOID];
     if (packageOID != nil) {
         Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
         if (package) {
-            [self handleNavigateToPackage:package];
-            [params addKey:AK_EP_PACKAGE_OID value:packageOID];
             [params addKey:AK_EP_PACKAGE_NAME value:package.name];
         }
     }
     [params addKey:AK_EP_TEXT valueIfNotNil:info[@"alert"]];
     [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
+
+    if (packageOID != nil) {
+        [self handleNavigateToPackageOID:packageOID];
+    }
 }
 
 
--(void)handleNavigateToPackage:(Package *)package
+-(void)handleNavigateToPackageOID:(NSString *)packOID
 {
-    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
-        // If not on first screen, pop back to the main screen (with no animation).
-        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
-        [nc popToRootViewControllerAnimated:NO];
-        if (nc.presentedViewController) {
-            [nc dismissViewControllerAnimated:NO completion:nil];
-        }
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIMainShouldShowPackage
-                                                        object:self
-                                                      userInfo:@{@"packageOID":package.oid}];
+    // Block the UI until finishing the flow of opening the pack
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShowBlockingProgress
+                                                        object:nil
+                                                      userInfo:@{@"title":LS(@"PROGRESS_OPENING_PACK_TITLE")}];
+    
+    
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        HMParams *params = [HMParams new];
+        [params addKey:emkPackageOID value:packOID];
+        [params addKey:@"autoNavigateToPack" value:@YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequestToOpenPackage
+                                                            object:nil
+                                                          userInfo:params.dictionary];
+    });
 }
 
 #pragma mark - Background fetches

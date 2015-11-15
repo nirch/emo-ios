@@ -12,5 +12,6 @@
 
 -(void)fetchPackagesFullInfoWithInfo:(NSDictionary *)info;
 -(void)fetchPackagesUpdatesSince:(NSNumber *)timestamp withInfo:(NSDictionary *)info;
+-(void)unhideUsingCode:(NSString *)code withInfo:(NSDictionary *)info;
 
 @end

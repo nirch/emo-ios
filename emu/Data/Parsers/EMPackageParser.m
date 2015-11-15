@@ -33,7 +33,6 @@
     pkg.name = [info safeStringForKey:@"name"];
     pkg.timeUpdated = [self parseDateOfString:[info safeStringForKey:@"last_update"]];
     pkg.firstPublishedOn = [self parseDateOfString:[info safeStringForKey:@"first_published_on"]];
-    pkg.iconName = [info safeStringForKey:@"icon_name"];
     pkg.label = [info safeStringForKey:@"label"];
     pkg.notificationText = [info safeStringForKey:@"notification_text"];
     pkg.isActive = [info safeBoolNumberForKey:@"active" defaultsValue:@YES];
@@ -45,7 +44,32 @@
     
     NSNumber *shouldAutoDownload = [info safeBoolNumberForKey:@"should_auto_download"];
     pkg.shouldAutoDownload = shouldAutoDownload? shouldAutoDownload: @YES;
-    pkg.priority = @0;
+    [pkg updatePriority:@0];
+    
+    // Featured packs
+    pkg.isFeatured = [info safeBoolNumberForKey:@"is_featured" defaultsValue:@NO];
+    
+    // Icons, banners and posters for the pack
+    pkg.iconName = [info safeStringForKey:@"icon_name"];
+    pkg.bannerName = [info safeStringForKey:@"banner_name"];
+    pkg.bannerWideName = [info safeStringForKey:@"banner_wide_name"];
+    pkg.posterName = [info safeStringForKey:@"poster_name"];
+    pkg.posterOverlayName = [info safeStringForKey:@"poster_overlay_name"];
+    
+    // Hidden packages.
+    // Some packages:
+    //  - are hidden by default (hidden_by_default=YES)
+    //  - will be set to hidden=YES (if hidden field never set before)
+    //  - will not appear until some process will set the local field to hidden=NO
+    NSNumber *isHiddenByDefault = [info safeBoolNumberForKey:@"hidden_by_default"];
+    if (pkg.isHidden == nil && isHiddenByDefault != nil && isHiddenByDefault.boolValue) {
+        pkg.isHidden = @YES;
+    }
+    
+    // Premium and HD content.
+    pkg.hdAvailable = [info safeBoolNumberForKey:@"hd_available" defaultsValue:@NO];
+    pkg.hdProductID = [info safeStringForKey:@"hd_product_id"];
+    if (pkg.hdUnlocked == nil) pkg.hdUnlocked = @NO;
     
     // If package also include emuticon definitions, parse them all.
     NSInteger index = 0;

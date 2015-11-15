@@ -2,8 +2,8 @@
 //  Package.h
 //  emu
 //
-//  Created by Aviv Wolf on 8/19/15.
-//  Copyright (c) 2015 Homage. All rights reserved.
+//  Created by Aviv Wolf on 9/28/15.
+//  Copyright © 2015 Homage. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,37 +11,14 @@
 
 @class EmuticonDef;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Package : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * alreadyUnzipped;
-@property (nonatomic, retain) NSDate * firstPublishedOn;
-@property (nonatomic, retain) NSString * iconName;
-@property (nonatomic, retain) NSNumber * isActive;
-@property (nonatomic, retain) NSString * label;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * notificationText;
-@property (nonatomic, retain) NSString * oid;
-@property (nonatomic, retain) NSString * prefferedFootageOID;
-@property (nonatomic, retain) NSNumber * priority;
-@property (nonatomic, retain) NSNumber * rendersCount;
-@property (nonatomic, retain) NSString * requiredVersion;
-@property (nonatomic, retain) NSNumber * sampledEmuCount;
-@property (nonatomic, retain) NSString * sampledEmuResultOID;
-@property (nonatomic, retain) NSNumber * shouldAutoDownload;
-@property (nonatomic, retain) NSNumber * showOnPacksBar;
-@property (nonatomic, retain) NSDate * timeUpdated;
-@property (nonatomic, retain) NSNumber * viewedByUser;
-@property (nonatomic, retain) NSString * zipppedPackageFileName;
-@property (nonatomic, retain) NSNumber * preventVideoWaterMarks;
-@property (nonatomic, retain) id sharingHashtags;
-@property (nonatomic, retain) NSSet *emuDefs;
-@end
-
-@interface Package (CoreDataGeneratedAccessors)
-
-- (void)addEmuDefsObject:(EmuticonDef *)value;
-- (void)removeEmuDefsObject:(EmuticonDef *)value;
-- (void)addEmuDefs:(NSSet *)values;
-- (void)removeEmuDefs:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Package+CoreDataProperties.h"

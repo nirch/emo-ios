@@ -290,18 +290,18 @@
 #pragma mark - Analytics
 -(void)initAnalytics
 {
-    [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
-    [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
-    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
-    [HMPanel.sh reportSuperParameterKey:AK_S_DID_KEYBOARD_EVER_APPEAR value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
-    [HMPanel.sh personDetails:@{
-                                AK_PD_DID_KEYBOARD_EVER_APPEAR:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT],
-                                AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]
-                                }];
-    [HMPanel.sh analyticsForceSend];
-
-    // Experiments Goal
-    [HMPanel.sh experimentGoalEvent:GK_KEYBOARD_OPENED];
+//    [HMPanel.sh initializeAnalyticsWithLaunchOptions:nil];
+//    [HMPanel.sh analyticsEvent:AK_E_KB_DID_APPEAR info:nil];
+//    [HMPanel.sh reportCountedSuperParameterForKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT];
+//    [HMPanel.sh reportSuperParameterKey:AK_S_DID_KEYBOARD_EVER_APPEAR value:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]];
+//    [HMPanel.sh personDetails:@{
+//                                AK_PD_DID_KEYBOARD_EVER_APPEAR:[HMPanel.sh counterValueNamed:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT],
+//                                AK_PD_NUMBER_OF_KB_APPEARANCES_COUNT:[HMPanel.sh didEverCountedKey:AK_S_NUMBER_OF_KB_APPEARANCES_COUNT]
+//                                }];
+//    [HMPanel.sh analyticsForceSend];
+//
+//    // Experiments Goal
+//    [HMPanel.sh experimentGoalEvent:GK_KEYBOARD_OPENED];
 }
 
 #pragma mark - Initializations
@@ -383,7 +383,7 @@
         return _fetchedResultsController;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@", @NO, @YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@ AND (emuDef.package.isHidden=nil OR emuDef.package.isHidden=%@)", @NO, @YES, @NO];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
@@ -517,7 +517,8 @@
             // Not rendered, but all resources are available.
             [EMRenderManager2.sh enqueueEmu:emu
                                   indexPath:indexPath
-                                   userInfo:info];
+                                   userInfo:info
+                                       inHD:NO];
         }
     }
 }
@@ -664,7 +665,8 @@
                                [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
                                self.guiCollectionView.alpha = 1;
                                self.guiCollectionView.userInteractionEnabled = YES;
-                           }];
+                           }
+                                      inHD:NO];
 }
 
 

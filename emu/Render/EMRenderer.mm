@@ -30,6 +30,7 @@
 #import "ThumbOutput.h"
 
 #import "Emuticon+Logic.h"
+#import "EmuticonDef+Logic.h"
 
 //#import "Uigp/GpMemoryLeak.h"
 
@@ -59,6 +60,10 @@
     r.outputPath =              renderInfo[rkOutputPath];
     r.shouldOutputGif =         renderInfo[rkShouldOutputGif]?[renderInfo[rkShouldOutputGif] boolValue]:NO;
     r.effects =                 renderInfo[rkEffects];
+    r.outputWidth =             renderInfo[rkOutputResolutionWidth]?[renderInfo[rkOutputResolutionWidth] integerValue]:EMU_DEFAULT_WIDTH;
+    r.outputHeight =            renderInfo[rkOutputResolutionHeight]?[renderInfo[rkOutputResolutionHeight] integerValue]:EMU_DEFAULT_HEIGHT;
+    r.positioningScale =        renderInfo[rkPositioningScale]?[renderInfo[rkPositioningScale] floatValue]:1.0f;
+    r.inHD =                    renderInfo[rkRenderInHD]?[renderInfo[rkRenderInHD] boolValue]:NO;
     return r;
 }
 
@@ -68,6 +73,7 @@
 {
     CHomageRenderer *render = new CHomageRenderer();
     self.outputFiles = [NSMutableDictionary new];
+    CGSize size = CGSizeMake(self.outputWidth, self.outputHeight);
     
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
@@ -86,7 +92,7 @@
     //
     SolidColorSource *solidBG = NULL;
     if (self.shouldOutputVideo || self.backLayerPath == nil) {
-        solidBG = new SolidColorSource([UIColor whiteColor]);
+        solidBG = new SolidColorSource([UIColor whiteColor], size);
         render->AddSource(solidBG);
     }
     
@@ -95,30 +101,13 @@
     //
     PngSourceWithFX *userSource;
     if (userImages) {
-        userSource = new PngSourceWithFX(userImages);
+        userSource = new PngSourceWithFX(userImages, size);
     }
 
     //
-    // Set mask if provided.
+    // Set mask, dynamic mask, positional or other effects.
     //
-    // Load the mask
-    UIImage *maskImage = [UIImage imageNamed:self.userMaskPath];
-    image_type *maskImageType;
-    if (maskImage) {
-        maskImageType = CVtool::DecomposeUIimage(maskImage);
-        CHrEffectMask *maskEffect = new CHrEffectMask();
-        maskEffect->Init(maskImageType);
-        userSource->AddEffect(maskEffect);
-    } else {
-        maskImageType = NULL;
-    }
-
-    //
-    // More effects to the user layer
-    //
-    if (self.effects) {
-        [self addEffectsToSource:userSource];
-    }
+    [self addEffectsToSource:userSource];
     
     //
     // Background source.
@@ -138,24 +127,23 @@
         fgSource->Init((char*)self.frontLayerPath.UTF8String);
     }
     
-    
+
+
     //
     // Watermark source
     //
     WaterMarkSource *waterMarkSource = NULL;
     if (self.waterMarkName) {
-        waterMarkSource = new WaterMarkSource(self.waterMarkName);
+        waterMarkSource = new WaterMarkSource(self.waterMarkName, (int)self.outputWidth, (int)self.outputHeight);
     }
-    
-    
-    
     
     //
     // Dimensions.
     //
     CMVideoDimensions dimensions;
-    dimensions.width = 240;
-    dimensions.height = 240;
+    dimensions.width = (int)self.outputWidth;
+    dimensions.height = (int)self.outputHeight;
+
     
     //
     // Output thumb
@@ -169,9 +157,9 @@
             thumbFrame = self.numberOfFrames-1;
         }
         
-        NSString *outputThumbPath = [SF:@"%@/%@.jpg", self.outputPath, self.outputOID];;
+        NSString *outputThumbPath = [SF:@"%@/%@.png", self.outputPath, self.outputOID];;
         NSURL *thumbOutputURL = [NSURL fileURLWithPath:outputThumbPath];
-        thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_JPG);
+        thumbOutput = new ThumbOutput(thumbOutputURL, thumbFrame, HM_THUMB_TYPE_PNG);
         self.outputFiles[HM_K_OUTPUT_THUMB] = [thumbOutputURL path];
     }
     
@@ -180,7 +168,7 @@
     //
     CHrOutputGif *gifOutput = NULL;
     if (self.shouldOutputGif) {
-        NSString *outputGifPath = [SF:@"%@/%@.gif", self.outputPath, self.outputOID];
+        NSString *outputGifPath = [SF:@"%@/%@%@.gif", self.outputPath, self.outputOID, self.inHD?@"_2x":@""];
         self.outputFiles[HM_K_OUTPUT_GIF] = outputGifPath;
         gifOutput = new CHrOutputGif();
         gifOutput->Init((char*)outputGifPath.UTF8String, dimensions.width, dimensions.height, [self msPerFrame]);
@@ -260,12 +248,10 @@
 
 -(void)addEffectsToSource:(CHrSourceI *)source
 {
-    if (self.effects == nil) return;
-    
     //
     // Position effects
     //
-    if (self.effects[@"position"]) {
+    if (self.effects != nil && self.effects[@"position"]) {
         CHrEffectPose *posEffects = new CHrEffectPose();
         NSString *stringForPositionEffect = [self stringForPositioningEffect:self.effects[@"position"]];
         posEffects->InitFromData((char*)stringForPositionEffect.UTF8String);
@@ -281,10 +267,20 @@
         source->AddEffect(maskGifEffect);
     }
     
-    
+    // Load the mask
+    UIImage *maskImage = [UIImage imageNamed:self.userMaskPath];
+    image_type *maskImageType = NULL;
+    if (maskImage) {
+        maskImageType = CVtool::DecomposeUIimage(maskImage);
+        CHrEffectMask *maskEffect = new CHrEffectMask();
+        maskEffect->Init(maskImageType);
+        source->AddEffect(maskEffect);
+    }
+
     //
     // Colors effects
     //
+    // Black and white effect.
     CHrEffectBW *bwEffect = NULL;
     if (self.effects[@"grayscale"] && [self.effects[@"grayscale"] boolValue]) {
         bwEffect = new CHrEffectBW();
@@ -302,10 +298,13 @@
     [s appendString:[SF:@"TF 1 %@\t", @(positionEffect.count)]];
     for (NSDictionary *kFrame in positionEffect) {
         // "none <frame#> 6 <x> <y> <scale> <rx> <ry> <rz>"
+        CGFloat posX = [kFrame[@"pos"][0] longValue] * self.positioningScale;
+        CGFloat posY = [kFrame[@"pos"][1] longValue] * self.positioningScale;
+        
         [s appendString:[SF:@"none %@ 6 %@ %@ %@ %@ %@ %@\t",
                          kFrame[@"frame"],
-                         kFrame[@"pos"][0],
-                         kFrame[@"pos"][1],
+                         @(posX),
+                         @(posY),
                          kFrame[@"scale"],
                          kFrame[@"rotate"][0],
                          kFrame[@"rotate"][1],

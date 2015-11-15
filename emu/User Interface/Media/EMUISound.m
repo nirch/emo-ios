@@ -7,7 +7,8 @@
 //
 
 #import "EMUISound.h"
-
+#import "EMSoundPlayback.h"
+#import "EMDB.h"
 #import <AFSoundManager.h>
 
 @interface EMUISound()
@@ -15,6 +16,7 @@
 @property (nonatomic) NSDictionary *soundFiles;
 @property (nonatomic) NSMutableDictionary *sounds;
 @property (nonatomic) NSMutableDictionary *players;
+@property (nonatomic) NSNumber *enabled;
 
 @end
 
@@ -58,7 +60,8 @@
                         SND_RECORDING_ENDED:@"endRecording.wav",
                         SND_SOFT_CLICK:@"plasticClickSound.wav",
                         SND_SWIPE:@"simpleSwipe.wav",
-                        SND_FOCUSING:@"focusing.wav"
+                        SND_FOCUSING:@"focusing.wav",
+                        SND_POP:@"pop.wav"
                         };
     
     // Load audio files from bundle.
@@ -71,29 +74,36 @@
     }
 }
 
+#pragma mark - Configuration
+-(NSNumber *)enabled
+{
+    if (_enabled == nil) {
+        [self updateConfig];
+    }
+    return _enabled;
+}
+
+-(void)updateConfig
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    if (appCFG.playUISounds) {
+        _enabled = appCFG.playUISounds;
+    } else {
+        _enabled = @YES;
+    }
+}
+
 #pragma mark - playing
 -(void)playSoundNamed:(NSString *)soundName
 {
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    if (![audioSession.category isEqualToString:AVAudioSessionCategoryAmbient]) {
-        NSError *setCategoryErr = nil;
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&setCategoryErr];
-        [[AVAudioSession sharedInstance] setActive:YES error:nil];
-    }
-
+    if (!self.enabled.boolValue) return;
     AFSoundPlayback *player;
-    if (self.players[soundName]) {
-        player = self.players[soundName];
-        [player restart];
-        [player play];
-    } else {
-        NSError *setCategoryErr = nil;
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&setCategoryErr];
-        [[AVAudioSession sharedInstance] setActive:YES error:nil];
-        AFSoundItem *soundItem = self.sounds[soundName];
-        player = [[AFSoundPlayback alloc] initWithItem:soundItem];
-        self.players[soundName] = player;
-    }
+    NSError *setCategoryErr = nil;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&setCategoryErr];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    AFSoundItem *soundItem = self.sounds[soundName];
+    player = [[EMSoundPlayback alloc] initWithItem:soundItem];
+    self.players[soundName] = player;
 }
 
 @end

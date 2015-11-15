@@ -32,7 +32,7 @@
                                      metadata:nil
                               completionBlock:^(NSURL *assetURL, NSError *error) {
                                   if (error) {
-                                      [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+                                      [self showMessageForError:error];
                                       [self.delegate sharerDidFailWithInfo:self.info];
                                       return;
                                   }
@@ -52,7 +52,7 @@
     [library writeVideoAtPathToSavedPhotosAlbum:url
                                 completionBlock:^(NSURL *assetURL, NSError *error) {
                                     if (error) {
-                                        [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+                                        [self showMessageForError:error];
                                         [self.delegate sharerDidFailWithInfo:self.info];
                                         return;
                                     }
@@ -60,6 +60,15 @@
                                     [self.view makeToast:LS(@"SHARE_TOAST_SAVED")];
                                     [self.delegate sharerDidShareObject:self.objectToShare withInfo:self.info];
     }];
+}
+
+-(void)showMessageForError:(NSError *)error
+{
+    NSString *errorMessage = LS(@"SHARE_TOAST_FAILED");
+    if (error.code == ALAssetsLibraryAccessUserDeniedError) {
+        errorMessage = LS(@"SHARE_ERROR_SAVE_TO_CR_DENIED");
+    }
+    [self.view makeToast:errorMessage];
 }
 
 -(void)cancel

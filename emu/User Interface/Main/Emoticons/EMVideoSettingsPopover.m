@@ -38,6 +38,7 @@
 {
     [super viewDidLoad];
     [self updateUI];
+    [self initLocalization];
 }
 
 
@@ -58,6 +59,12 @@
     self.guiLoopCountSlider.value = loopCount;
     NSString *numberString = [SF:@"%@", @(loopCount)];
     self.guiLoopCountLabel.text = [LS(@"N_TIMES") stringByReplacingOccurrencesOfString:@"#" withString:numberString];
+}
+
+-(void)initLocalization
+{
+    [self.guiLoopTypeSegmentedControl setTitle:LS(@"REPEAT") forSegmentAtIndex:0];
+    [self.guiLoopTypeSegmentedControl setTitle:LS(@"BOOMERANG") forSegmentAtIndex:1];
 }
 
 #pragma mark - IB Actions

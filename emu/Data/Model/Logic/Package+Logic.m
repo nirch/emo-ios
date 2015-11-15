@@ -64,6 +64,22 @@
     return results;
 }
 
++(NSArray *)allPremiumPackagesInContext:(NSManagedObjectContext *)context
+{
+    // All active packs that have hdProductID set.
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isActive=%@ AND hdProductID!=nil", @YES];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_PACKAGE];
+    fetchRequest.predicate = predicate;
+    
+    // Fetch the packs.
+    NSError *error;
+    NSArray *results = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) return @[];
+    
+    // Return the packs.
+    return results;
+}
+
 
 +(void)prioritizePackagesWithInfo:(NSDictionary *)priorityInfo context:(NSManagedObjectContext *)context
 {
@@ -81,12 +97,18 @@
     for (Package *package in packages) {
         NSNumber *priority = priorityInfo[package.oid];
         priority = priority? @(now + priority.integerValue) : @0;
+        [package updatePriority:priority];
         package.priority = priority;
     }
 }
 
 
-
+-(void)updatePriority:(NSNumber *)priority
+{
+    self.priority = priority;
+    unsigned long p = self.priority.integerValue;
+    self.prioritizedIdentifier = [SF:@"%015ld_%@", p, self.oid];
+}
 
 -(NSString *)jsonFileName
 {
@@ -167,6 +189,25 @@
     return emus;
 }
 
+-(NSArray *)emuticons
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"emuDef.package=%@ AND isPreview=%@", self, @NO];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:self.managedObjectContext];
+    return emus;
+}
+
+-(NSArray *)emuticonsOIDS
+{
+    NSArray *emus = [self emuticons];
+    NSMutableArray *emusOIDS = [NSMutableArray new];
+    for (Emuticon *emu in emus) {
+        [emusOIDS addObject:emu.oid];
+    }
+    return emusOIDS;
+}
+
 -(void)cleanUpEmuticonsWithNoSpecificFootage
 {
     NSArray *emus = [self emuticonsWithNoSpecificFootage];
@@ -198,6 +239,7 @@
     return url;
 }
 
+//TODO: need to deprecate/update this method.
 -(NSURL *)urlForPackageIcon
 {
     AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
@@ -206,11 +248,68 @@
                            cfg.bucketName,
                            self.name,
                            self.iconName,
-                           @"@2x"
+                           @"@3x"
                            ];
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }
+
+-(NSString *)nameForResourceNamed:(NSString *)name
+{
+    NSArray *nameParts = [name componentsSeparatedByString:@"."];
+    if (nameParts.count != 2) return name;
+    // TODO: add support for smaller images on older devices
+    // (@3x, @2x and non retina)
+//    name = [SF:@"%@%@.%@", nameParts[0], RESOURCES_SCALE_STRING, nameParts[1]];
+    name = [SF:@"%@.%@", nameParts[0], nameParts[1]];
+    return name;
+}
+
+-(NSURL *)urlForPackageResourceNamed:(NSString *)name
+{
+    if (name == nil || name.length < 5) return nil;
+    AppCFG *cfg = [AppCFG cfgInContext:self.managedObjectContext];
+    NSString *urlString = [SF:@"%@/%@/packages/%@/%@",
+                           cfg.baseResourceURL,
+                           cfg.bucketName,
+                           self.name,
+                           [self nameForResourceNamed:name]
+                           ];
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
+
+-(NSURL *)urlForPackageBannerWide
+{
+    return [self urlForPackageResourceNamed:self.bannerWideName];
+}
+
+-(NSURL *)urlForPackageBanner
+{
+    return [self urlForPackageResourceNamed:self.bannerName];
+}
+
+-(NSURL *)urlForPackagePoster
+{
+    return [self urlForPackageResourceNamed:self.posterName];
+}
+
+-(NSURL *)urlForAnimatedPosterThumb
+{
+    NSString *posterURLString = [[self urlForPackagePoster] absoluteString];
+    if (![posterURLString hasSuffix:@".gif"]) return nil;
+    
+    // replace "-poster" with "-thumb"
+    NSString *thumbURLString = [posterURLString stringByReplacingOccurrencesOfString:@"-poster" withString:@"-thumb"];
+    thumbURLString = [thumbURLString stringByReplacingOccurrencesOfString:@".gif" withString:@".jpg"];
+    return [NSURL URLWithString:thumbURLString];
+}
+
+-(NSURL *)urlForPackagePosterOverlay
+{
+    return [self urlForPackageResourceNamed:self.posterOverlayName];
+}
+
 
 +(Package *)newlyAvailablePackageInContext:(NSManagedObjectContext *)context
 {
@@ -246,6 +345,8 @@
 {
     return [SF:@"#%@", [self.label lowercaseString]];
 }
+
+
 
 -(NSString *)localizedLabel
 {

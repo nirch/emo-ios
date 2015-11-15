@@ -2,11 +2,12 @@
     "_id": {
         "$oid": "55004ba2646174ef6e230000"
     },
+    "data_version": 2,
     "base_resource_url": "http://s3.amazonaws.com",
     "bucket_name": "homage-emu-prod",
     "client_name": "Emu iOS",
     "config_type": "bundled local in app resources",
-    "config_updated_on": "2015-03-18T13:46:48.276Z",
+    "config_updated_on": "2015-10-15T16:20:48.276Z",
     "default_output_video_max_fps": 15,
     "mixed_screen": {
         "_id": {
@@ -16,604 +17,139 @@
         "config_type": "mixed screen",
         "emus": [
                  {
-                 "name": "no",
-                 "oid": "55547c54d1ff7231d4000006"
+                 "oid": "54f8371b13ac4910154f6355"
                  },
                  {
-                 "name": "yeah",
-                 "oid": "55547bb0eeb909155e000002"
-                 },
-                 {
-                 "name": "omg",
-                 "oid": "55547c83eeb909155e000006"
-                 },
-                 {
-                 "name": "hearts",
                  "oid": "54f8543e13ac4910154f6356"
                  },
                  {
-                 "name": "hot",
+                 "oid": "54f8544613ac4910154f6357"
+                 },
+                 {
+                 "oid": "54f8545113ac4910154f6358"
+                 },
+                 {
                  "oid": "54f8545f13ac4910154f6359"
                  },
                  {
-                 "name": "twerk",
-                 "oid": "5517d52813ac49638a76ad61"
+                 "oid": "54f8546813ac4910154f635a"
                  },
-                 {
-                 "name": "party",
-                 "oid": "5517d51713ac49638a76ad5f"
-                 },
-                 {
-                 "name": "buzzzzzed",
-                 "oid": "554790d8eeb9090612000004"
-                 },
-                 {
-                 "name": "ubercool",
-                 "oid": "554792a1d1ff722fc4000005"
-                 },
-                 {
-                 "name": "peace",
-                 "oid": "5543bb9beeb90918b300000c"
-                 },
-                 {
-                 "name": "groovy",
-                 "oid": "5543ba8ed1ff72043d000004"
-                 },
-                 {
-                 "name": "goodmorning",
-                 "oid": "553dedfc0a05f01d28000002"
-                 },
-                 {
-                 "name": "coolstory",
-                 "oid": "5517e55213ac49638a76ad64"
-                 },
-                 {
-                 "name": "shit",
-                 "oid": "553e0f310a05f024b4000001"
-                 },
-                 {
-                 "name": "bitch",
-                 "oid": "553e0f310a05f024b4000003"
-                 },
-                 {
-                 "name": "lol",
-                 "oid": "5523ba4364617400981b0000"
-                 },
-                 {
-                 "name": "thanks",
-                 "oid": "5523ba7264617400ac200000"
-                 },
-                 {
-                 "name": "whatsup",
-                 "oid": "5523b9df64617400981a0000"
-                 },
-                 {
-                 "name": "baby",
-                 "oid": "551be46d13ac49206a6ee8cb"
-                 },
-                 {
-                 "name": "cage",
-                 "oid": "551be47a13ac49206a6ee8cd"
-                 }
-                 ],
+        ],
         "enabled": true,
         "last_updated_on": "2015-05-10T14:40:19.767Z",
-        "prioritized_emus": [
-                             {
-                             "name": "yeah",
-                             "oid": "55547bb0eeb909155e000002"
-                             },
-                             {
-                             "name": "no",
-                             "oid": "55547c54d1ff7231d4000006"
-                             }
-                             ]
+        "prioritized_emus": []
     },
     "onboarding_using_package": "54f826de64617400ae140000",
-    "packages": [
-                 {
-                 "_id": {
-                 "$oid": "5517e52913ac49638a76ad62"
-                 },
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "5517e55213ac49638a76ad64"
-                               },
-                               "name": "coolstory",
-                               "source_back_layer": "attitude-coolstory-bg.gif",
-                               "source_front_layer": "attitude-coolstory-fg.gif",
-                               "source_user_layer_mask": "attitude-coolstory-mask.png"
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 25,
-                 "thumbnail_frame_index": 23
-                 },
-                 "icon_name": "attitude_icon",
-                 "label": "Attitude",
-                 "last_update": "2015-03-29T11:46:43.535Z",
-                 "name": "attitude",
-                 "zipped_package_file_name": "package_attitude_20150329_114643.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "551be1bb646174009a270000"
-                 },
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "551be46d13ac49206a6ee8cb"
-                               },
-                               "name": "baby",
-                               "source_back_layer": "meme-baby-bg.gif",
-                               "source_front_layer": "meme-baby-fg.gif",
-                               "use_for_preview": true
-                               },
-                               {
-                               "_id": {
-                               "$oid": "551be47a13ac49206a6ee8cd"
-                               },
-                               "name": "cage",
-                               "palette": "PAL-X  6 00E7D666 00FEFEFE 0038CDBE 0003474C 000B6368 00198785",
-                               "source_back_layer": "meme-cage-bg.gif",
-                               "source_front_layer": "meme-cage-fg.gif"
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 25,
-                 "thumbnail_frame_index": 23
-                 },
-                 "first_published_on": "2015-04-02T22:01:52.889Z",
-                 "icon_name": "meme_icon",
-                 "label": "Meme",
-                 "last_update": "2015-04-01T12:31:02.741Z",
-                 "name": "meme",
-                 "zipped_package_file_name": "package_meme_20150401_123102.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "5547907dd1ff722fc4000001"
-                 },
-                 "active": true,
-                 "cms_first_published": "2015-05-05T08:45:09.000Z",
-                 "cms_icon_2x": "wasted_icon_v1@2x.png",
-                 "cms_icon_3x": "wasted_icon_v1@3x.png",
-                 "cms_last_published": "2015-06-21T10:31:43.000Z",
-                 "cms_proccessing": true,
-                 "cms_state": "save",
-                 "dev_only": false,
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "554790d8eeb9090612000004"
-                               },
-                               "duration": 2,
-                               "frames_count": 25,
-                               "name": "buzzzzzed",
-                               "patched_on": "2015-06-21T09:24:16.000Z",
-                               "source_back_layer": "wasted-buzzzzzed-bg.gif",
-                               "source_front_layer": "wasted-buzzzzzed-fg.gif",
-                               "source_user_layer_mask": "wasted-buzzzzzed-mask-v1.png",
-                               "tags": "buzzed,bees,drunk,wasted,happy",
-                               "thumbnail_frame_index": 23,
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "554792a1d1ff722fc4000005"
-                               },
-                               "duration": 2,
-                               "frames_count": 25,
-                               "name": "ubercool",
-                               "patched_on": "2015-06-21T09:25:14.000Z",
-                               "source_back_layer": "wasted-ubercool-bg.gif",
-                               "source_front_layer": "wasted-ubercool-fg.gif",
-                               "source_user_layer_mask": "wasted-ubercool-mask-v1.png",
-                               "tags": "cool,uber,wasted,nice",
-                               "thumbnail_frame_index": 23,
-                               "use_for_preview": false
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 25,
-                 "thumbnail_frame_index": 23
-                 },
-                 "icon_name": "wasted_icon_v1",
-                 "label": "buzzed",
-                 "last_update": "2015-06-21T10:31:38.000Z",
-                 "meta_data_created_on": "2015-05-04T15:30:05.000Z",
-                 "meta_data_last_update": "2015-06-21T10:31:30.000Z",
-                 "name": "wasted",
-                 "zipped_package_file_name": "package_wasted_20150621_103138.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "5543ba18eeb90918b3000007"
-                 },
-                 "active": true,
-                 "cms_first_published": "2015-05-04T16:11:04.000Z",
-                 "cms_icon_2x": "70s_icon@2x.png",
-                 "cms_icon_3x": "70s_icon@3x.png",
-                 "cms_last_published": "2015-05-06T09:55:04.000Z",
-                 "cms_proccessing": true,
-                 "cms_state": "save",
-                 "dev_only": false,
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "5543ba8ed1ff72043d000004"
-                               },
-                               "duration": 2,
-                               "frames_count": 25,
-                               "name": "groovy",
-                               "source_back_layer": "70s-groovy-bg.gif",
-                               "tags": "groovy",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "5543bb9beeb90918b300000c"
-                               },
-                               "duration": 2,
-                               "frames_count": 25,
-                               "name": "peace",
-                               "source_back_layer": "70s-peace-bg.gif",
-                               "tags": "peace",
-                               "use_for_preview": false
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 25,
-                 "thumbnail_frame_index": 23
-                 },
-                 "icon_name": "70s_icon",
-                 "label": "70s",
-                 "last_update": "2015-05-01T18:32:25.000Z",
-                 "meta_data_created_on": "2015-05-01T17:38:32.000Z",
-                 "name": "70s",
-                 "zipped_package_file_name": "package_70s_20150501_183225.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "5517d4b413ac49638a76ad5b"
-                 },
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "5517d51713ac49638a76ad5f"
-                               },
-                               "name": "party",
-                               "source_back_layer": "party-party-bg.gif",
-                               "source_front_layer": "party-party-fg.gif",
-                               "use_for_preview": true
-                               },
-                               {
-                               "_id": {
-                               "$oid": "5517d52813ac49638a76ad61"
-                               },
-                               "name": "twerk",
-                               "source_back_layer": "party-twerk-bg.gif",
-                               "source_front_layer": "party-twerk-fg.gif"
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 25,
-                 "thumbnail_frame_index": 23
-                 },
-                 "first_published_on": "2015-04-20T08:25:23.006Z",
-                 "icon_name": "party_icon",
-                 "label": "Party",
-                 "last_update": "2015-04-20T08:33:43.188Z",
-                 "name": "party",
-                 "notification_test": "This is a test. PARTY!!!!",
-                 "notification_text": "This is another test. PARTY 3!",
-                 "zipped_package_file_name": "package_party_20150420_083343.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "55547a9cd1ff7231d4000002"
-                 },
-                 "active": true,
-                 "cms_first_published": "2015-05-14T11:01:14.000Z",
-                 "cms_icon_2x": "yeah_icon@2x.png",
-                 "cms_icon_3x": "yeah_icon@3x.png",
-                 "cms_last_published": "2015-05-14T11:01:14.000Z",
-                 "cms_proccessing": false,
-                 "dev_only": false,
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "55547c54d1ff7231d4000006"
-                               },
-                               "name": "no",
-                               "source_back_layer": "yeah-no-bg.gif",
-                               "source_front_layer": "yeah-no-fg.gif",
-                               "tags": "no",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "55547c83eeb909155e000006"
-                               },
-                               "name": "omg",
-                               "source_back_layer": "yeah-omg-bg.gif",
-                               "source_front_layer": "yeah-omg-fg.gif",
-                               "tags": "omg,oh,my,god",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "55547bb0eeb909155e000002"
-                               },
-                               "name": "yeah",
-                               "patched_on": "2015-05-14T10:52:18.000Z",
-                               "source_back_layer": "yeah-yeah-bg-v1.gif",
-                               "source_front_layer": "yeah-yeah-fg-v1.gif",
-                               "tags": "yes,yeah,cool,ok,okay",
-                               "use_for_preview": false
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 24,
-                 "thumbnail_frame_index": 23
-                 },
-                 "icon_name": "yeah_icon",
-                 "label": "Yeah!",
-                 "last_update": "2015-05-14T11:01:04.000Z",
-                 "meta_data_created_on": "2015-05-14T10:36:12.000Z",
-                 "name": "yeah",
-                 "zipped_package_file_name": "package_yeah_20150514_110104.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "54f826de64617400ae140000"
-                 },
-                 "active": true,
-                 "cms_first_published": "2015-06-21T10:30:01.000Z",
-                 "cms_icon_2x": "love_icon@2x.png",
-                 "cms_icon_3x": "love_icon@3x.png",
-                 "cms_last_published": "2015-06-21T10:30:01.000Z",
-                 "cms_proccessing": true,
-                 "cms_state": "save",
-                 "dev_only": false,
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "54f8543e13ac4910154f6356"
-                               },
-                               "name": "hearts",
-                               "patched_on": "2015-06-21T09:11:58.000Z",
-                               "source_back_layer": "hearts-bg.gif",
-                               "source_front_layer": "hearts-fg.gif",
-                               "source_user_layer_mask": "hearts-mask-v1.png",
-                               "tags": "love,heart,hearts,luv,i,love,you",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "54f8545f13ac4910154f6359"
-                               },
-                               "name": "hot",
-                               "patched_on": "2015-06-21T09:13:40.000Z",
-                               "source_back_layer": "hot-bg.gif",
-                               "source_user_layer_mask": "hot-mask-v1.png",
-                               "tags": "sexy,hot,4,u,for,you,fun,",
-                               "use_for_preview": false
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 24,
-                 "thumbnail_frame_index": 23
-                 },
-                 "icon_name": "love_icon",
-                 "label": "Love",
-                 "last_update": "2015-06-21T10:29:54.000Z",
-                 "meta_data_last_update": "2015-06-21T10:29:45.000Z",
-                 "name": "love",
-                 "zipped_package_file_name": "package_love_20150621_102954.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "5523b8cf6461740098190000"
-                 },
-                 "active": true,
-                 "cms_first_published": "2015-06-21T10:24:38.000Z",
-                 "cms_icon_2x": "casual_icon@2x.png",
-                 "cms_icon_3x": "casual_icon@3x.png",
-                 "cms_last_published": "2015-06-21T10:24:38.000Z",
-                 "cms_proccessing": true,
-                 "cms_state": "save",
-                 "dev_only": false,
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "5523b9df64617400981a0000"
-                               },
-                               "name": "whatsup",
-                               "patched_on": "2015-06-21T08:39:28.000Z",
-                               "source_back_layer": "casual-whats-bg.gif",
-                               "source_front_layer": "casual-whats-fg.gif",
-                               "source_user_layer_mask": "casual-whats-mask-v1.png",
-                               "tags": "hey,whats,up,hello,yo",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "5523ba4364617400981b0000"
-                               },
-                               "name": "lol",
-                               "patched_on": "2015-06-21T08:56:40.000Z",
-                               "source_back_layer": "casual-lol-bg.gif",
-                               "source_front_layer": "casual-lol-fg.gif",
-                               "source_user_layer_mask": "casual-lol-mask-v1.png",
-                               "tags": "ha,lol,funny,fun",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "5523ba7264617400ac200000"
-                               },
-                               "name": "thanks",
-                               "patched_on": "2015-06-21T08:57:17.000Z",
-                               "source_back_layer": "casual-thanks-bg.gif",
-                               "source_front_layer": "casual-thanks-fg.gif",
-                               "source_user_layer_mask": "casual-thanks-mask-v1.png",
-                               "tags": "thanks,thank,you,",
-                               "use_for_preview": false
-                               }
-                               ],
-                 "emuticons_defaults": {
-                 "duration": 2,
-                 "frames_count": 25,
-                 "thumbnail_frame_index": 23
-                 },
-                 "icon_name": "casual_icon",
-                 "label": "Casual",
-                 "last_update": "2015-06-21T10:24:18.000Z",
-                 "meta_data_last_update": "2015-06-21T10:24:26.000Z",
-                 "name": "casual",
-                 "zipped_package_file_name": "package_casual_20150621_102418.zip"
-                 },
-                 {
-                 "_id": {
-                 "$oid": "553e0dd964617400b3000021"
-                 },
-                 "active": true,
-                 "cms_first_published": "2015-06-21T10:25:02.000Z",
-                 "cms_icon_2x": "crap_icon@2x.png",
-                 "cms_icon_3x": "crap_icon@3x.png",
-                 "cms_last_published": "2015-06-21T10:25:02.000Z",
-                 "cms_proccessing": true,
-                 "cms_state": "save",
-                 "dev_only": false,
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "553e0f310a05f024b4000001"
-                               },
-                               "name": "shit",
-                               "patched_on": "2015-06-21T08:59:54.000Z",
-                               "source_back_layer": "crap-shit-bg.gif",
-                               "source_front_layer": "crap-shit-fg.gif",
-                               "source_user_layer_mask": "crap-shit-mask-v1.png",
-                               "tags": "crap,shit,damn,dammit,fuck,",
-                               "use_for_preview": false
-                               },
-                               {
-                               "_id": {
-                               "$oid": "553e0f310a05f024b4000003"
-                               }, 
-                               "name": "bitch", 
-                               "patched_on": "2015-06-21T09:00:44.000Z", 
-                               "source_back_layer": "crap-bitch-bg.gif", 
-                               "source_front_layer": "crap-bitch-fg.gif", 
-                               "source_user_layer_mask": "crap-bitch-mask-v1.png", 
-                               "tags": "crap,shit,damn,dammit,fuck,bitch,please", 
-                               "use_for_preview": true
-                               }
-                               ], 
-                 "emuticons_defaults": {
-                 "duration": 2, 
-                 "frames_count": 25, 
-                 "thumbnail_frame_index": 23
-                 }, 
-                 "icon_name": "crap_icon", 
-                 "label": "Crap", 
-                 "last_update": "2015-06-21T10:24:56.000Z", 
-                 "meta_data_last_update": "2015-06-21T10:24:48.000Z", 
-                 "name": "crap", 
-                 "zipped_package_file_name": "package_crap_20150621_102456.zip"
-                 }, 
-                 {
-                 "_id": {
-                 "$oid": "553debb164617400a900001d"
-                 }, 
-                 "active": true, 
-                 "cms_first_published": "2015-06-21T10:31:13.000Z", 
-                 "cms_icon_2x": "snack_icon@2x.png", 
-                 "cms_icon_3x": "snack_icon@3x.png", 
-                 "cms_last_published": "2015-06-21T10:31:13.000Z", 
-                 "cms_proccessing": true, 
-                 "cms_state": "save", 
-                 "dev_only": false, 
-                 "emuticons": [
-                               {
-                               "_id": {
-                               "$oid": "553dedfc0a05f01d28000002"
-                               }, 
-                               "name": "goodmorning", 
-                               "patched_on": "2015-06-21T09:19:53.000Z", 
-                               "source_back_layer": "snack-morning-bg.gif", 
-                               "source_front_layer": "snack-morning-fg.gif", 
-                               "source_user_layer_mask": "snack-morning-mask-v1.png", 
-                               "tags": "snack,lunch,food,hungry,eat,breakfest,breakfast,fruit,", 
-                               "use_for_preview": false
-                               }
-                               ], 
-                 "emuticons_defaults": {
-                 "duration": 2, 
-                 "frames_count": 24, 
-                 "thumbnail_frame_index": 23
-                 }, 
-                 "icon_name": "snack_icon", 
-                 "label": "Snack", 
-                 "last_update": "2015-06-21T10:31:08.000Z", 
-                 "meta_data_last_update": "2015-06-21T10:31:02.000Z", 
-                 "name": "snack", 
-                 "zipped_package_file_name": "package_snack_20150621_103108.zip"
-                 }
-                 ], 
-    "packages_count": 10, 
+    "packages":[
+      {
+      "_id" : {
+        "$oid" : "54f826de64617400ae140000"
+      },
+      "active" : true,
+      "banner_name" : "love-small.jpg",
+      "banner_wide_name" : "love-big.jpg",
+      "blocked_country_code" : [],
+      "cms_first_published" : "2015-06-21T10:30:01.000Z",
+      "cms_icon_2x" : "love_icon@2x.png",
+      "cms_icon_3x" : "love_icon@3x.png",
+      "cms_last_published" : "2015-06-21T10:30:01.000Z",
+      "cms_proccessing" : true,
+      "cms_state" : "save",
+      "country_code" : [
+        "any"
+      ],
+      "dev_only" : false,
+      "emuticons" : [
+        {
+          "_id" : {
+            "$oid" : "54f8371b13ac4910154f6355"
+          },
+          "name" : "green-love",
+          "patched_on" : "2015-06-21T09:09:08.000Z",
+          "source_back_layer" : "green-love-bg.gif",
+          "source_front_layer" : "green-love-fg.gif",
+          "source_user_layer_mask" : "green-love-mask-v1.png",
+          "tags" : "love,happy,i,love,you,fun",
+          "use_for_preview" : false
+        },
+        {
+          "_id" : {
+            "$oid" : "54f8543e13ac4910154f6356"
+          },
+          "name" : "hearts",
+          "patched_on" : "2015-06-21T09:11:58.000Z",
+          "source_back_layer" : "hearts-bg.gif",
+          "source_front_layer" : "hearts-fg.gif",
+          "source_user_layer_mask" : "hearts-mask-v1.png",
+          "tags" : "love,heart,hearts,luv,i,love,you",
+          "use_for_preview" : false
+        },
+        {
+          "_id" : {
+            "$oid" : "54f8544613ac4910154f6357"
+          },
+          "name" : "kiss",
+          "patched_on" : "2015-06-21T09:12:42.000Z",
+          "source_back_layer" : "kiss-bg.gif",
+          "source_user_layer_mask" : "kiss-mask-v1.png",
+          "tags" : "love,kiss,rainbow,i,love,you,luv",
+          "use_for_preview" : true
+        },
+        {
+          "_id" : {
+            "$oid" : "54f8545113ac4910154f6358"
+          },
+          "name" : "teddies",
+          "patched_on" : "2015-06-21T09:13:08.000Z",
+          "source_back_layer" : "teddies-bg.gif",
+          "source_front_layer" : "teddies-fg.gif",
+          "source_user_layer_mask" : "teddies-mask-v1.png",
+          "tags" : "teddy,bear,love,cute,fun,happy",
+          "use_for_preview" : false
+        },
+        {
+          "_id" : {
+            "$oid" : "54f8545f13ac4910154f6359"
+          },
+          "name" : "hot",
+          "patched_on" : "2015-06-21T09:13:40.000Z",
+          "source_back_layer" : "hot-bg.gif",
+          "source_user_layer_mask" : "hot-mask-v1.png",
+          "tags" : "sexy,hot,4,u,for,you,fun,",
+          "use_for_preview" : false
+        },
+        {
+          "_id" : {
+            "$oid" : "54f8546813ac4910154f635a"
+          },
+          "name" : "angel",
+          "patched_on" : "2015-06-21T09:14:19.000Z",
+          "source_back_layer" : "angel-bg.gif",
+          "source_front_layer" : "angel-fg.gif",
+          "source_user_layer_mask" : "angel-mask-v1.png",
+          "tags" : "angel,wings,i,am,love,holy",
+          "use_for_preview" : false
+        }
+      ],
+      "emuticons_defaults" : {
+        "duration" : 2,
+        "frames_count" : 24,
+        "thumbnail_frame_index" : 23
+      },
+      "icon_name" : "love_icon",
+      "is_featured" : true,
+      "label" : "Love",
+      "last_update" : "2015-06-21T10:29:54.000Z",
+      "meta_data_last_update" : "2015-06-21T10:29:45.000Z",
+      "name" : "love",
+      "poster_name" : "love-poster.gif",
+      "zipped_package_file_name" : "package_love_20150621_102954.zip"
+    },
+    ],
+    "packages_count": 1,
     "prioritized_packages": [
                              {
-                             "$oid": "557eec84d1ff72313b000001"
-                             }, 
-                             {
-                             "$oid": "557d92c0d1ff72622f000002"
-                             }, 
-                             {
-                             "$oid": "556dde3aeeb90925ab000007"
-                             }, 
-                             {
-                             "$oid": "55798801d1ff722c1f000001"
-                             }, 
-                             {
                              "$oid": "54f826de64617400ae140000"
-                             }, 
-                             {
-                             "$oid": "556486f2eeb9092911000001"
-                             }, 
-                             {
-                             "$oid": "55547a9cd1ff7231d4000002"
-                             }, 
-                             {
-                             "$oid": "5543ba18eeb90918b3000007"
-                             }, 
-                             {
-                             "$oid": "5547907dd1ff722fc4000001"
-                             }, 
-                             {
-                             "$oid": "553debb164617400a900001d"
-                             }, 
-                             {
-                             "$oid": "552fdcbe646174009a0e0000"
-                             }, 
-                             {
-                             "$oid": "5517d4b413ac49638a76ad5b"
-                             }, 
-                             {
-                             "$oid": "5517e52913ac49638a76ad62"
-                             }, 
-                             {
-                             "$oid": "551be1bb646174009a270000"
                              }
                              ]
 }

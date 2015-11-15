@@ -50,7 +50,7 @@
 {
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
-    NSData *gifData = [emu animatedGifData];
+    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD]];
     
     // Get Twitter account
     ACAccountStore *account = [[ACAccountStore alloc] init];

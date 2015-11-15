@@ -22,5 +22,4 @@
 +(UIImage *)imageWithColor:(UIColor *)color;
 -(UIColor *)styleColorNamed:(NSString *)colorName;
 
-
 @end

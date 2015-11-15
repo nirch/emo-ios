@@ -201,7 +201,7 @@
         port =      self.cfg[@"dev_port"];
         protocol =  self.cfg[@"dev_protocol"];
         host =      self.cfg[@"dev_host"];
-        self.usingPublicDataBase = YES;
+        self.usingPublicDataBase = NO;
         
     } else {
 

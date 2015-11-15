@@ -10,10 +10,9 @@
 class SolidColorSource : public CHrSourceI
 {
 public:
-    SolidColorSource(UIColor *color);
+    SolidColorSource(UIColor *color, CGSize targetSize);
     virtual int	ReadFrame( int iFrame, image_type **im );
     virtual int Close();
 private:
-//    UIImage *solidColorImage;
     image_type *solidImage;
 };

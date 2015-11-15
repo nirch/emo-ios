@@ -136,4 +136,19 @@
     }
 }
 
+-(void)showModalOnTopAnimated:(BOOL)animated
+{
+    if (!self.alreadyConfiguredActions) {
+        [self configureActions];
+    }
+    
+    UIViewController *rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    [self showInView:rootVC.view animated:animated];
+}
+
+-(void)configureActions
+{
+    _alreadyConfiguredActions = YES;
+}
+
 @end

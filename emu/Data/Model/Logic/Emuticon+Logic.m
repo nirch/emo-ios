@@ -85,6 +85,25 @@
     return emus;
 }
 
++(NSArray *)allEmuticonsRenderedInHD
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.hdAvailable=%@ AND wasRenderedInHD=%@", @NO, @YES, @YES];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:EMDB.sh.context];
+    return emus;
+}
+
++(NSArray *)allEmuticonsUsingFootageOID:(NSString *)footageOID inContext:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND prefferedFootageOID=%@", @NO, footageOID];
+    NSArray *emus = [NSManagedObject fetchEntityNamed:E_EMU
+                                        withPredicate:predicate
+                                            inContext:EMDB.sh.context];
+    return emus;
+    
+}
+
 
 -(NSURL *)thumbURL
 {
@@ -95,31 +114,43 @@
 
 -(NSString *)thumbPath
 {
-    NSString *jpgName = [SF:@"%@.jpg", self.oid];
+    NSString *jpgName = [SF:@"%@.png", self.oid];
     NSString *outputPath = [EMDB outputPathForFileName:jpgName];
     return outputPath;
 }
 
-
 -(NSURL *)animatedGifURL
 {
-    NSString *outputPath = [self animatedGifPath];
+    return [self animatedGifURLInHD:NO];
+}
+
+-(NSURL *)animatedGifURLInHD:(BOOL)inHD
+{
+    NSString *outputPath = [self animatedGifPathInHD:inHD];
     NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
     return url;
 }
 
-
 -(NSString *)animatedGifPath
 {
-    NSString *gifName = [SF:@"%@.gif", self.oid];
+    return [self animatedGifPathInHD:NO];
+}
+
+-(NSString *)animatedGifPathInHD:(BOOL)inHD
+{
+    NSString *gifName = [SF:@"%@%@.gif", self.oid, inHD?@"_2x":@""];
     NSString *outputPath = [EMDB outputPathForFileName:gifName];
     return outputPath;
 }
 
-
 -(NSData *)animatedGifData
 {
-    NSString *path = [self animatedGifPath];
+    return [self animatedGifDataInHD:NO];
+}
+
+-(NSData *)animatedGifDataInHD:(BOOL)inHD
+{
+    NSString *path = [self animatedGifPathInHD:inHD];
     NSData *data = [[NSData alloc] initWithContentsOfFile:path];
     return data;
 }
@@ -168,18 +199,28 @@
     [self cleanUp:YES andRemoveResources:NO];
 }
 
+-(void)cleanUpHDOutputGif
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:[self animatedGifPathInHD:YES] error:nil];
+    
+    // Mark it as not rendered in HD.
+    self.wasRenderedInHD = @NO;
+}
+
 -(void)cleanUp:(BOOL)cleanUp andRemoveResources:(BOOL)removeResources
 {
     // Delete rendered output files
     NSFileManager *fm = [NSFileManager defaultManager];
     if (cleanUp) {
-        NSError *error;
-        [fm removeItemAtPath:[self animatedGifPath] error:&error];
-        [fm removeItemAtPath:[self videoPath] error:&error];
-        [EMCaches.sh removeCachedGifForEmu:self];
+        [fm removeItemAtPath:[self animatedGifPathInHD:YES] error:nil];
+        [fm removeItemAtPath:[self animatedGifPathInHD:NO] error:nil];
+        [fm removeItemAtPath:[self videoPath] error:nil];
+        [EMCaches.sh clearCachedResultsForEmu:self];
         
         // Mark it as not rendered.
         self.wasRendered = @NO;
+        self.wasRenderedInHD = @NO;
         self.renderedSampleUploaded = @NO;
     }
 
@@ -198,10 +239,8 @@
     // Specific to this emuticon
     NSString *oid = self.prefferedFootageOID;
     
-    if (oid == nil) {
-        // Specific to the related package
-        oid = self.emuDef.package.prefferedFootageOID;
-    }
+    // remark: deprecated package specific footage
+    // Footage can be related to a specific emu or default app wide is used.
     
     if (oid == nil) {
         // Preffered application wide
@@ -269,6 +308,7 @@
 -(NSDictionary *)metaDataForUpload
 {
     HMParams *params = [HMParams new];
+    // TODO: add latest bg mark to meta data.
     [params addKey:@"emuticonDefOID" value:self.emuDef.oid];
     [params addKey:@"emuticonDefName" value:self.emuDef.name];
     [params addKey:@"packageOID" value:self.emuDef.package.oid];
@@ -299,29 +339,88 @@
     [fm removeItemAtPath:outputVideoPath2 error:nil];
 }
 
--(NSDictionary *)infoForGifRender
+-(HMParams *)baseParamsForRenderInHD:(BOOL)inHD
 {
     EmuticonDef *emuDef = self.emuDef;
     UserFootage *footage = [self mostPrefferedUserFootage];
     HMParams *params = [HMParams new];
-
+    NSInteger baseWidth = self.emuDef.emuWidth?self.emuDef.emuWidth.integerValue:EMU_DEFAULT_WIDTH;
+    NSInteger baseHeight = self.emuDef.emuHeight?self.emuDef.emuHeight.integerValue:EMU_DEFAULT_HEIGHT;
     [params addKey:rkEmuticonDefOID         valueIfNotNil:emuDef.oid];
     [params addKey:rkFootageOID             valueIfNotNil:footage.oid];
-    [params addKey:rkBackLayerPath          valueIfNotNil:[emuDef pathForBackLayer]];
+    [params addKey:rkBackLayerPath          valueIfNotNil:[emuDef pathForBackLayerInHD:inHD]];
     [params addKey:rkUserImagesPath         valueIfNotNil:[footage pathForUserImages]];
-    [params addKey:rkUserMaskPath           valueIfNotNil:[emuDef pathForUserLayerMask]];
-    [params addKey:rkUserDynamicMaskPath    valueIfNotNil:[emuDef pathForUserLayerDynamicMask]];
-    [params addKey:rkFrontLayerPath         valueIfNotNil:[emuDef pathForFrontLayer]];
+    [params addKey:rkUserMaskPath           valueIfNotNil:[emuDef pathForUserLayerMaskInHD:inHD]];
+    [params addKey:rkUserDynamicMaskPath    valueIfNotNil:[emuDef pathForUserLayerDynamicMaskInHD:inHD]];
+    [params addKey:rkFrontLayerPath         valueIfNotNil:[emuDef pathForFrontLayerInHD:inHD]];
     [params addKey:rkNumberOfFrames         valueIfNotNil:emuDef.framesCount];
     [params addKey:rkDuration               valueIfNotNil:emuDef.duration];
     [params addKey:rkOutputOID              valueIfNotNil:self.oid];
     [params addKey:rkPaletteString          valueIfNotNil:emuDef.palette];
     [params addKey:rkOutputPath             valueIfNotNil:[EMDB outputPath]];
-    [params addKey:rkShouldOutputGif        valueIfNotNil:@YES];
     [params addKey:rkEffects                valueIfNotNil:emuDef.effects];
-    
+    [params addKey:rkPositioningScale       value:inHD?@(2.0f):@(1.0f)];
+    [params addKey:rkOutputResolutionWidth  value:inHD?@(baseWidth*2):@(baseWidth)];
+    [params addKey:rkOutputResolutionHeight value:inHD?@(baseHeight*2):@(baseHeight)];
+    [params addKey:rkRenderInHD             value:inHD?@YES:@NO];
+    return params;
+}
+
+-(NSDictionary *)infoForGifRenderInHD:(BOOL)inHD
+{
+    HMParams *params = [self baseParamsForRenderInHD:inHD];
+    [params addKey:rkShouldOutputGif        valueIfNotNil:@YES];
     return params.dictionary;
 }
 
+-(NSDictionary *)infoForVideoRenderInHD:(BOOL)inHD
+{
+    HMParams *params = [self baseParamsForRenderInHD:inHD];
+    [params addKey:rkShouldOutputGif        valueIfNotNil:@NO];
+    return params.dictionary;
+}
+
+-(void)toggleShouldRenderAsHDIfAvailable
+{
+    // Get the value (no by default)
+    BOOL should = self.shouldRenderAsHDIfAvailable?self.shouldRenderAsHDIfAvailable.boolValue:NO;
+
+    // Toggle and save
+    should = !should;
+    self.shouldRenderAsHDIfAvailable = @(should);
+}
+
+-(BOOL)shouldItRenderInHD
+{
+    if (self.emuDef.hdAvailable == nil || self.emuDef.hdAvailable.boolValue == NO) return NO;
+    BOOL should = self.shouldRenderAsHDIfAvailable?self.shouldRenderAsHDIfAvailable.boolValue:NO;
+    return should;
+}
+
+-(CGSize)size
+{
+    CGFloat w = self.emuDef.emuWidth?self.emuDef.emuWidth.integerValue:EMU_DEFAULT_WIDTH;
+    CGFloat h = self.emuDef.emuHeight?self.emuDef.emuHeight.integerValue:EMU_DEFAULT_HEIGHT;
+    if ([self shouldItRenderInHD]) {
+        w*=2.0f;
+        h*=2.0f;
+    }
+    return CGSizeMake(w, h);
+}
+
+-(NSString *)resolutionLabel
+{
+    CGSize size = [self size];
+    return [SF:@"%@ x %@", @((int)size.width), @((int)size.height)];
+}
+
+-(BOOL)boolWasRenderedInHD:(BOOL)inHD
+{
+    if (inHD) {
+        return self.wasRenderedInHD.boolValue;
+    } else {
+        return self.wasRendered.boolValue;
+    }
+}
 
 @end

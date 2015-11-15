@@ -53,6 +53,11 @@ typedef NS_ENUM(NSInteger, EMRenderError) {
 @property (nonatomic) NSTimeInterval audioStartTime;
 @property (nonatomic) NSDictionary *effects;
 
+@property (nonatomic) BOOL inHD;
+@property (nonatomic) CGFloat positioningScale;
+@property (nonatomic) NSInteger outputWidth;
+@property (nonatomic) NSInteger outputHeight;
+
 
 /**
  *  Creates a new instance of the renderer

@@ -64,7 +64,7 @@
     uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         HMLOG(TAG, EM_VERBOSE, @"Upload: %@ / %@", @(totalBytesSent), @(totalBytesExpectedToSend));
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.delegate sharerDidProgress:totalBytesSent/totalBytesExpectedToSend info:weakSelf.info];
+            [weakSelf.delegate sharerDidProgress:(double)totalBytesSent/(double)totalBytesExpectedToSend info:weakSelf.info];
         });
     };
     

@@ -60,7 +60,7 @@
     }
     
     // Set the angles on the slice
-    AWFanOpeningLayer *slice = self.containerLayer.sublayers[0];
+    AWFanOpeningLayer *slice = (AWFanOpeningLayer *)[self.containerLayer.sublayers firstObject];
     slice.startAngle = self.startAngle/360.0 * 2 * M_PI;
     slice.endAngle = self.endAngle/360.0 * 2 * M_PI;
     

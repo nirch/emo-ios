@@ -198,6 +198,16 @@ or
 			<key>description</key>
 			<string>The number of times the user pressed an emu in the keyboard and copied to clipboard</string>
 		</dict>
+		<key>markedAsFavCount</key>
+		<dict>
+			<key>description</key>
+			<string>The number of times the user added an emu to the fav list (unfav an emu doesn&apos;t subtract from this value)</string>
+		</dict>
+		<key>didEverMarkedAnyEmuAsFav</key>
+		<dict>
+			<key>description</key>
+			<string>true if the user ever marked an emu as fav</string>
+		</dict>
 	</dict>
 	<key>personDetails</key>
 	<dict>
@@ -288,6 +298,118 @@ or
 	</dict>
 	<key>events</key>
 	<dict>
+		<key>DeepLink:code</key>
+		<dict>
+			<key>v</key>
+			<string>2.0.6</string>
+			<key>description</key>
+			<string>User opened the app using a deep link with a code, initiating some action in the app.</string>
+			<key>params</key>
+			<dict>
+				<key>linkType</key>
+				<string>&lt;string&gt; - the type of link and related action:
+
+	unhide packages - user opened a deep link with a code for requesting server to unhide one or more hidden packages</string>
+				<key>code</key>
+				<string>&lt;string&gt; - the code passed with the link</string>
+			</dict>
+			<key>fabric</key>
+			<true/>
+		</dict>
+		<key>IAPTransaction</key>
+		<dict>
+			<key>v</key>
+			<string>2.1.2</string>
+			<key>description</key>
+			<string>User successfully purchased a product</string>
+			<key>params</key>
+			<dict>
+				<key>productID</key>
+				<string>&lt;string&gt; - the identifier of the product in itunes connect</string>
+				<key>productType</key>
+				<string>&lt;string&gt; - the type of product purchased. Currently only support &quot;hdPackContent&quot; but more options will be available in the future</string>
+				<key>transactionID</key>
+				<string>&lt;string&gt; - the id of the transaction</string>
+				<key>productName</key>
+				<string>&lt;string&gt; - some human readable name of the product. Can be a package name etc.</string>
+				<key>price</key>
+				<string>&lt;number&gt; - the amount of the transaction (can be in different currencies. check the currency param)</string>
+				<key>currency</key>
+				<string>&lt;string&gt; - the currency code of the amount stated in the price parameter.</string>
+				<key>success</key>
+				<string>&lt;bool&gt; - transaction successful or not</string>
+				<key>restoredPurchase</key>
+				<string>&lt;bool&gt; - YES on restored purchase event.</string>
+				<key>errorDescription</key>
+				<string>&lt;string&gt; - error description if any (only when success == NO)</string>
+			</dict>
+			<key>fabric</key>
+			<true/>
+		</dict>
+		<key>IAPProductPresented</key>
+		<dict>
+			<key>v</key>
+			<string>2.1.4</string>
+			<key>description</key>
+			<string>Purchase details presented to the user</string>
+			<key>params</key>
+			<dict>
+				<key>productID</key>
+				<string>&lt;string&gt; - the identifier of the product in itunes connect</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the origin user interface for this event</string>
+				<key>productType</key>
+				<string>&lt;string&gt; - the type of product purchased. Currently only support &quot;hdPackContent&quot; but more options will be available in the future</string>
+				<key>productName</key>
+				<string>&lt;string&gt; - some human readable name of the product. Can be a package name etc.</string>
+				<key>price</key>
+				<string>&lt;number&gt; - the amount of the transaction (can be in different currencies. check the currency param)</string>
+				<key>currency</key>
+				<string>&lt;string&gt; - the currency code of the amount stated in the price parameter.</string>
+			</dict>
+		</dict>
+		<key>IAPProductUserPressedPurchaseButton</key>
+		<dict>
+			<key>v</key>
+			<string>2.1.4</string>
+			<key>description</key>
+			<string>User pressed a &quot;purchase product&quot; button.</string>
+			<key>params</key>
+			<dict>
+				<key>productID</key>
+				<string>&lt;string&gt; - the identifier of the product in itunes connect</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the origin user interface for this event</string>
+				<key>productType</key>
+				<string>&lt;string&gt; - the type of product purchased. Currently only support &quot;hdPackContent&quot; but more options will be available in the future</string>
+				<key>productName</key>
+				<string>&lt;string&gt; - some human readable name of the product. Can be a package name etc.</string>
+				<key>price</key>
+				<string>&lt;number&gt; - the amount of the transaction (can be in different currencies. check the currency param)</string>
+				<key>currency</key>
+				<string>&lt;string&gt; - the currency code of the amount stated in the price parameter.</string>
+			</dict>
+		</dict>
+		<key>DeepLink:alertUserChoice</key>
+		<dict>
+			<key>v</key>
+			<string>2.0.6</string>
+			<key>description</key>
+			<string>After a user opened the app using a deep link, a choice was presented and the user chose an option.</string>
+			<key>params</key>
+			<dict>
+				<key>linkType</key>
+				<string>&lt;string&gt; - the type of link and related action:
+
+	unhide packages - user opened a deep link with a code for requesting server to unhide one or more hidden packages</string>
+				<key>code</key>
+				<string>&lt;string&gt; - the code passed with the link</string>
+				<key>userChoice</key>
+				<string>&lt;string&gt; - user choice</string>
+			</dict>
+			<key>fabric</key>
+			<true/>
+		</dict>
 		<key>Migration:hasPrefferedFootageAndCacheDirExists</key>
 		<dict>
 			<key>av</key>
@@ -356,6 +478,8 @@ or
 		</dict>
 		<key>App:versionUpdated</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.8</string>
 			<key>v</key>
@@ -622,6 +746,8 @@ or
 		</dict>
 		<key>Rec:stageAlignStarted</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -631,6 +757,8 @@ or
 		</dict>
 		<key>Rec:stageAlignUserPressedContinueWithBadBackground</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -645,6 +773,8 @@ or
 		</dict>
 		<key>Rec:stageAlignGoodBackgroundSatisfied</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>v</key>
 			<string>1.0.8</string>
 			<key>av</key>
@@ -669,6 +799,8 @@ or
 			<dict>
 				<key>timePassedSinceRecorderOpened</key>
 				<string>&lt;interval&gt; - the time interval passed since the Rec:opened event.</string>
+				<key>goodBackgroundSatisfied</key>
+				<string>&lt;boolean&gt; - true if good background satisfied and extraction started automatically. false if user pressed &quot;continue anyway&quot;.</string>
 			</dict>
 		</dict>
 		<key>Rec:stageExtUserPressedRecord</key>
@@ -696,6 +828,8 @@ or
 		</dict>
 		<key>Rec:stageRecordingDidStart</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -726,6 +860,8 @@ or
 		</dict>
 		<key>Rec:stageRecordingDidFinish</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -942,15 +1078,6 @@ or
 			<string>1.0.8</string>
 			<key>description</key>
 			<string>User selected a specific emu from the feed (item details screen will be opened)</string>
-		</dict>
-		<key>ItemDetails:userPressedBackButton</key>
-		<dict>
-			<key>av</key>
-			<string>1.0.0</string>
-			<key>v</key>
-			<string>1.0.8</string>
-			<key>description</key>
-			<string></string>
 			<key>params</key>
 			<dict>
 				<key>emuticonName</key>
@@ -961,10 +1088,14 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedRetakeButton</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -981,10 +1112,14 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedShareButton</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1005,6 +1140,8 @@ or
 				<string>&lt;string&gt; - the oid of the related package</string>
 				<key>sharedMediaType</key>
 				<string>&lt;string&gt; - the media type that was shared: gif, video etc.</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userPressedEmu</key>
@@ -1025,6 +1162,8 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>ItemDetails:userChoice</key>
@@ -1047,6 +1186,26 @@ or
 				<string>&lt;string&gt; - the name of the related package</string>
 				<key>packageOID</key>
 				<string>&lt;string&gt; - the oid of the related package</string>
+			</dict>
+		</dict>
+		<key>ItemDetails:favorite</key>
+		<dict>
+			<key>v</key>
+			<string>2.0.8</string>
+			<key>description</key>
+			<string>User added emu to favorites</string>
+			<key>params</key>
+			<dict>
+				<key>emuticonName</key>
+				<string>&lt;string&gt; - the name of the related emoticon</string>
+				<key>emuticonOID</key>
+				<string>&lt;string&gt; - the oid of the related emoticon</string>
+				<key>packageName</key>
+				<string>&lt;string&gt; - the name of the related package</string>
+				<key>packageOID</key>
+				<string>&lt;string&gt; - the oid of the related package</string>
+				<key>originUI</key>
+				<string>&lt;string&gt; - the screen it happened in</string>
 			</dict>
 		</dict>
 		<key>Share:success</key>
@@ -1296,6 +1455,8 @@ or
 		</dict>
 		<key>BE:zippedPackageDownloadSuccess</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1312,6 +1473,8 @@ or
 		</dict>
 		<key>BE:zippedPackageDownloadFailed</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1330,6 +1493,8 @@ or
 		</dict>
 		<key>BE:zippedPackageUnzipSuccess</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1346,6 +1511,8 @@ or
 		</dict>
 		<key>BE:zippedPackageUnzipFailed</key>
 		<dict>
+			<key>deprecated_ios</key>
+			<string>2.0.5</string>
 			<key>av</key>
 			<string>1.0.0</string>
 			<key>v</key>
@@ -1543,6 +1710,12 @@ or
 		<string>Keyboard</string>
 		<key>BE</key>
 		<string>Back end events</string>
+		<key>DeepLink</key>
+		<string>Deep links related events</string>
+		<key>ME</key>
+		<string>Me screen</string>
+		<key>IAP</key>
+		<string>In App Purchases</string>
 	</dict>
 </dict>
 </plist>

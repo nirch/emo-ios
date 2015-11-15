@@ -27,6 +27,17 @@
     return splashVC;
 }
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    [self setText:build];
+    
+    [UIView animateWithDuration:5.0 animations:^{
+        
+    }];
+}
 
 -(void)showAnimated:(BOOL)animated
 {

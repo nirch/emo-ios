@@ -15,6 +15,8 @@
 
 
 #pragma mark - Converting to UIImage
++(NSData *)createNSDataFromImageType:(image_type *)imageData withAlpha:(BOOL)withAlpha;
+
 /**
  *  Given an image_type object, creates and returns a UIImage object.
  *
@@ -26,6 +28,8 @@
  *  @param withAlpha - boolean.
  *          if YES: bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaLast
  *          if NO : bitmapInfo = kCGBitmapByteOrderDefault
+ *
+ *  @param targetSize - CGSize (optional) rescale the image to target size.
  *
  *  @return newly created UIImage object. 
  *
@@ -75,5 +79,8 @@
        compressionQuality:(CGFloat)compressionQuality;
 
 
+
++(UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
++(UIImage *)image:(UIImage *)sourceImage scaledProportionallyToSize:(CGSize)targetSize;
 
 @end

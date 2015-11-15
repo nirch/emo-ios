@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="AppCFG" representedClassName="AppCFG" syncable="YES">
+        <attribute name="baseResourceURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bucketName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="configUpdatedOn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dataVersionForcedFetch" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="defaultOutputVideoMaxFps" attributeType="Integer 16" defaultValueString="15" syncable="YES"/>
+        <attribute name="deprecatedFootageForPack" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdateTimestamp" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="latestPackagePublishedOn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="localization" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="mixedScreenEmus" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="mixedScreenEnabled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="mixedScreenPrioritizedEmus" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="onboardingPassed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="onboardingUsingPackage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="playUISounds" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="prefferedFootageOID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tweaks" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="uploadUserContent" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="userAskedInMainScreenAboutAlerts" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="userPrefferedShareType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="userViewedEmuScreenTutorial" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="userViewedKBTutorial" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="userViewedMainTutorial" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
+    <entity name="Emuticon" representedClassName="Emuticon" syncable="YES">
+        <attribute name="audioFilePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="audioStartTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="isPreview" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="lastTimeShared" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="lastTimeViewed" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="prefferedFootageOID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="renderedSampleUploaded" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="rendersCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="shouldRenderAsHDIfAvailable" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="usageCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="videoLoopsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="videoLoopsEffect" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="wasRendered" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="wasRenderedInHD" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <relationship name="emuDef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EmuticonDef" inverseName="emus" inverseEntity="EmuticonDef" syncable="YES"/>
+    </entity>
+    <entity name="EmuticonDef" representedClassName="EmuticonDef" syncable="YES">
+        <attribute name="disallowedForOnboardingPreview" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="dlProgress" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="effects" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="emuHeight" optional="YES" attributeType="Integer 16" defaultValueString="240" syncable="YES"/>
+        <attribute name="emuWidth" optional="YES" attributeType="Integer 16" defaultValueString="240" syncable="YES"/>
+        <attribute name="framesCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="hdAvailable" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="mixedScreenOrder" attributeType="Integer 16" defaultValueString="1000" indexed="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="1000" indexed="YES" syncable="YES"/>
+        <attribute name="palette" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patchedOn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="prefferedWaterMark" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceBackLayer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceBackLayer2X" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceFrontLayer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceFrontLayer2X" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceUserLayerDynamicMask" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceUserLayerDynamicMask2X" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceUserLayerMask" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceUserLayerMask2X" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailFrameIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="useForPreview" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <relationship name="emus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Emuticon" inverseName="emuDef" inverseEntity="Emuticon" syncable="YES"/>
+        <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="emuDefs" inverseEntity="Package" syncable="YES"/>
+    </entity>
+    <entity name="Package" representedClassName="Package" syncable="YES">
+        <attribute name="alreadyUnzipped" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="bannerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bannerWideName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstPublishedOn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hdAvailable" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="hdPriceLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hdProductID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="hdProductValidated" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="hdUnlocked" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="iconName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" indexed="YES" syncable="YES"/>
+        <attribute name="isFeatured" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="isHidden" optional="YES" attributeType="Boolean" indexed="YES" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="oid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posterName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="posterOverlayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefferedFootageOID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preventVideoWaterMarks" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="prioritizedIdentifier" attributeType="String" defaultValueString="000" indexed="YES" syncable="YES"/>
+        <attribute name="priority" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="productDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rendersCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="requiredVersion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sampledEmuCount" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sampledEmuResultOID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sharingHashtags" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="shouldAutoDownload" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="showOnPacksBar" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="timeUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="viewedByUser" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="zipppedPackageFileName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="emuDefs" toMany="YES" deletionRule="Cascade" destinationEntity="EmuticonDef" inverseName="package" inverseEntity="EmuticonDef" syncable="YES"/>
+    </entity>
+    <entity name="UserFootage" representedClassName="UserFootage" syncable="YES">
+        <attribute name="duration" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="footageHeight" attributeType="Integer 16" defaultValueString="240" syncable="YES"/>
+        <attribute name="footageWidth" attributeType="Integer 16" defaultValueString="240" syncable="YES"/>
+        <attribute name="framesCount" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="timeTaken" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AppCFG" positionX="-162" positionY="-261" width="128" height="420"/>
+        <element name="Emuticon" positionX="135" positionY="-52" width="189" height="300"/>
+        <element name="EmuticonDef" positionX="72" positionY="-340" width="333" height="450"/>
+        <element name="Package" positionX="36" positionY="-522" width="396" height="585"/>
+        <element name="UserFootage" positionX="-171" positionY="-387" width="144" height="135"/>
+    </elements>
+</model>

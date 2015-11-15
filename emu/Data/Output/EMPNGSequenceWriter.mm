@@ -24,21 +24,28 @@
 #import "Gpw/Vtool/Vtool.h"
 
 @interface EMPNGSequenceWriter() {
-    image_type *resampled_image;
+//    image_type *resampled_image;
     
     vTime_type firstFrameTimeStamp;
     vTime_type previousFrameTimeStamp;
     vTime_type totalTime;
+    vTime_type delta;
     
     vTime_type duration;
     
     BOOL done;
     BOOL canceled;
+    
+    dispatch_semaphore_t semaphore;
 }
 
 @property (nonatomic) NSTimeInterval durationInSeconds;
-@property (nonatomic) NSMutableArray *pngs;
-@property (nonatomic) NSInteger framesCount;
+@property (atomic) NSInteger framesCount;
+@property (atomic) NSInteger writtenFramesCount;
+@property (nonatomic) NSString *oid;
+@property (nonatomic) NSString *path;
+@property (nonatomic) NSDate *startTime;
+
 
 @end
 
@@ -53,7 +60,10 @@
 {
     self.writesFramesOfType = HMWritesFramesOfTypeImageType;
     self.framesCount = 0;
-    self.pngs = [NSMutableArray new];
+    self.oid = [[NSUUID UUID] UUIDString];
+    self.path = [EMDB pathForFootageWithOID:self.oid];
+    semaphore = dispatch_semaphore_create(0);
+    [EMDB ensureDirPathExists:self.path];
     
     firstFrameTimeStamp = 0;
     totalTime = 0;
@@ -70,50 +80,22 @@
 
 -(NSDictionary *)finishReturningInfo
 {
-    NSString *oid = [[NSUUID UUID] UUIDString];
-    [EMPNGSequenceWriter savePNGSequence:self.pngs toFolderNamed:oid];
-    [self clean];
-    return @{
-             emkPath:[EMDB pathForFootageWithOID:oid],
-             emkOID:oid,
-             emkNumberOfFrames:@(self.framesCount),
-             emkDate:[NSDate date],
-             emkDuration:@(self.durationInSeconds),
-             emkDebug:@(self.debugMode)
-             };
-}
-
-
-+(void)savePNGSequence:(NSArray *)pngs toFolderNamed:(NSString *)folderName
-{
-    // Get the path
-    NSString *path = [EMDB pathForFootageWithOID:folderName];
-    
-    // Ensure the path exists
-    BOOL exist = [EMDB ensureDirPathExists:path];
-    assert(exist);
-    
-    NSInteger frameCount = 0;
-    for (UIImage *png in pngs) {
-        frameCount++;
-        [HMImages savePNGOfUIImage:png
-                     directoryPath:path
-                          withName:[SF:@"img-%@", @(frameCount)]];
-    }
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    NSDictionary *info = @{
+                           emkPath:self.path,
+                           emkOID:self.oid,
+                           emkNumberOfFrames:@(self.framesCount),
+                           emkDate:[NSDate date],
+                           emkDuration:@(self.durationInSeconds),
+                           emkDebug:@(self.debugMode)
+                           };
+    return info;
 }
 
 -(void)cancel
 {
     canceled = YES;
-    [self clean];
 }
-
-
--(void)clean
-{
-    self.pngs = nil;
-}
-
 
 -(void)writeImageTypeFrame:(void *)image
 {
@@ -122,12 +104,7 @@
     }
     
     image_type *output_image = (image_type *)image;
-    resampled_image = image_sample2(output_image, resampled_image);
-    
     vTime_type currentFrameTimeStamp = output_image->timeStamp;
-    resampled_image->timeStamp = currentFrameTimeStamp;
-    
-    // HMLOG(TAG, DBG, @"Frame time stamp:%@", @(currentFrameTimeStamp));
     
     // If first frame, store the time stamp of the first frame.
     if (self.framesCount == 0) {
@@ -137,6 +114,7 @@
 
     } else {
         totalTime = currentFrameTimeStamp - firstFrameTimeStamp;
+        delta = currentFrameTimeStamp - previousFrameTimeStamp;
 
         if (totalTime > duration || self.framesCount > MAX_NUMBER_OF_FRAMES) {
             // Done! Skip future frames.
@@ -146,15 +124,27 @@
             done = YES;
             return;
         }
+        
+        if (delta < 42000000) return;
     }
     
+
+    // Convert the image passed as image_type to UIImage
+    UIImage *uiImage = [HMImageTools createUIImageFromImageType:output_image withAlpha:YES];
     
     // Counting frames
     self.framesCount++;
-
-    // Convert the image passed as image_type to UIImage.
-    UIImage *png = [HMImageTools createUIImageFromImageType:resampled_image withAlpha:YES];
-    [self.pngs addObject:png];
+    NSInteger currentFrameCount = self.framesCount;
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+        // Save the image in a background queue.
+        [HMImages savePNGOfUIImage:uiImage
+                     directoryPath:self.path
+                          withName:[SF:@"img-%@", @(currentFrameCount)]];
+        self.writtenFramesCount++;
+        if (self.writtenFramesCount >= currentFrameCount) {
+            dispatch_semaphore_signal(semaphore);
+        }
+    });
     previousFrameTimeStamp = currentFrameTimeStamp;
 }
 

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--AV Player View Controller-->
+        <scene sceneID="jxR-5d-qFa">
+            <objects>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="ZWe-KJ-vog" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sXa-zC-k77" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="727" y="-717"/>
+        </scene>
+        <!--TutorialVC-->
+        <scene sceneID="0d1-dY-hiX">
+            <objects>
+                <viewController storyboardIdentifier="keyboard tutorial" automaticallyAdjustsScrollViewInsets="NO" id="0bG-jl-4br" customClass="EMTutorialVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lPG-ln-q5L"/>
+                        <viewControllerLayoutGuide type="bottom" id="ptI-LQ-fR7"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SLv-zo-Mgn" customClass="EMGradientView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iAo-cl-PrN" userLabel="Continue Button" customClass="EMFlowButton">
+                                <rect key="frame" x="16" y="400" width="288" height="65"/>
+                                <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="dSj-fU-nmQ"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="geU-3l-Ypu"/>
+                                </constraints>
+                                <state key="normal" title="OK, GOT IT!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPressedContinueButton:" destination="0bG-jl-4br" eventType="touchUpInside" id="XSf-jj-Qkw"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General &gt; Keyboard &gt; Keyboards &gt; Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACn-FA-ZyG" customClass="EMLabel">
+                                <rect key="frame" x="9" y="353" width="303" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.27479079369999998" green="0.5571715236" blue="0.89757764340000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use your Emu from your keyboard. Add the keyboard from settings and allow full access:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3vC-8c-tUS" customClass="EMLabel">
+                                <rect key="frame" x="9" y="264" width="302" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="302" id="2gG-Qm-iDS"/>
+                                    <constraint firstAttribute="height" constant="80" id="bGK-A0-KgM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.43916493649999999" green="0.43924486639999999" blue="0.43915989999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADt-ln-084">
+                                <rect key="frame" x="31" y="40" width="258" height="258"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addKB" translatesAutoresizingMaskIntoConstraints="NO" id="Ojj-uE-61F">
+                                        <rect key="frame" x="0.0" y="0.0" width="258" height="258"/>
+                                    </imageView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygR-7f-8WR">
+                                        <rect key="frame" x="0.0" y="0.0" width="258" height="258"/>
+                                        <connections>
+                                            <segue destination="ZWe-KJ-vog" kind="embed" identifier="tutorial video player segue" id="abJ-eA-0jz"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ygR-7f-8WR" firstAttribute="top" secondItem="ADt-ln-084" secondAttribute="top" id="7ia-uF-cKb"/>
+                                    <constraint firstAttribute="centerY" secondItem="Ojj-uE-61F" secondAttribute="centerY" id="8d9-hF-NEH"/>
+                                    <constraint firstAttribute="trailing" secondItem="ygR-7f-8WR" secondAttribute="trailing" id="IZg-KL-WbT"/>
+                                    <constraint firstAttribute="width" secondItem="Ojj-uE-61F" secondAttribute="width" id="Ivq-gP-Xec"/>
+                                    <constraint firstAttribute="bottom" secondItem="ygR-7f-8WR" secondAttribute="bottom" id="KkO-dL-m1g"/>
+                                    <constraint firstAttribute="centerX" secondItem="Ojj-uE-61F" secondAttribute="centerX" id="X1T-XW-xp0"/>
+                                    <constraint firstAttribute="width" secondItem="ADt-ln-084" secondAttribute="height" multiplier="1:1" id="l38-rV-YuA"/>
+                                    <constraint firstAttribute="height" secondItem="Ojj-uE-61F" secondAttribute="height" id="tDC-xu-gnn"/>
+                                    <constraint firstItem="ygR-7f-8WR" firstAttribute="leading" secondItem="ADt-ln-084" secondAttribute="leading" id="yap-bx-icM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iAo-cl-PrN" firstAttribute="leading" secondItem="SLv-zo-Mgn" secondAttribute="leadingMargin" id="34R-XZ-dNC"/>
+                            <constraint firstAttribute="centerX" secondItem="3vC-8c-tUS" secondAttribute="centerX" constant="-0.5" id="382-dE-tcw"/>
+                            <constraint firstAttribute="centerX" secondItem="ADt-ln-084" secondAttribute="centerX" constant="-0.5" id="6yS-3e-RsM"/>
+                            <constraint firstItem="ptI-LQ-fR7" firstAttribute="top" secondItem="iAo-cl-PrN" secondAttribute="bottom" constant="15" id="DHD-vf-Lxh"/>
+                            <constraint firstAttribute="centerX" secondItem="ACn-FA-ZyG" secondAttribute="centerX" id="FL6-fK-EBy"/>
+                            <constraint firstItem="ADt-ln-084" firstAttribute="top" secondItem="lPG-ln-q5L" secondAttribute="bottom" constant="20" id="Gc5-kI-Dkw"/>
+                            <constraint firstItem="ADt-ln-084" firstAttribute="leading" secondItem="SLv-zo-Mgn" secondAttribute="leadingMargin" constant="15" id="L5k-KF-u6J" userLabel="left margin"/>
+                            <constraint firstItem="ADt-ln-084" firstAttribute="trailing" secondItem="SLv-zo-Mgn" secondAttribute="trailingMargin" constant="-15" id="fg9-Np-RU6" userLabel="right margin"/>
+                            <constraint firstItem="iAo-cl-PrN" firstAttribute="top" secondItem="ACn-FA-ZyG" secondAttribute="bottom" constant="26" id="lax-uJ-9I3"/>
+                            <constraint firstItem="iAo-cl-PrN" firstAttribute="trailing" secondItem="SLv-zo-Mgn" secondAttribute="trailingMargin" id="vkz-SI-5cj"/>
+                            <constraint firstItem="ACn-FA-ZyG" firstAttribute="top" secondItem="3vC-8c-tUS" secondAttribute="bottom" constant="9" id="zwU-fv-o2G"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
+                        </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="6yS-3e-RsM"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="480"/>
+                    <connections>
+                        <outlet property="constraintLeftMargin" destination="L5k-KF-u6J" id="4rC-l8-vA6"/>
+                        <outlet property="constraintRightMargin" destination="fg9-Np-RU6" id="EC4-fg-xAC"/>
+                        <outlet property="guiTutorialPresentationContainer" destination="ADt-ln-084" id="v6U-aN-Ozp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dxb-cf-SCR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="279" y="-717"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="addKB" width="414" height="414"/>
+    </resources>
+</document>
