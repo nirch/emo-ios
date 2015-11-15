@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>build_counter</key>
-	<integer>7014</integer>
+	<integer>7022</integer>
 	<key>build_date</key>
-	<date>2015-11-10T01:57:54Z</date>
+	<date>2015-11-11T16:08:07Z</date>
 	<key>build_type</key>
-	<string>Release</string>
+	<string>Debug</string>
 	<key>machine_name</key>
 	<string>La-Big-Mac.local</string>
 	<key>target_name</key>

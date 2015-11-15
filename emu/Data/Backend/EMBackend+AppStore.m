@@ -75,6 +75,8 @@
     NSArray *premiumPacks = [Package allPremiumPackagesInContext:EMDB.sh.context];
     for (Package *package in premiumPacks) {
         SKProduct *product = self.productsByPID[package.hdProductID];
+        // TODO: possible crash when product id is wrong
+        // TODO: fix this.
         self.packOIDByPID[product.productIdentifier] = package.oid;
         if (product) {
             package.hdProductValidated = @YES;
