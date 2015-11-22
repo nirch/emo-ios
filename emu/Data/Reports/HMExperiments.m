@@ -124,6 +124,17 @@ OptimizelyVariableKeyForBool(recorderShowAdvancedCameraOptionsOnOnboarding, NO);
 
 /**
 ---------------------------------------
+settingsRedeemCodeOption
+---------------------------------------
+value type: Number
+default values: 0
+description: Redeem code option in settings screen. 0: disabled. 1: enabled. 2: hidden (long press homage icon)
+*/
+OptimizelyVariableKeyForNumber(settingsRedeemCodeOption, @0);
+
+
+/**
+---------------------------------------
 textShareAppBody
 ---------------------------------------
 value type: String
@@ -162,6 +173,7 @@ OptimizelyVariableKeyForString(textShareAppSubject, @"Emu - Selfie Stickers");
 			@"onboardingEmusForPreviewList":onboardingEmusForPreviewList,
 			@"recorderRecordButtonCountdownFrom":recorderRecordButtonCountdownFrom,
 			@"recorderShowAdvancedCameraOptionsOnOnboarding":recorderShowAdvancedCameraOptionsOnOnboarding,
+			@"settingsRedeemCodeOption":settingsRedeemCodeOption,
 			@"textShareAppBody":textShareAppBody,
 			@"textShareAppSubject":textShareAppSubject
         };

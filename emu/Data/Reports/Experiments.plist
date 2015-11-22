@@ -202,6 +202,15 @@
 			<key>valueType</key>
 			<string>Number</string>
 		</dict>
+		<key>settingsRedeemCodeOption</key>
+		<dict>
+			<key>description</key>
+			<string>Redeem code option in settings screen. 0: disabled. 1: enabled. 2: hidden (long press homage icon)</string>
+			<key>defaultValue</key>
+			<integer>0</integer>
+			<key>valueType</key>
+			<string>Number</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

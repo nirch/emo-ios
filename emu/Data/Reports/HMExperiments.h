@@ -45,6 +45,9 @@
 /** recorderShowAdvancedCameraOptionsOnOnboarding : <Bool> - Boolean value indicating if the advanced camera options are shown to the user when the recorder is opened for the first time for onboarding.  */
 #define VK_RECORDER_SHOW_ADVANCED_CAMERA_OPTIONS_ON_ONBOARDING @"recorderShowAdvancedCameraOptionsOnOnboarding" 
 
+/** settingsRedeemCodeOption : Redeem code option in settings screen. 0: disabled. 1: enabled. 2: hidden (long press homage icon)  */
+#define VK_SETTINGS_REDEEM_CODE_OPTION @"settingsRedeemCodeOption" 
+
 /** textShareAppBody : <String> - The body text for the email sent when the user select to share app link using email.  */
 #define VK_TEXT_SHARE_APP_BODY @"textShareAppBody" 
 

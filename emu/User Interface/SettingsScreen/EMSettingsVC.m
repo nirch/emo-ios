@@ -212,12 +212,16 @@
     /**
      *  In App Purchases
      */
+    NSNumber *redeemCodeOption = [HMPanel.sh numberForKey:VK_SETTINGS_REDEEM_CODE_OPTION
+                                            fallbackValue:@0];
+    
+    NSMutableArray *iapItems = [NSMutableArray new];
+    [iapItems addObject:@{@"actionText":LS(@"SETTINGS_ACTION_RESTORE_PURCHASES"), @"icon":@"settingsIconRestorePurchases", @"actionName":@"restorePurchases", @"async":@YES}];
+    if ([redeemCodeOption isEqualToNumber:@1]) [iapItems addObject:@{@"actionText":LS(@"SETTINGS_ACTION_REDEEM_CODE"), @"icon":@"settingsIconRedeemCode", @"actionName":@"redeemCode", @"async":@YES}];
+    
     sectionInfo = @{
                 @"title":LS(@"SETTINGS_IN_APP_PURCHASES_TITLE"),
-                @"items":@[
-                        @{@"actionText":LS(@"SETTINGS_ACTION_RESTORE_PURCHASES"), @"icon":@"settingsIconRestorePurchases", @"actionName":@"restorePurchases", @"async":@YES},
-                        @{@"actionText":LS(@"SETTINGS_ACTION_REDEEM_CODE"), @"icon":@"settingsIconRedeemCode", @"actionName":@"redeemCode", @"async":@YES},
-                        ]
+                @"items":iapItems
                 };
     [self.settings addObject:sectionInfo];
 
@@ -520,6 +524,15 @@
     EMSettingsCell *cell = (EMSettingsCell *)[sender viewFindAncestorOfKind:[EMSettingsCell class]];
     if (cell == nil) return;
     [self doActionAtIndexPath:cell.indexPath withSwitchValue:sender.on];
+}
+
+- (IBAction)onLongPressedLogo:(id)sender
+{
+    NSNumber *redeemCodeOption = [HMPanel.sh numberForKey:VK_SETTINGS_REDEEM_CODE_OPTION
+                                            fallbackValue:@0];
+    if ([redeemCodeOption isEqualToNumber:@2]) {
+        [self _redeemCode];        
+    }
 }
 
 @end
