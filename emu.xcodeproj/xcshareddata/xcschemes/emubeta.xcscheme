@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0710"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "NO"
@@ -46,11 +46,28 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "08E4D6421BE03DA1005D2E78"
+               BlueprintIdentifier = "08CC7D2A1C05E4560075823C"
                BuildableName = "EmuTests.xctest"
                BlueprintName = "EmuTests"
                ReferencedContainer = "container:emu.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "EmuDBTests">
+               </Test>
+               <Test
+                  Identifier = "EmuParsersTests">
+               </Test>
+               <Test
+                  Identifier = "EmuRenderManagerTests">
+               </Test>
+               <Test
+                  Identifier = "EmuS3IntegrationTests">
+               </Test>
+               <Test
+                  Identifier = "EmuWebserviceIntegrationTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

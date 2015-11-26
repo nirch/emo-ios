@@ -32,6 +32,10 @@ int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
         // Need to scale image to requested target size.
         uiImage = [HMImageTools image:uiImage scaledProportionallyToSize:_targetSize];
         
+        if (uiImage == nil) {
+            return -1;
+        }
+        
         _image = CVtool::UIimage_to_image(uiImage, _image);
         *im = _image;
 

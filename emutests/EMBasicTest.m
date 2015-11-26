@@ -1,18 +1,19 @@
 //
-//  EmuTests.m
-//  EmuTests
+//  EMBasicTest.m
+//  emu
 //
-//  Created by Aviv Wolf on 28/10/2015.
+//  Created by Aviv Wolf on 25/11/2015.
 //  Copyright © 2015 Homage. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
+#import <AWSCore/AWSCore.h>
 
-@interface EmuTests : XCTestCase
+@interface EMBasicTest : XCTestCase
 
 @end
 
-@implementation EmuTests
+@implementation EMBasicTest
 
 - (void)setUp {
     [super setUp];

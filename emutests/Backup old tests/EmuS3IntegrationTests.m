@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <AWSCore.h>
-#import <AWSS3.h>
+#import <AWSCore/AWSCore.h>
+#import <AWSS3/AWSS3.h>
 #import "EMDB.h"
 
 @interface EmuS3IntegrationTests : XCTestCase
