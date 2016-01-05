@@ -23,7 +23,7 @@ SolidColorSource::SolidColorSource(UIColor *color, CGSize targetSize)
     solidImage = CVtool::DecomposeUIimage(solidColorImage);
 }
 
-int	SolidColorSource::ReadFrame( int iFrame, image_type **im )
+int	SolidColorSource::ReadFrame( int iFrame, long long timeStamp, image_type **im )
 {
     // Always return the same solid color image.
     *im = solidImage;

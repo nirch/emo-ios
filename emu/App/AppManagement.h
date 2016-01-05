@@ -30,6 +30,9 @@
 // Is this user's results are (were) sampled by the server?
 -(BOOL)userSampledByServer;
 
+#pragma mark - HSDK
+-(NSString *)hsdkVersionString;
+
 #pragma mark - device specific info
 +(NSString *)deviceModelName;
 +(NSNumber *)deviceGeneration;

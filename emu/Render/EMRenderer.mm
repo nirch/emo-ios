@@ -74,6 +74,7 @@
     CHomageRenderer *render = new CHomageRenderer();
     self.outputFiles = [NSMutableDictionary new];
     CGSize size = CGSizeMake(self.outputWidth, self.outputHeight);
+    render->SetFrameSize((int)self.outputWidth, (int)self.outputHeight);
     
     // Create an array of source images.
     // Also makes sure the number of images we get is the required amount.
@@ -134,7 +135,7 @@
     //
     WaterMarkSource *waterMarkSource = NULL;
     if (self.waterMarkName) {
-        waterMarkSource = new WaterMarkSource(self.waterMarkName, (int)self.outputWidth, (int)self.outputHeight);
+        //waterMarkSource = new WaterMarkSource(self.waterMarkName, (int)self.outputWidth, (int)self.outputHeight);
     }
     
     //

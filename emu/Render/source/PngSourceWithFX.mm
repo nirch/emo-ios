@@ -21,7 +21,7 @@ PngSourceWithFX::PngSourceWithFX(NSArray *pngFiles, CGSize targetSize)
     _targetSize = targetSize;
 }
 
-int	PngSourceWithFX::ReadFrame( int iFrame, image_type **im )
+int	PngSourceWithFX::ReadFrame( int iFrame, long long timeStamp, image_type **im )
 {
     if (iFrame < _pngFiles.count)
     {

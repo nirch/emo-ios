@@ -191,7 +191,7 @@
                     @"items":@[
                             @{
                                 @"title1":LS(@"SETTINGS_APP_NAME"),
-                                @"title2":[SF:LS(@"SETTINGS_ABOUT_VERSION"), [AppManagement.sh applicationBuild]], @"cellType":CELL_ID_ABOUT,
+                                @"title2":[SF:LS(@"SETTINGS_ABOUT_VERSION"), [AppManagement.sh applicationBuild], [AppManagement.sh hsdkVersionString]], @"cellType":CELL_ID_ABOUT,
                                 @"title3":LS(@"SETTINGS_HOMAGE_TITLE"),
                             }
                             ]

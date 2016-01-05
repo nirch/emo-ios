@@ -11,6 +11,8 @@
 #import <sys/utsname.h>
 #import <RegExCategories.h>
 
+#import <HomageSDKCore/HomageSDKCore.h>
+
 @interface AppManagement()
 
 /*
@@ -94,6 +96,11 @@
     return [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
+#pragma mark - HSDK
+-(NSString *)hsdkVersionString
+{
+    return [SF:@"( HSDK %@ )", [HSDKCore.sh versionString]];
+}
 
 #pragma mark - Queues
 -(dispatch_queue_t)ioQueue
@@ -103,6 +110,8 @@
     return _ioQueue;
 }
 
+
+#pragma mark - Device
 /**
  *  Will try to recognise the generation of the device.
  *  will return nil if unrecognised (or unimportant)

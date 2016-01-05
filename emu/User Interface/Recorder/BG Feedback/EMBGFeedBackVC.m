@@ -37,6 +37,8 @@
 
 @implementation EMBGFeedBackVC
 
+@synthesize delegate = _delegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initGUI];

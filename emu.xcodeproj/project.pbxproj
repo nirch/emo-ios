@@ -270,6 +270,16 @@
 		087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */; };
 		0881F0B61BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */; };
 		0881F0B71BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */; };
+		08820F6D1C3BAEF800E6E0ED /* HomageSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; };
+		08820F6F1C3BAEF800E6E0ED /* HomageSDKFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; };
+		08820F761C3BAF6200E6E0ED /* HomageSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; };
+		08820F771C3BAF6200E6E0ED /* HomageSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		08820F781C3BAF6200E6E0ED /* HomageSDKFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; };
+		08820F791C3BAF6200E6E0ED /* HomageSDKFlow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		08820F7B1C3BB0A400E6E0ED /* HomageSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; };
+		08820F7C1C3BB0A400E6E0ED /* HomageSDKFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; };
+		08820F7D1C3BB0A500E6E0ED /* HomageSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; };
+		08820F7E1C3BB0A500E6E0ED /* HomageSDKFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; };
 		088360041BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */; };
 		088360051BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */; };
 		08851DE61B53E32600DC9619 /* EMUploadAndShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 08851DE51B53E32600DC9619 /* EMUploadAndShare.m */; };
@@ -760,6 +770,18 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08820F7A1C3BAF6200E6E0ED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				08820F791C3BAF6200E6E0ED /* HomageSDKFlow.framework in Embed Frameworks */,
+				08820F771C3BAF6200E6E0ED /* HomageSDKCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -1038,6 +1060,8 @@
 		087F20931A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
 		0881F0B41BC67A2E005A7323 /* UIView+CommonAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CommonAnimations.h"; sourceTree = "<group>"; };
 		0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CommonAnimations.m"; sourceTree = "<group>"; };
+		08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HomageSDKCore.framework; sourceTree = "<group>"; };
+		08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HomageSDKFlow.framework; sourceTree = "<group>"; };
 		088360021BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFootagesNavigationCFG.h; sourceTree = "<group>"; };
 		088360031BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFootagesNavigationCFG.m; sourceTree = "<group>"; };
 		08851DE41B53E32600DC9619 /* EMUploadAndShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUploadAndShare.h; sourceTree = "<group>"; };
@@ -1279,6 +1303,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				085348E91BCF354A008BBBF9 /* libPods.a in Frameworks */,
+				08820F7E1C3BB0A500E6E0ED /* HomageSDKFlow.framework in Frameworks */,
+				08820F7D1C3BB0A500E6E0ED /* HomageSDKCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,6 +1312,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08820F761C3BAF6200E6E0ED /* HomageSDKCore.framework in Frameworks */,
+				08820F781C3BAF6200E6E0ED /* HomageSDKFlow.framework in Frameworks */,
 				0896D5561B2E24D60094ED41 /* SystemConfiguration.framework in Frameworks */,
 				0896D5541B2E24C80094ED41 /* Security.framework in Frameworks */,
 				08875E101B19F51200E6663C /* AVKit.framework in Frameworks */,
@@ -1306,6 +1334,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				08CA99DF1BCFC6E3004A5A02 /* libPods.a in Frameworks */,
+				08820F7C1C3BB0A400E6E0ED /* HomageSDKFlow.framework in Frameworks */,
+				08820F7B1C3BB0A400E6E0ED /* HomageSDKCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1323,8 +1353,10 @@
 				08875E111B19F51E00E6663C /* AVKit.framework in Frameworks */,
 				08D929F51A77E0DE00B6A68F /* AssetsLibrary.framework in Frameworks */,
 				08D929F31A77E0D500B6A68F /* QuartzCore.framework in Frameworks */,
+				08820F6F1C3BAEF800E6E0ED /* HomageSDKFlow.framework in Frameworks */,
 				08D929F11A77E0C300B6A68F /* CoreVideo.framework in Frameworks */,
 				08D929EF1A77E0BC00B6A68F /* CoreMedia.framework in Frameworks */,
+				08820F6D1C3BAEF800E6E0ED /* HomageSDKCore.framework in Frameworks */,
 				08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */,
 				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
 				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
@@ -2127,6 +2159,15 @@
 			path = "Common Animations";
 			sourceTree = "<group>";
 		};
+		08820F6A1C3BAEF800E6E0ED /* HSDK */ = {
+			isa = PBXGroup;
+			children = (
+				08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */,
+				08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */,
+			);
+			path = HSDK;
+			sourceTree = SOURCE_ROOT;
+		};
 		08967C221B5B9A9F000DDCF9 /* gifs */ = {
 			isa = PBXGroup;
 			children = (
@@ -2480,6 +2521,7 @@
 			children = (
 				080CB34E1AA4DB7800603E30 /* emu.entitlements */,
 				086911D41B1740AB00D5D29F /* emubeta.entitlements */,
+				08820F6A1C3BAEF800E6E0ED /* HSDK */,
 				085C66DD1A937EC9007BC910 /* App */,
 				085C67251A937EC9007BC910 /* User Interface */,
 				08AA14271B08EDA1002E1B2F /* Localization */,
@@ -2689,6 +2731,7 @@
 				08AA150C1B0BA658002E1B2F /* Copy Pods Resources */,
 				08E30BC81BB9D857009EDCFF /* Crashlytics Run Script */,
 				085348DE1BCF3337008BBBF9 /* Embed App Extensions */,
+				08820F7A1C3BAF6200E6E0ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3768,6 +3811,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E11A937EC9007BC910 /* Config.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -3780,6 +3824,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
@@ -3903,6 +3948,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E21A937EC9007BC910 /* Config.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = Keyboard/KeyboardBeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -3915,6 +3961,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
@@ -4038,6 +4085,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E11A937EC9007BC910 /* Config.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = emu/emubeta.entitlements;
@@ -4053,6 +4101,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4133,6 +4182,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "emu/User Interface/Main/emu-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -4141,6 +4191,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E21A937EC9007BC910 /* Config.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = emu/emubeta.entitlements;
@@ -4157,6 +4208,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4236,6 +4288,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "emu/User Interface/Main/emu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
@@ -4244,6 +4297,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E11A937EC9007BC910 /* Config.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -4256,6 +4310,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
@@ -4379,6 +4434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 085C66E21A937EC9007BC910 /* Config.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -4391,6 +4447,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Keyboard/Supporting Files/emu-kb-prefix.pch";
@@ -4684,6 +4741,7 @@
 					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4787,6 +4845,7 @@
 					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
