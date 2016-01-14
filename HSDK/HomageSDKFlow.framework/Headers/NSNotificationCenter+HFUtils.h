@@ -1,5 +1,5 @@
 //
-//  NSNotificationCenter+Utils.h
+//  NSNotificationCenter+HFUtils.h
 //  Misc. Projects
 //
 //  Created by Aviv Wolf on 10/15/13.
@@ -11,7 +11,7 @@
 /**
  *  Utils category on NSNotificationCenter. Used to add unique observers (so no duplicate observers will be added for the same notification name)
  */
-@interface NSNotificationCenter (Utils)
+@interface NSNotificationCenter (HFUtils)
 
 /**
  Adds an observer.

@@ -50,7 +50,7 @@
     
     // Lets start the clocks.
     self.duration = duration;
-    self.alpha = 1;
+    self.alpha = 0.3;
     self.timeStarted = [NSDate date];
     self.progress = 0;
     [self update];
@@ -86,6 +86,9 @@
         [self.ticker invalidate];
         self.ticker = nil;
         [self.delegate tickingProgressDidFinish];
+        [UIView animateWithDuration:1.0 animations:^{
+            self.alpha = 0;
+        }];
     }
 }
 

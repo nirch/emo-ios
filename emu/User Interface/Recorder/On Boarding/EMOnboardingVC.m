@@ -57,6 +57,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.guiPagerView.alpha = 1;
     }];
+    [self.guiCollectionView reloadData];
 }
 
 -(void)dealloc
@@ -90,7 +91,7 @@
 {
     self.guiPagerView.pagesCount = EMOB_STAGES-1;
     self.guiPagerView.alpha = 0;
-    self.guiSwitchCameraButton.alpha = 0;
+    self.guiSwitchCameraButton.alpha = 1;
     [self update];
     
     // Depending on flow type
@@ -120,7 +121,8 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.stage + 1;
+    NSInteger count = self.stage + 1;
+    return count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

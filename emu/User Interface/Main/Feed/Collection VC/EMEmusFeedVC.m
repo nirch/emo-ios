@@ -482,11 +482,12 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
                  layout:(UICollectionViewLayout *)collectionViewLayout
  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGFloat pad = 10.0;
     CGFloat aspectRatio = [self.dataSource aspectRatioForItemAtIndexPath:indexPath];
-    CGFloat width = (self.view.bounds.size.width-10.0) / 2.0;
+    CGFloat width = (self.view.bounds.size.width - pad) / 2.0;
     CGFloat height = width;
     if (aspectRatio != 1.0) {
-        width = (self.view.bounds.size.width-10.0);
+        width = (self.view.bounds.size.width - pad);
         height = width / aspectRatio;
     }
     return CGSizeMake(width, height);
@@ -656,7 +657,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     UICollectionViewLayoutAttributes *attributes = [self.guiCollectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect frameForFirstCell = attributes.frame;
-    CGFloat headerHeight = 39;
+    CGFloat headerHeight = 19;
     return CGRectOffset(frameForFirstCell, 0, -headerHeight);
 }
 

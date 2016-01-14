@@ -48,7 +48,8 @@
 {
     // A mapping from font style name to the font name
     // that should be passed on UIFont initialization.
-    self.fontsNamesByStyle = @{@"regular":@"SourceSansPro-Regular",
+    self.fontsNamesByStyle = @{
+                               @"regular":@"SourceSansPro-Regular",
                                @"bold":@"SourceSansPro-Semibold"
                                };
 }

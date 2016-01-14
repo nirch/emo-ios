@@ -6,5 +6,5 @@
 //  Copyright (c) 2014 Homage. All rights reserved.
 //
 
-#import "NSNotificationCenter+Utils.h"
-#import "NSNotification+Utils.h"
+#import "NSNotificationCenter+HFUtils.h"
+#import "NSNotification+HFUtils.h"

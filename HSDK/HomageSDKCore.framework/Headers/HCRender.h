@@ -77,6 +77,14 @@
  */
 -(void)process;
 
+
+/**
+ *  Returns NSURL to the first output in outputs array. May return nil if info not available yet / not rendered yet.
+ *
+ *  @return NSURL pointing to the first output file in outputs array.
+ */
+-(NSURL *)outputURL;
+
 /**
  *  Render results using current configuration.
  *
@@ -127,6 +135,12 @@
  *  this is set to app's documents directory by default.
  */
 @property (nonatomic, readonly) NSString *baseOutputsPath;
+
+/**
+ *  The base path for all sources' resources using a relative path.
+ *  this is set to the app's documents directory by default.
+ */
+@property (nonatomic, readonly) NSString *baseSourcesPath;
 
 /**
  *  An array of source layers configuration info.
@@ -241,6 +255,13 @@ extern NSString* const hcrHeight;
 extern NSString* const hcrDuration;
 
 /**
+ *  Down sample images 
+ *  default=1: meaning no downscaling.
+ *  2: meaning frame will be halved in width and height.
+ */
+extern NSString* const hcrDownSample;
+
+/**
  *  frames per second of an input, output or resource.
  */
 extern NSString* const hcrFPS;
@@ -280,6 +301,16 @@ extern NSString* const hcrResourceName;
  *  The name of a dynamic mask
  */
 extern NSString* const hcrDynamicMaskName;
+
+/**
+ *  The absolute path to a dynamic mask.
+ */
+extern NSString* const hcrDynamicMaskPath;
+
+/**
+ *  The relative path to a dynamic mask.
+ */
+extern NSString* const hcrDynamicMaskRelativePath;
 
 /**
  *  Absolute file path

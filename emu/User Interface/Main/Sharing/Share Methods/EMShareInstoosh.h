@@ -10,4 +10,6 @@
 
 @interface EMShareInstoosh : EMShare
 
+-(void)shareVideoAtURL:(NSURL *)videoLocalURL;
+
 @end

@@ -31,12 +31,17 @@
     // Info about the shared video
     Emuticon *emu = self.objectToShare;
     NSURL *videoLocalURL = [emu videoURL];
+    [self shareVideoAtURL:videoLocalURL];
+}
+
+-(void)shareVideoAtURL:(NSURL *)videoLocalURL
+{
     NSString *caption = self.userInputText?self.userInputText:@"";
-    
+
     // Write the video to the library and share to instagram.
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library writeVideoAtPathToSavedPhotosAlbum:videoLocalURL completionBlock:^(NSURL *assetURL, NSError *error) {
-
+        
         // Build instagram deep link to the video asset
         NSString *escapedURLString = [[assetURL absoluteString] urlEncodeUsingEncoding:NSUTF8StringEncoding];
         NSString *escapedCaptionString = [caption urlEncodeUsingEncoding:NSUTF8StringEncoding];
@@ -44,11 +49,7 @@
                                        escapedURLString,
                                        escapedCaptionString];
         NSURL *instagramURL = [NSURL URLWithString:instagramURLString];
-        
-        // Open the deep link
-        if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
-            [[UIApplication sharedApplication] openURL:instagramURL];
-        }
+        [[UIApplication sharedApplication] openURL:instagramURL];        
     }];
 }
 

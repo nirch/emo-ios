@@ -70,6 +70,28 @@
  */
 -(NSArray *)nonPreviewEmuticons;
 
+#pragma mark - HSDK related
+/**
+ *  Creates and returns a mutable base cfg that can be used for configuring HSDK HCRender object.
+ *
+ *  @param userLayerInfo NSDictionary with info about the user layer resources (video capture, video mask)
+ *
+ *  @return NSMutableDictionary with cfg info for the HCRender object.
+ */
+
+/**
+ *  Creates and returns a mutable base cfg that can be used for configuring HSDK HCRender object.
+ *
+ *  @param userLayerInfo NSDictionary with info about the user layer resources (video capture, video mask)
+ *  @param inHD          BOOL if to render in the higher definition or lower difinition
+ *  @param fps           FPS default fps of the render
+ *
+ *  @return <#return value description#>
+ */
+-(NSMutableDictionary *)hcRenderCFGWithUserLayerInfo:(NSDictionary *)userLayerInfo
+                                                inHD:(BOOL)inHD
+                                                 fps:(NSInteger)fps;
+
 #pragma mark - Resources Paths
 -(NSString *)pathForUserLayerMask;
 -(NSString *)pathForUserLayerMaskInHD:(BOOL)inHD;

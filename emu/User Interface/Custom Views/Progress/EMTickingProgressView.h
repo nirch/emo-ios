@@ -31,6 +31,11 @@
 -(void)reset;
 
 /**
+ * Stop showing progress.
+ */
+-(void)done;
+
+/**
  *  Start animating the progress from 0 to 1 for the given duration.
  *
  *  @param duration       The duration in seconds that it should take to progress from 0 to 1

@@ -1,5 +1,5 @@
 //
-//  NSNotification+Utils.h
+//  NSNotification+HFUtils.h
 //  Homage
 //
 //  Created by Aviv Wolf on 1/17/14.
@@ -11,7 +11,7 @@
 /**
  *  A utils category on NSNotification.
  */
-@interface NSNotification (Utils)
+@interface NSNotification (HFUtils)
 
 /**
  *  BOOL YES if reportedError is not nil.

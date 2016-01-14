@@ -186,6 +186,7 @@
 #pragma mark - Theme color
 -(void)updateThemeColor:(UIColor *)color animated:(BOOL)animated
 {
+    color = [color colorWithAlphaComponent:0.97];
     if (animated) {
         [UIView animateWithDuration:0.3 animations:^{
             [self updateThemeColor:color animated:NO];

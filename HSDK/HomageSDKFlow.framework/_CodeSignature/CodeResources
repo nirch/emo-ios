@@ -6,7 +6,7 @@
 	<dict>
 		<key>.DS_Store</key>
 		<data>
-		AR7JxO7WGK9fT+Tp/X2JWczulhE=
+		kZ8mjOUpkVOS2xY4g0Mwa4jIBfs=
 		</data>
 		<key>Headers/HFBGRemover.h</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/HFNotificationCenter.h</key>
 		<data>
-		JrxQwBTA/U++luu/i6A6Tsg1tcs=
+		C5Mc+wgM6cSh15KWqTw+374yOcY=
 		</data>
 		<key>Headers/HFPObject.h</key>
 		<data>
@@ -60,17 +60,17 @@
 		<data>
 		NPeVXiUg1BluMvemyzG2nQpR3/0=
 		</data>
-		<key>Headers/NSNotification+Utils.h</key>
+		<key>Headers/NSNotification+HFUtils.h</key>
 		<data>
-		GmZUBxC9b0hCgO7i0/VNU5ez3O4=
+		RyV224b7fmVZdg2P6lyXC8CLwVc=
 		</data>
-		<key>Headers/NSNotificationCenter+Utils.h</key>
+		<key>Headers/NSNotificationCenter+HFUtils.h</key>
 		<data>
-		F+5zxOZeBgWNVlVj8Dv/murMW/c=
+		4cTqNB5AXMJlses+hgZyvNzi1fQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Nfne07WOVvajrCefCmsPgydix4k=
+		Q6KM1ATh2NwTIvmIontesAd5eq0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -102,7 +102,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		o3RQYs6GdBFF11BKrkSalPDc5SM=
+		/8LvLuuCMoPcAKIRYu4pl5oYnhI=
+		</data>
+		<key>release_notes.txt</key>
+		<data>
+		eTzsie5yynnInId2LeULXndCgdc=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -133,7 +137,7 @@
 		</data>
 		<key>Headers/HFNotificationCenter.h</key>
 		<data>
-		JrxQwBTA/U++luu/i6A6Tsg1tcs=
+		C5Mc+wgM6cSh15KWqTw+374yOcY=
 		</data>
 		<key>Headers/HFPObject.h</key>
 		<data>
@@ -159,13 +163,13 @@
 		<data>
 		NPeVXiUg1BluMvemyzG2nQpR3/0=
 		</data>
-		<key>Headers/NSNotification+Utils.h</key>
+		<key>Headers/NSNotification+HFUtils.h</key>
 		<data>
-		GmZUBxC9b0hCgO7i0/VNU5ez3O4=
+		RyV224b7fmVZdg2P6lyXC8CLwVc=
 		</data>
-		<key>Headers/NSNotificationCenter+Utils.h</key>
+		<key>Headers/NSNotificationCenter+HFUtils.h</key>
 		<data>
-		F+5zxOZeBgWNVlVj8Dv/murMW/c=
+		4cTqNB5AXMJlses+hgZyvNzi1fQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -197,7 +201,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		o3RQYs6GdBFF11BKrkSalPDc5SM=
+		/8LvLuuCMoPcAKIRYu4pl5oYnhI=
+		</data>
+		<key>release_notes.txt</key>
+		<data>
+		eTzsie5yynnInId2LeULXndCgdc=
 		</data>
 	</dict>
 	<key>rules</key>

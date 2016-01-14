@@ -10,6 +10,7 @@
 #import "NSManagedObject+FindAndCreate.h"
 #import "EMDB.h"
 #import "EMDB+Files.h"
+#import <HomageSDKCore/HomageSDKCore.h>
 
 @implementation EmuticonDef (Logic)
 
@@ -109,6 +110,16 @@
     return w/h;
 }
 
+-(CGSize)sizeInHD:(BOOL)inHD
+{
+    CGFloat w = self.emuWidth?self.emuWidth.floatValue:EMU_DEFAULT_WIDTH;
+    CGFloat h = self.emuHeight?self.emuHeight.floatValue:EMU_DEFAULT_HEIGHT;
+    if (inHD) {
+        w *= 2.0f;
+        h *= 2.0f;
+    }
+    return CGSizeMake(w, h);
+}
 
 -(NSArray *)nonPreviewEmuticons
 {
@@ -119,6 +130,127 @@
     }
     return emus;
 }
+
+#pragma mark - HSDK related
+-(NSMutableDictionary *)hcRenderCFGWithUserLayerInfo:(NSDictionary *)userLayerInfo
+                                                inHD:(BOOL)inHD
+                                                 fps:(NSInteger)fps
+{
+    // All resources must be available, if not will return nil and rendering should be avoided.
+    if (![self allResourcesAvailableInHD:inHD]) return nil;
+    
+    NSMutableDictionary *cfg = [NSMutableDictionary new];
+    CGSize size = [self sizeInHD:inHD];
+    
+    // General info
+    cfg[hcrWidth] = @(size.width);
+    cfg[hcrHeight] = @(size.height);
+    cfg[hcrFPS] = @(fps);
+    cfg[hcrDuration] = self.duration?self.duration:@2.0;
+    
+    NSMutableArray *layers = [NSMutableArray new];
+    
+    // Background layer
+    [self addBackLayerToHCRenderLayers:layers inHD:inHD];
+    
+    // User layer
+    [self addUserLayerToHCRenderLayers:layers userLayerInfo:userLayerInfo inHD:inHD];
+    
+    // Front layer
+    [self addFrontLayerToHCRenderLayers:layers inHD:inHD];
+
+    cfg[hcrSourceLayersInfo] = layers;
+    
+    return cfg;
+}
+
+-(void)addBackLayerToHCRenderLayers:(NSMutableArray *)layers inHD:(BOOL)inHD
+{
+    NSString *path = [self pathForBackLayerInHD:inHD];
+    if (path == nil) return;
+    
+    NSMutableDictionary *layer = [NSMutableDictionary new];
+    layer[hcrSourceType] = hcrGIF;
+    layer[hcrPath] = path;
+    [layers addObject:layer];
+}
+
+-(void)addUserLayerToHCRenderLayers:(NSMutableArray *)layers userLayerInfo:(NSDictionary *)userLayerInfo inHD:(BOOL)inHD
+{
+    //
+    // Converts old style model emus to new style rendering information supported by the SDK API
+    // Exists because of historical reasons
+    //
+    if ([userLayerInfo[@"writer_type"] isEqualToString:@"HFWriterVideo"]) {
+        // Captured layers provided by HSDK video writer.
+        NSDictionary *outputs = userLayerInfo[@"output_files"];
+        NSString *path = userLayerInfo[@"output_path"];
+        
+        NSString *videoFile = outputs[@"captured"];
+        if (videoFile == nil) return;
+
+        // The user layer.
+        NSString *maskFile = outputs[@"mask"];
+        if (maskFile == nil) return;
+        NSMutableDictionary *layer = [NSMutableDictionary new];
+        layer[hcrSourceType] = hcrVideo;
+        layer[hcrPath] = [path stringByAppendingPathComponent:videoFile];
+        layer[hcrDynamicMaskPath] = [path stringByAppendingPathComponent:maskFile];
+        if (!inHD) layer[hcrDownSample] = @2;
+        
+        // Effects on the user layer.
+        [self addEffectsToUserLayer:layer inHD:inHD];
+        
+        [layers addObject:layer];
+    }
+}
+
+-(void)addEffectsToUserLayer:(NSMutableDictionary *)layer inHD:(BOOL)inHD
+{
+    NSMutableArray *effects = [NSMutableArray new];
+    
+    // Old effects style to new effects stlye
+    if (self.effects) {
+    }
+    
+    //
+    // Old user dynamic mask effect --> HSDK DMask effect
+    //
+    NSString *dMaskPath = [self pathForUserLayerDynamicMaskInHD:inHD];
+    if (dMaskPath) {
+        NSMutableDictionary *effect = [NSMutableDictionary new];
+        effect[hcrEffectType] = hcrEffectTypeDMask;
+        effect[hcrPath] = dMaskPath;
+        [effects addObject:effect];
+    }
+    
+    //
+    // Old user mask effect --> HSDK Mask effect
+    //
+    NSString *maskPath = [self pathForUserLayerMaskInHD:inHD];
+    if (maskPath) {
+        NSMutableDictionary *effect = [NSMutableDictionary new];
+        effect[hcrEffectType] = hcrEffectTypeMask;
+        effect[hcrPath] = maskPath;
+        [effects addObject:effect];
+    }
+    
+    if (effects.count > 0) {
+        layer[hcrEffects] = effects;
+    }
+}
+
+-(void)addFrontLayerToHCRenderLayers:(NSMutableArray *)layers inHD:(BOOL)inHD
+{
+    NSString *path = [self pathForFrontLayerInHD:inHD];
+    if (path == nil) return;
+    
+    NSMutableDictionary *layer = [NSMutableDictionary new];
+    layer[hcrSourceType] = hcrGIF;
+    layer[hcrPath] = path;
+    [layers addObject:layer];
+}
+
 
 #pragma mark - Resources required
 -(NSInteger)requiredResourcesCount

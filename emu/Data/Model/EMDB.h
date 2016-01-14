@@ -32,6 +32,7 @@
 #define emkIndexPath                @"indexPath"
 #define emkSender                   @"sender"
 #define emkOID                      @"oid"
+#define emkUUID                     @"uuid"
 #define emkPackageOID               @"package oid"
 #define emkEmuticonOID              @"emuticon oid"
 #define emkEmuticonDefOID           @"emuticon definition oid"
@@ -43,6 +44,9 @@
 #define emkDate                     @"date"
 #define emkDebug                    @"debug"
 #define emkDataAlreadyExists        @"data already exists"
+#define emkURL                      @"url"
+#define emkCaptureInfo              @"capture info"
+#define emkError                    @"error"
 
 typedef NS_ENUM(NSInteger, EMMediaDataType) {
     EMMediaDataTypeGIF      = 0,

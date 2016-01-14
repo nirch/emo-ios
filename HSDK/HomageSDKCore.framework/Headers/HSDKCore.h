@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ *  Base singleton SDK object.
+ */
 @interface HSDKCore : NSObject
 
 #pragma mark - Initialization

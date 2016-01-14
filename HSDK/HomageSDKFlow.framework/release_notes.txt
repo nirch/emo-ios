@@ -1,0 +1,9 @@
+--------------------
+HSDKFlow Version 1.7
+--------------------
+- Bug fix: cancel recording threading issues resolved
+
+--------------------
+HSDKFlow Version 1.6
+--------------------
+- Bug fix: renderer failing to load resources provided as absolute paths issue resolved

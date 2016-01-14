@@ -18,7 +18,6 @@
 
 #define TAG @"EMMainNavigationVC"
 
-
 #import "EMNavigationAndFlowVC.h"
 #import "EMTabsBarVC.h"
 #import "EMUINotifications.h"
@@ -30,6 +29,7 @@
 #import <PINRemoteImage/PINRemoteImageManager.h>
 #import "EMBlockingProgressVC.h"
 #import <UIView+Toast.h>
+#import "emu-Swift.h"
 
 @interface EMNavigationAndFlowVC () <
     EMRecorderDelegate,
@@ -645,8 +645,9 @@
 -(void)openRecorderWithConfigInfo:(NSDictionary *)info
 {
     // Open the recorder and make this VC the delegate of the recorder.
-    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:info];
+    EMRecorderVC2 *recorderVC = [EMRecorderVC2 recorderVCWithConfigInfo:info];
     recorderVC.delegate = self;
+    
     [self presentViewController:recorderVC animated:YES completion:^{
         [self.splashVC hideAnimated:NO];
     }];
