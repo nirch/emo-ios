@@ -422,13 +422,47 @@
     }
 }
 
-//-(NSMutableDictionary *)hcRenderCFGInHD:(BOOL)inHD
-//                                    fps:(NSInteger)fps
-//                                footage:(UserFootage *)footage
-//{
-//    NSMutableDictionary *cfg = [self.emuDef hcRenderCFGWithUserFootage:footage inHD:inHD fps:fps];
-//    return cfg;
-//}
+-(BOOL)isJointEmu
+{
+    if (self.emuDef.jointEmu != nil) return YES;
+    return NO;
+}
+
+-(NSArray *)remoteFootages
+{
+    if (self.isJointEmu == NO) return @[];
+    NSArray *slots = self.emuDef.jointEmu[@"slots"];
+    if (![slots isKindOfClass:[NSArray class]]) return @[];
+
+    NSMutableArray *footages = [NSMutableArray new];
+
+    for (NSInteger slotIndex=0;slotIndex<slots.count;slotIndex++) {
+        if (slotIndex==0) continue;
+        PlaceHolderFootage *placeHolderFootage = [PlaceHolderFootage new];
+        [footages addObject:placeHolderFootage];
+    }
+    
+    return footages;
+}
+
+-(NSArray *)relatedFootages
+{
+    if (self.isJointEmu) {
+        NSMutableArray *footages = [NSMutableArray new];
+        
+        // On slot 1, return the most preffered footage.
+        [footages addObject:[self mostPrefferedUserFootage]];
+        
+        // Add placeholder slots.
+        NSArray *remoteFootages = [self remoteFootages];
+        for (NSObject<FootageProtocol>* remoteFootage in remoteFootages) {
+            [footages addObject:remoteFootage];
+        }
+        return footages;
+    }
+    
+    return @[[self mostPrefferedUserFootage]];
+}
 
 
 @end

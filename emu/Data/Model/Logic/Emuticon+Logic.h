@@ -261,26 +261,10 @@
 #define rkOutputResolutionHeight    @"outputResolutionHeight"
 #define rkRenderInHD                @"renderInHD"
 
-//-(NSDictionary *)infoForGifRenderInHD:(BOOL)inHD;
-//-(NSDictionary *)infoForVideoRenderInHD:(BOOL)inHD;
-
 -(CGSize)size;
 -(NSString *)resolutionLabel;
 -(BOOL)boolWasRenderedInHD:(BOOL)inHD;
-
-
-///**
-// *  Creates default render configuration for an emu for HSDK HCRender engine.
-// *
-// *  @param inHD Bool indicates if render is of higher definition or not
-// *  (The meaning of HD/None HD in emu is the content is @2x or not
-// *   for example: 640x360 in None HD means 1280x720 in HD for the same emu)
-// *  @param fps  Frames per second
-// *
-// *  @return NSMutableDictionary with default render configuration.
-// */
-//-(NSMutableDictionary *)hcRenderCFGInHD:(BOOL)inHD
-//                                    fps:(NSInteger)fps
-//                                footage:(UserFootage *)footage;
+-(NSArray *)relatedFootages;
+-(BOOL)isJointEmu;
 
 @end

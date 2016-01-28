@@ -113,6 +113,11 @@ typedef NS_ENUM(NSInteger, hcbMark){
     hcbMarkUnrecognized = -9999,
     
     /**
+     *  An exception was raised during bg detection.
+     */
+    hcbMarkErrorEncountered = -100,
+    
+    /**
      *  Noisy background.
      *  A more uniform BG should be used.
      */

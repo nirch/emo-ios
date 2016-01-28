@@ -57,8 +57,7 @@ extern NSString* const hcrEffectTypeTransform;
 
 /**
  *  gray_scale
- *  A boolean flag for gray scale effect.
- *  If value is true, converts the layer to gray scale.
+ *  A black&white filter effect.
  */
 extern NSString* const hcrEffectTypeGrayScale;
 
@@ -73,6 +72,45 @@ extern NSString* const hcrEffectTypeMask;
  *  A dynamic mask effect.
  */
 extern NSString* const hcrEffectTypeDMask;
+
+/**
+ *  sepia
+ *  A sepia filter effect.
+ */
+extern NSString* const hcrEffectTypeSepia;
+
+/**
+ *  cartoon
+ *  A cartoonize filter effect.
+ */
+extern NSString* const hcrEffectTypeCartoon;
+
+/**
+ *  alpha
+ *  An alpha (transparency) effect.
+ */
+extern NSString* const hcrEffectTypeAlpha;
+
+
+/**
+ *  rgb_levels
+ *  Levels of RGB to be used with sepia effect (array of levels, each level between 0 - 1)
+ */
+extern NSString* const hcrRGBLevels;
+
+/**
+ *  colors_num
+ *  Number of colors to use with cartoonize effect
+ */
+extern NSString* const hcrColorsNum;
+
+/**
+ *  alpha_level
+ *  Alphha level to use with the alpha effect (value between 0 - 1)
+ */
+extern NSString* const hcrAlphaLevel;
+
+
 
 /**
  *  Time (

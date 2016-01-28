@@ -7,7 +7,19 @@
 //
 
 #import "PlaceHolderFootage.h"
+#import <HomageSDKCore/HomageSDKCore.h>
 
 @implementation PlaceHolderFootage
+
+-(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD
+{
+    NSMutableDictionary *layer = [NSMutableDictionary new];
+    layer[hcrSourceType] = hcrPNG;
+    
+    NSString *resourceName = [NSString stringWithFormat:@"placeholder%@.png", forHD?@"480":@"240"];
+    layer[hcrResourceName] = resourceName;
+    
+    return layer;
+}
 
 @end

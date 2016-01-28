@@ -30,6 +30,7 @@
 #import "EMInterfaceDelegate.h"
 #import "EMBackend+AppStore.h"
 #import "EMFullScreenGifPlayer.h"
+#import "AppManagement.h"
 
 
 @interface EMEmuticonScreenVC () <
@@ -268,7 +269,7 @@
     
     // Resolution (showed only when the aspect ratio is not 1:1
     if ([emu.emuDef aspectRatio] != 1.0f) {
-        self.guiResolutionLabel.hidden = NO;
+        self.guiResolutionLabel.hidden = [AppManagement.sh isTestApp]?NO:YES;
         self.guiFullScreenButton.hidden = NO;
         self.guiResolutionLabel.text = [emu resolutionLabel];
     } else {

@@ -2,7 +2,7 @@
 //  UserFootage+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 18/01/2016.
+//  Created by Aviv Wolf on 28/01/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UserFootage (CoreDataProperties)
 
+@property (nullable, nonatomic, retain) NSNumber *audioAvailable;
 @property (nullable, nonatomic, retain) NSNumber *capturedVideoAvailable;
 @property (nullable, nonatomic, retain) NSNumber *duration;
 @property (nullable, nonatomic, retain) NSNumber *footageHeight;
@@ -24,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *oid;
 @property (nullable, nonatomic, retain) NSNumber *pngSequenceAvailable;
 @property (nullable, nonatomic, retain) NSDate *timeTaken;
-@property (nullable, nonatomic, retain) NSNumber *audioAvailable;
+@property (nullable, nonatomic, retain) NSNumber *remoteFootage;
 
 @end
 

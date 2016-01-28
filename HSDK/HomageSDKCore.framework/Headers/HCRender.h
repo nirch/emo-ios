@@ -78,6 +78,13 @@
 -(void)process;
 
 
+
+/**
+ *  YES if output should post notifications during rendering about the progress of the render.
+ *  NO by default.
+ */
+@property (nonatomic) BOOL outputProgressNotifications;
+
 /**
  *  Returns NSURL to the first output in outputs array. May return nil if info not available yet / not rendered yet.
  *
@@ -95,6 +102,12 @@
  *  It makes sense to always run this in a background thread.
  */
 -(void)processWithInfo:(NSDictionary *)info;
+
+/**
+ *  Cancel rendering in progress.
+ *  (sliently ignored if called if not currently rendering)
+ */
+-(void)cancel;
 
 #pragma mark - Properties
 /**  @name Properties */
@@ -291,6 +304,11 @@ extern NSString* const hcrResourcesBundle;
  *  (optional) when this path is set, relative output paths are relative to this path. If not set, relative paths will be relative to NSDocument directory by default.
  */
 extern NSString* const hcrOutputsPath;
+
+/**
+ *  Progress of long processes (0.0 - 1.0 value)
+ */
+extern NSString* const hcrProgress;
 
 #pragma mark - Resources and files info
 /**

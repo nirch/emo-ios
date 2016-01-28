@@ -17,6 +17,8 @@
 #import "EmuticonDef+Logic.h"
 
 #import "UserFootage.h"
+#import "UserTempFootage.h"
+#import "PlaceHolderFootage.h"
 #import "UserFootage+Logic.h"
 
 #import "AppCFG.h"

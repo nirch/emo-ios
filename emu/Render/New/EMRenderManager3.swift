@@ -234,7 +234,7 @@ class EMRenderManager3 : NSObject
             let emuOID = emu.oid!
             
             // Preffered footage
-            let footage = emu.mostPrefferedUserFootage()
+            let footages = emu.relatedFootages() as [AnyObject]
             
             //
             // If not all resources available, we can't render.
@@ -249,7 +249,7 @@ class EMRenderManager3 : NSObject
             
             // Source CFG
             var renderCFG = emuDef.hcRenderCFGWithFootages(
-                [footage],
+                footages,
                 oldStyle: true,
                 inHD: false,
                 fps: fps) as [NSObject:AnyObject]
