@@ -13,6 +13,8 @@
 
 #import "EmuticonDef.h"
 
+@class UserFootage;
+
 @interface EmuticonDef (Logic)
 
 #pragma mark - Find or create
@@ -62,6 +64,14 @@
  */
 -(CGFloat)aspectRatio;
 
+
+/**
+ *  Frames per second (number of frames divided by duration in seconds)
+ *
+ *  @return NSInteger frames per second
+ */
+-(NSInteger)fps;
+
 /**
  *  An array of all related emuticons
  *  excluding preview emuticons.
@@ -74,23 +84,16 @@
 /**
  *  Creates and returns a mutable base cfg that can be used for configuring HSDK HCRender object.
  *
- *  @param userLayerInfo NSDictionary with info about the user layer resources (video capture, video mask)
+ *  @param footages An array of footages objects.
+ *  @param inHD     BOOL if to render in the higher definition or lower difinition
+ *  @param fps      FPS default fps of the render
  *
- *  @return NSMutableDictionary with cfg info for the HCRender object.
+ *  @return NSMutableDictionary with CFG for HCRender
  */
-
-/**
- *  Creates and returns a mutable base cfg that can be used for configuring HSDK HCRender object.
- *
- *  @param userLayerInfo NSDictionary with info about the user layer resources (video capture, video mask)
- *  @param inHD          BOOL if to render in the higher definition or lower difinition
- *  @param fps           FPS default fps of the render
- *
- *  @return <#return value description#>
- */
--(NSMutableDictionary *)hcRenderCFGWithUserLayerInfo:(NSDictionary *)userLayerInfo
-                                                inHD:(BOOL)inHD
-                                                 fps:(NSInteger)fps;
+-(NSMutableDictionary *)hcRenderCFGWithFootages:(NSArray *)footages
+                                       oldStyle:(BOOL)oldStyle
+                                           inHD:(BOOL)inHD
+                                            fps:(NSInteger)fps;
 
 #pragma mark - Resources Paths
 -(NSString *)pathForUserLayerMask;

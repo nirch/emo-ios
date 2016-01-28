@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "FootageProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UserFootage : NSManagedObject
+@interface UserFootage : NSManagedObject<FootageProtocol>
 
 // Insert code here to declare functionality of your managed object subclass
 

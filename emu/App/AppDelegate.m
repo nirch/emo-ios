@@ -143,6 +143,10 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     REMOTE_LOG(@"App lifecycle: %s", __PRETTY_FUNCTION__);
     
+    // Migration from V<2.2 to V>=2.2 footage type support
+    // (starting V2.2 renders using HCRender with video/gif source instead of png sequence source)
+//    [EMBackend.sh footagesMigrationIfRequired];
+    
     // Logs 'install' and 'app activate' App Events.
     [FBSDKAppEvents activateApp];
     

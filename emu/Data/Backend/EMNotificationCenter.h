@@ -32,6 +32,7 @@
 // Notification of navigation events
 #define emkUINavigationTabSelected @"emk ui nav tab selected"
 #define emkUINavigationShowBlockingProgress @"emk ui show blocking progress"
+#define emkUINavigationUpdateBlockingProgress @"emk ui update blocking progress"
 
 // Notification of the backend to the UI
 #define emkUIDataRefreshPackages @"emk backend data refreshed packages"

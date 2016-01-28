@@ -203,6 +203,7 @@
     - hcrPos=**pos**: 2D Position (x,y)
     - hcrScale=**scale**: Scale
     - hcrRotate=**rotate**: Rotation value in 3 axis (x,y,z)
+    - hcrPalette=**palette**: palette string forcing output to include certain colors (for example in gif output)
  */
 +(NSDictionary *)constants;
 
@@ -327,6 +328,15 @@ extern NSString* const hcrPaths;
  */
 extern NSString* const hcrRelativePath;
 
+/**
+ *  Paths pattern. A pattern for a range of resources - will be used to produce a list of paths with a "running number".
+ */
+extern NSString* const hcrPathsPattern;
+
+/**
+ *  Number of frames.
+ */
+extern NSString* const hcrFramesCount;
 
 #pragma mark - Audio
 /**
@@ -392,5 +402,9 @@ extern NSString* const hcrVideo;
  */
 extern NSString* const hcrColor;
 
+/**
+ *  Palette string forcing a list of colors to be used in output (used in gif output)
+ */
+extern NSString* const hcrPalette;
 
 @end

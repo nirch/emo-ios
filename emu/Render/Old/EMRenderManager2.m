@@ -184,14 +184,14 @@
     //
     // We should and can render this emu.
     // Enqueue it for rendering with all required information.
-    __weak EMRenderManager2 *wSelf = self;
-    NSDictionary *renderInfo = [emu infoForGifRenderInHD:inHD];
-    dispatch_async(self.renderingManagementQueue, ^{
-        wSelf.oidByIndexPath[indexPath] = oid;
-        wSelf.readyPool[oid] = renderInfo;
-        wSelf.userInfo[oid] = userInfo;
-        [wSelf _manageQueue];
-    });
+//    __weak EMRenderManager2 *wSelf = self;
+//    NSDictionary *renderInfo = [emu infoForGifRenderInHD:inHD];
+//    dispatch_async(self.renderingManagementQueue, ^{
+//        wSelf.oidByIndexPath[indexPath] = oid;
+//        wSelf.readyPool[oid] = renderInfo;
+//        wSelf.userInfo[oid] = userInfo;
+//        [wSelf _manageQueue];
+//    });
 }
 
 #pragma mark - Queue management
@@ -359,50 +359,50 @@
                failBlock:(void (^)(void))failBlock
                     inHD:(BOOL)inHD
 {
-    EmuticonDef *emuDef = emu.emuDef;
-    HMLOG(TAG,
-          EM_DBG,
-          @"Starting to render temp video file for emu named:%@. %@ frames.",
-          emuDef.name,
-          emuDef.framesCount
-          );
-    
-    NSDictionary *renderInfo = [emu infoForVideoRenderInHD:inHD];
-    EMRenderer *renderer = [EMRenderer rendererWithInfo:renderInfo];
-    if (requiresWaterMark) {
-        renderer.waterMarkName = @"wmTL";
-        NSString *wm = emuDef.prefferedWaterMark;
-        if ([wm isEqualToString:@"wmTR"] || [wm isEqualToString:@"wmBR"] || [wm isEqualToString:@"wmBL"]) {
-            renderer.waterMarkName = wm;
-        }
-    }    
-    
-    // Should output a looping video to the temp folder.
-    renderer.outputPath = NSTemporaryDirectory();
-    renderer.outputOID = emu.oid;
-    renderer.shouldOutputVideo = YES;
-    
-    // Audio track (optional)
-    renderer.audioFileURL = emu.audioFileURL;
-    renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
-    
-    // Video settings (optional, use defaults if not defined)
-    renderer.videoFXLoopsCount = emu.videoLoopsCount && emu.videoLoopsCount.integerValue>0? emu.videoLoopsCount.integerValue : EMU_DEFAULT_VIDEO_LOOPS_COUNT;
-    renderer.videoFXLoopEffect = emu.videoLoopsEffect? emu.videoLoopsEffect.integerValue : EMU_DEFAULT_VIDEO_LOOPS_FX;
-    
-    
-    // Render
-    dispatch_async(self.renderingQueue, ^(void){
-        [renderer render];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Callback on the main thread.
-            if (emu.videoURL) {
-                completionBlock();
-            } else {
-                failBlock();
-            }
-        });
-    });
+//    EmuticonDef *emuDef = emu.emuDef;
+//    HMLOG(TAG,
+//          EM_DBG,
+//          @"Starting to render temp video file for emu named:%@. %@ frames.",
+//          emuDef.name,
+//          emuDef.framesCount
+//          );
+//    
+//    NSDictionary *renderInfo = [emu infoForVideoRenderInHD:inHD];
+//    EMRenderer *renderer = [EMRenderer rendererWithInfo:renderInfo];
+//    if (requiresWaterMark) {
+//        renderer.waterMarkName = @"wmTL";
+//        NSString *wm = emuDef.prefferedWaterMark;
+//        if ([wm isEqualToString:@"wmTR"] || [wm isEqualToString:@"wmBR"] || [wm isEqualToString:@"wmBL"]) {
+//            renderer.waterMarkName = wm;
+//        }
+//    }    
+//    
+//    // Should output a looping video to the temp folder.
+//    renderer.outputPath = NSTemporaryDirectory();
+//    renderer.outputOID = emu.oid;
+//    renderer.shouldOutputVideo = YES;
+//    
+//    // Audio track (optional)
+//    renderer.audioFileURL = emu.audioFileURL;
+//    renderer.audioStartTime = emu.audioStartTime? emu.audioStartTime.doubleValue : 0;
+//    
+//    // Video settings (optional, use defaults if not defined)
+//    renderer.videoFXLoopsCount = emu.videoLoopsCount && emu.videoLoopsCount.integerValue>0? emu.videoLoopsCount.integerValue : EMU_DEFAULT_VIDEO_LOOPS_COUNT;
+//    renderer.videoFXLoopEffect = emu.videoLoopsEffect? emu.videoLoopsEffect.integerValue : EMU_DEFAULT_VIDEO_LOOPS_FX;
+//    
+//    
+//    // Render
+//    dispatch_async(self.renderingQueue, ^(void){
+//        [renderer render];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            // Callback on the main thread.
+//            if (emu.videoURL) {
+//                completionBlock();
+//            } else {
+//                failBlock();
+//            }
+//        });
+//    });
 }
 
 

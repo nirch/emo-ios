@@ -25,11 +25,11 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     @IBOutlet weak var guiMessageLabel: UILabel!
     
     // Buttons
+    
     @IBOutlet weak var guiRecordButton: EMRecordButton!
     @IBOutlet weak var guiContinueAnywayButton: EMFlowButton!
     @IBOutlet weak var guiRestartButton: UIButton!
     @IBOutlet weak var guiHelpButton: UIButton!
-    
     @IBOutlet weak var guiCancelButton: UIButton!
     
     // Record timing
@@ -54,6 +54,8 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     var package : Package?
     var emuticonsOID : NSArray?
     var msgUUID: String = ""
+    var latestRecordingInfo : [NSObject:AnyObject]?
+    var shouldRecordAudio : Bool = false
     
     // Timing
     var duration : NSTimeInterval = 2.0
@@ -250,8 +252,17 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         // TODO: The API is like this because of historical reasons.
         // TODO: make this internal/encapsulated in the recorder and make the API simpler.
         if let info = self.info {
-            self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? NSString;
-            self.emuticonDefOIDForPreview = info[emkEmuticonDefOID] as? NSString;
+            if let emuticonsOID = info[emkRetakeEmuticonsOID] as? NSArray {
+                self.emuticonsOID = emuticonsOID
+                let emuOID = self.emuticonsOID!.lastObject as! String
+                if let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
+                    self.emuticonDefNameForPreview = emu.emuDef?.name
+                    self.emuticonDefOIDForPreview = emu.emuDef?.oid
+                }
+            } else {
+                self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? NSString;
+                self.emuticonDefOIDForPreview = info[emkEmuticonDefOID] as? NSString;
+            }
         }
     }
     
@@ -358,7 +369,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     }
     
     func onboardingUserWantsToCancel() {
-        
+        self.delegate?.recorderCanceledByTheUserInFlow(self.flowType, info: self.info as? [NSObject:AnyObject])
     }
     
     func onboardingWantsToSwitchCamera() {
@@ -451,6 +462,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.renderingUI()
         self.guiCameraPreviewViewContainer.alpha = 0
         self.showRecordingPreviewAnimated(true)
+        self.latestRecordingInfo = info
         self.recordingPreviewVC?.renderEmuDef(self.emuticonDefOIDForPreview as! String, captureInfo: info)
     }
     
@@ -462,20 +474,63 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     // MARK: - Timing
     //
     func updateTimingIndicator() {
-        self.guiTimingLabel.text = "yad yada yada"
+        let durationInSeconds = Int(self.duration)
+        var title = EML.s("RECORDER_MESSAGE_REVIEW_PREVIEW")
+        title = title.stringByReplacingOccurrencesOfString("#", withString: String(durationInSeconds))
+        self.guiTimingLabel.text = title
         self.guiTimingLabel.animateQuickPopIn()
+    }
+    
+    //
+    // MARK: - Restart & Failures
+    //
+    func epicFail() {
+        let alert = UIAlertController(
+            title: EML.s("ERROR_TITLE"),
+            message: EML.s("SOMETHING_WENT_WRONG"),
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        if self.flowType != EMRecorderFlowType.Onboarding {
+            alert.addAction(UIAlertAction(title: EML.s("CANCEL"), style: UIAlertActionStyle.Cancel, handler:{(UIAlertAction) -> Void in
+                
+            }))
+        }
+
+        alert.addAction(UIAlertAction(title: EML.s("TRY_AGAIN"), style: UIAlertActionStyle.Default, handler:{(UIAlertAction) -> Void in
+            self.restartItAll()
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    func restartItAll() {
+        // Delete temp files and restart recorder session
+        self.recordingPreviewVC!.stop()
+        self.hideRecordingPreviewAnimated(false)
+        self.initCaptureSession()
+        self.captureSession?.resetAndStartAutoFlow()
     }
     
     //
     // MARK: - Recording
     //
     func startRecording() {
+        self.latestRecordingInfo = nil
         if self.captureSession?.isRecording == true {return}
 
         //
         // Writer
         //
+        self.shouldRecordAudio = true
         let writer = HFWriterVideo()
+        if self.shouldRecordAudio {
+            writer.includingAudio = true
+            writer.audioSampleRate = 24000
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
+            } catch {}
+        }
         self.captureSession?.startRecordingUsingWriter(writer, duration: self.duration)
         
         //
@@ -527,7 +582,6 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     }
     
     func previewDidFailWithInfo(info : [NSObject:AnyObject]) {
-        
     }
     
     // MARK: - IB Actions
@@ -543,7 +597,14 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
 
         // UI
         self.guiRecordButton.hidden = true
-        EMUISound.sh().playSoundNamed(SND_START_RECORDING)
+        
+        // Don't play sound when starting to record with audio.
+        if self.shouldRecordAudio {
+//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
+        } else {
+            EMUISound.sh().playSoundNamed(SND_START_RECORDING)            
+        }
+
         self.guiTimingProgress.startTickingForDuration(self.duration, ticksPerSecond: 2)
         self.guiCancelButton.hidden = false
         self.hideMessage(false)
@@ -569,17 +630,59 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         
     }
     
-    @IBAction func onPressedPositiveButton(sender: AnyObject) {
-        // Create new footage!
-        self.delegate?.recorderWantsToBeDismissedAfterFlow(self.flowType, info: self.info! as [NSObject : AnyObject])
+    @IBAction func onPressedPositiveButton(sender: UIButton) {
+        sender.hidden = true
+        
+        // Create a new footage object
+        let oid = NSUUID().UUIDString
+        let footage = UserFootage.newFootageWithID(oid, captureInfo: self.latestRecordingInfo, context: EMDB.sh().context)
+        if footage == nil || footage.validateResources() == false {
+            self.epicFail()
+            return
+        }
+        let appCFG = AppCFG.cfgInContext(EMDB.sh().context)
+        
+        // Apply the footage according to flow type.
+        if (self.flowType == EMRecorderFlowType.Onboarding) {
+            
+            // Make it the default footage.
+            appCFG.prefferedFootageOID = footage.oid
+            appCFG.onboardingPassed = true
+            
+        } else if (self.flowType == EMRecorderFlowType.RetakeForSpecificEmuticons) {
+            
+            // Set the preffered footage for all emus in the list to the new footage
+            if let emusOID = self.emuticonsOID {
+                for emuOID in emusOID as! [String] {
+                    let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context)
+                    if emu == nil {continue}
+                    emu.prefferedFootageOID = footage.oid
+                }
+            }
+            
+        }
+
+        // Save
+        EMDB.sh().save()
+
+        self.delegate?.recorderWantsToBeDismissedAfterFlow(
+            self.flowType,
+            info: self.info! as [NSObject : AnyObject])
+
+        
+        // Render gif for the
+//        EMRenderManager3.sh().renderGifForFootage(footage) { (success) -> () in
+//            if (success == true) {
+//                // Dismiss the recorder
+//            } else {
+//                self.epicFail()
+//            }
+//        }
+
     }
 
     @IBAction func onPressedNegativeButton(sender: AnyObject) {
-        // Delete temp files and restart recorder session
-        self.recordingPreviewVC!.stop()
-        self.hideRecordingPreviewAnimated(false)
-        self.initCaptureSession()
-        self.captureSession?.resetAndStartAutoFlow()
+        self.restartItAll()
     }
     
 }

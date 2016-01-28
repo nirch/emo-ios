@@ -10,6 +10,14 @@
 
 #import "UserFootage.h"
 
+typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
+    EMFootageTypeSupportUndefined       = 0,
+    EMFootageTypeSupportOldPNGSequence  = 1,
+    EMFootageTypeSupportHSDKVideo       = 2
+};
+
+
+
 @interface UserFootage (Logic)
 
 #pragma mark - Find or create
@@ -24,6 +32,19 @@
 +(UserFootage *)findOrCreateWithID:(NSString *)oid
                            context:(NSManagedObjectContext *)context;
 
+
+/**
+ *  Creates a user footage object with the provided oid and info provided by the HSDK capture session.
+ *
+ *  @param oid     The id of the object
+ *  @param captureInfo    Information about the recording provided by the HSDK capture session.
+ *  @param context The managed object context.
+ *
+ *  @return new UserFootage object.
+ */
++(UserFootage *)newFootageWithID:(NSString *)oid
+                     captureInfo:(NSDictionary *)captureInfo
+                         context:(NSManagedObjectContext *)context;
 
 /**
  *  Finds a user footage object with the provided oid.
@@ -72,12 +93,27 @@
  */
 +(BOOL)multipleAvailableInContext:(NSManagedObjectContext *)context;
 
+
+/**
+ *  Returns an array of all user footage objects.
+ *
+ *  @return NSArray of UserFootage objects.
+ */
++(NSArray *)allUserFootages;
+
 /**
  *  The path to the stored images of the footage.
  *
  *  @return A string path to the user images. nil if missing.
  */
--(NSString *)pathForUserImages;
+-(NSString *)pathForUserImages; // Deprecated (files should be deleted)
+
+// New style footage files
+-(NSString *)pathToUserGif;
+-(NSString *)pathToUserVideo;
+-(NSString *)pathToUserDMaskVideo;
+-(NSString *)pathToUserThumb;
+-(NSString *)pathToUserAudio;
 
 /**
  *  NSURL to the first image of the footage.
@@ -117,6 +153,11 @@
 -(void)deleteAndCleanUp;
 
 /**
+ *  Delete the old style png sequence footage files.
+ */
+-(void)deleteOldStylePngSequenceFiles;
+
+/**
  *  Is captured in 480p or above?
  *
  *  @return BOOL value indicating if footage taken in 480x480 or above or not.
@@ -146,5 +187,18 @@
                                             ptn:(NSString *)ptn
                                            path:(NSString *)path;
 
+-(NSArray *)imagesSequencePaths;
+
+-(BOOL)isPNGSequenceAvailable;
+-(BOOL)isGIFAvailable;
+-(BOOL)isCapturedVideoAvailable;
+-(BOOL)isAudioAvailable;
+
+/**
+ *  Checks that the resources of this footage are available.
+ *
+ *  @return YES if required resources for this footage are available.
+ */
+-(BOOL)validateResources;
 
 @end

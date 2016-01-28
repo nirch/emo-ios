@@ -1,6 +1,17 @@
 --------------------
+HSDKCore Version 1.9
+--------------------
+- Added HCPNGOutput. Now possible to render a single frame (can be use to output a thumb image). Will output the frame at the end of the duration by default (Use hcrFrameTime with time in seconds to change that).
+- It is possible to cancel a render (stops and deletes all outputs).
+- Dynamic masks gif format can be applied to any type of layer (including video source type).
+
+--------------------
 HSDKCore Version 1.8
 --------------------
+New Features:
 - Added outputURL method to HCRender. A helper method that returns NSURL to the first file in the outputs array.
 - Source layers can be defined as down scaled for creating lower definition output of same resources (480x480 --> 240x240 for example)
-- 
+- PNG sequence supported as source layer. use [hcrSourceType:hcrPNGSequence, hcrPaths:<array of images paths>]
+- Added for historical reason (backward support for emu app): frame number can be passed using hcrFrame instead of hcrTime in transform effects.
+
+- Bug fix: Absolute output paths now work as should using hcrPath key (previously only hcrRelativePath worked properly)

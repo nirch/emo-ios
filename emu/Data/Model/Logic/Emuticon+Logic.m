@@ -107,15 +107,14 @@
 
 -(NSURL *)thumbURL
 {
-    NSString *outputPath = [self thumbPath];
-    NSURL *url = [NSURL URLWithString:[SF:@"file://%@" , outputPath]];
+    NSURL *url = [NSURL fileURLWithPath:[self thumbPath]];
     return url;
 }
 
 -(NSString *)thumbPath
 {
-    NSString *jpgName = [SF:@"%@.png", self.oid];
-    NSString *outputPath = [EMDB outputPathForFileName:jpgName];
+    NSString *pngName = [SF:@"%@.png", self.oid];
+    NSString *outputPath = [EMDB outputPathForFileName:pngName];
     return outputPath;
 }
 
@@ -339,46 +338,46 @@
     [fm removeItemAtPath:outputVideoPath2 error:nil];
 }
 
--(HMParams *)baseParamsForRenderInHD:(BOOL)inHD
-{
-    EmuticonDef *emuDef = self.emuDef;
-    UserFootage *footage = [self mostPrefferedUserFootage];
-    HMParams *params = [HMParams new];
-    NSInteger baseWidth = self.emuDef.emuWidth?self.emuDef.emuWidth.integerValue:EMU_DEFAULT_WIDTH;
-    NSInteger baseHeight = self.emuDef.emuHeight?self.emuDef.emuHeight.integerValue:EMU_DEFAULT_HEIGHT;
-    [params addKey:rkEmuticonDefOID         valueIfNotNil:emuDef.oid];
-    [params addKey:rkFootageOID             valueIfNotNil:footage.oid];
-    [params addKey:rkBackLayerPath          valueIfNotNil:[emuDef pathForBackLayerInHD:inHD]];
-    [params addKey:rkUserImagesPath         valueIfNotNil:[footage pathForUserImages]];
-    [params addKey:rkUserMaskPath           valueIfNotNil:[emuDef pathForUserLayerMaskInHD:inHD]];
-    [params addKey:rkUserDynamicMaskPath    valueIfNotNil:[emuDef pathForUserLayerDynamicMaskInHD:inHD]];
-    [params addKey:rkFrontLayerPath         valueIfNotNil:[emuDef pathForFrontLayerInHD:inHD]];
-    [params addKey:rkNumberOfFrames         valueIfNotNil:emuDef.framesCount];
-    [params addKey:rkDuration               valueIfNotNil:emuDef.duration];
-    [params addKey:rkOutputOID              valueIfNotNil:self.oid];
-    [params addKey:rkPaletteString          valueIfNotNil:emuDef.palette];
-    [params addKey:rkOutputPath             valueIfNotNil:[EMDB outputPath]];
-    [params addKey:rkEffects                valueIfNotNil:emuDef.effects];
-    [params addKey:rkPositioningScale       value:inHD?@(2.0f):@(1.0f)];
-    [params addKey:rkOutputResolutionWidth  value:inHD?@(baseWidth*2):@(baseWidth)];
-    [params addKey:rkOutputResolutionHeight value:inHD?@(baseHeight*2):@(baseHeight)];
-    [params addKey:rkRenderInHD             value:inHD?@YES:@NO];
-    return params;
-}
+//-(HMParams *)baseParamsForRenderInHD:(BOOL)inHD
+//{
+//    EmuticonDef *emuDef = self.emuDef;
+//    UserFootage *footage = [self mostPrefferedUserFootage];
+//    HMParams *params = [HMParams new];
+//    NSInteger baseWidth = self.emuDef.emuWidth?self.emuDef.emuWidth.integerValue:EMU_DEFAULT_WIDTH;
+//    NSInteger baseHeight = self.emuDef.emuHeight?self.emuDef.emuHeight.integerValue:EMU_DEFAULT_HEIGHT;
+//    [params addKey:rkEmuticonDefOID         valueIfNotNil:emuDef.oid];
+//    [params addKey:rkFootageOID             valueIfNotNil:footage.oid];
+//    [params addKey:rkBackLayerPath          valueIfNotNil:[emuDef pathForBackLayerInHD:inHD]];
+//    [params addKey:rkUserImagesPath         valueIfNotNil:[footage pathForUserImages]];
+//    [params addKey:rkUserMaskPath           valueIfNotNil:[emuDef pathForUserLayerMaskInHD:inHD]];
+//    [params addKey:rkUserDynamicMaskPath    valueIfNotNil:[emuDef pathForUserLayerDynamicMaskInHD:inHD]];
+//    [params addKey:rkFrontLayerPath         valueIfNotNil:[emuDef pathForFrontLayerInHD:inHD]];
+//    [params addKey:rkNumberOfFrames         valueIfNotNil:emuDef.framesCount];
+//    [params addKey:rkDuration               valueIfNotNil:emuDef.duration];
+//    [params addKey:rkOutputOID              valueIfNotNil:self.oid];
+//    [params addKey:rkPaletteString          valueIfNotNil:emuDef.palette];
+//    [params addKey:rkOutputPath             valueIfNotNil:[EMDB outputPath]];
+//    [params addKey:rkEffects                valueIfNotNil:emuDef.effects];
+//    [params addKey:rkPositioningScale       value:inHD?@(2.0f):@(1.0f)];
+//    [params addKey:rkOutputResolutionWidth  value:inHD?@(baseWidth*2):@(baseWidth)];
+//    [params addKey:rkOutputResolutionHeight value:inHD?@(baseHeight*2):@(baseHeight)];
+//    [params addKey:rkRenderInHD             value:inHD?@YES:@NO];
+//    return params;
+//}
 
--(NSDictionary *)infoForGifRenderInHD:(BOOL)inHD
-{
-    HMParams *params = [self baseParamsForRenderInHD:inHD];
-    [params addKey:rkShouldOutputGif        valueIfNotNil:@YES];
-    return params.dictionary;
-}
-
--(NSDictionary *)infoForVideoRenderInHD:(BOOL)inHD
-{
-    HMParams *params = [self baseParamsForRenderInHD:inHD];
-    [params addKey:rkShouldOutputGif        valueIfNotNil:@NO];
-    return params.dictionary;
-}
+//-(NSDictionary *)infoForGifRenderInHD:(BOOL)inHD
+//{
+//    HMParams *params = [self baseParamsForRenderInHD:inHD];
+//    [params addKey:rkShouldOutputGif valueIfNotNil:@YES];
+//    return params.dictionary;
+//}
+//
+//-(NSDictionary *)infoForVideoRenderInHD:(BOOL)inHD
+//{
+//    HMParams *params = [self baseParamsForRenderInHD:inHD];
+//    [params addKey:rkShouldOutputGif        valueIfNotNil:@NO];
+//    return params.dictionary;
+//}
 
 -(void)toggleShouldRenderAsHDIfAvailable
 {
@@ -422,5 +421,14 @@
         return self.wasRendered.boolValue;
     }
 }
+
+//-(NSMutableDictionary *)hcRenderCFGInHD:(BOOL)inHD
+//                                    fps:(NSInteger)fps
+//                                footage:(UserFootage *)footage
+//{
+//    NSMutableDictionary *cfg = [self.emuDef hcRenderCFGWithUserFootage:footage inHD:inHD fps:fps];
+//    return cfg;
+//}
+
 
 @end

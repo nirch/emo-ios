@@ -50,6 +50,22 @@ typedef NS_ENUM(NSInteger, fxPositionUnits) {
 extern NSString* const hcrPositionUnits;
 
 /**
+ *  Position units are points/pixels
+ */
+extern NSString* const hcrPositionUnitsPoints;
+
+/**
+ *  Position units are normalized ( 
+ *  
+ *  For example:
+ *    [0,0] top left corner
+ *    [0.5,0.5] center
+ *    [1,1] bottom right corner
+ */
+extern NSString* const hcrPositionUnitsNormalized;
+
+
+/**
  *  Position.
  */
 extern NSString* const hcrPosition;

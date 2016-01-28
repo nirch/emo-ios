@@ -110,6 +110,15 @@
     return w/h;
 }
 
+-(NSInteger)fps
+{
+    NSTimeInterval duration = self.duration?self.duration.doubleValue:2.0f;
+    if (duration==0) duration = 1.0f;
+    NSInteger numberOfFrames = self.framesCount?self.framesCount.integerValue:25;
+    NSInteger framesPerSecond = numberOfFrames / duration;
+    return framesPerSecond;
+}
+
 -(CGSize)sizeInHD:(BOOL)inHD
 {
     CGFloat w = self.emuWidth?self.emuWidth.floatValue:EMU_DEFAULT_WIDTH;
@@ -132,30 +141,164 @@
 }
 
 #pragma mark - HSDK related
--(NSMutableDictionary *)hcRenderCFGWithUserLayerInfo:(NSDictionary *)userLayerInfo
-                                                inHD:(BOOL)inHD
-                                                 fps:(NSInteger)fps
+//-(NSMutableDictionary *)hcRenderCFGWithUserLayerInfo:(NSDictionary *)userLayerInfo
+//                                                inHD:(BOOL)inHD
+//                                                 fps:(NSInteger)fps
+//{
+//    // All resources must be available, if not will return nil and rendering should be avoided.
+//    if (![self allResourcesAvailableInHD:inHD]) return nil;
+//    
+//    NSMutableDictionary *cfg = [NSMutableDictionary new];
+//    CGSize size = [self sizeInHD:inHD];
+//    
+//    // General info
+//    cfg[hcrWidth] = @(size.width);
+//    cfg[hcrHeight] = @(size.height);
+//    cfg[hcrFPS] = @(fps);
+//    
+//    // By default will use the emu def duration
+//    cfg[hcrDuration] = self.duration?self.duration:@2.0;
+//    
+//    // If the
+//    NSNumber *userLayerDuration = userLayerInfo[@"duration"];
+//    if ([userLayerDuration isKindOfClass:[NSNumber class]]) {
+//        cfg[hcrDuration] = userLayerDuration;
+//    }
+//    
+//    NSMutableArray *layers = [NSMutableArray new];
+//    
+//    // Background layer
+//    [self addBackLayerToHCRenderLayers:layers inHD:inHD];
+//    
+//    // User layer
+//    [self addUserLayerToHCRenderLayers:layers userLayerInfo:userLayerInfo inHD:inHD];
+//    
+//    // Front layer
+//    [self addFrontLayerToHCRenderLayers:layers inHD:inHD];
+//
+//    cfg[hcrSourceLayersInfo] = layers;
+//    
+//    return cfg;
+//}
+
+//-(NSMutableDictionary *)hcRenderCFGWithUserFootages:(NSArray *)footages
+//                                               inHD:(BOOL)inHD
+//                                                fps:(NSInteger)fps
+//{
+//    // All resources of the emu must be available.
+//    if (![self allResourcesAvailableInHD:inHD]) return nil;
+//    
+//    // All footages resources also must be available (if is a joint emu)
+//    if (self.jointEmu) {
+//        
+//    }
+//    
+//    NSMutableDictionary *cfg = [self hcRenderCFGWithUserLayerInfo:nil inHD:inHD fps:fps];
+//    return cfg;
+//}
+
+//-(NSMutableDictionary *)hcRenderCFGWithUserFootages:(NSArray *)footages
+//                                               inHD:(BOOL)inHD
+//                                                fps:(NSInteger)fps
+//{
+//}
+
+//-(NSMutableDictionary *)hcRenderCFGWithUserFootage:(UserFootage *)footage
+//                                              inHD:(BOOL)inHD
+//                                               fps:(NSInteger)fps
+//{
+//    // All resources must be available, if not will return nil and rendering should be avoided.
+//    if (![self allResourcesAvailableInHD:inHD]) return nil;
+//    
+////    NSMutableDictionary *info = [NSMutableDictionary new];
+////    if (footage.isGIFAvailable) {
+////        
+////        info[@"writer_type"] = @"GIF";
+////        info[hcrPath]= [footage pathToUserGif];
+////        
+////    } else if (footage.isCapturedVideoAvailable) {
+////        
+////        info[@"writer_type"] = @"HFWriterVideo";
+////        info[@"output_files"] = @{
+////                                  @"captured":[footage pathToUserVideo],
+////                                  @"mask":[footage pathToUserDMaskVideo]
+////                                  };
+////        
+////    } else if (footage.isPNGSequenceAvailable) {
+////        
+////        info[@"writer_type"] = @"PNGSequence";
+////        info[hcrPathsPattern]= [footage imagesPathPTN];
+////        info[hcrFramesCount] = footage.framesCount;
+////        
+////    }
+////
+////    if (footage.isHD && !inHD) {
+////        info[hcrDownSample] = @2;
+////    }
+////
+////    NSMutableDictionary *cfg = [self hcRenderCFGWithUserLayerInfo:info inHD:inHD fps:fps];
+////    return cfg;
+//}
+
+-(NSMutableDictionary *)hcRenderCFGWithFootages:(NSArray *)footages
+                                       oldStyle:(BOOL)oldStyle
+                                           inHD:(BOOL)inHD
+                                            fps:(NSInteger)fps
 {
-    // All resources must be available, if not will return nil and rendering should be avoided.
-    if (![self allResourcesAvailableInHD:inHD]) return nil;
+    NSMutableDictionary *cfg;
+    if (oldStyle == YES) {
+        cfg = [self hcRenderOldCFGWithFootages:footages inHD:inHD fps:fps];
+    } else {
+        cfg = [self hcRenderCFGWithFootages:footages inHD:inHD fps:fps];
+    }
+    return cfg;
+}
+
+-(NSMutableDictionary *)hcRenderCFGWithFootages:(NSArray *)footages
+                                           inHD:(BOOL)inHD
+                                            fps:(NSInteger)fps
+{
+    return nil;
+}
+
+
+#pragma mark - Converting old style emus to HSDK render info
+-(NSMutableDictionary *)hcRenderOldCFGWithFootages:(NSArray *)footages
+                                              inHD:(BOOL)inHD
+                                               fps:(NSInteger)fps
+{
+    // Old emu def, support only bg layer, users and fg layer.
+    // Takes the old style emu definition and builds the CFG required of HSDK HCRender
     
+    // All resources must be available, if not will return nil and rendering should be avoided.
+    if (![self allResourcesAvailableInHD:inHD])
+        return nil;
+    
+    // All footages resources must also must be available.
+//    for (UserFootage *footage in footages) {
+//    }
+
     NSMutableDictionary *cfg = [NSMutableDictionary new];
     CGSize size = [self sizeInHD:inHD];
-    
+
     // General info
     cfg[hcrWidth] = @(size.width);
     cfg[hcrHeight] = @(size.height);
     cfg[hcrFPS] = @(fps);
+
+    // By default will use the emu def duration
     cfg[hcrDuration] = self.duration?self.duration:@2.0;
-    
+
+
+    // Start adding the layers
     NSMutableArray *layers = [NSMutableArray new];
-    
+
     // Background layer
     [self addBackLayerToHCRenderLayers:layers inHD:inHD];
-    
-    // User layer
-    [self addUserLayerToHCRenderLayers:layers userLayerInfo:userLayerInfo inHD:inHD];
-    
+
+    // User/s layer/s
+    [self addUsersLayersToHCRenderLayers:layers footages:footages inHD:inHD];
+
     // Front layer
     [self addFrontLayerToHCRenderLayers:layers inHD:inHD];
 
@@ -164,6 +307,26 @@
     return cfg;
 }
 
+
+
+#pragma mark - Adding User Layers
+-(void)addUsersLayersToHCRenderLayers:(NSMutableArray *)layers
+                             footages:(NSArray *)footages
+                                 inHD:(BOOL)inHD
+{
+    for (NSObject<FootageProtocol>* footage in footages) {
+        NSMutableDictionary *layerInfo = [footage hcRenderInfoForHD:inHD];
+        if (layerInfo != nil && [layerInfo count] > 0) {
+            // Add effects to users layers.
+            [self addEffectsToUserLayer:layerInfo inHD:inHD];
+
+            // Add the user layer.
+            [layers addObject:layerInfo];
+        }
+    }
+}
+
+#pragma mark - Adding Layers
 -(void)addBackLayerToHCRenderLayers:(NSMutableArray *)layers inHD:(BOOL)inHD
 {
     NSString *path = [self pathForBackLayerInHD:inHD];
@@ -172,45 +335,74 @@
     NSMutableDictionary *layer = [NSMutableDictionary new];
     layer[hcrSourceType] = hcrGIF;
     layer[hcrPath] = path;
+    if (self.duration) layer[hcrDuration] = self.duration;
     [layers addObject:layer];
 }
 
--(void)addUserLayerToHCRenderLayers:(NSMutableArray *)layers userLayerInfo:(NSDictionary *)userLayerInfo inHD:(BOOL)inHD
-{
-    //
-    // Converts old style model emus to new style rendering information supported by the SDK API
-    // Exists because of historical reasons
-    //
-    if ([userLayerInfo[@"writer_type"] isEqualToString:@"HFWriterVideo"]) {
-        // Captured layers provided by HSDK video writer.
-        NSDictionary *outputs = userLayerInfo[@"output_files"];
-        NSString *path = userLayerInfo[@"output_path"];
-        
-        NSString *videoFile = outputs[@"captured"];
-        if (videoFile == nil) return;
-
-        // The user layer.
-        NSString *maskFile = outputs[@"mask"];
-        if (maskFile == nil) return;
-        NSMutableDictionary *layer = [NSMutableDictionary new];
-        layer[hcrSourceType] = hcrVideo;
-        layer[hcrPath] = [path stringByAppendingPathComponent:videoFile];
-        layer[hcrDynamicMaskPath] = [path stringByAppendingPathComponent:maskFile];
-        if (!inHD) layer[hcrDownSample] = @2;
-        
-        // Effects on the user layer.
-        [self addEffectsToUserLayer:layer inHD:inHD];
-        
-        [layers addObject:layer];
-    }
-}
+//-(void)addUserLayerToHCRenderLayers:(NSMutableArray *)layers userLayerInfo:(NSDictionary *)userLayerInfo inHD:(BOOL)inHD
+//{
+//    NSMutableDictionary *layer = [NSMutableDictionary new];
+//
+//    //
+//    // Converts old style model emus to new style rendering information supported by the SDK API
+//    // Exists because of historical reasons
+//    //
+//    if ([userLayerInfo[@"writer_type"] isEqualToString:@"HFWriterVideo"]) {
+//        
+//        // Captured layers provided by HSDK video writer.
+//        NSDictionary *outputs = userLayerInfo[@"output_files"];
+//        NSString *path = userLayerInfo[@"output_path"];
+//        
+//        NSString *videoFile = outputs[@"captured"];
+//        if (videoFile == nil) return;
+//
+//        // The user layer.
+//        NSString *maskFile = outputs[@"mask"];
+//        if (maskFile == nil) return;
+//        layer[hcrSourceType] = hcrVideo;
+//        layer[hcrPath] = path? [path stringByAppendingPathComponent:videoFile]:videoFile;
+//        layer[hcrDynamicMaskPath] = path? [path stringByAppendingPathComponent:maskFile]:maskFile;
+//        
+//    } else if ([userLayerInfo[@"writer_type"] isEqualToString:@"PNGSequence"]) {
+//        
+//        // Old style using PNG Sequence
+//        layer[hcrSourceType] = hcrPNGSequence;
+//        layer[hcrPathsPattern] = userLayerInfo[hcrPathsPattern];
+//        layer[hcrFramesCount] = userLayerInfo[hcrFramesCount];
+//        
+//    } else if ([userLayerInfo[@"writer_type"] isEqualToString:@"GIF"]) {
+//        
+//        layer[hcrSourceType] = hcrGIF;
+//        layer[hcrPath] = userLayerInfo[hcrPath];
+//        
+//    }
+//
+//    if (layer.allKeys.count>0) {
+//        if (userLayerInfo[hcrDownSample]) layer[hcrDownSample] = userLayerInfo[hcrDownSample];
+//        
+//        // Effects on the user layer.
+//        [self addEffectsToUserLayer:layer inHD:inHD];
+//
+//        // Add the layer
+//        [layers addObject:layer];
+//    }
+//}
 
 -(void)addEffectsToUserLayer:(NSMutableDictionary *)layer inHD:(BOOL)inHD
 {
     NSMutableArray *effects = [NSMutableArray new];
     
     // Old effects style to new effects stlye
-    if (self.effects) {
+    if (self.effects != nil && [self.effects isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *definedEffects = self.effects;
+        if (definedEffects[@"position"]) {
+            NSMutableDictionary *effect = [NSMutableDictionary new];
+            effect[hcrEffectType] = hcrEffectTypeTransform;
+            effect[hcrTimeUnits] = hcrTimeUnitsFrames;
+            effect[hcrPositionUnits] = hcrPositionUnitsPoints;
+            effect[hcrAnimation] = definedEffects[@"position"];
+            [effects addObject:effect];
+        }
     }
     
     //
@@ -248,6 +440,7 @@
     NSMutableDictionary *layer = [NSMutableDictionary new];
     layer[hcrSourceType] = hcrGIF;
     layer[hcrPath] = path;
+    if (self.duration) layer[hcrDuration] = self.duration;
     [layers addObject:layer];
 }
 

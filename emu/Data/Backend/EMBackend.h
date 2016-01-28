@@ -40,4 +40,7 @@
 
 -(void)notifyUserAboutUpdateForPackage:(Package *)package;
 
+#pragma mark - Migration
+-(void)footagesMigrationIfRequired;
+
 @end

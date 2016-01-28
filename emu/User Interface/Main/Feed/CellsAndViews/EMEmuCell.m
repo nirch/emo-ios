@@ -11,8 +11,9 @@
 #import <FLAnimatedImage.h>
 #import "HMPanel.h"
 #import "EMCaches.h"
-#import "EMRenderManager2.h"
 #import <PINRemoteImage/UIImageView+PINRemoteImage.h>
+#import "emu-Swift.h"
+#import "EMRenderTypes.h"
 
 @interface EMEmuCell()
 
@@ -95,16 +96,20 @@
             [self updateStateToFailed];
             return;
         }
-        [EMRenderManager2.sh enqueueEmu:emu
-                              indexPath:nil
+        
+        [EMRenderManager3.sh enqueueEmu:emu
+                             renderType:EMRenderTypeShortLowDefPreview
+                              mediaType:EMMediaDataTypeGIF
+                             fullRender:NO
                                userInfo:@{
                                           @"for":@"emu",
                                           @"indexPath":indexPath,
                                           @"emuticonOID":emu.oid,
                                           @"packageOID":emu.emuDef.package.oid,
-                                          @"inUI":self.inUI
-                                          }
-                                   inHD:NO];
+                                          @"inUI":self.inUI,
+                                          @"renderType":@"shortLDPreview",
+                                          @"mediaType":hcrGIF
+                                          }];
         _state = EMEmuCellStateSentForRendering;
         
     } else {

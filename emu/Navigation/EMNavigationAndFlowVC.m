@@ -172,6 +172,12 @@
                      name:emkUINavigationShowBlockingProgress
                    object:nil];
     
+    // On blocking progress modal view need to update progrees
+    [nc addUniqueObserver:self
+                 selector:@selector(onBlockingProgressUpdate:)
+                     name:emkUINavigationUpdateBlockingProgress
+                   object:nil];
+    
 
 }
 
@@ -185,6 +191,8 @@
     [nc removeObserver:emkUIUserRequestToOpenRecorder];
     [nc removeObserver:emkUIUserSelectedPack];
     [nc removeObserver:emkDataUpdatedUnhidePackages];
+    [nc removeObserver:emkUINavigationShowBlockingProgress];
+    [nc removeObserver:emkUINavigationUpdateBlockingProgress];
 }
 
 #pragma mark - Observers handlers
@@ -301,6 +309,23 @@
     NSString *title = info[@"title"];
     [self.blockingProgressVC updateTitle:title];
 }
+
+-(void)onBlockingProgressUpdate:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *title = info[@"title"];
+    if ([title isKindOfClass:[NSString class]]) {
+        [self.blockingProgressVC updateTitle:title];
+    }
+    
+    NSNumber *progressNumber = info[@"progress"];
+    if ([progressNumber isKindOfClass:[NSNumber class]]) {
+        CGFloat progress = [progressNumber floatValue];
+        [self.blockingProgressVC updateProgress:progress animated:YES];
+    }
+}
+
+
 
 #pragma mark - Orientations
 -(BOOL)shouldAutorotate

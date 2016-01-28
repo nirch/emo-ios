@@ -11,7 +11,6 @@
 
 #import "EMRecorderDelegate.h"
 #import "EMOnboardingVC.h"
-#import "EMDB.h"
 #import "UIView+CommonAnimations.h"
 #import "EmuStyle.h"
 #import "EML.h"
@@ -22,6 +21,10 @@
 #import "EMTickingProgressView.h"
 #import "HMNotificationCenter.h"
 #import "EMPreviewDelegate.h"
+#import "EMRenderTypes.h"
+
+#import "EMDB.h"
+#import "EMDB+Files.h"
 
 #pragma mark - Homage SDK imports
 #import <HomageSDKCore/HomageSDKCore.h>

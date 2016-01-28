@@ -80,6 +80,13 @@ extern NSString* const hcrEffectTypeDMask;
 extern NSString* const hcrTime;
 
 /**
+ *  Frame number.
+ *  Deprecated 
+ *  (exists for historical reasons. You can pass frame number using hcrTime if hcrTimeUnitsFrames is used)
+ */
+extern NSString* const hcrFrame;
+
+/**
  *  Determines in what time units animation info is provided in.
  *
  *  Possible values:

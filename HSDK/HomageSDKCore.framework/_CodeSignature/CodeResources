@@ -42,11 +42,11 @@
 		</data>
 		<key>Headers/HCRFX.h</key>
 		<data>
-		vtRHZfPdcQbjAk+W99vNC5rJ1Lw=
+		8Bx48G/+0216HsUBfa+WZQtRBVQ=
 		</data>
 		<key>Headers/HCRFXTransform.h</key>
 		<data>
-		EQ0W/fIuXmKUaDV8DW7TqB22ukA=
+		7Q1RQTZLeI+wbSWA3uqpF6DGCVY=
 		</data>
 		<key>Headers/HCRObject.h</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Headers/HCRender.h</key>
 		<data>
-		upP+O4yn2kJ3tTAJkyio0dMbiys=
+		PYdr9VXUSbwURtuMPH7g81kQwkU=
 		</data>
 		<key>Headers/HCRenderError.h</key>
 		<data>
@@ -74,7 +74,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		fSQcST6LbueS5OP9Zali56jLa1Q=
+		s/Bmz7PO5ar2WAIEHcMa+w/6a/8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -90,11 +90,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		IzLE3NwDOalVWrqKnnTbX8l9qHY=
+		ra2PlvUojgPZO8L24J1W4QBPq9o=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		gQWWhuxFn9a3Kh8U8NkU12mvJfY=
+		doWTXROUVNPr+YkSpR4h/QrSsK8=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -133,11 +133,11 @@
 		</data>
 		<key>Headers/HCRFX.h</key>
 		<data>
-		vtRHZfPdcQbjAk+W99vNC5rJ1Lw=
+		8Bx48G/+0216HsUBfa+WZQtRBVQ=
 		</data>
 		<key>Headers/HCRFXTransform.h</key>
 		<data>
-		EQ0W/fIuXmKUaDV8DW7TqB22ukA=
+		7Q1RQTZLeI+wbSWA3uqpF6DGCVY=
 		</data>
 		<key>Headers/HCRObject.h</key>
 		<data>
@@ -145,7 +145,7 @@
 		</data>
 		<key>Headers/HCRender.h</key>
 		<data>
-		upP+O4yn2kJ3tTAJkyio0dMbiys=
+		PYdr9VXUSbwURtuMPH7g81kQwkU=
 		</data>
 		<key>Headers/HCRenderError.h</key>
 		<data>
@@ -177,11 +177,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		IzLE3NwDOalVWrqKnnTbX8l9qHY=
+		ra2PlvUojgPZO8L24J1W4QBPq9o=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		gQWWhuxFn9a3Kh8U8NkU12mvJfY=
+		doWTXROUVNPr+YkSpR4h/QrSsK8=
 		</data>
 	</dict>
 	<key>rules</key>

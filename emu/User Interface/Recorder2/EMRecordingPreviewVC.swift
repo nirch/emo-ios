@@ -126,20 +126,21 @@ class EMRecordingPreviewVC: AVPlayerViewController {
     // MARK: - Rendering UI
     func startRenderingUI() {
         let bundle = NSBundle.mainBundle()
-        let url = bundle.URLForResource("rendering", withExtension: "mov")
+        let url = bundle.URLForResource("rendering", withExtension: "mp4")
         self.setVideoURL(url!)
     }
     
     // MARK: - Rendering preview
     func renderEmuDef(emuDefOID: String, captureInfo: [NSObject:AnyObject]) {
-        self.startRenderingUI()
         if let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context) {
             if emuDef.allResourcesAvailable() {
                 // Render a preview for this capture
+                self.startRenderingUI()
                 let rm = EMRenderManager3.sharedInstance
                 self.latestPreviewUUID = rm.renderPreviewForEmuDefOID(emuDefOID, captureInfo: captureInfo)
             } else {
                 // Download resources first, before rendering
+//                self.startDownloadingUI()
             }
         } else {
             self.epicFail()

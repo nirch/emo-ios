@@ -2,8 +2,8 @@
 //  AppCFG+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 08/11/2015.
-//  Copyright © 2015 Homage. All rights reserved.
+//  Created by Aviv Wolf on 16/01/2016.
+//  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
@@ -29,6 +29,7 @@
 @dynamic oid;
 @dynamic onboardingPassed;
 @dynamic onboardingUsingPackage;
+@dynamic playUISounds;
 @dynamic prefferedFootageOID;
 @dynamic tweaks;
 @dynamic uploadUserContent;
@@ -37,6 +38,6 @@
 @dynamic userViewedEmuScreenTutorial;
 @dynamic userViewedKBTutorial;
 @dynamic userViewedMainTutorial;
-@dynamic playUISounds;
+@dynamic footageTypeSupportVersion;
 
 @end

@@ -22,6 +22,7 @@
 #import "EMNotificationCenter.h"
 #import "EMDownloadsManager2.h"
 #import "EMBackend+AppStore.h"
+#import "emu-Swift.h"
 
 #import <AWSS3.h>
 
@@ -405,5 +406,71 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIDataRefreshPackages object:nil];
 }
 
+-(void)footagesMigrationIfRequired
+{
+    // The client from now on will work with HSDK HCRender
+    // So footge resources should be video or gif.
+    // If the user has old footages from previous versions,
+    // all of them will need to be converted before the app can be used.
+    EMFootageTypeSupport requiredSupport = EMFootageTypeSupportHSDKVideo;
+    
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    EMFootageTypeSupport support = appCFG.footageTypeSupportVersion?appCFG.footageTypeSupportVersion.integerValue:EMFootageTypeSupportUndefined;
+    
+    if (support>=requiredSupport) {
+        // Already supports latest footage type.
+        return;
+    }
+    
+    // If no footages exists for this user, no migration required. Just mark the app as supporting new footages type.
+    NSInteger footagesCount = [EMDB countEntityNamed:E_USER_FOOTAGE predicate:nil inContext:EMDB.sh.context];
+    if (footagesCount == 0) {
+        return;
+    }
+    
+    
+    // Block the UI until finishing the flow of opening the pack
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShowBlockingProgress
+                                                        object:nil
+                                                      userInfo:@{@"title":LS(@"MIGRATION_APPLYING_PATCH")}];
+    
+    // Do the migration.
+    NSArray *footages = [UserFootage allUserFootages];
+    for (UserFootage *footage in footages) {
+//        if (footage.gifAvailable && footage.gifAvailable.boolValue) continue;
+//        if (footage.capturedVideoAvailable && footage.capturedVideoAvailable.boolValue) continue;
+
+        // Missing the related gif.
+        // Create the gif and delete the old style png sequence.
+        NSString *footageID = footage.oid;
+        static NSInteger rendersFinished=0;
+        [EMRenderManager3.sh renderGifForFootage:footage onFinish:^(BOOL success) {
+            @synchronized(self) {
+                if (!success) {
+                    // Failed converting png sequence source to gif :-(
+                    return;
+                }
+
+                rendersFinished += 1;
+                CGFloat progress = (double)rendersFinished/(double)footages.count;
+                [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationUpdateBlockingProgress
+                                                                    object:nil
+                                                                  userInfo:@{
+                                                                             @"title":[SF:@"%@ %@/%@", LS(@"MIGRATION_APPLYING_PATCH"),@(rendersFinished),@(footages.count)],
+                                                                             @"progress":@(progress)}];
+            }
+            
+            // Converted. Mark that the gif is available and
+            UserFootage *newStyleFootage = [UserFootage findWithID:footageID context:EMDB.sh.context];
+            newStyleFootage.gifAvailable = @YES;
+            newStyleFootage.pngSequenceAvailable = @YES;
+            newStyleFootage.capturedVideoAvailable = @NO;
+            [EMDB.sh save];
+        }];
+    }
+
+    
+    
+}
 
 @end

@@ -86,8 +86,11 @@
 
 -(void)updateProgress:(CGFloat)progress animated:(BOOL)animated
 {
+    if (self.guiProgressView.hidden == YES || self.guiProgressView.alpha != 1) {
+        self.guiProgressView.hidden = NO;
+        self.guiProgressView.alpha = 1;
+    }
     [self.guiProgressView setProgress:progress animated:animated];
-    self.guiProgressView.alpha = 1.0f;
 }
 
 -(void)updateTitle:(NSString *)title

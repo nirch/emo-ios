@@ -2,8 +2,8 @@
 //  AppCFG+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 08/11/2015.
-//  Copyright © 2015 Homage. All rights reserved.
+//  Created by Aviv Wolf on 16/01/2016.
+//  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *oid;
 @property (nullable, nonatomic, retain) NSNumber *onboardingPassed;
 @property (nullable, nonatomic, retain) NSString *onboardingUsingPackage;
+@property (nullable, nonatomic, retain) NSNumber *playUISounds;
 @property (nullable, nonatomic, retain) NSString *prefferedFootageOID;
 @property (nullable, nonatomic, retain) id tweaks;
 @property (nullable, nonatomic, retain) id uploadUserContent;
@@ -39,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *userViewedEmuScreenTutorial;
 @property (nullable, nonatomic, retain) NSNumber *userViewedKBTutorial;
 @property (nullable, nonatomic, retain) NSNumber *userViewedMainTutorial;
-@property (nullable, nonatomic, retain) NSNumber *playUISounds;
+@property (nullable, nonatomic, retain) NSNumber *footageTypeSupportVersion;
 
 @end
 

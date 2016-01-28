@@ -69,6 +69,14 @@
     return userFootage;
 }
 
++(NSArray *)allUserFootages
+{
+    NSArray *all = [NSManagedObject fetchEntityNamed:E_USER_FOOTAGE
+                                        withPredicate:nil
+                                            inContext:EMDB.sh.context];
+    return all;
+}
+
 -(BOOL)isHD
 {
     if (self.footageWidth == nil) return NO;
@@ -104,10 +112,46 @@
     return path;
 }
 
+-(NSString *)pathToUserGif
+{
+    NSString *footagesPath = [EMDB footagesPath];
+    NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@_footage.gif", self.oid]];
+    return path;
+}
+
+-(NSString *)pathToUserThumb
+{
+    NSString *footagesPath = [EMDB footagesPath];
+    NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@_footage.png", self.oid]];
+    return path;
+}
+
+-(NSString *)pathToUserVideo
+{
+    NSString *footagesPath = [EMDB footagesPath];
+    NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@_footage.mov", self.oid]];
+    return path;
+}
+
+-(NSString *)pathToUserDMaskVideo
+{
+    NSString *footagesPath = [EMDB footagesPath];
+    NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@_footage_dmask.mov", self.oid]];
+    return path;
+}
+
+-(NSString *)pathToUserAudio
+{
+    NSString *footagesPath = [EMDB footagesPath];
+    NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@_footage.wav", self.oid]];
+    return path;
+}
+
 -(NSURL *)urlToThumbImage
 {
-    return [self urlToImageWithIndex:1];
+    return [NSURL fileURLWithPath:[self pathToUserThumb]];
 }
+
 
 -(UIImage *)thumbImage
 {
@@ -122,6 +166,22 @@
     [s appendString:@"/img-%ld.png"];
     return s;
 }
+
+-(NSArray *)imagesSequencePaths
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *path = [self pathForUserImages];
+    NSArray *storedImagesPaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    NSMutableArray *imagesPaths = [NSMutableArray new];
+    for (NSInteger i=1;i<=storedImagesPaths.count;i++) {
+        NSString *path = [SF:[self imagesPathPTN],i];
+        if ([fm fileExistsAtPath:path]) {
+            [imagesPaths addObject:path];
+        }
+    }
+    return imagesPaths;
+}
+
 
 -(NSArray *)imagesSequenceWithMaxNumberOfFrames:(NSInteger)maxFrames
 {
@@ -187,11 +247,93 @@
     [self.managedObjectContext deleteObject:self];
 }
 
--(void)cleanUp
+-(void)deleteOldStylePngSequenceFiles
 {
-    // Delete all footage files.
+    // Delete old style footages files.
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:[self pathForUserImages] error:nil];
 }
+
+-(void)cleanUp
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:[self pathForUserImages] error:nil];
+    [fm removeItemAtPath:[self pathToUserGif] error:nil];
+    [fm removeItemAtPath:[self pathToUserVideo] error:nil];
+    [fm removeItemAtPath:[self pathToUserDMaskVideo] error:nil];
+}
+
+-(BOOL)isPNGSequenceAvailable
+{
+    if (self.pngSequenceAvailable == nil) return NO;
+    return self.pngSequenceAvailable.boolValue;
+}
+
+-(BOOL)isGIFAvailable
+{
+    if (self.gifAvailable == nil) return NO;
+    return self.gifAvailable.boolValue;
+}
+
+-(BOOL)isCapturedVideoAvailable
+{
+    if (self.capturedVideoAvailable == nil) return NO;
+    return self.capturedVideoAvailable.boolValue;
+}
+
+-(BOOL)isAudioAvailable
+{
+    if (self.audioAvailable == nil) return NO;
+    return self.audioAvailable.boolValue;
+}
+
++(UserFootage *)newFootageWithID:(NSString *)oid
+                     captureInfo:(NSDictionary *)captureInfo
+                         context:(NSManagedObjectContext *)context
+{
+    if (![captureInfo[@"writer_type"] isEqualToString:@"HFWriterVideo"]) {
+        // Must use the new style HSDK footage created by HSDK capture session.
+        return nil;
+    }
+    
+    // New style footage. Captured video files using HSDK capture session.
+    UserFootage *footage = [UserFootage findOrCreateWithID:oid context:context];
+    footage.gifAvailable = @NO;
+    footage.pngSequenceAvailable = @NO;
+    footage.duration = captureInfo[@"duration"];
+    footage.footageWidth = @480;
+    footage.footageHeight = @480;
+    footage.timeTaken = [NSDate date];
+    footage.capturedVideoAvailable = @YES;
+    
+    NSDictionary *outputFiles = captureInfo[@"output_files"];
+    NSString *outputPath = captureInfo[@"output_path"];
+    NSString *videoPath = [outputPath stringByAppendingPathComponent:outputFiles[@"captured"]];
+    NSString *videoDMaskPath = [outputPath stringByAppendingPathComponent:outputFiles[@"mask"]];
+    NSString *audioPath = [outputPath stringByAppendingPathComponent:outputFiles[@"audio"]];
+    
+    // Move the captured video files to their final path.
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm moveItemAtPath:videoPath toPath:[footage pathToUserVideo] error:nil];
+    [fm moveItemAtPath:videoDMaskPath toPath:[footage pathToUserDMaskVideo] error:nil];
+    if (audioPath) {
+        [fm moveItemAtPath:audioPath toPath:[footage pathToUserAudio] error:nil];
+        footage.audioAvailable = @YES;
+    }
+    
+    // Return the new footage object.
+    return footage;
+}
+
+-(BOOL)validateResources
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if ([self isCapturedVideoAvailable]) {
+        if ([fm fileExistsAtPath:[self pathToUserVideo]] == NO) return NO;
+        if ([fm fileExistsAtPath:[self pathToUserDMaskVideo]] == NO) return NO;
+    }
+    return YES;
+}
+
 
 @end
