@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>prod_host</key>
-	<string>app.emu.im</string>
+	<string>api-dev.emu.im</string>
 	<key>prod_protocol</key>
 	<string>http</string>
 	<key>prod_port</key>
@@ -24,6 +24,8 @@
 		<string>emuapi/packages/update</string>
 		<key>packages unhide</key>
 		<string>emuapi/unhide/packages</string>
+		<key>user</key>
+		<string>user</string>
 	</dict>
 </dict>
 </plist>

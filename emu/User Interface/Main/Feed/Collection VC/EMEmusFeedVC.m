@@ -42,6 +42,7 @@
 #import "AppManagement.h"
 #import "EMProductPopover.h"
 #import "EMBackend+AppStore.h"
+#import "emu-Swift.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -85,6 +86,8 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 // Ask user about alerts permission
 @property (nonatomic, weak) EMAlertsPermissionVC *alertsPermissionVC;
+
+@property (nonatomic) BOOL inScroll;
 
 @end
 
@@ -233,6 +236,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
  */
 -(void)initState
 {
+    self.inScroll = NO;
     self.titleState = EMEmusFeedTitleStateLogo;
     [self updateState:EMEmusFeedStateBrowsing info:nil];
 }
@@ -548,8 +552,14 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         if (emuOID == nil) return;
         
         self.guiCollectionView.userInteractionEnabled = NO;
-        dispatch_after(DTIME(0.3), dispatch_get_main_queue(), ^{
-            [self performSegueWithIdentifier:@"emuticon screen segue" sender:emuOID];
+        dispatch_after(DTIME(0.2), dispatch_get_main_queue(), ^{
+            Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+            NSString *emuDefOID = emu.emuDef.oid;
+            if (emuDefOID) {
+                EmuScreenVC *emuScreenVC = [EmuScreenVC emuScreenVC:emuDefOID
+                                                         themeColor:self.navBarThemeColor];
+                [self.navigationController pushViewController:emuScreenVC animated:YES];
+            }
             self.guiCollectionView.userInteractionEnabled = YES;
         });
 
@@ -591,11 +601,24 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     CGPoint offset = scrollView.contentOffset;
     offset.y += scrollView.contentInset.top;
     [self.navBarVC childVCDidScrollToOffset:offset];
+    
+    if (!self.inScroll && scrollView.isDragging) {
+        self.inScroll = YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldHideTabsBar
+                                                            object:self
+                                                          userInfo:@{emkUIAnimated:@(YES)}];
+    }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self handleVisibleCells];
+    
+    self.inScroll = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
+                                                        object:self
+                                                      userInfo:@{emkUIAnimated:@(YES)}];
+
 }
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
@@ -628,6 +651,11 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     if (!decelerate) {
         // Will not decelerate after dragging, so scrolling just ended.
         [self handleVisibleCells];
+
+        self.inScroll = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
+                                                            object:self
+                                                          userInfo:@{emkUIAnimated:@(YES)}];
     }
 }
 
@@ -638,6 +666,10 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     CGFloat delay = animated?0.7f:0.0f;
     dispatch_after(DTIME(delay), dispatch_get_main_queue(), ^{
         [self handleVisibleCells];
+        self.inScroll = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
+                                                            object:self
+                                                          userInfo:@{emkUIAnimated:@(YES)}];
     });
 }
 
@@ -995,6 +1027,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     // Mark package as viewed.
     package.viewedByUser = @YES;
     [EMDB.sh save];
+
 }
 
 #pragma mark - Alerts question

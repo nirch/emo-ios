@@ -23,6 +23,8 @@
 #define emkDataUpdatedPackages @"emk data updated packages"
 #define emkDataUpdatedUnhidePackages @"emk data updated unhide packages"
 
+#define emkUserSignedIn @"emk user signed in"
+
 // Store
 #define emkDataProductsInfoUpdated  @"emk data products info updated"
 #define emkDataProductsError  @"emk data products error"

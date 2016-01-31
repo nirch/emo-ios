@@ -1,5 +1,5 @@
 Loco ios export: iOS Localizable.strings
 Project: Emu
 Release: Working copy
-Exported at: Mon, 18 Jan 2016 08:43:12 +0000
+Exported at: Sun, 31 Jan 2016 11:21:18 +0000
 Exported by: Aviv Wolf

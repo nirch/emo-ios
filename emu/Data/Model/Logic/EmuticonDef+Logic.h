@@ -124,4 +124,9 @@
 -(void)removeAllResources;
 -(void)removeAllHDResources;
 
+#pragma mark - Joint emu
+-(BOOL)isJointEmu;
+
+
+
 @end

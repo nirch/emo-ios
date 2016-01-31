@@ -424,8 +424,7 @@
 
 -(BOOL)isJointEmu
 {
-    if (self.emuDef.jointEmu != nil) return YES;
-    return NO;
+    return self.emuDef.isJointEmu;
 }
 
 -(NSArray *)remoteFootages

@@ -2,7 +2,6 @@
 HSDKCore Version 1.9
 --------------------
 - Added HCPNGOutput. Now possible to render a single frame (can be use to output a thumb image). Will output the frame at the end of the duration by default (Use hcrFrameTime with time in seconds to change that).
-- It is possible to cancel a render (stops and deletes all outputs).
 - Dynamic masks gif format can be applied to any type of layer (including video source type).
 
 --------------------

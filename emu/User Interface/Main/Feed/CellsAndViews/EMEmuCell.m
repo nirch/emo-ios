@@ -134,6 +134,13 @@
     _state = EMEmuCellStateEmpty;
 }
 
+-(void)updateStateToPlaceHolder
+{
+    _label = nil;
+    _oid = nil;
+    _state = EMEmuCellStatePlaceHolderEmu;
+}
+
 -(void)updateGUI
 {
     // Just for debugging.
@@ -153,6 +160,8 @@
         [self updateGUIToReady];
     } else if (self.state == EMEmuCellStateEmpty) {
         [self updateGUIEmpty];
+    } else if (self.state == EMEmuCellStatePlaceHolderEmu) {
+        [self updateGUIPlaceHolder];
     } else {
         [HMPanel.sh explodeOnTestApplicationsWithInfo:@{@"msg":[SF:@"Unset state for cell!"]}];
     }
@@ -165,6 +174,14 @@
 
     self.guiBGButton.hidden = YES;
     self.guiBGImage.hidden = YES;
+}
+
+-(void)updateGUIPlaceHolder
+{
+    [self clear];
+    self.guiThumbImage.hidden = NO;
+    self.guiThumbImage.image = [UIImage imageNamed:@"emuPlaceHolder"];
+    self.guiThumbImage.alpha = 1;
 }
 
 -(void)updateGUIToFailedState

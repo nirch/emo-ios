@@ -317,7 +317,6 @@ class EMRenderManager3 : NSObject
         // Get render info from the ready pool and start rendering in the background
         if let renderInfo = self.readyPool[oid] as? [NSObject:AnyObject] {
             let userInfo = self.userInfo[oid] as! [NSObject:AnyObject];
-            
             self.renderingPOOL[oid] = renderInfo;
             self.readyPool.removeValueForKey(oid)
             
@@ -337,7 +336,7 @@ class EMRenderManager3 : NSObject
                     
                     // TODO: Handle errors
                 }
-                renderer.process()
+                renderer.processWithInfo(userInfo)
                 
                 //
                 // Finishing rendering

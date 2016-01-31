@@ -12,6 +12,7 @@
 #import "HMJSONResponseSerializerWithData.h"
 #import "HMPanel.h"
 #import "AppManagement.h"
+#import "EMDB.h"
 
 @interface HMServer()
 
@@ -20,7 +21,6 @@
 @property (strong,nonatomic) NSDictionary *context;
 @property (strong,nonatomic) NSString *appVersionInfo;
 @property (strong,nonatomic) NSString *appBuildInfo;
-@property (strong,nonatomic) NSString *currentUserID;
 
 @property (strong, nonatomic, readwrite) NSURL *serverURL;
 @property (nonatomic) BOOL usingPublicDataBase;
@@ -60,30 +60,21 @@
     self.session.requestSerializer = [AFHTTPRequestSerializer new];
     
     // Add app information to the headers.
-    [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP_BUILD_INFO"];
-    [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP_VERSION_INFO"];
-    [self.session.requestSerializer setValue:@"Emu iOS" forHTTPHeaderField:@"APP_CLIENT_NAME"];
+    [self.session.requestSerializer setValue:self.appBuildInfo forHTTPHeaderField:@"APP-BUILD-INFO"];
+    [self.session.requestSerializer setValue:self.appVersionInfo forHTTPHeaderField:@"APP-VERSION-INFO"];
+    [self.session.requestSerializer setValue:@"Emu iOS" forHTTPHeaderField:@"APP-CLIENT-NAME"];
+    
+    // User related info in the header
+    //[self.session.requestSerializer setValue:[[UIDevice currentDevice].identifierForVendor UUIDString] forHTTPHeaderField:@"USER_ID"];
     
     // Using public database or just the scratchpad?
     if (self.usingPublicDataBase == NO) {
         [self.session.requestSerializer setValue:@"true" forHTTPHeaderField:@"SCRATCHPAD"];
     }
     
-    // Is user sampled (or was sampled) by the server?
-    if ([AppManagement.sh userSampledByServer]) {
-        [self.session.requestSerializer setValue:@"true" forHTTPHeaderField:@"USER_SAMPLED_BY_SERVER"];
-    }
-    
-    // Add homage's internal application identifier
-    NSString *applicationIdentifier = self.configurationInfo[@"application"];
-    if (applicationIdentifier) {
-        [NSString stringWithFormat:@"Homage:%@", applicationIdentifier];
-        [self.session.requestSerializer setValue:applicationIdentifier forHTTPHeaderField:@"HOMAGE_CLIENT"];
-    }
-    
     // Add current user id to the headers (if set)
     if (self.currentUserID) {
-         [self.session.requestSerializer setValue:self.currentUserID forHTTPHeaderField:@"USER_ID"];
+         [self.session.requestSerializer setValue:self.currentUserID forHTTPHeaderField:@"USER-ID"];
     }
     
     // Localization
@@ -92,6 +83,12 @@
     // Set the session response serializer and set the acceptable content types
     self.session.responseSerializer = [HMJSONResponseSerializerWithData new];
     self.session.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"text/html",@"application/json"]];
+}
+
+-(NSString *)currentUserID
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    return appCFG.userSignInID;
 }
 
 #pragma mark - URL named
@@ -118,11 +115,6 @@
 }
 
 #pragma mark - provide server woth request context
--(void)chooseCurrentUserID:(NSString *)userID
-{
-    self.currentUserID = userID;
-}
-
 -(void)storeFetchedConfiguration:(NSDictionary *)info
 {
     // Store in local storage for future use.
@@ -322,7 +314,6 @@
                        info:(NSDictionary *)info
                      parser:(HMParser *)parser
 {
-    
     NSMutableDictionary *moreInfo = [info mutableCopy];    
     [self postRelativeURL:(NSString *)[self relativeURLNamed:relativeURLName]
                parameters:(NSDictionary *)parameters
@@ -384,7 +375,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:moreInfo];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-
         //
         // Failed request.
         //

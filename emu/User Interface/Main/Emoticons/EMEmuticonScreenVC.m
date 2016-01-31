@@ -47,10 +47,9 @@
 @property (nonatomic) BOOL guiInitialized;
 @property (weak, nonatomic) IBOutlet UIView *guiNavView;
 
-// Emu player
+// Showing results
 @property (weak, nonatomic) IBOutlet UIView *guiEmuContainer;
-@property (weak, nonatomic) EMAnimatedGifPlayer *gifPlayerVC;
-@property (weak, nonatomic) EMShareVC *shareVC;
+
 @property (weak, nonatomic) IBOutlet UILabel *guiResolutionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *guiFullScreenButton;
 
@@ -68,6 +67,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiHDToggleButton;
 @property (weak, nonatomic) IBOutlet UIView *guiEmuOptionsBar;
 
+// Emu creation flow bar
+@property (weak, nonatomic) IBOutlet UIView *guiEmuCreationFlowBarContainer;
 
 // Tutorial
 @property (strong, nonatomic) JDFSequentialTooltipManager *tooltipManager;
@@ -82,6 +83,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiAudioOKButton;
 @property (weak, nonatomic) IBOutlet UIButton *guiAudioRemoveButton;
 @property (weak, nonatomic) IBOutlet UISlider *guiAudioTrimSlider;
+
 @property (weak, nonatomic) UIView *audioPlayPositionView;
 @property (nonatomic) BOOL showSelectedAudioUI;
 
@@ -92,6 +94,12 @@
 
 // Footages screen
 @property (weak, nonatomic) EMFootagesVC *footagesVC;
+
+// Single player VC
+@property (weak, nonatomic) EMAnimatedGifPlayer *gifPlayerVC;
+
+// Share VC
+@property (weak, nonatomic) EMShareVC *shareVC;
 
 @end
 
@@ -142,13 +150,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    if (!appCFG.userViewedEmuScreenTutorial.boolValue) {
-        [self showEmuTutorial];
-        appCFG.userViewedEmuScreenTutorial = @YES;
-    }
-    
     if (self.emuticon) {
         self.emuticon.lastTimeViewed = [NSDate date];
     }
@@ -157,7 +158,7 @@
     if (!self.alreadyInitializedGUIOnAppearance) {
         self.alreadyInitializedGUIOnAppearance = YES;
     } else {
-        [self updateEmuOptionsBar];
+        [self updateEmuBars];
         [self refreshEmu];
     }
 }
@@ -183,13 +184,14 @@
 
 -(void)initGUI
 {
+    [self hideEmuCreationFlowBar];
     self.guiInitialized = NO;
     
     // Audtio trim slider
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateNormal];
     [self.guiAudioTrimSlider setThumbImage:[UIImage imageNamed:@"audioTrimThumb"] forState:UIControlStateHighlighted];
     self.guiNavView.backgroundColor = self.themeColor;    
-    [self updateEmuOptionsBar];
+    [self updateEmuBars];
 }
 
 #pragma mark - GUI init
@@ -248,6 +250,16 @@
             self.guiEmuOptionsBar.transform = CGAffineTransformMakeScale(0.95, 0.95);
         }];
     }
+}
+
+-(void)showEmuCreationFlowBar
+{
+    self.guiEmuCreationFlowBarContainer.hidden = NO;
+}
+
+-(void)hideEmuCreationFlowBar
+{
+    self.guiEmuCreationFlowBarContainer.hidden = YES;
 }
 
 -(void)refreshEmu
@@ -326,25 +338,32 @@
 }
 
 #pragma mark - Emu options bar
--(void)updateEmuOptionsBar
+-(void)updateEmuBars
 {
-    // HD button (show only if HD available)
-    BOOL hdAvailable = self.emuticon.emuDef.hdAvailable?self.emuticon.emuDef.hdAvailable.boolValue:NO;
-    self.guiHDToggleButton.hidden = !hdAvailable;
-    if (hdAvailable) {
-        BOOL shouldRenderAsHD = self.emuticon.shouldRenderAsHDIfAvailable?self.emuticon.shouldRenderAsHDIfAvailable.boolValue:NO;
-        if (shouldRenderAsHD) {
-            [self.guiHDToggleButton setImage:[UIImage imageNamed:@"hdOptionOn"] forState:UIControlStateNormal];
-        } else {
-            [self.guiHDToggleButton setImage:[UIImage imageNamed:@"hdOptionOff"] forState:UIControlStateNormal];
+    if (self.emuticon.isJointEmu) {
+        self.guiShareContainer.hidden = YES;
+        [self hideEmuOptionsBar];
+        [self showEmuCreationFlowBar];
+        
+    } else {
+        // HD button (show only if HD available)
+        BOOL hdAvailable = self.emuticon.emuDef.hdAvailable?self.emuticon.emuDef.hdAvailable.boolValue:NO;
+        self.guiHDToggleButton.hidden = !hdAvailable;
+        if (hdAvailable) {
+            BOOL shouldRenderAsHD = self.emuticon.shouldRenderAsHDIfAvailable?self.emuticon.shouldRenderAsHDIfAvailable.boolValue:NO;
+            if (shouldRenderAsHD) {
+                [self.guiHDToggleButton setImage:[UIImage imageNamed:@"hdOptionOn"] forState:UIControlStateNormal];
+            } else {
+                [self.guiHDToggleButton setImage:[UIImage imageNamed:@"hdOptionOff"] forState:UIControlStateNormal];
+            }
         }
+        
+        // Gif / Video
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        EMMediaDataType predderedRenderingType = appCFG.userPrefferedShareType.integerValue;
+        self.guiRenderingTypeSelector.selectedSegmentIndex = predderedRenderingType==0?0:1;
+        [self.shareVC update];
     }
-    
-    // Gif / Video
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    EMMediaDataType predderedRenderingType = appCFG.userPrefferedShareType.integerValue;
-    self.guiRenderingTypeSelector.selectedSegmentIndex = predderedRenderingType==0?0:1;
-    [self.shareVC update];
 }
 
 #pragma mark - Tutorial
@@ -639,7 +658,7 @@
         
         [EMDB.sh save];
         [self dismissViewControllerAnimated:YES completion:^{
-            [self updateEmuOptionsBar];
+            [self updateEmuBars];
             [self refreshEmu];
         }];
         
@@ -792,7 +811,7 @@
     // Always allow to return to low definition emus.
     if ([self.emuticon shouldItRenderInHD]) {
         [self.emuticon toggleShouldRenderAsHDIfAvailable];
-        [self updateEmuOptionsBar];
+        [self updateEmuBars];
         [self refreshEmu];
         return;
     }
@@ -805,7 +824,7 @@
     if (footage.isHD) {
         // No problem, the footage is in HD. Just toggle.
         [self.emuticon toggleShouldRenderAsHDIfAvailable];
-        [self updateEmuOptionsBar];
+        [self updateEmuBars];
         [self refreshEmu];
         return;
     }
@@ -880,7 +899,7 @@
     } else if ([actionName isEqualToString:@"HD_REQUIRED_USE_LD"]) {
         // Well just use low def take and goggle HD anyway.
         [self.emuticon toggleShouldRenderAsHDIfAvailable];
-        [self updateEmuOptionsBar];
+        [self updateEmuBars];
         [self refreshEmu];
     }
 }

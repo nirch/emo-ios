@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, HMNetworkErrorCode) {
 -(NSString *)relativeURLNamed:(NSString *)relativeURLName withSuffix:(NSString *)suffix;
 
 #pragma mark - provide server with request context
--(void)chooseCurrentUserID:(NSString *)userID;
+//-(void)chooseCurrentUserID:(NSString *)userID;
 -(void)storeFetchedConfiguration:(NSDictionary *)info;
 
 #pragma mark - GET requests

@@ -56,17 +56,21 @@
 		<data>
 		JEL/WaQfJykfcvn+B2B475uixhQ=
 		</data>
+		<key>Headers/HCTracking.h</key>
+		<data>
+		kGenF5S77zHv5ApjbiiiUGbztyU=
+		</data>
 		<key>Headers/HCVideoFromFramesWriter.h</key>
 		<data>
 		OmRXslkd3rGErM8Kek+N8eXN4v0=
 		</data>
 		<key>Headers/HSDKCore.h</key>
 		<data>
-		e9JY/Hz30H0DTI2ArUNy/6Vuh/s=
+		ypclq0WmK3GGbU5GdtHzW8+DdZ8=
 		</data>
 		<key>Headers/HomageSDKCore.h</key>
 		<data>
-		XWBoCDl+OTVBff44Zqe0h3lFf4o=
+		yYfNr4SpDD2LRb4Z/v/q95JvDfM=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -86,11 +90,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		OJkHODXCAjp9Xi3Q5k4Ut80ciXI=
+		khckSU4rL5LhTDth3eEBZuO+/Kc=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		doWTXROUVNPr+YkSpR4h/QrSsK8=
+		DaMgC8AG0R+B9F6F5CFXTCgfhqE=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -147,17 +151,21 @@
 		<data>
 		JEL/WaQfJykfcvn+B2B475uixhQ=
 		</data>
+		<key>Headers/HCTracking.h</key>
+		<data>
+		kGenF5S77zHv5ApjbiiiUGbztyU=
+		</data>
 		<key>Headers/HCVideoFromFramesWriter.h</key>
 		<data>
 		OmRXslkd3rGErM8Kek+N8eXN4v0=
 		</data>
 		<key>Headers/HSDKCore.h</key>
 		<data>
-		e9JY/Hz30H0DTI2ArUNy/6Vuh/s=
+		ypclq0WmK3GGbU5GdtHzW8+DdZ8=
 		</data>
 		<key>Headers/HomageSDKCore.h</key>
 		<data>
-		XWBoCDl+OTVBff44Zqe0h3lFf4o=
+		yYfNr4SpDD2LRb4Z/v/q95JvDfM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -173,11 +181,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		OJkHODXCAjp9Xi3Q5k4Ut80ciXI=
+		khckSU4rL5LhTDth3eEBZuO+/Kc=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		doWTXROUVNPr+YkSpR4h/QrSsK8=
+		DaMgC8AG0R+B9F6F5CFXTCgfhqE=
 		</data>
 	</dict>
 	<key>rules</key>

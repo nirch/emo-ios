@@ -17,6 +17,7 @@
 #import "EMNotificationCenter.h"
 #import "EMShareFBMessanger.h"
 #import "HMServer.h"
+#import "HMServer+User.h"
 #import <MPTweakInline.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
@@ -26,6 +27,7 @@
 #import "AppManagement.h"
 #import "EMCaches.h"
 #import "EMURLSchemeHandler.h"
+#import <HomageSDKCore/HomageSDKCore.h>
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -57,11 +59,16 @@
 #pragma mark - App Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Initialize rendering tracking
+    [HSDKCore.sh enableTrackingWithEnv:YES];
+
+    
     // Initialize Logging
     [self initLogging];
     
     // Initialize backend
     [EMBackend sharedInstance];
+    
     
     // Crash reports
     [HMPanel.sh initCrashReports];
@@ -103,13 +110,14 @@
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
     
+    // User sign in
+    [EMBackend.sh.server signInUserWithPushToken:nil];
+    
     // Preload sounds
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
     [EMUISound sh];
 
     return YES;
-//    return [[FBSDKApplicationDelegate sharedInstance] application:application
-//                                    didFinishLaunchingWithOptions:launchOptions];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -285,6 +293,11 @@
 
     // Foreward the push token to mixpanel.
     [HMPanel.sh personPushToken:deviceToken];
+    
+    // Sign in user with the push token
+    NSString *pushToken = [deviceToken description];
+    if (pushToken)
+        [EMBackend.sh.server signInUserWithPushToken:pushToken];
 }
 
 #pragma mark - Opened notifications

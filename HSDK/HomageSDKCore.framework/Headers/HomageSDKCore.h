@@ -29,3 +29,5 @@ FOUNDATION_EXPORT const unsigned char HomageSDKCoreVersionString[];
 
 #import "HCBObject.h"
 #import "HCBackground.h"
+
+#import "HCTracking.h"

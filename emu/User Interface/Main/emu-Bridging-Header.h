@@ -26,6 +26,10 @@
 #import "EMDB.h"
 #import "EMDB+Files.h"
 
+#import "EMUINotifications.h"
+
+#import "EMEmuCell.h"
+
 #pragma mark - Homage SDK imports
 #import <HomageSDKCore/HomageSDKCore.h>
 #import <HomageSDKFlow/HomageSDKFlow.h>

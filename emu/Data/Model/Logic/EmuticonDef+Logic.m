@@ -426,4 +426,11 @@
     [EMDB removeResourceNamed:resourceName path:resourcesPath];
 }
 
+#pragma mark - Joint emu
+-(BOOL)isJointEmu
+{
+    if (self.jointEmu != nil) return YES;
+    return NO;
+}
+
 @end

@@ -539,6 +539,14 @@
 		08AA15081B0BA658002E1B2F /* onboarding_packages_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 08271FE11B0203820046F38E /* onboarding_packages_test.json */; };
 		08AA15091B0BA658002E1B2F /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 089E78AD1A77FD8600BC3479 /* passThrough.fsh */; };
 		08AA150B1B0BA658002E1B2F /* onboarding_packages_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 08331A371B069CA7000B8979 /* onboarding_packages_prod.json */; };
+		08AE9CCC1C5D55A00075B03C /* HMServer+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CCB1C5D55A00075B03C /* HMServer+User.m */; };
+		08AE9CCD1C5D55A00075B03C /* HMServer+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CCB1C5D55A00075B03C /* HMServer+User.m */; };
+		08AE9CD91C5D5F8D0075B03C /* EMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */; };
+		08AE9CDA1C5D5F8D0075B03C /* EMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */; };
+		08AE9CDB1C5D5F950075B03C /* EMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */; };
+		08AE9CDC1C5D5F950075B03C /* EMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */; };
+		08AE9CDE1C5E063E0075B03C /* JointEmuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */; };
+		08AE9CDF1C5E063E0075B03C /* JointEmuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */; };
 		08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
 		08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
 		08B5899C1A93B9E5008D9068 /* EMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899B1A93B9E5008D9068 /* EMLabel.m */; };
@@ -779,6 +787,12 @@
 		08FB19611BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB194D1BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m */; };
 		08FB19641BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB19631BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m */; };
 		08FB19651BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB19631BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m */; };
+		08FF199D1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */; };
+		08FF199E1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */; };
+		08FF19A01C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */; };
+		08FF19A11C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */; };
+		08FF19A31C5C0D0800E15C36 /* EmusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF19A21C5C0D0800E15C36 /* EmusVC.swift */; };
+		08FF19A41C5C0D0800E15C36 /* EmusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF19A21C5C0D0800E15C36 /* EmusVC.swift */; };
 		54854CFB1AA38E8D00B19E12 /* VideoOutput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89C61A9B84F400224A38 /* VideoOutput.mm */; };
 		C6299F57CD0A76AD7D3A195D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 594DE828059C80499BD9E834 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -1214,6 +1228,11 @@
 		08AC3E691AD15465005231B5 /* EMAlphaNumericKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAlphaNumericKeyboard.m; sourceTree = "<group>"; };
 		08AC3E6C1AD2C9A1005231B5 /* KBKeyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBKeyButton.h; sourceTree = "<group>"; };
 		08AC3E6D1AD2C9A1005231B5 /* KBKeyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBKeyButton.m; sourceTree = "<group>"; };
+		08AE9CCA1C5D55A00075B03C /* HMServer+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+User.h"; sourceTree = "<group>"; };
+		08AE9CCB1C5D55A00075B03C /* HMServer+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+User.m"; sourceTree = "<group>"; };
+		08AE9CD71C5D5F8D0075B03C /* EMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUserParser.h; sourceTree = "<group>"; };
+		08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUserParser.m; sourceTree = "<group>"; };
+		08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JointEmuFlow.swift; sourceTree = "<group>"; };
 		08B589811A938C5A008D9068 /* EmuticonDef+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmuticonDef+Logic.h"; sourceTree = "<group>"; };
 		08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+Logic.m"; sourceTree = "<group>"; };
 		08B589841A9391B3008D9068 /* Emuticon+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+Logic.h"; sourceTree = "<group>"; };
@@ -1380,6 +1399,9 @@
 		08FB194D1BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeedSelectionsActionBarVC.m; sourceTree = "<group>"; };
 		08FB19621BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMajorRetakeOptionsSheet.h; sourceTree = "<group>"; };
 		08FB19631BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMajorRetakeOptionsSheet.m; sourceTree = "<group>"; };
+		08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EmuScreen.storyboard; sourceTree = "<group>"; };
+		08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmuScreenVC.swift; sourceTree = "<group>"; };
+		08FF19A21C5C0D0800E15C36 /* EmusVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmusVC.swift; sourceTree = "<group>"; };
 		594DE828059C80499BD9E834 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EBC61D3F02128F78B223F3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		79CFE9051A98F6D7D2C3BBED /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -1479,6 +1501,7 @@
 				0806BD791AA37DC20078F14B /* EMPackagesParser.m */,
 				085348CA1BCEED99008BBBF9 /* EMUnhidePackagesParser.h */,
 				085348CB1BCEED99008BBBF9 /* EMUnhidePackagesParser.m */,
+				08AE9CD61C5D5F8D0075B03C /* User */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -1526,6 +1549,8 @@
 				080B05981AB064E2003C19E7 /* HMServer.m */,
 				080B059F1AB068C7003C19E7 /* HMServer+Packages.h */,
 				080B05A01AB068C7003C19E7 /* HMServer+Packages.m */,
+				08AE9CCA1C5D55A00075B03C /* HMServer+User.h */,
+				08AE9CCB1C5D55A00075B03C /* HMServer+User.m */,
 			);
 			path = WebService;
 			sourceTree = "<group>";
@@ -2427,6 +2452,15 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		08AE9CD61C5D5F8D0075B03C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				08AE9CD71C5D5F8D0075B03C /* EMUserParser.h */,
+				08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		08B589991A93B9AF008D9068 /* Fonts Related */ = {
 			isa = PBXGroup;
 			children = (
@@ -2512,6 +2546,7 @@
 				08409E961AB1C69700EC0930 /* Splash */,
 				08CED0E31AA5EA9300C50D0C /* Tutorial */,
 				080CB3501AA50D2F00603E30 /* PackagesBar */,
+				08FF19981C5BC05400E15C36 /* EmuScreen */,
 				08CB89641A9AA12A00224A38 /* Emoticons */,
 				08CB89751A9AA12A00224A38 /* Sharing */,
 				08A907131ACAB2D2008534F7 /* AlertsPermission */,
@@ -2822,6 +2857,17 @@
 			path = "Supporting Controllers";
 			sourceTree = "<group>";
 		};
+		08FF19981C5BC05400E15C36 /* EmuScreen */ = {
+			isa = PBXGroup;
+			children = (
+				08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */,
+				08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */,
+				08FF19A21C5C0D0800E15C36 /* EmusVC.swift */,
+				08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */,
+			);
+			path = EmuScreen;
+			sourceTree = "<group>";
+		};
 		66A306109166C5AB9F6B2628 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -3104,6 +3150,7 @@
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
 				085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
 				0889BD461C5A559B004B81CB /* placeholder240.png in Resources */,
+				08FF199E1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				08A4570D1BA02F08001AB79E /* NavBar.storyboard in Resources */,
 				08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */,
@@ -3292,6 +3339,7 @@
 				08AA14351B08F062002E1B2F /* Localizable.strings in Resources */,
 				08CA9A731BCFE842004A5A02 /* hot-bg.gif in Resources */,
 				085C67971A937EC9007BC910 /* EMRecorder.storyboard in Resources */,
+				08FF199D1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */,
 				08CA9A6D1BCFE842004A5A02 /* hearts-bg.gif in Resources */,
 				08CA9A751BCFE842004A5A02 /* hot-mask-v1.png in Resources */,
@@ -3502,6 +3550,7 @@
 				0853492E1BCF4BBA008BBBF9 /* VideoOutput.mm in Sources */,
 				085348E01BCF34CB008BBBF9 /* EMKeyboardContainerVC.m in Sources */,
 				085349291BCF480F008BBBF9 /* AppManagement.m in Sources */,
+				08AE9CDC1C5D5F950075B03C /* EMUserParser.m in Sources */,
 				0853492A1BCF4876008BBBF9 /* EMCaches.m in Sources */,
 				0853490C1BCF36E2008BBBF9 /* EMPackagesVC.m in Sources */,
 				085348F41BCF364B008BBBF9 /* EmuticonDef+CoreDataProperties.m in Sources */,
@@ -3603,6 +3652,7 @@
 				08FB19551BC7C45F00F227C6 /* EMEmusFeedVC.m in Sources */,
 				08357F541BCA053A00C302AA /* EMEmusPickerDataSource.m in Sources */,
 				08AA14681B0BA658002E1B2F /* HMPreviewView.m in Sources */,
+				08AE9CDA1C5D5F8D0075B03C /* EMUserParser.m in Sources */,
 				08CBF4811BE8C21C00466B36 /* EMSettingsVC.m in Sources */,
 				08AA14691B0BA658002E1B2F /* PngSourceWithFX.mm in Sources */,
 				08AA146A1B0BA658002E1B2F /* EMPNGSequenceWriter.mm in Sources */,
@@ -3625,6 +3675,7 @@
 				08CF07AD1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
 				0830B3B21BE82721003E64BA /* EMBackend+AppStore.m in Sources */,
 				08A457111BA03948001AB79E /* EMNavBarVC.m in Sources */,
+				08FF19A41C5C0D0800E15C36 /* EmusVC.swift in Sources */,
 				08AA14711B0BA658002E1B2F /* EMShareVC.m in Sources */,
 				081B08861BB5C7AB003AFF16 /* EmuticonDef.m in Sources */,
 				08967C2C1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
@@ -3668,11 +3719,13 @@
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
 				08A457051BA02844001AB79E /* EMPackCell.m in Sources */,
 				08AA148E1B0BA658002E1B2F /* EMBGFeedBackVC.m in Sources */,
+				08FF19A11C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */,
 				0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				083248501BECB22B00B4E82F /* EMBlockingProgressVC.m in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
 				08E30BC71BB9CF6E009EDCFF /* UIView+MotionEffect.m in Sources */,
 				0865788C1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */,
+				08AE9CCD1C5D55A00075B03C /* HMServer+User.m in Sources */,
 				08AA14901B0BA658002E1B2F /* AWFanOpeningView.m in Sources */,
 				08AA14911B0BA658002E1B2F /* HMCaptureSessionError.m in Sources */,
 				08A456E01B9DB0B2001AB79E /* EMTabsVC.m in Sources */,
@@ -3712,6 +3765,7 @@
 				08357F501BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,
 				08FB19611BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */,
 				08CA9AA61BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
+				08AE9CDF1C5E063E0075B03C /* JointEmuFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3756,6 +3810,7 @@
 				08CA99BA1BCFC6E3004A5A02 /* VideoOutput.mm in Sources */,
 				08CA99BB1BCFC6E3004A5A02 /* EMKeyboardContainerVC.m in Sources */,
 				08CA99BC1BCFC6E3004A5A02 /* AppManagement.m in Sources */,
+				08AE9CDB1C5D5F950075B03C /* EMUserParser.m in Sources */,
 				08CA99BD1BCFC6E3004A5A02 /* EMCaches.m in Sources */,
 				08CA99BE1BCFC6E3004A5A02 /* EMPackagesVC.m in Sources */,
 				08CA99BF1BCFC6E3004A5A02 /* EmuticonDef+CoreDataProperties.m in Sources */,
@@ -3820,6 +3875,7 @@
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
 				084349D11B84999F009A653F /* NSString+Utilities.m in Sources */,
 				088360041BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */,
+				08AE9CCC1C5D55A00075B03C /* HMServer+User.m in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
 				086578871BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */,
 				084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */,
@@ -3847,6 +3903,7 @@
 				082C8BAB1C3D563500D6C6B7 /* EML.m in Sources */,
 				087592501BEB5FAD0090555B /* EMFullScreenGifPlayer.m in Sources */,
 				080B05A11AB068C7003C19E7 /* HMServer+Packages.m in Sources */,
+				08AE9CD91C5D5F8D0075B03C /* EMUserParser.m in Sources */,
 				081B08791BB5C7AB003AFF16 /* Emuticon.m in Sources */,
 				0833348D1A827D81008AC771 /* HMBackgroundRemoval.mm in Sources */,
 				08ED7FF51B1DDD1600B6856F /* EMVideoSettingsPopover.m in Sources */,
@@ -3856,6 +3913,7 @@
 				0833189A1B049D3E000B8979 /* EMRenderer.mm in Sources */,
 				087F20941A8F5A28002B1678 /* NSDictionary+TypeSafeValues.m in Sources */,
 				08B5899F1A93B9F7008D9068 /* EMButton.m in Sources */,
+				08FF19A01C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */,
 				08BBBC731AD9B15F00D4AD1D /* Package+Logic.m in Sources */,
 				0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */,
 				081B08831BB5C7AB003AFF16 /* EmuticonDef+CoreDataProperties.m in Sources */,
@@ -3887,6 +3945,8 @@
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				08967C0E1B580AFE000DDCF9 /* EMRenderManager2.m in Sources */,
 				081B087D1BB5C7AB003AFF16 /* UserFootage.m in Sources */,
+				08AE9CDE1C5E063E0075B03C /* JointEmuFlow.swift in Sources */,
+				08FF19A31C5C0D0800E15C36 /* EmusVC.swift in Sources */,
 				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
 				0830B3B01BE82721003E64BA /* EMBackend+AppStore.m in Sources */,

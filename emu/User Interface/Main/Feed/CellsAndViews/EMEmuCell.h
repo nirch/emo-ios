@@ -65,7 +65,11 @@ typedef NS_ENUM(NSInteger, EMEmuCellState){
      *  Failed downloads of resources / failed rendering or any other reason)
      */
     EMEmuCellStateFailed            = 40,
-    
+
+    /**
+     *  Place holder cell with image to add a new emu to the collection.
+     */
+    EMEmuCellStatePlaceHolderEmu = 50,
     
     /**
      *  Empty cell. Sometimes we want cells to represent "no content".
@@ -94,6 +98,11 @@ typedef NS_ENUM(NSInteger, EMEmuCellState){
  *  Update the cell state to empty state (emu cell will be presented as empty).
  */
 -(void)updateStateToEmpty;
+
+/**
+ *  Update the cell state to placeholder state (emu cell represents a yet to be created emu).
+ */
+-(void)updateStateToPlaceHolder;
 
 /**
  *  Update the GUI elements according to the cell's current state.

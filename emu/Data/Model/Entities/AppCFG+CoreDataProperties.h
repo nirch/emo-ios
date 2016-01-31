@@ -2,7 +2,7 @@
 //  AppCFG+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 16/01/2016.
+//  Created by Aviv Wolf on 30/01/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *dataVersionForcedFetch;
 @property (nullable, nonatomic, retain) NSNumber *defaultOutputVideoMaxFps;
 @property (nullable, nonatomic, retain) NSNumber *deprecatedFootageForPack;
+@property (nullable, nonatomic, retain) NSNumber *footageTypeSupportVersion;
 @property (nullable, nonatomic, retain) NSNumber *lastUpdateTimestamp;
 @property (nullable, nonatomic, retain) NSDate *latestPackagePublishedOn;
 @property (nullable, nonatomic, retain) id localization;
@@ -40,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *userViewedEmuScreenTutorial;
 @property (nullable, nonatomic, retain) NSNumber *userViewedKBTutorial;
 @property (nullable, nonatomic, retain) NSNumber *userViewedMainTutorial;
-@property (nullable, nonatomic, retain) NSNumber *footageTypeSupportVersion;
+@property (nullable, nonatomic, retain) NSString *userSignInID;
 
 @end
 

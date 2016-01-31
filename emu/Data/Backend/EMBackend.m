@@ -165,6 +165,8 @@
     [nc removeObserver:emkDataRequiredUnhidePackages];
     [nc removeObserver:emkDataRequestToOpenPackage];
     [nc removeObserver:hmkRenderingFinished];
+    
+    
 }
 
 #pragma mark - Observers handlers
