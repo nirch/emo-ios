@@ -36,8 +36,8 @@
                                             <action selector="onPressedBackButton:" destination="QF1-1A-wKk" eventType="touchUpInside" id="lBO-hP-M1j"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some title for emu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPt-nt-KfE" customClass="EMLabel">
-                                        <rect key="frame" x="117" y="11" width="141" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Some title for emu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPt-nt-KfE" customClass="EMLabel">
+                                        <rect key="frame" x="118" y="13" width="140" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -68,8 +68,8 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="Nvd-Y7-4kz">
                                         <rect key="frame" x="5" y="0.0" width="365" height="44"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create with friends" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6k-60-z2E" customClass="EMLabel">
-                                        <rect key="frame" x="130" y="15" width="116" height="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Create with friends" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6k-60-z2E" customClass="EMLabel">
+                                        <rect key="frame" x="131" y="15" width="115" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -133,16 +133,38 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ukZ-dI-nFt">
-                                        <rect key="frame" x="138" y="126" width="20" height="20"/>
+                                        <rect key="frame" x="138" y="127" width="20" height="20"/>
                                         <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </activityIndicatorView>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ybz-NG-pHX">
+                                        <rect key="frame" x="157" y="58" width="60" height="60"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="tKz-Kz-8yl"/>
+                                            <constraint firstAttribute="width" constant="60" id="xKh-LA-KQh"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressedUserButton:" destination="QF1-1A-wKk" eventType="touchUpInside" id="WzG-ml-tEL"/>
+                                        </connections>
+                                    </button>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dkH-ya-LfV">
+                                        <rect key="frame" x="40" y="154" width="295" height="2"/>
+                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="0Pb-IT-qeh" firstAttribute="top" secondItem="Ybz-NG-pHX" secondAttribute="bottom" constant="8" id="0em-bu-0Kj"/>
+                                    <constraint firstItem="dkH-ya-LfV" firstAttribute="top" secondItem="0Pb-IT-qeh" secondAttribute="bottom" constant="7" id="6hY-JS-GmH"/>
                                     <constraint firstItem="0Pb-IT-qeh" firstAttribute="centerX" secondItem="ox7-ll-0jO" secondAttribute="centerX" id="Fvk-JZ-Qlh"/>
                                     <constraint firstItem="0Pb-IT-qeh" firstAttribute="centerY" secondItem="ox7-ll-0jO" secondAttribute="centerY" id="Iid-ee-RQ1"/>
+                                    <constraint firstAttribute="trailing" secondItem="dkH-ya-LfV" secondAttribute="trailing" constant="40" id="JiA-pI-eEo"/>
                                     <constraint firstItem="0Pb-IT-qeh" firstAttribute="leading" secondItem="ukZ-dI-nFt" secondAttribute="trailing" constant="8" id="OVc-BR-Gm5"/>
+                                    <constraint firstItem="dkH-ya-LfV" firstAttribute="leading" secondItem="ox7-ll-0jO" secondAttribute="leading" constant="40" id="Zu9-T5-JTY"/>
                                     <constraint firstItem="ukZ-dI-nFt" firstAttribute="centerY" secondItem="0Pb-IT-qeh" secondAttribute="centerY" id="hu5-hl-zPI"/>
+                                    <constraint firstItem="Ybz-NG-pHX" firstAttribute="centerX" secondItem="0Pb-IT-qeh" secondAttribute="centerX" id="yGS-BU-veh"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grK-vz-yTP" userLabel="Action button container">
@@ -167,25 +189,72 @@
                                     <constraint firstItem="Y21-x1-6ea" firstAttribute="centerY" secondItem="grK-vz-yTP" secondAttribute="centerY" id="y0T-a7-IQ2"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oYs-FP-hCh" userLabel="Flow buttons container">
+                                <rect key="frame" x="0.0" y="613" width="375" height="54"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gze-xK-79q" userLabel="Positive Action Button" customClass="EMFlowButton">
+                                        <rect key="frame" x="8" y="5" width="175" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="eZU-vS-POJ"/>
+                                        </constraints>
+                                        <state key="normal" title="YES"/>
+                                        <connections>
+                                            <action selector="onPressedPositiveButton:" destination="QF1-1A-wKk" eventType="touchUpInside" id="dYI-n0-9iy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2D-4f-VSv" userLabel="Negative Action Button" customClass="EMFlowButton">
+                                        <rect key="frame" x="192" y="5" width="175" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="5Kk-ks-9Pd"/>
+                                        </constraints>
+                                        <state key="normal" title="NO"/>
+                                        <connections>
+                                            <action selector="onPressedNegativeButton:" destination="QF1-1A-wKk" eventType="touchUpInside" id="4Ao-It-lJd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="g2D-4f-VSv" firstAttribute="width" secondItem="Gze-xK-79q" secondAttribute="width" id="Eoi-vL-sio"/>
+                                    <constraint firstAttribute="height" constant="54" id="K8E-XA-JuU"/>
+                                    <constraint firstItem="g2D-4f-VSv" firstAttribute="centerY" secondItem="oYs-FP-hCh" secondAttribute="centerY" id="Pic-xy-owE"/>
+                                    <constraint firstItem="g2D-4f-VSv" firstAttribute="height" secondItem="Gze-xK-79q" secondAttribute="height" id="Sde-Py-Ku9"/>
+                                    <constraint firstAttribute="trailing" secondItem="Gze-xK-79q" secondAttribute="trailing" constant="8" id="alL-GL-zxZ"/>
+                                    <constraint firstItem="Gze-xK-79q" firstAttribute="centerY" secondItem="oYs-FP-hCh" secondAttribute="centerY" id="e8v-Vt-si3"/>
+                                    <constraint firstAttribute="trailing" secondItem="g2D-4f-VSv" secondAttribute="trailing" constant="8" id="lAF-OS-t0F"/>
+                                    <constraint firstItem="g2D-4f-VSv" firstAttribute="leading" secondItem="Gze-xK-79q" secondAttribute="trailing" constant="10" id="p6e-Pm-RrG"/>
+                                    <constraint firstItem="Gze-xK-79q" firstAttribute="leading" secondItem="oYs-FP-hCh" secondAttribute="leading" constant="8" id="v6l-5o-5M1"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="alL-GL-zxZ"/>
+                                        <exclude reference="Sde-Py-Ku9"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="dvt-o2-7sZ" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="2LA-Cz-Vn5"/>
+                            <constraint firstItem="oYs-FP-hCh" firstAttribute="height" secondItem="grK-vz-yTP" secondAttribute="height" id="3mv-FD-WEE"/>
                             <constraint firstAttribute="trailing" secondItem="ox7-ll-0jO" secondAttribute="trailing" id="ATW-tC-o3O"/>
                             <constraint firstItem="dvt-o2-7sZ" firstAttribute="top" secondItem="uVZ-4F-b90" secondAttribute="bottom" id="MGH-kr-iBe"/>
                             <constraint firstItem="pqD-K3-eJ1" firstAttribute="top" secondItem="w7F-DQ-Ndw" secondAttribute="bottom" constant="5" id="ONk-eq-rbe"/>
                             <constraint firstItem="w7F-DQ-Ndw" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="PYH-fo-JpZ"/>
                             <constraint firstItem="ox7-ll-0jO" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="RcS-Ia-q6r"/>
                             <constraint firstItem="w7F-DQ-Ndw" firstAttribute="top" secondItem="dvt-o2-7sZ" secondAttribute="bottom" id="SE5-1k-vfS"/>
+                            <constraint firstItem="oYs-FP-hCh" firstAttribute="centerX" secondItem="grK-vz-yTP" secondAttribute="centerX" id="UCb-zm-F4a"/>
                             <constraint firstItem="ox7-ll-0jO" firstAttribute="top" secondItem="pqD-K3-eJ1" secondAttribute="bottom" constant="8" id="XSO-Yl-fOV"/>
                             <constraint firstAttribute="trailing" secondItem="grK-vz-yTP" secondAttribute="trailing" id="YTH-ZB-LmF"/>
                             <constraint firstItem="grK-vz-yTP" firstAttribute="top" secondItem="ox7-ll-0jO" secondAttribute="bottom" constant="8" id="Z4G-Zx-cvL"/>
                             <constraint firstAttribute="trailing" secondItem="pqD-K3-eJ1" secondAttribute="trailing" id="aSy-e2-wni"/>
                             <constraint firstAttribute="trailing" secondItem="w7F-DQ-Ndw" secondAttribute="trailing" id="bug-kX-9v0"/>
                             <constraint firstAttribute="trailing" secondItem="dvt-o2-7sZ" secondAttribute="trailing" id="cNc-dB-egy"/>
+                            <constraint firstItem="oYs-FP-hCh" firstAttribute="width" secondItem="grK-vz-yTP" secondAttribute="width" id="d17-2D-p49"/>
                             <constraint firstItem="pqD-K3-eJ1" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="h6B-WD-Fra"/>
                             <constraint firstItem="grK-vz-yTP" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="osI-Oq-KUi"/>
                             <constraint firstItem="RZ4-cz-InB" firstAttribute="top" secondItem="grK-vz-yTP" secondAttribute="bottom" id="xAf-Pg-LbF"/>
+                            <constraint firstItem="oYs-FP-hCh" firstAttribute="centerY" secondItem="grK-vz-yTP" secondAttribute="centerY" id="xZn-gf-f7g"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
@@ -194,9 +263,16 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="guiActionButton" destination="Y21-x1-6ea" id="wMU-8Q-vqA"/>
+                        <outlet property="guiActionButtonContainer" destination="grK-vz-yTP" id="5NX-V5-1NP"/>
                         <outlet property="guiActivity" destination="ukZ-dI-nFt" id="wWI-X8-EeR"/>
+                        <outlet property="guiEmusContainer" destination="w7F-DQ-Ndw" id="ize-15-Etd"/>
+                        <outlet property="guiFlowButtonsContainer" destination="oYs-FP-hCh" id="IY4-5X-Xrt"/>
+                        <outlet property="guiInviteStateButton" destination="Ybz-NG-pHX" id="Mfb-bn-MUA"/>
                         <outlet property="guiMessage" destination="0Pb-IT-qeh" id="wuB-Yb-ahS"/>
                         <outlet property="guiNavBarView" destination="dvt-o2-7sZ" id="9KC-SN-EqL"/>
+                        <outlet property="guiNegativeButton" destination="g2D-4f-VSv" id="fC8-XU-sku"/>
+                        <outlet property="guiPositiveButton" destination="Gze-xK-79q" id="xKt-LV-muT"/>
+                        <outlet property="guiProgressView" destination="dkH-ya-LfV" id="1Y7-R1-Xhp"/>
                         <outlet property="guiTitle" destination="iPt-nt-KfE" id="NNu-CS-UK9"/>
                         <outlet property="guiUserGuidanceTitle" destination="t6k-60-z2E" id="G4P-go-hto"/>
                     </connections>
@@ -228,7 +304,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu instance cell" id="8Kf-oJ-IUf" customClass="EMEmuCell">
-                                        <rect key="frame" x="0.0" y="9" width="344" height="193"/>
+                                        <rect key="frame" x="0.0" y="9.5" width="344" height="192.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="344" height="193"/>

@@ -1,3 +1,14 @@
+---------------------
+HSDKCore Version 1.11
+---------------------
+- Possible to cancel a long render by calling renderer.cancel()
+- Possible to get notifications of video render progress by setting renderer.outputProgressNotifications to YES (NO by default)
+
+---------------------
+HSDKCore Version 1.10
+---------------------
+- iOS8.1 issue fixed: fileURLWithPath:relativeToURL: is iOS9.1 only. fixed to methods supported by iOS8.1
+
 --------------------
 HSDKCore Version 1.9
 --------------------

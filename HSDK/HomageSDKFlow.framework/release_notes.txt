@@ -1,3 +1,17 @@
+---------------------
+HSDKCore Version 1.10
+---------------------
+- bug fix: deployment target was set to iOS 9.1 by mistake. Fixed to 8.1
+
+--------------------
+HSDKFlow Version 1.9
+--------------------
+
+
+--------------------
+HSDKFlow Version 1.8
+--------------------
+
 --------------------
 HSDKFlow Version 1.7
 --------------------

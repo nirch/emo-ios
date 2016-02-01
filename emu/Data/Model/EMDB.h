@@ -12,6 +12,7 @@
 
 #import "Emuticon.h"
 #import "Emuticon+Logic.h"
+#import "Emuticon+JointEmuLogic.h"
 
 #import "EmuticonDef.h"
 #import "EmuticonDef+Logic.h"
@@ -37,6 +38,9 @@
 #define emkUUID                     @"uuid"
 #define emkPackageOID               @"package oid"
 #define emkEmuticonOID              @"emuticon oid"
+#define emkJEmuOID                  @"joint emu oid"
+#define emkJEmuSlot                 @"joint emu slot"
+#define emkJEmuInviteCode           @"joint emu invite code"
 #define emkEmuticonDefOID           @"emuticon definition oid"
 #define emkEmuticonDefName          @"emuticon definition name"
 #define emkFootageOID               @"footage oid"

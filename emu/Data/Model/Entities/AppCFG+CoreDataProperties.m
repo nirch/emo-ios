@@ -2,7 +2,7 @@
 //  AppCFG+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 30/01/2016.
+//  Created by Aviv Wolf on 31/01/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -40,5 +40,6 @@
 @dynamic userViewedKBTutorial;
 @dynamic userViewedMainTutorial;
 @dynamic userSignInID;
+@dynamic pushToken;
 
 @end

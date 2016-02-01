@@ -2,7 +2,7 @@
 //  Emuticon+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 28/01/2016.
+//  Created by Aviv Wolf on 31/01/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSDate *lastTimeViewed;
 @property (nullable, nonatomic, retain) NSString *oid;
 @property (nullable, nonatomic, retain) NSString *prefferedFootageOID;
+@property (nullable, nonatomic, retain) id remoteFootages;
 @property (nullable, nonatomic, retain) NSNumber *renderedSampleUploaded;
 @property (nullable, nonatomic, retain) NSNumber *rendersCount;
 @property (nullable, nonatomic, retain) NSNumber *shouldRenderAsHDIfAvailable;
@@ -31,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *videoLoopsEffect;
 @property (nullable, nonatomic, retain) NSNumber *wasRendered;
 @property (nullable, nonatomic, retain) NSNumber *wasRenderedInHD;
-@property (nullable, nonatomic, retain) id remoteFootages;
+@property (nullable, nonatomic, retain) id jointEmuInstance;
 @property (nullable, nonatomic, retain) EmuticonDef *emuDef;
 
 @end

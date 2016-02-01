@@ -137,7 +137,9 @@ class EMRecordingPreviewVC: AVPlayerViewController {
                 // Render a preview for this capture
                 self.startRenderingUI()
                 let rm = EMRenderManager3.sharedInstance
-                self.latestPreviewUUID = rm.renderPreviewForEmuDefOID(emuDefOID, captureInfo: captureInfo)
+                
+                let tempUserFootage = UserTempFootage(info: captureInfo)
+                self.latestPreviewUUID = rm.renderPreviewForEmuDefOID(emuDefOID, tempUserFootage: tempUserFootage)
             } else {
                 // Download resources first, before rendering
 //                self.startDownloadingUI()

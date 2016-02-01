@@ -18,7 +18,7 @@
     NSString *oid = [info safeOIDStringForKey:@"_id"];
     if (oid) {
         AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//        appCFG.userSignInID = oid;
+        appCFG.userSignInID = oid;
         [EMDB.sh save];
     }
 }

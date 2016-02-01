@@ -10,6 +10,6 @@
 
 @interface HMServer (User)
 
--(void)signInUserWithPushToken:(NSString *)pushToken;
+-(void)signInUser;
 
 @end

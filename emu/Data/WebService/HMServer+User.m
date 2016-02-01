@@ -9,13 +9,17 @@
 #import "HMServer+User.h"
 #import "EMUserParser.h"
 #import "EMNotificationCenter.h"
+#import "EMDB.h"
 
 @implementation HMServer (User)
 
--(void)signInUserWithPushToken:(NSString *)pushToken
+-(void)signInUser
 {
+    // Get push token if stored on device
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSString *pushToken = appCFG.pushToken;
     UIDevice *device = UIDevice.currentDevice;
-    
+
     HMParams *params = [HMParams new];
     [params addKey:@"serial" valueIfNotNil:device.identifierForVendor.UUIDString];
     [params addKey:@"model" valueIfNotNil:device.model];

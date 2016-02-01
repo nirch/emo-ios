@@ -8,9 +8,21 @@
 import Foundation
 
 enum JointEmuState {
+    case Undefined
     case NotCreatedYet
     case NotAJointEmu
     case UserNotSignedIn
+    
+    case InstanceInfoMissing
+    case NoInvitationsSent
+    
+    case SendInviteConfirmationRequired
+    case InitiatorUploadingFootage
+    
+    case InitiatorWaitingForFriends
+    
+    case InitiatorCancelInviteOptions
+    
     case Error
 }
 
@@ -27,7 +39,13 @@ class JointEmuFlow: NSObject {
         let appCFG = AppCFG.cfgInContext(EMDB.sh().context)
         if appCFG.userSignInID == nil {return .UserNotSignedIn}
         
-        // :-(
-        return .Error
+        // Check if required to create the joint emu on the server side.
+        if emu.jointEmuInstance == nil {return .InstanceInfoMissing}
+        
+        // Check if no invitations sent yet
+        if emu.jointEmuInvitationsSentCount() == 0 {return .NoInvitationsSent}
+        
+        return .InitiatorWaitingForFriends
+        
     }
 }

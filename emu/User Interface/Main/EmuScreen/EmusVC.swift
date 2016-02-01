@@ -141,20 +141,6 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     //
     // MARK: - Joint emu
     //
-    func updateJointEmuUIState() {
-        let state = JointEmuFlow.stateForEmu(self.currentEmu())
-
-//        switch state {
-//            case .UserNotSignedIn:
-//                self.guiTitle.text = EML.s("JOINT_EMU")
-//                self.gui
-//            default:
-//                break
-//        }
-//        
-//                self.guiTitle.text = "Create New Joint Emu!"
-//        self.guiActionButton.title
-    }
     
     //
     // MARK: - CV DataSource

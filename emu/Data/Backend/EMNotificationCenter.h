@@ -25,6 +25,10 @@
 
 #define emkUserSignedIn @"emk user signed in"
 
+#define emkJointEmuRefresh @"emk joint emu refresh"
+#define emkJointEmuNew @"emk joint emu new"
+#define emkJointEmuCreateInvite @"emk joint create invite"
+
 // Store
 #define emkDataProductsInfoUpdated  @"emk data products info updated"
 #define emkDataProductsError  @"emk data products error"

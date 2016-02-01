@@ -11,4 +11,7 @@
 
 @interface UserTempFootage : NSObject<FootageProtocol>
 
++(UserTempFootage *)tempFootageWithInfo:(NSDictionary *)info;
+-(instancetype)initWithInfo:(NSDictionary *)info;
+
 @end

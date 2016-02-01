@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>.DS_Store</key>
+		<data>
+		9+XkXwpK2122Eg2yNnCV6/FvOdw=
+		</data>
 		<key>480x480_head_and_shoulders.ctr</key>
 		<data>
 		xMRX6dDh7xFfc5S5VEjETVDAscE=
@@ -74,7 +78,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		s/Bmz7PO5ar2WAIEHcMa+w/6a/8=
+		kDVsMGfy5yREedYMJIa5TguXyn8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -90,11 +94,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		khckSU4rL5LhTDth3eEBZuO+/Kc=
+		5UofBl3f3XlWcIe+8nxD5LF+QYg=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		DaMgC8AG0R+B9F6F5CFXTCgfhqE=
+		R9QnwpqxfNWdm6H/1/7nuzT0mac=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -181,11 +185,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		khckSU4rL5LhTDth3eEBZuO+/Kc=
+		5UofBl3f3XlWcIe+8nxD5LF+QYg=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		DaMgC8AG0R+B9F6F5CFXTCgfhqE=
+		R9QnwpqxfNWdm6H/1/7nuzT0mac=
 		</data>
 	</dict>
 	<key>rules</key>

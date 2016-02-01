@@ -111,7 +111,7 @@
     }
     
     // User sign in
-    [EMBackend.sh.server signInUserWithPushToken:nil];
+    [EMBackend.sh.server signInUser];
     
     // Preload sounds
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
@@ -296,8 +296,12 @@
     
     // Sign in user with the push token
     NSString *pushToken = [deviceToken description];
-    if (pushToken)
-        [EMBackend.sh.server signInUserWithPushToken:pushToken];
+    if (pushToken) {
+        AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+        appCFG.pushToken = pushToken;
+        [EMDB.sh save];
+        [EMBackend.sh.server signInUser];
+    }
 }
 
 #pragma mark - Opened notifications

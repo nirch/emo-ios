@@ -201,4 +201,5 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
  */
 -(BOOL)validateResources;
 
+
 @end

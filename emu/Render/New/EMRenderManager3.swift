@@ -93,42 +93,35 @@ class EMRenderManager3 : NSObject
     - parameter emuDefOID:   The oid of the emu definition
     - parameter captureInfo: Dictionary with info about the captured user
     */
-    func renderPreviewForEmuDefOID(emuDefOID : String, captureInfo : [NSObject:AnyObject]) -> String? {
-        // Capture info
-        var captureInfoForPreview = captureInfo
-        captureInfoForPreview[hcrDownSample] = 2
-        
+    func renderPreviewForEmuDefOID(emuDefOID : String, tempUserFootage : UserTempFootage) -> String? {
         // Must have an emu definition and all resources must exist on local storage
         let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context)
         if emuDef == nil {return nil}
         if !emuDef.allResourcesAvailable() {return nil}
-        let outputPath = captureInfo["output_path"] as! String
-        let outputFiles = captureInfo["output_files"] as! [NSObject:AnyObject]
         
         // Create CFG for renderer
         let uuid = NSUUID().UUIDString
         let fps = self.fpsForEmuDef(emuDef, renderType: EMRenderType.CapturePreview)
-        let cfg = emuDef.hcRenderCFGWithFootages([captureInfoForPreview], oldStyle: true, inHD: false, fps: fps)
+        let cfg = emuDef.hcRenderCFGWithFootages([tempUserFootage], oldStyle: true, inHD: false, fps: fps)
         
         var outputInfo = [
             hcrOutputType:hcrVideo,
             hcrRelativePath:"tmp_preview_\(uuid).mov"
         ] as [NSObject:AnyObject]
         
-        // Add audio if captured
-        if let audioPath = outputFiles["audio"] as? String {
-            let fullAudioPath = "\(outputPath)/\(audioPath)"
-            let audioURL = NSURL(fileURLWithPath: fullAudioPath)
-            outputInfo[hcrAudioURL] = audioURL
-        }
+//        // Add audio if captured
+//        if let audioPath = outputFiles["audio"] as? String {
+//            let fullAudioPath = "\(outputPath)/\(audioPath)"
+//            let audioURL = NSURL(fileURLWithPath: fullAudioPath)
+//            outputInfo[hcrAudioURL] = audioURL
+//        }
 
         cfg[hcrOutputsInfo] = [outputInfo]
 
         // Render
         var previewInfo = [
             emkUUID:uuid,
-            emkEmuticonDefOID:emuDefOID,
-            emkCaptureInfo:captureInfo
+            emkEmuticonDefOID:emuDefOID
         ] as [NSObject:AnyObject]
         
         let renderer = HCRender(configurationInfo: cfg as [NSObject:AnyObject], userInfo: [emkEmuticonDefOID:emuDefOID,"uuid":uuid])

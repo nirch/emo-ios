@@ -26,6 +26,8 @@
 		<string>emuapi/unhide/packages</string>
 		<key>user</key>
 		<string>user</string>
+		<key>jointemu</key>
+		<string>jointemu</string>
 	</dict>
 </dict>
 </plist>

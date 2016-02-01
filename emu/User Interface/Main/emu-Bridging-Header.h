@@ -30,6 +30,20 @@
 
 #import "EMEmuCell.h"
 
+#import "EMBackend.h"
+
+#import "HMServer.h"
+#import "HMServer+User.h"
+#import "HMServer+JEmu.h"
+
+#import "EMNotificationCenter.h"
+
+#import "EMShare.h"
+#import "EMUploadPublicFootageForJointEmu.h"
+#import "EMShareDelegate.h"
+
+#import <SIAlertView.h>
+
 #pragma mark - Homage SDK imports
 #import <HomageSDKCore/HomageSDKCore.h>
 #import <HomageSDKFlow/HomageSDKFlow.h>
