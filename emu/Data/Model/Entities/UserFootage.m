@@ -39,4 +39,9 @@
     return layer;
 }
 
+-(NSURL *)urlToThumbImage
+{
+    return [NSURL fileURLWithPath:[self pathToUserThumb]];
+}
+
 @end

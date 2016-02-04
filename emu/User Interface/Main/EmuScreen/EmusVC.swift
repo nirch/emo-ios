@@ -25,12 +25,7 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     // Emuticon def oid
     var emuDefOID: String? {
         didSet {
-            self.emuDef = EmuticonDef.findWithID(self.emuDefOID, context: EMDB.sh().context)
-            self.emus = Array(self.emuDef!.emus!)
-            if let collection = self.guiEmusCollection {
-                collection.reloadData()
-                self.refreshCarouselButtons()
-            }
+            self.refresh()
         }
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,6 +87,9 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func emuSelectionChanged() {
         self.refreshCarouselButtons()
         self.delegate?.emuSelected(self.currentEmu())
+        if let emu = self.currentEmu() {
+            emu.gainFocus()
+        }
     }
     
     func emuIndex() -> Int {
@@ -145,6 +143,15 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     //
     // MARK: - CV DataSource
     //
+    func refresh() {
+        self.emuDef = EmuticonDef.findWithID(self.emuDefOID, context: EMDB.sh().context)
+        self.emus = Array(self.emuDef!.emus!)
+        if let collection = self.guiEmusCollection {
+            collection.reloadData()
+            self.refreshCarouselButtons()
+        }
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let emuDef = self.emuDef {
             // If not joint emu, allow only a single emu instance for this emu def.

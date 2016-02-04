@@ -56,4 +56,17 @@
                   parser:[EMJointEmuNewParser new]];
 }
 
+-(void)jointEmuTakeSlotForInviteCode:(NSString *)inviteCode
+{
+    NSString *urlString = [NSString stringWithFormat:@"/jointemu/invite/%@/take_slot", inviteCode];
+    [self putRelativeURL:urlString
+              parameters:@{}
+        notificationName:emkJointEmuInviteTakeSlot
+                    info:@{
+                           emkJEmuInviteCode:inviteCode,
+                           emkEmuticonOID:@"create"
+                           }
+                  parser:[EMJointEmuNewParser new]];
+}
+
 @end

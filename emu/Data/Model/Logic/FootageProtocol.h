@@ -11,5 +11,6 @@
 @protocol FootageProtocol <NSObject>
 
 -(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD;
+-(NSURL *)urlToThumbImage;
 
 @end

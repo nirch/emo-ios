@@ -22,4 +22,9 @@
     return layer;
 }
 
+-(NSURL *)urlToThumbImage
+{
+    return nil;
+}
+
 @end

@@ -2,7 +2,7 @@
 //  Emuticon+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 31/01/2016.
+//  Created by Aviv Wolf on 04/02/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,8 +15,10 @@
 
 @dynamic audioFilePath;
 @dynamic audioStartTime;
+@dynamic inFocus;
 @dynamic isFavorite;
 @dynamic isPreview;
+@dynamic jointEmuInstance;
 @dynamic lastTimeShared;
 @dynamic lastTimeViewed;
 @dynamic oid;
@@ -25,12 +27,13 @@
 @dynamic renderedSampleUploaded;
 @dynamic rendersCount;
 @dynamic shouldRenderAsHDIfAvailable;
+@dynamic timeCreated;
 @dynamic usageCount;
 @dynamic videoLoopsCount;
 @dynamic videoLoopsEffect;
 @dynamic wasRendered;
 @dynamic wasRenderedInHD;
-@dynamic jointEmuInstance;
+@dynamic createdWithInvitationCode;
 @dynamic emuDef;
 
 @end

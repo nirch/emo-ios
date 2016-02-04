@@ -67,7 +67,7 @@
         return;
     }
     
-    _label = [SF:@"%@ - %@", emu.emuDef.package.name, emu.emuDef.name];
+    _label = [SF:@"%@", emu.oid];
     _oid = emu.oid;
     
     // Determine cell state by emu object state
@@ -106,7 +106,7 @@
                                           @"indexPath":indexPath,
                                           @"emuticonOID":emu.oid,
                                           @"packageOID":emu.emuDef.package.oid,
-                                          @"inUI":self.inUI,
+                                          @"inUI":self.inUI?self.inUI:@"unknown",
                                           @"renderType":@"shortLDPreview",
                                           @"mediaType":hcrGIF
                                           }];

@@ -17,6 +17,7 @@ enum JointEmuState {
     case NoInvitationsSent
     
     case SendInviteConfirmationRequired
+    
     case InitiatorUploadingFootage
     
     case InitiatorWaitingForFriends

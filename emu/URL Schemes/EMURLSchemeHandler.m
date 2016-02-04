@@ -11,6 +11,7 @@
 #import "EMNotificationCenter.h"
 #import "HMPanel.h"
 #import "EMDB.h"
+#import "EMBackend.h"
 
 @implementation EMURLSchemeHandler
 
@@ -25,7 +26,11 @@
     // Emu Open
     expectedScheme = [AppManagement.sh isTestApp]?@"emubetaopen":@"emuopen";
     if ([scheme isEqualToString:expectedScheme]) return YES;
-    
+
+    // Joint Emu
+    expectedScheme = [AppManagement.sh isTestApp]?@"jointemubeta":@"jointemu";
+    if ([scheme isEqualToString:expectedScheme]) return YES;
+
     // Scheme not supported
     return NO;
 }
@@ -50,10 +55,13 @@
     }
     
     // Handle open schemes
-    if ([scheme containsString:@"open"]) {
+    if ([scheme containsString:@"open"] || [scheme containsString:@"jointemu"]) {
         NSString *whatToOpen = [url host];
         if ([whatToOpen isEqualToString:@"pack"]) {
             [self openPackWithOID:[[url path] substringFromIndex:1]];
+            return YES;
+        } else if ([whatToOpen isEqualToString:@"invite"]) {
+            [self openInviteWithInviteCode:[[url path] substringFromIndex:1]];
             return YES;
         }
     }
@@ -93,6 +101,41 @@
                                                             object:nil
                                                           userInfo:params.dictionary];
     });
+}
+
+-(void)openInviteWithInviteCode:(NSString *)inviteCode
+{
+    if (inviteCode == nil) return;
+    
+    // Block the UI until finishing the flow of opening the invite
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShowBlockingProgress
+                                                        object:nil
+                                                      userInfo:@{@"title":LS(@"JOINT_EMU_LOADING")}];
+    
+
+    // First, force refresh data
+    [EMBackend.sh updatePackagesWithCompletionHandler:^(BOOL success) {
+        if (success == NO) {
+            // Failed refetching packages.
+            // TODO: handle this error.
+            return;
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationUpdateBlockingProgress
+                                                            object:nil
+                                                          userInfo:@{@"title":LS(@"JOINT_EMU_LOADING_INVITATION")}];
+
+        // First, check if local storage already has an emu created by this invitation code.
+        Emuticon *emu = [Emuticon findWithInvitationCode:inviteCode context:EMDB.sh.context];
+        [emu gainFocus];
+        HMParams *params = [HMParams new];
+        [params addKey:emkJEmuInviteCode value:inviteCode];
+
+        NSString *notificationName = emu==nil ? emkDataRequestInviteCode:emkJointEmuNavigateToInviteCode;
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                            object:nil
+                                                          userInfo:params.dictionary];
+    }];
 }
 
 @end

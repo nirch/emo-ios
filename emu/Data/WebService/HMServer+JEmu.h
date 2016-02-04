@@ -22,4 +22,7 @@ typedef NS_ENUM(NSInteger, EMJEmuCancelInvite) {
 -(void)jointEmuCreateInvite:(NSString *)jeOID slot:(NSInteger)slot emuOID:(NSString *)emuOID;
 -(void)jointEmuCancelInvite:(NSString *)inviteCode cancelCode:(EMJEmuCancelInvite)cancelCode emuOID:(NSString *)emuOID;
 
+-(void)jointEmuTakeSlotForInviteCode:(NSString *)inviteCode;
+
+
 @end

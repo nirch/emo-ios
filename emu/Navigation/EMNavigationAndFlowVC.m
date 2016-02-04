@@ -122,6 +122,17 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
+    // Joint emu take slot
+    [nc addUniqueObserver:self
+                 selector:@selector(onJointEmuInviteTakeSlot:)
+                     name:emkJointEmuInviteTakeSlot
+                   object:nil];
+
+    [nc addUniqueObserver:self
+                 selector:@selector(onJointEmuNavigateToInviteCode:)
+                     name:emkJointEmuNavigateToInviteCode
+                   object:nil];
+
     // Packages data refresh
     [nc addUniqueObserver:self
                  selector:@selector(onPackagesDataRefresh:)
@@ -185,6 +196,8 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkUIDataRefreshPackages];
+    [nc removeObserver:emkJointEmuNavigateToInviteCode];
+    [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIShouldHideTabsBar];
     [nc removeObserver:emkUIShouldShowTabsBar];
     [nc removeObserver:emkUINavigationTabSelected];
@@ -229,11 +242,32 @@
     }
 }
 
-/**
- *  A notification was 
- *
- *  @param notification <#notification description#>
- */
+-(void)onJointEmuInviteTakeSlot:(NSNotification *)notification
+{
+    if (notification.isReportingError) {
+        [self.blockingProgressVC hideAnimated:YES];
+        NSError *error = notification.reportedError;
+        if ([error.domain isEqualToString:NSURLErrorDomain]) {
+            [self.view makeToast:LS(@"ALERT_CHECK_INTERNET_MESSAGE")];
+        } else {
+            [self.view makeToast:LS(@"JOINT_EMU_ERROR_SLOT_ALREADY_TAKEN")];
+        }
+        return;
+    }
+    
+    // Invitation success. Will navigate to the new emu.
+    NSDictionary *info = notification.userInfo;
+    NSString *invitationCode = info[emkJEmuInviteCode];
+    [self navigateToContentRelatedToInvitationCode:invitationCode];
+}
+
+-(void)onJointEmuNavigateToInviteCode:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *invitationCode = info[emkJEmuInviteCode];
+    [self navigateToContentRelatedToInvitationCode:invitationCode];
+}
+
 -(void)onPackagesDataRefresh:(NSNotification *)notification
 {
     // Mark that attempted a refetch.
@@ -245,32 +279,12 @@
     } else {
         NSDictionary *info = notification.userInfo;
         if (info[emkPackageOID] != nil && [info[@"autoNavigateToPack"] boolValue]) {
-            [self navigateIfPossibleToPackWithInfo:info];
+            [self navigateIfPossibleToContentWithInfo:info];
         }
     }
     
     // Handle the flow
     [self handleFlow];
-}
-
--(void)navigateIfPossibleToPackWithInfo:(NSDictionary *)info
-{
-    NSString *packOID = info[emkPackageOID];
-    Package *package = [Package findWithID:packOID context:EMDB.sh.context];
-    if (package == nil) {
-        if (self.blockingProgressVC) {
-            [self.blockingProgressVC done];
-        }
-        return;
-    }
-    
-    [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:NO info:info];
-    
-    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
-        if (self.blockingProgressVC) {
-            [self.blockingProgressVC done];
-        }        
-    });
 }
 
 -(void)onRequestToOpenRecorder:(NSNotification *)notification
@@ -596,6 +610,51 @@
     if (_blockingProgressVC) [_blockingProgressVC done];
     _blockingProgressVC = nil;
     [self.blockingProgressVC showAnimated:YES];
+}
+
+#pragma mark - Automatic navigations to content
+-(void)navigateToContentRelatedToInvitationCode:(NSString *)invitationCode
+{
+    Emuticon *emu = [Emuticon findWithInvitationCode:invitationCode context:EMDB.sh.context];
+    if (invitationCode == nil || emu == nil) {
+        // No invitation code? Something went wrong :-(
+        [self.view makeToast:LS(@"ERROR_TITLE")];
+        [self.blockingProgressVC hideAnimated:YES];
+        return;
+    }
+    
+    // Emu gains focus.
+    [emu gainFocus];
+    [EMDB.sh save];
+    
+    // We have the invitation code and related emu. Navigate to that emu if possible.
+    HMParams *params = [HMParams new];
+    [params addKey:emkEmuticonOID valueIfNotNil:emu.oid];
+    [params addKey:emkEmuticonDefOID valueIfNotNil:emu.emuDef.oid];
+    [params addKey:emkPackageOID valueIfNotNil:emu.emuDef.package.oid];
+    dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
+        [self navigateIfPossibleToContentWithInfo:params.dictionary];
+    });
+}
+
+-(void)navigateIfPossibleToContentWithInfo:(NSDictionary *)info
+{
+    NSString *packOID = info[emkPackageOID];
+    Package *package = [Package findWithID:packOID context:EMDB.sh.context];
+    if (package == nil) {
+        if (self.blockingProgressVC) {
+            [self.blockingProgressVC done];
+        }
+        return;
+    }
+    
+    [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:NO info:info];
+    
+    dispatch_after(DTIME(1.0), dispatch_get_main_queue(), ^{
+        if (self.blockingProgressVC) {
+            [self.blockingProgressVC done];
+        }
+    });
 }
 
 #pragma mark - KB Tutorial

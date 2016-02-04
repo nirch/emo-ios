@@ -524,9 +524,10 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         //
         self.shouldRecordAudio = true
         let writer = HFWriterVideo()
+        writer.videoBitsPerPixel = 21.0
         if self.shouldRecordAudio {
             writer.includingAudio = true
-            writer.audioSampleRate = 24000
+            writer.audioSampleRate = 21000
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
             } catch {}

@@ -50,7 +50,7 @@
     
     // Configure the fetch request
     // (emus in active unhidden packs, divided to section by pack)
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@ AND (emuDef.package.isHidden=nil OR emuDef.package.isHidden=%@)", @NO, @YES, @NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPreview=%@ AND emuDef.package.isActive=%@ AND (emuDef.package.isHidden=nil OR emuDef.package.isHidden=%@) AND (inFocus=%@ OR inFocus=nil)", @NO, @YES, @NO, @YES];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
     fetchRequest.predicate = predicate;
     

@@ -104,7 +104,7 @@ class EMRenderManager3 : NSObject
         let fps = self.fpsForEmuDef(emuDef, renderType: EMRenderType.CapturePreview)
         let cfg = emuDef.hcRenderCFGWithFootages([tempUserFootage], oldStyle: true, inHD: false, fps: fps)
         
-        var outputInfo = [
+        let outputInfo = [
             hcrOutputType:hcrVideo,
             hcrRelativePath:"tmp_preview_\(uuid).mov"
         ] as [NSObject:AnyObject]

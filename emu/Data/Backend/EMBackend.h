@@ -40,6 +40,9 @@
 
 -(void)notifyUserAboutUpdateForPackage:(Package *)package;
 
+#pragma mark - Update with completion handler
+-(void)updatePackagesWithCompletionHandler:(void (^)(BOOL success))completionHandler;
+
 #pragma mark - Migration
 -(void)footagesMigrationIfRequired;
 

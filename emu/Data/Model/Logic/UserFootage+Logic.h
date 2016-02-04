@@ -116,13 +116,6 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
 -(NSString *)pathToUserAudio;
 
 /**
- *  NSURL to the first image of the footage.
- *
- *  @return NSURL of the first image in the footage or nil if missing.
- */
--(NSURL *)urlToThumbImage;
-
-/**
  *  UIImage of the thumb image for this footage.
  *
  *  @return UIImage of the thumb image of this footage.

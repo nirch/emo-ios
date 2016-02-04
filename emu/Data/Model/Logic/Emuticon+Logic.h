@@ -218,6 +218,11 @@
  */
 -(UserFootage *)previewUserFootage;
 
+/**
+ *  Mark this emu instance as "in focus" and marks all other emus with the same emu def as not in focus.
+ */
+-(void)gainFocus;
+
 
 /**
  * URL pointing to the audio file selected for this emuticon 

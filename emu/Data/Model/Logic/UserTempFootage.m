@@ -79,4 +79,9 @@
     }
 }
 
+-(NSURL *)urlToThumbImage
+{
+    return nil;
+}
+
 @end

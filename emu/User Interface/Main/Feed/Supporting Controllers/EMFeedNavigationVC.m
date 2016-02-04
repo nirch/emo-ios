@@ -32,8 +32,17 @@
 {
     EMEmusFeedVC *feedVC = self.childViewControllers.firstObject;
     NSString *requestedPackageOID = info[emkPackageOID];
+    NSString *requestedEmuOID = info[emkEmuticonOID];
+    
     if (requestedPackageOID != nil && feedVC != nil) {
         feedVC.requestsPackageOID = requestedPackageOID;
+        if (requestedEmuOID) feedVC.requestsEmuOID = requestedEmuOID;
+
+        NSNumber *previousTabIndex = info[@"previousTabIndex"];
+        NSNumber *newTabIndex = info[@"newTabIndex"];
+        if ([previousTabIndex isEqualToNumber:newTabIndex]) {
+            [feedVC consumeNavigationRequests];
+        }
     }
 }
 

@@ -33,7 +33,7 @@
     EMAppCFGParser *cfgParser = [[EMAppCFGParser alloc] initWithContext:self.ctx];
     cfgParser.objectToParse = info;
     [cfgParser parse];
-    HMLOG(TAG, EM_DBG, @"Server response:%@", info);
+    HMLOG(TAG, EM_VERBOSE, @"Server response:%@", info);
     
     //
     // Iterate and parse packages

@@ -9,6 +9,7 @@
 #import "UserFootage+Logic.h"
 #import "EMDB.h"
 #import "EMDB+Files.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation UserFootage (Logic)
 
@@ -146,12 +147,6 @@
     NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@_footage.wav", self.oid]];
     return path;
 }
-
--(NSURL *)urlToThumbImage
-{
-    return [NSURL fileURLWithPath:[self pathToUserThumb]];
-}
-
 
 -(UIImage *)thumbImage
 {
@@ -311,7 +306,12 @@
     NSString *videoPath = [outputPath stringByAppendingPathComponent:outputFiles[@"captured"]];
     NSString *videoDMaskPath = [outputPath stringByAppendingPathComponent:outputFiles[@"mask"]];
     NSString *audioPath = [outputPath stringByAppendingPathComponent:outputFiles[@"audio"]];
-    
+
+    // Create thumb image
+    UIImage *thumb = [self generateThumbImageForVideoAtPath:videoPath];
+    if (thumb != nil)
+        [UIImagePNGRepresentation(thumb) writeToFile:[footage pathToUserThumb] atomically:YES];
+
     // Move the captured video files to their final path.
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm moveItemAtPath:videoPath toPath:[footage pathToUserVideo] error:nil];
@@ -320,9 +320,22 @@
         [fm moveItemAtPath:audioPath toPath:[footage pathToUserAudio] error:nil];
         footage.audioAvailable = @YES;
     }
-    
+
     // Return the new footage object.
     return footage;
+}
+
++(UIImage *)generateThumbImageForVideoAtPath:(NSString *)filepath
+{
+    NSURL *url = [NSURL fileURLWithPath:filepath];
+    AVAsset *asset = [AVAsset assetWithURL:url];
+    AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]initWithAsset:asset];
+    CMTime time = [asset duration];
+    time.value = 0;
+    CGImageRef imageRef = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:NULL];
+    UIImage *thumbnail = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return thumbnail;
 }
 
 -(BOOL)validateResources

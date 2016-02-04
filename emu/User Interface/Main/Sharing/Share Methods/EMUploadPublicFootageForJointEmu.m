@@ -38,7 +38,7 @@
     // Progress
     self.progressByFile = [NSMutableDictionary new];
     self.uploadedFilesCount = 0;
-    self.requiredFilesToUploadCount = 2;
+    self.requiredFilesToUploadCount = 3;
     
     // Joint emu OID
     NSString *jointEmuOID = [self.emu jointEmuOID];
@@ -59,6 +59,14 @@
     uploadRequestMask.contentType = @"video/mov";
     uploadRequestMask.ACL = AWSS3ObjectCannedACLPublicRead;
     [self uploadRequest:uploadRequestMask jeOID:jointEmuOID file:@"mask" ext:@"mov"];
+    
+    // Upload video thumb
+    AWSS3TransferManagerUploadRequest *uploadRequestThumb = [AWSS3TransferManagerUploadRequest new];
+    uploadRequestThumb.bucket = appCFG.bucketName;
+    uploadRequestThumb.body = [NSURL fileURLWithPath:self.footage.pathToUserThumb];
+    uploadRequestThumb.contentType = @"image/png";
+    uploadRequestThumb.ACL = AWSS3ObjectCannedACLPublicRead;
+    [self uploadRequest:uploadRequestThumb jeOID:jointEmuOID file:@"thumb" ext:@"png"];
 }
 
 -(void)shareAfterUploaded

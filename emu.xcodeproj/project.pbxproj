@@ -703,6 +703,10 @@
 		08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D91A9CD18100224A38 /* EMunizingView.m */; };
 		08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89DF1A9D10D100224A38 /* clear480x480.png */; };
 		08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89F01A9D28BA00224A38 /* activityAnimation.gif */; };
+		08CBA5401C60EDE400574F0B /* SlotsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CBA53F1C60EDE400574F0B /* SlotsVC.swift */; };
+		08CBA5411C60EDE400574F0B /* SlotsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CBA53F1C60EDE400574F0B /* SlotsVC.swift */; };
+		08CBA5431C626B3000574F0B /* JointEmuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CBA5421C626B3000574F0B /* JointEmuScreenVC.swift */; };
+		08CBA5441C626B3000574F0B /* JointEmuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CBA5421C626B3000574F0B /* JointEmuScreenVC.swift */; };
 		08CBF4801BE8C21C00466B36 /* EMSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CBF47F1BE8C21C00466B36 /* EMSettingsVC.m */; };
 		08CBF4811BE8C21C00466B36 /* EMSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CBF47F1BE8C21C00466B36 /* EMSettingsVC.m */; };
 		08CBF4841BE8CEC300466B36 /* EMSettingsNavigationVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CBF4831BE8CEC300466B36 /* EMSettingsNavigationVCViewController.m */; };
@@ -1332,6 +1336,8 @@
 		08CB89D91A9CD18100224A38 /* EMunizingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMunizingView.m; sourceTree = "<group>"; };
 		08CB89DF1A9D10D100224A38 /* clear480x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clear480x480.png; sourceTree = "<group>"; };
 		08CB89F01A9D28BA00224A38 /* activityAnimation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = activityAnimation.gif; sourceTree = "<group>"; };
+		08CBA53F1C60EDE400574F0B /* SlotsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlotsVC.swift; sourceTree = "<group>"; };
+		08CBA5421C626B3000574F0B /* JointEmuScreenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JointEmuScreenVC.swift; sourceTree = "<group>"; };
 		08CBF47E1BE8C21C00466B36 /* EMSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSettingsVC.h; sourceTree = "<group>"; };
 		08CBF47F1BE8C21C00466B36 /* EMSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSettingsVC.m; sourceTree = "<group>"; };
 		08CBF4821BE8CEC300466B36 /* EMSettingsNavigationVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSettingsNavigationVCViewController.h; sourceTree = "<group>"; };
@@ -2898,7 +2904,9 @@
 			children = (
 				08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */,
 				08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */,
+				08CBA5421C626B3000574F0B /* JointEmuScreenVC.swift */,
 				08FF19A21C5C0D0800E15C36 /* EmusVC.swift */,
+				08CBA53F1C60EDE400574F0B /* SlotsVC.swift */,
 				08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */,
 			);
 			path = EmuScreen;
@@ -3653,6 +3661,7 @@
 				0889BD2C1C5A15C0004B81CB /* UserTempFootage.m in Sources */,
 				081B087C1BB5C7AB003AFF16 /* UserFootage+CoreDataProperties.m in Sources */,
 				08AA14541B0BA658002E1B2F /* HMImageTools.mm in Sources */,
+				08CBA5441C626B3000574F0B /* JointEmuScreenVC.swift in Sources */,
 				081B08781BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */,
 				08AA14551B0BA658002E1B2F /* HMGMError.m in Sources */,
 				08AA14561B0BA658002E1B2F /* EMPagerView.m in Sources */,
@@ -3671,6 +3680,7 @@
 				081B087A1BB5C7AB003AFF16 /* Emuticon.m in Sources */,
 				08AA145C1B0BA658002E1B2F /* HMBackgroundRemoval.mm in Sources */,
 				08ED7FF61B1DDD1600B6856F /* EMVideoSettingsPopover.m in Sources */,
+				08CBA5411C60EDE400574F0B /* SlotsVC.swift in Sources */,
 				08BD22211C46464A00A64FC8 /* EMRenderManager3.swift in Sources */,
 				084349C71B837EA0009A653F /* EMShareInputVC.m in Sources */,
 				08AA145D1B0BA658002E1B2F /* HMServer.m in Sources */,
@@ -3917,6 +3927,7 @@
 				08BD22201C46464A00A64FC8 /* EMRenderManager3.swift in Sources */,
 				08D9D4541AC2C6BC004A83F3 /* HMBackgroundRemovalDebugger.mm in Sources */,
 				085C67991A937EC9007BC910 /* EMControlsBarVC.m in Sources */,
+				08CBA5401C60EDE400574F0B /* SlotsVC.swift in Sources */,
 				084349D11B84999F009A653F /* NSString+Utilities.m in Sources */,
 				088360041BCB7FB7008C4DD8 /* EMFootagesNavigationCFG.m in Sources */,
 				08AE9CCC1C5D55A00075B03C /* HMServer+User.m in Sources */,
@@ -3995,6 +4006,7 @@
 				08FF19A31C5C0D0800E15C36 /* EmusVC.swift in Sources */,
 				0867C9FB1B14C40700FF0E85 /* SolidColorSource.mm in Sources */,
 				08CF07AC1B4CFB0700034BB5 /* WaterMarkSource.mm in Sources */,
+				08CBA5431C626B3000574F0B /* JointEmuScreenVC.swift in Sources */,
 				0830B3B01BE82721003E64BA /* EMBackend+AppStore.m in Sources */,
 				08A457101BA03948001AB79E /* EMNavBarVC.m in Sources */,
 				08CB89871A9B217D00224A38 /* EMShareVC.m in Sources */,

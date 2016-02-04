@@ -9,6 +9,7 @@
 #ifndef emu_emu_Bridging_Header_h
 #define emu_emu_Bridging_Header_h
 
+#import "AppManagement.h"
 #import "EMRecorderDelegate.h"
 #import "EMOnboardingVC.h"
 #import "UIView+CommonAnimations.h"
@@ -43,6 +44,10 @@
 #import "EMShareDelegate.h"
 
 #import <SIAlertView.h>
+
+#import <PINRemoteImage/UIImageView+PINRemoteImage.h>
+#import <FLAnimatedImage.h>
+#import <FLAnimatedImageView.h>
 
 #pragma mark - Homage SDK imports
 #import <HomageSDKCore/HomageSDKCore.h>

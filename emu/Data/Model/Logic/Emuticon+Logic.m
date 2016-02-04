@@ -24,6 +24,7 @@
 +(Emuticon *)findWithID:(NSString *)oid
                 context:(NSManagedObjectContext *)context
 {
+    if (oid==nil) return nil;
     NSManagedObject *object = [NSManagedObject fetchSingleEntityNamed:E_EMU
                                                                withID:oid
                                                             inContext:context];
@@ -60,6 +61,7 @@
     emu.emuDef = emuDef;
     emu.usageCount = @0;
     emu.isPreview = @YES;
+    emu.timeCreated = [NSDate date];
     return emu;
 }
 
@@ -71,6 +73,7 @@
     Emuticon *emu = (Emuticon *)[NSManagedObject findOrCreateEntityNamed:E_EMU
                                                                      oid:oid
                                                                  context:context];
+    emu.timeCreated = [NSDate date];
     emu.emuDef = emuticonDef;
     return emu;
 }
@@ -138,6 +141,7 @@
 -(NSString *)animatedGifPathInHD:(BOOL)inHD
 {
     NSString *gifName = [SF:@"%@%@.gif", self.oid, inHD?@"_2x":@""];
+    NSLog(@"gif name:%@", gifName);
     NSString *outputPath = [EMDB outputPathForFileName:gifName];
     return outputPath;
 }
@@ -268,6 +272,17 @@
                            context:self.managedObjectContext];
 }
 
+-(void)gainFocus
+{
+    EmuticonDef *emuDef = self.emuDef;
+    for (Emuticon *emu in emuDef.emus) {
+        if ([emu.oid isEqualToString:self.oid]) {
+            emu.inFocus = @YES;
+        } else {
+            emu.inFocus = @NO;
+        }
+    }
+}
 
 
 -(NSURL *)audioFileURL

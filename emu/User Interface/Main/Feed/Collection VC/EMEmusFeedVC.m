@@ -187,7 +187,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 -(void)restoreState
 {
-    if (self.requestsPackageOID) [self consumeRequestsPackageOID];
+    if (self.requestsPackageOID) [self consumeNavigationRequests];
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
@@ -456,20 +456,32 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     // Reload the data in the collection view.
     [self.dataSource reset];
     [self reload];
-    if (self.requestsPackageOID) [self consumeRequestsPackageOID];
+    if (self.requestsPackageOID) [self consumeNavigationRequests];
 }
 
--(void)consumeRequestsPackageOID
+-(void)consumeNavigationRequests
 {
     if (self.requestsPackageOID) {
-        Package *package = [Package findWithID:self.requestsPackageOID context:EMDB.sh.context];
+        NSString *packageOID = self.requestsPackageOID;
+        NSString *emuOID = self.requestsEmuOID;
+        
+        Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
         [self _handleChangeToPackage:package];
         NSIndexPath *indexPath = [self.dataSource indexPathForPackOID:self.requestsPackageOID];
         if (indexPath) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self scrollToSection:indexPath.section animated:NO];
+                
+                if (self.navigationController.presentingViewController.presentedViewController != self) {
+                    // Another vc is already pushed on the stack
+                    [self.navigationController popToViewController:self animated:NO];
+                }
+                
+                Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+                if (emu) [self navigateToEmuOID:emu.oid animated:NO];
             });
         }
+        self.requestsEmuOID = nil;
         self.requestsPackageOID = nil;
         return;
     }
@@ -479,6 +491,18 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)vcWasSelectedWithInfo:(NSDictionary *)info
 {
     HMLOG(TAG, EM_DBG, @"Top vc selected: EMEmusFeedVC");
+}
+
+#pragma mark - Navigating to emu screen
+-(void)navigateToEmuOID:(NSString *)emuOID animated:(BOOL)animated
+{
+    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    if (emu == nil) return;
+
+    EmuScreenVC *emuScreenVC = [EmuScreenVC emuScreenVC:emu.emuDef.oid
+                                             themeColor:self.navBarThemeColor];
+    [self.navigationController pushViewController:emuScreenVC animated:animated];
+    self.guiCollectionView.userInteractionEnabled = YES;
 }
 
 #pragma mark - Collection view Layout
@@ -553,14 +577,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         
         self.guiCollectionView.userInteractionEnabled = NO;
         dispatch_after(DTIME(0.2), dispatch_get_main_queue(), ^{
-            Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-            NSString *emuDefOID = emu.emuDef.oid;
-            if (emuDefOID) {
-                EmuScreenVC *emuScreenVC = [EmuScreenVC emuScreenVC:emuDefOID
-                                                         themeColor:self.navBarThemeColor];
-                [self.navigationController pushViewController:emuScreenVC animated:YES];
-            }
-            self.guiCollectionView.userInteractionEnabled = YES;
+            [self navigateToEmuOID:emuOID animated:YES];
         });
 
     } else if (self.currentState == EMEmusFeedStateSelecting) {

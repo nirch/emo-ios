@@ -139,12 +139,19 @@
     // ---------------------------
     // Request to open a package
     //
-    
     [nc addUniqueObserver:self
                  selector:@selector(onOpenPackageRequest:)
                      name:emkDataRequestToOpenPackage
                    object:nil];
     
+    // ---------------------------
+    // Request to open an invitation
+    //
+    [nc addUniqueObserver:self
+                 selector:@selector(onOpenInviteCode:)
+                     name:emkDataRequestInviteCode
+                   object:nil];
+
     
     // --------------------
     // Rendering notifications
@@ -226,6 +233,26 @@
     [EMDB.sh save];
 }
 
+-(void)updatePackagesWithCompletionHandler:(void (^)(BOOL success))completionHandler {
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSNumber *timeStamp = appCFG.lastUpdateTimestamp?appCFG.lastUpdateTimestamp:@0;
+    EMPackagesParser *parser = [[EMPackagesParser alloc] initWithContext:EMDB.sh.context];
+    [self.server.session GET:@"emuapi/packages/update"
+                  parameters:@{@"after":timeStamp.stringValue}
+                     success:^(NSURLSessionDataTask *task, id responseObject) {
+                         parser.objectToParse = responseObject;
+                         [parser parse];
+                         if (parser.error) {
+                             completionHandler(NO);
+                             return;
+                         }
+                         // Parse successful
+                         completionHandler(YES);
+                         
+                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                         completionHandler(NO);
+                     }];
+}
 
 /**
  *  The data about the packages was updated (or failed to update).
@@ -274,6 +301,12 @@
     [self.server unhideUsingCode:code withInfo:info];
 }
 
+-(void)onOpenInviteCode:(NSNotification *)notification
+{
+    NSString *inviteCode = notification.userInfo[emkJEmuInviteCode];
+    [self.server jointEmuTakeSlotForInviteCode:inviteCode];
+}
+
 -(void)onOpenPackageRequest:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
@@ -282,6 +315,7 @@
     // First check if pack already exists locally on the device.
     Package *package = [Package findWithID:info[emkPackageOID] context:EMDB.sh.context];
     BOOL packAlreadyOnDevice = package != nil;
+
     // Tell backend that data update is required.
     // Also pass info about the pack the app needs to navigate to
     // after it gets the required data of the pack.
@@ -429,7 +463,6 @@
     if (footagesCount == 0) {
         return;
     }
-    
     
     // Block the UI until finishing the flow of opening the pack
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShowBlockingProgress
