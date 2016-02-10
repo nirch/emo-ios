@@ -8,13 +8,17 @@
 
 #import "Emuticon.h"
 
+@class UserFootage;
+
 #pragma mark - States
 typedef NS_ENUM(NSInteger, EMSlotState){
-    EMSlotStateUndefined    = 0,
-    EMSlotStateInitiator    = 1,
-    EMSlotStateUninvited    = 2,
-    EMSlotStateInvited      = 3,
-    EMSlotStateCanceled     = 4
+    EMSlotStateUndefined                        = 0,
+    EMSlotStateInitiator                        = 1,
+    EMSlotStateUninvited                        = 2,
+    EMSlotStateInvited                          = 3,
+    EMSlotStateCanceledByInitiator              = 4,
+    EMSlotStateDeclinedByReceiver               = 5,
+    EMSlotStateDeclinedFootageByInitiator       = 6
 };
 
 
@@ -30,17 +34,23 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 
 #pragma mark - Initiator related.
 -(NSString *)jointEmuInitiatorID;
+-(NSInteger)jointEmuInitiatorSlot;
 -(BOOL)isJointEmuInitiatedByThisUser;
 -(NSInteger)jointEmuInvitationsSentCount;
 
 #pragma mark - Invitations and receivers
 -(NSInteger)jointEmuFirstUninvitedSlotIndex;
+-(NSInteger)jointEmuSlotForInvitationCode:(NSString *)invitationCode;
 
 #pragma mark - Questions about a specific slot
 -(NSString *)jointEmuInviteCodeAtSlot:(NSInteger)slotIndex;
 -(NSString *)jointEmuUserIDAtSlot:(NSInteger)slotIndex;
 -(BOOL)isJointEmuInitiatorAtSlot:(NSInteger)slotIndex;
 -(EMSlotState)jointEmuStateOfSlot:(NSInteger)slotIndex;
+-(NSDictionary *)jointEmuRemoteFilesAtSlot:(NSInteger)slotIndex;
+
+#pragma mark - Footages
+-(UserFootage *)jointEmuFootageAtSlot:(NSInteger)slotIndex;
 
 #pragma mark - AWS S3
 -(NSString *)s3KeyForFile:(NSString *)fileName slot:(NSInteger)slot ext:(NSString *)ext;

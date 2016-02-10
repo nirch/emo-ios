@@ -95,6 +95,9 @@
                                            inHD:(BOOL)inHD
                                             fps:(NSInteger)fps;
 
+#pragma mark - Emuticons
+-(NSArray *)emusOrdered:(NSArray *)sortDescriptors;
+
 #pragma mark - Resources Paths
 -(NSString *)pathForUserLayerMask;
 -(NSString *)pathForUserLayerMaskInHD:(BOOL)inHD;
@@ -126,7 +129,7 @@
 
 #pragma mark - Joint emu
 -(BOOL)isJointEmu;
-
+-(void)latestEmuGainFocus;
 
 
 @end

@@ -84,4 +84,9 @@
     return nil;
 }
 
+-(BOOL)isAvailable
+{
+    return YES;
+}
+
 @end

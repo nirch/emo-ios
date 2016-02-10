@@ -10,6 +10,7 @@
 #import "NSDictionary+TypeSafeValues.h"
 #import "EmuticonDef.h"
 #import "EMDB.h"
+#import "HMServer+JEmu.h"
 
 @implementation Emuticon (JointEmuLogic)
 
@@ -46,6 +47,19 @@
     return [self.jointEmuInstance safeOIDStringForKey:@"user_id"];
 }
 
+-(NSInteger)jointEmuInitiatorSlot
+{
+    NSString *initiatorID = [self jointEmuInitiatorID];
+    if (self.jointEmuInstance == nil) return 0;
+    for (NSInteger slot=1;slot<=self.jointEmuSlots.count;slot++) {
+        if ([[self jointEmuUserIDAtSlot:slot] isEqualToString:initiatorID]) {
+            return slot;
+        }
+    }
+    return 0;
+
+}
+
 -(BOOL)isJointEmuInitiatedByThisUser
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
@@ -74,7 +88,22 @@
 {
     for (NSInteger i=1;i<=self.jointEmuSlots.count;i++) {
         EMSlotState state = [self jointEmuStateOfSlot:i];
-        if (state == EMSlotStateUninvited) return i;
+        if (state == EMSlotStateUninvited ||
+            state == EMSlotStateCanceledByInitiator ||
+            state == EMSlotStateDeclinedByReceiver ||
+            state == EMSlotStateDeclinedFootageByInitiator
+            ) return i;
+    }
+    return 0;
+}
+
+-(NSInteger)jointEmuSlotForInvitationCode:(NSString *)invitationCode
+{
+    for (NSInteger i=1;i<=self.jointEmuSlots.count;i++) {
+        NSString *invitationCodeAtSlot = [self jointEmuInviteCodeAtSlot:i];
+        if ([invitationCode isEqualToString:invitationCodeAtSlot]) {
+            return i;
+        }
     }
     return 0;
 }
@@ -124,6 +153,20 @@
     if ([self isJointEmuInitiatorAtSlot:slotIndex])
         return EMSlotStateInitiator;
 
+    // Cancelations
+    NSNumber *cancelCode = slot[@"cancel_reason"];
+    if ([cancelCode isKindOfClass:[NSNumber class]]) {
+        EMJEmuCancelInvite cancelReason = [cancelCode integerValue];
+        switch (cancelReason) {
+            case EMJEmuCancelInviteCanceledByInitiator:
+                return EMSlotStateCanceledByInitiator;
+            case EMJEmuCancelInviteDeclinedByReceiver:
+                return EMSlotStateDeclinedByReceiver;
+            case EMJEmuCancelInviteFootageDeclinedByInitiator:
+                return EMSlotStateDeclinedFootageByInitiator;
+        }
+    }
+    
     // Check if invited
     NSString *inviteCode = [self jointEmuInviteCodeAtSlot:slotIndex];
     if (inviteCode == nil)
@@ -131,6 +174,76 @@
     
     // Invited
     return EMSlotStateInvited;
+}
+
+-(BOOL)isJointEmuCurrentReceiverAtSlot:(NSInteger)slotIndex
+{
+    NSAssert(self.isJointEmuInitiatedByThisUser == NO, @"Call this method only for receiver");
+    if (self.isJointEmuInitiatedByThisUser == NO) return NO;
+    NSString *invitationCode = self.createdWithInvitationCode;
+    if (invitationCode == nil) return nil;
+    return [invitationCode isEqualToString:[self jointEmuInviteCodeAtSlot:slotIndex]];
+}
+
+-(NSDictionary *)jointEmuRemoteFilesAtSlot:(NSInteger)slotIndex
+{
+    NSDictionary *slot = [self jointEmuSlot:slotIndex];
+    if (slot == nil) return nil;
+    return slot[@"footage_files"];
+}
+
+#pragma mark - Footages
+-(id<FootageProtocol>)jointEmuFootageAtSlot:(NSInteger)slotIndex
+{
+    if (self.isJointEmuInitiatedByThisUser) {
+        if ([self isJointEmuInitiatorAtSlot:slotIndex]) {
+            
+            // The initiator local slot.
+            return [self mostPrefferedUserFootage];
+            
+        } else {
+            
+            // The remote slots.
+            return [self jointEmuRemoteFootageAtSlot:slotIndex];
+        }
+        
+    } else {
+        
+        // Receiver. As long as the joint emu is not finished, the receiver will
+        // show placeholders for all slots except the initator slot and this receiver slot.
+        if ([self isJointEmuCurrentReceiverAtSlot:slotIndex]) {
+
+            // The receiver's local slot.
+            return [self mostPrefferedUserFootage];
+            
+        } else {
+            
+            // The remote slots.
+            return [self jointEmuRemoteFootageAtSlot:slotIndex];
+
+        }
+    }
+    return nil;
+}
+
+-(id<FootageProtocol>)jointEmuRemoteFootageAtSlot:(NSInteger)slotIndex
+{
+    if (self.remoteFootages == nil) {
+        self.remoteFootages = [NSMutableDictionary new];
+    }
+    
+    NSString *footageOID = self.remoteFootages[@(slotIndex)];
+    if (footageOID == nil) {
+        // Placeholder
+        return [PlaceHolderFootage new];
+    } else {
+        UserFootage *footage = [UserFootage findOrCreateWithID:footageOID context:EMDB.sh.context];
+        if (footage) {
+            return footage;
+        } else {
+            return [PlaceHolderFootage new];
+        }
+    }
 }
 
 #pragma mark - AWS S3
@@ -143,6 +256,7 @@
 
     return nil;
 }
+
 
 
 @end

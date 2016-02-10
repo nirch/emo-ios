@@ -27,6 +27,8 @@
 #pragma mark - Sampled results
 -(BOOL)shouldUploadSampledResults;
 
+#pragma mark - remote files
+-(NSURL *)remoteURLToFile:(NSString *)remoteFile;
 
 #pragma mark - tweaked values
 +(NSNumber *)tweakedNumber:(NSString *)name;

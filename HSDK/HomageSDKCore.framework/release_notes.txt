@@ -1,8 +1,8 @@
 ---------------------
 HSDKCore Version 1.11
 ---------------------
-- Possible to cancel a long render by calling renderer.cancel()
-- Possible to get notifications of video render progress by setting renderer.outputProgressNotifications to YES (NO by default)
+- Bug fix: Background layers of size exactly as the frame size, sometimes (on specific sizes) had an alpha 1 pixel border
+            to the right and bottom of the layer. Caused by the transform effects. Bug fixed.
 
 ---------------------
 HSDKCore Version 1.10
@@ -25,3 +25,11 @@ New Features:
 - Added for historical reason (backward support for emu app): frame number can be passed using hcrFrame instead of hcrTime in transform effects.
 
 - Bug fix: Absolute output paths now work as should using hcrPath key (previously only hcrRelativePath worked properly)
+
+
+FUTURE:
+-----------------------------
+Planned HSDKCore Version 1.12
+-----------------------------
+- Possible to cancel a long render by calling renderer.cancel()
+- Possible to get notifications of video render progress by setting renderer.outputProgressNotifications to YES (NO by default)

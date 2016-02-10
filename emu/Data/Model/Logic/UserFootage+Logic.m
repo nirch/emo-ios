@@ -325,6 +325,22 @@
     return footage;
 }
 
++(UserFootage *)newFootageWithID:(NSString *)oid
+                 remoteFilesInfo:(NSDictionary *)remoteFilesInfo
+                         context:(NSManagedObjectContext *)context
+{
+    UserFootage *footage = [UserFootage findOrCreateWithID:oid context:context];
+    footage.gifAvailable = @NO;
+    footage.pngSequenceAvailable = @NO;
+    // footage.duration = captureInfo[@"duration"];
+    footage.footageWidth = @480;
+    footage.footageHeight = @480;
+    footage.timeTaken = [NSDate date];
+    footage.remoteFootage = @YES;
+    footage.remoteFootageFiles = remoteFilesInfo;
+    return footage;
+}
+
 +(UIImage *)generateThumbImageForVideoAtPath:(NSString *)filepath
 {
     NSURL *url = [NSURL fileURLWithPath:filepath];
@@ -338,14 +354,22 @@
     return thumbnail;
 }
 
--(BOOL)validateResources
+-(NSArray *)allMissingRemoteFiles
 {
+    NSMutableArray *missingFiles = [NSMutableArray new];
+    if (self.remoteFootage == nil) return missingFiles;
+    if (self.remoteFootage.boolValue == NO) return missingFiles;
+    NSDictionary *remoteFiles = self.remoteFootageFiles;
+    if (![remoteFiles isKindOfClass:[NSDictionary class]]) return missingFiles;
+    
+    NSString *footagesPath = [EMDB footagesPath];
     NSFileManager *fm = [NSFileManager defaultManager];
-    if ([self isCapturedVideoAvailable]) {
-        if ([fm fileExistsAtPath:[self pathToUserVideo]] == NO) return NO;
-        if ([fm fileExistsAtPath:[self pathToUserDMaskVideo]] == NO) return NO;
+    for (NSString *file in remoteFiles.allValues) {
+        if (![file isKindOfClass:[NSString class]]) continue;
+        NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@", file]];
+        if (![fm fileExistsAtPath:path]) [missingFiles addObject:file];
     }
-    return YES;
+    return missingFiles;
 }
 
 @end

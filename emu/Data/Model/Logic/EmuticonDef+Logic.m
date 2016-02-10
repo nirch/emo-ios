@@ -35,6 +35,19 @@
 }
 
 
+-(NSArray *)emusOrdered:(NSArray *)sortDescriptors
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"emuDef=%@", self];
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];
+    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = sortDescriptors;
+    NSError *error;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error) return nil;
+    return results;
+}
+
 #pragma mark - Resources Paths
 
 // User layer mask
@@ -431,6 +444,14 @@
 {
     if (self.jointEmu != nil) return YES;
     return NO;
+}
+
+-(void)latestEmuGainFocus
+{
+    NSArray *sortBy = @[[NSSortDescriptor sortDescriptorWithKey:@"timeCreated" ascending:YES]];
+    NSArray *emus = [self emusOrdered:sortBy];
+    Emuticon *emu = [emus lastObject];
+    [emu gainFocus];
 }
 
 @end

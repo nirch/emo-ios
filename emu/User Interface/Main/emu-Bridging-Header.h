@@ -42,6 +42,7 @@
 #import "EMShare.h"
 #import "EMUploadPublicFootageForJointEmu.h"
 #import "EMShareDelegate.h"
+#import "UserFootage+DownloadsHelpers.h"
 
 #import <SIAlertView.h>
 

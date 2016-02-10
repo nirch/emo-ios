@@ -39,6 +39,7 @@
 @property (nonatomic, readonly) NSMutableDictionary *downloadingPool;
 @property (nonatomic, readonly) NSMutableDictionary *neededDownloadsPool;
 @property (nonatomic, readonly) NSMutableDictionary *pathByOID;
+@property (nonatomic, readonly) NSMutableDictionary *taskType;
 @property (nonatomic, readonly) NSMutableDictionary *userInfo;
 
 @property (nonatomic, readonly) NSURL *rootURL;
@@ -90,6 +91,7 @@
     _neededDownloadsPool = [NSMutableDictionary new];
     _userInfo = [NSMutableDictionary new];
     _pathByOID = [NSMutableDictionary new];
+    _taskType = [NSMutableDictionary new];
     
     _rootURL = [EMDB rootURL];
     
@@ -160,12 +162,26 @@
                          path:(NSString *)path
                      userInfo:(NSDictionary *)userInfo
 {
+    [self enqueueResourcesForOID:oid
+                           names:names
+                            path:path
+                        userInfo:userInfo
+                        taskType:nil];
+}
+
+-(void)enqueueResourcesForOID:(NSString *)oid
+                        names:(NSArray *)names
+                         path:(NSString *)path
+                     userInfo:(NSDictionary *)userInfo
+                     taskType:(NSString *)taskType
+{
     __weak EMDownloadsManager2 *wSelf = self;
     dispatch_async(self.downloadingManagementQueue, ^{
         [wSelf _enqueueResourcesForOID:oid
                                  names:names
                                   path:path
-                              userInfo:userInfo];
+                              userInfo:userInfo
+                              taskType:taskType];
     });
 }
 
@@ -173,6 +189,7 @@
                         names:(NSArray *)names
                          path:(NSString *)path
                      userInfo:(NSDictionary *)userInfo
+                      taskType:(NSString *)taskType
 {
     HMLOG(TAG, EM_DBG, @"Need to download resources: %@", names);
     
@@ -194,6 +211,7 @@
     self.pathByOID[oid] = path;
     self.userInfo[oid] = userInfo;
     self.neededDownloadsPool[oid] = resources;
+    if (taskType) self.taskType[oid] = taskType;
 }
 
 #pragma mark - Queue management
@@ -268,6 +286,7 @@
     HMLOG(TAG, EM_DBG, @"Download job: %@", jobID);
     AWSTask *downloadTask = [self newDownloadTaskForOID:oid resourceName:name];
     self.downloadingPool[jobID] = downloadTask;
+    
     
     
     // Download!
@@ -354,18 +373,6 @@
     }];
 }
 
-//-(BOOL)validateFileAtPath:(NSString *)path withExpectedMD5:(NSString *)expectedMD5
-//{
-//    NSString *md5 = [HMFileHash md5HashOfFileAtPath:path];
-//    BOOL validated = [md5 isEqualToString:expectedMD5];
-//    if (!validated) {
-//        REMOTE_LOG(@"MD5 validation failed for resource:%@ expected:%@ got:%@",
-//                   path,
-//                   expectedMD5,
-//                   md5);
-//    }
-//    return validated;
-//}
 
 -(void)_cancelledJobForOID:(NSString *)oid resourceName:(NSString *)name
 {
@@ -405,30 +412,43 @@
 #pragma mark - AWS Downloads
 -(NSString *)s3KeyForOID:(NSString *)oid resourceName:(NSString *)name
 {
+    NSString *taskType = self.taskType[oid];
     NSString *path = self.pathByOID[oid];
-    return [SF:@"packages/%@/%@", path, name];
+    if ([taskType isEqualToString:DL_TASK_TYPE_FOOTAGES_FILES]) {
+        // Footage remote file
+        return name;
+    } else {
+        // Emus render resources.
+        return [SF:@"packages/%@/%@", path, name];
+    }
 }
 
 -(NSURL *)localURLForOID:(NSString *)oid resourceName:(NSString *)name asTempFile:(BOOL)asTempFile
 {
     NSString *path = self.pathByOID[oid];
-    NSString *localPath = [SF:@"resources/%@", path];
+    NSString *localPath = nil;
+    if ([self.taskType[oid] isEqualToString:DL_TASK_TYPE_FOOTAGES_FILES]) {
+        localPath = path;
+    } else {
+        localPath = [SF:@"resources/%@", path];
+    }
+    
     if (asTempFile) localPath = [localPath stringByAppendingString:@".tmp"];
     NSURL *url = [self.rootURL URLByAppendingPathComponent:localPath];
+
+    // Add the path component of the resource name
+    url = [url URLByAppendingPathComponent:name];
 
     // Make sure required folder exists.
     NSFileManager *fm = [NSFileManager defaultManager];
     if (![fm fileExistsAtPath:url.path]) {
         NSError *error;
-        [fm createDirectoryAtURL:url withIntermediateDirectories:YES
+        [fm createDirectoryAtURL:url.URLByDeletingLastPathComponent withIntermediateDirectories:YES
                       attributes:nil error:&error];
         if (error) {
             HMLOG(TAG, EM_ERR, @"Failed creating directory: %@", [error localizedDescription]);
         }
     }
-    
-    // Add the path compenent of the resource name
-    url = [url URLByAppendingPathComponent:name];
     
     // Return the url the path of resources.
     return url;
@@ -438,6 +458,8 @@
 
 -(AWSTask *)newDownloadTaskForOID:(NSString *)oid resourceName:(NSString *)name
 {
+    [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+    
     // Create a download request for specified bucket.
     AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
     downloadRequest.bucket = self.bucketName;

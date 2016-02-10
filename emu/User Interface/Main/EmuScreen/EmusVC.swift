@@ -51,7 +51,6 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     // MARK: - Initializations
     //
     func initGUI() {
-//        self.guiEmusCollection.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
         self.guiNextContainer.backgroundColor = UIColor.clearColor()
         self.guiPrevContainer.backgroundColor = UIColor.clearColor()
     }
@@ -145,10 +144,15 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     //
     func refresh() {
         self.emuDef = EmuticonDef.findWithID(self.emuDefOID, context: EMDB.sh().context)
-        self.emus = Array(self.emuDef!.emus!)
-        if let collection = self.guiEmusCollection {
-            collection.reloadData()
-            self.refreshCarouselButtons()
+        if self.emuDef == nil {
+            self.emus = nil
+        } else {
+            let sortBy = [NSSortDescriptor(key: "timeCreated", ascending: true)]
+            self.emus = emuDef!.emusOrdered(sortBy) as? [Emuticon]
+            if let collection = self.guiEmusCollection {
+                collection.reloadData()
+                self.refreshCarouselButtons()
+            }
         }
     }
     
@@ -164,7 +168,6 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 return emus.count+1
             }
         }
-        
         
         return 0
     }

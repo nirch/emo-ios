@@ -14,15 +14,16 @@ enum JointEmuState {
     case UserNotSignedIn
     
     case InstanceInfoMissing
+    
+    // Initiator
     case NoInvitationsSent
-    
     case SendInviteConfirmationRequired
-    
     case InitiatorUploadingFootage
-    
     case InitiatorWaitingForFriends
-    
     case InitiatorCancelInviteOptions
+    
+    // Receiver
+    case ReceiverInvited
     
     case Error
 }
@@ -43,10 +44,34 @@ class JointEmuFlow: NSObject {
         // Check if required to create the joint emu on the server side.
         if emu.jointEmuInstance == nil {return .InstanceInfoMissing}
         
-        // Check if no invitations sent yet
-        if emu.jointEmuInvitationsSentCount() == 0 {return .NoInvitationsSent}
-        
-        return .InitiatorWaitingForFriends
+        // Initiator or receiver?
+        if emu.isJointEmuInitiatedByThisUser() {
+            
+            // Initiator flow
+
+            // Check if no invitations sent yet
+            if emu.jointEmuInvitationsSentCount() == 0 {return .NoInvitationsSent}
+            
+            return .InitiatorWaitingForFriends
+            
+            
+        } else {
+            
+            // Receiver flow
+            if let invitationCode = emu.createdWithInvitationCode {
+                let receiverSlotIndex = emu.jointEmuSlotForInvitationCode(invitationCode)
+                if receiverSlotIndex > 0 {
+                    //let state = emu.jointEmuStateOfSlot(receiverSlotIndex)
+                    return .ReceiverInvited
+                    
+                } else {
+                    return .Error
+                }
+            } else {
+                // Error 
+                return .Error
+            }
+        }
         
     }
 }

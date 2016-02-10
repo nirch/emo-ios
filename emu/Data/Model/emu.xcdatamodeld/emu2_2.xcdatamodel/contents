@@ -134,6 +134,7 @@
         <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pngSequenceAvailable" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="remoteFootage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="remoteFootageFiles" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="timeTaken" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
     </entity>
     <elements>
@@ -141,6 +142,6 @@
         <element name="Emuticon" positionX="135" positionY="-52" width="189" height="375"/>
         <element name="EmuticonDef" positionX="72" positionY="-340" width="333" height="480"/>
         <element name="Package" positionX="36" positionY="-522" width="396" height="585"/>
-        <element name="UserFootage" positionX="-171" positionY="-387" width="144" height="210"/>
+        <element name="UserFootage" positionX="-171" positionY="-387" width="144" height="225"/>
     </elements>
 </model>

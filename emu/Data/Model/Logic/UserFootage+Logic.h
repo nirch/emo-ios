@@ -46,6 +46,20 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
                      captureInfo:(NSDictionary *)captureInfo
                          context:(NSManagedObjectContext *)context;
 
+
+/**
+ *  Creates a remote footage object with the provided oid and info provided about the remote files.
+ *
+ *  @param oid             The id of the object
+ *  @param remoteFilesInfo NSDictionary info about the names of the remote files.
+ *  @param context         The managed object context.
+ *
+ *  @return new UserFootage object representing footage available on the server side.
+ */
++(UserFootage *)newFootageWithID:(NSString *)oid
+                 remoteFilesInfo:(NSDictionary *)remoteFilesInfo
+                         context:(NSManagedObjectContext *)context;
+
 /**
  *  Finds a user footage object with the provided oid.
  *
@@ -187,12 +201,7 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
 -(BOOL)isCapturedVideoAvailable;
 -(BOOL)isAudioAvailable;
 
-/**
- *  Checks that the resources of this footage are available.
- *
- *  @return YES if required resources for this footage are available.
- */
--(BOOL)validateResources;
+-(NSArray *)allMissingRemoteFiles;
 
 
 @end

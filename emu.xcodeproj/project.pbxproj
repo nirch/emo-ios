@@ -803,6 +803,10 @@
 		08FB19611BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB194D1BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m */; };
 		08FB19641BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB19631BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m */; };
 		08FB19651BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB19631BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m */; };
+		08FCDF741C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FCDF731C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m */; };
+		08FCDF751C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FCDF731C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m */; };
+		08FCDF761C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FCDF731C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m */; };
+		08FCDF771C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FCDF731C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m */; };
 		08FF199D1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */; };
 		08FF199E1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */; };
 		08FF19A01C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */; };
@@ -1425,6 +1429,8 @@
 		08FB194D1BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeedSelectionsActionBarVC.m; sourceTree = "<group>"; };
 		08FB19621BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMMajorRetakeOptionsSheet.h; sourceTree = "<group>"; };
 		08FB19631BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMMajorRetakeOptionsSheet.m; sourceTree = "<group>"; };
+		08FCDF721C6A1EF000C147AA /* UserFootage+DownloadsHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UserFootage+DownloadsHelpers.h"; sourceTree = "<group>"; };
+		08FCDF731C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UserFootage+DownloadsHelpers.m"; sourceTree = "<group>"; };
 		08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EmuScreen.storyboard; sourceTree = "<group>"; };
 		08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmuScreenVC.swift; sourceTree = "<group>"; };
 		08FF19A21C5C0D0800E15C36 /* EmusVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmusVC.swift; sourceTree = "<group>"; };
@@ -1935,6 +1941,8 @@
 			children = (
 				0845BDF71BC5607900173B66 /* Emuticon+DownloadsHelpers.h */,
 				0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */,
+				08FCDF721C6A1EF000C147AA /* UserFootage+DownloadsHelpers.h */,
+				08FCDF731C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m */,
 			);
 			path = "Data source helpers";
 			sourceTree = "<group>";
@@ -2904,10 +2912,10 @@
 			children = (
 				08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */,
 				08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */,
+				08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */,
 				08CBA5421C626B3000574F0B /* JointEmuScreenVC.swift */,
 				08FF19A21C5C0D0800E15C36 /* EmusVC.swift */,
 				08CBA53F1C60EDE400574F0B /* SlotsVC.swift */,
-				08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */,
 			);
 			path = EmuScreen;
 			sourceTree = "<group>";
@@ -3571,6 +3579,7 @@
 				085349191BCF39CC008BBBF9 /* EMButton.m in Sources */,
 				0853491D1BCF3B1D008BBBF9 /* SolidColorSource.mm in Sources */,
 				085349301BCF4BD9008BBBF9 /* HMImageTools.mm in Sources */,
+				08FCDF771C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */,
 				0853492D1BCF4BB7008BBBF9 /* ThumbOutput.mm in Sources */,
 				085349211BCF3BAE008BBBF9 /* PngSourceWithFX.mm in Sources */,
 				0853490D1BCF36E6008BBBF9 /* EMPackageCell.m in Sources */,
@@ -3799,6 +3808,7 @@
 				086FFB6A1BB55EB40097CA45 /* EMPacksDataSource.m in Sources */,
 				08AA149C1B0BA658002E1B2F /* EMLabel.m in Sources */,
 				08AA149D1B0BA658002E1B2F /* AppManagement.m in Sources */,
+				08FCDF761C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */,
 				08AA149E1B0BA658002E1B2F /* EMBackend.m in Sources */,
 				08E30BC11BB9C730009EDCFF /* Package.m in Sources */,
 				08AA149F1B0BA658002E1B2F /* EMDB.m in Sources */,
@@ -3839,6 +3849,7 @@
 				08CA99A41BCFC6E3004A5A02 /* EMButton.m in Sources */,
 				08CA99A51BCFC6E3004A5A02 /* SolidColorSource.mm in Sources */,
 				08CA99A61BCFC6E3004A5A02 /* HMImageTools.mm in Sources */,
+				08FCDF751C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */,
 				08CA99A71BCFC6E3004A5A02 /* ThumbOutput.mm in Sources */,
 				08CA99A81BCFC6E3004A5A02 /* PngSourceWithFX.mm in Sources */,
 				08CA99AA1BCFC6E3004A5A02 /* EMPackageCell.m in Sources */,
@@ -3956,6 +3967,7 @@
 				0860054F1A97C210008CD7DE /* EMMessageButton.m in Sources */,
 				08357F461BC9F53000C302AA /* EMMeNavigationCFG.m in Sources */,
 				08CB89781A9AA12A00224A38 /* EMAnimatedGifPlayer.m in Sources */,
+				08FCDF741C6A1EF000C147AA /* UserFootage+DownloadsHelpers.m in Sources */,
 				08875E171B1AF25600E6663C /* ThumbOutput.mm in Sources */,
 				082C8BAB1C3D563500D6C6B7 /* EML.m in Sources */,
 				087592501BEB5FAD0090555B /* EMFullScreenGifPlayer.m in Sources */,

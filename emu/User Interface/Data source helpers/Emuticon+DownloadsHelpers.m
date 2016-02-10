@@ -49,7 +49,7 @@
     if (self.wasRendered.boolValue) return NO;
 
     NSArray *missingResourcesNames = [self.emuDef allMissingResourcesNames];
-    if (missingResourcesNames.count>0) {
+    if (missingResourcesNames.count > 0) {
         [EMDownloadsManager2.sh enqueueResourcesForOID:self.oid
                                                  names:missingResourcesNames
                                                   path:self.emuDef.package.name

@@ -442,40 +442,36 @@
     return self.emuDef.isJointEmu;
 }
 
--(NSArray *)remoteFootages
-{
-    if (self.isJointEmu == NO) return @[];
-    NSArray *slots = self.emuDef.jointEmu[@"slots"];
-    if (![slots isKindOfClass:[NSArray class]]) return @[];
-
-    NSMutableArray *footages = [NSMutableArray new];
-
-    for (NSInteger slotIndex=0;slotIndex<slots.count;slotIndex++) {
-        if (slotIndex==0) continue;
-        PlaceHolderFootage *placeHolderFootage = [PlaceHolderFootage new];
-        [footages addObject:placeHolderFootage];
-    }
-    
-    return footages;
-}
+//-(NSArray *)remoteFootages
+//{
+//    if (self.isJointEmu == NO) return @[];
+//    NSArray *slots = self.emuDef.jointEmu[@"slots"];
+//    if (![slots isKindOfClass:[NSArray class]]) return @[];
+//
+//    NSMutableArray *footages = [NSMutableArray new];
+//
+//    for (NSInteger slotIndex=0;slotIndex<slots.count;slotIndex++) {
+//        if (slotIndex==0) continue;
+//        PlaceHolderFootage *placeHolderFootage = [PlaceHolderFootage new];
+//        [footages addObject:placeHolderFootage];
+//    }
+//    
+//    return footages;
+//}
 
 -(NSArray *)relatedFootages
 {
     if (self.isJointEmu) {
         NSMutableArray *footages = [NSMutableArray new];
-        
-        // On slot 1, return the most preffered footage.
-        [footages addObject:[self mostPrefferedUserFootage]];
-        
-        // Add placeholder slots.
-        NSArray *remoteFootages = [self remoteFootages];
-        for (NSObject<FootageProtocol>* remoteFootage in remoteFootages) {
-            [footages addObject:remoteFootage];
+        for (NSInteger slotIndex=1;slotIndex<=self.jointEmuSlots.count;slotIndex++) {
+            NSObject<FootageProtocol> *footage = [self jointEmuFootageAtSlot:slotIndex];
+            [footages addObject:footage];
         }
         return footages;
+    } else {
+        // Regular emu
+        return @[[self mostPrefferedUserFootage]];
     }
-    
-    return @[[self mostPrefferedUserFootage]];
 }
 
 

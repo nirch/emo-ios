@@ -97,6 +97,8 @@ const CFArrayCallBacks pbArrayCallBacks = {0, 0, PixelBufferArrayReleaseCallback
     // Initialize asset writer
     NSError *writerInitError = NULL;
     assetWriter = [AVAssetWriter assetWriterWithURL:self.videoOutputURL fileType:AVFileTypeMPEG4 error:&writerInitError];
+    assetWriter.shouldOptimizeForNetworkUse = YES;
+    
     // Check for errors.
     if (writerInitError) {
         // TODO: error handling.

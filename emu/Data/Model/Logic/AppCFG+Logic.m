@@ -94,10 +94,22 @@
 #pragma mark - Sampled results
 -(BOOL)shouldUploadSampledResults
 {
-    NSDictionary *info = self.uploadUserContent;
-    if (info == nil || info[@"enabled"] == nil) return NO;
-    return [info[@"enabled"] boolValue];
+    return NO;
+// DEPRECATED.
+//    NSDictionary *info = self.uploadUserContent;
+//    if (info == nil || info[@"enabled"] == nil) return NO;
+//    return [info[@"enabled"] boolValue];
 }
+
+#pragma mark - remote files
+-(NSURL *)remoteURLToFile:(NSString *)remoteFile
+{
+    NSString *fullHTTPURLString = [NSString stringWithFormat:@"https://s3.amazonaws.com/%@/%@", self.bucketName, remoteFile];
+    NSURL *url = [NSURL URLWithString:fullHTTPURLString];
+    return url;
+}
+
+
 
 
 #pragma mark - tweaked values

@@ -637,7 +637,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         // Create a new footage object
         let oid = NSUUID().UUIDString
         let footage = UserFootage.newFootageWithID(oid, captureInfo: self.latestRecordingInfo, context: EMDB.sh().context)
-        if footage == nil || footage.validateResources() == false {
+        if footage == nil || footage.isAvailable() == false {
             self.epicFail()
             return
         }

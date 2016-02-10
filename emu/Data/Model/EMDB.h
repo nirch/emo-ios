@@ -41,6 +41,7 @@
 #define emkJEmuOID                  @"joint emu oid"
 #define emkJEmuSlot                 @"joint emu slot"
 #define emkJEmuInviteCode           @"joint emu invite code"
+#define emkJEmuCancelReason         @"joint emu cancel reason"
 #define emkEmuticonDefOID           @"emuticon definition oid"
 #define emkEmuticonDefName          @"emuticon definition name"
 #define emkFootageOID               @"footage oid"

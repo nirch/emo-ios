@@ -60,6 +60,9 @@ class EmuScreenVC: UIViewController,
     var emusVC: EmusVC?
     var slotsVC: SlotsVC?
     
+    //
+    var timeRefetchedFromServer: [String: NSDate] = [String: NSDate]()
+    
     // Emu definition oid
     var emuDefOID: String = ""
     var emuDef: EmuticonDef?
@@ -78,7 +81,6 @@ class EmuScreenVC: UIViewController,
     // theme color
     var themeColor = EmuStyle.colorThemeFeed()
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     
     //
     // MARK: - Factories
@@ -111,23 +113,14 @@ class EmuScreenVC: UIViewController,
         // Init gui state
         self.initGUI()
         
-        //
+        // Loading emu...
         self.showActivity(EML.s("JOINT_EMU_LOADING"), messageText: EML.s("JOINT_EMU_LOADING"))
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.initObservers()
-        
-        // Refresh joint emu
-        if let emu = self.currentEmu() {
-            if emu.isJointEmu() == true && emu.jointEmuOID() != nil {
-                self.showActivity(EML.s("JOINT_EMU"), messageText: EML.s("JOINT_EMU_LOADING"))
-                EMBackend.sh().server.jointEmuRefetch(emu.jointEmuOID(), emuOID: emu.oid)
-            } else {
-                self.updateEmuUIStateForEmu()
-            }
-        }
+        self.refreshCurrentEmu()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -183,6 +176,18 @@ class EmuScreenVC: UIViewController,
             selector: "onJointEmuInviteCreated:",
             name: emkJointEmuCreateInvite,
             object: nil)
+        
+        nc.addUniqueObserver(
+            self,
+            selector: "onRenderingFinished:",
+            name: hmkRenderingFinished,
+            object: nil)
+        
+        nc.addUniqueObserver(
+            self,
+            selector: "onDownloadFinished:",
+            name: hmkDownloadResourceFinished,
+            object: nil)
     }
     
     func removeObservers() {
@@ -191,6 +196,8 @@ class EmuScreenVC: UIViewController,
         nc.removeObserver(emkJointEmuNew)
         nc.removeObserver(emkJointEmuRefresh)
         nc.removeObserver(emkJointEmuCreateInvite)
+        nc.removeObserver(hmkRenderingFinished)
+        nc.removeObserver(hmkDownloadResourceFinished)
     }
     
     // MARK: - Observers handlers
@@ -204,11 +211,32 @@ class EmuScreenVC: UIViewController,
     }
     
     func onJointEmuRefresh(notification: NSNotification) {
+        self.emusVC?.refresh()
         self.updateEmuUIStateForEmu()
     }
     
     func onJointEmuInviteCreated(notification: NSNotification) {
         self.sendInviteToFriend()
+    }
+    
+    func onRenderingFinished(notification: NSNotification) {
+        if let emu = self.currentEmu() {
+            if let info = notification.userInfo {
+                if info[emkEmuticonOID] as? String == emu.oid {
+                    self.refreshCurrentEmu()
+                }
+            }
+        }
+    }
+    
+    func onDownloadFinished(notification: NSNotification) {
+        if let emu = self.currentEmu() {
+            if let info = notification.userInfo {
+                if info[emkEmuticonOID] as? String == emu.oid {
+                    self.refreshCurrentEmu()
+                }
+            }
+        }
     }
     
     //
@@ -235,12 +263,35 @@ class EmuScreenVC: UIViewController,
         }
     }
     
-    
     //
     // MARK: - status bar
     //
     override func prefersStatusBarHidden() -> Bool {
         return false
+    }
+    
+    //
+    // MARK: - Current emu
+    //
+    
+    func refreshCurrentEmu() {
+        if let emu = self.currentEmu() {
+            if emu.isJointEmu() == true && emu.jointEmuOID() != nil {
+                // Refresh joint emu (but not more than once a minute)
+                let lastTime = self.timeRefetchedFromServer[emu.jointEmuOID()]
+                let now = NSDate()
+                if lastTime == nil || now.timeIntervalSinceDate(lastTime!) > 60 {
+                    self.showActivity(EML.s("JOINT_EMU"), messageText: EML.s("JOINT_EMU_LOADING"))
+                    EMBackend.sh().server.jointEmuRefetch(emu.jointEmuOID(), emuOID: emu.oid)
+                    self.timeRefetchedFromServer[emu.jointEmuOID()] = now
+                } else {
+                    self.updateEmuUIStateForEmu()
+                }
+            } else {
+                // Update regular emu
+                self.updateEmuUIStateForEmu()
+            }
+        }
     }
     
     //
@@ -275,7 +326,8 @@ class EmuScreenVC: UIViewController,
             
         case .InstanceInfoMissing:
             self.createJointEmuInstance()
-            
+         
+        // Initiator flow
         case .NoInvitationsSent:
             self.showUserMessage(EML.s("JOINT_EMU_INFO_INVITE_FRIEND"), messageText: EML.s("NO_INVITATION_SENT"))
             self.showActionButton(EML.s("INVITE_FRIEND"))
@@ -288,6 +340,11 @@ class EmuScreenVC: UIViewController,
             }
             self.showUserMessage(EML.s("JOINT_EMU_INFO_WAIT_FOR_FRIENDS"), messageText: invitationsSentText)
             self.showActionButton(EML.s("WAIT_FOR_YOU_FRIENDS"), buttonDisabled: true)
+        
+        // Receiver
+        case .ReceiverInvited:
+            self.showUserMessage(EML.s("JOINT_EMU_INFO_JOIN_NEW_INVITE"), messageText: EML.s(""))
+            self.showFlowButtons(EML.s("CHOOSE_TAKE"), negativeButtonText: EML.s("DECLINE"))
             
         case .Error:
             self.showActivity("error :-(", messageText: "Epic FAIL!!!")
@@ -365,7 +422,7 @@ class EmuScreenVC: UIViewController,
     // MARK: - EmuSelectionProtocol
     //
     func emuSelected(emu: Emuticon?) {
-        self.updateEmuUIStateForEmu()
+        self.refreshCurrentEmu()
     }
     
     //
@@ -453,6 +510,19 @@ class EmuScreenVC: UIViewController,
             emuOID: emu.oid)
     }
     
+    func declineInvite() {
+        if let emu = self.currentEmu() {
+            if let inviteCode = emu.createdWithInvitationCode {
+                self.showActivity(EML.s("JOINT_EMU"), messageText: EML.s("JOINT_EMU_CANCELING"))
+                EMBackend.sh().server.jointEmuCancelInvite(
+                    inviteCode,
+                    cancelCode: EMJEmuCancelInvite.DeclinedByReceiver,
+                    emuOID: emu.oid)
+            }
+        }
+        
+    }
+    
     //
     // MARK: - EMShareDelegate
     //    
@@ -531,7 +601,7 @@ class EmuScreenVC: UIViewController,
         let emu = self.currentEmu()!
         let slotState = emu.jointEmuStateOfSlot(slotIndex)
         switch slotState {
-        case .Uninvited:
+        case .Uninvited, .DeclinedByReceiver:
             self.slotIndex = slotIndex
             self.showInviteConfirmUI()
         case .Invited:
@@ -597,8 +667,20 @@ class EmuScreenVC: UIViewController,
             self.updateEmuUIStateForEmu()
         case .InitiatorCancelInviteOptions:
             self.cancelInvite()
+        case .ReceiverInvited:
+            self.declineInvite()
         default:
             break
         }
     }
+    
+    
+    @IBAction func onPressedDebugButton(sender: AnyObject)
+    {
+        if let emu = self.currentEmu() {
+            emu.cleanUp()
+            self.emusVC?.refresh()
+        }
+    }
+    
 }

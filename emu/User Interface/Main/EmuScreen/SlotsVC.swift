@@ -141,6 +141,7 @@ class SlotsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
 enum SlotCellState {
     case Neutral
     case InvitationSent
+    case InvitationReceived
     case Declined
     case FootageDownloading
     case FootageAvailable
@@ -152,6 +153,9 @@ enum SlotCellState {
             return UIColor.grayColor()
             
         case .InvitationSent:
+            return EmuStyle.colorButtonBGPositive()
+            
+        case .InvitationReceived:
             return EmuStyle.colorButtonBGPositive()
             
         case .Declined:
@@ -169,7 +173,7 @@ enum SlotCellState {
     func thumbName() -> String {
         switch self {
             
-        case .InvitationSent:
+        case .InvitationSent, .InvitationReceived:
             return "placeholderPositive240.png"
             
         case .Declined:
@@ -191,6 +195,8 @@ class SlotCell: UICollectionViewCell {
     // Outlets
     @IBOutlet weak var guiThumb: UIImageView!
     @IBOutlet weak var guiLabel: UILabel!
+    @IBOutlet weak var guiActivity: UIActivityIndicatorView!
+    @IBOutlet weak var guiDownloadingLabel: UILabel!
 
     // vars
     static let placeholderImage: UIImage = UIImage(named: "placeholder240.png")!
@@ -208,20 +214,47 @@ class SlotCell: UICollectionViewCell {
         self.isCellSelected = isSelected
         
         if let emu = emuticon {
-            if emu.isJointEmuInitiatorAtSlot(slotIndex) && emu.isJointEmuInitiatedByThisUser() {
-                self.footage = emu.mostPrefferedUserFootage()
-                self.cellState = .FootageAvailable
-                self.text = "YOU"
+            if emu.isJointEmuInitiatedByThisUser() {
+                self.updateSlotCellWithJointEmuForInitiatorUI(emu, slotIndex: slotIndex, isSelected: isSelected)
             } else {
-                let state = emu.jointEmuStateOfSlot(slotIndex)
-                switch state {
-                case .Invited:
-                    self.cellState = .InvitationSent
-                    self.text = EML.s("INVITED")
-                default:
-                    self.cellState = .Neutral
-                    self.text = nil
-                }
+                self.updateSlotCellWithJointEmuForReceiverUI(emu, isSelected: isSelected)
+            }
+        }
+    }
+    
+    func updateSlotCellWithJointEmuForInitiatorUI(emu: Emuticon, slotIndex: Int, isSelected: Bool = false) {
+        if emu.isJointEmuInitiatorAtSlot(slotIndex) && emu.isJointEmuInitiatedByThisUser() {
+            self.footage = emu.mostPrefferedUserFootage()
+            self.cellState = .FootageAvailable
+            self.text = EML.s("YOU")
+        } else {
+            let state = emu.jointEmuStateOfSlot(slotIndex)
+            switch state {
+            case .Invited:
+                self.cellState = .InvitationSent
+                self.text = EML.s("INVITED")
+            case .DeclinedByReceiver:
+                self.cellState = .Declined
+                self.text = EML.s("DECLINED")
+            default:
+                self.cellState = .Neutral
+                self.text = nil
+            }
+        }
+    }
+    
+    func updateSlotCellWithJointEmuForReceiverUI(emu: Emuticon, isSelected: Bool = false) {
+        // The receiver will show only the initiator (other slots don't matter to the receiver).
+        let initiatorSlot = emu.jointEmuInitiatorSlot()
+        if initiatorSlot < 1 {return}
+        
+        if let footage = emu.jointEmuFootageAtSlot(initiatorSlot) {
+            self.footage = footage
+            if footage.isAvailable() {
+                self.cellState = .FootageAvailable
+            } else {
+                self.cellState = .FootageDownloading
+                footage.enqueueIfMissingResourcesWithInfo([emkFootageOID:footage.oid!])
             }
         }
     }
@@ -238,6 +271,9 @@ class SlotCell: UICollectionViewCell {
     }
     
     func updateGUI() {
+        self.guiDownloadingLabel.hidden = true
+        self.guiActivity.stopAnimating()
+        
         if let i = self.guiThumb {
             i.clipsToBounds = true
             i.layer.cornerRadius = i.layer.bounds.width/2.0
@@ -248,22 +284,27 @@ class SlotCell: UICollectionViewCell {
             i.layer.shadowRadius = 4.0
         }
         
-        self.updateLabel();
-        self.updateImage();
+        self.updateImageAndLabel();
     }
     
-    func updateLabel() {
-        self.guiLabel.textColor = self.cellState.color()
-        self.guiLabel.text = self.text
-    }
-    
-    func updateImage() {
+    func updateImageAndLabel() {
         var imageURL: NSURL?
         
-        if self.cellState == .FootageAvailable {
+        switch self.cellState {
+        case .FootageAvailable:
             imageURL = self.footage?.urlToThumbImage()
+        case .FootageDownloading:
+            imageURL = self.footage?.urlToThumbImage()
+            self.guiDownloadingLabel.text = EML.s("DOWNLOADING")
+            self.guiDownloadingLabel.hidden = false
+            self.guiActivity.startAnimating()
+        default:
+            break
         }
-
+        
+        self.guiLabel.textColor = self.cellState.color()
+        self.guiLabel.text = self.text
+        
         // Set the image
         if imageURL != nil {
             self.guiThumb.pin_setImageFromURL(imageURL, placeholderImage: SlotCell.placeholderImage)

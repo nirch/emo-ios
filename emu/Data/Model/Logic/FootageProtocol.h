@@ -12,5 +12,6 @@
 
 -(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD;
 -(NSURL *)urlToThumbImage;
+-(BOOL)isAvailable;
 
 @end

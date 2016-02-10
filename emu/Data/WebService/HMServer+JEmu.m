@@ -52,7 +52,11 @@
     [self putRelativeURL:urlString
               parameters:@{@"cancel_reason":@(cancelCode)}
         notificationName:emkJointEmuRefresh
-                    info:@{emkJEmuInviteCode:inviteCode, emkEmuticonOID:emuOID}
+                    info:@{
+                           emkJEmuInviteCode:inviteCode,
+                           emkEmuticonOID:emuOID,
+                           emkJEmuCancelReason:@(cancelCode)
+                           }
                   parser:[EMJointEmuNewParser new]];
 }
 

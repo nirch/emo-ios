@@ -2,7 +2,7 @@
 //  UserFootage+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 28/01/2016.
+//  Created by Aviv Wolf on 09/02/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -22,7 +22,8 @@
 @dynamic gifAvailable;
 @dynamic oid;
 @dynamic pngSequenceAvailable;
-@dynamic timeTaken;
 @dynamic remoteFootage;
+@dynamic timeTaken;
+@dynamic remoteFootageFiles;
 
 @end

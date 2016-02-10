@@ -22,13 +22,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *guiEmptyButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *guiBGImage;
+
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiAnimatedGif;
+@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiDownloadingAnimatedGif;
+@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiRenderingAnimatedGif;
+
 @property (weak, nonatomic) IBOutlet UIImageView *guiThumbImage;
 @property (weak, nonatomic) IBOutlet UIImageView *guiFailedImage;
 @property (weak, nonatomic) IBOutlet UILabel *guiDebugLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiSelectionIndicator;
-@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiDownloadingAnimatedGif;
-@property (weak, nonatomic) IBOutlet FLAnimatedImageView *guiRenderingAnimatedGif;
 
 @property (nonatomic) NSString *thumbPath;
 @property (nonatomic) NSURL *gifURL;
@@ -67,7 +69,8 @@
         return;
     }
     
-    _label = [SF:@"%@", emu.oid];
+    //_label = [SF:@"%@", emu.timeCreated];
+    _label = @"";
     _oid = emu.oid;
     
     // Determine cell state by emu object state
@@ -97,19 +100,22 @@
             return;
         }
         
+        NSDictionary *info =@{
+                              @"for":@"emu",
+                              @"indexPath":indexPath,
+                              @"emuticonOID":emu.oid,
+                              @"packageOID":emu.emuDef.package.oid,
+                              @"inUI":self.inUI?self.inUI:@"unknown",
+                              @"renderType":@"shortLDPreview",
+                              @"mediaType":hcrGIF
+                              };
+        
         [EMRenderManager3.sh enqueueEmu:emu
                              renderType:EMRenderTypeShortLowDefPreview
                               mediaType:EMMediaDataTypeGIF
                              fullRender:NO
-                               userInfo:@{
-                                          @"for":@"emu",
-                                          @"indexPath":indexPath,
-                                          @"emuticonOID":emu.oid,
-                                          @"packageOID":emu.emuDef.package.oid,
-                                          @"inUI":self.inUI?self.inUI:@"unknown",
-                                          @"renderType":@"shortLDPreview",
-                                          @"mediaType":hcrGIF
-                                          }];
+                               userInfo:info];
+        
         _state = EMEmuCellStateSentForRendering;
         
     } else {

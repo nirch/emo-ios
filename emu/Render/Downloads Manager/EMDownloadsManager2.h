@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+#define DL_TASK_TYPE_EMU_RESOURCES @"dl emu resources"
+#define DL_TASK_TYPE_FOOTAGES_FILES @"dl footages files"
+
 @class AWSS3TransferManager;
 
 #define MAX_CONCURRENT_DOWNLOADS 4
@@ -45,6 +48,12 @@
                         names:(NSArray *)names
                          path:(NSString *)path
                      userInfo:(NSDictionary *)userInfo;
+
+-(void)enqueueResourcesForOID:(NSString *)oid
+                        names:(NSArray *)names
+                         path:(NSString *)path
+                     userInfo:(NSDictionary *)userInfo
+                     taskType:(NSString *)taskType;
 
 #pragma mark - Queue management
 -(void)updatePriorities:(NSDictionary *)priorities;

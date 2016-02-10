@@ -9,6 +9,7 @@
 #import "UserFootage.h"
 #import "UserFootage+Logic.h"
 #import <HomageSDKCore/HomageSDKCore.h>
+#import "EMDB.h"
 
 @implementation UserFootage
 
@@ -41,7 +42,36 @@
 
 -(NSURL *)urlToThumbImage
 {
-    return [NSURL fileURLWithPath:[self pathToUserThumb]];
+    if (self.remoteFootage) {
+        return [self remoteURLToFile:self.remoteFootageFiles[@"thumb"]];
+    } else {
+        return [NSURL fileURLWithPath:[self pathToUserThumb]];
+    }
 }
+
+-(NSURL *)remoteURLToFile:(NSString *)remoteFilePath
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:self.managedObjectContext];
+    return [appCFG remoteURLToFile:remoteFilePath];
+}
+
+-(BOOL)isAvailable
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    if (self.remoteFootage.boolValue == YES) {
+        NSArray *missingRemoteFiles = [self allMissingRemoteFiles];
+        return missingRemoteFiles.count == 0;
+    }
+    
+    
+    if ([self isCapturedVideoAvailable]) {
+        // Local user footage
+        if ([fm fileExistsAtPath:[self pathToUserVideo]] == NO) return NO;
+        if ([fm fileExistsAtPath:[self pathToUserDMaskVideo]] == NO) return NO;
+    }
+    return YES;
+}
+
 
 @end
