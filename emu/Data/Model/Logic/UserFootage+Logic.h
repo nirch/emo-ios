@@ -159,6 +159,8 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
  */
 -(void)deleteAndCleanUp;
 
+
+
 /**
  *  Delete the old style png sequence footage files.
  */
@@ -202,6 +204,6 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
 -(BOOL)isAudioAvailable;
 
 -(NSArray *)allMissingRemoteFiles;
-
+-(void)cleanDownloadedRemoteFiles;
 
 @end

@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 #pragma mark - General.
 -(NSString *)jointEmuOID;
 -(NSArray *)jointEmuSlots;
+-(NSInteger)jointEmuLocalSlotIndex;
 
 #pragma mark - Initiator related.
 -(NSString *)jointEmuInitiatorID;
@@ -41,6 +42,7 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 #pragma mark - Invitations and receivers
 -(NSInteger)jointEmuFirstUninvitedSlotIndex;
 -(NSInteger)jointEmuSlotForInvitationCode:(NSString *)invitationCode;
+-(NSInteger)jointEmuSlotForInvitedReceiver;
 
 #pragma mark - Questions about a specific slot
 -(NSString *)jointEmuInviteCodeAtSlot:(NSInteger)slotIndex;
@@ -48,9 +50,12 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 -(BOOL)isJointEmuInitiatorAtSlot:(NSInteger)slotIndex;
 -(EMSlotState)jointEmuStateOfSlot:(NSInteger)slotIndex;
 -(NSDictionary *)jointEmuRemoteFilesAtSlot:(NSInteger)slotIndex;
+-(NSTimeInterval)jointEmuCaptureDurationAtSlot:(NSInteger)slotIndex;
+-(BOOL)jointEmuRequiresDedicatedCaptureAtSlot:(NSInteger)slotIndex;
 
 #pragma mark - Footages
 -(UserFootage *)jointEmuFootageAtSlot:(NSInteger)slotIndex;
+-(NSArray *)allMissingRemoteFootageFiles;
 
 #pragma mark - AWS S3
 -(NSString *)s3KeyForFile:(NSString *)fileName slot:(NSInteger)slot ext:(NSString *)ext;

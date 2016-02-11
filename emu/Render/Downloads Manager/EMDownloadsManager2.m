@@ -414,7 +414,7 @@
 {
     NSString *taskType = self.taskType[oid];
     NSString *path = self.pathByOID[oid];
-    if ([taskType isEqualToString:DL_TASK_TYPE_FOOTAGES_FILES]) {
+    if ([taskType isEqualToString:emkDLTaskTypeFootages]) {
         // Footage remote file
         return name;
     } else {
@@ -427,7 +427,7 @@
 {
     NSString *path = self.pathByOID[oid];
     NSString *localPath = nil;
-    if ([self.taskType[oid] isEqualToString:DL_TASK_TYPE_FOOTAGES_FILES]) {
+    if ([self.taskType[oid] isEqualToString:emkDLTaskTypeFootages]) {
         localPath = path;
     } else {
         localPath = [SF:@"resources/%@", path];

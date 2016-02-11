@@ -27,4 +27,7 @@
                                          frc:(NSFetchedResultsController *)frc
                                        forUI:(NSString *)forUI;
 
+-(BOOL)enqueueIfMissingResourcesWithInfo:(NSDictionary *)info;
+-(void)enqueueMissingRemoteFootageFilesWithInfo:(NSDictionary *)info;
+
 @end

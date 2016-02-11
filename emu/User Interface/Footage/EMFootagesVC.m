@@ -17,7 +17,7 @@
 #import "EMFootagesNavigationCFG.h"
 #import "EMUINotifications.h"
 #import "UIView+CommonAnimations.h"
-#import "EMRecorderVC.h"
+#import "EMRecorderDelegate.h"
 #import "EMDB.h"
 
 @interface EMFootagesVC () <
@@ -323,18 +323,18 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)onAddButtonPressed:(id)sender
 {
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
-    EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
+//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+//    NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
+//    EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
     
-    NSDictionary *configInfo =@{
-                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
-                                emkEmuticonDefName:emuticonDefForOnboarding.name
-                                };
+//    NSDictionary *configInfo =@{
+//                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+//                                emkEmuticonDefName:emuticonDefForOnboarding.name
+//                                };
     
-    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:configInfo];
-    recorderVC.delegate = self;
-    [self presentViewController:recorderVC animated:YES completion:nil];
+//    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:configInfo];
+//    recorderVC.delegate = self;
+//    [self presentViewController:recorderVC animated:YES completion:nil];
 
     [self.guiAddIcon animateQuickPopIn];
 

@@ -58,6 +58,14 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     //
     // MARK: - collection view
     //
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.delegate?.emuPressed(self.currentEmu())
+    }
+    
+    
+    //
+    // MARK: - Scroll view
+    //
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         self.emuSelectionChanged()
     }
@@ -65,6 +73,8 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.emuSelectionChanged()
     }
+    
+    
     
     //
     // MARK: - Carousel buttons and emu selection
@@ -174,11 +184,13 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("emu instance cell", forIndexPath: indexPath) as! EMEmuCell
-
+        cell.inUI = "emuVC"
+        
         if let emus = self.emus {
             let index = indexPath.item
             if index < emus.count {
                 let emu = emus[indexPath.item]
+                self.handleVisibleEmu(emu)
                 cell.updateStateWithEmu(emu, forIndexPath: indexPath)
                 cell.updateGUI()
             } else {
@@ -213,6 +225,20 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
+    }
+    
+    //
+    // MARK: - Downloads
+    //
+    func handleVisibleEmu(emu: Emuticon) {
+        let info = [
+            emkEmuticonOID:emu.oid!,
+            emkPackageOID:emu.emuDef!.oid!,
+            emkDLTaskType:emkDLTaskTypeFootages
+        ] as [NSObject: AnyObject]
+
+        emu.enqueueIfMissingResourcesWithInfo(info)
+        emu.enqueueMissingRemoteFootageFilesWithInfo(info)
     }
     
     // MARK: - IB Actions

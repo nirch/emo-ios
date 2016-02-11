@@ -131,7 +131,7 @@ class EMRecordingPreviewVC: AVPlayerViewController {
     }
     
     // MARK: - Rendering preview
-    func renderEmuDef(emuDefOID: String, captureInfo: [NSObject:AnyObject]) {
+    func renderEmuDef(emuDefOID: String, captureInfo: [NSObject:AnyObject], slotIndex: Int = 0) {
         if let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context) {
             if emuDef.allResourcesAvailable() {
                 // Render a preview for this capture
@@ -139,10 +139,15 @@ class EMRecordingPreviewVC: AVPlayerViewController {
                 let rm = EMRenderManager3.sharedInstance
                 
                 let tempUserFootage = UserTempFootage(info: captureInfo)
-                self.latestPreviewUUID = rm.renderPreviewForEmuDefOID(emuDefOID, tempUserFootage: tempUserFootage)
+                self.latestPreviewUUID = rm.renderPreviewForEmuDefOID(
+                    emuDefOID,
+                    tempUserFootage: tempUserFootage,
+                    slotIndex: slotIndex
+                )
             } else {
                 // Download resources first, before rendering
 //                self.startDownloadingUI()
+                NSLog("@@@@")
             }
         } else {
             self.epicFail()

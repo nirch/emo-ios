@@ -34,7 +34,6 @@
 #import "iRate.h"
 
 #import <Toast/UIView+Toast.h>
-#import "EMRenderManager2.h"
 #import "EMShareInputDelegate.h"
 
 @interface EMShareVC () <
@@ -495,30 +494,30 @@
 -(void)renderVideoBeforeShareForEmu:(Emuticon *)emu
                   requiresWaterMark:(BOOL)requiresWaterMark
 {
-    BOOL inHD = [emu shouldItRenderInHD];
+//    BOOL inHD = [emu shouldItRenderInHD];
     self.guiCollectionView.hidden = YES;
     self.guiFBMButtonContainer.hidden = YES;
     self.guiRenderingView.hidden = NO;
     self.guiRenderingProgress.progress = 0;
     self.guiRenderingProgressLabel.text = LS(@"EMUNIZING");
     
-    [EMRenderManager2.sh renderVideoForEmu:emu
-                         requiresWaterMark:requiresWaterMark
-                           completionBlock:^{
-                               // If we are here, emu.videoURL points to the rendered video.
-                               [self _share];
-                               self.guiRenderingView.hidden = YES;
-                               self.guiCollectionView.hidden = NO;
-                               self.guiFBMButtonContainer.hidden = NO;
-                           } failBlock:^{
-                               // Failed :-(
-                               // No rendered video available.
-                               self.sharer = nil;
-                               [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
-                               self.guiRenderingView.hidden = YES;
-                               self.guiCollectionView.hidden = NO;
-                               self.guiFBMButtonContainer.hidden = NO;
-                           } inHD:inHD];
+//    [EMRenderManager2.sh renderVideoForEmu:emu
+//                         requiresWaterMark:requiresWaterMark
+//                           completionBlock:^{
+//                               // If we are here, emu.videoURL points to the rendered video.
+//                               [self _share];
+//                               self.guiRenderingView.hidden = YES;
+//                               self.guiCollectionView.hidden = NO;
+//                               self.guiFBMButtonContainer.hidden = NO;
+//                           } failBlock:^{
+//                               // Failed :-(
+//                               // No rendered video available.
+//                               self.sharer = nil;
+//                               [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+//                               self.guiRenderingView.hidden = YES;
+//                               self.guiCollectionView.hidden = NO;
+//                               self.guiFBMButtonContainer.hidden = NO;
+//                           } inHD:inHD];
 }
 
 

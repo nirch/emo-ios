@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
-#define DL_TASK_TYPE_EMU_RESOURCES @"dl emu resources"
-#define DL_TASK_TYPE_FOOTAGES_FILES @"dl footages files"
+#define emkDLTaskType @"dl task type"
+#define emkDLTaskTypeResources @"dl emu resources"
+#define emkDLTaskTypeFootages @"dl footages files"
 
 @class AWSS3TransferManager;
 

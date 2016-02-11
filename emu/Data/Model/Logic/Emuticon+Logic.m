@@ -442,23 +442,6 @@
     return self.emuDef.isJointEmu;
 }
 
-//-(NSArray *)remoteFootages
-//{
-//    if (self.isJointEmu == NO) return @[];
-//    NSArray *slots = self.emuDef.jointEmu[@"slots"];
-//    if (![slots isKindOfClass:[NSArray class]]) return @[];
-//
-//    NSMutableArray *footages = [NSMutableArray new];
-//
-//    for (NSInteger slotIndex=0;slotIndex<slots.count;slotIndex++) {
-//        if (slotIndex==0) continue;
-//        PlaceHolderFootage *placeHolderFootage = [PlaceHolderFootage new];
-//        [footages addObject:placeHolderFootage];
-//    }
-//    
-//    return footages;
-//}
-
 -(NSArray *)relatedFootages
 {
     if (self.isJointEmu) {

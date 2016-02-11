@@ -157,9 +157,9 @@
     // Vaidate we have required info
     NSDictionary *info = notification.userInfo;
     if (info == nil) return;
-    NSIndexPath *indexPath = info[@"indexPath"];
-    NSString *oid = info[@"emuticonOID"];
-    NSString *packageOID = info[@"packageOID"];
+    NSIndexPath *indexPath = info[emkIndexPath];
+    NSString *oid = info[emkEmuticonOID];
+    NSString *packageOID = info[emkPackageOID];
     if (indexPath == nil || oid == nil || packageOID == nil) return;
     
     // Check for errors.

@@ -24,6 +24,13 @@
     return defaultValue;
 }
 
+-(NSArray *)safeArrayForKey:(id)key defaultValue:(NSArray *)defaultValue
+{
+    id value = self[key];
+    if ([value isKindOfClass:[NSArray class]]) return value;
+    return defaultValue;
+}
+
 -(NSString *)safeOIDStringForKey:(id)key
 {
     id value = self[key];
@@ -140,6 +147,8 @@
     }
     return value;
 }
+
+
 
 
 @end

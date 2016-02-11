@@ -24,7 +24,6 @@
 
 #import "EMNotificationCenter.h"
 #import "EMDownloadsManager2.h"
-#import "EMRenderManager2.h"
 #import "AppManagement.h"
 #import <AWSS3.h>
 
@@ -228,8 +227,8 @@
 -(void)onEmuStateUpdated:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
-    NSIndexPath *indexPath = info[@"indexPath"];
-    NSString *oid = info[@"emuticonOID"];
+    NSIndexPath *indexPath = info[emkIndexPath];
+    NSString *oid = info[emkEmuticonOID];
     
     // Make sure indexpath is in the range of the fetched results controller.
     if (indexPath.item >= self.fetchedResultsController.fetchedObjects.count) {
@@ -483,12 +482,12 @@
         forIndexPath:(NSIndexPath *)indexPath
 {
     Emuticon *emu = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSDictionary *info = @{
-                           @"for":@"emu",
-                           @"indexPath":indexPath,
-                           @"emuticonOID":emu.oid,
-                           @"packageOID":emu.emuDef.package.oid,
-                           };
+//    NSDictionary *info = @{
+//                           @"for":@"emu",
+//                           emkIndexPath:indexPath,
+//                           emkEmuticonOID:emu.oid,
+//                           emkPackageOID:emu.emuDef.package.oid,
+//                           };
     
     cell.transform = CGAffineTransformIdentity;
     cell.alpha = 1;
@@ -515,10 +514,10 @@
         
         if ([emu.emuDef allResourcesAvailable]) {
             // Not rendered, but all resources are available.
-            [EMRenderManager2.sh enqueueEmu:emu
-                                  indexPath:indexPath
-                                   userInfo:info
-                                       inHD:NO];
+//            [EMRenderManager2.sh enqueueEmu:emu
+//                                  indexPath:indexPath
+//                                   userInfo:info
+//                                       inHD:NO];
         }
     }
 }
@@ -651,22 +650,22 @@
     self.guiCollectionView.alpha = 0.4;
     self.guiCollectionView.userInteractionEnabled = NO;
     
-    [EMRenderManager2.sh renderVideoForEmu:emu
-                         requiresWaterMark:YES
-                           completionBlock:^{
-                               // If we are here, emu.videoURL points to the rendered video.
-                               [self _saveVideoToCRForEmu:emu];
-                               self.guiCollectionView.alpha = 1;
-                               self.guiCollectionView.userInteractionEnabled = YES;
-                           } failBlock:^{
-                               // Failed :-(
-                               // No rendered video available.
-                               self.sharer = nil;
-                               [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
-                               self.guiCollectionView.alpha = 1;
-                               self.guiCollectionView.userInteractionEnabled = YES;
-                           }
-                                      inHD:NO];
+//    [EMRenderManager2.sh renderVideoForEmu:emu
+//                         requiresWaterMark:YES
+//                           completionBlock:^{
+//                               // If we are here, emu.videoURL points to the rendered video.
+//                               [self _saveVideoToCRForEmu:emu];
+//                               self.guiCollectionView.alpha = 1;
+//                               self.guiCollectionView.userInteractionEnabled = YES;
+//                           } failBlock:^{
+//                               // Failed :-(
+//                               // No rendered video available.
+//                               self.sharer = nil;
+//                               [self.view makeToast:LS(@"SHARE_TOAST_FAILED")];
+//                               self.guiCollectionView.alpha = 1;
+//                               self.guiCollectionView.userInteractionEnabled = YES;
+//                           }
+//                                      inHD:NO];
 }
 
 
@@ -868,8 +867,8 @@
         // Handle unrendered emus:
         NSDictionary *userInfo = @{
                                    @"for":@"emu",
-                                   @"indexPath":indexPath,
-                                   @"emuticonOID":emu.oid,
+                                   emkIndexPath:indexPath,
+                                   emkEmuticonOID:emu.oid,
                                    @"packageOID":emu.emuDef.package.oid,
                                    };
         
@@ -883,8 +882,8 @@
         }
         anyEnqueued = YES;
     }
+
     if (anyEnqueued) {
-        [EMRenderManager2.sh updatePriorities:prioritizedOID];
         [EMDownloadsManager2.sh updatePriorities:prioritizedOID];
         [EMDownloadsManager2.sh manageQueue];
     }

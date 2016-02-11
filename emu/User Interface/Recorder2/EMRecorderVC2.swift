@@ -60,6 +60,10 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     // Timing
     var duration : NSTimeInterval = 2.0
     
+    // Slots (joint emu)
+    var slotIndex: Int = 0
+    var isDedicatedFootage: Bool = false
+    
     // delegate
     weak var delegate: EMRecorderDelegate?
     
@@ -263,6 +267,18 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
                 self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? NSString;
                 self.emuticonDefOIDForPreview = info[emkEmuticonDefOID] as? NSString;
             }
+            
+            if info[emkDedicatedFootage] != nil {
+                self.isDedicatedFootage = info[emkDedicatedFootage] as! Bool
+            }
+            
+            if info[emkDuration] != nil {
+                self.duration = info[emkDuration] as! NSTimeInterval
+            }
+            
+            if info[emkJEmuSlot] != nil {
+                self.slotIndex = info[emkJEmuSlot] as! Int
+            }
         }
     }
     
@@ -453,17 +469,24 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     }
     
     func recordingDidStopWithInfo(info: [NSObject : AnyObject]!) {
+        dispatch_async(dispatch_get_main_queue()) {
+            EMUISound.sh().playSoundNamed(SND_RECORDING_ENDED)
+        }
+
         self.captureSession?.stopAndTearDownCaptureSession()
         self.captureSession = nil
         self.updateToState(HFProcessingState.ProcessFrames)
-        EMUISound.sh().playSoundNamed(SND_RECORDING_ENDED)
         
         // Will show preview screen.
         self.renderingUI()
         self.guiCameraPreviewViewContainer.alpha = 0
         self.showRecordingPreviewAnimated(true)
         self.latestRecordingInfo = info
-        self.recordingPreviewVC?.renderEmuDef(self.emuticonDefOIDForPreview as! String, captureInfo: info)
+        self.recordingPreviewVC?.renderEmuDef(
+            self.emuticonDefOIDForPreview as! String,
+            captureInfo: info,
+            slotIndex: self.slotIndex
+        )
     }
     
     func recordingWasCanceledWithInfo(info: [NSObject : AnyObject]!) {

@@ -102,12 +102,12 @@
         
         NSDictionary *info =@{
                               @"for":@"emu",
-                              @"indexPath":indexPath,
-                              @"emuticonOID":emu.oid,
-                              @"packageOID":emu.emuDef.package.oid,
+                              emkIndexPath:indexPath,
+                              emkEmuticonOID:emu.oid,
+                              emkPackageOID:emu.emuDef.package.oid,
                               @"inUI":self.inUI?self.inUI:@"unknown",
-                              @"renderType":@"shortLDPreview",
-                              @"mediaType":hcrGIF
+                              emkRenderType:@"shortLDPreview",
+                              emkMediaType:hcrGIF
                               };
         
         [EMRenderManager3.sh enqueueEmu:emu

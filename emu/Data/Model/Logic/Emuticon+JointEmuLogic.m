@@ -40,6 +40,15 @@
     return self.jointEmuInstance[@"joint_emu_slots"];
 }
 
+-(NSInteger)jointEmuLocalSlotIndex
+{
+    if ([self isJointEmuInitiatedByThisUser]) {
+        return [self jointEmuInitiatorSlot];
+    } else {
+        return [self jointEmuSlotForInvitedReceiver];
+    }
+}
+
 #pragma mark - Initiator related.
 -(NSString *)jointEmuInitiatorID
 {
@@ -108,6 +117,12 @@
     return 0;
 }
 
+-(NSInteger)jointEmuSlotForInvitedReceiver
+{
+    NSString *invitationCode = self.createdWithInvitationCode;
+    if (invitationCode == nil) return 0;
+    return [self jointEmuSlotForInvitationCode:invitationCode];
+}
 
 #pragma mark - Questions about a specific slot
 -(NSDictionary *)jointEmuSlot:(NSInteger)slotIndex
@@ -181,7 +196,7 @@
     NSAssert(self.isJointEmuInitiatedByThisUser == NO, @"Call this method only for receiver");
     if (self.isJointEmuInitiatedByThisUser == NO) return NO;
     NSString *invitationCode = self.createdWithInvitationCode;
-    if (invitationCode == nil) return nil;
+    if (invitationCode == nil) return NO;
     return [invitationCode isEqualToString:[self jointEmuInviteCodeAtSlot:slotIndex]];
 }
 
@@ -190,6 +205,22 @@
     NSDictionary *slot = [self jointEmuSlot:slotIndex];
     if (slot == nil) return nil;
     return slot[@"footage_files"];
+}
+
+-(NSTimeInterval)jointEmuCaptureDurationAtSlot:(NSInteger)slotIndex
+{
+    NSDictionary *slot = [self jointEmuSlot:slotIndex];
+    if (slot == nil) return self.emuDef.duration.doubleValue;
+    if ([slot[@"duration"] isKindOfClass:[NSNumber class]]) {
+        return [slot[@"duration"] doubleValue];
+    }
+    return self.emuDef.duration.doubleValue;
+}
+
+-(BOOL)jointEmuRequiresDedicatedCaptureAtSlot:(NSInteger)slotIndex
+{
+    NSTimeInterval duration = [self jointEmuCaptureDurationAtSlot:slotIndex];
+    return duration > 2.0;
 }
 
 #pragma mark - Footages
@@ -224,6 +255,22 @@
         }
     }
     return nil;
+}
+
+-(NSArray *)allMissingRemoteFootageFiles
+{
+    NSMutableArray *allFiles = [NSMutableArray new];
+    for (int slotIndex=1;slotIndex<=self.jointEmuSlots.count;slotIndex++) {
+        UserFootage *footage = [self jointEmuRemoteFootageAtSlot:slotIndex];
+        if (![footage isKindOfClass:[UserFootage class]]) continue;
+        NSArray *missingFiles = [footage allMissingRemoteFiles];
+        if (missingFiles.count>0) {
+            for (NSString *file in missingFiles) {
+                [allFiles addObject:file];
+            }
+        }
+    }
+    return allFiles;
 }
 
 -(id<FootageProtocol>)jointEmuRemoteFootageAtSlot:(NSInteger)slotIndex

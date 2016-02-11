@@ -93,16 +93,22 @@ class EMRenderManager3 : NSObject
     - parameter emuDefOID:   The oid of the emu definition
     - parameter captureInfo: Dictionary with info about the captured user
     */
-    func renderPreviewForEmuDefOID(emuDefOID : String, tempUserFootage : UserTempFootage) -> String? {
+    func renderPreviewForEmuDefOID(emuDefOID : String, tempUserFootage : UserTempFootage, slotIndex: Int = 0) -> String? {
         // Must have an emu definition and all resources must exist on local storage
         let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context)
         if emuDef == nil {return nil}
         if !emuDef.allResourcesAvailable() {return nil}
         
         // Create CFG for renderer
+        let footagesForPreview = self.footagesForPreview(tempUserFootage, emuDef: emuDef, slotIndex: slotIndex)
         let uuid = NSUUID().UUIDString
         let fps = self.fpsForEmuDef(emuDef, renderType: EMRenderType.CapturePreview)
-        let cfg = emuDef.hcRenderCFGWithFootages([tempUserFootage], oldStyle: true, inHD: false, fps: fps)
+        let cfg = emuDef.hcRenderCFGWithFootages(
+            footagesForPreview,
+            oldStyle: true,
+            inHD: false,
+            fps: fps
+        )
         
         let outputInfo = [
             hcrOutputType:hcrVideo,
@@ -150,6 +156,23 @@ class EMRenderManager3 : NSObject
             })
         }
         return uuid
+    }
+    
+    func footagesForPreview(tempUserFootage: UserTempFootage, emuDef: EmuticonDef, slotIndex: Int = 0) -> [FootageProtocol] {
+        var footages = [FootageProtocol]()
+        if slotIndex > 0 && emuDef.isJointEmu() {
+            for i in 1...emuDef.slotsCount() {
+                if i == slotIndex {
+                    // Show the temp footage in this slot indec
+                    footages.append(tempUserFootage)
+                } else {
+                    footages.append(PlaceHolderFootage())
+                }
+            }
+        } else {
+            footages = [tempUserFootage]
+        }
+        return footages;
     }
     
     func oidForEmu(emu:Emuticon, renderType:EMRenderType) -> String {
@@ -369,8 +392,8 @@ class EMRenderManager3 : NSObject
 
         let emuOID = renderInfo[emkEmuticonOID] as! String
         if let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
-            let inHD = renderInfo[rkRenderInHD]?.boolValue
-            let renderType = renderInfo[rkRenderType]?.integerValue
+            let inHD = renderInfo[emkRenderInHD]?.boolValue
+            let renderType = renderInfo[emkRenderType]?.integerValue
             if inHD == true {
                 emu.wasRenderedInHD = true
             } else {

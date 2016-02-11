@@ -129,7 +129,7 @@
 
 #pragma mark - Joint emu
 -(BOOL)isJointEmu;
+-(NSInteger)slotsCount;
 -(void)latestEmuGainFocus;
-
 
 @end

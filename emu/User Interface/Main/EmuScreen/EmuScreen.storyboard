@@ -37,19 +37,32 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some title for emu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPt-nt-KfE" customClass="EMLabel">
-                                        <rect key="frame" x="117" y="12" width="141" height="21"/>
+                                        <rect key="frame" x="117.5" y="12.5" width="140.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7VF-ve-PIB" userLabel="Options button" customClass="EMButton">
+                                        <rect key="frame" x="331" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="gTK-iF-Bmn"/>
+                                            <constraint firstAttribute="width" constant="44" id="yrm-OI-YaA"/>
+                                        </constraints>
+                                        <state key="normal" image="retakeIcon4">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="7VF-ve-PIB" secondAttribute="trailing" id="15i-T7-irM"/>
                                     <constraint firstItem="iPt-nt-KfE" firstAttribute="centerY" secondItem="dvt-o2-7sZ" secondAttribute="centerY" id="30H-q0-ZPy"/>
                                     <constraint firstAttribute="height" constant="44" id="Hhm-Zo-zlP"/>
                                     <constraint firstItem="L6W-WB-k6K" firstAttribute="leading" secondItem="dvt-o2-7sZ" secondAttribute="leading" id="NpI-iv-ah3"/>
                                     <constraint firstItem="iPt-nt-KfE" firstAttribute="centerX" secondItem="dvt-o2-7sZ" secondAttribute="centerX" id="Qt4-Cq-2o2"/>
                                     <constraint firstItem="L6W-WB-k6K" firstAttribute="centerY" secondItem="dvt-o2-7sZ" secondAttribute="centerY" id="mlp-Sl-32A"/>
+                                    <constraint firstItem="7VF-ve-PIB" firstAttribute="centerY" secondItem="dvt-o2-7sZ" secondAttribute="centerY" id="r2h-NI-7hM"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7F-DQ-Ndw" userLabel="Emus container view">
@@ -69,7 +82,7 @@
                                         <rect key="frame" x="5" y="0.0" width="365" height="44"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create with friends" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6k-60-z2E" customClass="EMLabel">
-                                        <rect key="frame" x="130" y="15" width="116" height="16"/>
+                                        <rect key="frame" x="130.5" y="15" width="115.5" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -130,7 +143,7 @@
                                         <rect key="frame" x="0.0" y="60" width="375" height="160"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages to the user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wue-lG-npk">
-                                                <rect key="frame" x="110" y="10" width="156" height="20"/>
+                                                <rect key="frame" x="110" y="10" width="156" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -140,7 +153,7 @@
                                                 <color key="color" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </activityIndicatorView>
                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BOv-cc-zxa">
-                                                <rect key="frame" x="110" y="29" width="156" height="2"/>
+                                                <rect key="frame" x="110" y="29.5" width="156" height="2"/>
                                                 <color key="progressTintColor" red="0.4941176471" green="0.82745098039999998" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="trackTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </progressView>
@@ -226,7 +239,7 @@
                                 <rect key="frame" x="0.0" y="613" width="375" height="54"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gze-xK-79q" userLabel="Positive Action Button" customClass="EMFlowButton">
-                                        <rect key="frame" x="8" y="5" width="175" height="44"/>
+                                        <rect key="frame" x="8" y="5" width="174.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="eZU-vS-POJ"/>
                                         </constraints>
@@ -236,7 +249,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2D-4f-VSv" userLabel="Negative Action Button" customClass="EMFlowButton">
-                                        <rect key="frame" x="192" y="5" width="175" height="44"/>
+                                        <rect key="frame" x="192.5" y="5" width="174.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="5Kk-ks-9Pd"/>
                                         </constraints>
@@ -351,7 +364,7 @@
                                         <rect key="frame" x="0.0" y="9.5" width="344" height="192.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="344" height="193"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="192.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="fRO-1q-adt">
@@ -644,6 +657,7 @@
         <image name="leftButton" width="12" height="21"/>
         <image name="leftGradBG" width="15" height="15"/>
         <image name="placeholder240.png" width="240" height="240"/>
+        <image name="retakeIcon4" width="25" height="24"/>
         <image name="rightButton" width="12" height="21"/>
         <image name="rightGradBG" width="15" height="15"/>
     </resources>

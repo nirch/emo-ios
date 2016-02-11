@@ -9,11 +9,11 @@
 #import "UserFootage.h"
 #import "UserFootage+Logic.h"
 #import <HomageSDKCore/HomageSDKCore.h>
-#import "EMDB.h"
+#import "EMDB+Files.h"
 
 @implementation UserFootage
 
--(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD
+-(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef
 {
     NSMutableDictionary *layer = [NSMutableDictionary new];
     if (self.isCapturedVideoAvailable) {
@@ -22,6 +22,24 @@
         layer[hcrSourceType] = hcrVideo;
         layer[hcrPath] = [self pathToUserVideo];
         layer[hcrDynamicMaskPath] = [self pathToUserDMaskVideo];
+    
+    } else if (self.remoteFootage) {
+      
+        // Remote files downloaded/downloading from server.
+        if (self.allMissingRemoteFiles.count==0) {
+            NSString *rawPath = [self pathToDownloadedRemoteFileKey:@"raw"];
+            NSString *maskPath = [self pathToDownloadedRemoteFileKey:@"mask"];
+            if (rawPath != nil && maskPath != nil) {
+                layer[hcrSourceType] = hcrVideo;
+                layer[hcrPath] = rawPath;
+                layer[hcrDynamicMaskPath] = maskPath;
+            }
+        } else {
+            PlaceHolderFootage *placeHolder = [PlaceHolderFootage new];
+            placeHolder.status = PlaceHolderFootageStatusPositive;
+            placeHolder.label = LS(@"DOWNLOADING");
+            layer = [placeHolder hcRenderInfoForHD:forHD emuDef:emuDef];
+        }
         
     } else if (self.isPNGSequenceAvailable) {
         
@@ -30,14 +48,23 @@
     }
     
     if ([layer count] > 0) {
-        // Downsample if required.
-        if (forHD == NO && self.isHD == YES) {
+        NSInteger assumedUserLayerSizeInPositining = emuDef.assumedUsersLayersWidth?emuDef.assumedUsersLayersWidth.integerValue:240;
+        if (forHD == NO && self.isHD == YES && assumedUserLayerSizeInPositining==240) {
             // Downsample if required.
             layer[hcrDownSample] = @2;
         }
     }
     
     return layer;
+}
+
+-(NSString *)pathToDownloadedRemoteFileKey:(NSString *)fileKey
+{
+    NSDictionary *remoteFiles = self.remoteFootageFiles;
+    NSString *filePath = remoteFiles[fileKey];
+    if (filePath == nil) return nil;
+    filePath = [[EMDB footagesPath] stringByAppendingPathComponent:filePath];
+    return filePath;
 }
 
 -(NSURL *)urlToThumbImage

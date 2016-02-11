@@ -24,7 +24,6 @@
 #import "EMSplashVC.h"
 #import "EMNotificationCenter.h"
 #import "EMDB.h"
-#import "EMRecorderVC.h"
 #import "EMTutorialVC.h"
 #import <PINRemoteImage/PINRemoteImageManager.h>
 #import "EMBlockingProgressVC.h"

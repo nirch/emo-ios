@@ -254,7 +254,6 @@ class SlotCell: UICollectionViewCell {
                 self.cellState = .FootageAvailable
             } else {
                 self.cellState = .FootageDownloading
-                footage.enqueueIfMissingResourcesWithInfo([emkFootageOID:footage.oid!])
             }
         }
     }

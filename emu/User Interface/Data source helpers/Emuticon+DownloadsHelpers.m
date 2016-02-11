@@ -9,7 +9,6 @@
 #import "Emuticon+DownloadsHelpers.h"
 #import "EMDB.h"
 #import "EMDownloadsManager2.h"
-#import "EMRenderManager2.h"
 
 @implementation Emuticon (DownloadsHelpers)
 
@@ -24,19 +23,17 @@
         if (indexPath.item >= [[frc.sections[indexPath.section] objects] count]) continue;
         
         Emuticon *emu = [frc objectAtIndexPath:indexPath];
-        
         NSDictionary *info =     @{
                                    @"for":forUI,
-                                   @"indexPath":indexPath,
-                                   @"emuticonOID":emu.oid,
-                                   @"packageOID":emu.emuDef.package.oid
+                                   emkIndexPath:indexPath,
+                                   emkEmuticonOID:emu.oid,
+                                   emkPackageOID:emu.emuDef.package.oid
                                    };
         
         if ([emu enqueueIfMissingResourcesWithInfo:info]) enqueued[emu.oid] = @YES;
     }
     
     if (enqueued.count > 0) {
-        [EMRenderManager2.sh updatePriorities:enqueued];
         [EMDownloadsManager2.sh updatePriorities:enqueued];
         [EMDownloadsManager2.sh manageQueue];
     }
@@ -57,5 +54,19 @@
     }
     return YES;
 }
+
+-(void)enqueueMissingRemoteFootageFilesWithInfo:(NSDictionary *)info
+{
+    NSArray *missingResourcesNames = [self allMissingRemoteFootageFiles];
+    if (missingResourcesNames.count>0) {
+        [EMDownloadsManager2.sh enqueueResourcesForOID:self.oid
+                                                 names:missingResourcesNames
+                                                  path:@"footages"
+                                              userInfo:info
+                                              taskType:emkDLTaskTypeFootages];
+        [EMDownloadsManager2.sh manageQueue];
+    }
+}
+
 
 @end

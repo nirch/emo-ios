@@ -345,7 +345,7 @@
 
 -(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
 {
-    NSString *packageOID = info[@"packageOID"];
+    NSString *packageOID = info[emkPackageOID];
     
     [params addKey:AK_EP_PACKAGE_OID value:packageOID];
     if (packageOID != nil) {

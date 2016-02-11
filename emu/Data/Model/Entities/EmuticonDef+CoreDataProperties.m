@@ -2,7 +2,7 @@
 //  EmuticonDef+CoreDataProperties.m
 //  emu
 //
-//  Created by Aviv Wolf on 27/01/2016.
+//  Created by Aviv Wolf on 11/02/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -20,7 +20,9 @@
 @dynamic emuHeight;
 @dynamic emuWidth;
 @dynamic framesCount;
+@dynamic fullRenderCFG;
 @dynamic hdAvailable;
+@dynamic jointEmu;
 @dynamic mixedScreenOrder;
 @dynamic name;
 @dynamic oid;
@@ -38,8 +40,8 @@
 @dynamic sourceUserLayerMask2X;
 @dynamic thumbnailFrameIndex;
 @dynamic useForPreview;
-@dynamic jointEmu;
-@dynamic fullRenderCFG;
+@dynamic assumedUsersLayersWidth;
+@dynamic assumedUsersLayersHeight;
 @dynamic emus;
 @dynamic package;
 

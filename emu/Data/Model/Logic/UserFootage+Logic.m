@@ -372,4 +372,20 @@
     return missingFiles;
 }
 
+-(void)cleanDownloadedRemoteFiles
+{
+    NSDictionary *remoteFiles = self.remoteFootageFiles;
+    if (![remoteFiles isKindOfClass:[NSDictionary class]]) return;
+
+    NSString *footagesPath = [EMDB footagesPath];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    for (NSString *file in remoteFiles.allValues) {
+        if (![file isKindOfClass:[NSString class]]) continue;
+        NSString *path = [footagesPath stringByAppendingPathComponent:[SF:@"/%@", file]];
+        if ([fm fileExistsAtPath:path]) {
+            [fm removeItemAtPath:path error:nil];
+        }
+    }
+}
+
 @end

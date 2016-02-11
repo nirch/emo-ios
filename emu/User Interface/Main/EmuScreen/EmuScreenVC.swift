@@ -10,6 +10,7 @@ import UIKit
 
 protocol EmuSelectionProtocol: class {
     func emuSelected(emu: Emuticon?)
+    func emuPressed(emu: Emuticon?)
 }
 
 class EmuScreenVC: UIViewController,
@@ -220,23 +221,28 @@ class EmuScreenVC: UIViewController,
     }
     
     func onRenderingFinished(notification: NSNotification) {
-        if let emu = self.currentEmu() {
-            if let info = notification.userInfo {
-                if info[emkEmuticonOID] as? String == emu.oid {
-                    self.refreshCurrentEmu()
-                }
-            }
-        }
+        guard let emu = self.currentEmu() else {return}
+        guard let info = notification.userInfo else {return}
+        guard let emuOID = info[emkEmuticonOID] as? String else {return}
+        guard emuOID == emu.oid else {return}
+
+        self.emusVC?.refresh()
+        self.refreshCurrentEmu()
     }
     
     func onDownloadFinished(notification: NSNotification) {
-        if let emu = self.currentEmu() {
-            if let info = notification.userInfo {
-                if info[emkEmuticonOID] as? String == emu.oid {
-                    self.refreshCurrentEmu()
-                }
-            }
+        guard let emu = self.currentEmu() else {return}
+        guard let info = notification.userInfo else {return}
+        guard let emuOID = info[emkEmuticonOID] as? String else {return}
+        guard emuOID == emu.oid else {return}
+        let taskType = info[emkDLTaskType] as? String
+
+        if emu.allMissingRemoteFootageFiles().count == 0 && taskType == emkDLTaskTypeFootages {
+            emu.cleanUp()
         }
+
+        self.emusVC?.refresh()
+        self.refreshCurrentEmu()
     }
     
     //
@@ -345,7 +351,6 @@ class EmuScreenVC: UIViewController,
         case .ReceiverInvited:
             self.showUserMessage(EML.s("JOINT_EMU_INFO_JOIN_NEW_INVITE"), messageText: EML.s(""))
             self.showFlowButtons(EML.s("CHOOSE_TAKE"), negativeButtonText: EML.s("DECLINE"))
-            
         case .Error:
             self.showActivity("error :-(", messageText: "Epic FAIL!!!")
             
@@ -418,11 +423,63 @@ class EmuScreenVC: UIViewController,
         self.showFlowButtons(EML.s("KEEP_INVITATION"), negativeButtonText: EML.s("CANCEL_INVITATION"))
     }
     
+    func askAboutFootageOptions() {
+        guard let emu = self.currentEmu() else {return}
+        let slotIndex = emu.jointEmuLocalSlotIndex()
+        guard slotIndex > 0 else {return}
+        let duration = emu.jointEmuCaptureDurationAtSlot(slotIndex)
+        let dedicatedFootage = emu.jointEmuRequiresDedicatedCaptureAtSlot(slotIndex)
+        
+        if emu.jointEmuRequiresDedicatedCaptureAtSlot(slotIndex) {
+            // Just open the recorder for new take.
+        } else {
+            // New take or replace take?
+            let alertView = SIAlertView(title: nil, andMessage: EML.s("CHANGE_FOOTAGE_FROM"))
+            alertView.buttonColor = EmuStyle.colorButtonBGPositive()
+            alertView.cancelButtonColor = EmuStyle.colorButtonBGNegative()
+            alertView.addButtonWithTitle(EML.s("CHOOSE_TAKE"), type: SIAlertViewButtonType.Default, handler: {alert in
+                //
+                
+            })
+            alertView.addButtonWithTitle(EML.s("EMU_SCREEN_CHOICE_RETAKE_EMU"), type: SIAlertViewButtonType.Default, handler: {alert in
+                // Open the recorder for a new take.
+                // Recorder should be opened for a retake.
+                let oids = [emu.oid as! AnyObject]
+                let requestInfo = [
+                    emkRetakeEmuticonsOID:oids,
+                    emkDuration:duration,
+                    emkDedicatedFootage:dedicatedFootage,
+                    emkJEmuSlot:slotIndex
+                ] as [NSObject:AnyObject]
+                
+                // Notify main navigation controller that the recorder should be opened.
+                let nc = NSNotificationCenter.defaultCenter()
+                nc.postNotificationName(emkUIUserRequestToOpenRecorder, object: self, userInfo: requestInfo)
+            })
+            alertView.addButtonWithTitle(EML.s("CANCEL"), type: SIAlertViewButtonType.Cancel, handler: {alert in
+                
+            })
+            alertView.show()
+            self.alertView = alertView
+        }
+        
+    }
+    
     //
     // MARK: - EmuSelectionProtocol
     //
     func emuSelected(emu: Emuticon?) {
         self.refreshCurrentEmu()
+    }
+    
+    func emuPressed(emu: Emuticon?) {
+        self.refreshCurrentEmu()
+        
+        if emu == nil {
+            
+        } else {
+            self.askAboutFootageOptions()
+        }
     }
     
     //
@@ -449,7 +506,6 @@ class EmuScreenVC: UIViewController,
     }
     
     func jointEmuInviteLink(inviteCode: String) -> String {
-//        "http://api-dev.emu.im/jointemu/invite/\(inviteCode)"
         if AppManagement.sh().isDevApp() {
             return "jointemubeta://invite/\(inviteCode)"
         } else {
@@ -579,15 +635,17 @@ class EmuScreenVC: UIViewController,
     // MARK: - SlotsSelectionDelegate
     //
     func slotWasPressed(slotIndex: Int) {
+        guard let emu = self.currentEmu() else {return}
+        guard emu.isJointEmuInitiatedByThisUser() else {return}
+
         switch self.jointEmuState {
         case .NoInvitationsSent, .InitiatorWaitingForFriends:
-            if let emu = self.currentEmu() {
-                if emu.isJointEmuInitiatorAtSlot(slotIndex) {
-                    // Initiator wants to change own footage.
-                } else {
-                    // Initiator wants to invite/cancel/decline friend at slot.
-                    self.initiatorActionOnAFriendSlot(slotIndex)
-                }
+            if emu.isJointEmuInitiatorAtSlot(slotIndex) {
+                // Initiator wants to change own footage.
+                self.askAboutFootageOptions()
+            } else {
+                // Initiator wants to invite/cancel/decline friend at slot.
+                self.initiatorActionOnAFriendSlot(slotIndex)
             }
         default:
             break
@@ -652,10 +710,17 @@ class EmuScreenVC: UIViewController,
     @IBAction func onPressedPositiveButton(sender: AnyObject) {
         EMUISound.sh().playSoundNamed(SND_SOFT_CLICK)
         switch self.jointEmuState {
+            
         case .SendInviteConfirmationRequired:
             self.uploadEmuFootageBeforeSendingInvite()
+            
         case .InitiatorCancelInviteOptions:
             self.updateEmuUIStateForEmu()
+            
+        case .ReceiverInvited:
+            self.askAboutFootageOptions()
+            break
+            
         default:
             break
         }
@@ -680,6 +745,9 @@ class EmuScreenVC: UIViewController,
         if let emu = self.currentEmu() {
             emu.cleanUp()
             self.emusVC?.refresh()
+            
+//            let footage = emu.jointEmuFootageAtSlot(1)
+//            footage.cleanDownloadedRemoteFiles()
         }
     }
     

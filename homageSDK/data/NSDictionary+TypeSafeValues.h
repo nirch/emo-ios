@@ -18,13 +18,14 @@
 -(NSNumber *)safeBoolNumberForKey:(id)key;
 -(NSNumber *)safeBoolNumberForKey:(id)key defaultsValue:(NSNumber *)defaultValue;
 -(NSArray *)safeArrayOfIdsForKey:(id)key;
+-(NSArray *)safeArrayForKey:(id)key defaultValue:(NSArray *)defaultValue;
+-(NSDictionary *)safeDictionaryForKey:(id)key defaultValue:(NSDictionary *)defaultValue;
 
-#pragma mark - With defaults
+#pragma mark - With defaults dict
 -(NSString *)safeStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;
 -(NSString *)safeOIDStringForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
 -(NSNumber *)safeNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
 -(NSDecimalNumber *)safeDecimalNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
 -(NSNumber *)safeBoolNumberForKey:(id)key defaultsDictionary:(NSDictionary *)defaultsDictionary;;
--(NSDictionary *)safeDictionaryForKey:(id)key defaultValue:(NSDictionary *)defaultValue;
 
 @end

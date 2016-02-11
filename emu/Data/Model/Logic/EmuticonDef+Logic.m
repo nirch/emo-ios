@@ -227,7 +227,7 @@
     NSInteger slotIndex = 0;
     for (NSObject<FootageProtocol>* footage in footages) {
         slotIndex += 1;
-        NSMutableDictionary *layerInfo = [footage hcRenderInfoForHD:inHD];
+        NSMutableDictionary *layerInfo = [footage hcRenderInfoForHD:inHD emuDef:self];
         if (layerInfo != nil && [layerInfo count] > 0) {
             
             // Add effects to users layers.
@@ -444,6 +444,14 @@
 {
     if (self.jointEmu != nil) return YES;
     return NO;
+}
+
+-(NSInteger)slotsCount
+{
+    if (self.isJointEmu == NO) return 0;
+    NSArray *slots = self.jointEmu[@"slots"];
+    if ([slots isKindOfClass:[NSArray class]]) return slots.count;
+    return 0;
 }
 
 -(void)latestEmuGainFocus

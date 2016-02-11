@@ -403,7 +403,7 @@
         }
         
         // Add info to the notification
-        localNotification.userInfo = @{@"packageOID":package.oid};
+        localNotification.userInfo = @{emkPackageOID:package.oid};
         
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }

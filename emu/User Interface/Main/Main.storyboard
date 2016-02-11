@@ -270,10 +270,10 @@
             </objects>
             <point key="canvasLocation" x="-1216" y="94"/>
         </scene>
-        <!--Emuticon ScreenVC-->
+        <!--View Controller-->
         <scene sceneID="eUe-uI-kbE">
             <objects>
-                <viewController storyboardIdentifier="emuticon vc" id="rnG-vP-eU5" customClass="EMEmuticonScreenVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="emuticon vc" id="rnG-vP-eU5" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2jC-9S-6vE"/>
                         <viewControllerLayoutGuide type="bottom" id="6OK-A8-yVv"/>
@@ -1138,7 +1138,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BE427632-82A0-409B-8384-9C0A2C5A4E04" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FDB96D50-D57C-4F2E-9947-04F68514DE67" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
                                 <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYP-nE-gH7" customClass="FLAnimatedImageView">
@@ -1379,7 +1379,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BE427632-82A0-409B-8384-9C0A2C5A4E04" width="350" height="350">
+        <image name="FDB96D50-D57C-4F2E-9947-04F68514DE67" width="350" height="350">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

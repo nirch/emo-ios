@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class EmuticonDef;
+
 @protocol FootageProtocol <NSObject>
 
--(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD;
+-(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef;
 -(NSURL *)urlToThumbImage;
 -(BOOL)isAvailable;
 

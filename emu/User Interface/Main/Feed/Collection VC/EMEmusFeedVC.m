@@ -37,7 +37,6 @@
 #import "EMInterfaceDelegate.h"
 #import "EMRecorderDelegate.h"
 #import "EMFootagesVC.h"
-#import "EMEmuticonScreenVC.h"
 #import "EMAlertsPermissionVC.h"
 #import "AppManagement.h"
 #import "EMProductPopover.h"
@@ -150,7 +149,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                         object:self
                                                       userInfo:@{emkUIAnimated:@YES}];
-
+    [UIView animateWithDuration:0.2 animations:^{
+        self.navBarVC.view.alpha = 1;
+    }];
     
     // Reveal
     if (self.guiCollectionView.alpha == 0) {
@@ -207,26 +208,6 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         self.selectionsActionBarVC = segue.destinationViewController;
         self.selectionsActionBarVC.delegate = self;
         
-    } else if ([segue.identifier isEqualToString:@"emuticon screen segue"]) {
-        
-        // Get the emuticon object we want to see.
-        NSString *emuOID = (NSString *)sender;
-        Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-        
-        // Pass the emuticon oid to the destination view controller.
-        EMEmuticonScreenVC *vc = segue.destinationViewController;
-        vc.emuticonOID = emu.oid;
-        vc.originUI = @"feed";
-        vc.themeColor = self.navBarVC.themeColor;
-        
-        // Analytics
-        HMParams *params = [HMParams new];
-        [params addKey:AK_EP_EMUTICON_NAME valueIfNotNil:emu.emuDef.name];
-        [params addKey:AK_EP_EMUTICON_OID valueIfNotNil:emu.emuDef.oid];
-        [params addKey:AK_EP_PACKAGE_NAME valueIfNotNil:emu.emuDef.package.name];
-        [params addKey:AK_EP_PACKAGE_OID valueIfNotNil:emu.emuDef.package.oid];
-        [params addKey:AK_EP_ORIGIN_UI value:@"feed"];
-        [HMPanel.sh analyticsEvent:AK_E_ITEMS_USER_SELECTED_ITEM info:params.dictionary];
     }
 }
 
@@ -392,9 +373,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     // Vaidate we have required info
     NSDictionary *info = notification.userInfo;
     if (info == nil) return;
-    NSIndexPath *indexPath = info[@"indexPath"];
-    NSString *oid = info[@"emuticonOID"];
-    NSString *packageOID = info[@"packageOID"];
+    NSIndexPath *indexPath = info[emkIndexPath];
+    NSString *oid = info[emkEmuticonOID];
+    NSString *packageOID = info[emkPackageOID];
     if (indexPath == nil || oid == nil || packageOID == nil) return;
     
     // Check for errors.
@@ -428,7 +409,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // =====================================================
         // Changing from the browsing state to the emus selection state
         _currentState = newState;
-        NSIndexPath *indexPath = info[@"indexPath"];
+        NSIndexPath *indexPath = info[emkIndexPath];
         [self _startSelectingEmusWithIndexPath:indexPath];
 
     } else if (self.currentState == EMEmusFeedStateSelecting && newState == EMEmusFeedStateBrowsing) {
@@ -624,6 +605,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldHideTabsBar
                                                             object:self
                                                           userInfo:@{emkUIAnimated:@(YES)}];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.navBarVC.view.alpha = 0;
+        }];
     }
 }
 
@@ -635,7 +619,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                         object:self
                                                       userInfo:@{emkUIAnimated:@(YES)}];
-
+    [UIView animateWithDuration:0.2 animations:^{
+        self.navBarVC.view.alpha = 1;
+    }];
 }
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
@@ -673,6 +659,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                             object:self
                                                           userInfo:@{emkUIAnimated:@(YES)}];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.navBarVC.view.alpha = 1;
+        }];
     }
 }
 
@@ -687,6 +676,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                             object:self
                                                           userInfo:@{emkUIAnimated:@(YES)}];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.navBarVC.view.alpha = 1;
+        }];
     });
 }
 
@@ -851,7 +843,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                         object:self
                                                       userInfo:@{emkUIAnimated:@(animated)}];
-
+    [UIView animateWithDuration:0.2 animations:^{
+        self.navBarVC.view.alpha = 1;
+    }];
 }
 
 #pragma mark - Selecting emus
@@ -913,7 +907,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         if (self.currentState == EMEmusFeedStateBrowsing) {
             // Long press on a cell while browsing.
             // Change to selection state and choose the emu pressed.
-            [self updateState:EMEmusFeedStateSelecting info:@{@"indexPath":indexPath}];
+            [self updateState:EMEmusFeedStateSelecting info:@{emkIndexPath:indexPath}];
             [self.navBarVC updateUIByCurrentState];
         }
     }
@@ -936,7 +930,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
             return;
         }
         
-        // Recorder should be opened to retake a whole pack.
+        // Recorder should be opened for a retake.
         NSMutableDictionary *requestInfo = [NSMutableDictionary new];
         requestInfo[emkRetakeEmuticonsOID] = [self.dataSource selectionsOID];
         

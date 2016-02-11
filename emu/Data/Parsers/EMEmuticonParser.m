@@ -95,7 +95,13 @@
     emuDef.emuWidth                             = [info safeNumberForKey:@"emu_width" defaultsDictionary:defaults];
     emuDef.emuHeight                            = [info safeNumberForKey:@"emu_height" defaultsDictionary:defaults];
     
+    // Joint emu
     emuDef.jointEmu                             = [info safeDictionaryForKey:@"joint_emu" defaultValue:nil];
+    
+    // Default assumed size of user's layers when using positining.
+    NSArray *assumedUsersLayersSize = [info safeArrayForKey:@"assumed_users_layers_size" defaultValue:nil];
+    emuDef.assumedUsersLayersWidth = assumedUsersLayersSize? assumedUsersLayersSize[0]:@240;
+    emuDef.assumedUsersLayersHeight = assumedUsersLayersSize? assumedUsersLayersSize[1]:@240;
     
     HMLOG(TAG, EM_VERBOSE, @"Parsed emuticon def named: %@", emuDef.name);
 }

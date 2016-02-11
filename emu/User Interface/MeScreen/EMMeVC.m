@@ -11,7 +11,6 @@
 #import "EMMeNavigationCFG.h"
 #import "EMEmusPickerVC.h"
 #import "EMDB.h"
-#import "EMEmuticonScreenVC.h"
 #import "EMUINotifications.h"
 #import "EMFootagesVC.h"
 
@@ -148,9 +147,9 @@
     Emuticon *emu = [Emuticon findWithID:emuticonOID context:EMDB.sh.context];
     if (emu == nil) return;
     
-    EMEmuticonScreenVC *vc = [EMEmuticonScreenVC emuticonScreenForEmuticonOID:emuticonOID];
-    vc.themeColor = [EmuBaseStyle colorThemeMe];
-    [self.navigationController pushViewController:vc animated:YES];
+//    EMEmuticonScreenVC *vc = [EMEmuticonScreenVC emuticonScreenForEmuticonOID:emuticonOID];
+//    vc.themeColor = [EmuBaseStyle colorThemeMe];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)openFootagesScreen

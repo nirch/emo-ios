@@ -8,19 +8,39 @@
 
 #import "PlaceHolderFootage.h"
 #import <HomageSDKCore/HomageSDKCore.h>
+#import "EMDB.h"
 
 @implementation PlaceHolderFootage
 
--(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD
+-(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef
 {
     NSMutableDictionary *layer = [NSMutableDictionary new];
     layer[hcrSourceType] = hcrPNG;
+
+    NSString *sizeUsed=@"240";
+    if (emuDef.assumedUsersLayersWidth) {
+        if (emuDef.assumedUsersLayersWidth.integerValue == 480) {
+            sizeUsed = @"480";
+        }
+    }
     
-    NSString *resourceName = [NSString stringWithFormat:@"placeholder%@.png", forHD?@"480":@"240"];
+    NSString *resourceName;
+    switch (self.status) {
+        case PlaceHolderFootageStatusPositive:
+            resourceName = [SF:@"placeholderPositive%@.png", sizeUsed];
+            break;
+        case PlaceHolderFootageStatusNegative:
+            resourceName = [SF:@"placeholderNegative%@.png", sizeUsed];
+            break;
+        default:
+            resourceName = [SF:@"placeholder%@.png", sizeUsed];
+    }
+    
     layer[hcrResourceName] = resourceName;
     
     return layer;
 }
+
 
 -(NSURL *)urlToThumbImage
 {

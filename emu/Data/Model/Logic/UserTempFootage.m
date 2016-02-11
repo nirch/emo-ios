@@ -52,13 +52,13 @@
     return self;
 }
 
--(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD
+-(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef
 {
     NSMutableDictionary *layer = [NSMutableDictionary new];
     layer[hcrSourceType] = hcrVideo;
     layer[hcrPath] = self.capturedVideo;
     layer[hcrDynamicMaskPath] = self.maskVideo;
-    if (!forHD) layer[hcrDownSample] = @2;
+    //if (!forHD) layer[hcrDownSample] = @2;
     return layer;
 }
 

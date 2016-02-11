@@ -23,6 +23,7 @@
 #import "HMNotificationCenter.h"
 #import "EMPreviewDelegate.h"
 #import "EMRenderTypes.h"
+#import "EMDownloadsManager2.h"
 
 #import "EMDB.h"
 #import "EMDB+Files.h"
@@ -42,13 +43,14 @@
 #import "EMShare.h"
 #import "EMUploadPublicFootageForJointEmu.h"
 #import "EMShareDelegate.h"
-#import "UserFootage+DownloadsHelpers.h"
 
 #import <SIAlertView.h>
 
 #import <PINRemoteImage/UIImageView+PINRemoteImage.h>
 #import <FLAnimatedImage.h>
 #import <FLAnimatedImageView.h>
+
+#import "Emuticon+DownloadsHelpers.h"
 
 #pragma mark - Homage SDK imports
 #import <HomageSDKCore/HomageSDKCore.h>
