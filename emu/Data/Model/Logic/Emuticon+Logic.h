@@ -12,6 +12,7 @@
 @class Package;
 
 #import "Emuticon.h"
+#import "FootageProtocol.h"
 
 @interface Emuticon (Logic)
 
@@ -207,7 +208,7 @@
  *
  *  @return UserFootage of the most preffered user footage.
  */
--(UserFootage *)mostPrefferedUserFootage;
+-(id<FootageProtocol>)mostPrefferedUserFootage;
 
 /**
  *  Returns the related preview footage of an emuticon marked as preview.

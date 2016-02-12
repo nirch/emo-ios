@@ -172,7 +172,13 @@
                                            inHD:(BOOL)inHD
                                             fps:(NSInteger)fps
 {
-    return nil;
+    // Full render video CFG
+    NSMutableDictionary *cfg = [NSMutableDictionary dictionaryWithDictionary:self.fullRenderCFG];
+    
+    // If footages provided, will replace some marked layers with footages taken.
+    // TODO: replace footages here.
+    
+    return cfg;
 }
 
 
@@ -432,11 +438,26 @@
     if (self.sourceUserLayerDynamicMask2X) [self removeResourceNamed:self.sourceUserLayerDynamicMask2X];
 }
 
-
 -(void)removeResourceNamed:(NSString *)resourceName
 {
     NSString *resourcesPath = [self.package resourcesPath];
     [EMDB removeResourceNamed:resourceName path:resourcesPath];
+}
+
+#pragma mark - Full render related
+-(BOOL)requiresDedicatedCapture
+{
+    NSTimeInterval duration = self.duration.doubleValue;
+    if (self.captureDuration) duration = self.captureDuration.doubleValue;
+    return duration > 2.0;
+}
+
+-(NSString *)emuStoryTimeTitle
+{
+    NSString *title = LS(@"X_SECONDS_VIDEO");
+    NSString *durationString = self.captureDuration.stringValue;
+    title = [title stringByReplacingOccurrencesOfString:@"#" withString:durationString];
+    return title;
 }
 
 #pragma mark - Joint emu

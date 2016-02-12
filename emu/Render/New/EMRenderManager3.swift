@@ -103,9 +103,10 @@ class EMRenderManager3 : NSObject
         let footagesForPreview = self.footagesForPreview(tempUserFootage, emuDef: emuDef, slotIndex: slotIndex)
         let uuid = NSUUID().UUIDString
         let fps = self.fpsForEmuDef(emuDef, renderType: EMRenderType.CapturePreview)
+
         let cfg = emuDef.hcRenderCFGWithFootages(
             footagesForPreview,
-            oldStyle: true,
+            oldStyle: emuDef.fullRenderCFG == nil,
             inHD: false,
             fps: fps
         )
@@ -130,6 +131,8 @@ class EMRenderManager3 : NSObject
             emkEmuticonDefOID:emuDefOID
         ] as [NSObject:AnyObject]
         
+        
+        AppManagement.sh().debugDict(cfg as [NSObject:AnyObject])
         let renderer = HCRender(configurationInfo: cfg as [NSObject:AnyObject], userInfo: [emkEmuticonDefOID:emuDefOID,"uuid":uuid])
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
@@ -343,6 +346,7 @@ class EMRenderManager3 : NSObject
                 //
                 // Rendering
                 //
+                AppManagement.sh().debugDict(renderInfo)
                 let renderer = HCRender(configurationInfo: renderInfo, userInfo: userInfo)
                 renderer.setup()
                 if renderer.error != nil {

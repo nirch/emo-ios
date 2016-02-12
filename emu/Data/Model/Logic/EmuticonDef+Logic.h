@@ -127,6 +127,10 @@
 -(void)removeAllResources;
 -(void)removeAllHDResources;
 
+#pragma mark - Full render related
+-(BOOL)requiresDedicatedCapture;
+-(NSString *)emuStoryTimeTitle;
+
 #pragma mark - Joint emu
 -(BOOL)isJointEmu;
 -(NSInteger)slotsCount;

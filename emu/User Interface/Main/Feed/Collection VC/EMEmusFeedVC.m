@@ -42,6 +42,8 @@
 #import "EMProductPopover.h"
 #import "EMBackend+AppStore.h"
 #import "emu-Swift.h"
+#import <SIAlertView.h>
+#import "EmuStyle.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -491,7 +493,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
                  layout:(UICollectionViewLayout *)collectionViewLayout
  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat pad = 10.0;
+    CGFloat pad = 0.0;
     CGFloat aspectRatio = [self.dataSource aspectRatioForItemAtIndexPath:indexPath];
     CGFloat width = (self.view.bounds.size.width - pad) / 2.0;
     CGFloat height = width;
@@ -533,6 +535,28 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     });
 }
 
+#pragma mark - Dedicated footage
+-(void)askUserIfWantsADedicatedFootageForEmu:(Emuticon *)emu
+{
+    if (![emu.emuDef requiresDedicatedCapture]) return;
+    
+    SIAlertView *alert = [[SIAlertView alloc] initWithTitle:[emu.emuDef emuStoryTimeTitle] andMessage:LS(@"DEDICATED_FOOTAGE_REQUIRED_MESSAGE")];
+    alert.buttonColor = [EmuStyle colorButtonBGPositive];
+    alert.cancelButtonColor = [EmuStyle colorButtonBGNegative];
+    [alert addButtonWithTitle:LS(@"EMU_SCREEN_CHOICE_RETAKE_EMU") type:SIAlertViewButtonTypeDefault handler:^(SIAlertView *alertView) {
+        // Recorder should be opened for a retake.
+        HMParams *requestInfo = [HMParams new];
+        [requestInfo addKey:emkRetakeEmuticonsOID value:@[emu.oid]];
+        [requestInfo addKey:emkDuration value:emu.emuDef.captureDuration];
+        
+        // Notify main navigation controller that the recorder should be opened.
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUIUserRequestToOpenRecorder
+                                                            object:self
+                                                          userInfo:requestInfo.dictionary];
+    }];
+    [alert addButtonWithTitle:LS(@"CANCEL") type:SIAlertViewButtonTypeCancel handler:nil];
+    [alert show];
+}
 
 #pragma mark - Collection View Delegate
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -551,10 +575,20 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // -------------------------------------------------------
         // Tapped emu when browsing.
         //
-        // When browsing, selection of an emu will navigate to the emu screen.
-        // Also post a notification that the tabs bar (if shown) should be hidden.
         NSString *emuOID = [self.dataSource emuOIDAtIndexPath:indexPath];
         if (emuOID == nil) return;
+        
+        // Emus that require a dedicated footage and still don't have such
+        // footage taken yet, will popup a question to the user about taking
+        // the dedicated footage.
+        Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        if ([emu.mostPrefferedUserFootage isKindOfClass:[PlaceHolderFootage class]]) {
+            [self askUserIfWantsADedicatedFootageForEmu:emu];
+            return;
+        }
+        
+        // When browsing, selection of an emu will navigate to the emu screen.
+        // Also post a notification that the tabs bar (if shown) should be hidden.
         
         self.guiCollectionView.userInteractionEnabled = NO;
         dispatch_after(DTIME(0.2), dispatch_get_main_queue(), ^{
@@ -905,7 +939,21 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     NSIndexPath *indexPath = [self.guiCollectionView indexPathForItemAtPoint:position];
     if (indexPath) {
         if (self.currentState == EMEmusFeedStateBrowsing) {
-            // Long press on a cell while browsing.
+            // -------------------------------------------------------
+            // Long press emu when browsing.
+            //
+            NSString *emuOID = [self.dataSource emuOIDAtIndexPath:indexPath];
+            if (emuOID == nil) return;
+            
+            // Emus that require a dedicated footage will popup a question to the user
+            // about taking the dedicated footage.
+            Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+            if (emu.emuDef.requiresDedicatedCapture) {
+                [self askUserIfWantsADedicatedFootageForEmu:emu];
+                return;
+            }
+            
+            // Long press on a regular cell while browsing.
             // Change to selection state and choose the emu pressed.
             [self updateState:EMEmusFeedStateSelecting info:@{emkIndexPath:indexPath}];
             [self.navBarVC updateUIByCurrentState];

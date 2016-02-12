@@ -314,7 +314,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     // Gather info about selected footage.
     HMParams *params = [HMParams new];
     [params addKey:emkFootageOID valueIfNotNil:selectedOID];
-    [params addKey:@"renderEmuInHD" valueIfNotNil:@(self.hdFootagesOnly)];
+    [params addKey:emkRenderInHD valueIfNotNil:@(self.hdFootagesOnly)];
     [params addKey:emkEmuticonOID value:self.selectedEmusOID];
     
     // Send the info about the selection to the delegate.

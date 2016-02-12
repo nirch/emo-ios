@@ -440,10 +440,13 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.guiRecordButton.hidden = true
         self.guiContinueAnywayButton.hidden = true
         self.guiRestartButton.hidden = true
-        self.guiTimingContainer.hidden = true
-        self.guiTimingProgress.reset()
         self.guiCancelButton.hidden = true
         self.guiHelpButton.hidden = true
+
+        
+        self.guiTimingContainer.hidden = false
+        self.guiTimingProgress.reset()
+        self.guiTimingLabel.text = "Please wait while rendering video"
     }
 
     
@@ -498,7 +501,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     //
     func updateTimingIndicator() {
         let durationInSeconds = Int(self.duration)
-        var title = EML.s("RECORDER_MESSAGE_REVIEW_PREVIEW")
+        var title = EML.s("X_SECONDS_VIDEO")
         title = title.stringByReplacingOccurrencesOfString("#", withString: String(durationInSeconds))
         self.guiTimingLabel.text = title
         self.guiTimingLabel.animateQuickPopIn()

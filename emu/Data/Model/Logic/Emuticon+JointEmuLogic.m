@@ -211,9 +211,10 @@
 {
     NSDictionary *slot = [self jointEmuSlot:slotIndex];
     if (slot == nil) return self.emuDef.duration.doubleValue;
-    if ([slot[@"duration"] isKindOfClass:[NSNumber class]]) {
-        return [slot[@"duration"] doubleValue];
+    if ([slot[@"capture_duration"] isKindOfClass:[NSNumber class]]) {
+        return [slot[@"capture_duration"] doubleValue];
     }
+    if (self.emuDef.captureDuration) return self.emuDef.captureDuration.doubleValue;
     return self.emuDef.duration.doubleValue;
 }
 

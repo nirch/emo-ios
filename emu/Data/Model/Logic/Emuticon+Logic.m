@@ -255,8 +255,21 @@
 }
 
 
--(UserFootage *)mostPrefferedUserFootage
+-(id<FootageProtocol>)mostPrefferedUserFootage
 {
+    // If emu requires a dedicated longer capture, and such a capture
+    // is not available yet, will show a place holder until user
+    // finishes such a dedicated footage for this emu.
+    if (self.emuDef.requiresDedicatedCapture) {
+        if (self.prefferedFootageOID == nil) {
+            // No dedicated footage available.
+            // Return a placeholder as footage.
+            PlaceHolderFootage *footage = [PlaceHolderFootage new];
+            footage.status = PlaceHolderFootageStatusNegative;
+            return footage;
+        }
+    }
+    
     NSString *footageOID = [self mostPrefferedUserFootageOID];
     UserFootage *userFootage = [UserFootage findWithID:footageOID
                                                context:self.managedObjectContext];

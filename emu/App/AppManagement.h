@@ -43,6 +43,9 @@
 -(NSString *)serverSideLocalizedString:(NSString *)stringKey defaultValue:(NSString *)defaultValue;
 -(void)updateLocalizedStrings;
 
+#pragma mark - Debugging
+-(void)debugDict:(NSDictionary *)dict;
+
 #pragma mark - Queues
 @property (nonatomic, readonly) dispatch_queue_t ioQueue;
 

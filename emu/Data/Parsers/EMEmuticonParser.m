@@ -95,6 +95,10 @@
     emuDef.emuWidth                             = [info safeNumberForKey:@"emu_width" defaultsDictionary:defaults];
     emuDef.emuHeight                            = [info safeNumberForKey:@"emu_height" defaultsDictionary:defaults];
     
+    // Full render
+    emuDef.captureDuration                      = [info safeNumberForKey:@"capture_duration" defaultsDictionary:defaults];
+    emuDef.fullRenderCFG                        = [info safeDictionaryForKey:@"full_render_cfg" defaultValue:nil];
+    
     // Joint emu
     emuDef.jointEmu                             = [info safeDictionaryForKey:@"joint_emu" defaultValue:nil];
     

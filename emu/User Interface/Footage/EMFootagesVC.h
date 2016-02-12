@@ -24,6 +24,7 @@
 
 @property (nonatomic) NSArray *selectedEmusOID;
 @property (nonatomic) BOOL hdFootagesOnly;
+@property (nonatomic) BOOL videoFootagesOnly;
 
 typedef NS_ENUM(NSInteger, EMFootagesFlowType)
 {

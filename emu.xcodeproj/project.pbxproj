@@ -230,6 +230,16 @@
 		0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
 		0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */; };
 		0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */; };
+		0854FCEC1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */; };
+		0854FCED1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */; };
+		0854FCEE1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */; };
+		0854FCEF1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */; };
+		0854FCF01C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */; };
+		0854FCF11C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */; };
+		0854FCF21C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */; };
+		0854FCF31C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */; };
+		0854FCF41C6E22C9008BB43A /* nuke.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEB1C6E22C9008BB43A /* nuke.wav */; };
+		0854FCF51C6E22C9008BB43A /* nuke.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEB1C6E22C9008BB43A /* nuke.wav */; };
 		085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66DF1A937EC9007BC910 /* AppDelegate.m */; };
 		085C67621A937EC9007BC910 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66E51A937EC9007BC910 /* main.m */; };
 		085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670B1A937EC9007BC910 /* AppCFG+Logic.m */; };
@@ -971,6 +981,11 @@
 		0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareMail.m; sourceTree = "<group>"; };
 		0854EE3E1AA08E0F00FD3833 /* EMShareAppleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareAppleMessage.h; sourceTree = "<group>"; };
 		0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareAppleMessage.m; sourceTree = "<group>"; };
+		0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg1-mask.mp4"; sourceTree = "<group>"; };
+		0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg1.mp4"; sourceTree = "<group>"; };
+		0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg2-mask.mp4"; sourceTree = "<group>"; };
+		0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg2.mp4"; sourceTree = "<group>"; };
+		0854FCEB1C6E22C9008BB43A /* nuke.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nuke.wav; sourceTree = "<group>"; };
 		085C66DE1A937EC9007BC910 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085C66DF1A937EC9007BC910 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		085C66E11A937EC9007BC910 /* Config.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
@@ -1544,6 +1559,7 @@
 			isa = PBXGroup;
 			children = (
 				08CA9A311BCFE842004A5A02 /* love */,
+				0854FCE61C6E22C9008BB43A /* nuke */,
 			);
 			path = emus;
 			sourceTree = "<group>";
@@ -1617,7 +1633,8 @@
 				08357F401BC9F0F800C302AA /* EMMeNavigationVC.h */,
 				08357F411BC9F0F800C302AA /* EMMeNavigationVC.m */,
 			);
-			path = MeScreen;
+			name = MeScreen;
+			path = ../MeScreen;
 			sourceTree = "<group>";
 		};
 		08357F4C1BCA04C100C302AA /* EmusPicker */ = {
@@ -1779,6 +1796,18 @@
 			path = "Share Methods";
 			sourceTree = "<group>";
 		};
+		0854FCE61C6E22C9008BB43A /* nuke */ = {
+			isa = PBXGroup;
+			children = (
+				0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */,
+				0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */,
+				0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */,
+				0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */,
+				0854FCEB1C6E22C9008BB43A /* nuke.wav */,
+			);
+			path = nuke;
+			sourceTree = "<group>";
+		};
 		085C66DD1A937EC9007BC910 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -1934,7 +1963,6 @@
 				08A456FE1BA02844001AB79E /* PacksAndFeatured */,
 				08CB89631A9AA12A00224A38 /* Main */,
 				0838142B1BBBA69E004D902E /* Footage */,
-				08357F381BC9EBE600C302AA /* MeScreen */,
 				08357F4C1BCA04C100C302AA /* EmusPicker */,
 				087C5D3E1BCC4F86004B3121 /* SettingsScreen */,
 				08820F8C1C3C01F300E6E0ED /* Recorder2 */,
@@ -2333,6 +2361,7 @@
 				08A456D71B9D97E6001AB79E /* emu-Bridging-Header.h */,
 				08FB19341BC7C45F00F227C6 /* Feed */,
 				08FF19981C5BC05400E15C36 /* EmuScreen */,
+				08357F381BC9EBE600C302AA /* MeScreen */,
 				08BE1F9B1B28486500A34232 /* Debug */,
 				08409E961AB1C69700EC0930 /* Splash */,
 				08CED0E31AA5EA9300C50D0C /* Tutorial */,
@@ -2608,8 +2637,8 @@
 			children = (
 				08FF199C1C5BC09B00E15C36 /* EmuScreen.storyboard */,
 				08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */,
-				08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */,
 				08CBA5421C626B3000574F0B /* JointEmuScreenVC.swift */,
+				08AE9CDD1C5E063E0075B03C /* JointEmuFlow.swift */,
 				08FF19A21C5C0D0800E15C36 /* EmusVC.swift */,
 				08CBA53F1C60EDE400574F0B /* SlotsVC.swift */,
 			);
@@ -2872,6 +2901,7 @@
 				085348C41BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
 				085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
+				0854FCF11C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */,
 				0889BD461C5A559B004B81CB /* placeholder240.png in Resources */,
 				08FF199E1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
@@ -2882,6 +2912,7 @@
 				08CA9A7E1BCFE843004A5A02 /* teddies-fg.gif in Resources */,
 				08CA9A701BCFE842004A5A02 /* hearts-fg.gif in Resources */,
 				08AA14DC1B0BA658002E1B2F /* kbAllowAccessTutorial.mp4 in Resources */,
+				0854FCEF1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */,
 				0847E5651BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				08AA14DD1B0BA658002E1B2F /* endRecording.wav in Resources */,
 				08AA14E01B0BA658002E1B2F /* cancel.wav in Resources */,
@@ -2901,6 +2932,7 @@
 				08CF07B11B4D65CC00034BB5 /* shareapp.html in Resources */,
 				08967C261B5B9A9F000DDCF9 /* downloading.gif in Resources */,
 				08AA14F61B0BA658002E1B2F /* SplashView.xib in Resources */,
+				0854FCF51C6E22C9008BB43A /* nuke.wav in Resources */,
 				08A457091BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				0889BD561C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				0896D5261B2D8D430094ED41 /* sil-1.png in Resources */,
@@ -2910,6 +2942,7 @@
 				08CA9A261BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */,
 				0889BD4E1C5A559B004B81CB /* placeholderNegative240.png in Resources */,
 				08CA9A621BCFE842004A5A02 /* angel-bg.gif in Resources */,
+				0854FCED1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */,
 				08CA9A661BCFE842004A5A02 /* angel-mask-v1.png in Resources */,
 				083814271BBB3139004D902E /* pop.wav in Resources */,
 				08CA9A7A1BCFE843004A5A02 /* kiss-mask-v1.png in Resources */,
@@ -2928,6 +2961,7 @@
 				0889BD521C5A559B004B81CB /* placeholderNegative480.png in Resources */,
 				08A456F81B9F2404001AB79E /* Images.xcassets in Resources */,
 				08AA15091B0BA658002E1B2F /* passThrough.fsh in Resources */,
+				0854FCF31C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */,
 				08CA9A6E1BCFE842004A5A02 /* hearts-bg.gif in Resources */,
 				082C8B9D1C3D378600D6C6B7 /* replaced-bg3-480.png in Resources */,
 				08AA150B1B0BA658002E1B2F /* onboarding_packages_prod.json in Resources */,
@@ -3001,6 +3035,7 @@
 				082C8BA21C3D3BB100D6C6B7 /* replaced-bg4-480.png in Resources */,
 				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
 				08CA9A611BCFE842004A5A02 /* angel-bg.gif in Resources */,
+				0854FCF01C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */,
 				083248471BEB858900B4E82F /* TheLaunchScreen.storyboard in Resources */,
 				08ED7FF81B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				0845BDF31BC523AB00173B66 /* Tutorials.storyboard in Resources */,
@@ -3011,6 +3046,7 @@
 				084349C21B837B1C009A653F /* EMShareInputBox.xib in Resources */,
 				0892DE6C1C47C4DD00CA537D /* rendering.mp4 in Resources */,
 				08271FD91B01F5B90046F38E /* kbAllowAccessTutorial.mp4 in Resources */,
+				0854FCEE1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */,
 				0889BD441C5A559B004B81CB /* placeholder240.png in Resources */,
 				08CA9A691BCFE842004A5A02 /* green-love-fg.gif in Resources */,
 				08967C271B5B9A9F000DDCF9 /* rendering.gif in Resources */,
@@ -3030,6 +3066,7 @@
 				08A456D21B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
 				08AA14351B08F062002E1B2F /* Localizable.strings in Resources */,
 				08CA9A731BCFE842004A5A02 /* hot-bg.gif in Resources */,
+				0854FCF41C6E22C9008BB43A /* nuke.wav in Resources */,
 				08FF199D1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */,
 				08CA9A6D1BCFE842004A5A02 /* hearts-bg.gif in Resources */,
@@ -3039,6 +3076,7 @@
 				08357F3A1BC9EC0400C302AA /* Me.storyboard in Resources */,
 				083248521BECB3C500B4E82F /* EMBlockingProgressVC.storyboard in Resources */,
 				08CA9A6F1BCFE842004A5A02 /* hearts-fg.gif in Resources */,
+				0854FCEC1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */,
 				0889BD541C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				08967C251B5B9A9F000DDCF9 /* downloading.gif in Resources */,
 				0847E5641BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
@@ -3057,6 +3095,7 @@
 				085348BB1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
 				089E78AF1A77FD8600BC3479 /* passThrough.fsh in Resources */,
 				082C8B9C1C3D378600D6C6B7 /* replaced-bg3-480.png in Resources */,
+				0854FCF21C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */,
 				082C8B991C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */,
 				08331A381B069CA7000B8979 /* onboarding_packages_prod.json in Resources */,
 				0889BD481C5A559B004B81CB /* placeholder480.png in Resources */,

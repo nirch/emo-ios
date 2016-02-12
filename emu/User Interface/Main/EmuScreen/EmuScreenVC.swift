@@ -16,7 +16,8 @@ protocol EmuSelectionProtocol: class {
 class EmuScreenVC: UIViewController,
     EmuSelectionProtocol,
     EMShareDelegate,
-    SlotsSelectionDelegate {
+    SlotsSelectionDelegate,
+    EMInterfaceDelegate {
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -439,11 +440,21 @@ class EmuScreenVC: UIViewController,
             alertView.cancelButtonColor = EmuStyle.colorButtonBGNegative()
             alertView.addButtonWithTitle(EML.s("CHOOSE_TAKE"), type: SIAlertViewButtonType.Default, handler: {alert in
                 //
+                // Choose another take from footages screen
+                //
+                let footageVC = EMFootagesVC(forFlow: .ChooseFootage)
+                footageVC.hdFootagesOnly = true
+                footageVC.videoFootagesOnly = true
+                footageVC.delegate = self
+                self.presentViewController(footageVC, animated: true, completion: nil)
                 
             })
             alertView.addButtonWithTitle(EML.s("EMU_SCREEN_CHOICE_RETAKE_EMU"), type: SIAlertViewButtonType.Default, handler: {alert in
+                //
+                // New Take
                 // Open the recorder for a new take.
                 // Recorder should be opened for a retake.
+                //
                 let oids = [emu.oid as! AnyObject]
                 let requestInfo = [
                     emkRetakeEmuticonsOID:oids,
@@ -541,12 +552,15 @@ class EmuScreenVC: UIViewController,
         
         self.jointEmuState = .InitiatorUploadingFootage
         let footage = self.currentEmu()?.mostPrefferedUserFootage()
-        self.uploader = EMUploadPublicFootageForJointEmu()
-        uploader?.footage = footage
-        uploader?.emu = self.currentEmu()
-        uploader?.slotIndex = 1;
-        uploader?.delegate = self
-        self.uploader?.uploadBeforeSharing()
+
+        if footage is UserFootage {
+            self.uploader = EMUploadPublicFootageForJointEmu()
+            uploader?.footage = footage as! UserFootage
+            uploader?.emu = self.currentEmu()
+            uploader?.slotIndex = 1;
+            uploader?.delegate = self
+            self.uploader?.uploadBeforeSharing()
+        }
     }
     
     func inviteAfterInitiatorUploadedFootage() {
@@ -597,6 +611,24 @@ class EmuScreenVC: UIViewController,
     
     func sharerDidFailWithInfo(info: [NSObject : AnyObject]!) {
         self.updateEmuUIStateForEmu()
+    }
+    
+    //
+    // MARK: - EMInterfaceDelegate
+    //
+    func controlSentActionNamed(actionName: String!, info: [NSObject : AnyObject]!) {
+        self.dismissViewControllerAnimated(true) {
+            guard actionName == emkUIFootageSelectionApply else {return}
+            guard let footageOID = info[emkFootageOID] as? String else {return}
+            guard let footage = UserFootage.findWithID(footageOID, context: EMDB.sh().context) else {return}
+            guard let emu = self.currentEmu() else {return}
+            
+            // Update the preffered footage of this emu.
+            emu.prefferedFootageOID = footage.oid
+            emu.cleanUp()
+            self.emusVC?.refresh()
+            self.updateEmuUIStateForEmu()
+        }
     }
     
     //

@@ -8,6 +8,7 @@
 
 #import "UserTempFootage.h"
 #import <HomageSDKCore/HomageSDKCore.h>
+#import "EMDB.h"
 
 @interface UserTempFootage()
 
@@ -58,7 +59,12 @@
     layer[hcrSourceType] = hcrVideo;
     layer[hcrPath] = self.capturedVideo;
     layer[hcrDynamicMaskPath] = self.maskVideo;
-    //if (!forHD) layer[hcrDownSample] = @2;
+
+    NSInteger assumedUserLayerSizeInPositining = emuDef.assumedUsersLayersWidth.integerValue;    
+    if (forHD == NO && assumedUserLayerSizeInPositining==240) {
+        // Downsample if required.
+        layer[hcrDownSample] = @2;
+    }
     return layer;
 }
 

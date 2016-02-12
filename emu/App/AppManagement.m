@@ -276,4 +276,9 @@ NSString* machineName()
     _serverSideLocalizationString = appCFG.localization;
 }
 
+-(void)debugDict:(NSDictionary *)dict
+{
+    HMLOG(@"DEBUG", EM_DBG, @"%@", dict.description);
+}
+
 @end
