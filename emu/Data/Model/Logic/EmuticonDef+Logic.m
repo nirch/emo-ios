@@ -445,6 +445,29 @@
 }
 
 #pragma mark - Full render related
+-(BOOL)isNewStyleLongRender
+{
+    if (self.fullRenderCFG == nil) return NO;
+    return [self newStyleRenderDuration] > 2.0;
+}
+
+-(NSTimeInterval)newStyleRenderDuration
+{
+    if (self.fullRenderCFG == nil) return 0;
+    NSNumber *duration = self.fullRenderCFG[hcrDuration];
+    if (![duration isKindOfClass:[NSNumber class]]) return 0;
+    return duration.doubleValue;
+}
+
+-(NSString *)newStyleRenderDurationTitle
+{
+    NSString *title = LS(@"X_SECONDS_VIDEO");
+    NSInteger duration = [self newStyleRenderDuration];
+    NSString *durationString = [NSString stringWithFormat:@"%@", @(duration)];
+    title = [title stringByReplacingOccurrencesOfString:@"#" withString:durationString];
+    return title;
+}
+
 -(BOOL)requiresDedicatedCapture
 {
     NSTimeInterval duration = self.duration.doubleValue;
@@ -458,29 +481,6 @@
     NSString *durationString = self.captureDuration.stringValue;
     title = [title stringByReplacingOccurrencesOfString:@"#" withString:durationString];
     return title;
-}
-
-#pragma mark - Joint emu
--(BOOL)isJointEmu
-{
-    if (self.jointEmu != nil) return YES;
-    return NO;
-}
-
--(NSInteger)slotsCount
-{
-    if (self.isJointEmu == NO) return 0;
-    NSArray *slots = self.jointEmu[@"slots"];
-    if ([slots isKindOfClass:[NSArray class]]) return slots.count;
-    return 0;
-}
-
--(void)latestEmuGainFocus
-{
-    NSArray *sortBy = @[[NSSortDescriptor sortDescriptorWithKey:@"timeCreated" ascending:YES]];
-    NSArray *emus = [self emusOrdered:sortBy];
-    Emuticon *emu = [emus lastObject];
-    [emu gainFocus];
 }
 
 @end

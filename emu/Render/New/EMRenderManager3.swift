@@ -40,7 +40,7 @@ import Foundation
 class EMRenderManager3 : NSObject
 {
     internal static let sharedInstance = EMRenderManager3()
-
+    
     static private let FPS_CAPTURE_PREVIEW = 25
     static private let FPS_LD_SHORT_PREVIEW = 6
     
@@ -74,7 +74,7 @@ class EMRenderManager3 : NSObject
         // Rendering management queue
         let attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_BACKGROUND, 0)
         self.renderingManagementQueue = dispatch_queue_create("rendering Management Queue", attr)
-
+        
         // Super
         super.init()
     }
@@ -93,17 +93,16 @@ class EMRenderManager3 : NSObject
     - parameter emuDefOID:   The oid of the emu definition
     - parameter captureInfo: Dictionary with info about the captured user
     */
-    func renderPreviewForEmuDefOID(emuDefOID : String, tempUserFootage : UserTempFootage, slotIndex: Int = 0) -> String? {
+    func renderPreviewForEmuDefOID(emuDefOID : String, footagesForPreview: [FootageProtocol], slotIndex: Int = 0) -> HCRender? {
         // Must have an emu definition and all resources must exist on local storage
         let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context)
         if emuDef == nil {return nil}
         if !emuDef.allResourcesAvailable() {return nil}
         
         // Create CFG for renderer
-        let footagesForPreview = self.footagesForPreview(tempUserFootage, emuDef: emuDef, slotIndex: slotIndex)
         let uuid = NSUUID().UUIDString
         let fps = self.fpsForEmuDef(emuDef, renderType: EMRenderType.CapturePreview)
-
+        
         let cfg = emuDef.hcRenderCFGWithFootages(
             footagesForPreview,
             oldStyle: emuDef.fullRenderCFG == nil,
@@ -114,27 +113,17 @@ class EMRenderManager3 : NSObject
         let outputInfo = [
             hcrOutputType:hcrVideo,
             hcrRelativePath:"tmp_preview_\(uuid).mov"
-        ] as [NSObject:AnyObject]
+            ] as [NSObject:AnyObject]
         
-//        // Add audio if captured
-//        if let audioPath = outputFiles["audio"] as? String {
-//            let fullAudioPath = "\(outputPath)/\(audioPath)"
-//            let audioURL = NSURL(fileURLWithPath: fullAudioPath)
-//            outputInfo[hcrAudioURL] = audioURL
-//        }
-
         cfg[hcrOutputsInfo] = [outputInfo]
-
-        // Render
-        var previewInfo = [
-            emkUUID:uuid,
-            emkEmuticonDefOID:emuDefOID
-        ] as [NSObject:AnyObject]
         
-        
-        AppManagement.sh().debugDict(cfg as [NSObject:AnyObject])
+        // Render creation
+        var previewInfo = [emkUUID:uuid, emkEmuticonDefOID:emuDefOID] as [NSObject:AnyObject]
         let renderer = HCRender(configurationInfo: cfg as [NSObject:AnyObject], userInfo: [emkEmuticonDefOID:emuDefOID,"uuid":uuid])
-
+        renderer.uuid = uuid
+        renderer.outputProgressNotifications = true
+        
+        // Dispatch the async work.
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
             renderer.setup()
             if (renderer.error == nil) {
@@ -148,7 +137,7 @@ class EMRenderManager3 : NSObject
                 previewInfo[emkError] = renderer.error
             }
             
-            // Notify main thread about render success/failure 
+            // Notify main thread about render success/failure
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let nc = NSNotificationCenter.defaultCenter()
                 nc.postNotificationName(
@@ -158,13 +147,13 @@ class EMRenderManager3 : NSObject
                 )
             })
         }
-        return uuid
+        return renderer
     }
     
-    func footagesForPreview(tempUserFootage: UserTempFootage, emuDef: EmuticonDef, slotIndex: Int = 0) -> [FootageProtocol] {
+    func footagesForPreviewWithTempUserFootage(tempUserFootage: UserTempFootage, emuDef: EmuticonDef, slotIndex: Int = 0) -> [FootageProtocol] {
         var footages = [FootageProtocol]()
         if slotIndex > 0 && emuDef.isJointEmu() {
-            for i in 1...emuDef.slotsCount() {
+            for i in 1...emuDef.jointEmuDefSlotsCount() {
                 if i == slotIndex {
                     // Show the temp footage in this slot indec
                     footages.append(tempUserFootage)
@@ -180,14 +169,14 @@ class EMRenderManager3 : NSObject
     
     func oidForEmu(emu:Emuticon, renderType:EMRenderType) -> String {
         switch renderType {
-            case EMRenderType.ShortLowDefPreview:
-                return emu.oid!
-            case EMRenderType.CapturePreview:
-                return "\(emu.oid)_cp"
-            case EMRenderType.FullLowDef:
-                return "\(emu.oid)_fld"
-            case EMRenderType.FullHighDef:
-                return "\(emu.oid)_fhd"
+        case EMRenderType.ShortLowDefPreview:
+            return emu.oid!
+        case EMRenderType.CapturePreview:
+            return "\(emu.oid)_cp"
+        case EMRenderType.FullLowDef:
+            return "\(emu.oid)_fld"
+        case EMRenderType.FullHighDef:
+            return "\(emu.oid)_fhd"
         }
     }
     
@@ -198,16 +187,16 @@ class EMRenderManager3 : NSObject
     func fpsForEmuDef(emuDef:EmuticonDef, renderType:EMRenderType) -> Int {
         let fps = emuDef.fps()
         return fps
-//        switch renderType {
-//            case EMRenderType.ShortLowDefPreview:
-//                return EMRenderManager3.FPS_LD_SHORT_PREVIEW
-//            case EMRenderType.CapturePreview:
-//                return EMRenderManager3.FPS_CAPTURE_PREVIEW
-//            case EMRenderType.FullLowDef:
-//                return fps!
-//            case EMRenderType.FullHighDef:
-//                return fps!
-//        }
+        //        switch renderType {
+        //            case EMRenderType.ShortLowDefPreview:
+        //                return EMRenderManager3.FPS_LD_SHORT_PREVIEW
+        //            case EMRenderType.CapturePreview:
+        //                return EMRenderManager3.FPS_CAPTURE_PREVIEW
+        //            case EMRenderType.FullLowDef:
+        //                return fps!
+        //            case EMRenderType.FullHighDef:
+        //                return fps!
+        //        }
     }
     
     
@@ -229,88 +218,88 @@ class EMRenderManager3 : NSObject
         fullRender:Bool,
         userInfo:[NSObject:AnyObject]) {
             
-        if let emuDef = emu.emuDef {
-            #if DEBUG
-                NSAssert(NSThread.isMainThread(), "%s should be called on the main thread", __PRETTY_FUNCTION__);
-            #endif
-            if !emuDef.allResourcesAvailable() {return}
-            
-            //
-            // If already rendering or enqueued, ignore.
-            //
-            if emu.oid == nil {return}
-            let oid = self.oidForEmu(emu, renderType: renderType)
-            if self.renderingPOOL[oid] != nil || self.readyPool[oid] != nil {return}
-            
-            // HD or LD?
-            let inHD = self.inHDForRenderType(renderType)
-            
-            // fps
-            let fps = self.fpsForEmuDef(emuDef, renderType: renderType)
-            
-            // Info
-            let emuDefOID = emuDef.oid!
-            let emuOID = emu.oid!
-            
-            // Preffered footage
-            let footages = emu.relatedFootages() as [AnyObject]
-            
-            //
-            // If not all resources available, we can't render.
-            // It is not the responsibility of the render manager
-            // to manage fetching these resources.
-            // Just ignore this enqueue request.
-            if !emuDef.allResourcesAvailableInHD(inHD) {return}
-            
-            //
-            // We should and can render this emu.
-            // Enqueue it for rendering with all required information.
-            
-            // Source CFG
-            var renderCFG = emuDef.hcRenderCFGWithFootages(
-                footages,
-                oldStyle: true,
-                inHD: false,
-                fps: fps) as [NSObject:AnyObject]
-            
-            // Output CFG
-            var outputsInfo = [NSObject]()
-            if (mediaType == EMMediaDataType.Video) {
-                // Output Video
-                outputsInfo.append([
-                    hcrOutputType:hcrVideo,
-                    hcrPath:emu.videoPath()])
-            } else {
-                // Output GIF
-                var gifOutputCFG = [
-                    hcrOutputType:hcrGIF,
-                    hcrPath:emu.animatedGifPathInHD(inHD)
-                ]
-                if let palette = emuDef.palette {
-                    gifOutputCFG[hcrPalette] = palette
+            if let emuDef = emu.emuDef {
+                #if DEBUG
+                    NSAssert(NSThread.isMainThread(), "%s should be called on the main thread", __PRETTY_FUNCTION__);
+                #endif
+                if !emuDef.allResourcesAvailable() {return}
+                
+                //
+                // If already rendering or enqueued, ignore.
+                //
+                if emu.oid == nil {return}
+                let oid = self.oidForEmu(emu, renderType: renderType)
+                if self.renderingPOOL[oid] != nil || self.readyPool[oid] != nil {return}
+                
+                // HD or LD?
+                let inHD = self.inHDForRenderType(renderType)
+                
+                // fps
+                let fps = self.fpsForEmuDef(emuDef, renderType: renderType)
+                
+                // Info
+                let emuDefOID = emuDef.oid!
+                let emuOID = emu.oid!
+                
+                // Preffered footage
+                let footages = emu.relatedFootages() as [AnyObject]
+                
+                //
+                // If not all resources available, we can't render.
+                // It is not the responsibility of the render manager
+                // to manage fetching these resources.
+                // Just ignore this enqueue request.
+                if !emuDef.allResourcesAvailableInHD(inHD) {return}
+                
+                //
+                // We should and can render this emu.
+                // Enqueue it for rendering with all required information.
+                
+                // Source CFG
+                var renderCFG = emuDef.hcRenderCFGWithFootages(
+                    footages,
+                    oldStyle: true,
+                    inHD: false,
+                    fps: fps) as [NSObject:AnyObject]
+                
+                // Output CFG
+                var outputsInfo = [NSObject]()
+                if (mediaType == EMMediaDataType.Video) {
+                    // Output Video
+                    outputsInfo.append([
+                        hcrOutputType:hcrVideo,
+                        hcrPath:emu.videoPath()])
+                } else {
+                    // Output GIF
+                    var gifOutputCFG = [
+                        hcrOutputType:hcrGIF,
+                        hcrPath:emu.animatedGifPathInHD(inHD)
+                    ]
+                    if let palette = emuDef.palette {
+                        gifOutputCFG[hcrPalette] = palette
+                    }
+                    outputsInfo.append(gifOutputCFG)
                 }
-                outputsInfo.append(gifOutputCFG)
+                
+                if (renderType == EMRenderType.ShortLowDefPreview) {
+                    // Thumb images
+                    outputsInfo.append([
+                        hcrOutputType:hcrPNG,
+                        hcrPath:emu.thumbPath(),
+                        hcrFrame:0])
+                }
+                renderCFG[hcrOutputsInfo] = outputsInfo
+                
+                // Add extra meta info to the render CFG
+                renderCFG[emkEmuticonDefOID] = emuDefOID
+                renderCFG[emkEmuticonOID] = emuOID
+                
+                dispatch_async(self.renderingManagementQueue, {
+                    self.readyPool[oid] = renderCFG
+                    self.userInfo[oid] = userInfo
+                    self._manageQueue()
+                })
             }
-            
-            if (renderType == EMRenderType.ShortLowDefPreview) {
-                // Thumb images
-                outputsInfo.append([
-                    hcrOutputType:hcrPNG,
-                    hcrPath:emu.thumbPath(),
-                    hcrFrame:0])
-            }
-            renderCFG[hcrOutputsInfo] = outputsInfo
-            
-            // Add extra meta info to the render CFG
-            renderCFG[emkEmuticonDefOID] = emuDefOID
-            renderCFG[emkEmuticonOID] = emuOID
-            
-            dispatch_async(self.renderingManagementQueue, {
-                self.readyPool[oid] = renderCFG
-                self.userInfo[oid] = userInfo
-                self._manageQueue()
-            })
-        }
     }
     
     
@@ -323,7 +312,7 @@ class EMRenderManager3 : NSObject
         //
         if self.readyPool.count == 0 ||
             self.renderingPOOL.count > self.maxConcurrentRenders {
-            return
+                return
         }
         
         //
@@ -378,7 +367,7 @@ class EMRenderManager3 : NSObject
         } else {
             // Couldn't pick anything?
         }
-
+        
     }
     
     func _chooseOID() -> String? {
@@ -393,7 +382,7 @@ class EMRenderManager3 : NSObject
         #if DEBUG
             NSAssert(NSThread.isMainThread(), "%s should be called on the main thread", __PRETTY_FUNCTION__);
         #endif
-
+        
         let emuOID = renderInfo[emkEmuticonOID] as! String
         if let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
             let inHD = renderInfo[emkRenderInHD]?.boolValue
@@ -418,7 +407,7 @@ class EMRenderManager3 : NSObject
             let nc = NSNotificationCenter.defaultCenter()
             nc.postNotificationName(hmkRenderingFinished, object: self, userInfo: userInfo)
         }
-
+        
     }
     
     
@@ -449,7 +438,7 @@ class EMRenderManager3 : NSObject
                     hcrPath:gifPath
                 ]
             ]
-        ] as [NSObject:AnyObject]
+            ] as [NSObject:AnyObject]
         
         let renderer = HCRender(configurationInfo: cfg, userInfo: nil)
         renderer.setup()
@@ -457,7 +446,7 @@ class EMRenderManager3 : NSObject
             onFinish(success: false)
             return
         }
-
+        
         // Render one by one serially in the background
         dispatch_async(self.renderingQueue) {
             // Render the gif

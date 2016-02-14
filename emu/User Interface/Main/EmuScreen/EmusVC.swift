@@ -71,10 +71,14 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.emuSelectionChanged()
+        if decelerate == false {
+            self.emuSelectionChanged()
+        }
     }
     
-    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.delegate?.emuSelectionScrolled()
+    }
     
     //
     // MARK: - Carousel buttons and emu selection

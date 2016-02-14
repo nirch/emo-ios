@@ -128,12 +128,11 @@
 -(void)removeAllHDResources;
 
 #pragma mark - Full render related
+-(BOOL)isNewStyleLongRender;
+-(NSTimeInterval)newStyleRenderDuration;
+-(NSString *)newStyleRenderDurationTitle;
 -(BOOL)requiresDedicatedCapture;
 -(NSString *)emuStoryTimeTitle;
 
-#pragma mark - Joint emu
--(BOOL)isJointEmu;
--(NSInteger)slotsCount;
--(void)latestEmuGainFocus;
 
 @end

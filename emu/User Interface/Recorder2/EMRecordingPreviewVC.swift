@@ -10,8 +10,8 @@ import UIKit
 import AVKit
 
 class EMRecordingPreviewVC: AVPlayerViewController {
-    var latestPreviewUUID : String? = nil
-    var info : [NSObject:AnyObject]? = nil
+    var renderer: HCRender? = nil
+    var info: [NSObject:AnyObject]? = nil
     
     weak var previewDelegate : EMPreviewDelegate?
     
@@ -72,39 +72,40 @@ class EMRecordingPreviewVC: AVPlayerViewController {
     }
     
     func onPreviewRenderUpdate(notification: NSNotification) {
-        if self.latestPreviewUUID == nil {return}
-        let info = notification.userInfo!
+        guard self.renderer != nil else {return}
+        guard let info = notification.userInfo else {return}
+        guard let uuid = info[emkUUID] as? String where uuid == self.renderer?.uuid else {return}
         
-        if let uuid = info[emkUUID] as? String {
+        // Store info
+        self.info = info
+        
+        // Check for render errors
+        if notification.isReportingError {
+            // Something went wrong during rendering :-(
+            self.epicFail()
+            return
+        }
             
-            // Ignore old renders
-            if uuid != self.latestPreviewUUID {return}
-            
-            // Store info
-            self.info = info
-            
-            // Check for render errors
-            if notification.isReportingError {
-                self.epicFail()
-                return
-            }
-            
-            // Successful preview render. Show it!
-            if let url = info[emkURL] as? NSURL {
-                let fm = NSFileManager.defaultManager()
-                let exists = fm.fileExistsAtPath(url.path!)
-                if exists == false {
-                    self.epicFail()
-                    return
-                }
-                
-                self.setVideoURL(url)
-                if let d = self.previewDelegate {
-                    d.previewIsShownWithInfo(self.info)
-                }
-            } else {
-                self.epicFail()
-            }
+        guard let url = info[emkURL] as? NSURL else {
+            // No output url of the result?
+            self.epicFail()
+            return
+        }
+        
+        // Successful preview render.
+        let fm = NSFileManager.defaultManager()
+        let outputExists = fm.fileExistsAtPath(url.path!)
+        guard outputExists else {
+            // Output file not found on local storage?
+            // Something went horribly wrong.
+            self.epicFail()
+            return
+        }
+        
+        // Shot it.
+        self.setVideoURL(url)
+        if let d = self.previewDelegate {
+            d.previewIsShownWithInfo(self.info)
         }
     }
     
@@ -132,25 +133,24 @@ class EMRecordingPreviewVC: AVPlayerViewController {
     
     // MARK: - Rendering preview
     func renderEmuDef(emuDefOID: String, captureInfo: [NSObject:AnyObject], slotIndex: Int = 0) {
-        if let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context) {
-            if emuDef.allResourcesAvailable() {
-                // Render a preview for this capture
-                self.startRenderingUI()
-                let rm = EMRenderManager3.sharedInstance
-                
-                let tempUserFootage = UserTempFootage(info: captureInfo)
-                self.latestPreviewUUID = rm.renderPreviewForEmuDefOID(
-                    emuDefOID,
-                    tempUserFootage: tempUserFootage,
-                    slotIndex: slotIndex
-                )
-            } else {
-                // Download resources first, before rendering
-//                self.startDownloadingUI()
-                NSLog("@@@@")
-            }
-        } else {
+        guard let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context) else {
             self.epicFail()
+            return
+        }
+        
+        if emuDef.allResourcesAvailable() {
+            // Render a preview for this capture
+            self.startRenderingUI()
+            let rm = EMRenderManager3.sharedInstance
+            let tempUserFootage = UserTempFootage(info: captureInfo)
+            let footagesForPreview = rm.footagesForPreviewWithTempUserFootage(tempUserFootage, emuDef: emuDef, slotIndex: slotIndex)
+            self.renderer = rm.renderPreviewForEmuDefOID(
+                emuDefOID,
+                footagesForPreview: footagesForPreview,
+                slotIndex: slotIndex
+            )
+        } else {
+            NSLog("@@@@")
         }
     }
     

@@ -207,23 +207,6 @@
     return slot[@"footage_files"];
 }
 
--(NSTimeInterval)jointEmuCaptureDurationAtSlot:(NSInteger)slotIndex
-{
-    NSDictionary *slot = [self jointEmuSlot:slotIndex];
-    if (slot == nil) return self.emuDef.duration.doubleValue;
-    if ([slot[@"capture_duration"] isKindOfClass:[NSNumber class]]) {
-        return [slot[@"capture_duration"] doubleValue];
-    }
-    if (self.emuDef.captureDuration) return self.emuDef.captureDuration.doubleValue;
-    return self.emuDef.duration.doubleValue;
-}
-
--(BOOL)jointEmuRequiresDedicatedCaptureAtSlot:(NSInteger)slotIndex
-{
-    NSTimeInterval duration = [self jointEmuCaptureDurationAtSlot:slotIndex];
-    return duration > 2.0;
-}
-
 #pragma mark - Footages
 -(id<FootageProtocol>)jointEmuFootageAtSlot:(NSInteger)slotIndex
 {

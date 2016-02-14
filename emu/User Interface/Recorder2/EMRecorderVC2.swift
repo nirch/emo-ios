@@ -25,7 +25,6 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     @IBOutlet weak var guiMessageLabel: UILabel!
     
     // Buttons
-    
     @IBOutlet weak var guiRecordButton: EMRecordButton!
     @IBOutlet weak var guiContinueAnywayButton: EMFlowButton!
     @IBOutlet weak var guiRestartButton: UIButton!
@@ -36,6 +35,9 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     @IBOutlet weak var guiTimingContainer: UIView!
     @IBOutlet weak var guiTimingLabel: UILabel!
     @IBOutlet weak var guiTimingProgress: EMTickingProgressView!
+    
+    // Long render progress
+    @IBOutlet weak var guiLongRenderProgressView: YLProgressBar!
     
     // Review buttons
     @IBOutlet weak var guiPositiveButton: EMFlowButton!
@@ -120,18 +122,21 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.hideMessage(false)
         
         //
-        // The timing bar
+        // The timing bar (replace with YLProgress? it looks much better)
         //
         let layer = self.guiTimingContainer.layer
         layer.borderColor = EmuStyle.colorMain1().CGColor
         layer.backgroundColor = EmuStyle.colorMainBG1().CGColor
         layer.borderWidth = 2
         layer.cornerRadius = 15
-        
         self.guiTimingLabel.text = "3 seconds"
         self.guiTimingLabel.textColor = EmuStyle.colorMain1()
-
         self.hideRecordingPreviewAnimated(false)
+        
+        //
+        // The long render progress bar
+        //
+        EmuStyle.sh().styleYLProgressBar(self.guiLongRenderProgressView)
     }
     
     // MARK: - Lifecycle
@@ -303,27 +308,45 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
             selector: "onBGMarkUpdate:",
             name: hfpNotificationBackgroundInfo,
             object: nil)
+        
+        nc.addUniqueObserver(
+            self,
+            selector: "onRenderProgress:",
+            name: hcrNotificationRenderProgress,
+            object: nil)
     }
     
     func removeObservers() {
         let nc = NSNotificationCenter.defaultCenter()
         nc.removeObserver(hfpNotificationBackgroundInfo)
+        nc.removeObserver(hcrNotificationRenderProgress)
     }
 
     // MARK: - Observers handlers
     func onBGMarkUpdate(notification: NSNotification) {
-        if let info = notification.userInfo {
-            if let bgMark = info[hfpBGMark] as? Int {
-                let key = info[hfpBGMarkTextKey] as! String
-                let text = EML.s(key)
-                self.showMessage("\(text)", positive: (bgMark > 0))                
-                if bgMark > 0 {
-                    self.guiContinueAnywayButton.setTitle(EML.s("RECORDER_CONTINUE_BUTTON"), forState: UIControlState.Normal)
-                } else {
-                    self.guiContinueAnywayButton.setTitle(EML.s("RECORDER_CONTINUE_ANYWAY_BUTTON"), forState: UIControlState.Normal)
-                }
-            }
+        guard let info = notification.userInfo else {return}
+        guard let bgMark = info[hfpBGMark] as? Int else {return}
+        guard let key = info[hfpBGMarkTextKey] as? String else {return}
+        
+        let text = EML.s(key)
+        self.showMessage("\(text)", positive: (bgMark > 0))
+        
+        let button = self.guiContinueAnywayButton
+        if bgMark > 0 {
+            button.setTitle(EML.s("RECORDER_CONTINUE_BUTTON"), forState: .Normal)
+        } else {
+            button.setTitle(EML.s("RECORDER_CONTINUE_ANYWAY_BUTTON"), forState: .Normal)
         }
+    }
+    
+    func onRenderProgress(notification: NSNotification) {
+        guard let renderer = self.recordingPreviewVC?.renderer else {return}
+        guard let info = notification.userInfo else {return}
+        guard let moreInfo = info["userInfo"] as? [NSObject:AnyObject] else {return}
+        guard renderer.uuid == moreInfo["uuid"] as? String else {return}
+        guard let progress = info[hcrProgress] as? CGFloat else {return}
+        
+        self.guiLongRenderProgressView.setProgress(progress, animated: true)
     }
     
     // MARK: - Status bar & Orientation
@@ -433,6 +456,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.guiPositiveButton.hidden = true
         self.guiNegativeButton.hidden = true
         self.guiQuestionLabel.hidden = true
+        self.guiLongRenderProgressView.hidden = true
     }
     
     func renderingUI() {
@@ -443,10 +467,16 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.guiCancelButton.hidden = true
         self.guiHelpButton.hidden = true
 
-        
+        // Rendering message
         self.guiTimingContainer.hidden = false
         self.guiTimingProgress.reset()
         self.guiTimingLabel.text = "Please wait while rendering video"
+        
+        // Progress bar
+        if self.duration > 2.0 {
+            self.guiLongRenderProgressView.hidden = false
+            self.guiLongRenderProgressView.setProgress(0, animated: false)
+        }
     }
 
     
@@ -548,7 +578,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         //
         // Writer
         //
-        self.shouldRecordAudio = true
+        self.shouldRecordAudio = false
         let writer = HFWriterVideo()
         writer.videoBitsPerPixel = 21.0
         if self.shouldRecordAudio {
@@ -594,6 +624,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.guiPositiveButton.hidden = false
         self.guiNegativeButton.hidden = false
         self.guiQuestionLabel.hidden = false
+        self.guiTimingContainer.hidden = true
         
         // texts
         self.guiPositiveButton.setTitle(EML.s("RECORDER_PREVIEW_CONFIRM"), forState: UIControlState.Normal)
@@ -606,6 +637,16 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     //
     func previewIsShownWithInfo(info : [NSObject:AnyObject]) {
         self.confirmFootageUI()
+        
+        if self.guiLongRenderProgressView.hidden == false {
+            self.guiLongRenderProgressView.setProgress(1, animated: true)
+            UIView.animateWithDuration(0.3, animations: {
+                self.guiLongRenderProgressView.alpha = 0
+            }, completion: {finished in
+                self.guiLongRenderProgressView.alpha = 1
+                self.guiLongRenderProgressView.hidden = true
+            })
+        }
     }
     
     func previewDidFailWithInfo(info : [NSObject:AnyObject]) {

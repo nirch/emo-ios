@@ -14,7 +14,6 @@ pod 'Toast', '~> 2.4'
 pod 'JDFTooltips', '~> 1.0',            :inhibit_warnings => true
 pod 'JGActionSheet', '~> 1.0'
 pod 'SIAlertView', '~> 1.3',            :inhibit_warnings => true
-pod 'CircleProgressBar', '~> 0.22’,     :inhibit_warnings => true
 
 # Reporting and experiments
 pod 'Mixpanel', '~> 2.8.0',             :inhibit_warnings => true

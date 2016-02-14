@@ -26,7 +26,7 @@
                                     <constraint firstAttribute="width" secondItem="qc2-Rz-IG6" secondAttribute="height" multiplier="1:1" id="C4V-pE-Ygx"/>
                                 </constraints>
                             </view>
-                            <containerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76D-E7-pGa" userLabel="recording preview container">
+                            <containerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76D-E7-pGa" userLabel="recording preview player container">
                                 <rect key="frame" x="0.0" y="44" width="414" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -59,6 +59,10 @@
                                     <constraint firstAttribute="trailing" secondItem="Ik7-4U-ioy" secondAttribute="trailing" id="Yov-zI-T8S"/>
                                     <constraint firstAttribute="bottom" secondItem="Ik7-4U-ioy" secondAttribute="bottom" id="iyN-LE-HHm"/>
                                 </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fe7-6l-Juq" userLabel="Long render progress view" customClass="YLProgressBar">
+                                <rect key="frame" x="8" y="414" width="398" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bD-Fc-kRe">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -222,6 +226,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Fe7-6l-Juq" firstAttribute="height" secondItem="5IB-Fd-KYc" secondAttribute="height" id="0gh-BG-ZUU"/>
                             <constraint firstItem="qc2-Rz-IG6" firstAttribute="top" secondItem="5bD-Fc-kRe" secondAttribute="bottom" id="1GN-me-cC5"/>
                             <constraint firstItem="aBF-oR-Wsn" firstAttribute="centerX" secondItem="qc2-Rz-IG6" secondAttribute="centerX" id="4kD-IL-gaS"/>
                             <constraint firstItem="aBF-oR-Wsn" firstAttribute="centerY" secondItem="kc3-yo-xSR" secondAttribute="centerY" id="5Hn-Qy-vU9"/>
@@ -234,7 +239,9 @@
                             <constraint firstItem="ZBH-qW-910" firstAttribute="top" secondItem="qc2-Rz-IG6" secondAttribute="bottom" constant="8" id="Ajy-LT-gel"/>
                             <constraint firstAttribute="right" secondItem="5IB-Fd-KYc" secondAttribute="right" constant="8" id="Aoe-mD-c4T"/>
                             <constraint firstItem="qc2-Rz-IG6" firstAttribute="left" secondItem="lJh-YE-Y1n" secondAttribute="left" id="Cnm-L3-jKU"/>
+                            <constraint firstItem="Fe7-6l-Juq" firstAttribute="width" secondItem="5IB-Fd-KYc" secondAttribute="width" id="ECS-xD-cL9"/>
                             <constraint firstItem="aBF-oR-Wsn" firstAttribute="centerY" secondItem="kc3-yo-xSR" secondAttribute="centerY" id="EgC-Ye-tGc"/>
+                            <constraint firstItem="Fe7-6l-Juq" firstAttribute="centerX" secondItem="5IB-Fd-KYc" secondAttribute="centerX" id="Eje-jK-GaF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5bD-Fc-kRe" secondAttribute="trailing" constant="-20" id="FEG-RL-KmD"/>
                             <constraint firstItem="C47-y9-vqw" firstAttribute="height" secondItem="tvo-9w-jgy" secondAttribute="height" id="G4y-AW-nZK"/>
                             <constraint firstItem="5fe-na-8rn" firstAttribute="top" secondItem="kc3-yo-xSR" secondAttribute="bottom" constant="8" id="HRl-Q0-UjO"/>
@@ -243,6 +250,7 @@
                             <constraint firstItem="d67-VO-Cta" firstAttribute="centerX" secondItem="lJh-YE-Y1n" secondAttribute="centerX" id="Kzf-7a-cco"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tvo-9w-jgy" secondAttribute="trailing" constant="-5" id="L1F-3F-RBO"/>
                             <constraint firstItem="5bD-Fc-kRe" firstAttribute="leading" secondItem="lJh-YE-Y1n" secondAttribute="leadingMargin" constant="-20" id="P1P-vU-3KU"/>
+                            <constraint firstItem="Fe7-6l-Juq" firstAttribute="centerY" secondItem="5IB-Fd-KYc" secondAttribute="centerY" id="SML-f2-KpB"/>
                             <constraint firstAttribute="right" secondItem="qc2-Rz-IG6" secondAttribute="right" id="So4-UU-tTC"/>
                             <constraint firstItem="kc3-yo-xSR" firstAttribute="width" secondItem="kc3-yo-xSR" secondAttribute="height" multiplier="1:1" id="VN4-fs-DAb"/>
                             <constraint firstItem="C47-y9-vqw" firstAttribute="centerY" secondItem="tvo-9w-jgy" secondAttribute="centerY" id="VR9-E8-F73"/>
@@ -293,6 +301,7 @@
                         <outlet property="guiCancelButton" destination="sw7-Cz-DZo" id="HgN-yv-apj"/>
                         <outlet property="guiContinueAnywayButton" destination="tvo-9w-jgy" id="9nm-PV-8S9"/>
                         <outlet property="guiHelpButton" destination="39F-Pi-Hza" id="y1j-4T-Ctm"/>
+                        <outlet property="guiLongRenderProgressView" destination="Fe7-6l-Juq" id="GH8-rk-lCL"/>
                         <outlet property="guiMessageBlurry" destination="Ik7-4U-ioy" id="1pR-m0-ZjK"/>
                         <outlet property="guiMessageContainer" destination="5IB-Fd-KYc" id="ZXT-2Y-Qp3"/>
                         <outlet property="guiMessageLabel" destination="ehK-5W-p95" id="z23-Np-aJH"/>

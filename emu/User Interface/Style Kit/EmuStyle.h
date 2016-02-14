@@ -8,6 +8,8 @@
 
 #import "EmuBaseStyle.h"
 
+@class YLProgressBar;
+
 @interface EmuStyle : EmuBaseStyle
 
 #pragma mark - Initialization
@@ -21,5 +23,8 @@
 #pragma mark - Colors
 +(UIImage *)imageWithColor:(UIColor *)color;
 -(UIColor *)styleColorNamed:(NSString *)colorName;
+
+#pragma mark - YL Progress bar
+-(void)styleYLProgressBar:(YLProgressBar *)pb;
 
 @end

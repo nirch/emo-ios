@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		9+XkXwpK2122Eg2yNnCV6/FvOdw=
-		</data>
 		<key>480x480_head_and_shoulders.ctr</key>
 		<data>
 		xMRX6dDh7xFfc5S5VEjETVDAscE=
@@ -54,7 +50,7 @@
 		</data>
 		<key>Headers/HCRender.h</key>
 		<data>
-		8VvEgZcqMligjH5vmuIrRxQo/yQ=
+		h5D+ZyyKdUsl5J5Ad/Aj2eCo7sM=
 		</data>
 		<key>Headers/HCRenderError.h</key>
 		<data>
@@ -78,7 +74,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		JVvbI2QZ74FQ95qq+BOKdQreTQ4=
+		TivD0Jn5j137+AeX/YqPq8xtJm8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -94,11 +90,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		dV/YOn8GG9bf92H90T+RFnR4aDc=
+		MACTTlf/KoalEBHb7w2GBKHxi4c=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		tMTawd3zPlBFOj7p9iknFmVNkMc=
+		eBn+luQFf/CB4gm2HArCBEKyWWI=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -149,7 +145,7 @@
 		</data>
 		<key>Headers/HCRender.h</key>
 		<data>
-		8VvEgZcqMligjH5vmuIrRxQo/yQ=
+		h5D+ZyyKdUsl5J5Ad/Aj2eCo7sM=
 		</data>
 		<key>Headers/HCRenderError.h</key>
 		<data>
@@ -185,11 +181,11 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		dV/YOn8GG9bf92H90T+RFnR4aDc=
+		MACTTlf/KoalEBHb7w2GBKHxi4c=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
-		tMTawd3zPlBFOj7p9iknFmVNkMc=
+		eBn+luQFf/CB4gm2HArCBEKyWWI=
 		</data>
 	</dict>
 	<key>rules</key>

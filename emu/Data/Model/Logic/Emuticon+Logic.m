@@ -459,7 +459,7 @@
 {
     if (self.isJointEmu) {
         NSMutableArray *footages = [NSMutableArray new];
-        for (NSInteger slotIndex=1;slotIndex<=self.jointEmuSlots.count;slotIndex++) {
+        for (NSInteger slotIndex=1;slotIndex<=self.emuDef.jointEmuDefSlotsCount;slotIndex++) {
             NSObject<FootageProtocol> *footage = [self jointEmuFootageAtSlot:slotIndex];
             [footages addObject:footage];
         }

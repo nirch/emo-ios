@@ -22,6 +22,7 @@
 #import "EMLabel.h"
 #import "EMTickingProgressView.h"
 #import "EMEmuCell.h"
+#import "YLProgressBar.h"
 
 // Notifications
 #import "HMNotificationCenter.h"

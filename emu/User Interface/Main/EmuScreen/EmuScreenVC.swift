@@ -11,6 +11,7 @@ import UIKit
 protocol EmuSelectionProtocol: class {
     func emuSelected(emu: Emuticon?)
     func emuPressed(emu: Emuticon?)
+    func emuSelectionScrolled()
 }
 
 class EmuScreenVC: UIViewController,
@@ -55,6 +56,20 @@ class EmuScreenVC: UIViewController,
     @IBOutlet weak var slotsContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var indicatorsContainerHeight: NSLayoutConstraint!
     
+    // Long videos renders
+    @IBOutlet weak var guiLongVideoIndicator: UIView!
+    @IBOutlet weak var guiRenderPreviewButton: UIButton!
+    @IBOutlet weak var guiLongRenderProgress: YLProgressBar!
+    @IBOutlet weak var guiLongRenderLabel: EMLabel!
+
+    //
+    // Properties
+    //
+
+    // Long videos renders
+    var renderPreviewIndicatorTimer: NSTimer?
+    var renderer: HCRender?
+
     // Alerts
     var alertView: SIAlertView?
     
@@ -127,6 +142,13 @@ class EmuScreenVC: UIViewController,
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        if self.renderPreviewIndicatorTimer != nil {
+            self.renderPreviewIndicatorTimer?.invalidate()
+        }
+        if let renderer = self.renderer {
+            renderer.cancel()
+            self.renderer = nil
+        }
         self.removeObservers()
     }
     
@@ -148,6 +170,62 @@ class EmuScreenVC: UIViewController,
         self.guiActionButton.positive = true
         self.guiPositiveButton.positive = true
         self.guiNegativeButton.positive = false
+        
+        // Long render indicator
+        EmuStyle.sh().styleYLProgressBar(self.guiLongRenderProgress)
+        self.updateLongRenderIndicator()
+    }
+    
+    func updateLongRenderIndicator() {
+        // By default, hide it all.
+        self.guiLongVideoIndicator.hidden = true
+        self.guiLongRenderProgress.hidden = true
+        self.guiRenderPreviewButton.hidden = true
+
+        // Interesting only if this is a new style long render emu.
+        guard let emuDef = self.emuDef where emuDef.isNewStyleLongRender() else {return}
+        
+        // Not interesting if no emu in focus
+        guard self.currentEmu() != nil else {return}
+        
+        // A long render.
+        // If already rendering something, show the progress bar but hide the render button.
+        if self.renderer != nil {
+            self.guiLongVideoIndicator.hidden = false
+            self.guiLongRenderProgress.hidden = false
+            self.guiRenderPreviewButton.hidden = true
+            if self.renderPreviewIndicatorTimer != nil {
+                self.renderPreviewIndicatorTimer?.invalidate()
+                self.renderPreviewIndicatorTimer = nil
+            }
+            return
+        }
+        
+        if self.guiLongVideoIndicator.alpha != 1 {
+            UIView.animateWithDuration(0.2, animations: {
+                self.guiLongVideoIndicator.alpha = 1
+            })
+        }
+        
+        // Not rendering yet. Allow the user to start rendering and show the length of the new style long video.
+        var buttonTitle = ""
+        if self.guiLongVideoIndicator.tag == 0 {
+            self.guiLongVideoIndicator.tag = 1
+            buttonTitle = emuDef.newStyleRenderDurationTitle()
+        } else {
+            self.guiLongVideoIndicator.tag = 0
+            buttonTitle = "Tap to render a preview"
+        }
+        self.guiRenderPreviewButton.setTitle(buttonTitle, forState: .Normal)
+        self.guiRenderPreviewButton.alpha = 1
+        self.guiLongVideoIndicator.hidden = false
+        self.guiRenderPreviewButton.hidden = false
+        self.guiLongRenderLabel.hidden = true
+        
+        // Update once in a while
+        if self.renderPreviewIndicatorTimer == nil {
+            self.renderPreviewIndicatorTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: "updateLongRenderIndicator", userInfo: nil, repeats: true)
+        }
     }
     
     //
@@ -190,6 +268,18 @@ class EmuScreenVC: UIViewController,
             selector: "onDownloadFinished:",
             name: hmkDownloadResourceFinished,
             object: nil)
+        
+        nc.addUniqueObserver(
+            self,
+            selector: "onLongRenderProgress:",
+            name: hcrNotificationRenderProgress,
+            object: nil)
+
+        nc.addUniqueObserver(
+            self,
+            selector: "onLongRenderFinished:",
+            name: hcrNotificationRenderFinished,
+            object: nil)
     }
     
     func removeObservers() {
@@ -200,6 +290,8 @@ class EmuScreenVC: UIViewController,
         nc.removeObserver(emkJointEmuCreateInvite)
         nc.removeObserver(hmkRenderingFinished)
         nc.removeObserver(hmkDownloadResourceFinished)
+        nc.removeObserver(hcrNotificationRenderProgress)
+        nc.removeObserver(hcrNotificationRenderFinished)
     }
     
     // MARK: - Observers handlers
@@ -246,6 +338,41 @@ class EmuScreenVC: UIViewController,
         self.refreshCurrentEmu()
     }
     
+    func onLongRenderProgress(notification: NSNotification) {
+        NSLog("..... >>>> \(notification.userInfo)")
+
+        // Guard that notification is related to current long render.
+        guard let renderer = self.renderer else {return}
+        guard let info = notification.userInfo else {return}
+        guard let userInfo = info["userInfo"] else {return}
+        guard let uuid = userInfo["uuid"] as? String where renderer.uuid == uuid else {return}
+
+        // Update the long render progress bar
+        guard let progress = info[hcrProgress] as? CGFloat else {return}
+        self.guiLongRenderProgress.setProgress(progress, animated: true)
+        let percentage = Int(progress*100.0)
+        self.guiLongRenderLabel.text = "Rendering preview \(percentage)%"
+    }
+    
+    func onLongRenderFinished(notification: NSNotification) {
+        // Guard that notification is related to current long render.
+        guard let renderer = self.renderer else {return}
+        guard let info = notification.userInfo else {return}
+        guard let uuid = info[hcrUUID] as? String where renderer.uuid == uuid else {return}
+
+        // Update the long render progress bar
+        self.guiLongRenderProgress.setProgress(1, animated: true)
+        self.guiLongRenderLabel.text = ""
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.guiLongRenderProgress.alpha = 0
+        }) {finished in
+            self.guiLongRenderProgress.hidden = true
+            self.guiLongRenderProgress.alpha = 1
+            self.updateLongRenderIndicator()
+        }
+        self.renderer = nil
+    }
+    
     //
     // MARK: - Theme
     //
@@ -282,22 +409,26 @@ class EmuScreenVC: UIViewController,
     //
     
     func refreshCurrentEmu() {
-        if let emu = self.currentEmu() {
-            if emu.isJointEmu() == true && emu.jointEmuOID() != nil {
-                // Refresh joint emu (but not more than once a minute)
-                let lastTime = self.timeRefetchedFromServer[emu.jointEmuOID()]
-                let now = NSDate()
-                if lastTime == nil || now.timeIntervalSinceDate(lastTime!) > 60 {
-                    self.showActivity(EML.s("JOINT_EMU"), messageText: EML.s("JOINT_EMU_LOADING"))
-                    EMBackend.sh().server.jointEmuRefetch(emu.jointEmuOID(), emuOID: emu.oid)
-                    self.timeRefetchedFromServer[emu.jointEmuOID()] = now
-                } else {
-                    self.updateEmuUIStateForEmu()
-                }
+        guard let emu = self.currentEmu() else {
+            // No emu instance? update UI to indicate that no emu is in focus.
+            self.updateEmuUIStateForEmu()
+            return
+        }
+        
+        if emu.isJointEmu() == true && emu.jointEmuOID() != nil {
+            // Refresh joint emu (but not more than once a minute)
+            let lastTime = self.timeRefetchedFromServer[emu.jointEmuOID()]
+            let now = NSDate()
+            if lastTime == nil || now.timeIntervalSinceDate(lastTime!) > 60 {
+                self.showActivity(EML.s("JOINT_EMU"), messageText: EML.s("JOINT_EMU_LOADING"))
+                EMBackend.sh().server.jointEmuRefetch(emu.jointEmuOID(), emuOID: emu.oid)
+                self.timeRefetchedFromServer[emu.jointEmuOID()] = now
             } else {
-                // Update regular emu
                 self.updateEmuUIStateForEmu()
             }
+        } else {
+            // Update regular emu
+            self.updateEmuUIStateForEmu()
         }
     }
     
@@ -305,23 +436,32 @@ class EmuScreenVC: UIViewController,
     // MARK: - UI States
     //
     func updateEmuUIStateForEmu() {
-        if let emuDef = self.emuDef {
-            if emuDef.isJointEmu() {
-                self.updateEmuUIStateForJointEmu()
-            } else {
-                
-            }
+        guard let emuDef = self.emuDef else {return}
+        
+        if emuDef.isJointEmu() {
+            self.updateEmuUIStateForJointEmu()
+        } else {
+            self.updateEmuUIStateForNormalEmu()
         }
     }
     
-    func updateEmuUIStateForJointEmu() {
-        let emu = self.currentEmu()
-        if emu != nil && emu?.isJointEmu() == false {return}
+    func updateEmuUIStateForNormalEmu() {
         
+    }
+    
+    func updateEmuUIStateForJointEmu() {
+        guard let emuDef = self.emuDef where emuDef.isJointEmu() else {return}
+
+        // Current joint emu instance may be nil, if no emu instance is currently in focus.
+        let emu = self.currentEmu()
+        
+        // Get the state
         self.jointEmuState = JointEmuFlow.stateForEmu(emu)
         self.guiSlotsContainer.hidden = emu == nil
         self.slotsVC?.emu = emu
+        self.updateLongRenderIndicator()
         
+        // Handle the state
         switch self.jointEmuState {
         case .NotCreatedYet:
             self.showActionButton(EML.s("CREATE_NEW"))
@@ -428,20 +568,24 @@ class EmuScreenVC: UIViewController,
         guard let emu = self.currentEmu() else {return}
         let slotIndex = emu.jointEmuLocalSlotIndex()
         guard slotIndex > 0 else {return}
-        let duration = emu.jointEmuCaptureDurationAtSlot(slotIndex)
-        let dedicatedFootage = emu.jointEmuRequiresDedicatedCaptureAtSlot(slotIndex)
+        let emuDef = emu.emuDef!
         
-        if emu.jointEmuRequiresDedicatedCaptureAtSlot(slotIndex) {
-            // Just open the recorder for new take.
-        } else {
-            // New take or replace take?
-            let alertView = SIAlertView(title: nil, andMessage: EML.s("CHANGE_FOOTAGE_FROM"))
-            alertView.buttonColor = EmuStyle.colorButtonBGPositive()
-            alertView.cancelButtonColor = EmuStyle.colorButtonBGNegative()
+        let duration = emuDef.jointEmuDefCaptureDurationAtSlot(slotIndex)
+        let dedicatedFootageRequired = emuDef.jointEmuDefRequiresDedicatedCaptureAtSlot(slotIndex)
+        
+        // New take or replace take?
+        var message = "dsfgsdfgdsfg"
+        if dedicatedFootageRequired {
+            message = "xxxxxxxxxxxxxx long"
+        }
+        
+        let alertView = SIAlertView(title: nil, andMessage: message)
+        alertView.buttonColor = EmuStyle.colorButtonBGPositive()
+        alertView.cancelButtonColor = EmuStyle.colorButtonBGNegative()
+        
+        if dedicatedFootageRequired == false {
+            // If no dedicate footage required, allow to choose footage from the footage screen.
             alertView.addButtonWithTitle(EML.s("CHOOSE_TAKE"), type: SIAlertViewButtonType.Default, handler: {alert in
-                //
-                // Choose another take from footages screen
-                //
                 let footageVC = EMFootagesVC(forFlow: .ChooseFootage)
                 footageVC.hdFootagesOnly = true
                 footageVC.videoFootagesOnly = true
@@ -449,31 +593,33 @@ class EmuScreenVC: UIViewController,
                 self.presentViewController(footageVC, animated: true, completion: nil)
                 
             })
-            alertView.addButtonWithTitle(EML.s("EMU_SCREEN_CHOICE_RETAKE_EMU"), type: SIAlertViewButtonType.Default, handler: {alert in
-                //
-                // New Take
-                // Open the recorder for a new take.
-                // Recorder should be opened for a retake.
-                //
-                let oids = [emu.oid as! AnyObject]
-                let requestInfo = [
-                    emkRetakeEmuticonsOID:oids,
-                    emkDuration:duration,
-                    emkDedicatedFootage:dedicatedFootage,
-                    emkJEmuSlot:slotIndex
-                ] as [NSObject:AnyObject]
-                
-                // Notify main navigation controller that the recorder should be opened.
-                let nc = NSNotificationCenter.defaultCenter()
-                nc.postNotificationName(emkUIUserRequestToOpenRecorder, object: self, userInfo: requestInfo)
-            })
-            alertView.addButtonWithTitle(EML.s("CANCEL"), type: SIAlertViewButtonType.Cancel, handler: {alert in
-                
-            })
-            alertView.show()
-            self.alertView = alertView
         }
         
+        // New take option.
+        alertView.addButtonWithTitle(EML.s("EMU_SCREEN_CHOICE_RETAKE_EMU"), type: SIAlertViewButtonType.Default, handler: {alert in
+            //
+            // Open the recorder for a new take.
+            // Recorder should be opened for a retake.
+            //
+            let oids = [emu.oid as! AnyObject]
+            let requestInfo = [
+                emkRetakeEmuticonsOID:oids,
+                emkDuration:duration,
+                emkDedicatedFootage:dedicatedFootageRequired,
+                emkJEmuSlot:slotIndex
+                ] as [NSObject:AnyObject]
+            
+            // Notify main navigation controller that the recorder should be opened.
+            let nc = NSNotificationCenter.defaultCenter()
+            nc.postNotificationName(emkUIUserRequestToOpenRecorder, object: self, userInfo: requestInfo)
+        })
+        
+        // Cancel option
+        alertView.addButtonWithTitle(EML.s("CANCEL"), type: SIAlertViewButtonType.Cancel, handler:nil)
+        
+        // Show the alert.
+        alertView.show()
+        self.alertView = alertView
     }
     
     //
@@ -485,11 +631,24 @@ class EmuScreenVC: UIViewController,
     
     func emuPressed(emu: Emuticon?) {
         self.refreshCurrentEmu()
-        
         if emu == nil {
             
         } else {
             self.askAboutFootageOptions()
+        }
+    }
+    
+    func emuSelectionScrolled() {
+        // Cancel any long processes
+        if let renderer = self.renderer {
+            renderer.cancel()
+            self.renderer = nil
+        }
+        
+        if self.guiLongVideoIndicator.alpha != 0 {
+            UIView.animateWithDuration(0.2, animations: {
+                self.guiLongVideoIndicator.alpha = 0
+            })
         }
     }
     
@@ -702,6 +861,30 @@ class EmuScreenVC: UIViewController,
         }
     }
     
+    func previewFullRenderForCurrentEmu() {
+        guard let emuDef = self.emuDef where emuDef.isNewStyleLongRender() else {return}
+        guard let emu = self.currentEmu() else {return}
+        
+        // Show progress
+        self.guiLongRenderProgress.hidden = false
+        self.guiLongRenderProgress.setProgress(0, animated: false)
+        self.guiLongRenderProgress.alpha = 1
+        self.guiLongRenderLabel.hidden = false
+        self.guiLongRenderLabel.text = "Rendering preview"
+        
+        // Cancel preview long renders
+        if self.renderer != nil {
+            self.renderer?.cancel()
+        }
+        
+        // Render a preview
+        let rm = EMRenderManager3.sh()
+        self.renderer = rm.renderPreviewForEmuDefOID(
+            emuDef.oid!,
+            footagesForPreview: emu.relatedFootages() as! [FootageProtocol]
+        )
+    }
+    
     // MARK: - IB Actions
     // ===========
     // IB Actions.
@@ -782,5 +965,12 @@ class EmuScreenVC: UIViewController,
 //            footage.cleanDownloadedRemoteFiles()
         }
     }
+    
+    @IBAction func onPressedLongPreviewRenderButton(sender: AnyObject)
+    {
+        // Full long render preview
+        self.previewFullRenderForCurrentEmu()
+    }
+    
     
 }

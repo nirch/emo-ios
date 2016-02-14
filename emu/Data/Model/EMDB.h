@@ -16,6 +16,7 @@
 
 #import "EmuticonDef.h"
 #import "EmuticonDef+Logic.h"
+#import "EmuticonDef+JointEmuLogic.h"
 
 #import "UserFootage.h"
 #import "UserTempFootage.h"

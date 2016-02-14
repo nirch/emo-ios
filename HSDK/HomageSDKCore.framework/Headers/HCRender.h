@@ -58,6 +58,12 @@
  */
 -(id)initWithConfigurationInfo:(NSDictionary *)configInfo userInfo:(NSDictionary *)userInfo;
 
+/**
+ *  A UUID to identify this uuid.
+ *  By default, a UUID is generated on instanciation, but it is possible to set any string on this property at any time.
+ */
+@property (nonatomic) NSString *uuid;
+
 /** 
  *  Reads the passed configuration info and sets up the renderer for rendering.
  *  If a problem is encountered during setup, the setup will stop and an error object
@@ -309,6 +315,11 @@ extern NSString* const hcrOutputsPath;
  *  Progress of long processes (0.0 - 1.0 value)
  */
 extern NSString* const hcrProgress;
+
+/**
+ *  UUID string.
+ */
+extern NSString* const hcrUUID;
 
 #pragma mark - Resources and files info
 /**

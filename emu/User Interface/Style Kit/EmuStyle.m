@@ -7,6 +7,7 @@
 //
 
 #import "EmuStyle.h"
+#import "YLProgressBar.h"
 
 @interface EmuStyle()
 
@@ -97,6 +98,15 @@
     
     return image;
 }
+
+-(void)styleYLProgressBar:(YLProgressBar *)pb
+{
+    pb.progressTintColor = [EmuStyle colorButtonBGPositive];
+    pb.stripesColor = [[EmuStyle colorButtonBGPositive] colorWithAlphaComponent:0.6];
+    pb.trackTintColor = [EmuStyle colorButtonBGNegative];
+    pb.stripesAnimated = YES;
+}
+
 
 
 @end

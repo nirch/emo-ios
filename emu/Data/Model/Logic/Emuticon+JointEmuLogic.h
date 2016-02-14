@@ -50,8 +50,6 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 -(BOOL)isJointEmuInitiatorAtSlot:(NSInteger)slotIndex;
 -(EMSlotState)jointEmuStateOfSlot:(NSInteger)slotIndex;
 -(NSDictionary *)jointEmuRemoteFilesAtSlot:(NSInteger)slotIndex;
--(NSTimeInterval)jointEmuCaptureDurationAtSlot:(NSInteger)slotIndex;
--(BOOL)jointEmuRequiresDedicatedCaptureAtSlot:(NSInteger)slotIndex;
 
 #pragma mark - Footages
 -(UserFootage *)jointEmuFootageAtSlot:(NSInteger)slotIndex;

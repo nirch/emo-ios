@@ -1,4 +1,14 @@
 ---------------------
+HSDKCore Version 1.12
+---------------------
+New Features:
+- When render progress notifications are posted, extra user info is also included in the notifications user info.
+- A uuid can be set on each HCRender object (a uuid is generated automatically on instanciation by default but can be changed any time before setup() is called)
+
+Minor tweaks:
+- The userInfo sent on render progress notificiations are also sent on render finished notifications
+
+---------------------
 HSDKCore Version 1.11
 ---------------------
 - Bug fix: Background layers of size exactly as the frame size, sometimes (on specific sizes) had an alpha 1 pixel border

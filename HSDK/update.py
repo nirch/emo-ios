@@ -14,9 +14,9 @@ if __name__ == '__main__':
 		pass
 
 	# DEBUG
-	# shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Debug-iphoneos/HomageSDKCore.framework", "HomageSDKCore.framework")
-	# shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Debug-iphoneos/HomageSDKFlow.framework", "HomageSDKFlow.framework")
+	shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Debug-iphoneos/HomageSDKCore.framework", "HomageSDKCore.framework")
+	shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Debug-iphoneos/HomageSDKFlow.framework", "HomageSDKFlow.framework")
 
 	# RELEASE
-	shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Release-iphoneos/HomageSDKCore.framework", "HomageSDKCore.framework")
-	shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Release-iphoneos/HomageSDKFlow.framework", "HomageSDKFlow.framework")
+	# shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Release-iphoneos/HomageSDKCore.framework", "HomageSDKCore.framework")
+	# shutil.copytree("/Users/aviv/Library/Developer/Xcode/DerivedData/HomageSDK-frvsrndvdzevnofmbzqzgumyngkl/Build/Products/Release-iphoneos/HomageSDKFlow.framework", "HomageSDKFlow.framework")
