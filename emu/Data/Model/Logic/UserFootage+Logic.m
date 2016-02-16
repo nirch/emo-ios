@@ -10,6 +10,7 @@
 #import "EMDB.h"
 #import "EMDB+Files.h"
 #import <AVFoundation/AVFoundation.h>
+#import <HomageSDKCore/HomageSDKCore.h>
 
 @implementation UserFootage (Logic)
 

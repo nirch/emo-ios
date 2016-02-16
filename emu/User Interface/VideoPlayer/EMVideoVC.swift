@@ -1,5 +1,5 @@
 //
-//  EMRecordingPreviewVC.swift
+//  EMVideoVC.swift
 //  emu
 //
 //  Created by Aviv Wolf on 11/01/2016.
@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 
-class EMRecordingPreviewVC: AVPlayerViewController {
+class EMVideoVC: AVPlayerViewController {
     var renderer: HCRender? = nil
     var info: [NSObject:AnyObject]? = nil
     

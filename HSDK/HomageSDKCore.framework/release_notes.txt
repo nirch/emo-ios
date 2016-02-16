@@ -7,6 +7,10 @@ New Features:
 
 Minor tweaks:
 - The userInfo sent on render progress notificiations are also sent on render finished notifications
+- Added hcrPlaceHolderIndex key. Used to mark a layer as something that should be replaced with dynamic content in applications before rendering.
+
+Bug fixes:
+- Better thread safety in movie writers.
 
 ---------------------
 HSDKCore Version 1.11

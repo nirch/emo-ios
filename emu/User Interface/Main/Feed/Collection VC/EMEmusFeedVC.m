@@ -51,7 +51,8 @@
     UICollectionViewDelegateFlowLayout,
     EMNavBarDelegate,
     UIGestureRecognizerDelegate,
-    EMInterfaceDelegate
+    EMInterfaceDelegate,
+    EMRecorderDelegate
 >
 
 // The emus feed collection view.
@@ -805,6 +806,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
         // Sheet happens!
         EMMajorRetakeOptionsSheet *sheet = [[EMMajorRetakeOptionsSheet alloc] initWithPackOID:pack.oid packLabel:pack.label packName:pack.name];
+        sheet.interfaceDelegate = self;
         [sheet showModalOnTopAnimated:YES];
         
     } else if ([actionName isEqualToString:EMK_NAV_ACTION_CANCEL_SELECTION]) {
@@ -1041,7 +1043,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // New footage applied to a list of selected emus.
         //
         [self dismissViewControllerAnimated:YES completion:nil];
+        
     } else if ([actionName isEqualToString:emkUIPurchaseHDContent]) {
+        
         NSString *packageOID = info[emkPackageOID];
         
         // User pressed the purchase button
@@ -1050,8 +1054,42 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         if (packageOID) {
             [self purchaseHDContentForPackageOID:packageOID withInfo:info];
         }
+
+    } else if ([actionName isEqualToString:EMK_NAV_ACTION_NEW_TAKE]) {
+        [self openRecorderForNewTake];
+    } else if ([actionName isEqualToString:EMK_NAV_ACTION_MY_TAKES]) {
+        [self openFootagesScreen];
+    } else if ([actionName isEqualToString:emkUIFootagesManageDone]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 
+}
+
+#pragma mark - New and existing takes
+-(void)openFootagesScreen
+{
+    // Present the footages screen
+    EMFootagesVC *footagesVC = [EMFootagesVC footagesVCForFlow:EMFootagesFlowTypeMangementScreen];
+    footagesVC.delegate = self;
+    footagesVC.themeColor = self.navBarVC.themeColor;
+    self.footagesVC = footagesVC;
+    [self presentViewController:footagesVC animated:YES completion:nil];
+}
+
+-(void)openRecorderForNewTake
+{
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
+    EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
+
+    NSDictionary *configInfo =@{
+                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+                                emkEmuticonDefName:emuticonDefForOnboarding.name
+                                };
+
+    EMRecorderVC2 *recorderVC = [EMRecorderVC2 recorderVCWithConfigInfo:configInfo];
+    recorderVC.delegate = self;
+    [self presentViewController:recorderVC animated:YES completion:nil];
 }
 
 #pragma mark - Handle change to package
@@ -1144,6 +1182,17 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     if (package == nil || package.hdAvailable == nil || !package.hdAvailable.boolValue) return;
     if (package.hdProductID == nil) return;
     [EMBackend.sh buyProductWithIdentifier:package.hdProductID];
+}
+
+#pragma mark - EMRecorderDelegate
+-(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)recorderCanceledByTheUserInFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - IB Actions

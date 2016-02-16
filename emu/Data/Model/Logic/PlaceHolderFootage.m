@@ -52,4 +52,11 @@
     return YES;
 }
 
+#pragma mark - HCRender
+-(NSDictionary *)updateSourceLayerInfo:(NSDictionary *)layer
+{
+    // Just return static content as is.
+    return layer;
+}
+
 @end

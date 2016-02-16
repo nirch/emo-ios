@@ -474,7 +474,7 @@
         <!--AV Player View Controller-->
         <scene sceneID="6z9-5f-Ilo">
             <objects>
-                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="ryQ-zx-K3W" customClass="EMRecordingPreviewVC" customModule="emu" customModuleProvider="target" sceneMemberID="viewController"/>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="ryQ-zx-K3W" customClass="EMVideoVC" customModule="emu" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KMf-Y1-5nh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1037" y="514"/>

@@ -110,12 +110,21 @@ class EMRenderManager3 : NSObject
             fps: fps
         )
         
-        let outputInfo = [
+        // Video output
+        var videoOutputInfo = [
             hcrOutputType:hcrVideo,
             hcrRelativePath:"tmp_preview_\(uuid).mov"
             ] as [NSObject:AnyObject]
         
-        cfg[hcrOutputsInfo] = [outputInfo]
+        // Stitch audio to the output if required
+        if let fullRenderCFG = emuDef.fullRenderCFG as? [NSObject:AnyObject] {
+            if let stitchAudioNamed = fullRenderCFG["stitch_audio_named"] as? String {
+                videoOutputInfo[hcrAudioNamed] = stitchAudioNamed
+            }
+        }
+        
+        // Set the output
+        cfg[hcrOutputsInfo] = [videoOutputInfo]
         
         // Render creation
         var previewInfo = [emkUUID:uuid, emkEmuticonDefOID:emuDefOID] as [NSObject:AnyObject]
@@ -153,14 +162,16 @@ class EMRenderManager3 : NSObject
     func footagesForPreviewWithTempUserFootage(tempUserFootage: UserTempFootage, emuDef: EmuticonDef, slotIndex: Int = 0) -> [FootageProtocol] {
         var footages = [FootageProtocol]()
         if slotIndex > 0 && emuDef.isJointEmu() {
+
             for i in 1...emuDef.jointEmuDefSlotsCount() {
                 if i == slotIndex {
-                    // Show the temp footage in this slot indec
+                    // Show the temp footage in this slot index
                     footages.append(tempUserFootage)
                 } else {
                     footages.append(PlaceHolderFootage())
                 }
             }
+            
         } else {
             footages = [tempUserFootage]
         }
@@ -335,7 +346,6 @@ class EMRenderManager3 : NSObject
                 //
                 // Rendering
                 //
-                AppManagement.sh().debugDict(renderInfo)
                 let renderer = HCRender(configurationInfo: renderInfo, userInfo: userInfo)
                 renderer.setup()
                 if renderer.error != nil {

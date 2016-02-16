@@ -26,6 +26,14 @@
     return 0;
 }
 
+-(NSInteger)jointEmuDefInitiatorSlotIndex
+{
+    NSDictionary *jointEmuDef = self.jointEmu;
+    NSNumber *initiatorSlot = jointEmuDef[@"initiator_slot"];
+    if (initiatorSlot) return [initiatorSlot integerValue];
+    return 0;
+}
+
 -(void)latestEmuGainFocus
 {
     NSArray *sortBy = @[[NSSortDescriptor sortDescriptorWithKey:@"timeCreated" ascending:YES]];

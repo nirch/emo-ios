@@ -175,9 +175,23 @@
     // Full render video CFG
     NSMutableDictionary *cfg = [NSMutableDictionary dictionaryWithDictionary:self.fullRenderCFG];
     
-    // If footages provided, will replace some marked layers with footages taken.
-    // TODO: replace footages here.
-    
+    // Replace placeholder footages with available footages.
+    NSMutableArray *sourceLayers = [NSMutableArray new];
+    for (NSDictionary *layer in cfg[hcrSourceLayersInfo]) {
+        NSDictionary *updatedLayer = layer;
+        if (layer[hcrPlaceHolderIndex] != nil && [layer[hcrPlaceHolderIndex] isKindOfClass:[NSNumber class]]) {
+            // Get the place holder index and make sure user footage is available for that layer.
+            NSInteger index = [layer[hcrPlaceHolderIndex] integerValue] - 1;
+            if (index>=0 && index<footages.count) {
+                id<FootageProtocol> footage = footages[index];
+
+                // Make the changes required on this layer.
+                updatedLayer = [footage updateSourceLayerInfo:layer];
+            }
+        }
+        [sourceLayers addObject:updatedLayer];
+    }
+    cfg[hcrSourceLayersInfo] = sourceLayers;
     return cfg;
 }
 
@@ -479,7 +493,9 @@
 {
     NSString *title = LS(@"X_SECONDS_VIDEO");
     NSString *durationString = self.captureDuration.stringValue;
-    title = [title stringByReplacingOccurrencesOfString:@"#" withString:durationString];
+    if ([durationString isKindOfClass:[NSString class]]) {
+        title = [title stringByReplacingOccurrencesOfString:@"#" withString:durationString];
+    }
     return title;
 }
 

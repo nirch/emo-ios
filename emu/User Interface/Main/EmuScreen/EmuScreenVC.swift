@@ -18,7 +18,8 @@ class EmuScreenVC: UIViewController,
     EmuSelectionProtocol,
     EMShareDelegate,
     SlotsSelectionDelegate,
-    EMInterfaceDelegate {
+    EMInterfaceDelegate,
+    EMPreviewDelegate {
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -57,6 +58,7 @@ class EmuScreenVC: UIViewController,
     @IBOutlet weak var indicatorsContainerHeight: NSLayoutConstraint!
     
     // Long videos renders
+    @IBOutlet weak var guiVideoPlayerContainer: UIView!
     @IBOutlet weak var guiLongVideoIndicator: UIView!
     @IBOutlet weak var guiRenderPreviewButton: UIButton!
     @IBOutlet weak var guiLongRenderProgress: YLProgressBar!
@@ -76,6 +78,7 @@ class EmuScreenVC: UIViewController,
     // Child VCs
     var emusVC: EmusVC?
     var slotsVC: SlotsVC?
+    var videoVC: EMVideoVC?
     
     //
     var timeRefetchedFromServer: [String: NSDate] = [String: NSDate]()
@@ -170,6 +173,9 @@ class EmuScreenVC: UIViewController,
         self.guiActionButton.positive = true
         self.guiPositiveButton.positive = true
         self.guiNegativeButton.positive = false
+        
+        // Video output
+        self.guiVideoPlayerContainer.hidden = true
         
         // Long render indicator
         EmuStyle.sh().styleYLProgressBar(self.guiLongRenderProgress)
@@ -370,6 +376,13 @@ class EmuScreenVC: UIViewController,
             self.guiLongRenderProgress.alpha = 1
             self.updateLongRenderIndicator()
         }
+        
+        // Show the result of the render.
+        if let url = self.renderer?.outputURL() {
+            self.showVideoAtURL(url)
+        }
+        
+        // Clear up
         self.renderer = nil
     }
     
@@ -392,6 +405,9 @@ class EmuScreenVC: UIViewController,
             case "joint emu slots segue":
                 self.slotsVC = segue.destinationViewController as? SlotsVC
                 self.slotsVC?.delegate = self
+            case "emu screen video preview segue":
+                self.videoVC = segue.destinationViewController as? EMVideoVC
+                self.videoVC?.previewDelegate = self
             default:
                 break
         }
@@ -632,7 +648,7 @@ class EmuScreenVC: UIViewController,
     func emuPressed(emu: Emuticon?) {
         self.refreshCurrentEmu()
         if emu == nil {
-            
+            self.createJointEmuInstance()
         } else {
             self.askAboutFootageOptions()
         }
@@ -649,6 +665,10 @@ class EmuScreenVC: UIViewController,
             UIView.animateWithDuration(0.2, animations: {
                 self.guiLongVideoIndicator.alpha = 0
             })
+        }
+        
+        if self.isVideoShown() {
+            self.hideVideo(animated: false)
         }
     }
     
@@ -789,6 +809,53 @@ class EmuScreenVC: UIViewController,
             self.updateEmuUIStateForEmu()
         }
     }
+    
+    //
+    // MARK: - Video player
+    //
+    func showVideoAtURL(url: NSURL, animated: Bool = false) {
+        // Show the video
+        self.videoVC?.setVideoURL(url)
+        self.guiVideoPlayerContainer.hidden = false
+    
+        // Reveal
+        if animated {
+            UIView.animateWithDuration(0.2) {
+                self.guiVideoPlayerContainer.alpha = 1
+            }
+        } else {
+            self.guiVideoPlayerContainer.alpha = 1
+        }
+
+        self.emusVC?.seeThroughAnimated(animated: true)
+    }
+    
+    func hideVideo(animated animated: Bool = false) {
+        // Hide
+        if animated {
+            UIView.animateWithDuration(0.3) {
+                self.guiVideoPlayerContainer.alpha = 0
+            }
+        } else {
+            self.guiVideoPlayerContainer.alpha = 0
+        }
+        
+        self.emusVC?.opaqueAnimated(animated: true)
+    }
+    
+    func isVideoShown() -> Bool {
+        return self.guiVideoPlayerContainer.alpha > 0
+    }
+    
+    //
+    // MARK: - EMPreviewDelegate
+    //
+    func previewIsShownWithInfo(info: [NSObject : AnyObject]!) {
+    }
+    
+    func previewDidFailWithInfo(info: [NSObject : AnyObject]!) {
+    }
+    
     
     //
     // MARK: - Going back

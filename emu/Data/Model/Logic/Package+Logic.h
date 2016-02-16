@@ -173,6 +173,9 @@
 -(BOOL)hasEmusWithSpecificTakes;
 -(NSString *)localizedLabel;
 
+-(BOOL)anyEmuRequiresDedicatedCapture;
+-(BOOL)anyIsJointEmu;
+
 /**
  *  Always update the priority field using this method.
  *  it takes care of also 

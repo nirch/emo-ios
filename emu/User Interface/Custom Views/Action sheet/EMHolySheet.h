@@ -9,12 +9,14 @@
 #import "JGActionSheet.h"
 #import "EMHolySheetSection.h"
 #import "EMActionsArray.h"
+#import "EMInterfaceDelegate.h"
 
 @interface EMHolySheet : JGActionSheet
 
 @property (nonatomic) CGFloat targetAlpha;
 @property (nonatomic) EMActionsArray *actionsMapping;
 @property (nonatomic, readonly) BOOL alreadyConfiguredActions;
+@property (nonatomic, weak) id<EMInterfaceDelegate> interfaceDelegate;
 
 -(void)showModalOnTopAnimated:(BOOL)animated;
 -(void)configureActions;

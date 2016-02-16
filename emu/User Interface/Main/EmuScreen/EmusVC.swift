@@ -232,6 +232,31 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     //
+    // MARK: - Show/Hide content
+    //
+    func seeThroughAnimated(animated animated: Bool = false) {
+        guard let cell = self.guiEmusCollection.visibleCells().first else {return}
+        if (animated) {
+            UIView.animateWithDuration(0.3, animations: {
+                cell.alpha = 0
+            })
+        } else {
+            cell.alpha = 0
+        }
+    }
+    
+    func opaqueAnimated(animated animated: Bool = false) {
+        guard let cell = self.guiEmusCollection.visibleCells().first else {return}
+        if (animated) {
+            UIView.animateWithDuration(0.3, animations: {
+                cell.alpha = 1
+            })
+        } else {
+            cell.alpha = 1
+        }
+    }
+    
+    //
     // MARK: - Downloads
     //
     func handleVisibleEmu(emu: Emuticon) {

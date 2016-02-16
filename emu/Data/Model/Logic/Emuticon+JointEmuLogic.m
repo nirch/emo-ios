@@ -194,7 +194,11 @@
 -(BOOL)isJointEmuCurrentReceiverAtSlot:(NSInteger)slotIndex
 {
     NSAssert(self.isJointEmuInitiatedByThisUser == NO, @"Call this method only for receiver");
-    if (self.isJointEmuInitiatedByThisUser == NO) return NO;
+    
+    // If user is the initiator, the answer is no.
+    if (self.isJointEmuInitiatedByThisUser == YES) return NO;
+
+    // Return YES if emu created locally using an invitation code in slotIndex.
     NSString *invitationCode = self.createdWithInvitationCode;
     if (invitationCode == nil) return NO;
     return [invitationCode isEqualToString:[self jointEmuInviteCodeAtSlot:slotIndex]];
@@ -210,6 +214,15 @@
 #pragma mark - Footages
 -(id<FootageProtocol>)jointEmuFootageAtSlot:(NSInteger)slotIndex
 {
+    // If created locally and no joint emu instance info yet, just use the most
+    // preffered footage for the initiator slot and place holders for the rest.
+    if (self.jointEmuInstance == nil) {
+        NSInteger initiatorSlotIndex = self.emuDef.jointEmuDefInitiatorSlotIndex;
+        return slotIndex==initiatorSlotIndex?[self mostPrefferedUserFootage]:[PlaceHolderFootage new];
+    }
+    
+    // If we have more info from the server about the emu instance, use that info
+    // to return the required footage for this slot.
     if (self.isJointEmuInitiatedByThisUser) {
         if ([self isJointEmuInitiatorAtSlot:slotIndex]) {
             

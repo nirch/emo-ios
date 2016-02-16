@@ -100,14 +100,14 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="L2H-o7-LkD"/>
-                                                <exclude reference="Mas-kh-2JX"/>
-                                                <exclude reference="g3s-3L-AP1"/>
-                                                <exclude reference="h8K-yu-R3B"/>
                                                 <exclude reference="O3S-QP-gGK"/>
                                                 <exclude reference="ZEw-t6-Fqd"/>
                                                 <exclude reference="cpu-iF-FB0"/>
                                                 <exclude reference="tB3-jo-0FX"/>
+                                                <exclude reference="L2H-o7-LkD"/>
+                                                <exclude reference="Mas-kh-2JX"/>
+                                                <exclude reference="g3s-3L-AP1"/>
+                                                <exclude reference="h8K-yu-R3B"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -126,6 +126,12 @@
                                     <constraint firstItem="7VF-ve-PIB" firstAttribute="centerY" secondItem="dvt-o2-7sZ" secondAttribute="centerY" id="r2h-NI-7hM"/>
                                 </constraints>
                             </view>
+                            <containerView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tO9-WG-SCA" userLabel="Video player container">
+                                <rect key="frame" x="0.0" y="64" width="375" height="211"/>
+                                <connections>
+                                    <segue destination="Tlh-1l-eaQ" kind="embed" identifier="emu screen video preview segue" id="1Qn-pi-lq0"/>
+                                </connections>
+                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7F-DQ-Ndw" userLabel="Emus container view">
                                 <rect key="frame" x="0.0" y="64" width="375" height="211"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -356,7 +362,9 @@
                             <constraint firstItem="udE-fu-cM8" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="KOI-Iq-VAH"/>
                             <constraint firstItem="dvt-o2-7sZ" firstAttribute="top" secondItem="uVZ-4F-b90" secondAttribute="bottom" id="MGH-kr-iBe"/>
                             <constraint firstItem="pqD-K3-eJ1" firstAttribute="top" secondItem="w7F-DQ-Ndw" secondAttribute="bottom" constant="5" id="ONk-eq-rbe"/>
+                            <constraint firstItem="tO9-WG-SCA" firstAttribute="centerY" secondItem="w7F-DQ-Ndw" secondAttribute="centerY" id="OQ6-pp-LoS"/>
                             <constraint firstItem="w7F-DQ-Ndw" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="PYH-fo-JpZ"/>
+                            <constraint firstItem="tO9-WG-SCA" firstAttribute="height" secondItem="w7F-DQ-Ndw" secondAttribute="height" id="R4l-OV-pXM"/>
                             <constraint firstItem="w7F-DQ-Ndw" firstAttribute="top" secondItem="dvt-o2-7sZ" secondAttribute="bottom" id="SE5-1k-vfS"/>
                             <constraint firstItem="oYs-FP-hCh" firstAttribute="centerX" secondItem="grK-vz-yTP" secondAttribute="centerX" id="UCb-zm-F4a"/>
                             <constraint firstAttribute="trailing" secondItem="grK-vz-yTP" secondAttribute="trailing" id="YTH-ZB-LmF"/>
@@ -365,7 +373,9 @@
                             <constraint firstAttribute="trailing" secondItem="dvt-o2-7sZ" secondAttribute="trailing" id="cNc-dB-egy"/>
                             <constraint firstItem="oYs-FP-hCh" firstAttribute="width" secondItem="grK-vz-yTP" secondAttribute="width" id="d17-2D-p49"/>
                             <constraint firstItem="pqD-K3-eJ1" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="h6B-WD-Fra"/>
+                            <constraint firstItem="tO9-WG-SCA" firstAttribute="centerX" secondItem="w7F-DQ-Ndw" secondAttribute="centerX" id="jz4-J2-g5d"/>
                             <constraint firstItem="grK-vz-yTP" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="osI-Oq-KUi"/>
+                            <constraint firstItem="tO9-WG-SCA" firstAttribute="width" secondItem="w7F-DQ-Ndw" secondAttribute="width" id="p6o-4U-SB7"/>
                             <constraint firstItem="iBp-Fq-nBI" firstAttribute="centerX" secondItem="w7F-DQ-Ndw" secondAttribute="centerX" id="rQZ-Ev-mxL"/>
                             <constraint firstItem="udE-fu-cM8" firstAttribute="top" secondItem="pqD-K3-eJ1" secondAttribute="bottom" constant="5" id="slv-aM-Kp1"/>
                             <constraint firstAttribute="trailing" secondItem="udE-fu-cM8" secondAttribute="trailing" id="w8m-tW-XpP"/>
@@ -395,6 +405,7 @@
                         <outlet property="guiSlotsContainer" destination="pV9-tZ-e8Y" id="6JT-uz-Vxy"/>
                         <outlet property="guiTitle" destination="iPt-nt-KfE" id="NNu-CS-UK9"/>
                         <outlet property="guiUserGuidanceTitle" destination="t6k-60-z2E" id="G4P-go-hto"/>
+                        <outlet property="guiVideoPlayerContainer" destination="tO9-WG-SCA" id="8o9-Ks-3gL"/>
                         <outlet property="indicatorsContainerHeight" destination="B9q-AK-DDr" id="ocg-PI-f5e"/>
                         <outlet property="slotsContainerHeight" destination="5eh-LJ-a8E" id="h39-6a-mO4"/>
                     </connections>
@@ -712,6 +723,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sWM-zy-VcS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="845.5" y="471"/>
+        </scene>
+        <!--AV Player View Controller-->
+        <scene sceneID="vkc-8y-2Ax">
+            <objects>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="Tlh-1l-eaQ" customClass="EMVideoVC" customModule="emu" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mrj-dk-ABE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="845.5" y="-65.5"/>
         </scene>
     </scenes>
     <resources>

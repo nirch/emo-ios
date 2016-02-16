@@ -354,6 +354,23 @@
     return LSS(key, self.label);
 }
 
+
+-(BOOL)anyEmuRequiresDedicatedCapture
+{
+    for (EmuticonDef *emuDef in self.emuDefs) {
+        if (emuDef.requiresDedicatedCapture == YES) return YES;
+    }
+    return NO;
+}
+
+-(BOOL)anyIsJointEmu
+{
+    for (EmuticonDef *emuDef in self.emuDefs) {
+        if (emuDef.isJointEmu == YES) return YES;
+    }
+    return NO;
+}
+
 -(void)recountRenders
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:E_EMU];

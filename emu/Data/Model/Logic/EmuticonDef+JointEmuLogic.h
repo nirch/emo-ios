@@ -13,6 +13,7 @@
 #pragma mark - General
 -(BOOL)isJointEmu;
 -(NSInteger)jointEmuDefSlotsCount;
+-(NSInteger)jointEmuDefInitiatorSlotIndex;
 
 #pragma mark - Joint emu instances
 -(void)latestEmuGainFocus;

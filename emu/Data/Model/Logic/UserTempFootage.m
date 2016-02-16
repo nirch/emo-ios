@@ -95,4 +95,25 @@
     return YES;
 }
 
+#pragma mark - HCRender
+-(NSDictionary *)updateSourceLayerInfo:(NSDictionary *)layer
+{
+    NSMutableDictionary *updatedLayer = [NSMutableDictionary dictionaryWithDictionary:layer];
+    
+    NSString *pathToUserVideo = self.capturedVideo;
+    NSString *pathToUserDMaskVideo = self.maskVideo;
+    if (pathToUserVideo == nil || pathToUserDMaskVideo == nil)
+        return updatedLayer;
+    
+    // Remove the placeholder
+    [updatedLayer removeObjectForKey:hcrResourceName];
+    
+    // Use the user footage source files for this layer.
+    updatedLayer[hcrSourceType] = hcrVideo;
+    updatedLayer[hcrPath] = pathToUserVideo;
+    updatedLayer[hcrDynamicMaskPath] = pathToUserDMaskVideo;
+    
+    return updatedLayer;
+}
+
 @end

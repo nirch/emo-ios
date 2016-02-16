@@ -77,7 +77,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     var emuticonDefNameForPreview : NSString?
     var previewEmuticon : Emuticon?
     var emuDefForPreviewLastUsed : EmuticonDef?
-    var recordingPreviewVC: EMRecordingPreviewVC?
+    var recordingPreviewVC: EMVideoVC?
     
     //
     // onboarding & flow (will always show onboarding in this implementation)
@@ -171,7 +171,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
                 self.onBoardingVC?.flowType = self.flowType
                 self.onBoardingVC?.delegate = self
             case "recording preview segue":
-                self.recordingPreviewVC = segue.destinationViewController as? EMRecordingPreviewVC
+                self.recordingPreviewVC = segue.destinationViewController as? EMVideoVC
                 self.recordingPreviewVC?.previewDelegate = self
             default:
                 break
@@ -258,45 +258,69 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     }
     
     func configureForRetakeEmuticons() {
-        // TODO: The API is like this because of historical reasons.
-        // TODO: make this internal/encapsulated in the recorder and make the API simpler.
-        if let info = self.info {
-            if let emuticonsOID = info[emkRetakeEmuticonsOID] as? NSArray {
-                self.emuticonsOID = emuticonsOID
-                let emuOID = self.emuticonsOID!.lastObject as! String
-                if let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
-                    self.emuticonDefNameForPreview = emu.emuDef?.name
-                    self.emuticonDefOIDForPreview = emu.emuDef?.oid
-                }
-            } else {
-                self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? NSString;
-                self.emuticonDefOIDForPreview = info[emkEmuticonDefOID] as? NSString;
+        let info = self.info!
+        
+        if let specificEmuticonDefOID = info[emkEmuticonDefOID] as? String {
+            //
+            // Specic emu def requested to be used for preview.
+            //
+            self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? NSString
+            self.emuticonDefOIDForPreview = specificEmuticonDefOID
+        } else if let emuticonsOID = info[emkRetakeEmuticonsOID] as? NSArray {
+            //
+            // A list of emus provided to be retaken.
+            //
+            self.emuticonsOID = emuticonsOID
+        } else if let packageOID = info[emkRetakePackageOID] as? String {
+            //
+            // A package was requested to be retaken.
+            //
+            let package = Package.findWithID(packageOID, context: EMDB.sh().context)
+            self.emuticonsOID = package?.emuticonsOIDS()
+        }
+        
+        if let emusOIDS = self.emuticonsOID where emusOIDS.count > 0 {
+            // If list of emus set, use one of them for the preview.
+            let emuOID = emusOIDS.lastObject as! String
+            if let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
+                self.emuticonDefNameForPreview = emu.emuDef?.name
+                self.emuticonDefOIDForPreview = emu.emuDef?.oid
             }
-            
-            if info[emkDedicatedFootage] != nil {
-                self.isDedicatedFootage = info[emkDedicatedFootage] as! Bool
-            }
-            
-            if info[emkDuration] != nil {
-                self.duration = info[emkDuration] as! NSTimeInterval
-            }
-            
-            if info[emkJEmuSlot] != nil {
-                self.slotIndex = info[emkJEmuSlot] as! Int
-            }
+        }
+        
+        //
+        // More configurations.
+        //
+        
+        if info[emkDedicatedFootage] != nil {
+            // Dedicated footage.
+            self.isDedicatedFootage = info[emkDedicatedFootage] as! Bool
+        }
+        
+        if info[emkDuration] != nil {
+            // Specific duration.
+            self.duration = info[emkDuration] as! NSTimeInterval
+        }
+        
+        if info[emkJEmuSlot] != nil {
+            // Slot index in joint emus.
+            self.slotIndex = info[emkJEmuSlot] as! Int
         }
     }
     
     func configureForNewTake() {
-        if let info = self.info {
-            if (info[emkRetakePackageOID] != nil) {
-                if let package = Package.findWithID(
-                    info[emkRetakePackageOID] as? String,
-                    context: EMDB.sh().context) {
-                        self.package = package
-                        self.emuticonsOID = self.package?.emuticonsOIDS()
-                }
+        guard let info = self.info else {return}
+        if info[emkRetakePackageOID] != nil {
+            if let package = Package.findWithID(
+                info[emkRetakePackageOID] as? String,
+                context: EMDB.sh().context) {
+                    self.package = package
+                    self.emuticonsOID = self.package?.emuticonsOIDS()
             }
+        }
+        if info[emkEmuticonDefOID] != nil {
+            self.emuticonDefOIDForPreview = info[emkEmuticonDefOID] as? String
+            self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? String
         }
     }
     
@@ -724,10 +748,14 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
                 for emuOID in emusOID as! [String] {
                     let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context)
                     if emu == nil {continue}
+                    
                     emu.prefferedFootageOID = footage.oid
+                    
+                    // And clean previous renders so the emu will render
+                    // with the new footage.
+                    emu.cleanUp()
                 }
             }
-            
         }
 
         // Save
@@ -737,9 +765,8 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
             self.flowType,
             info: self.info! as [NSObject : AnyObject])
 
-        
         // Render gif for the
-//        EMRenderManager3.sh().renderGifForFootage(footage) { (success) -> () in
+//        EMRenderManager3.sh().renderGifForFootage(footage) {sucess in
 //            if (success == true) {
 //                // Dismiss the recorder
 //            } else {

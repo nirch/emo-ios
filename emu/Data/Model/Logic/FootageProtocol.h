@@ -12,8 +12,11 @@
 
 @protocol FootageProtocol <NSObject>
 
--(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef;
 -(NSURL *)urlToThumbImage;
 -(BOOL)isAvailable;
+
+#pragma mark - HCRender
+-(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef;
+-(NSDictionary *)updateSourceLayerInfo:(NSDictionary *)layer;
 
 @end
