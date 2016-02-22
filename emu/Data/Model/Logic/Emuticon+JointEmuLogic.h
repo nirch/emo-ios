@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, EMSlotState){
     EMSlotStateInvited                          = 3,
     EMSlotStateCanceledByInitiator              = 4,
     EMSlotStateDeclinedByReceiver               = 5,
-    EMSlotStateDeclinedFootageByInitiator       = 6
+    EMSlotStateDeclinedFootageByInitiator       = 6,
+    EMSlotStateReceiverUploadedFootage          = 7
 };
 
 
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 -(NSInteger)jointEmuInitiatorSlot;
 -(BOOL)isJointEmuInitiatedByThisUser;
 -(NSInteger)jointEmuInvitationsSentCount;
+-(BOOL)jointEmuReadyForFinalization;
 
 #pragma mark - Invitations and receivers
 -(NSInteger)jointEmuFirstUninvitedSlotIndex;

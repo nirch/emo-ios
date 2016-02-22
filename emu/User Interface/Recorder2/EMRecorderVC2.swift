@@ -749,6 +749,14 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
                     let emu = Emuticon.findWithID(emuOID, context: EMDB.sh().context)
                     if emu == nil {continue}
                     
+                    if let previousFootageOID = emu.prefferedFootageOID {
+                        if let previousFootage = UserFootage.findWithID(previousFootageOID, context: EMDB.sh().context) {
+                            if previousFootage.isDedicatedCapture() {
+                                previousFootage.deleteAndCleanUp()
+                            }
+                        }
+                    }
+                    
                     emu.prefferedFootageOID = footage.oid
                     
                     // And clean previous renders so the emu will render

@@ -17,22 +17,25 @@ enum JointEmuState {
     
     // Initiator
     case NoInvitationsSent
+    case InitiatorNeedsToCreateDedicatedFootage
     case SendInviteConfirmationRequired
     case InitiatorUploadingFootage
     case InitiatorWaitingForFriends
     case InitiatorCancelInviteOptions
+    case InitiatorReadyForFinalization
     
     // Receiver
     case ReceiverInvited
+    case ReceiverApprovedLocalFootageAndNeedsToUpload
+    case ReceiverUploadingFootage
+    case ReceiverWaitingForFlowEnd
     
     case Error
 }
 
 class JointEmuFlow: NSObject {
     class func stateForEmu(anEmu: Emuticon?) -> JointEmuState {
-        if anEmu == nil {return .NotCreatedYet}
-
-        let emu = anEmu!
+        guard let emu = anEmu else {return .NotCreatedYet}
         
         // Not a joint emu?
         if !emu.isJointEmu() {return .NotAJointEmu}
@@ -46,32 +49,56 @@ class JointEmuFlow: NSObject {
         
         // Initiator or receiver?
         if emu.isJointEmuInitiatedByThisUser() {
-            
-            // Initiator flow
-
-            // Check if no invitations sent yet
-            if emu.jointEmuInvitationsSentCount() == 0 {return .NoInvitationsSent}
-            
-            return .InitiatorWaitingForFriends
-            
-            
+            return self.stateForJointEmuInitiatedByThisUser(emu)
         } else {
-            
-            // Receiver flow
-            if let invitationCode = emu.createdWithInvitationCode {
-                let receiverSlotIndex = emu.jointEmuSlotForInvitationCode(invitationCode)
-                if receiverSlotIndex > 0 {
-                    //let state = emu.jointEmuStateOfSlot(receiverSlotIndex)
-                    return .ReceiverInvited
-                    
-                } else {
-                    return .Error
-                }
-            } else {
-                // Error 
-                return .Error
+            return self.stateForJointEmuReceivedByThisUser(emu)
+        }
+    }
+    
+    private class func stateForJointEmuInitiatedByThisUser(emu: Emuticon) -> JointEmuState {
+        // Initiator flow
+        guard emu.isJointEmuInitiatedByThisUser() else {return .Error}
+        guard let emuDef = emu.emuDef else {return .Error}
+
+        // If requires dedicated footage and none selected yet,
+        // The initiator will need to create one first.
+        if emuDef.jointEmuDefRequiresDedicatedCaptureAtSlot(emu.jointEmuLocalSlotIndex()) {
+            if emu.prefferedFootageOID == nil {
+                return .InitiatorNeedsToCreateDedicatedFootage
             }
         }
         
+        // Check if no invitations sent yet
+        if emu.jointEmuInvitationsSentCount() == 0 {
+            return .NoInvitationsSent
+        }
+
+        // If all footages (including remote footages) downloaded, initiator can finalize the joint emu.
+        if emu.jointEmuReadyForFinalization() {
+            return .InitiatorReadyForFinalization
+        }
+        
+        
+        return .InitiatorWaitingForFriends
     }
+    
+    private class func stateForJointEmuReceivedByThisUser(emu: Emuticon) -> JointEmuState {
+        guard emu.isJointEmuInitiatedByThisUser() == false else {return .Error}
+        guard let invitationCode = emu.createdWithInvitationCode else {return .Error}
+        let receiverSlotIndex = emu.jointEmuSlotForInvitationCode(invitationCode)
+        guard receiverSlotIndex > 0 else {return .Error}
+        
+        // If no footage chosen specifically by the receiver, the receiver was
+        // invited but still need to choose footage or decline.
+        if emu.prefferedFootageOID == nil {
+            return .ReceiverInvited
+        }
+        
+        if emu.jointEmuReceiverUploadedFootage?.boolValue == true {
+            return .ReceiverWaitingForFlowEnd
+        }
+        
+        return .ReceiverApprovedLocalFootageAndNeedsToUpload
+    }
+    
 }

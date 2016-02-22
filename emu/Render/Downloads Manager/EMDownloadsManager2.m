@@ -458,7 +458,10 @@
 
 -(AWSTask *)newDownloadTaskForOID:(NSString *)oid resourceName:(NSString *)name
 {
-    [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+    // --------------
+    // Don't enable this in production!
+    //    [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+    // --------------
     
     // Create a download request for specified bucket.
     AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];

@@ -11,5 +11,6 @@
 @interface EMFlowButton : EMButton
 
 @property (nonatomic) BOOL positive;
+-(void)setBGColor:(UIColor *)color;
 
 @end

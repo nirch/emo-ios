@@ -74,10 +74,14 @@ class SlotsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
             })
             if emu.isJointEmuInitiatedByThisUser() {
                 // For initiator, show remote slots.
-                                return emu.jointEmuSlots().count
+                return emu.jointEmuSlots().count
             } else {
                 // For receiver, show the invitation status.
-                return 1
+                if emu.jointEmuReceiverUploadedFootage?.boolValue == true {
+                    return 2
+                } else {
+                    return 1
+                }
             }
         }
         UIView.animateWithDuration(0.7, animations: {
@@ -217,7 +221,7 @@ class SlotCell: UICollectionViewCell {
             if emu.isJointEmuInitiatedByThisUser() {
                 self.updateSlotCellWithJointEmuForInitiatorUI(emu, slotIndex: slotIndex, isSelected: isSelected)
             } else {
-                self.updateSlotCellWithJointEmuForReceiverUI(emu, isSelected: isSelected)
+                self.updateSlotCellWithJointEmuForReceiverUI(emu, slotIndex: slotIndex, isSelected: isSelected)
             }
         }
     }
@@ -236,6 +240,14 @@ class SlotCell: UICollectionViewCell {
             case .DeclinedByReceiver:
                 self.cellState = .Declined
                 self.text = EML.s("DECLINED")
+            case .ReceiverUploadedFootage:
+                self.footage = emu.jointEmuFootageAtSlot(slotIndex)
+                self.cellState = .FootageDownloading
+                self.text = ""
+                if self.footage != nil && self.footage!.isAvailable() {
+                    self.cellState = .FootageAvailable
+                    self.text = "✓"
+                }
             default:
                 self.cellState = .Neutral
                 self.text = nil
@@ -243,13 +255,23 @@ class SlotCell: UICollectionViewCell {
         }
     }
     
-    func updateSlotCellWithJointEmuForReceiverUI(emu: Emuticon, isSelected: Bool = false) {
+    func updateSlotCellWithJointEmuForReceiverUI(emu: Emuticon, slotIndex: Int, isSelected: Bool = false) {
         // The receiver will show only the initiator (other slots don't matter to the receiver).
         let initiatorSlot = emu.jointEmuInitiatorSlot()
-        if initiatorSlot < 1 {return}
+        guard initiatorSlot > 0 else {return}
+        guard let invitationCode = emu.createdWithInvitationCode else {return}
+        let receiverSlot = emu.jointEmuSlotForInvitationCode(invitationCode)
+        guard receiverSlot > 0 else {return}
         
-        if let footage = emu.jointEmuFootageAtSlot(initiatorSlot) {
-            self.footage = footage
+        self.footage = nil
+        if slotIndex == 1 {
+            self.footage = emu.jointEmuFootageAtSlot(initiatorSlot)
+            self.text = EML.s("JOINT_EMU_INITIATOR_NICE")
+        } else {
+            self.footage = emu.jointEmuFootageAtSlot(receiverSlot)
+            self.text = EML.s("JOINT_EMU_MY_TAKE")
+        }
+        if let footage = self.footage {
             if footage.isAvailable() {
                 self.cellState = .FootageAvailable
             } else {

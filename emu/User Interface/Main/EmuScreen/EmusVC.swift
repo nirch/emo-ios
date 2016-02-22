@@ -23,11 +23,7 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     var emus: [Emuticon]?
     
     // Emuticon def oid
-    var emuDefOID: String? {
-        didSet {
-            self.refresh()
-        }
-    }
+    var emuDefOID: String?
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     //
@@ -35,6 +31,9 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     //
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.guiEmusCollection.alpha = 0
+        self.guiNextContainer.alpha = 0
+        self.guiPrevContainer.alpha = 0
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -84,17 +83,18 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     // MARK: - Carousel buttons and emu selection
     //
     func refreshCarouselButtons() {
-        if let emuDef = self.emuDef {
-            if emuDef.isJointEmu() {
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.guiNextContainer.alpha = (self.emuIndex() > 0) ? 0:1
-                    self.guiPrevContainer.alpha = (self.emuIndex() < self.emus?.count) ? 0:1
-                })
-            } else {
-                self.guiNextContainer.alpha = 0
-                self.guiPrevContainer.alpha = 0
-            }
+        guard let emuDef = self.emuDef else {return}
+        guard emuDef.isJointEmu() && self.emus != nil && self.emus!.count > 0 else {
+            self.guiNextContainer.alpha = 0
+            self.guiPrevContainer.alpha = 0
+            return
         }
+        let emusCount = self.emus!.count
+        
+        UIView.animateWithDuration(0.2, animations: {
+            self.guiNextContainer.alpha = (self.emuIndex() < emusCount) ? 1:0
+            self.guiPrevContainer.alpha = (self.emuIndex() > 0) ? 1:0
+        })
     }
     
     func emuSelectionChanged() {
@@ -158,15 +158,30 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     //
     func refresh() {
         self.emuDef = EmuticonDef.findWithID(self.emuDefOID, context: EMDB.sh().context)
-        if self.emuDef == nil {
+        guard let emuDef = self.emuDef else {
             self.emus = nil
-        } else {
-            let sortBy = [NSSortDescriptor(key: "timeCreated", ascending: true)]
-            self.emus = emuDef!.emusOrdered(sortBy) as? [Emuticon]
-            if let collection = self.guiEmusCollection {
-                collection.reloadData()
-                self.refreshCarouselButtons()
-            }
+            return
+        }
+        
+        let sortBy = [NSSortDescriptor(key: "timeCreated", ascending: true)]
+        self.emus = emuDef.emusOrdered(sortBy) as? [Emuticon]
+        
+        guard let collection = self.guiEmusCollection else {return}
+        
+        collection.reloadData()
+        self.refreshCarouselButtons()
+
+        // Scroll to
+        let indexPathInFocus = self.indexPathOfEmuInFocus()
+        collection.scrollToItemAtIndexPath(
+            indexPathInFocus,
+            atScrollPosition: .CenteredHorizontally,
+            animated: false)
+        
+        if collection.alpha == 0 {
+            UIView.animateWithDuration(0.2, animations: {
+                collection.alpha = 1
+            })
         }
     }
     
@@ -205,6 +220,21 @@ class EmusVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     
+    func indexPathOfEmuInFocus() -> NSIndexPath {
+        guard let emus = self.emus else {
+            return NSIndexPath(forItem: 0, inSection: 0)
+        }
+        
+        var index = 0
+        for emu in emus {
+            if emu.inFocus != nil && emu.inFocus!.boolValue == true {
+                return NSIndexPath(forItem: index, inSection: 0)
+            }
+            index += 1
+        }
+        
+        return NSIndexPath(forItem: 0, inSection: 0)
+    }
     
     //
     // MARK: - Layout

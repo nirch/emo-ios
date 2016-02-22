@@ -67,6 +67,15 @@
     return self.duration.doubleValue;
 }
 
+-(NSString *)jointEmuDefCaptureDurationStringAtSlot:(NSInteger)slotIndex
+{
+    NSString *title = LS(@"X_SECONDS_VIDEO");
+    NSInteger duration = [self jointEmuDefCaptureDurationAtSlot:slotIndex];
+    NSString *durationString = [NSString stringWithFormat:@"%@", @(duration)];
+    title = [title stringByReplacingOccurrencesOfString:@"#" withString:durationString];
+    return title;
+}
+
 -(BOOL)jointEmuDefRequiresDedicatedCaptureAtSlot:(NSInteger)slotIndex
 {
     NSTimeInterval duration = [self jointEmuDefCaptureDurationAtSlot:slotIndex];

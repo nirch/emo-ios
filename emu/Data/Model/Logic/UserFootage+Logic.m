@@ -243,6 +243,11 @@
     [self.managedObjectContext deleteObject:self];
 }
 
+-(BOOL)isDedicatedCapture
+{
+    return self.duration.doubleValue > 2.0;
+}
+
 -(void)deleteOldStylePngSequenceFiles
 {
     // Delete old style footages files.

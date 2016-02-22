@@ -109,12 +109,13 @@
                               emkRenderType:@"shortLDPreview",
                               emkMediaType:hcrGIF
                               };
-        
+                
         [EMRenderManager3.sh enqueueEmu:emu
                              renderType:EMRenderTypeShortLowDefPreview
                               mediaType:EMMediaDataTypeGIF
                              fullRender:NO
-                               userInfo:info];
+                               userInfo:info
+                               oldStyle:YES];
         
         _state = EMEmuCellStateSentForRendering;
         

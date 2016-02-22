@@ -37,15 +37,6 @@
             
             // Update the joint emu info.
             newEmu.jointEmuInstance = info;
-            
-            // Create new remote footage object for the initiator slot.
-            NSInteger initiatorSlotIndex = [newEmu jointEmuInitiatorSlot];
-            NSDictionary *remoteFiles = [newEmu jointEmuRemoteFilesAtSlot:initiatorSlotIndex];
-            NSString *footageOID = NSUUID.UUID.UUIDString;
-            [UserFootage newFootageWithID:footageOID
-                          remoteFilesInfo:remoteFiles
-                                  context:EMDB.sh.context];
-            newEmu.remoteFootages[@(initiatorSlotIndex)] = footageOID;
         }
         
     } else if (emuOID == nil) {
@@ -76,10 +67,36 @@
         }
     }
 
-    
     // Update the joint emu info.
     emu.jointEmuInstance = info;
     
+    // Remote footages
+    if (info[@"joint_emu_slots"]) {
+        for (NSDictionary *slotInfo in info[@"joint_emu_slots"]) {
+            NSNumber *slotIndexNumber = [slotInfo safeNumberForKey:@"slot_id"];
+            if (![slotIndexNumber isKindOfClass:[NSNumber class]]) continue;
+            NSInteger slotIndex = slotIndexNumber.integerValue;
+            
+            NSDictionary *remoteFootageFiles = [emu jointEmuRemoteFilesAtSlot:slotIndex];
+            if (![remoteFootageFiles isKindOfClass:[NSDictionary class]]) continue;
+            
+            NSString *footageOID = [remoteFootageFiles safeOIDStringForKey:@"_id"];
+            if (![footageOID isKindOfClass:[NSString class]]) continue;
+            
+            // Check if remote footage already exists.
+            UserFootage *remoteFootage = [UserFootage findWithID:footageOID context:EMDB.sh.context];
+            if (remoteFootage == nil) {
+                // Create the remote footage object.
+                [UserFootage newFootageWithID:footageOID
+                              remoteFilesInfo:remoteFootageFiles
+                                      context:EMDB.sh.context];
+                NSMutableDictionary *remoteFootagesDict = [NSMutableDictionary dictionaryWithDictionary:emu.remoteFootages?emu.remoteFootages:@{}];
+                remoteFootagesDict[@(slotIndex)] = footageOID;
+                emu.remoteFootages = remoteFootagesDict;
+            }
+        }
+    }
+        
     // Save
     [EMDB.sh save];
 }

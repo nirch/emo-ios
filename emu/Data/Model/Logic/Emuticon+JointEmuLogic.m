@@ -92,6 +92,23 @@
     return count;
 }
 
+-(BOOL)jointEmuReadyForFinalization
+{
+    // Check that all slots have a selected footage
+    // and the footage is available on the device.
+    NSInteger slotsCount = self.jointEmuSlots.count;
+    NSArray *relatedFootages = self.relatedFootages;
+    if (relatedFootages.count != self.jointEmuSlots.count) return NO;
+    
+    // Count available footages
+    NSInteger availableCount = 0;
+    for (id<FootageProtocol>footage in relatedFootages) {
+        if ([footage isKindOfClass:[UserFootage class]] && [footage isAvailable])
+            availableCount++;
+    }
+    return availableCount == slotsCount;
+}
+
 #pragma mark - Invitations and receivers
 -(NSInteger)jointEmuFirstUninvitedSlotIndex
 {
@@ -187,8 +204,14 @@
     if (inviteCode == nil)
         return EMSlotStateUninvited;
     
-    // Invited
-    return EMSlotStateInvited;
+    // Invited. Check if invited user uploaded footage or not.
+    UserFootage *footage = [self jointEmuFootageAtSlot:slotIndex];
+    if (footage == nil) {
+        // No footage uploaded yet. Show as "invited" state.
+        return EMSlotStateInvited;
+    }
+    
+    return EMSlotStateReceiverUploadedFootage;
 }
 
 -(BOOL)isJointEmuCurrentReceiverAtSlot:(NSInteger)slotIndex
@@ -214,11 +237,15 @@
 #pragma mark - Footages
 -(id<FootageProtocol>)jointEmuFootageAtSlot:(NSInteger)slotIndex
 {
+    NSInteger initiatorSlotIndex = self.emuDef.jointEmuDefInitiatorSlotIndex;
+
     // If created locally and no joint emu instance info yet, just use the most
     // preffered footage for the initiator slot and place holders for the rest.
     if (self.jointEmuInstance == nil) {
-        NSInteger initiatorSlotIndex = self.emuDef.jointEmuDefInitiatorSlotIndex;
-        return slotIndex==initiatorSlotIndex?[self mostPrefferedUserFootage]:[PlaceHolderFootage new];
+        if (initiatorSlotIndex == slotIndex) {
+            return [self mostPrefferedUserFootage];
+        }
+        return [PlaceHolderFootage new];
     }
     
     // If we have more info from the server about the emu instance, use that info
@@ -242,7 +269,11 @@
         if ([self isJointEmuCurrentReceiverAtSlot:slotIndex]) {
 
             // The receiver's local slot.
-            return [self mostPrefferedUserFootage];
+            UserFootage *footage = nil;
+            if (self.prefferedFootageOID) {
+                footage = [UserFootage findWithID:self.prefferedFootageOID context:EMDB.sh.context];
+            }
+            return footage?footage:[PlaceHolderFootage new];
             
         } else {
             

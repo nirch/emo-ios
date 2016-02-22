@@ -81,6 +81,8 @@
     NSString *s3Key = [self.emu s3KeyForFile:file slot:self.slotIndex ext:ext];
     uploadRequest.key = s3Key;
     
+    NSLog(@">>>>> UPLOADING: %@", s3Key);
+    
     __weak EMUploadPublicFootageForJointEmu *weakSelf = self;
     uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         dispatch_async(dispatch_get_main_queue(), ^{

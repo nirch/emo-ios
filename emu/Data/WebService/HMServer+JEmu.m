@@ -46,6 +46,16 @@
                    parser:[EMJointEmuNewParser new]];
 }
 
+-(void)jointEmuFinalize:(NSString *)jeOID emuOID:(NSString *)emuOID
+{
+    NSString *urlString = [NSString stringWithFormat:@"/jointemu/%@/done", jeOID];
+    [self putRelativeURL:urlString
+              parameters:@{}
+        notificationName:emkJointEmuRefresh
+                    info:@{emkJEmuOID:jeOID, emkEmuticonOID:emuOID}
+                  parser:[EMJointEmuNewParser new]];
+}
+
 -(void)jointEmuCancelInvite:(NSString *)inviteCode cancelCode:(EMJEmuCancelInvite)cancelCode emuOID:(NSString *)emuOID
 {
     NSString *urlString = [NSString stringWithFormat:@"/jointemu/invite/%@/cancel", inviteCode];

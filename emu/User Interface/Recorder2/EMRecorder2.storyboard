@@ -388,7 +388,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FFc-hG-RdG" userLabel="Camera button" customClass="EMButton">
-                                <rect key="frame" x="370" y="0.0" width="44" height="44"/>
+                                <rect key="frame" x="365" y="0.0" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="HJu-YS-XnQ"/>
                                     <constraint firstAttribute="height" constant="44" id="ZdB-Nw-a2f"/>
@@ -402,7 +402,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-ju-4DS" userLabel="Dismiss button" customClass="EMButton">
-                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <rect key="frame" x="5" y="0.0" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="6Fn-M2-8p3"/>
                                     <constraint firstAttribute="height" constant="44" id="Ml1-hj-Hox"/>
@@ -416,7 +416,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDD-DN-hYS" userLabel="emu logo button">
-                                <rect key="frame" x="7" y="7" width="30" height="30"/>
+                                <rect key="frame" x="12" y="7" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="0Iu-Fu-LYu"/>
                                     <constraint firstAttribute="height" constant="62" id="ASU-0E-1WF"/>
@@ -444,14 +444,14 @@
                             <constraint firstItem="z5x-ju-4DS" firstAttribute="centerY" secondItem="HX1-DW-feK" secondAttribute="centerY" id="7Jd-9m-U2K"/>
                             <constraint firstItem="kHS-o8-d2i" firstAttribute="left" secondItem="HX1-DW-feK" secondAttribute="left" id="DH5-LC-Tg3"/>
                             <constraint firstAttribute="right" secondItem="kHS-o8-d2i" secondAttribute="right" id="Gm1-Gh-f3u"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FFc-hG-RdG" secondAttribute="trailing" constant="-20" id="HRW-lo-wGq"/>
+                            <constraint firstAttribute="trailing" secondItem="FFc-hG-RdG" secondAttribute="trailing" constant="5" id="HRW-lo-wGq"/>
                             <constraint firstAttribute="topMargin" secondItem="FFc-hG-RdG" secondAttribute="top" id="WMj-Nm-FfY"/>
                             <constraint firstAttribute="topMargin" secondItem="kHS-o8-d2i" secondAttribute="top" id="XZl-dF-4N9"/>
                             <constraint firstAttribute="topMargin" secondItem="z5x-ju-4DS" secondAttribute="top" id="Yug-kU-P1A"/>
                             <constraint firstAttribute="bottomMargin" secondItem="kHS-o8-d2i" secondAttribute="bottom" id="cmG-IB-j2h"/>
                             <constraint firstItem="FFc-hG-RdG" firstAttribute="centerY" secondItem="HX1-DW-feK" secondAttribute="centerY" id="eg3-yk-TnQ"/>
                             <constraint firstItem="gDD-DN-hYS" firstAttribute="centerY" secondItem="z5x-ju-4DS" secondAttribute="centerY" id="leC-jx-jVd"/>
-                            <constraint firstItem="z5x-ju-4DS" firstAttribute="leading" secondItem="HX1-DW-feK" secondAttribute="leadingMargin" constant="-20" id="uRU-n3-e7R"/>
+                            <constraint firstItem="z5x-ju-4DS" firstAttribute="leading" secondItem="HX1-DW-feK" secondAttribute="leading" constant="5" id="uRU-n3-e7R"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

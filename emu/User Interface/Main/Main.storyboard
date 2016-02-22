@@ -64,7 +64,7 @@
                                                         <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="liQ-HG-2bL">
                                                             <rect key="frame" x="3" y="3" width="178" height="178"/>
                                                         </imageView>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999966" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emuNavLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Af4-Mu-Clg">
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999966" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="emuNavLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Af4-Mu-Clg">
                                                             <rect key="frame" x="61" y="62" width="60" height="59"/>
                                                         </imageView>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJh-a7-uhZ" userLabel="DEBUG">
@@ -632,7 +632,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFr-ja-be8" userLabel="Emu creation flow bar container">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sFr-ja-be8" userLabel="Emu creation flow bar container">
                                 <rect key="frame" x="-1" y="414" width="376" height="44"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="QZr-xE-cPZ">
@@ -1035,7 +1035,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="84S-s6-uj6" id="HgQ-Yc-bic">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-g1-GqX">
@@ -1138,7 +1138,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="4258342C-2D97-4802-BF89-E0C51839D5C2" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6AE03E63-38CF-4BF8-A24D-59C616FC94DE" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
                                 <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYP-nE-gH7" customClass="FLAnimatedImageView">
@@ -1379,7 +1379,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="4258342C-2D97-4802-BF89-E0C51839D5C2" width="350" height="350">
+        <image name="6AE03E63-38CF-4BF8-A24D-59C616FC94DE" width="350" height="350">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

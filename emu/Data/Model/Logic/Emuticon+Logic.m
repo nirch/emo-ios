@@ -75,6 +75,7 @@
                                                                  context:context];
     emu.timeCreated = [NSDate date];
     emu.emuDef = emuticonDef;
+    [emu gainFocus];
     return emu;
 }
 
@@ -260,13 +261,16 @@
     // If emu requires a dedicated longer capture, and such a capture
     // is not available yet, will show a place holder until user
     // finishes such a dedicated footage for this emu.
-    if (self.emuDef.requiresDedicatedCapture) {
+    if (!self.isJointEmu && self.emuDef.requiresDedicatedCapture) {
         if (self.prefferedFootageOID == nil) {
-            // No dedicated footage available.
-            // Return a placeholder as footage.
-            PlaceHolderFootage *footage = [PlaceHolderFootage new];
-            footage.status = PlaceHolderFootageStatusNegative;
-            return footage;
+            return [PlaceHolderFootage new];
+        }
+    }
+    if (self.isJointEmu) {
+        if ([self.emuDef jointEmuDefRequiresDedicatedCaptureAtSlot:[self jointEmuLocalSlotIndex]]) {
+            if (self.prefferedFootageOID == nil) {
+                return [PlaceHolderFootage new];
+            }
         }
     }
     

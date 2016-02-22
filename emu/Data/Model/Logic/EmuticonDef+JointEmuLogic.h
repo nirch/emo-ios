@@ -21,6 +21,7 @@
 #pragma mark - Questions about a specific slot
 -(NSDictionary *)jointEmuDefSlot:(NSInteger)slotIndex;
 -(NSTimeInterval)jointEmuDefCaptureDurationAtSlot:(NSInteger)slotIndex;
+-(NSString *)jointEmuDefCaptureDurationStringAtSlot:(NSInteger)slotIndex;
 -(BOOL)jointEmuDefRequiresDedicatedCaptureAtSlot:(NSInteger)slotIndex;
 
 @end

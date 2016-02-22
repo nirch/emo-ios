@@ -30,6 +30,11 @@
     [self setBackgroundImage:[EmuStyle imageWithColor:bgColor] forState:UIControlStateNormal];
 }
 
+-(void)setBGColor:(UIColor *)color
+{
+    [self setBackgroundImage:[EmuStyle imageWithColor:color] forState:UIControlStateNormal];
+}
+
 
 
 @end

@@ -160,6 +160,8 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
 -(void)deleteAndCleanUp;
 
 
+-(BOOL)isDedicatedCapture;
+
 
 /**
  *  Delete the old style png sequence footage files.

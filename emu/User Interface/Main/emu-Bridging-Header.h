@@ -23,6 +23,11 @@
 #import "EMTickingProgressView.h"
 #import "EMEmuCell.h"
 #import "YLProgressBar.h"
+#import <iCarousel.h>
+#import "EMShareDelegate.h"
+#import "EMShareProtocol.h"
+#import "EMInterfaceDelegate.h"
+#import <UIView+Toast.h>
 
 // Notifications
 #import "HMNotificationCenter.h"
@@ -49,11 +54,24 @@
 #import "HMServer.h"
 #import "HMServer+User.h"
 #import "HMServer+JEmu.h"
+#import "HMParams.h"
 
 // Sharing
 #import "EMShare.h"
 #import "EMUploadPublicFootageForJointEmu.h"
 #import "EMShareDelegate.h"
+#import "EMShareInputVC.h"
+
+// Share methods
+#import "EMShareCopy.h"
+#import "EMShareSaveToCameraRoll.h"
+#import "EMShareMail.h"
+#import "EMShareAppleMessage.h"
+#import "EMShareFBMessanger.h"
+#import "EMShareDocumentInteraction.h"
+#import "EMShareTwitter.h"
+#import "EMShareFacebook.h"
+#import "EMShareInstoosh.h"
 
 // Libraries & Pods
 #import <SIAlertView.h>

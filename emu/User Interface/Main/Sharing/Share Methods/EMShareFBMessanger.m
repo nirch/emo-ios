@@ -133,28 +133,28 @@
 
 -(void)messengerMissingMessage
 {
-    UIAlertController *alert = [UIAlertController new];
-    alert.title = LS(@"FBM_MISSING_TITLE");
-    alert.message = LS(@"FBM_MISSING_MESSAGE");
-    
-    // Install messenger action
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"FBM_INSTALL_OPTION")
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction *action) {
-                                                // Messenger isn't installed. Redirect the person to the App Store.
-                                                [HMPanel.sh analyticsEvent:AK_E_FBM_INSTALL];
-                                                NSString *iTunesLink = @"itms://itunes.apple.com/us/app/facebook-messenger/id454638411?mt=8";
-                                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
-                                            }]];
-    
-    // OK
-    [alert addAction:[UIAlertAction actionWithTitle:LS(@"FBM_MISSING_GOT_IT")
-                                              style:UIAlertActionStyleCancel
-                                            handler:^(UIAlertAction *action) {
-                                                [HMPanel.sh analyticsEvent:AK_E_FBM_DISMISSED_INSTALL];
-                                            }]];
-    
-    [self.viewController presentViewController:alert animated:YES completion:nil];
+//    UIAlertController *alert = [UIAlertController new];
+//    alert.title = LS(@"FBM_MISSING_TITLE");
+//    alert.message = LS(@"FBM_MISSING_MESSAGE");
+//    
+//    // Install messenger action
+//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"FBM_INSTALL_OPTION")
+//                                              style:UIAlertActionStyleDefault
+//                                            handler:^(UIAlertAction *action) {
+//                                                // Messenger isn't installed. Redirect the person to the App Store.
+//                                                [HMPanel.sh analyticsEvent:AK_E_FBM_INSTALL];
+//                                                NSString *iTunesLink = @"itms://itunes.apple.com/us/app/facebook-messenger/id454638411?mt=8";
+//                                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+//                                            }]];
+//    
+//    // OK
+//    [alert addAction:[UIAlertAction actionWithTitle:LS(@"FBM_MISSING_GOT_IT")
+//                                              style:UIAlertActionStyleCancel
+//                                            handler:^(UIAlertAction *action) {
+//                                                [HMPanel.sh analyticsEvent:AK_E_FBM_DISMISSED_INSTALL];
+//                                            }]];
+//    
+//    [self.viewController presentViewController:alert animated:YES completion:nil];
 }
 
 @end

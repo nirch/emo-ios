@@ -85,6 +85,61 @@ class EMRenderManager3 : NSObject
     
     //
     // MARK: - Rendering
+    //
+    func renderVideoFromEmuGif(emu: Emuticon, loopsCount: Int = 5) -> HCRender? {
+        guard emu.wasRendered?.boolValue == true else {return nil}
+        guard let emuDef = emu.emuDef else {return nil}
+        guard let gifPath = emu.animatedGifPath() else {return nil}
+
+        // Make sure gif file exists on disk
+        let fm = NSFileManager.defaultManager()
+        guard fm.fileExistsAtPath(gifPath) else {return nil}
+        
+        // Delete output video path if exists
+        do {try fm.removeItemAtPath(emu.videoPath())} catch {}
+        
+        let info = [
+            emkEmuticonOID:emu.oid!,
+            emkEmuticonDefOID:emuDef.oid!,
+            emkEmuticonDefName:emuDef.name!
+        ] as [NSObject:AnyObject]
+        
+        let duration = emuDef.duration!.doubleValue
+        let loopedDuration = duration * Double(loopsCount)
+        
+        var renderCFG = [String: AnyObject]()
+        renderCFG[hcrWidth] = emuDef.emuWidth != nil ? Int(emuDef.emuWidth!):240
+        renderCFG[hcrHeight] = emuDef.emuHeight != nil ? Int(emuDef.emuHeight!):240
+        renderCFG[hcrDuration] = loopedDuration
+        renderCFG[hcrFPS] = emuDef.fps()
+        renderCFG[hcrSourceLayersInfo] = [
+            [
+                hcrSourceType:hcrGIF,
+                hcrPath:gifPath,
+                hcrDuration: duration
+            ]
+        ]
+        renderCFG[hcrOutputsInfo] = [
+            [
+                hcrOutputType:hcrVideo,
+                hcrPath:emu.videoPath()
+            ]
+        ]
+        
+        // Init the renderer with render CFG and check for setup errors.
+        let renderer = HCRender(configurationInfo: renderCFG, userInfo: info)
+        renderer.setup()
+        if renderer.error != nil {
+            return nil
+        }
+        
+        // Send for rendering
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) { () -> Void in
+            renderer.process()
+        }
+        
+        return renderer
+    }
     
     /**
     Will send emu def for rendering a preview (usually used in recorders or footage selection to display recording results)
@@ -223,11 +278,12 @@ class EMRenderManager3 : NSObject
     - parameter userInfo:   Dictionary with extra optional info about this render
     */
     func enqueueEmu(
-        emu:Emuticon,
-        renderType:EMRenderType,
-        mediaType:EMMediaDataType,
-        fullRender:Bool,
-        userInfo:[NSObject:AnyObject]) {
+        emu: Emuticon,
+        renderType: EMRenderType,
+        mediaType: EMMediaDataType,
+        fullRender: Bool,
+        userInfo: [NSObject:AnyObject],
+        oldStyle: Bool = true) {
             
             if let emuDef = emu.emuDef {
                 #if DEBUG
@@ -243,7 +299,7 @@ class EMRenderManager3 : NSObject
                 if self.renderingPOOL[oid] != nil || self.readyPool[oid] != nil {return}
                 
                 // HD or LD?
-                let inHD = self.inHDForRenderType(renderType)
+                let inHD = false // for now HD is turned off. self.inHDForRenderType(renderType)
                 
                 // fps
                 let fps = self.fpsForEmuDef(emuDef, renderType: renderType)

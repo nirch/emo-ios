@@ -2,7 +2,7 @@
 //  Emuticon+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 04/02/2016.
+//  Created by Aviv Wolf on 17/02/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *audioFilePath;
 @property (nullable, nonatomic, retain) NSNumber *audioStartTime;
+@property (nullable, nonatomic, retain) NSString *createdWithInvitationCode;
 @property (nullable, nonatomic, retain) NSNumber *inFocus;
 @property (nullable, nonatomic, retain) NSNumber *isFavorite;
 @property (nullable, nonatomic, retain) NSNumber *isPreview;
@@ -35,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *videoLoopsEffect;
 @property (nullable, nonatomic, retain) NSNumber *wasRendered;
 @property (nullable, nonatomic, retain) NSNumber *wasRenderedInHD;
-@property (nullable, nonatomic, retain) NSString *createdWithInvitationCode;
+@property (nullable, nonatomic, retain) NSNumber *jointEmuReceiverUploadedFootage;
 @property (nullable, nonatomic, retain) EmuticonDef *emuDef;
 
 @end

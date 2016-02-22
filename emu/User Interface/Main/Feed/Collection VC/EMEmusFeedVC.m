@@ -539,6 +539,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 #pragma mark - Dedicated footage
 -(void)askUserIfWantsADedicatedFootageForEmu:(Emuticon *)emu
 {
+    if (emu.isJointEmu) return;
     if (![emu.emuDef requiresDedicatedCapture]) return;
     
     SIAlertView *alert = [[SIAlertView alloc] initWithTitle:[emu.emuDef emuStoryTimeTitle] andMessage:LS(@"DEDICATED_FOOTAGE_REQUIRED_MESSAGE")];
@@ -583,7 +584,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // footage taken yet, will popup a question to the user about taking
         // the dedicated footage.
         Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
-        if ([emu.mostPrefferedUserFootage isKindOfClass:[PlaceHolderFootage class]]) {
+        if (emu.isJointEmu == NO && [emu.mostPrefferedUserFootage isKindOfClass:[PlaceHolderFootage class]]) {
             [self askUserIfWantsADedicatedFootageForEmu:emu];
             return;
         }
