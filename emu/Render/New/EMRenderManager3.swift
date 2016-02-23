@@ -98,12 +98,6 @@ class EMRenderManager3 : NSObject
         // Delete output video path if exists
         do {try fm.removeItemAtPath(emu.videoPath())} catch {}
         
-        let info = [
-            emkEmuticonOID:emu.oid!,
-            emkEmuticonDefOID:emuDef.oid!,
-            emkEmuticonDefName:emuDef.name!
-        ] as [NSObject:AnyObject]
-        
         let duration = emuDef.duration!.doubleValue
         let loopedDuration = duration * Double(loopsCount)
         
@@ -127,7 +121,17 @@ class EMRenderManager3 : NSObject
         ]
         
         // Init the renderer with render CFG and check for setup errors.
+        let uuid = NSUUID().UUIDString
+        let info = [
+            emkEmuticonOID:emu.oid!,
+            emkEmuticonDefOID:emuDef.oid!,
+            emkEmuticonDefName:emuDef.name!,
+            hcrUUID:uuid
+        ] as [NSObject:AnyObject]
+
         let renderer = HCRender(configurationInfo: renderCFG, userInfo: info)
+        renderer.uuid = uuid
+        renderer.outputProgressNotifications = true
         renderer.setup()
         if renderer.error != nil {
             return nil

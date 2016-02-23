@@ -29,6 +29,7 @@ class EMSharingOptionsVC:
     // Outlets
     //
     @IBOutlet weak var guiCarousel: iCarousel!
+    @IBOutlet weak var guiRenderProgress: YLProgressBar!
 
     // Delegate
     weak var delegate: EMInterfaceDelegate?
@@ -48,6 +49,9 @@ class EMSharingOptionsVC:
     // Emu to share
     var emuToShare: Emuticon?
     
+    // Rendering videos
+    var renderer: HCRender?
+    
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     //
@@ -60,9 +64,15 @@ class EMSharingOptionsVC:
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.initObservers()
         self.initData()
         self.initGUI()
         self.update()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.removeObservers()
     }
 
     //
@@ -72,6 +82,8 @@ class EMSharingOptionsVC:
         self.guiCarousel.type = iCarouselType.Rotary
         self.guiCarousel.dataSource = self
         self.guiCarousel.delegate = self
+        EmuStyle.sh().styleYLProgressBar(self.guiRenderProgress)
+        self.guiRenderProgress.hidden = true
     }
 
     //
@@ -128,6 +140,70 @@ class EMSharingOptionsVC:
         
     }
     
+    //
+    // MARK: - Observers
+    //
+    func initObservers() {
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addUniqueObserver(
+            self,
+            selector: "onRenderingVideoProgress:",
+            name: hcrNotificationRenderProgress,
+            object: nil)
+        nc.addUniqueObserver(
+            self,
+            selector: "onRenderingVideoFinished:",
+            name: hcrNotificationRenderFinished,
+            object: nil)
+    }
+    
+    func removeObservers() {
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(hcrNotificationRenderProgress)
+        nc.removeObserver(hcrNotificationRenderFinished)
+    }
+    
+    // MARK: - Observers handlers
+    func onRenderingVideoProgress(notification: NSNotification) {
+        guard let renderer = self.renderer else {return}
+        guard let info = notification.userInfo else {return}
+        guard let extraInfo = info["userInfo"] else {return}
+        guard let uuid = extraInfo[hcrUUID] as? String else {return}
+        guard uuid == renderer.uuid! else {return}
+        guard let progress = info[hcrProgress] as? CGFloat else {return}
+
+        // Update the video progress bar
+        dispatch_async(dispatch_get_main_queue(), {
+            self.guiRenderProgress.setProgress(progress, animated: false)
+        })
+    }
+    
+    func onRenderingVideoFinished(notification: NSNotification) {
+        guard let renderer = self.renderer else {return}
+        guard let info = notification.userInfo else {return}
+        guard let uuid = info[hcrUUID] as? String else {return}
+        guard uuid == renderer.uuid! else {return}
+        
+        self.guiRenderProgress.hidden = true
+
+        guard self.sharer != nil else {
+            // sharer doesn't exist?
+            self.update()
+            self.view.makeToast(EML.s("FAILED"))
+            return
+        }
+        
+        // Update the video progress bar
+        dispatch_async(dispatch_get_main_queue(), {
+            self.guiRenderProgress.setProgress(1.0, animated: false)
+            self._shareEmuUsingCurrentSharer()
+        })
+        
+    }
+    
+    //
+    // MARK: - UI Updates
+    //
     func update() {
         let appCFG = AppCFG.cfgInContext(EMDB.sh().context)
         self.prefferedMediaType = appCFG.userPrefferedShareType == 1 ? EMKShareOption.emkShareOptionVideo : EMKShareOption.emkShareOptionAnimatedGif
@@ -334,15 +410,24 @@ class EMSharingOptionsVC:
     func renderVideoBeforeShareForEmu(emu: Emuticon, requiresWaterMark: Bool) {
         guard emu.emuDef!.allResourcesAvailable() else {return}
         guard emu.wasRendered?.boolValue == true else {return}
+        guard self.renderer == nil else {return}
         
         let info = HMParams()
         info.addKey(emkEmuticonOID, valueIfNotNil: emu.oid)
         info.addKey(emkEmuticonDefOID, valueIfNotNil: emu.emuDef?.oid)
         info.addKey(emkPackageOID, valueIfNotNil: emu.emuDef?.package?.name)
         
-        EMRenderManager3.sh().renderVideoFromEmuGif(
-            emu,
-            loopsCount: 4)
+        self.renderer = EMRenderManager3.sh().renderVideoFromEmuGif(emu, loopsCount: 5)
+        if self.renderer == nil {
+            // Failed rendering video
+            self.view.makeToast(EML.s("FAILED"))
+            self.update()
+            self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
+            self.guiRenderProgress.hidden = true
+        }
+        
+        self.guiRenderProgress.setProgress(0.0, animated: false)
+        self.guiRenderProgress.hidden = false
     }
     
     func _share() {
@@ -395,13 +480,11 @@ class EMSharingOptionsVC:
     }
 
     func sharerDidCancelWithInfo(info: [NSObject : AnyObject]!) {
-        self.update()
-        self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
+        self.finishUp()
     }
     
     func sharerDidFailWithInfo(info: [NSObject : AnyObject]!) {
-        self.update()
-        self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
+        self.finishUp()
     }
     
     func sharerDidFinishWithInfo(info: [NSObject : AnyObject]!) {
@@ -412,8 +495,15 @@ class EMSharingOptionsVC:
     }
     
     func sharerDidShareObject(sharedObject: AnyObject!, withInfo info: [NSObject : AnyObject]!) {
+        self.finishUp()
+    }
+    
+    func finishUp() {
         self.update()
         self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
+        self.emuToShare?.cleanTempVideoResources()
+        self.emuToShare?.cleanUpVideoIfNotFullRender()
+        self.renderer = nil
     }
     
     //

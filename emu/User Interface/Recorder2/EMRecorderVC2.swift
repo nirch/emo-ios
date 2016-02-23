@@ -323,8 +323,10 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
             self.emuticonDefNameForPreview = info[emkEmuticonDefName] as? String
         }
     }
-    
+
+    //
     // MARK: - Observers
+    //
     func initObservers() {
         let nc = NSNotificationCenter.defaultCenter()
         nc.addUniqueObserver(

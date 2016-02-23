@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Emu ScreenVC-->
@@ -785,17 +786,28 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ddp-dh-hwb" userLabel="render video progress" customClass="YLProgressBar">
+                                <rect key="frame" x="74.5" y="71.5" width="225" height="18"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="GEO-Sw-mDf"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="topMargin" secondItem="u8C-63-ZKL" secondAttribute="top" id="BfD-5W-Nf1"/>
+                            <constraint firstItem="Ddp-dh-hwb" firstAttribute="centerY" secondItem="in9-oc-1ke" secondAttribute="centerY" id="C8K-z2-AtU"/>
+                            <constraint firstItem="Ddp-dh-hwb" firstAttribute="width" secondItem="in9-oc-1ke" secondAttribute="width" multiplier="0.6" id="FRX-L5-hTh"/>
                             <constraint firstAttribute="trailing" secondItem="u8C-63-ZKL" secondAttribute="trailing" id="KCE-MF-7dR"/>
                             <constraint firstAttribute="bottomMargin" secondItem="u8C-63-ZKL" secondAttribute="bottom" id="R1x-YY-2sZ"/>
+                            <constraint firstItem="Ddp-dh-hwb" firstAttribute="centerX" secondItem="in9-oc-1ke" secondAttribute="centerX" id="Znd-v0-h3I"/>
                             <constraint firstItem="u8C-63-ZKL" firstAttribute="leading" secondItem="in9-oc-1ke" secondAttribute="leading" id="tbB-Iy-76F"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="guiCarousel" destination="u8C-63-ZKL" id="cNb-tw-dqA"/>
+                        <outlet property="guiRenderProgress" destination="Ddp-dh-hwb" id="h4f-yN-91c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s1H-9E-av3" userLabel="First Responder" sceneMemberID="firstResponder"/>

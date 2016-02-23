@@ -243,6 +243,7 @@
 // Videos
 -(BOOL)engagedUserVideoSettings;
 -(void)cleanTempVideoResources;
+-(void)cleanUpVideoIfNotFullRender;
 
 
 // Converting info to none core data object

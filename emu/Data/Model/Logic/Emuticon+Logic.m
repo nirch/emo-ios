@@ -370,6 +370,13 @@
     [fm removeItemAtPath:outputVideoPath2 error:nil];
 }
 
+-(void)cleanUpVideoIfNotFullRender
+{
+    if (self.videoPath == nil) return;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:self.videoPath error:nil];
+}
+
 //-(HMParams *)baseParamsForRenderInHD:(BOOL)inHD
 //{
 //    EmuticonDef *emuDef = self.emuDef;
