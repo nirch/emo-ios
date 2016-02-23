@@ -49,6 +49,13 @@
     }
 }
 
+-(BOOL)isJointEmuFinalized
+{
+    if (self.jointEmuInstance == nil) return NO;
+    NSNumber *done = [self.jointEmuInstance safeBoolNumberForKey:@"done" defaultsValue:@NO];
+    return [done boolValue];
+}
+
 #pragma mark - Initiator related.
 -(NSString *)jointEmuInitiatorID
 {

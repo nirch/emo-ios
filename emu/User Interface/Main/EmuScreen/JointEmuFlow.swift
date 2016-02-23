@@ -30,6 +30,9 @@ enum JointEmuState {
     case ReceiverUploadingFootage
     case ReceiverWaitingForFlowEnd
     
+    // Finalized
+    case Finalized
+    
     case Error
 }
 
@@ -46,6 +49,11 @@ class JointEmuFlow: NSObject {
         
         // Check if required to create the joint emu on the server side.
         if emu.jointEmuInstance == nil {return .InstanceInfoMissing}
+        
+        // Finalized emu
+        if emu.isJointEmuFinalized() {
+            return .Finalized
+        }
         
         // Initiator or receiver?
         if emu.isJointEmuInitiatedByThisUser() {

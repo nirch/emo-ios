@@ -125,7 +125,9 @@ class EmuScreenVC: UIViewController,
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.emusVC?.refresh()
+        
         // Messeges hidden by default
         self.guiProgressView.hidden = true
         self.guiMessage.hidden = true
@@ -145,7 +147,7 @@ class EmuScreenVC: UIViewController,
         self.initData()
         
         // Init gui state
-        self.initGUI()
+        self.initGUI()        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -530,6 +532,7 @@ class EmuScreenVC: UIViewController,
         self.guiSlotsContainer.hidden = emu == nil
         self.slotsVC?.emu = emu
         self.updateLongRenderIndicator()
+        self.hideSharing()
         
         // Handle the state
         switch self.jointEmuState {
@@ -543,6 +546,10 @@ class EmuScreenVC: UIViewController,
             
         case .InstanceInfoMissing:
             self.createJointEmuInstance()
+            
+        case .Finalized:
+            self.guiSlotsContainer.hidden = true
+            self.showSharing()
          
         // Initiator flow
         case .InitiatorNeedsToCreateDedicatedFootage:

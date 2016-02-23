@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 -(NSString *)jointEmuOID;
 -(NSArray *)jointEmuSlots;
 -(NSInteger)jointEmuLocalSlotIndex;
+-(BOOL)isJointEmuFinalized;
 
 #pragma mark - Initiator related.
 -(NSString *)jointEmuInitiatorID;
