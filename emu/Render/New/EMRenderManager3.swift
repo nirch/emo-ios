@@ -152,8 +152,14 @@ class EMRenderManager3 : NSObject
     - parameter emuDefOID:   The oid of the emu definition
     - parameter captureInfo: Dictionary with info about the captured user
     */
-    func renderPreviewForEmuDefOID(emuDefOID : String, footagesForPreview: [FootageProtocol], slotIndex: Int = 0) -> HCRender? {
-        // Must have an emu definition and all resources must exist on local storage
+    func renderPreviewForEmuDefOID(
+        emuDefOID : String,
+        footagesForPreview: [FootageProtocol],
+        slotIndex: Int = 0,
+        keepResultAtPath: String? = nil
+        ) -> HCRender? {
+        
+            // Must have an emu definition and all resources must exist on local storage
         let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context)
         if emuDef == nil {return nil}
         if !emuDef.allResourcesAvailable() {return nil}
@@ -197,9 +203,21 @@ class EMRenderManager3 : NSObject
             if (renderer.error == nil) {
                 // Render
                 renderer.process()
+                var url = renderer.outputURL()
+                
+                // If requested to keep the result, copy the file to the emus video path.
+                if keepResultAtPath != nil {
+                    let fm = NSFileManager.defaultManager()
+                    do {
+                        try fm.removeItemAtPath(keepResultAtPath!)
+                        try fm.moveItemAtPath(url.path!, toPath: keepResultAtPath!)
+                        url = NSURL(fileURLWithPath: keepResultAtPath!)
+                    } catch {}
+                }
                 
                 // Finished render
-                previewInfo[emkURL] = renderer.outputURL()
+                previewInfo[emkURL] = url
+
             } else {
                 // Configuration error for render
                 previewInfo[emkError] = renderer.error

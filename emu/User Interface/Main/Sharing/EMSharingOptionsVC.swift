@@ -204,9 +204,14 @@ class EMSharingOptionsVC:
     //
     // MARK: - UI Updates
     //
-    func update() {
-        let appCFG = AppCFG.cfgInContext(EMDB.sh().context)
-        self.prefferedMediaType = appCFG.userPrefferedShareType == 1 ? EMKShareOption.emkShareOptionVideo : EMKShareOption.emkShareOptionAnimatedGif
+    func update(forceVideoOnly forceVideoOnly: Bool = false) {
+        if (forceVideoOnly) {
+            self.prefferedMediaType = EMKShareOption.emkShareOptionVideo
+        } else {
+            let appCFG = AppCFG.cfgInContext(EMDB.sh().context)
+            self.prefferedMediaType = appCFG.userPrefferedShareType == 1 ? EMKShareOption.emkShareOptionVideo : EMKShareOption.emkShareOptionAnimatedGif
+        }
+        
         self.initData()
         self.guiCarousel.reloadData()
         self.updateToShareMethod(self.currentShareMethod, forcedUpdate: true)
@@ -501,7 +506,6 @@ class EMSharingOptionsVC:
     func finishUp() {
         self.update()
         self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
-        self.emuToShare?.cleanTempVideoResources()
         self.emuToShare?.cleanUpVideoIfNotFullRender()
         self.renderer = nil
     }

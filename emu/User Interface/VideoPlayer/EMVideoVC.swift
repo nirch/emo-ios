@@ -12,6 +12,7 @@ import AVKit
 class EMVideoVC: AVPlayerViewController {
     var renderer: HCRender? = nil
     var info: [NSObject:AnyObject]? = nil
+    private var latestPlayedURL: NSURL? = nil
     
     weak var previewDelegate : EMPreviewDelegate?
     
@@ -118,10 +119,15 @@ class EMVideoVC: AVPlayerViewController {
         if let player = self.player {
             player.pause()
         }
+        self.latestPlayedURL = url
         self.player = AVPlayer.init(URL: url)
         self.player?.actionAtItemEnd = AVPlayerActionAtItemEnd.None
         self.player?.seekToTime(kCMTimeZero)
         self.player?.play()
+    }
+    
+    func latestVideoURL() -> NSURL? {
+        return self.latestPlayedURL
     }
     
     // MARK: - Rendering UI
@@ -150,7 +156,8 @@ class EMVideoVC: AVPlayerViewController {
                 slotIndex: slotIndex
             )
         } else {
-            NSLog("@@@@")
+            // TODO: Download resources first before rendering.
+            NSLog(">>>>>>> DOWNLOAD!")
         }
     }
     

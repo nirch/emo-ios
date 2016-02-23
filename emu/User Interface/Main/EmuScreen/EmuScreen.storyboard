@@ -127,12 +127,6 @@
                                     <constraint firstItem="7VF-ve-PIB" firstAttribute="centerY" secondItem="dvt-o2-7sZ" secondAttribute="centerY" id="r2h-NI-7hM"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tO9-WG-SCA" userLabel="Video player container">
-                                <rect key="frame" x="0.0" y="64" width="375" height="211"/>
-                                <connections>
-                                    <segue destination="Tlh-1l-eaQ" kind="embed" identifier="emu screen video preview segue" id="1Qn-pi-lq0"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7F-DQ-Ndw" userLabel="Emus container view">
                                 <rect key="frame" x="0.0" y="64" width="375" height="211"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -141,6 +135,13 @@
                                 </constraints>
                                 <connections>
                                     <segue destination="Mbf-Gl-S8K" kind="embed" identifier="emus instances segue" id="5X2-gQ-8Kt"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tO9-WG-SCA" userLabel="Video player container">
+                                <rect key="frame" x="0.0" y="64" width="375" height="211"/>
+                                <color key="backgroundColor" red="0.4823529412" green="0.7843137255" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="Tlh-1l-eaQ" kind="embed" identifier="emu screen video preview segue" id="1Qn-pi-lq0"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pqD-K3-eJ1" userLabel="Emu creation flow bar container">

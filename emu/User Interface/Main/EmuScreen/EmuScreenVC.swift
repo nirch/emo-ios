@@ -212,7 +212,13 @@ class EmuScreenVC: UIViewController,
         guard let emuDef = self.emuDef where emuDef.isNewStyleLongRender() else {return}
         
         // Not interesting if no emu in focus
-        guard self.currentEmu() != nil else {return}
+        guard let emu = self.currentEmu() else {return}
+        
+        // If video already available
+        if emu.videoURL() != nil {
+            self.guiLongVideoIndicator.hidden = true
+            return
+        }
         
         // A long render.
         // If already rendering something, show the progress bar but hide the render button.
@@ -485,20 +491,37 @@ class EmuScreenVC: UIViewController,
     }
     
     func updateEmuUIStateForNormalEmu() {
+        guard let emu = self.currentEmu() else {return}
+        guard let emuDef = self.emuDef else {return}
+
         // Show the share UI.
         self.jointEmuState = .NotAJointEmu
         self.guiSlotsContainer.hidden = true
         self.emusVC?.refresh()
         self.showSharing()
+
+        // Play full rendered video, if required.
+        if emuDef.fullRenderCFG != nil {
+            if emu.videoURL() != nil {
+                self.showVideoAtURL(emu.videoURL())
+            } else {
+                if self.renderer != nil {
+                    // Cancel previous renders.
+                    self.renderer?.cancel()
+                }
+                self.fullRenderForCurrentEmu(keepResult: true)
+            }
+        }
     }
     
     func showSharing() {
         self.guiShareMediaTypeSelector.setTitle(EML.s("GIF"), forSegmentAtIndex: 0)
         self.guiShareMediaTypeSelector.setTitle(EML.s("VIDEO"), forSegmentAtIndex: 1)
         self.guiShareMediaTypeSelector.hidden = false
+        self.updateToPrefferedSharingMediaType()
+        
         self.showUserMessage(EML.s(""), messageText: EML.s(""))
         self.guiSharingContainer.hidden = false
-        self.updateToPrefferedSharingMediaType()
         self.guiActionButtonContainer.hidden = false
         
         // Select the preffered shared media type
@@ -734,13 +757,26 @@ class EmuScreenVC: UIViewController,
     }
     
     func updateToPrefferedSharingMediaType() {
+        self.guiShareMediaTypeSelector.userInteractionEnabled = true
         let appCFG = AppCFG.cfgInContext(EMDB.sh().context)
         if appCFG.userPrefferedShareType?.integerValue == 1 {
             self.guiShareMediaTypeSelector.selectedSegmentIndex = 1
         } else {
             self.guiShareMediaTypeSelector.selectedSegmentIndex = 0
         }
-        self.sharingOptionsVC!.update()
+        
+        // Full render emus will not allow to share gifs
+        var forceVideoOnly = false
+        if let emuDef = self.emuDef {
+            if emuDef.fullRenderCFG != nil {
+                self.guiShareMediaTypeSelector.selectedSegmentIndex = 1
+                self.guiShareMediaTypeSelector.hidden = true
+                self.guiShareMediaTypeSelector.userInteractionEnabled = false
+                forceVideoOnly = true
+            }
+        }
+        
+        self.sharingOptionsVC!.update(forceVideoOnly: forceVideoOnly)
     }
     
     func shareCurrentEmu() {
@@ -1018,7 +1054,7 @@ class EmuScreenVC: UIViewController,
         } else {
             self.guiVideoPlayerContainer.alpha = 0
         }
-        
+        self.videoVC?.stop()
         self.emusVC?.opaqueAnimated(animated: true)
     }
     
@@ -1116,7 +1152,7 @@ class EmuScreenVC: UIViewController,
         }
     }
     
-    func previewFullRenderForCurrentEmu() {
+    func fullRenderForCurrentEmu(keepResult keepResult: Bool = false) {
         guard let emuDef = self.emuDef where emuDef.isNewStyleLongRender() else {return}
         guard let emu = self.currentEmu() else {return}
         
@@ -1132,11 +1168,19 @@ class EmuScreenVC: UIViewController,
             self.renderer?.cancel()
         }
         
+        //
+        var keepResultForEmuAtPath: String? = nil
+        if keepResult {
+            keepResultForEmuAtPath = emu.videoPath()
+        }
+        
         // Render a preview
         let rm = EMRenderManager3.sh()
         self.renderer = rm.renderPreviewForEmuDefOID(
             emuDef.oid!,
-            footagesForPreview: emu.relatedFootages() as! [FootageProtocol]
+            footagesForPreview: emu.relatedFootages() as! [FootageProtocol],
+            slotIndex: 0,
+            keepResultAtPath: keepResultForEmuAtPath
         )
     }
     
@@ -1248,7 +1292,7 @@ class EmuScreenVC: UIViewController,
     @IBAction func onPressedLongPreviewRenderButton(sender: AnyObject)
     {
         // Full long render preview
-        self.previewFullRenderForCurrentEmu()
+        self.fullRenderForCurrentEmu()
     }
     
     @IBAction func onPrefferedMediaTypeChanged(sender: AnyObject) {

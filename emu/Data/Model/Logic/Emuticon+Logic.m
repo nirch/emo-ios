@@ -373,6 +373,7 @@
 -(void)cleanUpVideoIfNotFullRender
 {
     if (self.videoPath == nil) return;
+    if (self.emuDef.fullRenderCFG != nil) return;
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:self.videoPath error:nil];
 }

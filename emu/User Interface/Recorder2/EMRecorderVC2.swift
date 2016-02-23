@@ -761,9 +761,22 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
                     
                     emu.prefferedFootageOID = footage.oid
                     
-                    // And clean previous renders so the emu will render
-                    // with the new footage.
+                    // Cleanup for rerenders
                     emu.cleanUp()
+                    
+                    // Optimization: skip a full render when it isn't required.
+                    // If full render for finalized emus (joint or non-joint), 
+                    // copy the preview video file to the finalized video path
+                    if emu.isJointEmu() && emu.isJointEmuFinalized() ||
+                        !emu.isJointEmu() && emu.emuDef?.fullRenderCFG != nil {
+                            let fm = NSFileManager.defaultManager()
+                            do {
+                                guard let previewVideoURL = self.recordingPreviewVC?.latestVideoURL() else {break}
+                                guard let previewVideoPath = previewVideoURL.path else {break}
+                                try fm.moveItemAtPath(previewVideoPath, toPath: emu.videoPath())
+                            } catch {
+                            }
+                    }
                 }
             }
         }
@@ -774,16 +787,6 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.delegate?.recorderWantsToBeDismissedAfterFlow(
             self.flowType,
             info: self.info! as [NSObject : AnyObject])
-
-        // Render gif for the
-//        EMRenderManager3.sh().renderGifForFootage(footage) {sucess in
-//            if (success == true) {
-//                // Dismiss the recorder
-//            } else {
-//                self.epicFail()
-//            }
-//        }
-
     }
 
     @IBAction func onPressedNegativeButton(sender: AnyObject) {
