@@ -24,6 +24,8 @@
 #define emkDataUpdatedPackages @"emk data updated packages"
 #define emkDataUpdatedUnhidePackages @"emk data updated unhide packages"
 
+#define emkNavigateToEmuOID @"emk navigate to emu oid"
+
 #define emkUserSignedIn @"emk user signed in"
 
 #define emkJointEmuRefresh @"emk joint emu refresh"

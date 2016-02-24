@@ -132,6 +132,11 @@
                      name:emkJointEmuNavigateToInviteCode
                    object:nil];
 
+    [nc addUniqueObserver:self
+                 selector:@selector(onNavigateToEmu:)
+                     name:emkNavigateToEmuOID
+                   object:nil];
+    
     // Packages data refresh
     [nc addUniqueObserver:self
                  selector:@selector(onPackagesDataRefresh:)
@@ -196,6 +201,7 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkJointEmuNavigateToInviteCode];
+    [nc removeObserver:emkNavigateToEmuOID];
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIShouldHideTabsBar];
     [nc removeObserver:emkUIShouldShowTabsBar];
@@ -265,6 +271,13 @@
     NSDictionary *info = notification.userInfo;
     NSString *invitationCode = info[emkJEmuInviteCode];
     [self navigateToContentRelatedToInvitationCode:invitationCode];
+}
+
+-(void)onNavigateToEmu:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    NSString *emuOID = info[emkEmuticonOID];
+    [self navigateToContentRelatedToToEmuOID:emuOID];
 }
 
 -(void)onPackagesDataRefresh:(NSNotification *)notification
@@ -635,6 +648,31 @@
         [self navigateIfPossibleToContentWithInfo:params.dictionary];
     });
 }
+
+-(void)navigateToContentRelatedToToEmuOID:(NSString *)emuOID
+{
+    Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+    if (emu == nil) {
+        // No invitation code? Something went wrong :-(
+        [self.view makeToast:LS(@"ERROR_TITLE")];
+        [self.blockingProgressVC hideAnimated:YES];
+        return;
+    }
+    
+    // Emu gains focus.
+    [emu gainFocus];
+    [EMDB.sh save];
+    
+    // We have the invitation code and related emu. Navigate to that emu if possible.
+    HMParams *params = [HMParams new];
+    [params addKey:emkEmuticonOID valueIfNotNil:emu.oid];
+    [params addKey:emkEmuticonDefOID valueIfNotNil:emu.emuDef.oid];
+    [params addKey:emkPackageOID valueIfNotNil:emu.emuDef.package.oid];
+    dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
+        [self navigateIfPossibleToContentWithInfo:params.dictionary];
+    });
+}
+
 
 -(void)navigateIfPossibleToContentWithInfo:(NSDictionary *)info
 {

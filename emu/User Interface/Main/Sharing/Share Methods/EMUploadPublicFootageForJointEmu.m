@@ -97,7 +97,7 @@
         if (task.completed && task.error == nil) {
             [self success];
         } else if (task.completed && task.error) {
-            [self failed];
+            [self failedWithError:task.error];
         }
         return nil;
     }];
@@ -128,9 +128,10 @@
 }
 
 #pragma mark - Results
--(void)failed
+-(void)failedWithError:(NSError *)error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (error) [self.view makeToast:LS(@"ALERT_CHECK_INTERNET_MESSAGE")];
         [self.delegate sharerDidFailWithInfo:@{@"uploaded":@(NO), @"jeOID":self.jeOID}];
         [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(NO), @"jeOID":self.jeOID}];
     });
@@ -141,6 +142,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.uploadedFilesCount += 1;
         if (self.uploadedFilesCount >= self.requiredFilesToUploadCount) {
+            [self.view makeToast:LS(@"SHARE_TOAST_UPLOADED")];
             self.finishedSuccessfully = YES;
             [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(YES), @"jeOID":self.jeOID}];
         }

@@ -69,6 +69,7 @@
 
     // Update the joint emu info.
     emu.jointEmuInstance = info;
+    emu.jointEmuInstanceOID = [info safeOIDStringForKey:@"_id"];
     
     // Remote footages
     if (info[@"joint_emu_slots"]) {

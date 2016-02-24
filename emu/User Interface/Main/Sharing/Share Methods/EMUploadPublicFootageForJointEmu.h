@@ -15,6 +15,7 @@
 @property (nonatomic) NSInteger slotIndex;
 @property (nonatomic) BOOL finishedSuccessfully;
 
+-(void)cancel;
 -(void)uploadBeforeSharing;
 -(void)shareAfterUploaded;
 

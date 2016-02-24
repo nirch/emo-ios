@@ -345,8 +345,14 @@
 
 -(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
 {
-    NSString *packageOID = info[emkPackageOID];
+    // Handle joint emu notifications
+    if (info[@"emu_instance_id"]) {
+        [self handleJointEmuNotificationWithInfo:info params:params];
+        return;
+    }
     
+    // Handle package alert notifications
+    NSString *packageOID = info[emkPackageOID];
     [params addKey:AK_EP_PACKAGE_OID value:packageOID];
     if (packageOID != nil) {
         Package *package = [Package findWithID:packageOID context:EMDB.sh.context];
@@ -356,12 +362,26 @@
     }
     [params addKey:AK_EP_TEXT valueIfNotNil:info[@"alert"]];
     [HMPanel.sh analyticsEvent:AK_E_NOTIFICATIONS_USER_OPENED_NOTIFICATION info:params.dictionary];
-
     if (packageOID != nil) {
         [self handleNavigateToPackageOID:packageOID];
     }
 }
 
+-(void)handleJointEmuNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
+{
+    if (info[@"emu_instance_id"] == nil) return;
+    NSString *message = [info[@"aps"] valueForKey:@"alert"];
+    
+    NSString *jeOID = info[@"emu_instance_id"];
+    if (jeOID == nil) return;
+    
+    Emuticon *emu = [Emuticon findWithJointEmuInstanceID:jeOID context:EMDB.sh.context];
+    if (emu == nil) return;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [EMBackend.sh openEmuWithOID:emu.oid message:message?message:LS(@"JOINT_EMU_LOADING")];
+    });
+}
 
 -(void)handleNavigateToPackageOID:(NSString *)packOID
 {
@@ -380,6 +400,9 @@
                                                           userInfo:params.dictionary];
     });
 }
+
+
+
 
 #pragma mark - Background fetches
 //

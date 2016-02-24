@@ -23,7 +23,17 @@
                                                         withPredicate:predicate
                                                             inContext:context];
     return (Emuticon *)object;
+}
 
++(Emuticon *)findWithJointEmuInstanceID:(NSString *)jeOID
+                                context:(NSManagedObjectContext *)context
+{
+    if (jeOID == nil) return nil;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"jointEmuInstanceOID=%@", jeOID];
+    NSManagedObject *object = [NSManagedObject fetchSingleEntityNamed:E_EMU
+                                                        withPredicate:predicate
+                                                            inContext:context];
+    return (Emuticon *)object;
 }
 
 

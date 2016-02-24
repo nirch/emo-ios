@@ -329,6 +329,41 @@
                                                                  }];
 }
 
+#pragma mark - Data updates and navigations
+-(void)openEmuWithOID:(NSString *)emuOID message:(NSString *)message
+{
+    if (emuOID == nil) return;
+    
+    // Block the UI until finishing the flow of opening the invite
+    [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShowBlockingProgress
+                                                        object:nil
+                                                      userInfo:@{@"title":message}];
+    
+    
+    // First, force refresh data
+    [EMBackend.sh updatePackagesWithCompletionHandler:^(BOOL success) {
+        if (success == NO) {
+            // Failed refetching packages.
+            // TODO: handle this error.
+            return;
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationUpdateBlockingProgress
+                                                            object:nil
+                                                          userInfo:@{@"title":LS(@"JOINT_EMU_LOADING")}];
+        
+        // First, check if local emu exists.
+        Emuticon *emu = [Emuticon findWithID:emuOID context:EMDB.sh.context];
+        [emu gainFocus];
+        HMParams *params = [HMParams new];
+        [params addKey:emkEmuticonOID value:emuOID];        
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkNavigateToEmuOID
+                                                            object:nil
+                                                          userInfo:params.dictionary];
+    }];
+}
+
+
 #pragma mark - Background fetch
 -(void)reloadPackagesInTheBackgroundWithNewDataHandler:(void (^)())newDataHandler
                                       noNewDataHandler:(void (^)())noNewDataHandler

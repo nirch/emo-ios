@@ -208,8 +208,8 @@ class EMRenderManager3 : NSObject
                 // If requested to keep the result, copy the file to the emus video path.
                 if keepResultAtPath != nil {
                     let fm = NSFileManager.defaultManager()
+                    do {try fm.removeItemAtPath(keepResultAtPath!)} catch {}
                     do {
-                        try fm.removeItemAtPath(keepResultAtPath!)
                         try fm.moveItemAtPath(url.path!, toPath: keepResultAtPath!)
                         url = NSURL(fileURLWithPath: keepResultAtPath!)
                     } catch {}

@@ -28,6 +28,8 @@ typedef NS_ENUM(NSInteger, EMSlotState){
 +(Emuticon *)findWithInvitationCode:(NSString *)invitationCode
                 context:(NSManagedObjectContext *)context;
 
++(Emuticon *)findWithJointEmuInstanceID:(NSString *)jeOID
+                                context:(NSManagedObjectContext *)context;
 
 #pragma mark - General.
 -(NSString *)jointEmuOID;

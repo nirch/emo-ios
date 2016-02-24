@@ -33,6 +33,9 @@
 @property (nonatomic) NSMutableDictionary *packOIDByPID;
 @property (nonatomic) BOOL isAlreadyListeningToTransactions;
 
+#pragma mark - Data updates and navigations
+-(void)openEmuWithOID:(NSString *)emuOID message:(NSString *)message;
+
 #pragma mark - Background fetch
 -(void)reloadPackagesInTheBackgroundWithNewDataHandler:(void (^)())newDataHandler
                                       noNewDataHandler:(void (^)())noNewDataHandler
