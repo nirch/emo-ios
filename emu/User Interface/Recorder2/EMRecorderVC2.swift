@@ -607,6 +607,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.shouldRecordAudio = false
         let writer = HFWriterVideo()
         writer.videoBitsPerPixel = 21.0
+        writer.videoMaskBitsPerPixel = 21.0
         if self.shouldRecordAudio {
             writer.includingAudio = true
             writer.audioSampleRate = 21000
@@ -784,6 +785,8 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         // Save
         EMDB.sh().save()
 
+        EMRenderManager3.sh().renderGifForFootage(footage) {success in}
+        
         self.delegate?.recorderWantsToBeDismissedAfterFlow(
             self.flowType,
             info: self.info! as [NSObject : AnyObject])

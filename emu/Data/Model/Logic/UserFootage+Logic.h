@@ -81,6 +81,13 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
 +(UserFootage *)masterFootage;
 
 /**
+ *  Check if any of the footages in local storage.
+ *
+ *  @return YES if a remote footage exists (at least one) in local storage.
+ */
++(BOOL)remoteFootagesAvailable;
+
+/**
  *  Finds or creates a user footage object with the provided info.
  *
  *  @param info    A dictionary containing info about the footage.

@@ -38,7 +38,7 @@ class EMSharingOptionsVC:
     var shareNames: [EMKShareMethod: String] = [EMKShareMethod: String]()
     var shareMethods: [EMKShareMethod] = [EMKShareMethod]()
     var colorsByShareMethod: [EMKShareMethod: UIColor] = [EMKShareMethod: UIColor]()
-    var buttonFrame: CGRect = CGRectMake(0, 0, 130, 130)
+    var buttonFrame: CGRect = CGRectMake(0, 0, 110, 110)
 
     var currentShareMethod: EMKShareMethod = EMKShareMethod.emkShareMethodFacebookMessanger
     var prefferedMediaType: EMKShareOption = EMKShareOption.emkShareOptionAnimatedGif

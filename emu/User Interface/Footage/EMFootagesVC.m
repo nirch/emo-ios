@@ -37,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *guiDeleteIcon;
 @property (weak, nonatomic) IBOutlet EMButton *guiSetAsDefaultButton;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *guiWhosTakesSelector;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topSpacing;
 
 @property (nonatomic, readwrite) EMFootagesFlowType flowType;
 
@@ -108,6 +110,14 @@
         self.guiApplyChoiceBar.hidden = YES;
         self.guiManageTakesBar.hidden = NO;
     }
+    
+    if ([UserFootage remoteFootagesAvailable]) {
+        self.guiWhosTakesSelector.hidden = NO;
+        self.topSpacing.constant = 44;
+    } else {
+        self.guiWhosTakesSelector.hidden = YES;
+        self.topSpacing.constant = 0;
+    }
 }
 
 -(void)initGUIOnAppearance
@@ -115,9 +125,16 @@
     if (!self.alreadyInitializedOnAppearance) {
         self.alreadyInitializedOnAppearance = YES;
     } else {
-        [self.dataSource reset];
-        [self.guiCollectionView reloadData];
+        [self refreshData];
     }
+}
+
+
+-(void)refreshData
+{
+    self.dataSource.remoteFootages = self.guiWhosTakesSelector.selectedSegmentIndex==1;
+    [self.dataSource reset];
+    [self.guiCollectionView reloadData];
 }
 
 -(void)initNavigationBar
@@ -240,8 +257,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.dataSource reset];
-        [self.guiCollectionView reloadData];
+        [self refreshData];
     }];
 }
 
@@ -262,8 +278,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     }
     
     [self.dataSource unselect];
-    [self.dataSource reset];
-    [self.guiCollectionView reloadData];
+    [self refreshData];
 }
 
 -(void)deleteSelectedFootage
@@ -285,8 +300,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         
     } completion:^(BOOL finished) {
         [EMDB.sh save];
-        [self.dataSource reset];
-        [self.guiCollectionView reloadData];
+        [self refreshData];
         [UIView animateWithDuration:0.3 animations:^{
             self.guiCollectionView.alpha = 1;
         }];
@@ -370,5 +384,14 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     [self deleteSelectedFootage];
 }
 
+
+#pragma mark - IB Actions
+// ===========
+// IB Actions.
+// ===========
+- (IBAction)onWhosTakesChanged:(id)sender
+{
+    [self refreshData];
+}
 
 @end

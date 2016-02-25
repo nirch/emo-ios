@@ -76,12 +76,8 @@ class SlotsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 // For initiator, show remote slots.
                 return emu.jointEmuSlots().count
             } else {
-                // For receiver, show the invitation status.
-                if emu.jointEmuReceiverUploadedFootage?.boolValue == true {
-                    return 2
-                } else {
-                    return 1
-                }
+                // For receiver, show the initiator and local receiver.
+                return 2
             }
         }
         UIView.animateWithDuration(0.7, animations: {
@@ -266,7 +262,8 @@ class SlotCell: UICollectionViewCell {
         self.footage = nil
         if slotIndex == 1 {
             self.footage = emu.jointEmuFootageAtSlot(initiatorSlot)
-            self.text = EML.s("JOINT_EMU_INITIATOR_NICE")
+            //self.text = EML.s("JOINT_EMU_INITIATOR_NICE")
+            self.text = EML.s("JOIN_ME")
         } else {
             self.footage = emu.jointEmuFootageAtSlot(receiverSlot)
             self.text = EML.s("JOINT_EMU_MY_TAKE")

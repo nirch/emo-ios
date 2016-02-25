@@ -28,6 +28,7 @@
 #import "EMShareProtocol.h"
 #import "EMInterfaceDelegate.h"
 #import <UIView+Toast.h>
+#import "EMCaches.h"
 
 // Notifications
 #import "HMNotificationCenter.h"

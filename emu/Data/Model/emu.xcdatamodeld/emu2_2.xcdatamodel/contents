@@ -138,7 +138,7 @@
         <attribute name="gifAvailable" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="oid" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pngSequenceAvailable" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="remoteFootage" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="remoteFootage" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="remoteFootageFiles" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="timeTaken" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
     </entity>

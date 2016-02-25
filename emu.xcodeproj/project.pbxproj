@@ -45,6 +45,10 @@
 		081B08881BB5C7AB003AFF16 /* AppCFG+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08741BB5C7AB003AFF16 /* AppCFG+CoreDataProperties.m */; };
 		081B08891BB5C7AB003AFF16 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08761BB5C7AB003AFF16 /* AppCFG.m */; };
 		081B088A1BB5C7AB003AFF16 /* AppCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08761BB5C7AB003AFF16 /* AppCFG.m */; };
+		08267E841C7DF9DE002A5C9D /* TestingKB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08267E831C7DF9DE002A5C9D /* TestingKB.swift */; };
+		08267E851C7DF9DF002A5C9D /* TestingKB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08267E831C7DF9DE002A5C9D /* TestingKB.swift */; };
+		08267E861C7E0213002A5C9D /* EMRenderManager3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD221F1C46464A00A64FC8 /* EMRenderManager3.swift */; };
+		08267E871C7E0214002A5C9D /* EMRenderManager3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD221F1C46464A00A64FC8 /* EMRenderManager3.swift */; };
 		08271FC91B01F5B90046F38E /* cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB51B01F5B90046F38E /* cancel.wav */; };
 		08271FCB1B01F5B90046F38E /* endRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB61B01F5B90046F38E /* endRecording.wav */; };
 		08271FCD1B01F5B90046F38E /* goodBG.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB71B01F5B90046F38E /* goodBG.wav */; };
@@ -879,6 +883,7 @@
 		081B08741BB5C7AB003AFF16 /* AppCFG+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppCFG+CoreDataProperties.m"; sourceTree = "<group>"; };
 		081B08751BB5C7AB003AFF16 /* AppCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCFG.h; sourceTree = "<group>"; };
 		081B08761BB5C7AB003AFF16 /* AppCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCFG.m; sourceTree = "<group>"; };
+		08267E831C7DF9DE002A5C9D /* TestingKB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingKB.swift; sourceTree = "<group>"; };
 		08271FB51B01F5B90046F38E /* cancel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cancel.wav; sourceTree = "<group>"; };
 		08271FB61B01F5B90046F38E /* endRecording.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = endRecording.wav; sourceTree = "<group>"; };
 		08271FB71B01F5B90046F38E /* goodBG.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = goodBG.wav; sourceTree = "<group>"; };
@@ -1482,6 +1487,7 @@
 				080CB31F1AA4A9DD00603E30 /* EMKeyboardContainerVC.m */,
 				080489E71AA5957A008CC885 /* EMEmusKeyboardVC.h */,
 				080489E81AA5957A008CC885 /* EMEmusKeyboardVC.m */,
+				08267E831C7DF9DE002A5C9D /* TestingKB.swift */,
 				08AC3E681AD15465005231B5 /* EMAlphaNumericKeyboard.h */,
 				08AC3E691AD15465005231B5 /* EMAlphaNumericKeyboard.m */,
 				08AC3E6C1AD2C9A1005231B5 /* KBKeyButton.h */,
@@ -3336,6 +3342,7 @@
 				085348E41BCF34DA008BBBF9 /* TagCell.m in Sources */,
 				0889BD2D1C5A15C0004B81CB /* UserTempFootage.m in Sources */,
 				085349101BCF3789008BBBF9 /* NSDictionary+TypeSafeValues.m in Sources */,
+				08267E851C7DF9DF002A5C9D /* TestingKB.swift in Sources */,
 				081971271BE9C0C00096CD75 /* UIView+Heirarchy.m in Sources */,
 				085348F71BCF364B008BBBF9 /* AppCFG.m in Sources */,
 				085348E61BCF34E2008BBBF9 /* EmuKBCell.m in Sources */,
@@ -3363,6 +3370,7 @@
 				085349041BCF36BE008BBBF9 /* EMShareSaveToCameraRoll.m in Sources */,
 				08CA9AA71BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
 				0889BD261C5A1566004B81CB /* PlaceHolderFootage.m in Sources */,
+				08267E871C7E0214002A5C9D /* EMRenderManager3.swift in Sources */,
 				085348E71BCF34E5008BBBF9 /* EMKBOptionsDrawer.m in Sources */,
 				085348FD1BCF364B008BBBF9 /* UserFootage+Logic.m in Sources */,
 				085348E11BCF34CF008BBBF9 /* EMEmusKeyboardVC.m in Sources */,
@@ -3583,6 +3591,7 @@
 				08CA99B31BCFC6E3004A5A02 /* TagCell.m in Sources */,
 				0889BD2B1C5A15C0004B81CB /* UserTempFootage.m in Sources */,
 				08CA99B41BCFC6E3004A5A02 /* NSDictionary+TypeSafeValues.m in Sources */,
+				08267E841C7DF9DE002A5C9D /* TestingKB.swift in Sources */,
 				081971251BE9C0C00096CD75 /* UIView+Heirarchy.m in Sources */,
 				08CA99B61BCFC6E3004A5A02 /* AppCFG.m in Sources */,
 				08CA99B71BCFC6E3004A5A02 /* EmuKBCell.m in Sources */,
@@ -3610,6 +3619,7 @@
 				08CA99CC1BCFC6E3004A5A02 /* EMShareSaveToCameraRoll.m in Sources */,
 				08CA9AA51BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
 				0889BD241C5A1566004B81CB /* PlaceHolderFootage.m in Sources */,
+				08267E861C7E0213002A5C9D /* EMRenderManager3.swift in Sources */,
 				08CA99CD1BCFC6E3004A5A02 /* EMKBOptionsDrawer.m in Sources */,
 				08CA99CE1BCFC6E3004A5A02 /* UserFootage+Logic.m in Sources */,
 				08CA99CF1BCFC6E3004A5A02 /* EMEmusKeyboardVC.m in Sources */,
@@ -3876,6 +3886,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				New_Setting = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3967,6 +3978,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.homage.ios.emubeta.KeyboardBeta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "emu/User Interface/Main/emu-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "emu-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -4015,6 +4028,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				New_Setting = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -4106,6 +4120,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.homage.ios.emubeta.KeyboardBeta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "emu/User Interface/Main/emu-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "emu-Swift.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -4120,6 +4136,7 @@
 				CODE_SIGN_ENTITLEMENTS = emu/emubeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4228,6 +4245,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4458,6 +4476,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.homage.ios.emu.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -4597,6 +4616,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.homage.ios.emu.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -4691,6 +4711,7 @@
 				CODE_SIGN_ENTITLEMENTS = emu/emu.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4795,6 +4816,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (

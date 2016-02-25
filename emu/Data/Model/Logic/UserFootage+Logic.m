@@ -45,6 +45,16 @@
                     context:EMDB.sh.context];
 }
 
++(BOOL)remoteFootagesAvailable
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"remoteFootage=%@",@YES];
+    NSArray *footages = [NSManagedObject fetchEntityNamed:E_USER_FOOTAGE
+                                            withPredicate:predicate
+                                                inContext:EMDB.sh.context];
+    if (![footages isKindOfClass:[NSArray class]]) return NO;
+    return footages.count > 0;
+}
+
 
 +(UserFootage *)userFootageWithInfo:(NSDictionary *)info
                             context:(NSManagedObjectContext *)context
@@ -393,5 +403,7 @@
         }
     }
 }
+
+
 
 @end

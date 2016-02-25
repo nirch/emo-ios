@@ -4,6 +4,8 @@ HSDKCore Version 1.12
 New Features:
 - When render progress notifications are posted, extra user info is also included in the notifications user info.
 - A uuid can be set on each HCRender object (a uuid is generated automatically on instanciation by default but can be changed any time before setup() is called)
+- Video layer loops. If duration of a video layer is shorter than the rendered result, the layer will loop (just like in a gif layer).
+- Downsample option added to gif source.
 
 Minor tweaks:
 - The userInfo sent on render progress notificiations are also sent on render finished notifications
@@ -11,6 +13,7 @@ Minor tweaks:
 
 Bug fixes:
 - Better thread safety in movie writers.
+- Fixed video sync issues with low FPS video captured layers that were captured on iPhone4S and iPhone5 when timing effects are used.
 
 ---------------------
 HSDKCore Version 1.11

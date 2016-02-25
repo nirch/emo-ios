@@ -225,7 +225,7 @@
                                 <rect key="frame" x="0.0" y="329" width="375" height="279"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mi5-WJ-WId" userLabel="State Indicators">
-                                        <rect key="frame" x="0.0" y="60" width="375" height="160"/>
+                                        <rect key="frame" x="0.0" y="70" width="375" height="140"/>
                                         <subviews>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages to the user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wue-lG-npk">
                                                 <rect key="frame" x="110" y="10" width="156" height="20"/>
@@ -243,7 +243,7 @@
                                                 <color key="trackTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </progressView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pV9-tZ-e8Y">
-                                                <rect key="frame" x="8" y="62" width="359" height="88"/>
+                                                <rect key="frame" x="8" y="42" width="359" height="88"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="88" id="5eh-LJ-a8E"/>
@@ -253,7 +253,7 @@
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqU-1Y-K0h">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <segue destination="bon-uR-woZ" kind="embed" identifier="sharing options vc segue" id="eUj-Rr-pCd"/>
@@ -266,7 +266,7 @@
                                             <constraint firstAttribute="trailing" secondItem="cqU-1Y-K0h" secondAttribute="trailing" id="2pn-Sy-zZ1"/>
                                             <constraint firstItem="wue-lG-npk" firstAttribute="top" secondItem="mi5-WJ-WId" secondAttribute="top" constant="8" id="4O7-kh-Dkw"/>
                                             <constraint firstItem="cqU-1Y-K0h" firstAttribute="top" secondItem="BOv-cc-zxa" secondAttribute="bottom" constant="8" id="8VQ-jU-ph0"/>
-                                            <constraint firstAttribute="height" constant="160" id="B9q-AK-DDr"/>
+                                            <constraint firstAttribute="height" constant="140" id="B9q-AK-DDr"/>
                                             <constraint firstItem="pV9-tZ-e8Y" firstAttribute="leading" secondItem="mi5-WJ-WId" secondAttribute="leading" constant="8" id="BYu-Tk-hh4"/>
                                             <constraint firstItem="wue-lG-npk" firstAttribute="top" secondItem="pV9-tZ-e8Y" secondAttribute="bottom" constant="8" id="Ipf-ci-ZbR"/>
                                             <constraint firstItem="wue-lG-npk" firstAttribute="leading" secondItem="Bio-m6-DlE" secondAttribute="trailing" constant="8" id="Mwl-Ts-mmF"/>
@@ -476,28 +476,28 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu instance cell" id="8Kf-oJ-IUf" customClass="EMEmuCell">
-                                        <rect key="frame" x="0.0" y="9.5" width="344" height="192.5"/>
+                                        <rect key="frame" x="0.0" y="10" width="344" height="192"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="344" height="193"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="192"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="fRO-1q-adt">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="fRO-1q-adt">
                                                     <rect key="frame" x="5" y="8" width="334" height="177"/>
                                                 </imageView>
                                                 <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="1do-Lg-X3r" userLabel="Gui Downloading Gif" customClass="FLAnimatedImageView">
                                                     <rect key="frame" x="0.0" y="9" width="344" height="177"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="3Hk-8B-jIA" userLabel="Gui Rendering Gif" customClass="FLAnimatedImageView">
+                                                <view contentMode="scaleAspectFit" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Hk-8B-jIA" userLabel="Gui Rendering Gif" customClass="FLAnimatedImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="344" height="193"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="KCB-N8-f3g" customClass="FLAnimatedImageView">
+                                                <view contentMode="scaleAspectFit" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KCB-N8-f3g" customClass="FLAnimatedImageView">
                                                     <rect key="frame" x="0.0" y="8" width="344" height="177"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="66b-3v-akQ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="66b-3v-akQ">
                                                     <rect key="frame" x="0.0" y="8" width="344" height="177"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g95-Ni-35T">
@@ -780,15 +780,15 @@
                         <viewControllerLayoutGuide type="bottom" id="7df-ca-Yon"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="in9-oc-1ke">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8C-63-ZKL" customClass="iCarousel">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ddp-dh-hwb" userLabel="render video progress" customClass="YLProgressBar">
-                                <rect key="frame" x="75" y="71" width="225" height="18"/>
+                                <rect key="frame" x="75" y="61" width="225" height="18"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="GEO-Sw-mDf"/>

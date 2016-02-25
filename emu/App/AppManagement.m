@@ -28,6 +28,8 @@
 
 @property (nonatomic) NSDictionary *serverSideLocalizationString;
 
+@property (nonatomic, readonly) NSNumber *storedDeviceGeneration;
+
 @end
 
 @implementation AppManagement
@@ -35,6 +37,7 @@
 @synthesize ioQueue = _ioQueue;
 @synthesize prefferedLanguages = _prefferedLanguages;
 @synthesize resourcesScaleString = _resourcesScaleString;
+@synthesize storedDeviceGeneration = _storedDeviceGeneration;
 
 #pragma mark - Initialization
 // A singleton
@@ -137,7 +140,17 @@
     return num;
 }
 
+-(NSInteger)theDeviceGeneration
+{
+    if (_storedDeviceGeneration != nil) return _storedDeviceGeneration.integerValue;
+    _storedDeviceGeneration = [AppManagement deviceGeneration];
+    return _storedDeviceGeneration.integerValue;
+}
 
+-(BOOL)isASlowMachine
+{
+    return YES;
+}
 
 +(NSString *)deviceModelName
 {

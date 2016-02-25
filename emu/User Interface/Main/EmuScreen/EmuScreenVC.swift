@@ -102,7 +102,9 @@ class EmuScreenVC: UIViewController,
     }
     
     // Uploaders and sharer
-    var uploader: EMUploadPublicFootageForJointEmu?
+//    var uploader: EMUploadPublicFootageForJointEmu?
+    
+    var uploaders: [String:EMUploadPublicFootageForJointEmu] = [String:EMUploadPublicFootageForJointEmu]()
     
     // theme color
     var themeColor = EmuStyle.colorThemeFeed()
@@ -553,9 +555,15 @@ class EmuScreenVC: UIViewController,
 
         // Current joint emu instance may be nil, if no emu instance is currently in focus.
         let emu = self.currentEmu()
+        var relatedUploader: EMUploadPublicFootageForJointEmu? = nil
+        if let anEmu = emu {
+            if let jeOID = anEmu.jointEmuInstanceOID {
+                relatedUploader = self.uploaders[jeOID]
+            }
+        }
         
         // Get the state
-        self.jointEmuState = JointEmuFlow.stateForEmu(emu)
+        self.jointEmuState = JointEmuFlow.stateForEmu(emu, uploader: relatedUploader)
         self.guiSlotsContainer.hidden = emu == nil
         self.slotsVC?.emu = emu
         self.updateLongRenderIndicator()
@@ -612,13 +620,26 @@ class EmuScreenVC: UIViewController,
             self.showUserMessage(EML.s("LOOKS_GREAT"), messageText: "")
             self.showActionButton(EML.s("FINALIZE"))
             
+        case .InitiatorUploadingFootage:
+            self.showActivity(
+                "",
+                messageText: EML.s("JOINT_EMU_UPLOADING_FOOTAGE"),
+                withProgress: true)
+            
         // Receiver
         case .ReceiverInvited:
             self.showUserMessage(EML.s("JOINT_EMU_INFO_JOIN_NEW_INVITE"), messageText: EML.s(""))
             self.showFlowButtons(EML.s("CHOOSE_TAKE"), negativeButtonText: EML.s("DECLINE"))
             
         case .ReceiverApprovedLocalFootageAndNeedsToUpload:
-            self.uploadRecieverFootageBeforeFinishingReceiverFlow()
+            self.showUserMessage(EML.s("JOINT_EMU_INFO_JOIN_NEW_INVITE"), messageText: EML.s(""))
+            self.showFlowButtons(EML.s("SEND"), negativeButtonText: EML.s("EMU_SCREEN_CHOICE_REPLACE_TAKE"))
+            
+        case .ReceiverUploadingFootage:
+            self.showActivity(
+                "",
+                messageText: EML.s("JOINT_EMU_UPLOADING_FOOTAGE"),
+                withProgress: true)
 
         case .ReceiverWaitingForFlowEnd:
             self.showUserMessage(EML.s("JOINT_EMU_INFO_YOUR_PART_DONE"), messageText: "")
@@ -649,7 +670,7 @@ class EmuScreenVC: UIViewController,
             let text = actionText?.uppercaseStringWithLocale(NSLocale.currentLocale())
             self.guiActionButton.setTitle(text, forState: .Normal)            
         }
-        self.guiEmusContainer.userInteractionEnabled = true
+//        self.guiEmusContainer.userInteractionEnabled = true
         self.guiActionButton.setBGColor(color != nil ? color : EmuStyle.colorButtonBGPositive())
     }
     
@@ -657,7 +678,7 @@ class EmuScreenVC: UIViewController,
         self.guiActivity.stopAnimating()
         self.guiUserGuidanceTitle.text = titleText
         self.guiMessage.text = messageText
-        self.guiEmusContainer.userInteractionEnabled = true
+        self.guiProgressView.hidden = true
     }
     
     func showActivity(titleText: String, messageText: String, withProgress: Bool = false) {
@@ -669,7 +690,6 @@ class EmuScreenVC: UIViewController,
         self.guiMessage.text = messageText
         self.guiMessage.hidden = false
         self.guiUserGuidanceTitle.text = titleText
-        self.guiEmusContainer.userInteractionEnabled = false
     }
     
     func showFlowButtons(positiveButtonText: String, negativeButtonText: String) {
@@ -702,7 +722,10 @@ class EmuScreenVC: UIViewController,
     func askAboutFootageOptions() {
         guard let emu = self.currentEmu() else {return}
         let slotIndex = emu.jointEmuLocalSlotIndex()
-        guard slotIndex > 0 else {return}
+        if emu.isJointEmu() {
+            guard slotIndex > 0 else {return}
+        }
+        
         let emuDef = emu.emuDef!
         
         let duration = emuDef.jointEmuDefCaptureDurationAtSlot(slotIndex)
@@ -728,7 +751,6 @@ class EmuScreenVC: UIViewController,
                 footageVC.videoFootagesOnly = true
                 footageVC.delegate = self
                 self.presentViewController(footageVC, animated: true, completion: nil)
-                
             })
         }
         
@@ -832,11 +854,12 @@ class EmuScreenVC: UIViewController,
     }
     
     func emuPressed(emu: Emuticon?) {
-        self.refreshCurrentEmu()
         if emu == nil {
             self.createJointEmuInstance()
         } else {
-            self.askAboutFootageOptions()
+            if emu!.wasRendered?.boolValue == true {
+                self.askAboutFootageOptions()
+            }
         }
     }
     
@@ -890,27 +913,31 @@ class EmuScreenVC: UIViewController,
     }
     
     func sendInviteToFriend() {
-        var textToShare = "I'm inviting you to join my Emu\n"
-        if let inviteCode = self.currentEmu()?.jointEmuInviteCodeAtSlot(self.slotIndex) {
-            textToShare += self.jointEmuInviteLink(inviteCode)
-            
-            let objectsToShare = [textToShare]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-            activityVC.completionWithItemsHandler = {activity, success, items, error in
-                if (success == true) {
-                    self.updateEmuUIStateForEmu()
-                } else {
-                    self.cancelInvite()
-                }
-            }
-            self.presentViewController(activityVC, animated: true, completion: nil)
-        } else {
-            self.cancelInvite()
+        guard let emu = self.currentEmu() else {return}
+        if (self.slotIndex < 1) {
+            // No slot selected?
+            // Choose first available one.
+            self.slotIndex = emu.jointEmuFirstUninvitedSlotIndex()
         }
+        guard self.slotIndex > 0 else {return}
+        guard let inviteCode = emu.jointEmuInviteCodeAtSlot(self.slotIndex) else {return}
+
+        let textToShare = EML.s("DEEPLINK_INVITE_JOINT_EMU_PTN") + self.jointEmuInviteLink(inviteCode)
+        let objectsToShare = [textToShare]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        activityVC.completionWithItemsHandler = {activity, success, items, error in
+            if (success == true) {
+                self.updateEmuUIStateForEmu()
+            } else {
+                self.cancelInvite()
+            }
+        }
+        self.presentViewController(activityVC, animated: true, completion: nil)
     }
     
     func uploadEmuFootageBeforeSendingInvite() {
         guard let emu = self.currentEmu() else {return}
+        guard let jeOID = emu.jointEmuInstanceOID else {return}
         guard let footage = self.currentEmu()?.mostPrefferedUserFootage() else {return}
         
         self.showActivity(
@@ -919,8 +946,8 @@ class EmuScreenVC: UIViewController,
             withProgress: true)
         self.jointEmuState = .InitiatorUploadingFootage
 
-        // Cancel previous uploads
-        if let uploader = self.uploader {
+        // Cancel previous uploads for this joint emu
+        if let uploader = self.uploaders[jeOID] {
             uploader.cancel()
         }
         
@@ -932,11 +959,12 @@ class EmuScreenVC: UIViewController,
         uploader.delegate = self
         uploader.uploadBeforeSharing()
         uploader.view = self.guiSlotsContainer
-        self.uploader = uploader
+        self.uploaders[jeOID] = uploader
     }
 
     func uploadRecieverFootageBeforeFinishingReceiverFlow() {
         guard let emu = self.currentEmu() else {return}
+        guard let jeOID = emu.jointEmuInstanceOID else {return}
         guard let footage = emu.mostPrefferedUserFootage() else {return}
         let slotIndex = emu.jointEmuSlotForInvitedReceiver()
         guard slotIndex > 0 else {return}
@@ -948,7 +976,7 @@ class EmuScreenVC: UIViewController,
         self.jointEmuState = .ReceiverUploadingFootage
         
         // Cancel previous uploads
-        if let uploader = self.uploader {
+        if let uploader = self.uploaders[jeOID] {
             uploader.cancel()
         }
         
@@ -960,20 +988,23 @@ class EmuScreenVC: UIViewController,
         uploader.delegate = self
         uploader.uploadBeforeSharing()
         uploader.view = self.guiSlotsContainer
-        self.uploader = uploader
+        self.uploaders[jeOID] = uploader
     }
     
     func inviteAfterInitiatorUploadedFootage() {
-        self.uploader = nil
+//        self.uploader = nil
         self.showActivity(EML.s("JOINT_EMU_INFO_INVITE_FRIEND"), messageText: EML.s("JOINT_EMU_CREATING_INVITATION"))
         let emu = self.currentEmu()!
         EMBackend.sh().server.jointEmuCreateInvite(emu.jointEmuOID(), slot: self.slotIndex, emuOID: emu.oid)
     }
     
     func cancelInvite() {
+        guard self.slotIndex > 0 else {return}
+        guard let emu = self.currentEmu() where emu.isJointEmu() else {return}
+        guard let inviteCode = emu.jointEmuInviteCodeAtSlot(self.slotIndex) else {return}
+
+        // Cancel the invite.
         self.showActivity(EML.s("JOINT_EMU"), messageText: EML.s("JOINT_EMU_CANCELING"))
-        let emu = self.currentEmu()!
-        let inviteCode = emu.jointEmuInviteCodeAtSlot(self.slotIndex)!
         EMBackend.sh().server.jointEmuCancelInvite(
             inviteCode,
             cancelCode: EMJEmuCancelInvite.CanceledByInitiator,
@@ -1006,27 +1037,33 @@ class EmuScreenVC: UIViewController,
     // MARK: - EMShareDelegate
     //    
     func sharerDidProgress(progress: Float, info: [NSObject : AnyObject]!) {
+        guard let emu = self.currentEmu() else {return}
+        guard let jeOID = info[emkJEmuOID] as? String else {return}
+        guard let currentJEOID = emu.jointEmuInstanceOID where currentJEOID == jeOID else {return}
+        
+        // Upload progress for the footage of currently viewed joint emu.
         self.guiProgressView.setProgress(progress, animated: true)
     }
     
     func sharerDidFinishWithInfo(info: [NSObject : AnyObject]!) {
-        if self.uploader != nil && self.uploader!.finishedSuccessfully {
-            switch self.jointEmuState {
-            case .InitiatorUploadingFootage:
-                // Successful upload by the initiator.
-                self.inviteAfterInitiatorUploadedFootage()
-            case .ReceiverUploadingFootage:
-                // Successful upload by the receiver.
-                self.currentEmu()?.jointEmuReceiverUploadedFootage = true
-                self.refreshCurrentEmu(forcedRefresh: true)
-            default:
-                break
-            }
-        }
+        guard let jeOID = info[emkJEmuOID] else {return}
+//        if self.uploader != nil && self.uploader!.finishedSuccessfully {
+//            switch self.jointEmuState {
+//            case .InitiatorUploadingFootage:
+//                // Successful upload by the initiator.
+//                self.inviteAfterInitiatorUploadedFootage()
+//            case .ReceiverUploadingFootage:
+//                // Successful upload by the receiver.
+//                self.currentEmu()?.jointEmuReceiverUploadedFootage = true
+//                self.refreshCurrentEmu(forcedRefresh: true)
+//            default:
+//                break
+//            }
+//        }
     }
     
     func sharerDidFailWithInfo(info: [NSObject : AnyObject]!) {
-        self.updateEmuUIStateForEmu()
+//        self.updateEmuUIStateForEmu()
     }
     
     //
@@ -1055,18 +1092,24 @@ class EmuScreenVC: UIViewController,
             return
             
         case emkUIFootageSelectionApply:
-            self.dismissViewControllerAnimated(true) {
-                guard actionName == emkUIFootageSelectionApply else {return}
-                guard let footageOID = info[emkFootageOID] as? String else {return}
-                guard let footage = UserFootage.findWithID(footageOID, context: EMDB.sh().context) else {return}
-                guard let emu = self.currentEmu() else {return}
+            guard actionName == emkUIFootageSelectionApply else {return}
+            guard let footageOID = info[emkFootageOID] as? String else {return}
+            guard let footage = UserFootage.findWithID(footageOID, context: EMDB.sh().context) else {return}
+            guard let emu = self.currentEmu() else {return}
 
-                // Update the preffered footage of this emu.
-                emu.prefferedFootageOID = footage.oid
-                emu.cleanUp()
-                self.emusVC?.refresh()
-                self.updateEmuUIStateForEmu()
+            // Update the preffered footage of this emu.
+            emu.prefferedFootageOID = footage.oid
+            emu.cleanUp()
+
+            self.dismissViewControllerAnimated(true) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateEmuUIStateForEmu()
+                    self.emusVC?.refresh()
+                })
             }
+            
+        case emkUIFootageSelectionCancel:
+            self.dismissViewControllerAnimated(true) {}
             
         default:
             break
@@ -1120,33 +1163,24 @@ class EmuScreenVC: UIViewController,
     }
     
     //
-    // MARK: - EMInterfaceDelegate
-    //
-
-    
-    //
     // MARK: - Going back
     //
     func goBack() {
-        if self.uploader != nil {
+        if self.uploaders.count > 0 {
             // Are you sure you want to cancel upload?
             let alertView = SIAlertView(title: "Uploading footage...", andMessage: "Are you sure you want to cancel?")
             alertView.buttonColor = EmuStyle.colorButtonBGPositive()
             alertView.cancelButtonColor = EmuStyle.colorButtonBGNegative()
             alertView.addButtonWithTitle(EML.s("YES"), type: SIAlertViewButtonType.Default, handler: {alert in
-                self.uploader?.cancel()
+                for uploader in self.uploaders.values {
+                    uploader.cancel()
+                }
                 self.navigationController?.popViewControllerAnimated(true)
+                self.uploaders.removeAll()
                 self.alertView = nil
-                self.uploader = nil
             })
             alertView.addButtonWithTitle(EML.s("NO"), type: SIAlertViewButtonType.Cancel, handler: {alert in
-                if self.uploader != nil && self.uploader!.finishedSuccessfully {
-                    if self.jointEmuState == JointEmuState.InitiatorUploadingFootage {
-                        // Successful upload
-                        self.inviteAfterInitiatorUploadedFootage()
-                    }
-                }
-                self.alertView = nil
+                self.refreshCurrentEmu()
             })
             alertView.show()
             self.alertView = alertView
@@ -1309,6 +1343,9 @@ class EmuScreenVC: UIViewController,
         case .ReceiverInvited:
             self.askAboutFootageOptions()
             
+        case .ReceiverApprovedLocalFootageAndNeedsToUpload:
+            self.uploadRecieverFootageBeforeFinishingReceiverFlow()
+            
         default:
             break
         }
@@ -1325,6 +1362,9 @@ class EmuScreenVC: UIViewController,
             
         case .ReceiverInvited:
             self.declineInvite()
+            
+        case .ReceiverApprovedLocalFootageAndNeedsToUpload:
+            self.askAboutFootageOptions()
             
         default:
             break

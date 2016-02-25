@@ -22,6 +22,7 @@
 
 @property (nonatomic) NSString *oid;
 @property (nonatomic) NSURL *thumbURL;
+@property (nonatomic) NSURL *gifURL;
 @property (nonatomic) NSString *imagesPathPTN;
 
 @end
@@ -70,8 +71,15 @@
     if (footage == nil) return;
     
     self.oid = footage.oid;
+    if (footage.gifAvailable.boolValue && footage.pathToUserGif) {
+        self.gifURL = [NSURL fileURLWithPath:footage.pathToUserGif];
+        self.imagesPathPTN = nil;
+    } else if (footage.pngSequenceAvailable.boolValue) {
+        self.gifURL = nil;
+         self.imagesPathPTN = [footage imagesPathPTN];   
+    }
     self.thumbURL = [footage urlToThumbImage];
-    self.imagesPathPTN = [footage imagesPathPTN];
+
 }
 
 #pragma mark - UI
@@ -104,12 +112,16 @@
     if (self.isDefault) self.guiIsDefaultIndicator.hidden = NO;
     if (self.isHD) self.guiHDIndicator.hidden = NO;
 
-    [self.guiThumbImage pin_setImageFromURL:self.thumbURL];
+    if (self.gifURL) {
+        [self.guiAnimatedGif pin_setImageFromURL:self.gifURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];
+    } else {
+        [self.guiThumbImage pin_setImageFromURL:self.thumbURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];
+    }
 }
 
 -(void)startPlayingFootage:(UserFootage *)footage
 {
-    if (footage == nil || self.oid == nil) return;
+    if (footage == nil || self.oid == nil || self.gifURL) return;
     
     // Highlight border of the cell and add a shadow
     CALayer *l = self.guiContainer.layer;
@@ -131,7 +143,6 @@
         NSArray *imagesArray = [UserFootage imagesSequenceWithMaxNumberOfFrames:36
                                                                             ptn:ptn
                                                                            path:path];
-
         dispatch_async(dispatch_get_main_queue(), ^{
             self.guiThumbImage.animationImages = imagesArray;
             self.guiThumbImage.animationRepeatCount = 0;

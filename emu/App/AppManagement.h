@@ -36,6 +36,10 @@
 #pragma mark - device specific info
 +(NSString *)deviceModelName;
 +(NSNumber *)deviceGeneration;
+
+@property (nonatomic, readonly) NSInteger theDeviceGeneration;
+@property (nonatomic, readonly) BOOL isASlowMachine;
+
 @property (nonatomic, readonly) NSString *resourcesScaleString;
 
 #pragma mark - Localization

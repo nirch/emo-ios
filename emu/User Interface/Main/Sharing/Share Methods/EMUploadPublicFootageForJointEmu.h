@@ -14,6 +14,8 @@
 @property (nonatomic) Emuticon *emu;
 @property (nonatomic) NSInteger slotIndex;
 @property (nonatomic) BOOL finishedSuccessfully;
+@property (nonatomic) BOOL finished;
+@property (nonatomic) NSError *error;
 
 -(void)cancel;
 -(void)uploadBeforeSharing;

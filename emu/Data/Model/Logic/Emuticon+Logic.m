@@ -13,6 +13,7 @@
 #import "HMPanel.h"
 #import "AppManagement.h"
 #import "EMCaches.h"
+#import "emu-Swift.h"
 
 @implementation Emuticon (Logic)
 

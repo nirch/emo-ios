@@ -37,7 +37,7 @@ enum JointEmuState {
 }
 
 class JointEmuFlow: NSObject {
-    class func stateForEmu(anEmu: Emuticon?) -> JointEmuState {
+    class func stateForEmu(anEmu: Emuticon?, uploader: EMUploadPublicFootageForJointEmu? = nil) -> JointEmuState {
         guard let emu = anEmu else {return .NotCreatedYet}
         
         // Not a joint emu?
@@ -49,6 +49,19 @@ class JointEmuFlow: NSObject {
         
         // Check if required to create the joint emu on the server side.
         if emu.jointEmuInstance == nil {return .InstanceInfoMissing}
+        
+        // Uploading?
+        if let currentUploader = uploader {
+            if (currentUploader.finished != true) {
+                // If uploader currently exists and still uploading
+                if emu.isJointEmuInitiatedByThisUser() {
+                    return .InitiatorUploadingFootage
+                } else {
+                    return .ReceiverUploadingFootage
+                }
+            }
+        }
+        
         
         // Finalized emu
         if emu.isJointEmuFinalized() {

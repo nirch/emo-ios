@@ -15,6 +15,7 @@
 #pragma mark - Selections
 @property (nonatomic, readonly) NSIndexPath *selectedIndexPath;
 @property (nonatomic) BOOL hdFootagesOnly;
+@property (nonatomic) BOOL remoteFootages;
 
 -(void)selectIndexPath:(NSIndexPath *)indexPath
       inCollectionView:(UICollectionView *)collectionView;

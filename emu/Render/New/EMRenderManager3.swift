@@ -51,8 +51,14 @@ class EMRenderManager3 : NSObject
     
     // States
     private var paused = false
+    
+    // Rendering pool (in rendering)
     private var renderingPOOL: [String:AnyObject]
+    
+    // Ready pool (ready to be rendered)
     private var readyPool: [String:AnyObject]
+    
+    // More info by oid.
     private var userInfo: [String:AnyObject]
     
     /// The rendering queue
@@ -318,7 +324,9 @@ class EMRenderManager3 : NSObject
                 //
                 if emu.oid == nil {return}
                 let oid = self.oidForEmu(emu, renderType: renderType)
-                if self.renderingPOOL[oid] != nil || self.readyPool[oid] != nil {return}
+                if self.renderingPOOL[oid] != nil || self.readyPool[oid] != nil {
+                    return
+                }
                 
                 // HD or LD?
                 let inHD = false // for now HD is turned off. self.inHDForRenderType(renderType)
@@ -391,6 +399,29 @@ class EMRenderManager3 : NSObject
             }
     }
     
+//    func enqueueCleaningEmu(emu: Emuticon) {
+//        let emuOID = emu.oid
+//        let gifPath = emu.animatedGifPathInHD(false)
+//        let gifPathInHD = emu.animatedGifPathInHD(true)
+//        let videoPath = emu.videoPath()
+//        dispatch_async(self.renderingManagementQueue) {
+//            let fm = NSFileManager.defaultManager()
+//            do {try fm.removeItemAtPath(gifPath)} catch {}
+//            do {try fm.removeItemAtPath(gifPathInHD)} catch {}
+//            do {try fm.removeItemAtPath(videoPath)} catch {}
+//            
+//            dispatch_async(dispatch_get_main_queue()) {
+//                if let anEmu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
+//                    EMCaches.sh().clearCachedResultsForEmu(anEmu)
+//                    
+//                    // Mark it as not rendered.
+//                    anEmu.wasRendered = false
+//                    anEmu.wasRenderedInHD = false
+//                    anEmu.renderedSampleUploaded = false
+//                }
+//            }        
+//        }
+//    }
     
     //
     // MARK: Rendering queue management and comitting rendering jobs
@@ -413,7 +444,8 @@ class EMRenderManager3 : NSObject
         
         // Get render info from the ready pool and start rendering in the background
         if let renderInfo = self.readyPool[oid] as? [NSObject:AnyObject] {
-            let userInfo = self.userInfo[oid] as! [NSObject:AnyObject];
+            let userInfo = self.userInfo[oid] as! [NSObject:AnyObject]
+            
             self.renderingPOOL[oid] = renderInfo;
             self.readyPool.removeValueForKey(oid)
             
@@ -424,6 +456,7 @@ class EMRenderManager3 : NSObject
                 //
                 // Rendering
                 //
+                AppManagement.sh().debugDict(renderInfo)
                 let renderer = HCRender(configurationInfo: renderInfo, userInfo: userInfo)
                 renderer.setup()
                 if renderer.error != nil {
@@ -459,11 +492,18 @@ class EMRenderManager3 : NSObject
     }
     
     func _chooseOID() -> String? {
-        if self.readyPool.isEmpty {
-            return nil
-        } else {
-            return self.readyPool.keys.first!
+        // If nothing is waiting for rendering, ignore.
+        if self.readyPool.isEmpty {return nil}
+        
+        // Iterate and choose the first oid.
+        // but skip oids that are already rendering.
+        // (don't send same emu for rendering more than once in parallel)
+        for oid in self.readyPool.keys {
+            if self.renderingPOOL[oid] == nil {return oid}
         }
+        
+        // Nothing found that can be sent for rendering.
+        return nil
     }
     
     func handleFinishedRenderOnMainThread(oid: String, renderInfo: [NSObject: AnyObject], userInfo: [NSObject: AnyObject]) {
@@ -503,11 +543,13 @@ class EMRenderManager3 : NSObject
         let width = footage.isHD() ? 480:240
         let height = footage.isHD() ? 480:240
         let gifPath = footage.pathToUserGif()
+        let thumbPath = footage.pathToUserThumb()
         let oid = footage.oid
         let duration = footage.duration!.doubleValue
         
         // The cfg for converting video sequence to gif.
         // 12 FPS and max 4 seconds
+        // Also creates a thumb image.
         let cfg = [
             hcrWidth:width,
             hcrHeight:height,
@@ -524,6 +566,10 @@ class EMRenderManager3 : NSObject
                 [
                     hcrOutputType:hcrGIF,
                     hcrPath:gifPath
+                ],
+                [
+                    hcrOutputType:hcrPNG,
+                    hcrPath:thumbPath
                 ]
             ]
             ] as [NSObject:AnyObject]

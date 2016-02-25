@@ -21,6 +21,15 @@
 
 @synthesize frc = _frc;
 
+-(instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.remoteFootages = NO;
+    }
+    return self;
+}
+
 #pragma mark - Fetched results controller
 /**
  *  The lazy loaded fetched results controller.
@@ -37,10 +46,20 @@
                                       [NSSortDescriptor sortDescriptorWithKey:@"timeTaken" ascending:NO]
                                      ];
     fetchRequest.fetchBatchSize = 20;
-    if (self.hdFootagesOnly) {
-        fetchRequest.predicate = [UserFootage predicateForHD];
-    }
     
+    // Predicates
+    NSMutableArray *predicates = [NSMutableArray new];
+    
+    // Remote / Local footages.
+    [predicates addObject:[NSPredicate predicateWithFormat:@"remoteFootage=%@", self.remoteFootages?@YES:@NO]];
+
+    // HD Footages only?
+    if (self.hdFootagesOnly) [predicates addObject:[UserFootage predicateForHD]];
+    
+    // Never show dedicated footages.
+    [predicates addObject:[NSPredicate predicateWithFormat:@"duration<=%@",@2]];
+    
+    fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil

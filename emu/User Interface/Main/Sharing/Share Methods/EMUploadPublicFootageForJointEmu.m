@@ -30,6 +30,8 @@
  -(void)uploadBeforeSharing
 {
     self.finishedSuccessfully = NO;
+    self.finished = NO;
+    self.error = nil;
     
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
     
@@ -81,14 +83,12 @@
     NSString *s3Key = [self.emu s3KeyForFile:file slot:self.slotIndex ext:ext];
     uploadRequest.key = s3Key;
     
-    NSLog(@">>>>> UPLOADING: %@", s3Key);
-    
     __weak EMUploadPublicFootageForJointEmu *weakSelf = self;
     uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         dispatch_async(dispatch_get_main_queue(), ^{
             CGFloat progress = (double)totalBytesSent/(double)totalBytesExpectedToSend;
             [weakSelf updateProgressForFile:file progressValue:progress];
-            [weakSelf.delegate sharerDidProgress:self.averageProgress info:@{@"jeOID":jeOID}];
+            [weakSelf.delegate sharerDidProgress:self.averageProgress info:@{emkJEmuOID:jeOID}];
         });
     };
     
@@ -131,9 +131,14 @@
 -(void)failedWithError:(NSError *)error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (error) [self.view makeToast:LS(@"ALERT_CHECK_INTERNET_MESSAGE")];
-        [self.delegate sharerDidFailWithInfo:@{@"uploaded":@(NO), @"jeOID":self.jeOID}];
-        [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(NO), @"jeOID":self.jeOID}];
+        if (error) {
+            [self.view makeToast:LS(@"ALERT_CHECK_INTERNET_MESSAGE")];
+            self.error = error;
+            self.finished = YES;
+            self.finishedSuccessfully = YES;
+        }
+        [self.delegate sharerDidFailWithInfo:@{@"uploaded":@(NO), emkJEmuOID:self.jeOID}];
+        [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(NO), emkJEmuOID:self.jeOID}];
     });
 }
 
@@ -142,9 +147,11 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.uploadedFilesCount += 1;
         if (self.uploadedFilesCount >= self.requiredFilesToUploadCount) {
-            [self.view makeToast:LS(@"SHARE_TOAST_UPLOADED")];
+            self.finished = YES;
             self.finishedSuccessfully = YES;
-            [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(YES), @"jeOID":self.jeOID}];
+
+            [self.view makeToast:LS(@"SHARE_TOAST_UPLOADED")];
+            [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(YES), emkJEmuOID:self.jeOID}];
         }
     });
 }

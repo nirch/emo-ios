@@ -10,6 +10,7 @@
 #import "UserFootage+Logic.h"
 #import <HomageSDKCore/HomageSDKCore.h>
 #import "EMDB+Files.h"
+#import "AppManagement.h"
 
 @implementation UserFootage
 
@@ -24,7 +25,7 @@
 
 -(NSURL *)urlToThumbImage
 {
-    if (self.remoteFootage) {
+    if (self.remoteFootage.boolValue) {
         return [self remoteURLToFile:self.remoteFootageFiles[@"thumb"]];
     } else {
         return [NSURL fileURLWithPath:[self pathToUserThumb]];
@@ -93,14 +94,23 @@
 -(NSMutableDictionary *)hcRenderInfoForHD:(BOOL)forHD emuDef:(EmuticonDef *)emuDef
 {
     NSMutableDictionary *layer = [NSMutableDictionary new];
-    if (self.isCapturedVideoAvailable) {
+    
+    if (self.isGIFAvailable && AppManagement.sh.isASlowMachine) {
+        
+        // On very slow machines, prefer to render using gif source if available.
+        // Rendering with asset readers of video is very slow on iPhone 4S.
+        layer[hcrSourceType] = hcrGIF;
+        layer[hcrPath] = [self pathToUserGif];
+        
+    } else if (self.isCapturedVideoAvailable) {
         
         // Captured layers provided by HSDK video writer and persisted to a UserFootage object.
+        // On slow machine
         layer[hcrSourceType] = hcrVideo;
         layer[hcrPath] = [self pathToUserVideo];
         layer[hcrDynamicMaskPath] = [self pathToUserDMaskVideo];
         
-    } else if (self.remoteFootage) {
+    } else if (self.remoteFootage.boolValue) {
         
         // Remote files downloaded/downloading from server.
         if (self.allMissingRemoteFiles.count==0) {
@@ -120,7 +130,7 @@
         
     } else if (self.isPNGSequenceAvailable) {
         
-    } else if (self.isGIFAvailable) {
+        // Old footages from previous emu versions.
         
     }
     
