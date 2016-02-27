@@ -118,6 +118,10 @@
 		0838142A1BBB33EB004D902E /* popQ.wav in Resources */ = {isa = PBXBuildFile; fileRef = 083814281BBB33EB004D902E /* popQ.wav */; };
 		083814331BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083814321BBBC0C8004D902E /* EMCustomPopoverVC.m */; };
 		083814341BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083814321BBBC0C8004D902E /* EMCustomPopoverVC.m */; };
+		083B315B1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */; };
+		083B315C1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */; };
+		083B315D1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */; };
+		083B315E1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */; };
 		083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 083C3E491A94BD99007A298C /* EMPagerView.m */; };
 		083D54751A8CB0A10048604A /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083D54741A8CB0A10048604A /* HMImageTools.mm */; };
 		08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08409E981AB1C69700EC0930 /* EMSplashVC.m */; };
@@ -947,6 +951,8 @@
 		083814311BBBC0C8004D902E /* EMCustomPopoverVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCustomPopoverVC.h; sourceTree = "<group>"; };
 		083814321BBBC0C8004D902E /* EMCustomPopoverVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCustomPopoverVC.m; sourceTree = "<group>"; };
 		083844621BE24B0C00703C0D /* emu2_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu2_1.xcdatamodel; sourceTree = "<group>"; };
+		083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "buds-topguns-bg.mp4"; sourceTree = "<group>"; };
+		083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "buds-topguns-users-dmask.gif"; sourceTree = "<group>"; };
 		083C3E481A94BD99007A298C /* EMPagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPagerView.h; sourceTree = "<group>"; };
 		083C3E491A94BD99007A298C /* EMPagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPagerView.m; sourceTree = "<group>"; };
 		083D54731A8CB0A10048604A /* HMImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMImageTools.h; sourceTree = "<group>"; };
@@ -2365,6 +2371,8 @@
 				089263511C71EF4B0037896D /* buds-molecular-user1-mask.png */,
 				089263521C71EF4B0037896D /* buds-molecular-user2-mask.png */,
 				0892635B1C71F9C50037896D /* buds-molecular-sfx.wav */,
+				083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */,
+				083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */,
 			);
 			path = buds;
 			sourceTree = "<group>";
@@ -2846,6 +2854,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
 						};
 					};
 					08CA99971BCFC6E3004A5A02 = {
@@ -2948,6 +2959,7 @@
 				08967C0A1B57CD02000DDCF9 /* Main.storyboard in Resources */,
 				0889BD4A1C5A559B004B81CB /* placeholder480.png in Resources */,
 				08AA14C11B0BA658002E1B2F /* passThrough.vsh in Resources */,
+				083B315E1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */,
 				08AA14C51B0BA658002E1B2F /* pressedButton.wav in Resources */,
 				08AA14C61B0BA658002E1B2F /* clear480x480.png in Resources */,
 				084349C31B837B1C009A653F /* EMShareInputBox.xib in Resources */,
@@ -2961,6 +2973,7 @@
 				08AA14D01B0BA658002E1B2F /* plasticClickSound.wav in Resources */,
 				08C88DDA1C70A73600300AAA /* buds-molecular-fg.mp4 in Resources */,
 				08CA9A721BCFE842004A5A02 /* hearts-mask-v1.png in Resources */,
+				083B315C1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */,
 				08CA9A6C1BCFE842004A5A02 /* green-love-mask-v1.png in Resources */,
 				08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */,
 				085348C41BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
@@ -3088,6 +3101,7 @@
 				08967C091B57CD02000DDCF9 /* Main.storyboard in Resources */,
 				08A4570C1BA02F08001AB79E /* NavBar.storyboard in Resources */,
 				08A457081BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
+				083B315D1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */,
 				089E78B01A77FD8600BC3479 /* passThrough.vsh in Resources */,
 				08271FD11B01F5B90046F38E /* pressedButton.wav in Resources */,
 				0889BD581C5A559B004B81CB /* placeholderPositive480.png in Resources */,
@@ -3101,6 +3115,7 @@
 				08271FCF1B01F5B90046F38E /* plasticClickSound.wav in Resources */,
 				08C88DD81C70A73600300AAA /* buds-molecular-fg.mp4 in Resources */,
 				08CA9A631BCFE842004A5A02 /* angel-fg.gif in Resources */,
+				083B315B1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */,
 				085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */,
 				083814261BBB3139004D902E /* pop.wav in Resources */,
 				082C8BA21C3D3BB100D6C6B7 /* replaced-bg4-480.png in Resources */,

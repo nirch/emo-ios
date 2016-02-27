@@ -40,6 +40,7 @@
 #define emkPackageOID               @"package oid"
 #define emkEmuticonOID              @"emuticon oid"
 #define emkJEmuOID                  @"joint emu oid"
+#define emkUploadedFootage          @"uploaded footage"
 #define emkJEmuSlot                 @"joint emu slot"
 #define emkJEmuInviteCode           @"joint emu invite code"
 #define emkJEmuCancelReason         @"joint emu cancel reason"

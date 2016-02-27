@@ -304,7 +304,7 @@
     }
 }
 
-#pragma mark - Opened notifications
+#pragma mark - Opened notifications & universal links
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     HMParams *params = [HMParams new];
@@ -400,9 +400,6 @@
                                                           userInfo:params.dictionary];
     });
 }
-
-
-
 
 #pragma mark - Background fetches
 //

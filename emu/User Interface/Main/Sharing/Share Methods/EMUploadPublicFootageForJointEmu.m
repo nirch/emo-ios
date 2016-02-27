@@ -137,8 +137,8 @@
             self.finished = YES;
             self.finishedSuccessfully = YES;
         }
-        [self.delegate sharerDidFailWithInfo:@{@"uploaded":@(NO), emkJEmuOID:self.jeOID}];
-        [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(NO), emkJEmuOID:self.jeOID}];
+        [self.delegate sharerDidFailWithInfo:@{emkUploadedFootage:@(NO), emkJEmuOID:self.jeOID}];
+        [self.delegate sharerDidFinishWithInfo:@{emkUploadedFootage:@(NO), emkJEmuOID:self.jeOID}];
     });
 }
 
@@ -151,7 +151,7 @@
             self.finishedSuccessfully = YES;
 
             [self.view makeToast:LS(@"SHARE_TOAST_UPLOADED")];
-            [self.delegate sharerDidFinishWithInfo:@{@"uploaded":@(YES), emkJEmuOID:self.jeOID}];
+            [self.delegate sharerDidFinishWithInfo:@{emkUploadedFootage:@(YES), emkJEmuOID:self.jeOID}];
         }
     });
 }

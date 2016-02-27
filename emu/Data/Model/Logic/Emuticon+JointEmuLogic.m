@@ -221,9 +221,9 @@
     if (inviteCode == nil)
         return EMSlotStateUninvited;
     
-    // Invited. Check if invited user uploaded footage or not.
-    UserFootage *footage = [self jointEmuFootageAtSlot:slotIndex];
-    if (footage == nil) {
+    // Invited, and not cancel code found. Check if the invited user uploaded the footage or not.
+    id<FootageProtocol> footage = [self jointEmuFootageAtSlot:slotIndex];
+    if (![footage isKindOfClass:[UserFootage class]]) {
         // No footage uploaded yet. Show as "invited" state.
         return EMSlotStateInvited;
     }
