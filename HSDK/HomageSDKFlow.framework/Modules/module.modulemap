@@ -1,6 +1,0 @@
-framework module HomageSDKFlow {
-  umbrella header "HomageSDKFlow.h"
-
-  export *
-  module * { export * }
-}

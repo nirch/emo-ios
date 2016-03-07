@@ -1300,4 +1300,10 @@ class EmuScreenVC: UIViewController,
         self.updatePrefferedSharingMediaType()
     }
     
+    @IBAction func onPressedRetakeOptionsButton(sender: AnyObject) {
+        guard let emu = self.currentEmu() else {return}
+        if emu.wasRendered?.boolValue == true {
+            self.askAboutFootageOptions()
+        }
+    }
 }

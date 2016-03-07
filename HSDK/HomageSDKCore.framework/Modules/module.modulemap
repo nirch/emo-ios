@@ -1,6 +1,0 @@
-framework module HomageSDKCore {
-  umbrella header "HomageSDKCore.h"
-
-  export *
-  module * { export * }
-}

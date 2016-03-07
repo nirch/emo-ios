@@ -122,6 +122,10 @@
 		083B315C1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */; };
 		083B315D1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */; };
 		083B315E1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */; };
+		083B315F1C826E1700070D30 /* HomageSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; };
+		083B31601C826E1700070D30 /* HomageSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		083B31621C826E1A00070D30 /* HomageSDKFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; };
+		083B31631C826E1A00070D30 /* HomageSDKFlow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 083C3E491A94BD99007A298C /* EMPagerView.m */; };
 		083D54751A8CB0A10048604A /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 083D54741A8CB0A10048604A /* HMImageTools.mm */; };
 		08409E9A1AB1C69700EC0930 /* EMSplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 08409E981AB1C69700EC0930 /* EMSplashVC.m */; };
@@ -799,6 +803,18 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		083B31611C826E1700070D30 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				083B31631C826E1A00070D30 /* HomageSDKFlow.framework in Embed Frameworks */,
+				083B31601C826E1700070D30 /* HomageSDKCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		085348DE1BCF3337008BBBF9 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1394,7 +1410,9 @@
 				08D929ED1A77E0B000B6A68F /* AVFoundation.framework in Frameworks */,
 				08D929EB1A77E0A500B6A68F /* CoreGraphics.framework in Frameworks */,
 				08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */,
+				083B31621C826E1A00070D30 /* HomageSDKFlow.framework in Frameworks */,
 				C6299F57CD0A76AD7D3A195D /* libPods.a in Frameworks */,
+				083B315F1C826E1700070D30 /* HomageSDKCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2815,6 +2833,7 @@
 				080CB3271AA4A9DD00603E30 /* Embed App Extensions */,
 				0894E29E1AA340940084C740 /* Crashlytics Run Script */,
 				2C1BC6D07DE491F8625A1E44 /* Embed Pods Frameworks */,
+				083B31611C826E1700070D30 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4490,8 +4509,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.homage.ios.emu.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "emu/User Interface/Main/emu-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "emu-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -4630,8 +4651,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.homage.ios.emu.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "emu/User Interface/Main/emu-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "emu-Swift.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -59,7 +59,8 @@
     
     // Parse the emuticon definition info.
     emuDef.name                        = [info safeStringForKey:@"name" defaultsDictionary:defaults];
-
+    emuDef.isActive                    = [info safeBoolNumberForKey:@"active" defaultsValue:@YES];
+    
     // If emu def patched (one of the resources or definitions updated)
     // Will need to rerender the emu for the user.
     NSDate *patchedOn = [self parseDateOfString:[info safeStringForKey:@"patched_on" defaultsDictionary:defaults]];

@@ -29,6 +29,7 @@
 @property (nonatomic) NSDictionary *serverSideLocalizationString;
 
 @property (nonatomic, readonly) NSNumber *storedDeviceGeneration;
+@property (nonatomic, readonly) NSNumber *isIPhone;
 
 @end
 
@@ -38,6 +39,7 @@
 @synthesize prefferedLanguages = _prefferedLanguages;
 @synthesize resourcesScaleString = _resourcesScaleString;
 @synthesize storedDeviceGeneration = _storedDeviceGeneration;
+@synthesize isIPhone = _isIPhone;
 
 #pragma mark - Initialization
 // A singleton
@@ -147,9 +149,23 @@
     return _storedDeviceGeneration.integerValue;
 }
 
+-(BOOL)deviceIsAnIPhone
+{
+    if (_isIPhone != nil) return _isIPhone.boolValue;
+    NSString *name = machineName();
+    if ([name containsString:@"iPhone"]) {
+        _isIPhone = @YES;
+    } else {
+        _isIPhone = @NO;
+    }
+    return _isIPhone.boolValue;
+}
+
 -(BOOL)isASlowMachine
 {
-    return YES;
+    NSInteger deviceGen = self.theDeviceGeneration;
+    if (deviceGen <= 4 && self.deviceIsAnIPhone) return YES;
+    return NO;
 }
 
 +(NSString *)deviceModelName

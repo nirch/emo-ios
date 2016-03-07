@@ -2,7 +2,7 @@
 //  EmuticonDef+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 12/02/2016.
+//  Created by Aviv Wolf on 28/02/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EmuticonDef (CoreDataProperties)
 
+@property (nullable, nonatomic, retain) NSNumber *assumedUsersLayersHeight;
+@property (nullable, nonatomic, retain) NSNumber *assumedUsersLayersWidth;
+@property (nullable, nonatomic, retain) NSNumber *captureDuration;
 @property (nullable, nonatomic, retain) NSNumber *disallowedForOnboardingPreview;
 @property (nullable, nonatomic, retain) NSNumber *dlProgress;
 @property (nullable, nonatomic, retain) NSNumber *duration;
@@ -42,9 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *sourceUserLayerMask2X;
 @property (nullable, nonatomic, retain) NSNumber *thumbnailFrameIndex;
 @property (nullable, nonatomic, retain) NSNumber *useForPreview;
-@property (nullable, nonatomic, retain) NSNumber *assumedUsersLayersWidth;
-@property (nullable, nonatomic, retain) NSNumber *assumedUsersLayersHeight;
-@property (nullable, nonatomic, retain) NSNumber *captureDuration;
+@property (nullable, nonatomic, retain) NSNumber *isActive;
 @property (nullable, nonatomic, retain) NSSet<Emuticon *> *emus;
 @property (nullable, nonatomic, retain) Package *package;
 
