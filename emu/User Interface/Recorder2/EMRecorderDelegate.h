@@ -7,15 +7,6 @@
 //
 #import <Foundation/Foundation.h>
 
-@protocol EMRecorderDelegate <NSObject>
-
-
-#define emkFirstTake @"firstTake"
-#define emkRetakeAll @"retakeAll"
-#define emkRetakePackageOID @"retakePackage"
-#define emkRetakeEmuticonsOID @"retakeEmuticonsOID"
-#define emkRetakeForHDEmu @"retakeForHDEmu"
-
 /**
  * EMRecorderFlowTypeInvalid
  * EMRecorderFlowTypeOnboarding
@@ -44,7 +35,7 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *      - Will start rendering all emuticons when done.
      */
     EMRecorderFlowTypeOnboarding                     = 1000,
-
+    
     
     /**
      *  Recorder opened to retake the master footage.
@@ -62,7 +53,7 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *
      */
     EMRecorderFlowTypeRetakeAll                     = 2000,
-
+    
     // EMRecorderFlowTypeRetakeForPackage = 3000 (deprecated)
     
     /**
@@ -86,9 +77,17 @@ typedef NS_ENUM(NSInteger, EMRecorderFlowType){
      *  Recorder opened to add a new take.
      */
     EMRecorderFlowTypeNewTake                        = 5000
-    
 };
 
+
+@protocol EMRecorderDelegate <NSObject>
+
+
+#define emkFirstTake @"firstTake"
+#define emkRetakeAll @"retakeAll"
+#define emkRetakePackageOID @"retakePackage"
+#define emkRetakeEmuticonsOID @"retakeEmuticonsOID"
+#define emkRetakeForHDEmu @"retakeForHDEmu"
 
 /**
  *  The flow is completed and the recorder should be dismissed.

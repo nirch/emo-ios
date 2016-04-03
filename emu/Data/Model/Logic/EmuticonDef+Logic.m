@@ -319,7 +319,7 @@
     NSString *dMaskPath = [self pathForUserLayerDynamicMaskInHD:inHD];
     if (dMaskPath) {
         NSMutableDictionary *effect = [NSMutableDictionary new];
-        effect[hcrEffectType] = hcrEffectTypeDMask;
+        effect[hcrEffectType] = hcrEffectTypeGifMask;
         effect[hcrPath] = dMaskPath;
         [effects addObject:effect];
     }
@@ -330,7 +330,7 @@
     NSString *maskPath = [self pathForUserLayerMaskInHD:inHD];
     if (maskPath) {
         NSMutableDictionary *effect = [NSMutableDictionary new];
-        effect[hcrEffectType] = hcrEffectTypeMask;
+        effect[hcrEffectType] = hcrEffectTypeImageMask;
         effect[hcrPath] = maskPath;
         [effects addObject:effect];
     }

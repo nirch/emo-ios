@@ -1,0 +1,10 @@
+<UniformBackgroundPrm>
+	<Background-Dx>12</Background-Dx>
+	<Background-Av>8</Background-Av>
+	<thin>0</thin>
+	<fillBlob>1024</fillBlob>
+    <fillBlobAll>1</fillBlobAll>
+	<Enable-Edge>0</Enable-Edge>
+	<Contour-In-D>50</Contour-In-D>
+    <Contour>0</Contour> <!-- Set to 1 to create plf file -->
+</UniformBackgroundPrm>

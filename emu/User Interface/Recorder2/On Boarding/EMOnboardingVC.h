@@ -13,8 +13,6 @@
 
 #define EMOB_STAGES 6
 
-@interface EMOnboardingVC : UIViewController
-
 typedef NS_ENUM(NSInteger, EMOnBoardingStage) {
     EMOnBoardingStageWelcome                       = 0,
     EMOnBoardingStageAlign                         = 1,
@@ -23,6 +21,8 @@ typedef NS_ENUM(NSInteger, EMOnBoardingStage) {
     EMOnBoardingStageFinishingUp                   = 4,
     EMOnBoardingStageReview                        = 5
 };
+
+@interface EMOnboardingVC : UIViewController
 
 @property (nonatomic, weak) id<EMOnboardingDelegate> delegate;
 @property (nonatomic, readonly) EMOnBoardingStage stage;

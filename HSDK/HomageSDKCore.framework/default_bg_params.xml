@@ -1,0 +1,10 @@
+<UniformBackgroundPrm>
+	<Background-Dx>6</Background-Dx>
+	<Background-Av>4</Background-Av>
+	<thin>0</thin>
+	<fillBlob>256</fillBlob>
+    <fillBlobAll>1</fillBlobAll>
+	<Enable-Edge>0</Enable-Edge>
+	<Contour-In-D>25</Contour-In-D>
+    <Contour>0</Contour>
+</UniformBackgroundPrm>

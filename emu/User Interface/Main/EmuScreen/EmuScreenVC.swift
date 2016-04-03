@@ -258,7 +258,7 @@ class EmuScreenVC: UIViewController,
         
         // Update once in a while
         if self.renderPreviewIndicatorTimer == nil {
-            self.renderPreviewIndicatorTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: "updateLongRenderIndicator", userInfo: nil, repeats: true)
+            self.renderPreviewIndicatorTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(EmuScreenVC.updateLongRenderIndicator), userInfo: nil, repeats: true)
         }
     }
     
@@ -269,49 +269,49 @@ class EmuScreenVC: UIViewController,
         let nc = NSNotificationCenter.defaultCenter()
         nc.addUniqueObserver(
             self,
-            selector: "onUserSignIn:",
+            selector: #selector(EmuScreenVC.onUserSignIn(_:)),
             name: emkUserSignedIn,
             object: nil)
         
         nc.addUniqueObserver(
             self,
-            selector: "onJointEmuNew:",
+            selector: #selector(EmuScreenVC.onJointEmuNew(_:)),
             name: emkJointEmuNew,
             object: nil)
 
         nc.addUniqueObserver(
             self,
-            selector: "onJointEmuRefresh:",
+            selector: #selector(EmuScreenVC.onJointEmuRefresh(_:)),
             name: emkJointEmuRefresh,
             object: nil)
 
         nc.addUniqueObserver(
             self,
-            selector: "onJointEmuInviteCreated:",
+            selector: #selector(EmuScreenVC.onJointEmuInviteCreated(_:)),
             name: emkJointEmuCreateInvite,
             object: nil)
         
         nc.addUniqueObserver(
             self,
-            selector: "onRenderingFinished:",
+            selector: #selector(EmuScreenVC.onRenderingFinished(_:)),
             name: hmkRenderingFinished,
             object: nil)
         
         nc.addUniqueObserver(
             self,
-            selector: "onDownloadFinished:",
+            selector: #selector(EmuScreenVC.onDownloadFinished(_:)),
             name: hmkDownloadResourceFinished,
             object: nil)
         
         nc.addUniqueObserver(
             self,
-            selector: "onLongRenderProgress:",
+            selector: #selector(EmuScreenVC.onLongRenderProgress(_:)),
             name: hcrNotificationRenderProgress,
             object: nil)
 
         nc.addUniqueObserver(
             self,
-            selector: "onLongRenderFinished:",
+            selector: #selector(EmuScreenVC.onLongRenderFinished(_:)),
             name: hcrNotificationRenderFinished,
             object: nil)
     }

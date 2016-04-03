@@ -1,0 +1,46 @@
+---------------------
+HSDKFlow Version 2.1
+---------------------
+- Bug fix: HFGCaptureSession, on some conditions, saved the audio file with a wrong file extension (mov instead of wav).
+
+---------------------
+HSDKFlow Version 2.0
+---------------------
+- New features and api changes:
+    - HFCaptureSession: replaced by HFGCaptureSession
+    - HFGCaptureSession start recording simplified. Just call start recording on capture session with no need for a movie writer instace.
+    - HFGCaptureSession: Two modes of mask creation. In realtime or as a post process.
+        - By default auto decision will be made: post process for older devices like iPhone5 and before. and real time for newer devices.
+    - GPUImage integration. Some of the work ofloaded to the GPU for better performace.
+
+---------------------
+HSDKFlow Version 1.11
+---------------------
+
+---------------------
+HSDKFlow Version 1.11
+---------------------
+
+---------------------
+HSDKFlow Version 1.10
+---------------------
+- bug fix: deployment target was set to iOS 9.1 by mistake. Fixed to 8.1
+
+--------------------
+HSDKFlow Version 1.9
+--------------------
+
+
+--------------------
+HSDKFlow Version 1.8
+--------------------
+
+--------------------
+HSDKFlow Version 1.7
+--------------------
+- Bug fix: cancel recording threading issues resolved
+
+--------------------
+HSDKFlow Version 1.6
+--------------------
+- Bug fix: renderer failing to load resources provided as absolute paths issue resolved

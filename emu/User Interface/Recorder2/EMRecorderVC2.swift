@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import HomageSDKFlow
+
 
 class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDelegate, EMPreviewDelegate {
     //
@@ -14,7 +16,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     //
     
     // Camera preview
-    @IBOutlet weak var guiCameraPreviewViewContainer: HFCameraPreviewView!
+    @IBOutlet weak var guiCameraPreviewViewContainer: HFGCameraPreviewView!
     
     // Recording preview
     @IBOutlet weak var guiRecordingPreviewContainer: UIView!
@@ -70,7 +72,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     weak var delegate: EMRecorderDelegate?
     
     // capture session
-    var captureSession : HFCaptureSession?
+    var captureSession : HFGCaptureSession?
     
     // recording preview
     var emuticonDefOIDForPreview : NSString?
@@ -148,7 +150,6 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.initGUI()
-        self.guiCameraPreviewViewContainer.initializeGL()
         self.initCaptureSession()
     }
     
@@ -187,7 +188,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         let imageName = "replaced-bg\(bgNum)-480.png"
         let bgImage = UIImage(named: imageName)
         
-        let hfc = HFCaptureSession(forBGRemovalWithPreset: AVCaptureSessionPreset640x480,
+        let hfc = HFGCaptureSession(forBGRemovalWithPreset: AVCaptureSessionPreset640x480,
             processingResolutionType: hcbResolution.Square480,
             processingSilhouetteType: hcbSilhouetteType.Default,
                              bgImage: bgImage)
@@ -331,13 +332,13 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         let nc = NSNotificationCenter.defaultCenter()
         nc.addUniqueObserver(
             self,
-            selector: "onBGMarkUpdate:",
+            selector: #selector(EMRecorderVC2.onBGMarkUpdate(_:)),
             name: hfpNotificationBackgroundInfo,
             object: nil)
         
         nc.addUniqueObserver(
             self,
-            selector: "onRenderProgress:",
+            selector: #selector(EMRecorderVC2.onRenderProgress(_:)),
             name: hcrNotificationRenderProgress,
             object: nil)
     }
@@ -552,6 +553,14 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.updateToState(HFProcessingState.ProcessFrames)
     }
     
+    func recordingWillStopWithInfo(info: [NSObject : AnyObject]!) {
+        
+    }
+    
+    func recordingPostProcessingWithProgress(progress: CGFloat, info: [NSObject : AnyObject]!) {
+        
+    }
+    
     //
     // MARK: - Timing
     //
@@ -602,20 +611,19 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         if self.captureSession?.isRecording == true {return}
 
         //
-        // Writer
+        // Recroding
         //
         self.shouldRecordAudio = false
-        let writer = HFWriterVideo()
-        writer.videoBitsPerPixel = 21.0
-        writer.videoMaskBitsPerPixel = 21.0
+        self.captureSession?.videoBitsPerPixel = 21.0
+        self.captureSession?.videoMaskBitsPerPixel = 21.0
         if self.shouldRecordAudio {
-            writer.includingAudio = true
-            writer.audioSampleRate = 21000
+            self.captureSession?.includingAudio = true
+            self.captureSession?.audioSampleRate = 21000
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
             } catch {}
         }
-        self.captureSession?.startRecordingUsingWriter(writer, duration: self.duration)
+        self.captureSession?.startRecordingWithDuration(self.duration)
         
         //
         // Onboarding UI

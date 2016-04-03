@@ -39,21 +39,21 @@ class EMVideoVC: AVPlayerViewController {
         // Looping video
         nc.addUniqueObserver(
             self,
-            selector: "onPlayerItemDidReachEnd:",
+            selector: #selector(EMVideoVC.onPlayerItemDidReachEnd(_:)),
             name: AVPlayerItemDidPlayToEndTimeNotification,
             object: nil)
         
         // Rendered previews
         nc.addUniqueObserver(
             self,
-            selector: "onPreviewRenderUpdate:",
+            selector: #selector(EMVideoVC.onPreviewRenderUpdate(_:)),
             name: hmkRenderingFinishedPreview,
             object: nil)
         
         // Video player errors
         nc.addUniqueObserver(
             self,
-            selector: "onPlayerError:",
+            selector: #selector(EMVideoVC.onPlayerError(_:)),
             name: AVPlayerItemFailedToPlayToEndTimeNotification,
             object: nil)
     }

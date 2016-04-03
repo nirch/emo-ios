@@ -147,12 +147,12 @@ class EMSharingOptionsVC:
         let nc = NSNotificationCenter.defaultCenter()
         nc.addUniqueObserver(
             self,
-            selector: "onRenderingVideoProgress:",
+            selector: #selector(EMSharingOptionsVC.onRenderingVideoProgress(_:)),
             name: hcrNotificationRenderProgress,
             object: nil)
         nc.addUniqueObserver(
             self,
-            selector: "onRenderingVideoFinished:",
+            selector: #selector(EMSharingOptionsVC.onRenderingVideoFinished(_:)),
             name: hcrNotificationRenderFinished,
             object: nil)
     }
@@ -246,10 +246,11 @@ class EMSharingOptionsVC:
         return self.shareMethods.count
     }
     
-    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, var reusingView view: UIView?) -> UIView {
-        if view == nil {
+    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
+        var v = view
+        if v == nil {
             let optionButton = ShareOption(frame: self.buttonFrame)
-            view = optionButton
+            v = optionButton
         }
         
         if let sb = view as? ShareOption {
@@ -259,7 +260,7 @@ class EMSharingOptionsVC:
             sb.updateGUI()
         }
         
-        return view!
+        return v!
     }
     
     
