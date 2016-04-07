@@ -17,13 +17,14 @@ typedef NS_ENUM(NSInteger, EMJEmuCancelInvite) {
 
 @interface HMServer (JEmu)
 
--(void)jointEmuRefetch:(NSString *)jeOID emuOID:(NSString *)emuOID;
--(void)jointEmuNewForEmuOID:(NSString *)emuOID;
--(void)jointEmuCreateInvite:(NSString *)jeOID slot:(NSInteger)slot emuOID:(NSString *)emuOID;
--(void)jointEmuCancelInvite:(NSString *)inviteCode cancelCode:(EMJEmuCancelInvite)cancelCode emuOID:(NSString *)emuOID;
--(void)jointEmuFinalize:(NSString *)jeOID emuOID:(NSString *)emuOID;
-
--(void)jointEmuTakeSlotForInviteCode:(NSString *)inviteCode;
+// Deprecated
+//-(void)jointEmuRefetch:(NSString *)jeOID emuOID:(NSString *)emuOID;
+//-(void)jointEmuNewForEmuOID:(NSString *)emuOID;
+//-(void)jointEmuCreateInvite:(NSString *)jeOID slot:(NSInteger)slot emuOID:(NSString *)emuOID;
+//-(void)jointEmuCancelInvite:(NSString *)inviteCode cancelCode:(EMJEmuCancelInvite)cancelCode emuOID:(NSString *)emuOID;
+//-(void)jointEmuFinalize:(NSString *)jeOID emuOID:(NSString *)emuOID;
+//
+//-(void)jointEmuTakeSlotForInviteCode:(NSString *)inviteCode;
 
 
 @end

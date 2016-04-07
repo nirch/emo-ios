@@ -303,8 +303,9 @@
 
 -(void)onOpenInviteCode:(NSNotification *)notification
 {
-    NSString *inviteCode = notification.userInfo[emkJEmuInviteCode];
-    [self.server jointEmuTakeSlotForInviteCode:inviteCode];
+    // Deprecated
+//    NSString *inviteCode = notification.userInfo[emkJEmuInviteCode];
+//    [self.server jointEmuTakeSlotForInviteCode:inviteCode];
 }
 
 -(void)onOpenPackageRequest:(NSNotification *)notification

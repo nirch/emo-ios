@@ -558,7 +558,6 @@
  *  Handle the flow after the finishing recorder onboarding.
  * 
  *  - Navigates to the main feed screen.
- *  - Currently will also display the keyboard tutorial (will be deprecated when app onboarding is implemented).
  *
  *  EMNavFlowStateWaitForRecorderDismissalAfterOnboarding ==> EMNavFlowStateUserControlsNavigation
  *
@@ -694,18 +693,6 @@
     });
 }
 
-#pragma mark - KB Tutorial
--(void)showKBTutorial
-{
-    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    appCFG.userViewedKBTutorial = @YES;
-    [EMDB.sh save];
-
-    self.guiTutorialContainer.hidden = NO;
-    [self.kbTutorialVC start];
-}
-
-
 #pragma mark - Segues
 /**
  * Get weak references to embedded view controllers:
@@ -832,11 +819,6 @@
 #pragma mark - EMRecorderDelegate
 -(void)recorderWantsToBeDismissedAfterFlow:(EMRecorderFlowType)flowType info:(NSDictionary *)info
 {
-    if (flowType == EMRecorderFlowTypeOnboarding) {
-        // Show KB tutorial
-        [self showKBTutorial];
-    }
-    
     // Dismiss the recorder
     [self dismissViewControllerAnimated:YES completion:^{
         [HMPanel.sh analyticsEvent:AK_E_REC_WAS_DISMISSED info:info];

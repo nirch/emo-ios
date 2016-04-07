@@ -38,7 +38,6 @@ class EMSharingOptionsVC:
     var shareNames: [EMKShareMethod: String] = [EMKShareMethod: String]()
     var shareMethods: [EMKShareMethod] = [EMKShareMethod]()
     var colorsByShareMethod: [EMKShareMethod: UIColor] = [EMKShareMethod: UIColor]()
-    var buttonFrame: CGRect = CGRectMake(0, 0, 110, 110)
 
     var currentShareMethod: EMKShareMethod = EMKShareMethod.emkShareMethodFacebookMessanger
     var prefferedMediaType: EMKShareOption = EMKShareOption.emkShareOptionAnimatedGif
@@ -246,11 +245,10 @@ class EMSharingOptionsVC:
         return self.shareMethods.count
     }
     
-    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, reusingView view: UIView?) -> UIView {
-        var v = view
-        if v == nil {
-            let optionButton = ShareOption(frame: self.buttonFrame)
-            v = optionButton
+    func carousel(carousel: iCarousel, viewForItemAtIndex index: Int, var reusingView view: UIView?) -> UIView {
+        if view == nil {
+            let optionButton = ShareOption(frame: self.buttonFrame())
+            view = optionButton
         }
         
         if let sb = view as? ShareOption {
@@ -260,24 +258,29 @@ class EMSharingOptionsVC:
             sb.updateGUI()
         }
         
-        return v!
+        return view!
     }
     
+    func buttonFrame() -> CGRect {
+        var h = self.guiCarousel.frame.size.height
+        h = fmin(h, 110)
+        return CGRectMake(0,0,h,h)
+    }
     
     //
     // MARK: - iCarouselDelegate (Layer types carousel)
     //
     func carousel(carousel: iCarousel, valueForOption option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         switch option {
-        case iCarouselOption.Spacing:
+        case .Spacing:
             return 2.5
-        case iCarouselOption.FadeMax:
+        case .FadeMax:
             return 0.5
-        case iCarouselOption.FadeMin:
+        case .FadeMin:
             return -0.5
-        case iCarouselOption.FadeRange:
+        case .FadeRange:
             return 3.14
-        case iCarouselOption.ShowBackfaces:
+        case .ShowBackfaces:
             return 1
             
         default:
@@ -423,7 +426,7 @@ class EMSharingOptionsVC:
         info.addKey(emkEmuticonDefOID, valueIfNotNil: emu.emuDef?.oid)
         info.addKey(emkPackageOID, valueIfNotNil: emu.emuDef?.package?.name)
         
-        self.renderer = EMRenderManager3.sh().renderVideoFromEmuGif(emu, loopsCount: 5)
+        self.renderer = EMRenderManager3.sh().renderVideoFromEmuGif(emu, loopsCount: 4)
         if self.renderer == nil {
             // Failed rendering video
             self.view.makeToast(EML.s("FAILED"))

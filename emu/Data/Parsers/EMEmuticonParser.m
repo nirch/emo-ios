@@ -99,9 +99,14 @@
     // Full render
     emuDef.captureDuration                      = [info safeNumberForKey:@"capture_duration" defaultsDictionary:defaults];
     emuDef.fullRenderCFG                        = [info safeDictionaryForKey:@"full_render_cfg" defaultValue:nil];
+    emuDef.fullRender                           = [info safeBoolNumberForKey:@"full_render" defaultsValue:@NO];
     
-    // Joint emu
-    emuDef.jointEmu                             = [info safeDictionaryForKey:@"joint_emu" defaultValue:nil];
+    // Supported outputs
+    emuDef.supportedOutputs                     = [info safeStringForKey:@"supported_outputs" defaultValue:@"any"];
+    
+    // Joint emu (deprecated)
+    emuDef.jointEmu = nil;
+    // emuDef.jointEmu                             = [info safeDictionaryForKey:@"joint_emu" defaultValue:nil];
     
     // Default assumed size of user's layers when using positining.
     NSArray *assumedUsersLayersSize = [info safeArrayForKey:@"assumed_users_layers_size" defaultValue:nil];

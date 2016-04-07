@@ -168,6 +168,13 @@
     return NO;
 }
 
+-(BOOL)isVerySmallScreen
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    return screenWidth <= 320;    
+}
+
 +(NSString *)deviceModelName
 {
     NSDictionary *commonNamesDictionary = @{

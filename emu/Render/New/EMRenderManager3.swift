@@ -41,8 +41,8 @@ class EMRenderManager3 : NSObject
 {
     internal static let sharedInstance = EMRenderManager3()
     
-    static private let FPS_CAPTURE_PREVIEW = 25
-    static private let FPS_LD_SHORT_PREVIEW = 6
+//    static private let FPS_CAPTURE_PREVIEW = 25
+//    static private let FPS_LD_SHORT_PREVIEW = 6
     
     private var MAX_CONCURENT_RENDERS_SLOW = 1
     private var MAX_CONCURENT_RENDERS = 2
@@ -281,6 +281,17 @@ class EMRenderManager3 : NSObject
     func fpsForEmuDef(emuDef:EmuticonDef, renderType:EMRenderType) -> Int {
         let fps = emuDef.fps()
         return fps
+        
+        // -----------------------------------------------------------
+        // Render preview in lower fps NOT IMPLEMENTED
+        // -----------------------------------------------------------
+        // Animations in emu are stored in db based on frames and not time
+        // The SDK supports rendering the same content in different FPS
+        // only when animation data is provided based on some time units.
+        // So only when emu's data will be converted to be time based, it will be possible
+        // to render preview gifs in the main feed with lower FPS and render the full result in the 
+        // details screen.
+        
         //        switch renderType {
         //            case EMRenderType.ShortLowDefPreview:
         //                return EMRenderManager3.FPS_LD_SHORT_PREVIEW

@@ -2,7 +2,7 @@
 //  EmuticonDef+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 28/02/2016.
+//  Created by Aviv Wolf on 07/04/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *framesCount;
 @property (nullable, nonatomic, retain) id fullRenderCFG;
 @property (nullable, nonatomic, retain) NSNumber *hdAvailable;
+@property (nullable, nonatomic, retain) NSNumber *isActive;
 @property (nullable, nonatomic, retain) id jointEmu;
 @property (nullable, nonatomic, retain) NSNumber *mixedScreenOrder;
 @property (nullable, nonatomic, retain) NSString *name;
@@ -45,7 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *sourceUserLayerMask2X;
 @property (nullable, nonatomic, retain) NSNumber *thumbnailFrameIndex;
 @property (nullable, nonatomic, retain) NSNumber *useForPreview;
-@property (nullable, nonatomic, retain) NSNumber *isActive;
+@property (nullable, nonatomic, retain) NSNumber *fullRender;
+@property (nullable, nonatomic, retain) NSString *supportedOutputs;
 @property (nullable, nonatomic, retain) NSSet<Emuticon *> *emus;
 @property (nullable, nonatomic, retain) Package *package;
 

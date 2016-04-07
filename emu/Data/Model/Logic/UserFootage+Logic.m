@@ -302,7 +302,7 @@
                      captureInfo:(NSDictionary *)captureInfo
                          context:(NSManagedObjectContext *)context
 {
-    if (![captureInfo[@"writer_type"] isEqualToString:@"HFWriterVideo"]) {
+    if (![captureInfo[@"writer_type"] isEqualToString:@"HFGCaptureSession"]) {
         // Must use the new style HSDK footage created by HSDK capture session.
         return nil;
     }

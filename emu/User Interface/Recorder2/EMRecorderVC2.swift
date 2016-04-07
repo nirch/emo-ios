@@ -59,7 +59,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     var emuticonsOID : NSArray?
     var msgUUID: String = ""
     var latestRecordingInfo : [NSObject:AnyObject]?
-    var shouldRecordAudio : Bool = false
+    var shouldRecordAudio : Bool = true
     
     // Timing
     var duration : NSTimeInterval = 2.0
@@ -193,6 +193,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
             processingSilhouetteType: hcbSilhouetteType.Default,
                              bgImage: bgImage)
         hfc.cameraPreviewView = self.guiCameraPreviewViewContainer
+        hfc.maxAllowedCameraCaptureFPS = 18
         hfc.setupAndStartCaptureSession()
         hfc.delegate = self
         self.captureSession = hfc
@@ -613,7 +614,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         //
         // Recroding
         //
-        self.shouldRecordAudio = false
+        self.captureSession?.defaultMaskCreationMode = .Realtime
         self.captureSession?.videoBitsPerPixel = 21.0
         self.captureSession?.videoMaskBitsPerPixel = 21.0
         if self.shouldRecordAudio {
@@ -703,7 +704,9 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         
         // Don't play sound when starting to record with audio.
         if self.shouldRecordAudio {
-//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
+            } catch {}
         } else {
             EMUISound.sh().playSoundNamed(SND_START_RECORDING)            
         }

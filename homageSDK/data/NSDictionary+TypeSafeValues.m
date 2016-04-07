@@ -12,10 +12,16 @@
 
 -(NSString *)safeStringForKey:(id)key
 {
+    return [self safeStringForKey:key defaultValue:nil];
+}
+
+-(NSString *)safeStringForKey:(id)key defaultValue:(NSString *)defaultValue
+{
     id value = self[key];
     if ([value isKindOfClass:[NSString class]]) return value;
-    return nil;
+    return defaultValue;
 }
+
 
 -(NSDictionary *)safeDictionaryForKey:(id)key defaultValue:(NSDictionary *)defaultValue
 {

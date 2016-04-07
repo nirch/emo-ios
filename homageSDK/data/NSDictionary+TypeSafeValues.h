@@ -12,6 +12,7 @@
 @interface NSDictionary (TypeSafeValues)
 
 -(NSString *)safeStringForKey:(id)key;
+-(NSString *)safeStringForKey:(id)key defaultValue:(NSString *)defaultValue;
 -(NSString *)safeOIDStringForKey:(id)key;
 -(NSNumber *)safeNumberForKey:(id)key;
 -(NSDecimalNumber *)safeDecimalNumberForKey:(id)key;

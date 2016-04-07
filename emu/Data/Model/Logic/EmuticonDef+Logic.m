@@ -314,18 +314,21 @@
     }
 
     //
-    // Old user dynamic mask effect --> HSDK DMask effect
+    // Old user dynamic mask effect --> HSDK Mask with gif source effect
     //
     NSString *dMaskPath = [self pathForUserLayerDynamicMaskInHD:inHD];
     if (dMaskPath) {
         NSMutableDictionary *effect = [NSMutableDictionary new];
-        effect[hcrEffectType] = hcrEffectTypeGifMask;
-        effect[hcrPath] = dMaskPath;
+        effect[hcrEffectType] = hcrEffectTypeMask;
+        effect[hcrSource] = @{
+                              hcrSourceType: hcrGIF,
+                              hcrPath: dMaskPath
+                              };
         [effects addObject:effect];
     }
     
     //
-    // Old user mask effect --> HSDK Mask effect
+    // Old user mask effect. Will use the old style image mask effect in CV.
     //
     NSString *maskPath = [self pathForUserLayerMaskInHD:inHD];
     if (maskPath) {

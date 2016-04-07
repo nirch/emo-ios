@@ -39,6 +39,7 @@
 
 @property (nonatomic, readonly) NSInteger theDeviceGeneration;
 @property (nonatomic, readonly) BOOL isASlowMachine;
+@property (nonatomic, readonly) BOOL isVerySmallScreen;
 
 @property (nonatomic, readonly) NSString *resourcesScaleString;
 
