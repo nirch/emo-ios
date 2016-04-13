@@ -117,9 +117,11 @@
 
 -(BOOL)allResourcesAvailable;
 -(BOOL)allResourcesAvailableInHD:(BOOL)inHD;
+-(BOOL)allFullRenderResourcesAvailable;
 
 -(NSArray *)allMissingResourcesNames;
 -(NSArray *)allMissingResourcesNamesInHD:(BOOL)inHD;
+-(NSArray *)allMissingFullRenderResourcesNames;
 
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName;
 

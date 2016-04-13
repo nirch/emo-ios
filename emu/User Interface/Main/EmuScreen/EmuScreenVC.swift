@@ -207,15 +207,27 @@ class EmuScreenVC: UIViewController,
         self.guiLongRenderProgress.hidden = true
         self.guiRenderPreviewButton.hidden = true
 
-        // Interesting only if this is a new style long render emu.
+        // Interesting only if this is a new style long render emu. If not, return.
         guard let emuDef = self.emuDef where emuDef.isNewStyleLongRender() else {return}
-        
-        // Not interesting if no emu in focus
         guard let emu = self.currentEmu() else {return}
         
         // If video already available
         if emu.videoURL() != nil {
+            // Result already available, no render required so no indicator required.
             self.guiLongVideoIndicator.hidden = true
+            return
+        }
+        
+        // If download of resources required
+        if emuDef.allFullRenderResourcesAvailable() == false {
+            // Missing resources for full render.
+            // Will need to download the resources before rendering.
+            self.guiLongVideoIndicator.hidden = false
+            self.guiLongRenderProgress.hidden = false
+            self.guiLongRenderProgress.setProgress(0, animated: false)
+            self.guiLongRenderProgress.alpha = 1
+            self.guiLongRenderLabel.hidden = false
+            self.guiLongRenderLabel.text = "Downloading... (preview shown)"
             return
         }
         
@@ -237,6 +249,9 @@ class EmuScreenVC: UIViewController,
                 self.guiLongVideoIndicator.alpha = 1
             })
         }
+        
+        // If downloading resources for the full render, show download progress.
+        
         
         // Not rendering yet. Allow the user to start rendering and show the length of the new style long video.
         var buttonTitle = ""
@@ -427,9 +442,6 @@ class EmuScreenVC: UIViewController,
     }
     
     func updateEmuUIStateForNormalEmu() {
-        guard let emu = self.currentEmu() else {return}
-        guard let emuDef = self.emuDef else {return}
-
         // Show the share UI.
         self.emusVC?.refresh()
         self.showSharing()
@@ -439,25 +451,24 @@ class EmuScreenVC: UIViewController,
     }
 
     func updateFullRenderStateIfRequired() {
-//        guard let emu = self.currentEmu() else {return}
-//        guard let emuDef = self.emuDef else {return}
-//        guard let fullRender = emuDef.
-//        if emuDef.fullRender.boolValue() {
-//            
-//        }
-//        
-//        if emuDef.fullRenderCFG != nil {
-//            if emu.videoURL() != nil {
-//                self.showVideoAtURL(emu.videoURL())
-//            } else {
-//                if self.renderer != nil {
-//                    // Cancel previous renders.
-//                    self.renderer?.cancel()
-//                }
-//                self.fullRenderForCurrentEmu(keepResult: true)
-//            }
-//        }
-
+        guard let emu = self.currentEmu() else {return}
+        guard let emuDef = self.emuDef else {return}
+        guard let fullRender = emuDef.fullRender where fullRender.boolValue == true else {return}
+        
+        // If an output video already rendered, show it
+        if emu.videoURL() != nil {
+            self.showVideoAtURL(emu.videoURL())
+            return
+        }
+        
+        // Full render required but not rendered yet.
+        
+        // Cancel current render (if ongoing render exist).
+        if self.renderer != nil {
+            self.renderer?.cancel()
+            self.renderer = nil
+        }
+        self.fullRenderForCurrentEmu(keepResult: true)
     }
     
     func showSharing() {
@@ -814,17 +825,35 @@ class EmuScreenVC: UIViewController,
         guard let emuDef = self.emuDef where emuDef.isNewStyleLongRender() else {return}
         guard let emu = self.currentEmu() else {return}
         
+        // Cancel preview long renders
+        if self.renderer != nil {
+            self.renderer?.cancel()
+        }
+
+        // Ensure all resources downloaded / cached in local storage
+        // Before sending to full render.
+        if emuDef.allFullRenderResourcesAvailable() == false {
+            // Missing resources for full render.
+            // Will need to download the resources before rendering.
+            self.updateLongRenderIndicator()
+            
+            // Download missing resources
+            let info = [
+                emkEmuticonOID:emu.oid!,
+                emkPackageOID:emuDef.oid!,
+                emkDLTaskType:emkDLTaskTypeFullRenderResources
+                ] as [NSObject: AnyObject]
+            emu.enqueueIfMissingFullRenderResourcesWithInfo(info)
+            return
+        }
+
+        
         // Show progress
         self.guiLongRenderProgress.hidden = false
         self.guiLongRenderProgress.setProgress(0, animated: false)
         self.guiLongRenderProgress.alpha = 1
         self.guiLongRenderLabel.hidden = false
         self.guiLongRenderLabel.text = "Rendering preview"
-        
-        // Cancel preview long renders
-        if self.renderer != nil {
-            self.renderer?.cancel()
-        }
         
         //
         var keepResultForEmuAtPath: String? = nil

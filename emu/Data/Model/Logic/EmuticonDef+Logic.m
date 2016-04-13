@@ -174,7 +174,7 @@
 {
     // Full render video CFG
     NSMutableDictionary *cfg = [NSMutableDictionary dictionaryWithDictionary:self.fullRenderCFG];
-    
+
     // Replace placeholder footages with available footages.
     NSMutableArray *sourceLayers = [NSMutableArray new];
     for (NSDictionary *layer in cfg[hcrSourceLayersInfo]) {
@@ -401,6 +401,34 @@
     return resourcesNames;
 }
 
+-(NSArray *)allMissingFullRenderResourcesNames
+{
+    if (self.fullRender == nil || self.fullRender.boolValue == NO) return @[];
+    if (self.fullRenderCFG == nil) return @[];
+    
+    NSMutableArray *missingResources = [NSMutableArray new];
+    for (NSDictionary *layer in self.fullRenderCFG[hcrSourceLayersInfo]) {
+        NSString *resourceRelativePath = layer[hcrRelativePath];
+        if (resourceRelativePath != nil && [self isMissingResourceNamed:resourceRelativePath]) {
+            [missingResources addObject:resourceRelativePath];
+        }
+
+        // Also check effects resources (masks etc).
+        for (NSDictionary *effect in layer[@"effects"]) {
+            if ([effect[hcrEffectType] isEqualToString:hcrEffectTypeMask]) {
+                NSDictionary *source = effect[hcrSource];
+                if (source) {
+                    NSString *maskResourceRelativePath = source[hcrRelativePath];
+                    if (maskResourceRelativePath != nil && [self isMissingResourceNamed:maskResourceRelativePath]) {
+                        [missingResources addObject:maskResourceRelativePath];
+                    }
+                }
+            }
+        }
+    }
+    return missingResources;
+}
+
 -(BOOL)allResourcesAvailable
 {
     return [self allResourcesAvailableInHD:NO];
@@ -423,6 +451,10 @@
     }
 }
 
+-(BOOL)allFullRenderResourcesAvailable
+{
+    return NO;
+}
 
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName
 {

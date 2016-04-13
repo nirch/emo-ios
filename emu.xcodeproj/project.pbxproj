@@ -50,7 +50,6 @@
 		08271FD11B01F5B90046F38E /* pressedButton.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB91B01F5B90046F38E /* pressedButton.wav */; };
 		08271FD51B01F5B90046F38E /* simpleSwipe.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBB1B01F5B90046F38E /* simpleSwipe.wav */; };
 		08271FD71B01F5B90046F38E /* startRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBC1B01F5B90046F38E /* startRecording.wav */; };
-		08271FD91B01F5B90046F38E /* kbAllowAccessTutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBE1B01F5B90046F38E /* kbAllowAccessTutorial.mp4 */; };
 		08271FE21B0203820046F38E /* onboarding_packages_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 08271FE11B0203820046F38E /* onboarding_packages_test.json */; };
 		082720C01B038CCB0046F38E /* EMCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 082720BF1B038CCB0046F38E /* EMCaches.m */; };
 		082C8B991C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 082C8B981C3D31ED00D6C6B7 /* replaced-bg2-480.png */; };
@@ -171,6 +170,8 @@
 		085D69491B25B90B0083ADD9 /* emu_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D69481B25B90B0083ADD9 /* emu_latest_build_info.plist */; };
 		085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */; };
 		086005581A98B153008CD7DE /* EMUISound.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005571A98B153008CD7DE /* EMUISound.m */; };
+		0863BB961CBD34DC00A421C4 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0863BB951CBD34DC00A421C4 /* Debug.storyboard */; };
+		0863BB971CBD34DC00A421C4 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0863BB951CBD34DC00A421C4 /* Debug.storyboard */; };
 		086578871BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 086578861BB7DCBB000DEDA7 /* EMFeaturedVC.m */; };
 		086578881BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 086578861BB7DCBB000DEDA7 /* EMFeaturedVC.m */; };
 		0865788B1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0865788A1BB7E148000DEDA7 /* EMFeaturedCell.m */; };
@@ -351,7 +352,6 @@
 		08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66DF1A937EC9007BC910 /* AppDelegate.m */; };
 		08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */ = {isa = PBXBuildFile; fileRef = 080C9F4F1AA478C00066FB30 /* EMDB+Files.m */; };
 		08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89D91A9CD18100224A38 /* EMunizingView.m */; };
-		08AA14751B0BA658002E1B2F /* AWFanOpeningLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD01A967906008A3E0A /* AWFanOpeningLayer.m */; };
 		08AA14791B0BA658002E1B2F /* EMShareDebuggingFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B9876B1B08CB3300EA0D73 /* EMShareDebuggingFile.m */; };
 		08AA147C1B0BA658002E1B2F /* EMPackageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 080CB39A1AA51B6100603E30 /* EMPackageCell.m */; };
 		08AA147D1B0BA658002E1B2F /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
@@ -364,7 +364,6 @@
 		08AA148C1B0BA658002E1B2F /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
 		08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E8F75B1AE5535000B27D2C /* EMHolySheet.m */; };
 		08AA148F1B0BA658002E1B2F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66E51A937EC9007BC910 /* main.m */; };
-		08AA14901B0BA658002E1B2F /* AWFanOpeningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */; };
 		08AA14921B0BA658002E1B2F /* EMShareMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */; };
 		08AA14941B0BA658002E1B2F /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 080B05941AB064E2003C19E7 /* BSONIdGenerator.m */; };
 		08AA14961B0BA658002E1B2F /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD731AA37DC20078F14B /* EMEmuticonParser.m */; };
@@ -394,7 +393,6 @@
 		08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C67361A937EC9007BC910 /* LaunchScreen.xib */; };
 		08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CED10F1AA6DA8800C50D0C /* Analytics.plist */; };
 		08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08A907181ACABB82008534F7 /* EMAlertsPermissionVC.xib */; };
-		08AA14DC1B0BA658002E1B2F /* kbAllowAccessTutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBE1B01F5B90046F38E /* kbAllowAccessTutorial.mp4 */; };
 		08AA14DD1B0BA658002E1B2F /* endRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB61B01F5B90046F38E /* endRecording.wav */; };
 		08AA14E01B0BA658002E1B2F /* cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB51B01F5B90046F38E /* cancel.wav */; };
 		08AA14E21B0BA658002E1B2F /* activityAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CB89F01A9D28BA00224A38 /* activityAnimation.gif */; };
@@ -472,8 +470,6 @@
 		08CA9A801BCFE843004A5A02 /* teddies-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A411BCFE842004A5A02 /* teddies-mask-v1.png */; };
 		08CA9AA41BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; };
 		08CA9AA61BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; };
-		08CAEAD31A967906008A3E0A /* AWFanOpeningLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD01A967906008A3E0A /* AWFanOpeningLayer.m */; };
-		08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */; };
 		08CAEAD71A9757BF008A3E0A /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD51A9757BF008A3E0A /* SourceSansPro-Regular.ttf */; };
 		08CAEAD81A9757BF008A3E0A /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD61A9757BF008A3E0A /* SourceSansPro-Semibold.ttf */; };
 		08CB89781A9AA12A00224A38 /* EMAnimatedGifPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CB89661A9AA12A00224A38 /* EMAnimatedGifPlayer.m */; };
@@ -661,7 +657,6 @@
 		08271FB91B01F5B90046F38E /* pressedButton.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pressedButton.wav; sourceTree = "<group>"; };
 		08271FBB1B01F5B90046F38E /* simpleSwipe.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = simpleSwipe.wav; sourceTree = "<group>"; };
 		08271FBC1B01F5B90046F38E /* startRecording.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = startRecording.wav; sourceTree = "<group>"; };
-		08271FBE1B01F5B90046F38E /* kbAllowAccessTutorial.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = kbAllowAccessTutorial.mp4; sourceTree = "<group>"; };
 		08271FE11B0203820046F38E /* onboarding_packages_test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_packages_test.json; sourceTree = "<group>"; };
 		082720BE1B038CCB0046F38E /* EMCaches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCaches.h; sourceTree = "<group>"; };
 		082720BF1B038CCB0046F38E /* EMCaches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCaches.m; sourceTree = "<group>"; };
@@ -781,6 +776,7 @@
 		085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emubeta_latest_build_info.plist; sourceTree = "<group>"; };
 		086005561A98B153008CD7DE /* EMUISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUISound.h; sourceTree = "<group>"; };
 		086005571A98B153008CD7DE /* EMUISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUISound.m; sourceTree = "<group>"; };
+		0863BB951CBD34DC00A421C4 /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		086578851BB7DCBB000DEDA7 /* EMFeaturedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeaturedVC.h; sourceTree = "<group>"; };
 		086578861BB7DCBB000DEDA7 /* EMFeaturedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeaturedVC.m; sourceTree = "<group>"; };
 		086578891BB7E148000DEDA7 /* EMFeaturedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeaturedCell.h; sourceTree = "<group>"; };
@@ -993,10 +989,6 @@
 		08CA9AA21BD05302004A5A02 /* emu1_8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_8.xcdatamodel; sourceTree = "<group>"; };
 		08CA9AA31BD05302004A5A02 /* emu1_9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu1_9.xcdatamodel; sourceTree = "<group>"; };
 		08CA9AA81BD05362004A5A02 /* emu2_0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu2_0.xcdatamodel; sourceTree = "<group>"; };
-		08CAEACF1A967906008A3E0A /* AWFanOpeningLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWFanOpeningLayer.h; sourceTree = "<group>"; };
-		08CAEAD01A967906008A3E0A /* AWFanOpeningLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWFanOpeningLayer.m; sourceTree = "<group>"; };
-		08CAEAD11A967906008A3E0A /* AWFanOpeningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWFanOpeningView.h; sourceTree = "<group>"; };
-		08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWFanOpeningView.m; sourceTree = "<group>"; };
 		08CAEAD51A9757BF008A3E0A /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		08CAEAD61A9757BF008A3E0A /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		08CB89651A9AA12A00224A38 /* EMAnimatedGifPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAnimatedGifPlayer.h; sourceTree = "<group>"; };
@@ -1275,7 +1267,6 @@
 		08271FBD1B01F5B90046F38E /* video */ = {
 			isa = PBXGroup;
 			children = (
-				08271FBE1B01F5B90046F38E /* kbAllowAccessTutorial.mp4 */,
 				0892DE681C47C4DC00CA537D /* downloading.mp4 */,
 				0892DE691C47C4DC00CA537D /* rendering.mp4 */,
 			);
@@ -1662,7 +1653,6 @@
 				08E30BC21BB9CF6E009EDCFF /* View Effects */,
 				08E8F7591AE5532700B27D2C /* Action sheet */,
 				08CB89D71A9CD15700224A38 /* EmunizingView */,
-				08CAEACE1A967906008A3E0A /* Pie Slice */,
 				083C3E471A94BD6F007A298C /* Pager */,
 				08B589A61A93CEF8008D9068 /* Gradients */,
 				08B589991A93B9AF008D9068 /* Fonts Related */,
@@ -2089,6 +2079,7 @@
 		08BE1F9B1B28486500A34232 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				0863BB951CBD34DC00A421C4 /* Debug.storyboard */,
 				08BE1F9C1B28487C00A34232 /* EMDebugViewController.h */,
 				08BE1F9D1B28487C00A34232 /* EMDebugViewController.m */,
 				08D558B51B286114006BF723 /* EMDebugCell.h */,
@@ -2141,17 +2132,6 @@
 				08CA9A411BCFE842004A5A02 /* teddies-mask-v1.png */,
 			);
 			path = love;
-			sourceTree = "<group>";
-		};
-		08CAEACE1A967906008A3E0A /* Pie Slice */ = {
-			isa = PBXGroup;
-			children = (
-				08CAEACF1A967906008A3E0A /* AWFanOpeningLayer.h */,
-				08CAEAD01A967906008A3E0A /* AWFanOpeningLayer.m */,
-				08CAEAD11A967906008A3E0A /* AWFanOpeningView.h */,
-				08CAEAD21A967906008A3E0A /* AWFanOpeningView.m */,
-			);
-			path = "Pie Slice";
 			sourceTree = "<group>";
 		};
 		08CB89631A9AA12A00224A38 /* Main */ = {
@@ -2580,7 +2560,6 @@
 				08CA9A7E1BCFE843004A5A02 /* teddies-fg.gif in Resources */,
 				08CA9A701BCFE842004A5A02 /* hearts-fg.gif in Resources */,
 				08C88DD21C70A73600300AAA /* buds-molecular-bg.mp4 in Resources */,
-				08AA14DC1B0BA658002E1B2F /* kbAllowAccessTutorial.mp4 in Resources */,
 				0854FCEF1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */,
 				0847E5651BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				08AA14DD1B0BA658002E1B2F /* endRecording.wav in Resources */,
@@ -2613,6 +2592,7 @@
 				08CA9A261BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */,
 				0889BD4E1C5A559B004B81CB /* placeholderNegative240.png in Resources */,
 				08CA9A621BCFE842004A5A02 /* angel-bg.gif in Resources */,
+				0863BB971CBD34DC00A421C4 /* Debug.storyboard in Resources */,
 				0854FCED1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */,
 				08CA9A661BCFE842004A5A02 /* angel-mask-v1.png in Resources */,
 				083814271BBB3139004D902E /* pop.wav in Resources */,
@@ -2683,7 +2663,6 @@
 				084349C21B837B1C009A653F /* EMShareInputBox.xib in Resources */,
 				0892DE6C1C47C4DD00CA537D /* rendering.mp4 in Resources */,
 				08C88DD01C70A73600300AAA /* buds-molecular-bg.mp4 in Resources */,
-				08271FD91B01F5B90046F38E /* kbAllowAccessTutorial.mp4 in Resources */,
 				0854FCEE1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */,
 				0889BD441C5A559B004B81CB /* placeholder240.png in Resources */,
 				08CA9A691BCFE842004A5A02 /* green-love-fg.gif in Resources */,
@@ -2716,6 +2695,7 @@
 				08357F3A1BC9EC0400C302AA /* Me.storyboard in Resources */,
 				083248521BECB3C500B4E82F /* EMBlockingProgressVC.storyboard in Resources */,
 				08CA9A6F1BCFE842004A5A02 /* hearts-fg.gif in Resources */,
+				0863BB961CBD34DC00A421C4 /* Debug.storyboard in Resources */,
 				0854FCEC1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */,
 				0889BD541C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				08967C251B5B9A9F000DDCF9 /* downloading.gif in Resources */,
@@ -2969,7 +2949,6 @@
 				0880DBCE1CB13B620050D227 /* HMImageTools.mm in Sources */,
 				08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */,
 				08ED7FBD1B1B52AF00B6856F /* HMExperiments.m in Sources */,
-				08AA14751B0BA658002E1B2F /* AWFanOpeningLayer.m in Sources */,
 				08357F3F1BC9EDBD00C302AA /* EMMeVC.m in Sources */,
 				08AA14791B0BA658002E1B2F /* EMShareDebuggingFile.m in Sources */,
 				08E35B831BE8E7840026F11B /* EMSettingsCell.m in Sources */,
@@ -3011,7 +2990,6 @@
 				08E30BC71BB9CF6E009EDCFF /* UIView+MotionEffect.m in Sources */,
 				0865788C1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */,
 				08AE9CCD1C5D55A00075B03C /* HMServer+User.m in Sources */,
-				08AA14901B0BA658002E1B2F /* AWFanOpeningView.m in Sources */,
 				08A456E01B9DB0B2001AB79E /* EMTabsVC.m in Sources */,
 				08AA14921B0BA658002E1B2F /* EMShareMail.m in Sources */,
 				08A457071BA02844001AB79E /* EMPacksVC.m in Sources */,
@@ -3141,7 +3119,6 @@
 				08967C2B1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
 				08CB89DA1A9CD18100224A38 /* EMunizingView.m in Sources */,
 				08ED7FBC1B1B52AF00B6856F /* HMExperiments.m in Sources */,
-				08CAEAD31A967906008A3E0A /* AWFanOpeningLayer.m in Sources */,
 				08357F3E1BC9EDBD00C302AA /* EMMeVC.m in Sources */,
 				08B9876C1B08CB3300EA0D73 /* EMShareDebuggingFile.m in Sources */,
 				08E35B821BE8E7840026F11B /* EMSettingsCell.m in Sources */,
@@ -3181,7 +3158,6 @@
 				085C67621A937EC9007BC910 /* main.m in Sources */,
 				08E30BC61BB9CF6E009EDCFF /* UIView+MotionEffect.m in Sources */,
 				0865788B1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */,
-				08CAEAD41A967906008A3E0A /* AWFanOpeningView.m in Sources */,
 				08A456DF1B9DB0B2001AB79E /* EMTabsVC.m in Sources */,
 				0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */,
 				08A457061BA02844001AB79E /* EMPacksVC.m in Sources */,

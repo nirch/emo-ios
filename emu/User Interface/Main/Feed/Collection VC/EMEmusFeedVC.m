@@ -176,6 +176,12 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     [self storeState];
 }
 
+-(void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    
+}
+
 #pragma mark - Persisting state
 -(void)storeState
 {
@@ -251,6 +257,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     longpressGesture.minimumPressDuration = 0.8;
     longpressGesture.delegate = self;
     [self.guiCollectionView addGestureRecognizer:longpressGesture];
+    
 }
 
 /**

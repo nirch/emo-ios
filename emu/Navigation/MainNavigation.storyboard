@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cfX-Dw-Hu5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cfX-Dw-Hu5">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -38,9 +37,6 @@
                             </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vu-Nu-tf1" userLabel="tutorial container">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <connections>
-                                    <segue destination="Ea0-I7-JDw" kind="embed" identifier="kb tutorial segue" id="dtf-zq-gHF"/>
-                                </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -348,124 +344,8 @@
             </objects>
             <point key="canvasLocation" x="2989" y="1859"/>
         </scene>
-        <!--AV Player View Controller-->
-        <scene sceneID="XOd-2R-TyL">
-            <objects>
-                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="Gaf-qt-5dD" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ORW-vd-lJg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3435" y="535"/>
-        </scene>
-        <!--TutorialVC-->
-        <scene sceneID="3PN-sT-s6v">
-            <objects>
-                <viewController storyboardIdentifier="keyboard tutorial" automaticallyAdjustsScrollViewInsets="NO" id="Ea0-I7-JDw" customClass="EMTutorialVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WHX-pS-r8Q"/>
-                        <viewControllerLayoutGuide type="bottom" id="M1M-jj-guC"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="3zq-Nc-xZO" customClass="EMGradientView">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQl-3K-5MK" userLabel="Continue Button" customClass="EMFlowButton">
-                                <rect key="frame" x="16" y="400" width="288" height="65"/>
-                                <color key="backgroundColor" red="0.27380502220000003" green="0.5128060579" blue="0.35326981540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="23g-Ky-91d"/>
-                                    <constraint firstAttribute="height" constant="65" id="iih-kg-7hh"/>
-                                </constraints>
-                                <state key="normal" title="OK, GOT IT!">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressedContinueButton:" destination="Ea0-I7-JDw" eventType="touchUpInside" id="gh9-NU-Zmg"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General &gt; Keyboard &gt; Keyboards &gt; Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HpE-ve-fci" customClass="EMLabel">
-                                <rect key="frame" x="9" y="353" width="303" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.27479079369999998" green="0.5571715236" blue="0.89757764340000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use your Emu from your keyboard. Add the keyboard from settings and allow full access:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="PLk-vY-lRZ" customClass="EMLabel">
-                                <rect key="frame" x="9" y="264" width="302" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="302" id="Z2T-aq-WS9"/>
-                                    <constraint firstAttribute="height" constant="80" id="b7s-ZD-H0z"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.43916493649999999" green="0.43924486639999999" blue="0.43915989999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bl5-LP-6qs">
-                                <rect key="frame" x="31" y="44" width="258" height="258"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addKB" translatesAutoresizingMaskIntoConstraints="NO" id="svR-UB-zGO">
-                                        <rect key="frame" x="0.0" y="0.0" width="258" height="258"/>
-                                    </imageView>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7u9-vQ-KLU">
-                                        <rect key="frame" x="0.0" y="0.0" width="258" height="258"/>
-                                        <connections>
-                                            <segue destination="Gaf-qt-5dD" kind="embed" identifier="tutorial video player segue" id="gXD-sw-Wz0"/>
-                                        </connections>
-                                    </containerView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="svR-UB-zGO" secondAttribute="centerY" id="2HT-W6-KZk"/>
-                                    <constraint firstAttribute="width" secondItem="bl5-LP-6qs" secondAttribute="height" multiplier="1:1" id="2gb-83-wGg"/>
-                                    <constraint firstAttribute="height" secondItem="svR-UB-zGO" secondAttribute="height" id="2s9-te-gXx"/>
-                                    <constraint firstAttribute="width" secondItem="svR-UB-zGO" secondAttribute="width" id="HKx-1l-dbJ"/>
-                                    <constraint firstAttribute="centerX" secondItem="svR-UB-zGO" secondAttribute="centerX" id="NXH-Dp-hqc"/>
-                                    <constraint firstItem="7u9-vQ-KLU" firstAttribute="top" secondItem="bl5-LP-6qs" secondAttribute="top" id="bxp-hY-OeJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="7u9-vQ-KLU" secondAttribute="trailing" id="fLk-Hj-gMO"/>
-                                    <constraint firstItem="7u9-vQ-KLU" firstAttribute="leading" secondItem="bl5-LP-6qs" secondAttribute="leading" id="gRy-Vd-YhX"/>
-                                    <constraint firstAttribute="bottom" secondItem="7u9-vQ-KLU" secondAttribute="bottom" id="yH5-gd-u0B"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="HpE-ve-fci" secondAttribute="centerX" id="7v0-z6-xet"/>
-                            <constraint firstItem="yQl-3K-5MK" firstAttribute="leading" secondItem="3zq-Nc-xZO" secondAttribute="leadingMargin" id="9M4-ou-w9v"/>
-                            <constraint firstItem="bl5-LP-6qs" firstAttribute="top" secondItem="WHX-pS-r8Q" secondAttribute="bottom" constant="44" id="F61-OP-d8e"/>
-                            <constraint firstAttribute="centerX" secondItem="bl5-LP-6qs" secondAttribute="centerX" constant="-0.5" id="HtD-CJ-JhQ"/>
-                            <constraint firstItem="M1M-jj-guC" firstAttribute="top" secondItem="yQl-3K-5MK" secondAttribute="bottom" constant="15" id="J4a-3v-SoV"/>
-                            <constraint firstItem="HpE-ve-fci" firstAttribute="top" secondItem="PLk-vY-lRZ" secondAttribute="bottom" constant="9" id="Ql8-Yb-bZF"/>
-                            <constraint firstItem="bl5-LP-6qs" firstAttribute="trailing" secondItem="3zq-Nc-xZO" secondAttribute="trailingMargin" constant="-15" id="TtG-oh-6t5" userLabel="right margin"/>
-                            <constraint firstItem="yQl-3K-5MK" firstAttribute="trailing" secondItem="3zq-Nc-xZO" secondAttribute="trailingMargin" id="kU4-zR-mfg"/>
-                            <constraint firstItem="yQl-3K-5MK" firstAttribute="top" secondItem="HpE-ve-fci" secondAttribute="bottom" constant="26" id="kp4-4p-InM"/>
-                            <constraint firstItem="bl5-LP-6qs" firstAttribute="leading" secondItem="3zq-Nc-xZO" secondAttribute="leadingMargin" constant="15" id="qwK-Zt-sNj" userLabel="left margin"/>
-                            <constraint firstAttribute="centerX" secondItem="PLk-vY-lRZ" secondAttribute="centerX" constant="-0.5" id="xoD-8e-6C7"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
-                        </userDefinedRuntimeAttributes>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="HtD-CJ-JhQ"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="480"/>
-                    <connections>
-                        <outlet property="constraintLeftMargin" destination="qwK-Zt-sNj" id="fkE-j2-Vh5"/>
-                        <outlet property="constraintRightMargin" destination="TtG-oh-6t5" id="cZd-my-tZg"/>
-                        <outlet property="guiTutorialPresentationContainer" destination="bl5-LP-6qs" id="rGe-JY-P7p"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CbY-Mk-p2t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2989" y="548"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="addKB" width="414" height="414"/>
         <image name="tabsIconFeatured" width="27" height="34"/>
         <image name="tabsIconFeed" width="36" height="36"/>
         <image name="tabsIconMe" width="33" height="32"/>

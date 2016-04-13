@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		vsJ3mnfcy/4eyFZi03hVR8NRFrE=
-		</data>
 		<key>GPUImage.framework/Versions/A/GPUImage</key>
 		<data>
 		iJN+rn6qDZMkMJ7xVfu62b65czQ=
@@ -786,7 +782,7 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		sO3ASA4y6oSR5qF27Us4qSGVFu4=
+		4JVtjI1mHCQJg5bGeUpYgs/YYIk=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
@@ -2937,11 +2933,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			sO3ASA4y6oSR5qF27Us4qSGVFu4=
+			4JVtjI1mHCQJg5bGeUpYgs/YYIk=
 			</data>
 			<key>hash2</key>
 			<data>
-			IluJW4FU8yn5OhSaYkfLlnz959g81tnHCOrCkwzQ3m4=
+			ZRGr51pIrZX3yjQJdoqT6lZFqzp+kja6ueBkKC2exv8=
 			</data>
 		</dict>
 		<key>release_notes.txt</key>

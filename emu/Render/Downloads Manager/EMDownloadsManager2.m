@@ -36,7 +36,7 @@
 // Data structures.
 //
 @property (atomic) NSDictionary *priorities;
-@property (nonatomic, readonly) NSMutableDictionary *downloadingPool;
+@property (nonatomic, readonly) NSMutableDictionary<NSString *,AWSS3TransferManagerDownloadRequest *> *downloadingPool;
 @property (nonatomic, readonly) NSMutableDictionary *neededDownloadsPool;
 @property (nonatomic, readonly) NSMutableDictionary *pathByOID;
 @property (nonatomic, readonly) NSMutableDictionary *taskType;
@@ -284,19 +284,19 @@
     // Get the task.
     NSString *jobID = [self jobIDForOID:oid resourceName:name];
     HMLOG(TAG, EM_DBG, @"Download job: %@", jobID);
-    AWSTask *downloadTask = [self newDownloadTaskForOID:oid resourceName:name];
-    self.downloadingPool[jobID] = downloadTask;
-    
-    
+
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [self newDownloadRequestForOID:oid resourceName:name];
+    self.downloadingPool[jobID] = downloadRequest;
     
     // Download!
+    __weak AWSTask *downloadTask = [self.transferManager download:downloadRequest];
     __weak EMDownloadsManager2 *wSelf = self;
-    [downloadTask continueWithBlock:^id(AWSTask *task) {
-        AWSS3TransferManagerDownloadOutput *output = task.result;
-        NSURL *downloadedFileURL = output.body;
-        NSFileManager *fm = [NSFileManager defaultManager];
-
-        if (task.completed) {
+    
+    [downloadTask continueWithExecutor:[AWSExecutor executorWithDispatchQueue:self.downloadingManagementQueue] withBlock:^id _Nullable(AWSTask * _Nonnull task) {
+            AWSS3TransferManagerDownloadOutput *output = task.result;
+            NSURL *downloadedFileURL = output.body;
+            NSFileManager *fm = [NSFileManager defaultManager];
+    
             if (task.error) {
                 [fm removeItemAtURL:downloadedFileURL error:nil];
                 if (task.error.code == AWSS3TransferManagerErrorCancelled) {
@@ -329,7 +329,7 @@
                                    md5);
                     }
                 }
-                
+    
                 if (!shouldValidateMD5 || md5Validated) {
                     //
                     // If didn't need to validate or validate succesfully,
@@ -366,11 +366,11 @@
                         [wSelf _failedJobForOID:oid resourceName:name error:error];
                     });
                 }
-                
-            }
-        }
-        return nil;
+            }    
+            return nil;
     }];
+    
+
 }
 
 
@@ -386,27 +386,30 @@
 
 -(void)_finishJobForOID:(NSString *)oid resourceName:(NSString *)name error:(NSError *)error
 {
-    //BOOL resourceValidated = [];
-    
     // Finish the job
     NSString *jobID = [self jobIDForOID:oid resourceName:name];
-    [self.downloadingPool removeObjectForKey:jobID];
-
+    
     __weak EMDownloadsManager2 *wSelf = self;
     
     // Post to the UI that a download was finished.
     NSDictionary *userInfoForOID = self.userInfo[oid]?self.userInfo[oid]:@{};
     NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:userInfoForOID];
-    if (error) info[@"error"] = error;
+    if (error) {
+        info[@"error"] = error;
+    }
+    [self.downloadingPool removeObjectForKey:jobID];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:hmkDownloadResourceFinished
-                                                            object:self
+                                                            object:wSelf
                                                           userInfo:info];
     });
 
-    dispatch_async(self.downloadingManagementQueue, ^{
-        [wSelf _manageQueue];
-    });
+    if (error == nil) {
+        dispatch_async(self.downloadingManagementQueue, ^{
+            [wSelf _manageQueue];
+        });
+    }
 }
 
 #pragma mark - AWS Downloads
@@ -456,11 +459,11 @@
 
 
 
--(AWSTask *)newDownloadTaskForOID:(NSString *)oid resourceName:(NSString *)name
+-(AWSS3TransferManagerDownloadRequest *)newDownloadRequestForOID:(NSString *)oid resourceName:(NSString *)name
 {
     // --------------
     // Don't enable this in production!
-    //    [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+    // [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
     // --------------
     
     // Create a download request for specified bucket.
@@ -480,10 +483,8 @@
     
     // Download to this local path.
     downloadRequest.downloadingFileURL = localPathURL;
-
-    // Get and return the download task.
-    AWSTask *downloadTask = [self.transferManager download:downloadRequest];
-    return downloadTask;
+    
+    return downloadRequest;
 }
 
 

@@ -120,6 +120,7 @@
         self.guiLogoButtonBG.layer.cornerRadius = self.guiLogoButtonBG.bounds.size.width / 2.0f;
         [self addSubtleShadowToLayer:self.guiLogoButtonBG.layer boundPath:NO];
 
+        
         // Show it
         self.view.alpha = 1;
         
@@ -186,7 +187,7 @@
 #pragma mark - Theme color
 -(void)updateThemeColor:(UIColor *)color animated:(BOOL)animated
 {
-    color = [color colorWithAlphaComponent:0.97];
+    color = [color colorWithAlphaComponent:0.92];
     if (animated) {
         [UIView animateWithDuration:0.3 animations:^{
             [self updateThemeColor:color animated:NO];

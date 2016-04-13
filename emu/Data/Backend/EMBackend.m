@@ -98,8 +98,10 @@
     if (_transferManager) return _transferManager;
     AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_UPLOAD_ACCESS_KEY secretKey:S3_UPLOAD_SECRET_KEY];
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    configuration.maxRetryCount = 0;
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
     _transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
     HMLOG(TAG, EM_DBG, @"Started s3 transfer manager");
     return _transferManager;
 }
@@ -172,8 +174,6 @@
     [nc removeObserver:emkDataRequiredUnhidePackages];
     [nc removeObserver:emkDataRequestToOpenPackage];
     [nc removeObserver:hmkRenderingFinished];
-    
-    
 }
 
 #pragma mark - Observers handlers

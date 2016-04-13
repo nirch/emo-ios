@@ -1,13 +1,17 @@
 //
 //  HMPanel.m
 //
+//  -------------------------------------------------------------------------
+//  Deprecated mixpanel integration for now
+//  Currently will only report specific flageed events to crashlytics/fabric.
+//  -------------------------------------------------------------------------
+//
 #define TAG @"HMPanel"
 
 
 #import "HMPanel.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-#import <Mixpanel.h>
+//#import <Fabric/Fabric.h>
+//#import <Crashlytics/Crashlytics.h>
 #import "AppManagement.h"
 #import "EMDB.h"
 #import "HMAnalyticsEvents.h"
@@ -15,8 +19,8 @@
 @interface HMPanel()
 
 @property (nonatomic) NSMutableDictionary *cfg;
-@property (nonatomic) NSString *mixPanelToken;
-@property (nonatomic) Mixpanel *mixPanel;
+//@property (nonatomic) NSString *mixPanelToken;
+//@property (nonatomic) Mixpanel *mixPanel;
 @property (nonatomic) HMExperiments *experiments;
 
 @end
@@ -67,86 +71,86 @@
 
 -(void)initCrashReports
 {
-    [Fabric with:@[CrashlyticsKit]];
-    Crashlytics *crashlytics = [Crashlytics sharedInstance];
-    [crashlytics setObjectValue:[[UIDevice currentDevice] name] forKey:@"device name"];
-    REMOTE_LOG(@"Initialized crashlytics");
+//    [Fabric with:@[CrashlyticsKit]];
+//    Crashlytics *crashlytics = [Crashlytics sharedInstance];
+//    [crashlytics setObjectValue:[[UIDevice currentDevice] name] forKey:@"device name"];
+//    REMOTE_LOG(@"Initialized crashlytics");
 }
 
 -(void)remoteKey:(NSString *)key value:(NSString *)value
 {
-    if (key == nil || value == nil) return;
-    Crashlytics *crashlytics = [Crashlytics sharedInstance];
-    [crashlytics setObjectValue:value forKey:key];
+//    if (key == nil || value == nil) return;
+//    Crashlytics *crashlytics = [Crashlytics sharedInstance];
+//    [crashlytics setObjectValue:value forKey:key];
 }
 
 -(void)initMixPanelWithOptions:(NSDictionary *)launchOptions
 {
-    self.mixPanelToken = self.cfg[@"token"][AppManagement.sh.isTestApp?@"testToken":@"productionToken"];
-    self.mixPanel = [Mixpanel sharedInstance];
+//    self.mixPanelToken = self.cfg[@"token"][AppManagement.sh.isTestApp?@"testToken":@"productionToken"];
+//    self.mixPanel = [Mixpanel sharedInstance];
 
     // Init mixpanel using the token
-    if ([Mixpanel sharedInstance] == nil) {
-        HMLOG(TAG, EM_DBG, @"Initializing mixpanel with token: %@", self.mixPanelToken);
-        self.mixPanel = [Mixpanel sharedInstanceWithToken:self.mixPanelToken
-                                            launchOptions:launchOptions];
-        self.mixPanel.showSurveyOnActive = NO;
-    } else {
-        HMLOG(TAG, EM_DBG, @"Mixpanel already initialized.");
-    }
+//    if ([Mixpanel sharedInstance] == nil) {
+//        HMLOG(TAG, EM_DBG, @"Initializing mixpanel with token: %@", self.mixPanelToken);
+//        self.mixPanel = [Mixpanel sharedInstanceWithToken:self.mixPanelToken
+//                                            launchOptions:launchOptions];
+//        self.mixPanel.showSurveyOnActive = NO;
+//    } else {
+//        HMLOG(TAG, EM_DBG, @"Mixpanel already initialized.");
+//    }
 }
 
 
 -(void)userFeedbackDialoguesPoint
 {
-    [self.mixPanel showSurvey];
+//    [self.mixPanel showSurvey];
 }
 
 
 -(void)reportSuperParameters
 {
-    HMParams *params = [HMParams new];
-    [params addKey:AK_S_BUILD_VERSION value:AppManagement.sh.applicationBuild];
-    [params addKey:AK_S_LOCALIZATION_PREFERENCE value:[self localizationPreference]];
-    [params addKey:AK_S_DEVICE_MODEL value:[AppManagement deviceModelName]];
-    [params addKey:AK_S_LAUNCHES_COUNT value:[self launchesCount]];
-    [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]?self.cfg[AK_S_CLIENT_NAME]:@"Emu iOS"];
-    
-    // More flags as super parameters
-    [params addKey:AK_S_DID_EVER_SHARE_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
-    [params addKey:AK_S_DID_EVER_SHARE_VIDEO_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_VIDEO_SHARES_USING_APP_COUNT]];
-    [params addKey:AK_S_DID_EVER_FINISH_A_RETAKE value:[self didEverCountedKey:AK_S_NUMBER_OF_APPROVED_RETAKES]];
-    [params addKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:[self didEverCountedKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED]];
-    
-    NSDictionary *info = params.dictionary;
-    [self.mixPanel registerSuperProperties:info];
-    
-    if ([self isFirstLaunch]) {
-        [self reportOnceSuperParameterKey:AK_S_FIRST_LAUNCH_DATE value:[NSDate date]];
-    }
+//    HMParams *params = [HMParams new];
+//    [params addKey:AK_S_BUILD_VERSION value:AppManagement.sh.applicationBuild];
+//    [params addKey:AK_S_LOCALIZATION_PREFERENCE value:[self localizationPreference]];
+//    [params addKey:AK_S_DEVICE_MODEL value:[AppManagement deviceModelName]];
+//    [params addKey:AK_S_LAUNCHES_COUNT value:[self launchesCount]];
+//    [params addKey:AK_S_CLIENT_NAME value:self.cfg[AK_S_CLIENT_NAME]?self.cfg[AK_S_CLIENT_NAME]:@"Emu iOS"];
+//    
+//    // More flags as super parameters
+//    [params addKey:AK_S_DID_EVER_SHARE_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_SHARES_USING_APP_COUNT]];
+//    [params addKey:AK_S_DID_EVER_SHARE_VIDEO_USING_APP value:[self didEverCountedKey:AK_S_NUMBER_OF_VIDEO_SHARES_USING_APP_COUNT]];
+//    [params addKey:AK_S_DID_EVER_FINISH_A_RETAKE value:[self didEverCountedKey:AK_S_NUMBER_OF_APPROVED_RETAKES]];
+//    [params addKey:AK_S_DID_EVER_NAVIGATE_TO_ANOTHER_PACKAGE value:[self didEverCountedKey:AK_S_NUMBER_OF_PACKAGES_NAVIGATED]];
+//    
+//    NSDictionary *info = params.dictionary;
+//    [self.mixPanel registerSuperProperties:info];
+//    
+//    if ([self isFirstLaunch]) {
+//        [self reportOnceSuperParameterKey:AK_S_FIRST_LAUNCH_DATE value:[NSDate date]];
+//    }
 }
 
 
 -(void)reportSuperParameters:(NSDictionary *)parameters
 {
-    HMParams *superParams = [HMParams new];
-    for (NSString *key in parameters.allKeys) {
-        [superParams addKey:key valueIfNotNil:parameters[key]];
-    }
-    [self.mixPanel registerSuperProperties:superParams.dictionary];
+//    HMParams *superParams = [HMParams new];
+//    for (NSString *key in parameters.allKeys) {
+//        [superParams addKey:key valueIfNotNil:parameters[key]];
+//    }
+//    [self.mixPanel registerSuperProperties:superParams.dictionary];
 }
 
 -(void)reportOnceSuperParameterKey:(NSString *)key value:(id)value
 {
-    [self.mixPanel registerSuperPropertiesOnce:@{key:value}];
+//    [self.mixPanel registerSuperPropertiesOnce:@{key:value}];
 }
 
 
 -(void)reportSuperParameterKey:(NSString *)key value:(id)value
 {
-    HMParams *superParams = [HMParams new];
-    [superParams addKey:key valueIfNotNil:value];
-    [self.mixPanel registerSuperProperties:superParams.dictionary];
+//    HMParams *superParams = [HMParams new];
+//    [superParams addKey:key valueIfNotNil:value];
+//    [self.mixPanel registerSuperProperties:superParams.dictionary];
 }
 
 -(void)reportCountedSuperParameterForKey:(NSString *)key
@@ -165,7 +169,7 @@
 
 -(void)analyticsForceSend
 {
-    [self.mixPanel flush];
+//    [self.mixPanel flush];
 }
 
 -(void)analyticsEvent:(NSString *)event
@@ -176,22 +180,24 @@
 -(void)analyticsEvent:(NSString *)event info:(NSDictionary *)info
 {
     if (event == nil) return;
-    
-    // Ensure the event is defined.
-    // If it is not defined, warn about it in production and explode on test/development.
     id e = self.cfg[@"events"][event];
-    if (![e isKindOfClass:[NSDictionary class]]) {
-        NSString *errMessage = [SF:@"Wrong analytics event name used '%@'", event];
-        HMLOG(TAG, EM_ERR, @"%@", errMessage);
-        // if a test app, just explode
-        [self explodeOnTestApplicationsWithInfo:@{@"description":errMessage}];
-        return;
-    }
     
-    // Report event to mixpanel.
-    [self.mixPanel track:event properties:info];
-    HMLOG(TAG, EM_VERBOSE, @"Event:%@ info:%@", event, info);
-    
+// ----------------------------------------------
+// FABRIC Events currently deprecated.
+//     // Ensure the event is defined.
+//     // If it is not defined, warn about it in production and explode on test/development.
+//    if (![e isKindOfClass:[NSDictionary class]]) {
+//        NSString *errMessage = [SF:@"Wrong analytics event name used '%@'", event];
+//        HMLOG(TAG, EM_ERR, @"%@", errMessage);
+//        // if a test app, just explode
+//        [self explodeOnTestApplicationsWithInfo:@{@"description":errMessage}];
+//        return;
+//    }
+//    
+//    // Report event to mixpanel.
+//    [self.mixPanel track:event properties:info];
+//    HMLOG(TAG, EM_VERBOSE, @"Event:%@ info:%@", event, info);
+// ----------------------------------------------
     
     if (e[FABRIC_EVENTS]!=nil && [e[FABRIC_EVENTS] boolValue]) {
         [self fabricAnswersEvent:event info:info];
@@ -384,7 +390,7 @@
 
 -(void)personIdentifyWithIdentifier:(NSString *)identifier
 {
-    [self.mixPanel identify:identifier];
+//    [self.mixPanel identify:identifier];
 }
 
 -(void)reportPersonDetails
@@ -409,20 +415,20 @@
     [self personDetails:params.dictionary];
 
     if ([self isFirstLaunch]) {
-        [self.mixPanel.people setOnce:@{AK_PD_FIRST_LAUNCH_DATE:now}];
+//        [self.mixPanel.people setOnce:@{AK_PD_FIRST_LAUNCH_DATE:now}];
     }
 }
 
 -(void)personDetails:(NSDictionary *)details
 {
-    [self.mixPanel.people set:details];
+//    [self.mixPanel.people set:details];
 }
 
 -(void)personPushToken:(NSData *)pushToken
 {
-    if (pushToken == nil) return;
-    [self.mixPanel.people addPushDeviceToken:pushToken];
-    [self personDetails:@{@"pushToken":[pushToken description]}];
+//    if (pushToken == nil) return;
+//    [self.mixPanel.people addPushDeviceToken:pushToken];
+//    [self personDetails:@{@"pushToken":[pushToken description]}];
 }
 
 
@@ -434,25 +440,26 @@
 
 -(void)initializeExperimentsWithLaunchOptions:(NSDictionary *)launchOptions
 {
-    [Optimizely startOptimizelyWithAPIToken:@"AAM7hIkAjQ2O6Dtl6TfFywzCXVVjq4W5~2898251091"
-                              launchOptions:launchOptions
-                  experimentsLoadedCallback:^(BOOL success, NSError *error) {
-                      [Optimizely activateMixpanelIntegration];
-                  }];
+//    [Optimizely startOptimizelyWithAPIToken:@"AAM7hIkAjQ2O6Dtl6TfFywzCXVVjq4W5~2898251091"
+//                              launchOptions:launchOptions
+//                  experimentsLoadedCallback:^(BOOL success, NSError *error) {
+//                      [Optimizely activateMixpanelIntegration];
+//                  }];
 }
 
 -(BOOL)handleOpenURL:(NSURL *)url
 {
-    if([Optimizely handleOpenURL:url]) {
-        return YES;
-    }
     return NO;
+//    if([Optimizely handleOpenURL:url]) {
+//        return YES;
+//    }
+//    return NO;
 }
 
 
 -(void)experimentGoalEvent:(NSString *)eventName
 {
-    [Optimizely trackEvent:eventName];
+//    [Optimizely trackEvent:eventName];
 }
 
 -(BOOL)boolForKey:(NSString *)key fallbackValue:(BOOL)fallbackValue
@@ -461,9 +468,9 @@
     NSNumber *boolNumber = [AppCFG tweakedNumber:key];
     if (boolNumber) return [boolNumber boolValue];
     
-    // Optimizely live variables.
-    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
-    if (opKey) return [Optimizely boolForKey:opKey];
+//    // Optimizely live variables.
+//    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+//    if (opKey) return [Optimizely boolForKey:opKey];
 
     // Nope. So use the passed fallback value instead.
     return fallbackValue;
@@ -475,9 +482,9 @@
     NSNumber *number = [AppCFG tweakedNumber:key];
     if (number) return number;
 
-    // Optimizely live variables.
-    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
-    if (opKey) return [Optimizely numberForKey:opKey];
+//    // Optimizely live variables.
+//    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+//    if (opKey) return [Optimizely numberForKey:opKey];
 
     // Nope. So use the passed fallback value instead.
     return fallbackValue;
@@ -490,14 +497,14 @@
     NSString *str = [AppCFG tweakedString:key];
     if (str) return str;
     
-    // Optimizely live variables.
-    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
-    if (opKey &&
-        [Optimizely stringForKey:opKey] &&
-        [[Optimizely stringForKey:opKey] length]>0) {
-        // A non empty string defined. Return it.
-        return [Optimizely stringForKey:opKey];
-    }
+//    // Optimizely live variables.
+//    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+//    if (opKey &&
+//        [Optimizely stringForKey:opKey] &&
+//        [[Optimizely stringForKey:opKey] length]>0) {
+//        // A non empty string defined. Return it.
+//        return [Optimizely stringForKey:opKey];
+//    }
     
     // Nope. So use the passed fallback value instead.
     return fallbackValue;
@@ -510,9 +517,9 @@
     NSString *str = [AppCFG tweakedString:key];
     if (str) return [self listFromString:str];
 
-    // Optimizely live variables.
-    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
-    if (opKey) return [self listFromString:[Optimizely stringForKey:opKey]];
+//    // Optimizely live variables.
+//    OptimizelyVariableKey *opKey = self.experiments.opKeysByString[key];
+//    if (opKey) return [self listFromString:[Optimizely stringForKey:opKey]];
     
     // Nope. So use the passed fallback value instead.
     return fallbackValue;

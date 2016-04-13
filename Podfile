@@ -6,7 +6,7 @@ pod 'AFNetworking',     '~> 2.6.0'
 pod 'FLAnimatedImage', '~> 1.0'
 pod 'SDWebImage', '~> 3.7'
 pod 'PINRemoteImage', '~> 1.2',                  :inhibit_warnings => true
-pod 'AWSS3', '~> 2.2',                  :inhibit_warnings => true
+pod 'AWSS3'                                      
 
 # GUI & Players
 pod 'AFSoundManager',                   :inhibit_warnings => true
@@ -17,14 +17,11 @@ pod 'SIAlertView', '~> 1.3',            :inhibit_warnings => true
 pod 'iCarousel', '~> 1.8'
 
 # Reporting and experiments
-pod 'Mixpanel', '~> 2.8.0',             :inhibit_warnings => true
 pod 'Fabric'
 pod 'Crashlytics'
-pod 'Optimizely-iOS-SDK'
 
 # General
 pod 'RegExCategories', '~> 1.0'
-pod 'iRate', '~> 1.11'
 
 # Facebook
 pod 'FBSDKCoreKit', '~> 4.6'

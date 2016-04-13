@@ -8,11 +8,12 @@
 
 #define emkDLTaskType @"dl task type"
 #define emkDLTaskTypeResources @"dl emu resources"
+#define emkDLTaskTypeFullRenderResources @"dl emu full render resources"
 #define emkDLTaskTypeFootages @"dl footages files"
 
 @class AWSS3TransferManager;
 
-#define MAX_CONCURRENT_DOWNLOADS 4
+#define MAX_CONCURRENT_DOWNLOADS 6
 
 @interface EMDownloadsManager2 : NSObject
 

@@ -5,10 +5,9 @@
 // Currently, remote logging implementation uses crashlytics.
 //#import <Crashlytics/Crashlytics.h>
 
-#import <Optimizely/Optimizely.h>
+//#import <Optimizely/Optimizely.h>
 #import "HMAnalyticsEvents.h"
 #import "HMParams.h"
-#import <MPTweakInline.h>
 #import "HMExperiments.h"
 #import <Crashlytics/Crashlytics.h>
 

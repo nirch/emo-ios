@@ -55,6 +55,19 @@
     return YES;
 }
 
+-(BOOL)enqueueIfMissingFullRenderResourcesWithInfo:(NSDictionary *)info
+{
+    NSArray *missingResourcesNames = [self.emuDef allMissingFullRenderResourcesNames];
+    if (missingResourcesNames.count < 1)
+        return NO;
+    
+    [EMDownloadsManager2.sh enqueueResourcesForOID:self.oid
+                                             names:missingResourcesNames
+                                              path:self.emuDef.package.name
+                                          userInfo:info];
+    return YES;
+}
+
 -(void)enqueueMissingRemoteFootageFilesWithInfo:(NSDictionary *)info
 {
     NSArray *missingResourcesNames = [self allMissingRemoteFootageFiles];

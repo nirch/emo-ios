@@ -28,6 +28,7 @@
                                        forUI:(NSString *)forUI;
 
 -(BOOL)enqueueIfMissingResourcesWithInfo:(NSDictionary *)info;
+-(BOOL)enqueueIfMissingFullRenderResourcesWithInfo:(NSDictionary *)info;
 -(void)enqueueMissingRemoteFootageFilesWithInfo:(NSDictionary *)info;
 
 @end

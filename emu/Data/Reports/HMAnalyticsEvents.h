@@ -2,7 +2,7 @@
 //  HMAnalyticsEvents.h
 //  emu
 //
-//  Created by build script on 08:56:48 02/01/16 IST
+//  Created by build script on 10:39:02 04/11/16 IDT
 //  Build script name: produce_events_resource_file.py
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
@@ -233,6 +233,20 @@ The user launched or returned to the application.
 The application was launched by the user.
 **/
 #define AK_E_APP_LAUNCHED @"App:launched"
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+The application entered the background and it is reporting the total
+    number of renders for this user and the number of renders since
+    the last time the app entered FG.
+**/
+#define AK_E_APP_REPORTING_RENDERS_COUNT @"App:reportingRendersCount"
+
+/** Param:totalRendersCount --> <number> - The total number of rendered content for this user. **/
+#define AK_EP_TOTAL_RENDERS_COUNT @"totalRendersCount"
+
+/** Param:rendersSinceLastAppEnteredFGCount --> <number> - The number of renders since the previous time the user entered the app **/
+#define AK_EP_RENDERS_SINCE_LAST_APP_ENTERED_FG_COUNT @"rendersSinceLastAppEnteredFGCount"
+
 
 /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Background fetch

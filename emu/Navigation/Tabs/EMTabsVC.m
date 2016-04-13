@@ -106,10 +106,10 @@
 //    searchVC.title = @"Search";
 //    [viewControllers addObject:searchVC];
     
-    // Me screen
-    UIViewController *meVC = [EMMeNavigationVC meNavigationVC];
-    meVC.title = @"Me";
-    [viewControllers addObject:meVC];
+//    // Me screen
+//    UIViewController *meVC = [EMMeNavigationVC meNavigationVC];
+//    meVC.title = @"Me";
+//    [viewControllers addObject:meVC];
     
     // Settings
     UIViewController *settingsVC = [EMSettingsNavigationVCViewController settingsNavVC];

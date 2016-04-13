@@ -8,6 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+@class HCTracking;
+
+/**
+ *  The environment the sdk
+ */
+typedef NS_ENUM(NSInteger, sdkENV) {
+    /**
+     *  Undefined. The SDK may raise exceptions / will block functionality when in this state.
+     */
+    sdkEnvUndefined      = 0,
+    /**
+     *  Development/test environment.
+     */
+    sdkEnvDev            = 1,
+    /**
+     *  Production environment. Use the SDK in this state only on production apps or beta apps on testflight.
+     */
+    sdkEnvProduction     = 10
+};
+
 /**
  *  Base singleton SDK object.
  */
@@ -41,21 +61,24 @@
 @property (nonatomic, readonly) NSString *sdkVersionStr;
 
 /**
- *  YES if should track events (like rendering). NO by default.
- */
-@property (nonatomic, readonly) BOOL isTrackingEnabled;
-
-/**
  *  YES if tracking is to the production env. NO by default.
  */
 @property (nonatomic, readonly) BOOL isTrackingEnvProd;
 
 /**
- *  The tracking identifier. This identifier is sent as part of the tracking events to identify the client.
- *  By default uses the containing app identifier. To use a different identifier call enableTrackingWithEnv:withTrackingIdentifier: when enabling tracking.
+ *  YES if tracking is enabled. YES after useInEnvironment: sets the environment to production or dev.
  */
-@property (nonatomic, readonly) NSString *trackingIdentifier;
+@property (nonatomic, readonly) BOOL isTrackingEnabled;
 
+/**
+ *  The environment (production/dev) set for the SDK. Can be set using the useInEnvironment: method.
+ */
+@property (nonatomic, readonly) sdkENV environment;
+
+/**
+ *  Tracking object.
+ */
+@property (nonatomic, readonly) HCTracking *tracking;
 
 #pragma mark - Initialization
 /**
@@ -72,31 +95,21 @@
  */
 +(instancetype)sh;
 
+
+/**
+ *  Sets the environment the SDK is used in.
+ *  Until this method is called for the first time, some of the SDK functionality will be blocked.
+ *  A good place to call this method is in application:didFinishLaunchingWithOptions: of the app using the SDK.
+ *
+ *  @param environment sdkENV environment.
+ */
+-(void)useInEnvironment:(sdkENV)environment;
+
 /**
  *  The version string of the SDK.
  *
  *  @return NSString with the version string of the SDK in the format X.Y
  */
 -(NSString *)versionString;
-
-/**
- *  Enables the tracking of events in the SDK. Default is disabled.
- *
- *  @param isProduction BOOL determines to which environment should report (true for production, false for test)
- */
--(void)enableTrackingWithEnv:(BOOL)isProduction;
-
-/**
- *  Enables the tracking of events in the SDK. Default is disabled.
- *
- *  @param isProduction BOOL determines to which environment should report (true for production, false for test)
- *  @param trackingIdentifier NSString provide a custom tracking identifier (e.g. host app name)
- */
--(void)enableTrackingWithEnv:(BOOL)isProduction withTrackingIdentifier:(NSString *)trackingIdentifier;
-
-/**
- *  Disables the tracking of events in the SDK.
- */
--(void)disableTracking;
 
 @end

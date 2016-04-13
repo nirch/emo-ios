@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		vSYdfWJQzNMx0w77LEM9mPybPzo=
-		</data>
 		<key>480x480_head_and_shoulders.ctr</key>
 		<data>
 		xMRX6dDh7xFfc5S5VEjETVDAscE=
@@ -90,7 +86,7 @@
 		</data>
 		<key>Headers/HCTracking.h</key>
 		<data>
-		kGenF5S77zHv5ApjbiiiUGbztyU=
+		3gJoMhy3d7+kTUPKyfEK5GUd+gY=
 		</data>
 		<key>Headers/HCVideoFromFramesWriter.h</key>
 		<data>
@@ -98,7 +94,7 @@
 		</data>
 		<key>Headers/HSDKCore.h</key>
 		<data>
-		jvdVsaTCtkIpGp94Xza5/4inOng=
+		Vra4FB4SrptYCm/Z/6xVqjWBWMg=
 		</data>
 		<key>Headers/HomageSDKCore.h</key>
 		<data>
@@ -122,7 +118,7 @@
 		</data>
 		<key>default_bg_params.xml</key>
 		<data>
-		IgWIesk9wx3Y6sw88DqV+a50DkI=
+		3oA1d5XQIa7aKLzxp/75FE+xd6o=
 		</data>
 		<key>default_bg_params_copy.xml</key>
 		<data>
@@ -130,7 +126,7 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		dM11WqWMO7IMEN10yP+QBUrbOEA=
+		oqmMnoK68hmNeGezYTrtJLyenuk=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
@@ -363,11 +359,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			kGenF5S77zHv5ApjbiiiUGbztyU=
+			3gJoMhy3d7+kTUPKyfEK5GUd+gY=
 			</data>
 			<key>hash2</key>
 			<data>
-			CYtZpYX/+aGBuGdDCbZvQLFIW9ejw5++vD6PxKwuer8=
+			D1mD9wUIr2cny4XHfZxm0e2Mhk9/1ZIYyauVPuZs9qs=
 			</data>
 		</dict>
 		<key>Headers/HCVideoFromFramesWriter.h</key>
@@ -385,11 +381,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			jvdVsaTCtkIpGp94Xza5/4inOng=
+			Vra4FB4SrptYCm/Z/6xVqjWBWMg=
 			</data>
 			<key>hash2</key>
 			<data>
-			zegoCTmIOk3Zw1kCt97xCXX0rByQne9sq+E5Ec2mhtI=
+			LnEpbQVByVhXpUtrBaOWUoE+/wN3ZeYZMCQBIYPJEOw=
 			</data>
 		</dict>
 		<key>Headers/HomageSDKCore.h</key>
@@ -440,11 +436,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IgWIesk9wx3Y6sw88DqV+a50DkI=
+			3oA1d5XQIa7aKLzxp/75FE+xd6o=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ke7bvxxH9uj+QvjzHN/tBdgzzLKM8h3P1B6m2mR4ufo=
+			mC/wUGP6c6fTpNlefMjw/fCHpV0/fGqLS9gvKJ4SziA=
 			</data>
 		</dict>
 		<key>default_bg_params_copy.xml</key>
@@ -462,11 +458,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dM11WqWMO7IMEN10yP+QBUrbOEA=
+			oqmMnoK68hmNeGezYTrtJLyenuk=
 			</data>
 			<key>hash2</key>
 			<data>
-			33oRcri7uY+VBG5D0BAZG+peyzgdQ9ekIPbpVNp81VM=
+			8qOn8MtJXRErGwBT83y5kEyn5vTKjJ8wAeM5Kc3hSB8=
 			</data>
 		</dict>
 		<key>release_notes.txt</key>

@@ -270,6 +270,7 @@
     if (self.guiDownloadingAnimatedGif.animatedImage == nil) {
         [self loadAnimatedGifNamed:@"downloading"
                inAnimatedImageView:self.guiDownloadingAnimatedGif];
+        self.guiDownloadingAnimatedGif.alpha = 0.2;
     }
 
     if (self.guiRenderingAnimatedGif.animatedImage == nil) {

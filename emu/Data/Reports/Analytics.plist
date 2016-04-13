@@ -467,6 +467,22 @@ or
 			<key>description</key>
 			<string>The application entered the background (user pressed home screen, changed to another app, etc.)</string>
 		</dict>
+		<key>App:reportingRendersCount</key>
+		<dict>
+			<key>v</key>
+			<string>2.2.5</string>
+			<key>description</key>
+			<string>The application entered the background and it is reporting the total number of renders for this user and the number of renders since the last time the app entered FG.</string>
+			<key>fabric</key>
+			<true/>
+			<key>params</key>
+			<dict>
+				<key>totalRendersCount</key>
+				<string>&lt;number&gt; - The total number of rendered content for this user.</string>
+				<key>rendersSinceLastAppEnteredFGCount</key>
+				<string>&lt;number&gt; - The number of renders since the previous time the user entered the app</string>
+			</dict>
+		</dict>
 		<key>App:enteredForeground</key>
 		<dict>
 			<key>androidRemark</key>

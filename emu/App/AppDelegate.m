@@ -18,16 +18,15 @@
 #import "EMShareFBMessanger.h"
 #import "HMServer.h"
 #import "HMServer+User.h"
-#import <MPTweakInline.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "EMUISound.h"
 #import "AppManagement.h"
-#import "iRate.h"
 #import "AppManagement.h"
 #import "EMCaches.h"
 #import "EMURLSchemeHandler.h"
 #import <HomageSDKCore/HomageSDKCore.h>
+#import <PINRemoteImage/PINRemoteImageManager.h>
 
 @interface AppDelegate ()<
     FBSDKMessengerURLHandlerDelegate
@@ -42,26 +41,25 @@
 
 -(void)initLogging
 {
-    Logger *logger = LoggerGetDefaultLogger();
-    LoggerSetOptions(logger,
-                     kLoggerOption_CaptureSystemConsole |
-                     kLoggerOption_LogToConsole |
-                     kLoggerOption_BufferLogsUntilConnection |
-                     kLoggerOption_BrowseBonjour |
-                     kLoggerOption_BrowseOnlyLocalDomain |
-                     kLoggerOption_UseSSL
-                     );
-    NSString *deviceName = [[UIDevice currentDevice] name];
-    if ([deviceName isEqualToString:@"iPhone Simulator"]) deviceName = @"Aviv's iPhone 6 Plus";
-    LoggerSetupBonjour(logger, NULL, (CFStringRef)CFBridgingRetain(deviceName));
+//    Logger *logger = LoggerGetDefaultLogger();
+//    LoggerSetOptions(logger,
+//                     kLoggerOption_CaptureSystemConsole |
+//                     kLoggerOption_LogToConsole |
+//                     kLoggerOption_BufferLogsUntilConnection |
+//                     kLoggerOption_BrowseBonjour |
+//                     kLoggerOption_BrowseOnlyLocalDomain |
+//                     kLoggerOption_UseSSL
+//                     );
+//    NSString *deviceName = [[UIDevice currentDevice] name];
+//    if ([deviceName isEqualToString:@"iPhone Simulator"]) deviceName = @"Aviv's iPhone 6 Plus";
+//    LoggerSetupBonjour(logger, NULL, (CFStringRef)CFBridgingRetain(deviceName));
 }
 
 #pragma mark - App Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialize rendering tracking
-    [HSDKCore.sh enableTrackingWithEnv:YES];
-
+    [HSDKCore.sh useInEnvironment:sdkEnvDev];
     
     // Initialize Logging
     [self initLogging];
@@ -69,17 +67,8 @@
     // Initialize backend
     [EMBackend sharedInstance];
     
-    
     // Crash reports
     [HMPanel.sh initCrashReports];
-    
-    if (!AppManagement.sh.isTestApp) {
-        // Initialize iRate
-        iRate *irate = [iRate sharedInstance];
-        irate.daysUntilPrompt = 3;
-        irate.usesUntilPrompt = 7;
-        irate.eventsUntilPrompt = 3;
-    }
     
     // Initialize analytics, set super parameters and report application launch.
     [HMPanel.sh initializeAnalyticsWithLaunchOptions:launchOptions];
@@ -345,12 +334,6 @@
 
 -(void)handleNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
 {
-    // Handle joint emu notifications
-    if (info[@"emu_instance_id"]) {
-        [self handleJointEmuNotificationWithInfo:info params:params];
-        return;
-    }
-    
     // Handle package alert notifications
     NSString *packageOID = info[emkPackageOID];
     [params addKey:AK_EP_PACKAGE_OID value:packageOID];
@@ -365,22 +348,6 @@
     if (packageOID != nil) {
         [self handleNavigateToPackageOID:packageOID];
     }
-}
-
--(void)handleJointEmuNotificationWithInfo:(NSDictionary *)info params:(HMParams *)params
-{
-    if (info[@"emu_instance_id"] == nil) return;
-    NSString *message = [info[@"aps"] valueForKey:@"alert"];
-    
-    NSString *jeOID = info[@"emu_instance_id"];
-    if (jeOID == nil) return;
-    
-    Emuticon *emu = [Emuticon findWithJointEmuInstanceID:jeOID context:EMDB.sh.context];
-    if (emu == nil) return;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [EMBackend.sh openEmuWithOID:emu.oid message:message?message:LS(@"JOINT_EMU_LOADING")];
-    });
 }
 
 -(void)handleNavigateToPackageOID:(NSString *)packOID

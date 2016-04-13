@@ -144,7 +144,7 @@ class EMRenderManager3 : NSObject
         }
         
         // Send for rendering
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) { () -> Void in
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) { () -> Void in
             renderer.process()
         }
         
@@ -323,7 +323,6 @@ class EMRenderManager3 : NSObject
         fullRender: Bool,
         userInfo: [NSObject:AnyObject],
         oldStyle: Bool = true) {
-            
             if let emuDef = emu.emuDef {
                 #if DEBUG
                     NSAssert(NSThread.isMainThread(), "%s should be called on the main thread", __PRETTY_FUNCTION__);
@@ -410,30 +409,6 @@ class EMRenderManager3 : NSObject
             }
     }
     
-//    func enqueueCleaningEmu(emu: Emuticon) {
-//        let emuOID = emu.oid
-//        let gifPath = emu.animatedGifPathInHD(false)
-//        let gifPathInHD = emu.animatedGifPathInHD(true)
-//        let videoPath = emu.videoPath()
-//        dispatch_async(self.renderingManagementQueue) {
-//            let fm = NSFileManager.defaultManager()
-//            do {try fm.removeItemAtPath(gifPath)} catch {}
-//            do {try fm.removeItemAtPath(gifPathInHD)} catch {}
-//            do {try fm.removeItemAtPath(videoPath)} catch {}
-//            
-//            dispatch_async(dispatch_get_main_queue()) {
-//                if let anEmu = Emuticon.findWithID(emuOID, context: EMDB.sh().context) {
-//                    EMCaches.sh().clearCachedResultsForEmu(anEmu)
-//                    
-//                    // Mark it as not rendered.
-//                    anEmu.wasRendered = false
-//                    anEmu.wasRenderedInHD = false
-//                    anEmu.renderedSampleUploaded = false
-//                }
-//            }        
-//        }
-//    }
-    
     //
     // MARK: Rendering queue management and comitting rendering jobs
     //
@@ -454,52 +429,55 @@ class EMRenderManager3 : NSObject
         let oid = chosenOID!
         
         // Get render info from the ready pool and start rendering in the background
-        if let renderInfo = self.readyPool[oid] as? [NSObject:AnyObject] {
-            let userInfo = self.userInfo[oid] as! [NSObject:AnyObject]
-            
-            self.renderingPOOL[oid] = renderInfo;
-            self.readyPool.removeValueForKey(oid)
-            
-            //
-            // Render it async on render queue.
-            //
-            dispatch_async(self.renderingQueue, {
-                //
-                // Rendering
-                //
-                AppManagement.sh().debugDict(renderInfo)
-                let renderer = HCRender(configurationInfo: renderInfo, userInfo: userInfo)
-                renderer.setup()
-                if renderer.error != nil {
-                    //
-                    // Rendering setup error
-                    //
-                    
-                    // TODO: Handle errors
-                }
-                renderer.processWithInfo(userInfo)
-                
-                //
-                // Finishing rendering
-                //
-                
-                // Rendering management queue
-                dispatch_async(self.renderingManagementQueue, {
-                    self.renderingPOOL.removeValueForKey(oid)
-                    self.userInfo.removeValueForKey(oid)
-                    self._manageQueue()
-                    
-                    // App level operations and notifications on the main thread
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.handleFinishedRenderOnMainThread(oid, renderInfo: renderInfo, userInfo: userInfo)
-                    })
-                })
-                
-            })
-        } else {
-            // Couldn't pick anything?
+        guard let renderInfo = self.readyPool[oid] as? [NSObject:AnyObject] else {
+            // Handle no render info available.
+            return
         }
         
+        guard let userInfo = self.userInfo[oid] as? [NSObject:AnyObject] else {
+            // Handle no user info available.
+            return
+        }
+        
+        self.renderingPOOL[oid] = renderInfo;
+        self.readyPool.removeValueForKey(oid)
+            
+        //
+        // Render it async on render queue.
+        //
+        dispatch_async(self.renderingQueue, {
+            //
+            // Rendering
+            //
+            AppManagement.sh().debugDict(renderInfo)
+            let renderer = HCRender(configurationInfo: renderInfo, userInfo: userInfo)
+            renderer.setup()
+            if renderer.error != nil {
+                //
+                // Rendering setup error
+                //
+                
+                // TODO: Handle errors
+                NSLog("Error on renderer setup \(renderer.error.description)")
+            }
+            renderer.processWithInfo(userInfo)
+            
+            //
+            // Finishing rendering
+            //
+            
+            // Rendering management queue
+            dispatch_async(self.renderingManagementQueue, {
+                self.renderingPOOL.removeValueForKey(oid)
+                self.userInfo.removeValueForKey(oid)
+                self._manageQueue()
+                
+                // App level operations and notifications on the main thread
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.handleFinishedRenderOnMainThread(oid, renderInfo: renderInfo, userInfo: userInfo)
+                })
+            })
+        })
     }
     
     func _chooseOID() -> String? {

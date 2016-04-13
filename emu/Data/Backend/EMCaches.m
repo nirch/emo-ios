@@ -39,9 +39,11 @@
     if (self) {
         _gifsDataCache = [NSCache new];
         
-        // Limit on disk cache to 20MB
+        // Limit on disk cache to 10MB
+        // And don't hold in memory cache more than a minute.
         PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
-        rm.cache.diskCache.byteLimit = 15000000;
+        rm.cache.diskCache.byteLimit = 10000000;
+        rm.cache.memoryCache.ageLimit = 60.0;
     }
     return self;
 }
