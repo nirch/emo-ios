@@ -86,11 +86,17 @@
 -(void)clearGUI
 {
     self.guiContainer.backgroundColor = [UIColor clearColor];
+    
     self.guiThumbImage.image = nil;
     [self.guiThumbImage stopAnimating];
     self.guiThumbImage.animationImages = nil;
+    
     self.guiIsDefaultIndicator.hidden = YES;
     self.guiHDIndicator.hidden = YES;
+    
+    [self.guiAnimatedGif stopAnimating];
+    self.guiAnimatedGif.image = nil;
+    self.guiAnimatedGif.animatedImage = nil;
     
     CALayer *l = self.guiContainer.layer;
     UIImage *dottedPattern = [UIImage imageNamed:@"dashedBorder"];

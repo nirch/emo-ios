@@ -145,6 +145,32 @@
     return path;
 }
 
+-(NSString *)pathPattenToUserPNGSequence
+{
+    NSString *footagesPath = [[EMDB footagesPath] stringByAppendingPathComponent:self.oid];
+    NSString *path = [footagesPath stringByAppendingPathComponent:@"img-%d.png"];
+    return path;
+}
+
+-(NSNumber *)countedPNGFrames
+{
+    if (self.framesCount != nil) return self.framesCount;
+    
+    // We need to find out the number of png sequence frames available.
+    // After we have the number, cache it in local storage and use the cached number in the future.
+    NSString *footagesPath = [[EMDB footagesPath] stringByAppendingPathComponent:self.oid];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *files = [fm contentsOfDirectoryAtPath:footagesPath error:nil];
+    if (files) {
+        NSInteger count = files.count;
+        self.framesCount = @(count);
+        [EMDB.sh save];
+    }
+    
+    return self.framesCount;
+}
+
+
 -(NSString *)pathToUserDMaskVideo
 {
     NSString *footagesPath = [EMDB footagesPath];
@@ -276,7 +302,7 @@
 
 -(BOOL)isPNGSequenceAvailable
 {
-    if (self.pngSequenceAvailable == nil) return NO;
+    if (self.pngSequenceAvailable == nil) return YES; // Yes by default for older footages.
     return self.pngSequenceAvailable.boolValue;
 }
 

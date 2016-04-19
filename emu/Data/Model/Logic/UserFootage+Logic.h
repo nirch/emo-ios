@@ -132,6 +132,8 @@ typedef NS_ENUM(NSInteger, EMFootageTypeSupport) {
 // New style footage files
 -(NSString *)pathToUserGif;
 -(NSString *)pathToUserVideo;
+-(NSString *)pathPattenToUserPNGSequence;
+-(NSNumber *)countedPNGFrames;
 -(NSString *)pathToUserDMaskVideo;
 -(NSString *)pathToUserThumb;
 -(NSString *)pathToUserAudio;

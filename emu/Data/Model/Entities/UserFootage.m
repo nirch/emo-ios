@@ -27,6 +27,8 @@
 {
     if (self.remoteFootage.boolValue) {
         return [self remoteURLToFile:self.remoteFootageFiles[@"thumb"]];
+    } else if (self.isPNGSequenceAvailable) {
+        return [self urlToImageWithIndex:1];
     } else {
         return [NSURL fileURLWithPath:[self pathToUserThumb]];
     }
@@ -95,7 +97,14 @@
 {
     NSMutableDictionary *layer = [NSMutableDictionary new];
     
-    if (self.isGIFAvailable && AppManagement.sh.isASlowMachine) {
+    if (self.isPNGSequenceAvailable) {
+        
+        // Old style footage.
+        layer[hcrSourceType] = hcrPNGSequence;
+        layer[hcrPathsPattern] = [self pathPattenToUserPNGSequence];
+        layer[hcrFramesCount] = [self countedPNGFrames];
+        
+    } else if (self.isGIFAvailable && AppManagement.sh.isASlowMachine) {
         
         // On very slow machines, prefer to render using gif source if available.
         // Rendering with asset readers of video is very slow on iPhone 4S.
@@ -128,10 +137,6 @@
             layer = [placeHolder hcRenderInfoForHD:forHD emuDef:emuDef];
         }
         
-    } else if (self.isPNGSequenceAvailable) {
-        
-        // Old footages from previous emu versions.
-        
     }
     
     if ([layer count] > 0) {
@@ -144,6 +149,5 @@
     
     return layer;
 }
-
 
 @end
