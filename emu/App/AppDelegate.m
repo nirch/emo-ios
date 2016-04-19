@@ -41,18 +41,18 @@
 
 -(void)initLogging
 {
-//    Logger *logger = LoggerGetDefaultLogger();
-//    LoggerSetOptions(logger,
-//                     kLoggerOption_CaptureSystemConsole |
-//                     kLoggerOption_LogToConsole |
-//                     kLoggerOption_BufferLogsUntilConnection |
-//                     kLoggerOption_BrowseBonjour |
-//                     kLoggerOption_BrowseOnlyLocalDomain |
-//                     kLoggerOption_UseSSL
-//                     );
-//    NSString *deviceName = [[UIDevice currentDevice] name];
-//    if ([deviceName isEqualToString:@"iPhone Simulator"]) deviceName = @"Aviv's iPhone 6 Plus";
-//    LoggerSetupBonjour(logger, NULL, (CFStringRef)CFBridgingRetain(deviceName));
+    Logger *logger = LoggerGetDefaultLogger();
+    LoggerSetOptions(logger,
+                     kLoggerOption_CaptureSystemConsole |
+                     kLoggerOption_LogToConsole |
+                     kLoggerOption_BufferLogsUntilConnection |
+                     kLoggerOption_BrowseBonjour |
+                     kLoggerOption_BrowseOnlyLocalDomain |
+                     kLoggerOption_UseSSL
+                     );
+    NSString *deviceName = [[UIDevice currentDevice] name];
+    if ([deviceName isEqualToString:@"iPhone Simulator"]) deviceName = @"Aviv's iPhone 6 Plus";
+    LoggerSetupBonjour(logger, NULL, (CFStringRef)CFBridgingRetain(deviceName));
 }
 
 #pragma mark - App Delegate

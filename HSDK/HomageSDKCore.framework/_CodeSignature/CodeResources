@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>.DS_Store</key>
+		<data>
+		ysD5EH5YCUt7JHjVNB0qDYTszNo=
+		</data>
 		<key>480x480_head_and_shoulders.ctr</key>
 		<data>
 		xMRX6dDh7xFfc5S5VEjETVDAscE=
@@ -126,7 +130,7 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		oqmMnoK68hmNeGezYTrtJLyenuk=
+		WzhAaztAbB0esCCFLJwvoXbLesA=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
@@ -458,11 +462,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			oqmMnoK68hmNeGezYTrtJLyenuk=
+			WzhAaztAbB0esCCFLJwvoXbLesA=
 			</data>
 			<key>hash2</key>
 			<data>
-			8qOn8MtJXRErGwBT83y5kEyn5vTKjJ8wAeM5Kc3hSB8=
+			4ksNWvqTxsg+ANH7n8U+3CXpCGEN1Yq5z2Rm2l/OPKU=
 			</data>
 		</dict>
 		<key>release_notes.txt</key>

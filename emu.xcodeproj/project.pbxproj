@@ -102,10 +102,6 @@
 		0838142A1BBB33EB004D902E /* popQ.wav in Resources */ = {isa = PBXBuildFile; fileRef = 083814281BBB33EB004D902E /* popQ.wav */; };
 		083814331BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083814321BBBC0C8004D902E /* EMCustomPopoverVC.m */; };
 		083814341BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 083814321BBBC0C8004D902E /* EMCustomPopoverVC.m */; };
-		083B315B1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */; };
-		083B315C1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */; };
-		083B315D1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */; };
-		083B315E1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */ = {isa = PBXBuildFile; fileRef = 083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */; };
 		083B31601C826E1700070D30 /* HomageSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		083B31631C826E1A00070D30 /* HomageSDKFlow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 083C3E491A94BD99007A298C /* EMPagerView.m */; };
@@ -150,16 +146,6 @@
 		0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
 		0854EE3D1AA07FBF00FD3833 /* EMShareMail.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */; };
 		0854EE401AA08E0F00FD3833 /* EMShareAppleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */; };
-		0854FCEC1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */; };
-		0854FCED1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */; };
-		0854FCEE1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */; };
-		0854FCEF1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */; };
-		0854FCF01C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */; };
-		0854FCF11C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */; };
-		0854FCF21C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */; };
-		0854FCF31C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */; };
-		0854FCF41C6E22C9008BB43A /* nuke.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEB1C6E22C9008BB43A /* nuke.wav */; };
-		0854FCF51C6E22C9008BB43A /* nuke.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0854FCEB1C6E22C9008BB43A /* nuke.wav */; };
 		085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66DF1A937EC9007BC910 /* AppDelegate.m */; };
 		085C67621A937EC9007BC910 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66E51A937EC9007BC910 /* main.m */; };
 		085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670B1A937EC9007BC910 /* AppCFG+Logic.m */; };
@@ -281,12 +267,6 @@
 		0889BD561C5A559B004B81CB /* placeholderPositive240.png in Resources */ = {isa = PBXBuildFile; fileRef = 0889BD421C5A559B004B81CB /* placeholderPositive240.png */; };
 		0889BD581C5A559B004B81CB /* placeholderPositive480.png in Resources */ = {isa = PBXBuildFile; fileRef = 0889BD431C5A559B004B81CB /* placeholderPositive480.png */; };
 		0889BD5A1C5A559B004B81CB /* placeholderPositive480.png in Resources */ = {isa = PBXBuildFile; fileRef = 0889BD431C5A559B004B81CB /* placeholderPositive480.png */; };
-		089263531C71EF4B0037896D /* buds-molecular-user1-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 089263511C71EF4B0037896D /* buds-molecular-user1-mask.png */; };
-		089263541C71EF4B0037896D /* buds-molecular-user1-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 089263511C71EF4B0037896D /* buds-molecular-user1-mask.png */; };
-		089263551C71EF4B0037896D /* buds-molecular-user2-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 089263521C71EF4B0037896D /* buds-molecular-user2-mask.png */; };
-		089263561C71EF4B0037896D /* buds-molecular-user2-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 089263521C71EF4B0037896D /* buds-molecular-user2-mask.png */; };
-		0892635C1C71F9C50037896D /* buds-molecular-sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0892635B1C71F9C50037896D /* buds-molecular-sfx.wav */; };
-		0892635D1C71F9C50037896D /* buds-molecular-sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0892635B1C71F9C50037896D /* buds-molecular-sfx.wav */; };
 		0892DE6A1C47C4DC00CA537D /* downloading.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0892DE681C47C4DC00CA537D /* downloading.mp4 */; };
 		0892DE6B1C47C4DD00CA537D /* downloading.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0892DE681C47C4DC00CA537D /* downloading.mp4 */; };
 		0892DE6C1C47C4DD00CA537D /* rendering.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0892DE691C47C4DC00CA537D /* rendering.mp4 */; };
@@ -403,6 +383,8 @@
 		08AA14FA1B0BA658002E1B2F /* goodBG.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FB71B01F5B90046F38E /* goodBG.wav */; };
 		08AA15081B0BA658002E1B2F /* onboarding_packages_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 08271FE11B0203820046F38E /* onboarding_packages_test.json */; };
 		08AA150B1B0BA658002E1B2F /* onboarding_packages_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 08331A371B069CA7000B8979 /* onboarding_packages_prod.json */; };
+		08AA57CC1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AA57CB1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m */; };
+		08AA57CD1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AA57CB1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m */; };
 		08AE9CCC1C5D55A00075B03C /* HMServer+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CCB1C5D55A00075B03C /* HMServer+User.m */; };
 		08AE9CCD1C5D55A00075B03C /* HMServer+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CCB1C5D55A00075B03C /* HMServer+User.m */; };
 		08AE9CD91C5D5F8D0075B03C /* EMUserParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9CD81C5D5F8D0075B03C /* EMUserParser.m */; };
@@ -413,6 +395,38 @@
 		08AE9D091C5E3DAB0075B03C /* EMJointEmuNewParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9D061C5E3DAB0075B03C /* EMJointEmuNewParser.m */; };
 		08AE9D0D1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9D0C1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m */; };
 		08AE9D0F1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AE9D0C1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m */; };
+		08B4AB8C1CBE960C00A302D7 /* angel-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7C1CBE960C00A302D7 /* angel-bg.gif */; };
+		08B4AB8D1CBE960C00A302D7 /* angel-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7C1CBE960C00A302D7 /* angel-bg.gif */; };
+		08B4AB8E1CBE960C00A302D7 /* angel-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7D1CBE960C00A302D7 /* angel-fg.gif */; };
+		08B4AB8F1CBE960C00A302D7 /* angel-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7D1CBE960C00A302D7 /* angel-fg.gif */; };
+		08B4AB901CBE960C00A302D7 /* angel-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7E1CBE960C00A302D7 /* angel-mask-v1.png */; };
+		08B4AB911CBE960C00A302D7 /* angel-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7E1CBE960C00A302D7 /* angel-mask-v1.png */; };
+		08B4AB921CBE960C00A302D7 /* green-love-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7F1CBE960C00A302D7 /* green-love-bg.gif */; };
+		08B4AB931CBE960C00A302D7 /* green-love-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB7F1CBE960C00A302D7 /* green-love-bg.gif */; };
+		08B4AB941CBE960C00A302D7 /* green-love-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB801CBE960C00A302D7 /* green-love-fg.gif */; };
+		08B4AB951CBE960C00A302D7 /* green-love-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB801CBE960C00A302D7 /* green-love-fg.gif */; };
+		08B4AB961CBE960C00A302D7 /* green-love-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB811CBE960C00A302D7 /* green-love-mask-v1.png */; };
+		08B4AB971CBE960C00A302D7 /* green-love-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB811CBE960C00A302D7 /* green-love-mask-v1.png */; };
+		08B4AB981CBE960C00A302D7 /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB821CBE960C00A302D7 /* hearts-bg.gif */; };
+		08B4AB991CBE960C00A302D7 /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB821CBE960C00A302D7 /* hearts-bg.gif */; };
+		08B4AB9A1CBE960C00A302D7 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB831CBE960C00A302D7 /* hearts-fg.gif */; };
+		08B4AB9B1CBE960C00A302D7 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB831CBE960C00A302D7 /* hearts-fg.gif */; };
+		08B4AB9C1CBE960C00A302D7 /* hearts-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB841CBE960C00A302D7 /* hearts-mask-v1.png */; };
+		08B4AB9D1CBE960C00A302D7 /* hearts-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB841CBE960C00A302D7 /* hearts-mask-v1.png */; };
+		08B4AB9E1CBE960C00A302D7 /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB851CBE960C00A302D7 /* hot-bg.gif */; };
+		08B4AB9F1CBE960C00A302D7 /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB851CBE960C00A302D7 /* hot-bg.gif */; };
+		08B4ABA01CBE960C00A302D7 /* hot-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB861CBE960C00A302D7 /* hot-mask-v1.png */; };
+		08B4ABA11CBE960C00A302D7 /* hot-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB861CBE960C00A302D7 /* hot-mask-v1.png */; };
+		08B4ABA21CBE960C00A302D7 /* kiss-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB871CBE960C00A302D7 /* kiss-bg.gif */; };
+		08B4ABA31CBE960C00A302D7 /* kiss-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB871CBE960C00A302D7 /* kiss-bg.gif */; };
+		08B4ABA41CBE960C00A302D7 /* kiss-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB881CBE960C00A302D7 /* kiss-mask-v1.png */; };
+		08B4ABA51CBE960C00A302D7 /* kiss-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB881CBE960C00A302D7 /* kiss-mask-v1.png */; };
+		08B4ABA61CBE960C00A302D7 /* teddies-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB891CBE960C00A302D7 /* teddies-bg.gif */; };
+		08B4ABA71CBE960C00A302D7 /* teddies-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB891CBE960C00A302D7 /* teddies-bg.gif */; };
+		08B4ABA81CBE960C00A302D7 /* teddies-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB8A1CBE960C00A302D7 /* teddies-fg.gif */; };
+		08B4ABA91CBE960C00A302D7 /* teddies-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB8A1CBE960C00A302D7 /* teddies-fg.gif */; };
+		08B4ABAA1CBE960C00A302D7 /* teddies-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB8B1CBE960C00A302D7 /* teddies-mask-v1.png */; };
+		08B4ABAB1CBE960C00A302D7 /* teddies-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B4AB8B1CBE960C00A302D7 /* teddies-mask-v1.png */; };
 		08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */; };
 		08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589851A9391B3008D9068 /* Emuticon+Logic.m */; };
 		08B5899C1A93B9E5008D9068 /* EMLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B5899B1A93B9E5008D9068 /* EMLabel.m */; };
@@ -426,48 +440,10 @@
 		08BD22211C46464A00A64FC8 /* EMRenderManager3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BD221F1C46464A00A64FC8 /* EMRenderManager3.swift */; };
 		08BE1F9E1B28487C00A34232 /* EMDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE1F9D1B28487C00A34232 /* EMDebugViewController.m */; };
 		08BE1F9F1B28487C00A34232 /* EMDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE1F9D1B28487C00A34232 /* EMDebugViewController.m */; };
-		08C88DD01C70A73600300AAA /* buds-molecular-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08C88DCD1C70A73600300AAA /* buds-molecular-bg.mp4 */; };
-		08C88DD21C70A73600300AAA /* buds-molecular-bg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08C88DCD1C70A73600300AAA /* buds-molecular-bg.mp4 */; };
-		08C88DD41C70A73600300AAA /* buds-molecular-fg-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08C88DCE1C70A73600300AAA /* buds-molecular-fg-mask.mp4 */; };
-		08C88DD61C70A73600300AAA /* buds-molecular-fg-mask.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08C88DCE1C70A73600300AAA /* buds-molecular-fg-mask.mp4 */; };
-		08C88DD81C70A73600300AAA /* buds-molecular-fg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08C88DCF1C70A73600300AAA /* buds-molecular-fg.mp4 */; };
-		08C88DDA1C70A73600300AAA /* buds-molecular-fg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 08C88DCF1C70A73600300AAA /* buds-molecular-fg.mp4 */; };
 		08C88DDE1C70D9C700300AAA /* EMVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C88DDD1C70D9C700300AAA /* EMVideoVC.swift */; };
 		08C88DE01C70D9C700300AAA /* EMVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C88DDD1C70D9C700300AAA /* EMVideoVC.swift */; };
 		08CA9A251BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A241BCFCDA5004A5A02 /* bw-thumb.jpg */; };
 		08CA9A261BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A241BCFCDA5004A5A02 /* bw-thumb.jpg */; };
-		08CA9A611BCFE842004A5A02 /* angel-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A321BCFE842004A5A02 /* angel-bg.gif */; };
-		08CA9A621BCFE842004A5A02 /* angel-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A321BCFE842004A5A02 /* angel-bg.gif */; };
-		08CA9A631BCFE842004A5A02 /* angel-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A331BCFE842004A5A02 /* angel-fg.gif */; };
-		08CA9A641BCFE842004A5A02 /* angel-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A331BCFE842004A5A02 /* angel-fg.gif */; };
-		08CA9A651BCFE842004A5A02 /* angel-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A341BCFE842004A5A02 /* angel-mask-v1.png */; };
-		08CA9A661BCFE842004A5A02 /* angel-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A341BCFE842004A5A02 /* angel-mask-v1.png */; };
-		08CA9A671BCFE842004A5A02 /* green-love-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A351BCFE842004A5A02 /* green-love-bg.gif */; };
-		08CA9A681BCFE842004A5A02 /* green-love-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A351BCFE842004A5A02 /* green-love-bg.gif */; };
-		08CA9A691BCFE842004A5A02 /* green-love-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A361BCFE842004A5A02 /* green-love-fg.gif */; };
-		08CA9A6A1BCFE842004A5A02 /* green-love-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A361BCFE842004A5A02 /* green-love-fg.gif */; };
-		08CA9A6B1BCFE842004A5A02 /* green-love-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A371BCFE842004A5A02 /* green-love-mask-v1.png */; };
-		08CA9A6C1BCFE842004A5A02 /* green-love-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A371BCFE842004A5A02 /* green-love-mask-v1.png */; };
-		08CA9A6D1BCFE842004A5A02 /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A381BCFE842004A5A02 /* hearts-bg.gif */; };
-		08CA9A6E1BCFE842004A5A02 /* hearts-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A381BCFE842004A5A02 /* hearts-bg.gif */; };
-		08CA9A6F1BCFE842004A5A02 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A391BCFE842004A5A02 /* hearts-fg.gif */; };
-		08CA9A701BCFE842004A5A02 /* hearts-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A391BCFE842004A5A02 /* hearts-fg.gif */; };
-		08CA9A711BCFE842004A5A02 /* hearts-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3A1BCFE842004A5A02 /* hearts-mask-v1.png */; };
-		08CA9A721BCFE842004A5A02 /* hearts-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3A1BCFE842004A5A02 /* hearts-mask-v1.png */; };
-		08CA9A731BCFE842004A5A02 /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3B1BCFE842004A5A02 /* hot-bg.gif */; };
-		08CA9A741BCFE842004A5A02 /* hot-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3B1BCFE842004A5A02 /* hot-bg.gif */; };
-		08CA9A751BCFE842004A5A02 /* hot-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3C1BCFE842004A5A02 /* hot-mask-v1.png */; };
-		08CA9A761BCFE842004A5A02 /* hot-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3C1BCFE842004A5A02 /* hot-mask-v1.png */; };
-		08CA9A771BCFE842004A5A02 /* kiss-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3D1BCFE842004A5A02 /* kiss-bg.gif */; };
-		08CA9A781BCFE843004A5A02 /* kiss-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3D1BCFE842004A5A02 /* kiss-bg.gif */; };
-		08CA9A791BCFE843004A5A02 /* kiss-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3E1BCFE842004A5A02 /* kiss-mask-v1.png */; };
-		08CA9A7A1BCFE843004A5A02 /* kiss-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3E1BCFE842004A5A02 /* kiss-mask-v1.png */; };
-		08CA9A7B1BCFE843004A5A02 /* teddies-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3F1BCFE842004A5A02 /* teddies-bg.gif */; };
-		08CA9A7C1BCFE843004A5A02 /* teddies-bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A3F1BCFE842004A5A02 /* teddies-bg.gif */; };
-		08CA9A7D1BCFE843004A5A02 /* teddies-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A401BCFE842004A5A02 /* teddies-fg.gif */; };
-		08CA9A7E1BCFE843004A5A02 /* teddies-fg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A401BCFE842004A5A02 /* teddies-fg.gif */; };
-		08CA9A7F1BCFE843004A5A02 /* teddies-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A411BCFE842004A5A02 /* teddies-mask-v1.png */; };
-		08CA9A801BCFE843004A5A02 /* teddies-mask-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 08CA9A411BCFE842004A5A02 /* teddies-mask-v1.png */; };
 		08CA9AA41BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; };
 		08CA9AA61BD05302004A5A02 /* emu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08CA9A991BD05302004A5A02 /* emu.xcdatamodeld */; };
 		08CAEAD71A9757BF008A3E0A /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08CAEAD51A9757BF008A3E0A /* SourceSansPro-Regular.ttf */; };
@@ -492,6 +468,8 @@
 		08CF07B11B4D65CC00034BB5 /* shareapp.html in Resources */ = {isa = PBXBuildFile; fileRef = 08CF07AF1B4D65CC00034BB5 /* shareapp.html */; };
 		08D02DE41C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D02DE31C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m */; };
 		08D02DE61C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D02DE31C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m */; };
+		08D456761CC63E9C00CB6B73 /* EMEmuOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */; };
+		08D456771CC63E9C00CB6B73 /* EMEmuOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */; };
 		08D558B71B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D558B81B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
@@ -702,8 +680,6 @@
 		083814311BBBC0C8004D902E /* EMCustomPopoverVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCustomPopoverVC.h; sourceTree = "<group>"; };
 		083814321BBBC0C8004D902E /* EMCustomPopoverVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCustomPopoverVC.m; sourceTree = "<group>"; };
 		083844621BE24B0C00703C0D /* emu2_1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu2_1.xcdatamodel; sourceTree = "<group>"; };
-		083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "buds-topguns-bg.mp4"; sourceTree = "<group>"; };
-		083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "buds-topguns-users-dmask.gif"; sourceTree = "<group>"; };
 		083C3E481A94BD99007A298C /* EMPagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPagerView.h; sourceTree = "<group>"; };
 		083C3E491A94BD99007A298C /* EMPagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPagerView.m; sourceTree = "<group>"; };
 		08409E971AB1C69700EC0930 /* EMSplashVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSplashVC.h; sourceTree = "<group>"; };
@@ -749,11 +725,6 @@
 		0854EE3C1AA07FBF00FD3833 /* EMShareMail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareMail.m; sourceTree = "<group>"; };
 		0854EE3E1AA08E0F00FD3833 /* EMShareAppleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMShareAppleMessage.h; sourceTree = "<group>"; };
 		0854EE3F1AA08E0F00FD3833 /* EMShareAppleMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMShareAppleMessage.m; sourceTree = "<group>"; };
-		0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg1-mask.mp4"; sourceTree = "<group>"; };
-		0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg1.mp4"; sourceTree = "<group>"; };
-		0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg2-mask.mp4"; sourceTree = "<group>"; };
-		0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nuke-fg2.mp4"; sourceTree = "<group>"; };
-		0854FCEB1C6E22C9008BB43A /* nuke.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nuke.wav; sourceTree = "<group>"; };
 		085C66DE1A937EC9007BC910 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		085C66DF1A937EC9007BC910 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		085C66E11A937EC9007BC910 /* Config.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
@@ -881,9 +852,6 @@
 		0889BD411C5A559B004B81CB /* placeholderNegative480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderNegative480.png; sourceTree = "<group>"; };
 		0889BD421C5A559B004B81CB /* placeholderPositive240.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderPositive240.png; sourceTree = "<group>"; };
 		0889BD431C5A559B004B81CB /* placeholderPositive480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderPositive480.png; sourceTree = "<group>"; };
-		089263511C71EF4B0037896D /* buds-molecular-user1-mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buds-molecular-user1-mask.png"; sourceTree = "<group>"; };
-		089263521C71EF4B0037896D /* buds-molecular-user2-mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buds-molecular-user2-mask.png"; sourceTree = "<group>"; };
-		0892635B1C71F9C50037896D /* buds-molecular-sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "buds-molecular-sfx.wav"; sourceTree = "<group>"; };
 		0892DE671C47B86900CA537D /* EMRenderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMRenderTypes.h; sourceTree = "<group>"; };
 		0892DE681C47C4DC00CA537D /* downloading.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = downloading.mp4; sourceTree = "<group>"; };
 		0892DE691C47C4DC00CA537D /* rendering.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = rendering.mp4; sourceTree = "<group>"; };
@@ -923,6 +891,8 @@
 		08AA14391B08F069002E1B2F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08AA15131B0BA658002E1B2F /* emubeta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emubeta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08AA15151B0BA73A002E1B2F /* emubeta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "emubeta-Info.plist"; sourceTree = "<group>"; };
+		08AA57CA1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmuticonDef+DownloadsHelpers.h"; sourceTree = "<group>"; };
+		08AA57CB1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+DownloadsHelpers.m"; sourceTree = "<group>"; };
 		08AE9CCA1C5D55A00075B03C /* HMServer+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMServer+User.h"; sourceTree = "<group>"; };
 		08AE9CCB1C5D55A00075B03C /* HMServer+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HMServer+User.m"; sourceTree = "<group>"; };
 		08AE9CD71C5D5F8D0075B03C /* EMUserParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUserParser.h; sourceTree = "<group>"; };
@@ -933,6 +903,22 @@
 		08AE9D061C5E3DAB0075B03C /* EMJointEmuNewParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMJointEmuNewParser.m; sourceTree = "<group>"; };
 		08AE9D0B1C5E47EF0075B03C /* Emuticon+JointEmuLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+JointEmuLogic.h"; sourceTree = "<group>"; };
 		08AE9D0C1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Emuticon+JointEmuLogic.m"; sourceTree = "<group>"; };
+		08B4AB7C1CBE960C00A302D7 /* angel-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-bg.gif"; sourceTree = "<group>"; };
+		08B4AB7D1CBE960C00A302D7 /* angel-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-fg.gif"; sourceTree = "<group>"; };
+		08B4AB7E1CBE960C00A302D7 /* angel-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "angel-mask-v1.png"; sourceTree = "<group>"; };
+		08B4AB7F1CBE960C00A302D7 /* green-love-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "green-love-bg.gif"; sourceTree = "<group>"; };
+		08B4AB801CBE960C00A302D7 /* green-love-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "green-love-fg.gif"; sourceTree = "<group>"; };
+		08B4AB811CBE960C00A302D7 /* green-love-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-love-mask-v1.png"; sourceTree = "<group>"; };
+		08B4AB821CBE960C00A302D7 /* hearts-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hearts-bg.gif"; sourceTree = "<group>"; };
+		08B4AB831CBE960C00A302D7 /* hearts-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hearts-fg.gif"; sourceTree = "<group>"; };
+		08B4AB841CBE960C00A302D7 /* hearts-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-mask-v1.png"; sourceTree = "<group>"; };
+		08B4AB851CBE960C00A302D7 /* hot-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hot-bg.gif"; sourceTree = "<group>"; };
+		08B4AB861CBE960C00A302D7 /* hot-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hot-mask-v1.png"; sourceTree = "<group>"; };
+		08B4AB871CBE960C00A302D7 /* kiss-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "kiss-bg.gif"; sourceTree = "<group>"; };
+		08B4AB881CBE960C00A302D7 /* kiss-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kiss-mask-v1.png"; sourceTree = "<group>"; };
+		08B4AB891CBE960C00A302D7 /* teddies-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "teddies-bg.gif"; sourceTree = "<group>"; };
+		08B4AB8A1CBE960C00A302D7 /* teddies-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "teddies-fg.gif"; sourceTree = "<group>"; };
+		08B4AB8B1CBE960C00A302D7 /* teddies-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "teddies-mask-v1.png"; sourceTree = "<group>"; };
 		08B589811A938C5A008D9068 /* EmuticonDef+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmuticonDef+Logic.h"; sourceTree = "<group>"; };
 		08B589821A938C5A008D9068 /* EmuticonDef+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+Logic.m"; sourceTree = "<group>"; };
 		08B589841A9391B3008D9068 /* Emuticon+Logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+Logic.h"; sourceTree = "<group>"; };
@@ -957,27 +943,8 @@
 		08BD22221C467EA400A64FC8 /* EMPreviewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPreviewDelegate.h; sourceTree = "<group>"; };
 		08BE1F9C1B28487C00A34232 /* EMDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDebugViewController.h; sourceTree = "<group>"; };
 		08BE1F9D1B28487C00A34232 /* EMDebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDebugViewController.m; sourceTree = "<group>"; };
-		08C88DCD1C70A73600300AAA /* buds-molecular-bg.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "buds-molecular-bg.mp4"; sourceTree = "<group>"; };
-		08C88DCE1C70A73600300AAA /* buds-molecular-fg-mask.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "buds-molecular-fg-mask.mp4"; sourceTree = "<group>"; };
-		08C88DCF1C70A73600300AAA /* buds-molecular-fg.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "buds-molecular-fg.mp4"; sourceTree = "<group>"; };
 		08C88DDD1C70D9C700300AAA /* EMVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMVideoVC.swift; sourceTree = "<group>"; };
 		08CA9A241BCFCDA5004A5A02 /* bw-thumb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bw-thumb.jpg"; sourceTree = "<group>"; };
-		08CA9A321BCFE842004A5A02 /* angel-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-bg.gif"; sourceTree = "<group>"; };
-		08CA9A331BCFE842004A5A02 /* angel-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "angel-fg.gif"; sourceTree = "<group>"; };
-		08CA9A341BCFE842004A5A02 /* angel-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "angel-mask-v1.png"; sourceTree = "<group>"; };
-		08CA9A351BCFE842004A5A02 /* green-love-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "green-love-bg.gif"; sourceTree = "<group>"; };
-		08CA9A361BCFE842004A5A02 /* green-love-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "green-love-fg.gif"; sourceTree = "<group>"; };
-		08CA9A371BCFE842004A5A02 /* green-love-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-love-mask-v1.png"; sourceTree = "<group>"; };
-		08CA9A381BCFE842004A5A02 /* hearts-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hearts-bg.gif"; sourceTree = "<group>"; };
-		08CA9A391BCFE842004A5A02 /* hearts-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hearts-fg.gif"; sourceTree = "<group>"; };
-		08CA9A3A1BCFE842004A5A02 /* hearts-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hearts-mask-v1.png"; sourceTree = "<group>"; };
-		08CA9A3B1BCFE842004A5A02 /* hot-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "hot-bg.gif"; sourceTree = "<group>"; };
-		08CA9A3C1BCFE842004A5A02 /* hot-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hot-mask-v1.png"; sourceTree = "<group>"; };
-		08CA9A3D1BCFE842004A5A02 /* kiss-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "kiss-bg.gif"; sourceTree = "<group>"; };
-		08CA9A3E1BCFE842004A5A02 /* kiss-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kiss-mask-v1.png"; sourceTree = "<group>"; };
-		08CA9A3F1BCFE842004A5A02 /* teddies-bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "teddies-bg.gif"; sourceTree = "<group>"; };
-		08CA9A401BCFE842004A5A02 /* teddies-fg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "teddies-fg.gif"; sourceTree = "<group>"; };
-		08CA9A411BCFE842004A5A02 /* teddies-mask-v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "teddies-mask-v1.png"; sourceTree = "<group>"; };
 		08CA9A9A1BD05302004A5A02 /* emu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = emu.xcdatamodel; sourceTree = "<group>"; };
 		08CA9A9B1BD05302004A5A02 /* emu1_ 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 3.xcdatamodel"; sourceTree = "<group>"; };
 		08CA9A9C1BD05302004A5A02 /* emu1_ 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "emu1_ 4.xcdatamodel"; sourceTree = "<group>"; };
@@ -1016,6 +983,8 @@
 		08CF07AF1B4D65CC00034BB5 /* shareapp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = shareapp.html; sourceTree = "<group>"; };
 		08D02DE21C6F939D00010F1E /* EmuticonDef+JointEmuLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmuticonDef+JointEmuLogic.h"; sourceTree = "<group>"; };
 		08D02DE31C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+JointEmuLogic.m"; sourceTree = "<group>"; };
+		08D456741CC63E9C00CB6B73 /* EMEmuOptionsSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmuOptionsSheet.h; sourceTree = "<group>"; };
+		08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMEmuOptionsSheet.m; sourceTree = "<group>"; };
 		08D558B51B286114006BF723 /* EMDebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDebugCell.h; sourceTree = "<group>"; };
 		08D558B61B286114006BF723 /* EMDebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDebugCell.m; sourceTree = "<group>"; };
 		08D929841A77A36D00B6A68F /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1276,9 +1245,7 @@
 		08271FE41B0211DA0046F38E /* emus */ = {
 			isa = PBXGroup;
 			children = (
-				08CA9A311BCFE842004A5A02 /* love */,
-				0854FCE61C6E22C9008BB43A /* nuke */,
-				08C88DCC1C70A73600300AAA /* buds */,
+				08B4AB7B1CBE960C00A302D7 /* love */,
 			);
 			path = emus;
 			sourceTree = "<group>";
@@ -1399,6 +1366,8 @@
 			children = (
 				0845BDF71BC5607900173B66 /* Emuticon+DownloadsHelpers.h */,
 				0845BDF81BC5607900173B66 /* Emuticon+DownloadsHelpers.m */,
+				08AA57CA1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.h */,
+				08AA57CB1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m */,
 			);
 			path = "Data source helpers";
 			sourceTree = "<group>";
@@ -1457,18 +1426,6 @@
 				084FDA941C5E7FCC008BC87E /* EMUploadPublicFootageForJointEmu.m */,
 			);
 			path = "Share Methods";
-			sourceTree = "<group>";
-		};
-		0854FCE61C6E22C9008BB43A /* nuke */ = {
-			isa = PBXGroup;
-			children = (
-				0854FCE71C6E22C9008BB43A /* nuke-fg1-mask.mp4 */,
-				0854FCE81C6E22C9008BB43A /* nuke-fg1.mp4 */,
-				0854FCE91C6E22C9008BB43A /* nuke-fg2-mask.mp4 */,
-				0854FCEA1C6E22C9008BB43A /* nuke-fg2.mp4 */,
-				0854FCEB1C6E22C9008BB43A /* nuke.wav */,
-			);
-			path = nuke;
 			sourceTree = "<group>";
 		};
 		085C66DD1A937EC9007BC910 /* App */ = {
@@ -2047,6 +2004,29 @@
 			path = JointEmu;
 			sourceTree = "<group>";
 		};
+		08B4AB7B1CBE960C00A302D7 /* love */ = {
+			isa = PBXGroup;
+			children = (
+				08B4AB7C1CBE960C00A302D7 /* angel-bg.gif */,
+				08B4AB7D1CBE960C00A302D7 /* angel-fg.gif */,
+				08B4AB7E1CBE960C00A302D7 /* angel-mask-v1.png */,
+				08B4AB7F1CBE960C00A302D7 /* green-love-bg.gif */,
+				08B4AB801CBE960C00A302D7 /* green-love-fg.gif */,
+				08B4AB811CBE960C00A302D7 /* green-love-mask-v1.png */,
+				08B4AB821CBE960C00A302D7 /* hearts-bg.gif */,
+				08B4AB831CBE960C00A302D7 /* hearts-fg.gif */,
+				08B4AB841CBE960C00A302D7 /* hearts-mask-v1.png */,
+				08B4AB851CBE960C00A302D7 /* hot-bg.gif */,
+				08B4AB861CBE960C00A302D7 /* hot-mask-v1.png */,
+				08B4AB871CBE960C00A302D7 /* kiss-bg.gif */,
+				08B4AB881CBE960C00A302D7 /* kiss-mask-v1.png */,
+				08B4AB891CBE960C00A302D7 /* teddies-bg.gif */,
+				08B4AB8A1CBE960C00A302D7 /* teddies-fg.gif */,
+				08B4AB8B1CBE960C00A302D7 /* teddies-mask-v1.png */,
+			);
+			path = love;
+			sourceTree = "<group>";
+		};
 		08B589991A93B9AF008D9068 /* Fonts Related */ = {
 			isa = PBXGroup;
 			children = (
@@ -2088,50 +2068,12 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
-		08C88DCC1C70A73600300AAA /* buds */ = {
-			isa = PBXGroup;
-			children = (
-				08C88DCD1C70A73600300AAA /* buds-molecular-bg.mp4 */,
-				08C88DCE1C70A73600300AAA /* buds-molecular-fg-mask.mp4 */,
-				08C88DCF1C70A73600300AAA /* buds-molecular-fg.mp4 */,
-				089263511C71EF4B0037896D /* buds-molecular-user1-mask.png */,
-				089263521C71EF4B0037896D /* buds-molecular-user2-mask.png */,
-				0892635B1C71F9C50037896D /* buds-molecular-sfx.wav */,
-				083B31591C80F68000070D30 /* buds-topguns-bg.mp4 */,
-				083B315A1C80F68000070D30 /* buds-topguns-users-dmask.gif */,
-			);
-			path = buds;
-			sourceTree = "<group>";
-		};
 		08C88DDC1C70D9C700300AAA /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
 				08C88DDD1C70D9C700300AAA /* EMVideoVC.swift */,
 			);
 			path = VideoPlayer;
-			sourceTree = "<group>";
-		};
-		08CA9A311BCFE842004A5A02 /* love */ = {
-			isa = PBXGroup;
-			children = (
-				08CA9A321BCFE842004A5A02 /* angel-bg.gif */,
-				08CA9A331BCFE842004A5A02 /* angel-fg.gif */,
-				08CA9A341BCFE842004A5A02 /* angel-mask-v1.png */,
-				08CA9A351BCFE842004A5A02 /* green-love-bg.gif */,
-				08CA9A361BCFE842004A5A02 /* green-love-fg.gif */,
-				08CA9A371BCFE842004A5A02 /* green-love-mask-v1.png */,
-				08CA9A381BCFE842004A5A02 /* hearts-bg.gif */,
-				08CA9A391BCFE842004A5A02 /* hearts-fg.gif */,
-				08CA9A3A1BCFE842004A5A02 /* hearts-mask-v1.png */,
-				08CA9A3B1BCFE842004A5A02 /* hot-bg.gif */,
-				08CA9A3C1BCFE842004A5A02 /* hot-mask-v1.png */,
-				08CA9A3D1BCFE842004A5A02 /* kiss-bg.gif */,
-				08CA9A3E1BCFE842004A5A02 /* kiss-mask-v1.png */,
-				08CA9A3F1BCFE842004A5A02 /* teddies-bg.gif */,
-				08CA9A401BCFE842004A5A02 /* teddies-fg.gif */,
-				08CA9A411BCFE842004A5A02 /* teddies-mask-v1.png */,
-			);
-			path = love;
 			sourceTree = "<group>";
 		};
 		08CB89631A9AA12A00224A38 /* Main */ = {
@@ -2218,6 +2160,15 @@
 				08CF07AF1B4D65CC00034BB5 /* shareapp.html */,
 			);
 			path = html;
+			sourceTree = "<group>";
+		};
+		08D456731CC63E9C00CB6B73 /* Supporint Controls */ = {
+			isa = PBXGroup;
+			children = (
+				08D456741CC63E9C00CB6B73 /* EMEmuOptionsSheet.h */,
+				08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */,
+			);
+			path = "Supporint Controls";
 			sourceTree = "<group>";
 		};
 		08D9297B1A77A36D00B6A68F = {
@@ -2376,6 +2327,7 @@
 				08FF199F1C5BC0DC00E15C36 /* EmuScreenVC.swift */,
 				08FF19A21C5C0D0800E15C36 /* EmusVC.swift */,
 				08CBA53F1C60EDE400574F0B /* SlotsVC.swift */,
+				08D456731CC63E9C00CB6B73 /* Supporint Controls */,
 			);
 			path = EmuScreen;
 			sourceTree = "<group>";
@@ -2527,95 +2479,82 @@
 				08AA14BE1B0BA658002E1B2F /* SourceSansPro-Semibold.ttf in Resources */,
 				08967C0A1B57CD02000DDCF9 /* Main.storyboard in Resources */,
 				0889BD4A1C5A559B004B81CB /* placeholder480.png in Resources */,
-				083B315E1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */,
 				0880DBD81CB13B620050D227 /* passThrough.vsh in Resources */,
+				08B4ABA71CBE960C00A302D7 /* teddies-bg.gif in Resources */,
 				08AA14C51B0BA658002E1B2F /* pressedButton.wav in Resources */,
 				08AA14C61B0BA658002E1B2F /* clear480x480.png in Resources */,
+				08B4ABA11CBE960C00A302D7 /* hot-mask-v1.png in Resources */,
 				084349C31B837B1C009A653F /* EMShareInputBox.xib in Resources */,
+				08B4ABA51CBE960C00A302D7 /* kiss-mask-v1.png in Resources */,
 				0892DE6D1C47C4DD00CA537D /* rendering.mp4 in Resources */,
 				082C8BA31C3D3BB100D6C6B7 /* replaced-bg4-480.png in Resources */,
 				08AA14CE1B0BA658002E1B2F /* simpleSwipe.wav in Resources */,
 				085348C21BCD9A3B008BBBF9 /* ouch-thumb.jpg in Resources */,
-				08CA9A741BCFE842004A5A02 /* hot-bg.gif in Resources */,
-				08CA9A7C1BCFE843004A5A02 /* teddies-bg.gif in Resources */,
 				0830B3B81BE844EE003E64BA /* EMProductPopover.xib in Resources */,
 				08AA14D01B0BA658002E1B2F /* plasticClickSound.wav in Resources */,
-				08C88DDA1C70A73600300AAA /* buds-molecular-fg.mp4 in Resources */,
-				08CA9A721BCFE842004A5A02 /* hearts-mask-v1.png in Resources */,
-				083B315C1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */,
-				08CA9A6C1BCFE842004A5A02 /* green-love-mask-v1.png in Resources */,
+				08B4AB8F1CBE960C00A302D7 /* angel-fg.gif in Resources */,
+				08B4AB911CBE960C00A302D7 /* angel-mask-v1.png in Resources */,
 				08AA14D21B0BA658002E1B2F /* LaunchScreen.xib in Resources */,
 				085348C41BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
+				08B4AB951CBE960C00A302D7 /* green-love-fg.gif in Resources */,
 				08AA14D41B0BA658002E1B2F /* Analytics.plist in Resources */,
 				085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
-				0854FCF11C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */,
 				0889BD461C5A559B004B81CB /* placeholder240.png in Resources */,
 				08FF199E1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				08A4570D1BA02F08001AB79E /* NavBar.storyboard in Resources */,
+				08B4AB9B1CBE960C00A302D7 /* hearts-fg.gif in Resources */,
 				08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */,
 				0845BDF41BC523AB00173B66 /* Tutorials.storyboard in Resources */,
-				089263541C71EF4B0037896D /* buds-molecular-user1-mask.png in Resources */,
 				08967C281B5B9A9F000DDCF9 /* rendering.gif in Resources */,
-				08CA9A7E1BCFE843004A5A02 /* teddies-fg.gif in Resources */,
-				08CA9A701BCFE842004A5A02 /* hearts-fg.gif in Resources */,
-				08C88DD21C70A73600300AAA /* buds-molecular-bg.mp4 in Resources */,
-				0854FCEF1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */,
 				0847E5651BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
+				08B4ABA91CBE960C00A302D7 /* teddies-fg.gif in Resources */,
 				08AA14DD1B0BA658002E1B2F /* endRecording.wav in Resources */,
 				08AA14E01B0BA658002E1B2F /* cancel.wav in Resources */,
+				08B4ABA31CBE960C00A302D7 /* kiss-bg.gif in Resources */,
 				0889BD5A1C5A559B004B81CB /* placeholderPositive480.png in Resources */,
-				089263561C71EF4B0037896D /* buds-molecular-user2-mask.png in Resources */,
 				08820F921C3C033900E6E0ED /* EMRecorder2.storyboard in Resources */,
 				08CF07A91B4C122900034BB5 /* emuDefaultContour480.ctr in Resources */,
-				0892635D1C71F9C50037896D /* buds-molecular-sfx.wav in Resources */,
 				08AA14E21B0BA658002E1B2F /* activityAnimation.gif in Resources */,
-				08CA9A641BCFE842004A5A02 /* angel-fg.gif in Resources */,
-				08CA9A681BCFE842004A5A02 /* green-love-bg.gif in Resources */,
-				08CA9A761BCFE842004A5A02 /* hot-mask-v1.png in Resources */,
 				08AA14E91B0BA658002E1B2F /* ServerCFG.plist in Resources */,
-				08CA9A781BCFE843004A5A02 /* kiss-bg.gif in Resources */,
+				08B4AB971CBE960C00A302D7 /* green-love-mask-v1.png in Resources */,
 				083248481BEB858900B4E82F /* TheLaunchScreen.storyboard in Resources */,
 				08AA14EC1B0BA658002E1B2F /* startRecording.wav in Resources */,
 				08AA14EE1B0BA658002E1B2F /* Localizable.strings in Resources */,
+				08B4ABAB1CBE960C00A302D7 /* teddies-mask-v1.png in Resources */,
 				08CF07B11B4D65CC00034BB5 /* shareapp.html in Resources */,
 				08967C261B5B9A9F000DDCF9 /* downloading.gif in Resources */,
 				08AA14F61B0BA658002E1B2F /* SplashView.xib in Resources */,
-				0854FCF51C6E22C9008BB43A /* nuke.wav in Resources */,
 				08A457091BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				0889BD561C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				0896D5261B2D8D430094ED41 /* sil-1.png in Resources */,
 				0880DBBA1CB13B620050D227 /* uniformBGParams.xml in Resources */,
 				08AA14FA1B0BA658002E1B2F /* goodBG.wav in Resources */,
 				0892DE6B1C47C4DD00CA537D /* downloading.mp4 in Resources */,
+				08B4AB991CBE960C00A302D7 /* hearts-bg.gif in Resources */,
 				084AF5321B38A6BD0056FC34 /* focusing.wav in Resources */,
 				08CA9A261BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */,
 				0889BD4E1C5A559B004B81CB /* placeholderNegative240.png in Resources */,
-				08CA9A621BCFE842004A5A02 /* angel-bg.gif in Resources */,
 				0863BB971CBD34DC00A421C4 /* Debug.storyboard in Resources */,
-				0854FCED1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */,
-				08CA9A661BCFE842004A5A02 /* angel-mask-v1.png in Resources */,
 				083814271BBB3139004D902E /* pop.wav in Resources */,
-				08CA9A7A1BCFE843004A5A02 /* kiss-mask-v1.png in Resources */,
 				0880DBB81CB13B620050D227 /* _uniformBGParams.xml in Resources */,
 				08357F2B1BC9328F00C302AA /* Footages.storyboard in Resources */,
-				08C88DD61C70A73600300AAA /* buds-molecular-fg-mask.mp4 in Resources */,
-				08CA9A6A1BCFE842004A5A02 /* green-love-fg.gif in Resources */,
 				083248531BECB3C500B4E82F /* EMBlockingProgressVC.storyboard in Resources */,
 				0880DBD61CB13B620050D227 /* passThrough.fsh in Resources */,
 				082C8B9A1C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */,
 				085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */,
-				08CA9A801BCFE843004A5A02 /* teddies-mask-v1.png in Resources */,
 				08A456D31B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
 				085348C01BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */,
 				08357F3B1BC9EC0400C302AA /* Me.storyboard in Resources */,
 				087C5D411BCC4F9F004B3121 /* Settings.storyboard in Resources */,
+				08B4AB931CBE960C00A302D7 /* green-love-bg.gif in Resources */,
 				08AA15081B0BA658002E1B2F /* onboarding_packages_test.json in Resources */,
 				082C8BA01C3D3B1800D6C6B7 /* replaced-bg1-480.png in Resources */,
 				0889BD521C5A559B004B81CB /* placeholderNegative480.png in Resources */,
+				08B4AB9F1CBE960C00A302D7 /* hot-bg.gif in Resources */,
 				08A456F81B9F2404001AB79E /* Images.xcassets in Resources */,
-				0854FCF31C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */,
-				08CA9A6E1BCFE842004A5A02 /* hearts-bg.gif in Resources */,
+				08B4AB8D1CBE960C00A302D7 /* angel-bg.gif in Resources */,
+				08B4AB9D1CBE960C00A302D7 /* hearts-mask-v1.png in Resources */,
 				082C8B9D1C3D378600D6C6B7 /* replaced-bg3-480.png in Resources */,
 				08AA150B1B0BA658002E1B2F /* onboarding_packages_prod.json in Resources */,
 			);
@@ -2631,94 +2570,81 @@
 				08967C091B57CD02000DDCF9 /* Main.storyboard in Resources */,
 				08A4570C1BA02F08001AB79E /* NavBar.storyboard in Resources */,
 				08A457081BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
+				08B4ABA61CBE960C00A302D7 /* teddies-bg.gif in Resources */,
 				0880DBD71CB13B620050D227 /* passThrough.vsh in Resources */,
-				083B315D1C80F68000070D30 /* buds-topguns-users-dmask.gif in Resources */,
 				08271FD11B01F5B90046F38E /* pressedButton.wav in Resources */,
+				08B4ABA01CBE960C00A302D7 /* hot-mask-v1.png in Resources */,
 				0889BD581C5A559B004B81CB /* placeholderPositive480.png in Resources */,
+				08B4ABA41CBE960C00A302D7 /* kiss-mask-v1.png in Resources */,
 				085348BF1BCD9A3B008BBBF9 /* love-thumb.jpg in Resources */,
 				08A456F61B9F2403001AB79E /* Images.xcassets in Resources */,
 				0830B3B71BE844EE003E64BA /* EMProductPopover.xib in Resources */,
 				08CB89E01A9D10D100224A38 /* clear480x480.png in Resources */,
 				08271FD51B01F5B90046F38E /* simpleSwipe.wav in Resources */,
-				08CA9A7F1BCFE843004A5A02 /* teddies-mask-v1.png in Resources */,
-				08CA9A7D1BCFE843004A5A02 /* teddies-fg.gif in Resources */,
 				08271FCF1B01F5B90046F38E /* plasticClickSound.wav in Resources */,
-				08C88DD81C70A73600300AAA /* buds-molecular-fg.mp4 in Resources */,
-				08CA9A631BCFE842004A5A02 /* angel-fg.gif in Resources */,
-				083B315B1C80F68000070D30 /* buds-topguns-bg.mp4 in Resources */,
+				08B4AB8E1CBE960C00A302D7 /* angel-fg.gif in Resources */,
+				08B4AB901CBE960C00A302D7 /* angel-mask-v1.png in Resources */,
 				085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */,
 				083814261BBB3139004D902E /* pop.wav in Resources */,
+				08B4AB941CBE960C00A302D7 /* green-love-fg.gif in Resources */,
 				082C8BA21C3D3BB100D6C6B7 /* replaced-bg4-480.png in Resources */,
 				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
-				08CA9A611BCFE842004A5A02 /* angel-bg.gif in Resources */,
-				0854FCF01C6E22C9008BB43A /* nuke-fg2-mask.mp4 in Resources */,
 				083248471BEB858900B4E82F /* TheLaunchScreen.storyboard in Resources */,
 				08ED7FF81B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				0845BDF31BC523AB00173B66 /* Tutorials.storyboard in Resources */,
 				087C5D401BCC4F9F004B3121 /* Settings.storyboard in Resources */,
-				08CA9A7B1BCFE843004A5A02 /* teddies-bg.gif in Resources */,
+				08B4AB9A1CBE960C00A302D7 /* hearts-fg.gif in Resources */,
 				08CA9A251BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */,
-				089263531C71EF4B0037896D /* buds-molecular-user1-mask.png in Resources */,
 				08A907191ACABB82008534F7 /* EMAlertsPermissionVC.xib in Resources */,
 				084349C21B837B1C009A653F /* EMShareInputBox.xib in Resources */,
 				0892DE6C1C47C4DD00CA537D /* rendering.mp4 in Resources */,
-				08C88DD01C70A73600300AAA /* buds-molecular-bg.mp4 in Resources */,
-				0854FCEE1C6E22C9008BB43A /* nuke-fg1.mp4 in Resources */,
+				08B4ABA81CBE960C00A302D7 /* teddies-fg.gif in Resources */,
 				0889BD441C5A559B004B81CB /* placeholder240.png in Resources */,
-				08CA9A691BCFE842004A5A02 /* green-love-fg.gif in Resources */,
 				08967C271B5B9A9F000DDCF9 /* rendering.gif in Resources */,
+				08B4ABA21CBE960C00A302D7 /* kiss-bg.gif in Resources */,
 				0892DE6A1C47C4DC00CA537D /* downloading.mp4 in Resources */,
-				089263551C71EF4B0037896D /* buds-molecular-user2-mask.png in Resources */,
-				08CA9A771BCFE842004A5A02 /* kiss-bg.gif in Resources */,
-				08CA9A791BCFE843004A5A02 /* kiss-mask-v1.png in Resources */,
-				0892635C1C71F9C50037896D /* buds-molecular-sfx.wav in Resources */,
-				08CA9A671BCFE842004A5A02 /* green-love-bg.gif in Resources */,
 				08271FCB1B01F5B90046F38E /* endRecording.wav in Resources */,
 				08271FC91B01F5B90046F38E /* cancel.wav in Resources */,
 				08CB89F11A9D28BA00224A38 /* activityAnimation.gif in Resources */,
 				08CF07A81B4C122900034BB5 /* emuDefaultContour480.ctr in Resources */,
+				08B4AB961CBE960C00A302D7 /* green-love-mask-v1.png in Resources */,
 				085348C11BCD9A3B008BBBF9 /* ouch-thumb.jpg in Resources */,
 				080B05A41AB06E85003C19E7 /* ServerCFG.plist in Resources */,
 				08820F911C3C033900E6E0ED /* EMRecorder2.storyboard in Resources */,
+				08B4ABAA1CBE960C00A302D7 /* teddies-mask-v1.png in Resources */,
 				08271FD71B01F5B90046F38E /* startRecording.wav in Resources */,
 				08A456D21B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
 				08AA14351B08F062002E1B2F /* Localizable.strings in Resources */,
-				08CA9A731BCFE842004A5A02 /* hot-bg.gif in Resources */,
-				0854FCF41C6E22C9008BB43A /* nuke.wav in Resources */,
 				08FF199D1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */,
-				08CA9A6D1BCFE842004A5A02 /* hearts-bg.gif in Resources */,
 				0880DBB91CB13B620050D227 /* uniformBGParams.xml in Resources */,
-				08CA9A751BCFE842004A5A02 /* hot-mask-v1.png in Resources */,
 				08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */,
 				0889BD4C1C5A559B004B81CB /* placeholderNegative240.png in Resources */,
 				08357F3A1BC9EC0400C302AA /* Me.storyboard in Resources */,
+				08B4AB981CBE960C00A302D7 /* hearts-bg.gif in Resources */,
 				083248521BECB3C500B4E82F /* EMBlockingProgressVC.storyboard in Resources */,
-				08CA9A6F1BCFE842004A5A02 /* hearts-fg.gif in Resources */,
 				0863BB961CBD34DC00A421C4 /* Debug.storyboard in Resources */,
-				0854FCEC1C6E22C9008BB43A /* nuke-fg1-mask.mp4 in Resources */,
 				0889BD541C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				08967C251B5B9A9F000DDCF9 /* downloading.gif in Resources */,
 				0847E5641BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				0880DBB71CB13B620050D227 /* _uniformBGParams.xml in Resources */,
 				0896D5241B2D8D430094ED41 /* sil-1.png in Resources */,
-				08C88DD41C70A73600300AAA /* buds-molecular-fg-mask.mp4 in Resources */,
-				08CA9A6B1BCFE842004A5A02 /* green-love-mask-v1.png in Resources */,
 				085348C31BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
 				0880DBD51CB13B620050D227 /* passThrough.fsh in Resources */,
 				082C8B9F1C3D3B1800D6C6B7 /* replaced-bg1-480.png in Resources */,
-				08CA9A651BCFE842004A5A02 /* angel-mask-v1.png in Resources */,
 				083814291BBB33EB004D902E /* popQ.wav in Resources */,
 				08271FCD1B01F5B90046F38E /* goodBG.wav in Resources */,
 				084AF5311B38A6BD0056FC34 /* focusing.wav in Resources */,
 				085D69491B25B90B0083ADD9 /* emu_latest_build_info.plist in Resources */,
 				08271FE21B0203820046F38E /* onboarding_packages_test.json in Resources */,
+				08B4AB921CBE960C00A302D7 /* green-love-bg.gif in Resources */,
 				0889BD501C5A559B004B81CB /* placeholderNegative480.png in Resources */,
-				08CA9A711BCFE842004A5A02 /* hearts-mask-v1.png in Resources */,
 				085348BB1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
 				082C8B9C1C3D378600D6C6B7 /* replaced-bg3-480.png in Resources */,
-				0854FCF21C6E22C9008BB43A /* nuke-fg2.mp4 in Resources */,
+				08B4AB9E1CBE960C00A302D7 /* hot-bg.gif in Resources */,
 				082C8B991C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */,
+				08B4AB8C1CBE960C00A302D7 /* angel-bg.gif in Resources */,
+				08B4AB9C1CBE960C00A302D7 /* hearts-mask-v1.png in Resources */,
 				08331A381B069CA7000B8979 /* onboarding_packages_prod.json in Resources */,
 				0889BD481C5A559B004B81CB /* placeholder480.png in Resources */,
 			);
@@ -2753,7 +2679,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Pods/Fabric/Fabric.framework/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
+			shellScript = "${PODS_ROOT}/Fabric/run daa34917843cd9e52b65a68cec43efac16fb680a f5fd3b883c035c5f7aa0d83f87d90fdabbe551bfb010542cb374224d6e18e31c";
 		};
 		08AA14461B0BA658002E1B2F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2975,6 +2901,7 @@
 				08FB194F1BC7C45F00F227C6 /* EMCounterCircleContainerView.m in Sources */,
 				08FB19571BC7C45F00F227C6 /* EMEmusFeedDataSource.m in Sources */,
 				086747A11C6B71B900AAE545 /* EMOnboardingVC.m in Sources */,
+				08D456771CC63E9C00CB6B73 /* EMEmuOptionsSheet.m in Sources */,
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
 				08A457051BA02844001AB79E /* EMPackCell.m in Sources */,
 				08FF19A11C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */,
@@ -3018,6 +2945,7 @@
 				08AA14A11B0BA658002E1B2F /* EMHolySheetSection.m in Sources */,
 				08357F431BC9F0F800C302AA /* EMMeNavigationVC.m in Sources */,
 				083814341BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */,
+				08AA57CD1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m in Sources */,
 				084DAC0D1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */,
 				0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
 				08AE9D031C5E3CE50075B03C /* HMServer+JEmu.m in Sources */,
@@ -3142,6 +3070,7 @@
 				086747A01C6B71B900AAE545 /* EMOnboardingVC.m in Sources */,
 				08D558B71B286114006BF723 /* EMDebugCell.m in Sources */,
 				08357F361BC9331000C302AA /* EMFootageCell.m in Sources */,
+				08D456761CC63E9C00CB6B73 /* EMEmuOptionsSheet.m in Sources */,
 				085348CC1BCEED99008BBBF9 /* EMUnhidePackagesParser.m in Sources */,
 				08FB194E1BC7C45F00F227C6 /* EMCounterCircleContainerView.m in Sources */,
 				08FB19561BC7C45F00F227C6 /* EMEmusFeedDataSource.m in Sources */,
@@ -3185,6 +3114,7 @@
 				0806BD7E1AA37DC20078F14B /* EMPackagesParser.m in Sources */,
 				08E8F75F1AE5540D00B27D2C /* EMHolySheetSection.m in Sources */,
 				08357F421BC9F0F800C302AA /* EMMeNavigationVC.m in Sources */,
+				08AA57CC1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m in Sources */,
 				083814331BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */,
 				084DAC0C1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */,
 				0880DBCF1CB13B620050D227 /* NSNotification+Utils.m in Sources */,

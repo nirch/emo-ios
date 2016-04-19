@@ -125,6 +125,8 @@
 
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName;
 
+-(NSURL *)stichedAudioURLForRelativePath:(NSString *)relativePath;
+
 #pragma mark - Removing resources
 -(void)removeAllResources;
 -(void)removeAllHDResources;
@@ -134,6 +136,7 @@
 -(NSTimeInterval)newStyleRenderDuration;
 -(NSString *)newStyleRenderDurationTitle;
 -(BOOL)requiresDedicatedCapture;
+-(NSTimeInterval)requiredCaptureTime;
 -(NSString *)emuStoryTimeTitle;
 
 

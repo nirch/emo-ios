@@ -165,10 +165,18 @@ class EMRenderManager3 : NSObject
         keepResultAtPath: String? = nil
         ) -> HCRender? {
         
-            // Must have an emu definition and all resources must exist on local storage
+        // Must have an emu definition and all resources must exist on local storage
         let emuDef = EmuticonDef.findWithID(emuDefOID, context: EMDB.sh().context)
         if emuDef == nil {return nil}
-        if !emuDef.allResourcesAvailable() {return nil}
+        let previewAsFullRender = emuDef.fullRenderCFG != nil
+        if previewAsFullRender {
+            // All full render resources must be available.
+            guard emuDef.allFullRenderResourcesAvailable() else {return nil}
+        } else {
+            // All old style emu resources must be available.
+            guard emuDef.allResourcesAvailable() else {return nil}
+        }
+
         
         // Create CFG for renderer
         let uuid = NSUUID().UUIDString
@@ -176,7 +184,7 @@ class EMRenderManager3 : NSObject
         
         let cfg = emuDef.hcRenderCFGWithFootages(
             footagesForPreview,
-            oldStyle: emuDef.fullRenderCFG == nil,
+            oldStyle: !previewAsFullRender,
             inHD: false,
             fps: fps
         )
@@ -189,13 +197,19 @@ class EMRenderManager3 : NSObject
         
         // Stitch audio to the output if required
         if let fullRenderCFG = emuDef.fullRenderCFG as? [NSObject:AnyObject] {
-            if let stitchAudioNamed = fullRenderCFG["stitch_audio_named"] as? String {
+            if let stitchAudioNamed = fullRenderCFG["stitched_audio_named"] as? String {
                 videoOutputInfo[hcrAudioNamed] = stitchAudioNamed
+            }
+            if let stichedAudioRelativePath = fullRenderCFG["stitched_audio"] as? String {
+                if let audioURL = emuDef.stichedAudioURLForRelativePath(stichedAudioRelativePath) {
+                    videoOutputInfo[hcrAudioURL] = audioURL
+                }
             }
         }
         
         // Set the output
         cfg[hcrOutputsInfo] = [videoOutputInfo]
+        AppManagement.sh().debugDict(cfg as [NSObject:AnyObject])
         
         // Render creation
         var previewInfo = [emkUUID:uuid, emkEmuticonDefOID:emuDefOID] as [NSObject:AnyObject]

@@ -183,6 +183,9 @@
     NSDictionary *sectionInfo;
     self.settings = [NSMutableArray new];
 
+    NSString *emuVersionString = [SF:LS(@"SETTINGS_ABOUT_VERSION"), [AppManagement.sh applicationBuild]];
+    NSString *verboseVersionString = [SF:@"%@ %@", emuVersionString, [AppManagement.sh hsdkVersionString]];
+
     /**
      *  About
      */
@@ -191,7 +194,8 @@
                     @"items":@[
                             @{
                                 @"title1":LS(@"SETTINGS_APP_NAME"),
-                                @"title2":[SF:LS(@"SETTINGS_ABOUT_VERSION"), [AppManagement.sh applicationBuild], [AppManagement.sh hsdkVersionString]], @"cellType":CELL_ID_ABOUT,
+                                @"title2":verboseVersionString,
+                                @"cellType":CELL_ID_ABOUT,
                                 @"title3":LS(@"SETTINGS_HOMAGE_TITLE"),
                             }
                             ]
@@ -231,7 +235,7 @@
     sectionInfo = @{
                     @"title":LS(@"SETTINGS_CACHE_TITLE"),
                     @"items":@[
-                            @{@"actionText":LS(@"SETTINGS_ACTION_CACHE_CLEAR_HD"), @"icon":@"settingsIconClearHD", @"actionName":@"clearCacheHD"},
+//                            @{@"actionText":LS(@"SETTINGS_ACTION_CACHE_CLEAR_HD"), @"icon":@"settingsIconClearHD", @"actionName":@"clearCacheHD"},
                             @{@"actionText":LS(@"SETTINGS_ACTION_CACHE_CLEAR_ALL"), @"icon":@"settingsIconClearCache", @"actionName":@"clearCacheAll"},
                             ]
                     };

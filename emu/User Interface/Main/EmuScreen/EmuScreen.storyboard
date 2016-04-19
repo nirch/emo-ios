@@ -565,7 +565,7 @@
                 <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="Tlh-1l-eaQ" customClass="EMVideoVC" customModule="emu" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mrj-dk-ABE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="845.5" y="-65.5"/>
+            <point key="canvasLocation" x="845.5" y="-200.5"/>
         </scene>
         <!--Sharing OptionsVC-->
         <scene sceneID="NNu-5X-Eu1">

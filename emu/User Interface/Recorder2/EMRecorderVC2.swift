@@ -534,6 +534,15 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
             EMUISound.sh().playSoundNamed(SND_RECORDING_ENDED)
         }
 
+        // If recording was canceled, do nothing.
+        if let wasCanceled = info["was_canceled"] as? Bool {
+            if wasCanceled {
+                self.updateToState(HFProcessingState.ProcessFrames)
+                return
+            }
+        }
+        
+        // Recording finished without cancelation. Use the capture to render a preview.
         self.captureSession?.stopAndTearDownCaptureSession()
         self.captureSession = nil
         self.updateToState(HFProcessingState.ProcessFrames)
@@ -543,15 +552,15 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.guiCameraPreviewViewContainer.alpha = 0
         self.showRecordingPreviewAnimated(true)
         self.latestRecordingInfo = info
+
         self.recordingPreviewVC?.renderEmuDef(
             self.emuticonDefOIDForPreview as! String,
-            captureInfo: info,
-            slotIndex: self.slotIndex
+            captureInfo: info
         )
     }
     
     func recordingWasCanceledWithInfo(info: [NSObject : AnyObject]!) {
-        self.updateToState(HFProcessingState.ProcessFrames)
+        
     }
     
     func recordingWillStopWithInfo(info: [NSObject : AnyObject]!) {
@@ -585,7 +594,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         
         if self.flowType != EMRecorderFlowType.Onboarding {
             alert.addAction(UIAlertAction(title: EML.s("CANCEL"), style: UIAlertActionStyle.Cancel, handler:{(UIAlertAction) -> Void in
-                
+                self.delegate?.recorderCanceledByTheUserInFlow(self.flowType, info: self.info as? [NSObject:AnyObject])
             }))
         }
 
@@ -686,6 +695,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     }
     
     func previewDidFailWithInfo(info : [NSObject:AnyObject]) {
+        self.epicFail()
     }
     
     // MARK: - IB Actions
@@ -712,7 +722,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         }
 
         self.guiTimingProgress.startTickingForDuration(self.duration, ticksPerSecond: 2)
-        self.guiCancelButton.hidden = false
+        self.guiCancelButton.hidden = true // Hack. For now will not allow to cancel a recording. requires fix in the SDK for support.
         self.hideMessage(false)
         
         dispatch_async(dispatch_get_main_queue()) {

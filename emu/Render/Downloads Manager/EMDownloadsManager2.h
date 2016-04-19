@@ -5,13 +5,12 @@
 //  Created by Aviv Wolf on 6/13/15.
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
+#import <AFAmazonS3Manager.h>
 
 #define emkDLTaskType @"dl task type"
 #define emkDLTaskTypeResources @"dl emu resources"
 #define emkDLTaskTypeFullRenderResources @"dl emu full render resources"
 #define emkDLTaskTypeFootages @"dl footages files"
-
-@class AWSS3TransferManager;
 
 #define MAX_CONCURRENT_DOWNLOADS 6
 
@@ -20,12 +19,17 @@
 /**
  *  A weak pointer to the AWS transfer manager.
  */
-@property (nonatomic, weak) AWSS3TransferManager *transferManager;
+@property (nonatomic, readonly) AFAmazonS3Manager *s3Manager;
 
 /**
  *  The bucket to download resources from.
  */
-@property (nonatomic) NSString *bucketName;
+@property (nonatomic, readonly) NSString *bucketName;
+
+/**
+ *  Recreate the AFAmazonS3Manager
+ */
+-(void)resetManagerWithBucketName:(NSString *)bucketName;
 
 #pragma mark - Initialization
 +(instancetype)sharedInstance;

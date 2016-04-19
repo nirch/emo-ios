@@ -20,10 +20,10 @@
 
 #import "EMDownloadsManager2.h"
 #import "EMDB+Files.h"
-#import <AWSS3.h>
 #import "HMFileHash.h"
 #import "HMPanel.h"
-
+#import <AFAmazonS3Manager.h>
+#import <AFAmazonS3ResponseSerializer.h>
 #include <errno.h>
 
 #define EMDownloadManagerErrorDomain @"EMDownloadsManager error"
@@ -32,11 +32,14 @@
 
 @interface EMDownloadsManager2()
 
+@property (nonatomic, readwrite) AFAmazonS3Manager *s3Manager;
+@property (nonatomic, readwrite) NSString *bucketName;
+
 //
 // Data structures.
 //
 @property (atomic) NSDictionary *priorities;
-@property (nonatomic, readonly) NSMutableDictionary<NSString *,AWSS3TransferManagerDownloadRequest *> *downloadingPool;
+@property (nonatomic, readonly) NSMutableDictionary<NSString *,AFHTTPRequestOperation *> *downloadingPool;
 @property (nonatomic, readonly) NSMutableDictionary *neededDownloadsPool;
 @property (nonatomic, readonly) NSMutableDictionary *pathByOID;
 @property (nonatomic, readonly) NSMutableDictionary *taskType;
@@ -84,7 +87,6 @@
     return self;
 }
 
-
 -(void)initDataStructures
 {
     _downloadingPool = [NSMutableDictionary new];
@@ -98,6 +100,13 @@
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
 //    _rootURL = [NSURL fileURLWithPath:documentsDirectory];
+}
+
+-(void)resetManagerWithBucketName:(NSString *)bucketName
+{
+    self.bucketName = bucketName;
+    self.s3Manager = [[AFAmazonS3Manager alloc] initWithAccessKeyID:S3_ACCESS_KEY secret:S3_SECRET_KEY];
+    self.s3Manager.requestSerializer.bucket = self.bucketName;
 }
 
 #pragma mark - Queues
@@ -121,33 +130,33 @@
 #pragma mark - Resume/Pause
 -(void)resume
 {
-    __weak EMDownloadsManager2 *wSelf = self;
+//    __weak EMDownloadsManager2 *wSelf = self;
     dispatch_async(self.downloadingManagementQueue, ^{
-        [wSelf.transferManager resumeAll:^(AWSRequest *request) {
-        }];
+//        [wSelf.transferManager resumeAll:^(AWSRequest *request) {
+//        }];
     });
 }
 
 -(void)pause
 {
-    __weak EMDownloadsManager2 *wSelf = self;
+//    __weak EMDownloadsManager2 *wSelf = self;
     dispatch_async(self.downloadingManagementQueue, ^{
-        [wSelf.transferManager pauseAll];
+//        [wSelf.transferManager pauseAll];
     });
 }
 
 -(void)clear
 {
-    __weak EMDownloadsManager2 *wSelf = self;
+//    __weak EMDownloadsManager2 *wSelf = self;
     dispatch_async(self.downloadingManagementQueue, ^{
-        [wSelf _clear];
+//        [wSelf _clear];
     });
 }
 
 -(void)_clear
 {
     // clear all work pending on queues
-    _neededDownloadsPool = [NSMutableDictionary new];
+//    _neededDownloadsPool = [NSMutableDictionary new];
 }
 
 #pragma mark - JOB ID
@@ -191,8 +200,6 @@
                      userInfo:(NSDictionary *)userInfo
                       taskType:(NSString *)taskType
 {
-    HMLOG(TAG, EM_DBG, @"Need to download resources: %@", names);
-    
     // Filter out resources already downloaded.
     NSMutableArray *resources = [NSMutableArray new];
     for (NSString *name in names) {
@@ -273,6 +280,7 @@
 
 -(void)_popAndStartJob
 {
+    // Choose an OID
     NSString *oid = [self _chooseOID];
     
     // Pop a resource to download for the chosen OID
@@ -281,96 +289,105 @@
     [resources removeLastObject];
     if (resources.count == 0) [self.neededDownloadsPool removeObjectForKey:oid];
     
-    // Get the task.
+    // Create a new download job for a resource related to the OID.
     NSString *jobID = [self jobIDForOID:oid resourceName:name];
-    HMLOG(TAG, EM_DBG, @"Download job: %@", jobID);
 
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [self newDownloadRequestForOID:oid resourceName:name];
-    self.downloadingPool[jobID] = downloadRequest;
-    
-    // Download!
-    __weak AWSTask *downloadTask = [self.transferManager download:downloadRequest];
+    // The S3 key of the resource to download.
+    NSString *key = [self s3KeyForOID:oid resourceName:name];
+
+    // The download task.
     __weak EMDownloadsManager2 *wSelf = self;
-    
-    [downloadTask continueWithExecutor:[AWSExecutor executorWithDispatchQueue:self.downloadingManagementQueue] withBlock:^id _Nullable(AWSTask * _Nonnull task) {
-            AWSS3TransferManagerDownloadOutput *output = task.result;
-            NSURL *downloadedFileURL = output.body;
-            NSFileManager *fm = [NSFileManager defaultManager];
-    
-            if (task.error) {
-                [fm removeItemAtURL:downloadedFileURL error:nil];
-                if (task.error.code == AWSS3TransferManagerErrorCancelled) {
-                    HMLOG(TAG, EM_VERBOSE, @"Cancelled downloading resource: %@", name);
-                    // Download failed
-                    dispatch_async(self.downloadingManagementQueue, ^{
-                        [wSelf _cancelledJobForOID:oid resourceName:name];
-                    });
-                } else {
-                    HMLOG(TAG, EM_ERR, @"Failed downloading resource: %@", name);
-                    // Download failed
-                    dispatch_async(self.downloadingManagementQueue, ^{
-                        [wSelf _failedJobForOID:oid resourceName:name error:task.error];
-                    });
-                }
-            } else {
-                HMLOG(TAG, EM_ERR, @"downloaded: %@", name);
-                BOOL shouldValidateMD5 = YES;
-                BOOL md5Validated = NO;
-                NSString *expectedMD5 = [output.ETag stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-                NSString *md5 = nil;
-                NSString *path = [downloadedFileURL path];
-                if (shouldValidateMD5) {
-                    md5 = [HMFileHash md5HashOfFileAtPath:path];
-                    md5Validated = [md5 isEqualToString:expectedMD5];
-                    if (!md5Validated) {
-                        REMOTE_LOG(@"MD5 validation failed for resource:%@ expected:%@ got:%@",
-                                   path,
-                                   expectedMD5,
-                                   md5);
-                    }
-                }
-    
-                if (!shouldValidateMD5 || md5Validated) {
-                    //
-                    // If didn't need to validate or validate succesfully,
-                    // we are in the money.
-                    // Rename the temp file to the resource name.
-                    //
-                    NSError *error=nil;
-                    NSURL *validatedFileURL = [self localURLForOID:oid resourceName:name asTempFile:NO];
-                    [fm removeItemAtURL:validatedFileURL error:nil];
-                    [fm moveItemAtURL:downloadedFileURL toURL:validatedFileURL error:&error];
-                    if (error) {
-                        // Error while renaming validate temp file to final position.
-                        dispatch_async(self.downloadingManagementQueue, ^{
-                            [wSelf _failedJobForOID:oid resourceName:name error:error];
-                        });
-                    } else {
-                        // All is well. Finish the job.
-                        dispatch_async(self.downloadingManagementQueue, ^{
-                            [wSelf _finishJobForOID:oid resourceName:name error:nil];
-                        });
-                    }
-                } else {
-                    //
-                    // Should have been validated and
-                    // downloaded file failed MD5 validation.
-                    // File is corrupted and can't be used.
-                    // Remove it from disk and report the error.
-                    //
-                    [fm removeItemAtURL:downloadedFileURL error:nil];
-                    NSError *error = [[NSError alloc] initWithDomain:EMDownloadManagerErrorDomain
-                                                                code:ERR_MD5_COMP_FAILED
-                                                            userInfo:@{NSLocalizedDescriptionKey:@"MD5 checksum failed. Probably corrupt file."}];
-                    dispatch_async(self.downloadingManagementQueue, ^{
-                        [wSelf _failedJobForOID:oid resourceName:name error:error];
-                    });
-                }
-            }    
-            return nil;
-    }];
-    
+    AFHTTPRequestOperation *dl;
+    dl = [self.s3Manager getObjectWithPath:key
+                                  progress:^(NSUInteger bytesRead,
+                                             long long totalBytesRead,
+                                             long long totalBytesExpectedToRead) {
+                                      
+                                      // -----------------------
+                                      // Handle progress
+                                      // -----------------------
+                                      
+                                  } success:^(id responseObject, NSData *responseData) {
+                                      
+                                      // -----------------------
+                                      // Handle the response.
+                                      // -----------------------
+                                      dispatch_async(self.downloadingManagementQueue, ^{
+                                          [wSelf _handleDownloadOfResponse:responseObject
+                                                                      data:responseData
+                                                                       oid:oid
+                                                                     jobID:jobID
+                                                                       key:key
+                                                                      name:name];
+                                      });
+                                      
+                                  } failure:^(NSError *error) {
+                                      
+                                      // -------------------------
+                                      // Handle download error.
+                                      // -------------------------
+                                      HMLOG(TAG, EM_ERR, @"Failed downloading resource: %@", name);
+                                      // Download failed
+                                      dispatch_async(self.downloadingManagementQueue, ^{
+                                          [wSelf _failedJobForOID:oid resourceName:name error:error];
+                                      });
+                                      
+                                  }];
+    self.downloadingPool[jobID] = dl;
+}
 
+/**
+ *  AFAmazonS3Manager finished a download successfully.
+ *  Handle that download: Validate what was downloaded and finish the job.
+ */
+-(void)_handleDownloadOfResponse:(AFAmazonS3ResponseObject *)response
+                            data:(NSData *)data
+                             oid:(NSString *)oid
+                           jobID:(NSString *)jobID
+                             key:(NSString *)key
+                            name:(NSString *)name
+{
+    // Save to local temp path
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *tempLocalURL = [self localURLForOID:oid resourceName:name asTempFile:YES];
+    [data writeToFile:tempLocalURL.path atomically:YES];
+    
+    // MD5 validation.
+    // Compare md5 of the file to expected md5.
+    NSString *expectedMD5 = response.ETag;
+    NSString *md5 = [HMFileHash md5HashOfFileAtPath:tempLocalURL.path];
+    if (![md5 isEqualToString:expectedMD5]) {
+        // :-( that is not the md5 you were looking for.
+        // Handle this as a download error.
+        [fm removeItemAtURL:tempLocalURL error:nil];
+        NSError *error = [[NSError alloc] initWithDomain:EMDownloadManagerErrorDomain
+                                                    code:ERR_MD5_COMP_FAILED
+                                                userInfo:@{NSLocalizedDescriptionKey:@"MD5 checksum failed. Probably corrupt file."}];
+        dispatch_async(self.downloadingManagementQueue, ^{
+            [self _failedJobForOID:oid resourceName:name error:error];
+        });
+        return;
+    }
+    
+    // MD5 validated. Save the temp file to destination.
+    NSError *error;
+    NSURL *localURL = [self localURLForOID:oid resourceName:name asTempFile:NO];
+    [fm removeItemAtURL:localURL error:nil];
+    [fm moveItemAtPath:tempLocalURL.path toPath:localURL.path error:&error];
+    if (error) {
+        // Handle copy temp file to final destination errors.
+        // Consider this as a failed download.
+        [fm removeItemAtURL:tempLocalURL error:nil];
+        dispatch_async(self.downloadingManagementQueue, ^{
+            [self _failedJobForOID:oid resourceName:name error:error];
+        });
+        return;
+    }
+    
+    // All is well. Finish the job on the download management queue.
+    dispatch_async(self.downloadingManagementQueue, ^{
+        [self _finishJobForOID:oid resourceName:name error:nil];
+    });
 }
 
 
@@ -436,10 +453,11 @@
         localPath = [SF:@"resources/%@", path];
     }
     
-    if (asTempFile) localPath = [localPath stringByAppendingString:@".tmp"];
     NSURL *url = [self.rootURL URLByAppendingPathComponent:localPath];
 
+
     // Add the path component of the resource name
+    if (asTempFile) name = [name stringByAppendingString:@".tmp"];
     url = [url URLByAppendingPathComponent:name];
 
     // Make sure required folder exists.
@@ -459,33 +477,33 @@
 
 
 
--(AWSS3TransferManagerDownloadRequest *)newDownloadRequestForOID:(NSString *)oid resourceName:(NSString *)name
-{
-    // --------------
-    // Don't enable this in production!
-    // [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
-    // --------------
-    
-    // Create a download request for specified bucket.
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-    downloadRequest.bucket = self.bucketName;
-    
-    // The s3 key of the remote file.
-    NSString *key = [self s3KeyForOID:oid resourceName:name];
-    downloadRequest.key = key;
-    
-    // Generate the destination local path.
-    NSURL *localPathURL = [self localURLForOID:oid resourceName:name asTempFile:YES];
-
-    // Make sure temp file doesn't already exist (remove it if it does)
-    NSFileManager *fm = [NSFileManager defaultManager];
-    [fm removeItemAtURL:localPathURL error:nil];
-    
-    // Download to this local path.
-    downloadRequest.downloadingFileURL = localPathURL;
-    
-    return downloadRequest;
-}
+//-(AWSS3TransferManagerDownloadRequest *)newDownloadRequestForOID:(NSString *)oid resourceName:(NSString *)name
+//{
+//    // --------------
+//    // Don't enable this in production!
+//    // [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+//    // --------------
+//    
+//    // Create a download request for specified bucket.
+//    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+//    downloadRequest.bucket = self.bucketName;
+//    
+//    // The s3 key of the remote file.
+//    NSString *key = [self s3KeyForOID:oid resourceName:name];
+//    downloadRequest.key = key;
+//    
+//    // Generate the destination local path.
+//    NSURL *localPathURL = [self localURLForOID:oid resourceName:name asTempFile:YES];
+//
+//    // Make sure temp file doesn't already exist (remove it if it does)
+//    NSFileManager *fm = [NSFileManager defaultManager];
+//    [fm removeItemAtURL:localPathURL error:nil];
+//    
+//    // Download to this local path.
+//    downloadRequest.downloadingFileURL = localPathURL;
+//    
+//    return downloadRequest;
+//}
 
 
 @end

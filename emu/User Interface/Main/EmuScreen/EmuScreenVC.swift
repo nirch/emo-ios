@@ -19,7 +19,8 @@ class EmuScreenVC: UIViewController,
     EMShareDelegate,
     EMInterfaceDelegate,
     EMPreviewDelegate,
-    EMRecorderDelegate {
+    EMRecorderDelegate,
+    EMHolySheetDelegate {
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -71,8 +72,9 @@ class EmuScreenVC: UIViewController,
     var renderPreviewIndicatorTimer: NSTimer?
     var renderer: HCRender?
 
-    // Alerts
+    // Alerts & actions
     var alertView: SIAlertView?
+    var anActionSheet: EMHolySheet?
     
     // Child VCs
     var emusVC: EmusVC?
@@ -547,41 +549,26 @@ class EmuScreenVC: UIViewController,
     
     func askAboutFootageOptions() {
         guard let emu = self.currentEmu() else {return}
-        let slotIndex = emu.jointEmuLocalSlotIndex()
-        if emu.isJointEmu() {
-            guard slotIndex > 0 else {return}
-        }
+        guard let emuOID = emu.oid else {return}
         
-        let emuDef = emu.emuDef!
+        // The action sheet.
+        self.anActionSheet = EMEmuOptionsSheet(emuOID: emuOID)
+        self.anActionSheet?.holyDelegate = self
+        self.anActionSheet?.showModalOnTopAnimated(true)
+    }
+    
+    func handleSheetActionWithIndexPath(indexPath: NSIndexPath, actionsMapping: EMActionsArray) {
+        guard let emu = self.currentEmu() else {return}
+        guard let emuDef = emu.emuDef else {return}
+        guard let actionName = actionsMapping.actionNameForIndexPath(indexPath) else {return}
         
-        let duration = emuDef.jointEmuDefCaptureDurationAtSlot(slotIndex)
-        let dedicatedFootageRequired = emuDef.jointEmuDefRequiresDedicatedCaptureAtSlot(slotIndex)
+        let duration = emuDef.requiredCaptureTime()
+        let dedicatedFootageRequired = emuDef.requiresDedicatedCapture()
         
-        // New take or replace take?
-        var message = EML.s("CHANGE_FOOTAGE_FROM")
-        var title = ""
-        if dedicatedFootageRequired {
-            title = emuDef.jointEmuDefCaptureDurationStringAtSlot(slotIndex)
-            message = EML.s("DEDICATED_FOOTAGE_REQUIRED_MESSAGE")
-        }
-        
-        let alertView = SIAlertView(title: title, andMessage: message)
-        alertView.buttonColor = EmuStyle.colorButtonBGPositive()
-        alertView.cancelButtonColor = EmuStyle.colorButtonBGNegative()
-        
-        if dedicatedFootageRequired == false {
-            // If no dedicate footage required, allow to choose footage from the footage screen.
-            alertView.addButtonWithTitle(EML.s("CHOOSE_TAKE"), type: SIAlertViewButtonType.Default, handler: {alert in
-                let footageVC = EMFootagesVC(forFlow: .ChooseFootage)
-                footageVC.hdFootagesOnly = true
-                footageVC.videoFootagesOnly = true
-                footageVC.delegate = self
-                self.presentViewController(footageVC, animated: true, completion: nil)
-            })
-        }
-        
-        // New take option.
-        alertView.addButtonWithTitle(EML.s("EMU_SCREEN_CHOICE_RETAKE_EMU"), type: SIAlertViewButtonType.Default, handler: {alert in
+        // Handle actions
+        switch actionName {
+
+        case EMK_EMU_FOOTAGE_ACTION_RETAKE:
             //
             // Open the recorder for a new take.
             // Recorder should be opened for a retake.
@@ -590,22 +577,21 @@ class EmuScreenVC: UIViewController,
             let requestInfo = [
                 emkRetakeEmuticonsOID:oids,
                 emkDuration:duration,
-                emkDedicatedFootage:dedicatedFootageRequired,
-                emkJEmuSlot:slotIndex
+                emkDedicatedFootage:dedicatedFootageRequired
                 ] as [NSObject:AnyObject]
-            
+
             // Notify main navigation controller that the recorder should be opened.
             let recorder = EMRecorderVC2.recorderVCWithConfigInfo(requestInfo)
             recorder.delegate = self
             self.presentViewController(recorder, animated: true, completion: nil)
-        })
+            break
         
-        // Cancel option
-        alertView.addButtonWithTitle(EML.s("CANCEL"), type: SIAlertViewButtonType.Cancel, handler:nil)
+        case EMK_EMU_FOOTAGE_ACTION_CHOOSE:
+            break
         
-        // Show the alert.
-        alertView.show()
-        self.alertView = alertView
+        default:
+            break
+        }
     }
     
     //
@@ -885,6 +871,11 @@ class EmuScreenVC: UIViewController,
         }
     }
     
+    // MARK: - JGActionSheetDelegate
+    func actionSheet(actionSheet: JGActionSheet!, pressedButtonAtIndexPath indexPath: NSIndexPath!) {
+        
+    }
+    
     // MARK: - IB Actions
     // ===========
     // IB Actions.
@@ -895,23 +886,10 @@ class EmuScreenVC: UIViewController,
     
     @IBAction func onPressedActionButton(sender: AnyObject) {
         EMUISound.sh().playSoundNamed(SND_SOFT_CLICK)
-        guard let emu = self.currentEmu() where emu.isJointEmu() == false else {return}
+        guard self.currentEmu() != nil else {return}
         self.shareCurrentEmu()
     }
 
-    @IBAction func onPressedPositiveButton(sender: AnyObject) {
-        // Deprecated
-    }
-    
-    @IBAction func onPressedNegativeButton(sender: AnyObject) {
-        // Deprecated
-    }
-    
-    
-    @IBAction func onPressedDebugButton(sender: AnyObject)
-    {
-    }
-    
     @IBAction func onPressedLongPreviewRenderButton(sender: AnyObject)
     {
         // Full long render preview

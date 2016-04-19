@@ -11,8 +11,15 @@
 #import "EMActionsArray.h"
 #import "EMInterfaceDelegate.h"
 
+@protocol EMHolySheetDelegate <NSObject>
+
+-(void)handleSheetActionWithIndexPath:(NSIndexPath *)indexPath actionsMapping:(EMActionsArray *)actionsMapping;
+
+@end
+
 @interface EMHolySheet : JGActionSheet
 
+@property (nonatomic, weak) id<EMHolySheetDelegate> holyDelegate;
 @property (nonatomic) CGFloat targetAlpha;
 @property (nonatomic) EMActionsArray *actionsMapping;
 @property (nonatomic, readonly) BOOL alreadyConfiguredActions;

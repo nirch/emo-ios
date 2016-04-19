@@ -29,6 +29,8 @@
 #import "EMInterfaceDelegate.h"
 #import <UIView+Toast.h>
 #import "EMCaches.h"
+#import "EMHolySheet.h"
+#import "EMEmuOptionsSheet.h"
 
 // Notifications
 #import "HMNotificationCenter.h"
@@ -47,6 +49,7 @@
 #import "EMRenderTypes.h"
 #import "EMDownloadsManager2.h"
 #import "Emuticon+DownloadsHelpers.h"
+#import "EmuticonDef+DownloadsHelpers.h"
 
 // Data & Backend
 #import "EMDB.h"

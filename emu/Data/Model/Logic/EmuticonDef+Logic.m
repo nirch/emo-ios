@@ -174,7 +174,8 @@
 {
     // Full render video CFG
     NSMutableDictionary *cfg = [NSMutableDictionary dictionaryWithDictionary:self.fullRenderCFG];
-
+    cfg[hcrResourcesPath] = self.package.resourcesPath;
+    
     // Replace placeholder footages with available footages.
     NSMutableArray *sourceLayers = [NSMutableArray new];
     for (NSDictionary *layer in cfg[hcrSourceLayersInfo]) {
@@ -426,6 +427,15 @@
             }
         }
     }
+    
+    // If also need an audio file to stich to final rendered result
+    if ([self.fullRenderCFG[@"stitched_audio"] isKindOfClass:[NSString class]]) {
+        NSString *audioResourceName = self.fullRenderCFG[@"stitched_audio"];
+        if ([self isMissingResourceNamed:audioResourceName]) {
+            [missingResources addObject:audioResourceName];
+        }
+    }
+    
     return missingResources;
 }
 
@@ -451,9 +461,17 @@
     }
 }
 
+-(NSURL *)stichedAudioURLForRelativePath:(NSString *)relativePath
+{
+    if (relativePath == nil) return nil;
+    NSString *path = [self pathForResourceNamed:relativePath];
+    if (path) return [NSURL fileURLWithPath:path];
+    return nil;
+}
+
 -(BOOL)allFullRenderResourcesAvailable
 {
-    return NO;
+    return [[self allMissingFullRenderResourcesNames] count] < 1;
 }
 
 -(BOOL)isMissingResourceNamed:(NSString *)resourceName
@@ -519,9 +537,14 @@
 
 -(BOOL)requiresDedicatedCapture
 {
+    return self.requiredCaptureTime > 2.0;
+}
+
+-(NSTimeInterval)requiredCaptureTime
+{
     NSTimeInterval duration = self.duration.doubleValue;
     if (self.captureDuration) duration = self.captureDuration.doubleValue;
-    return duration > 2.0;
+    return duration;
 }
 
 -(NSString *)emuStoryTimeTitle
@@ -533,5 +556,4 @@
     }
     return title;
 }
-
 @end

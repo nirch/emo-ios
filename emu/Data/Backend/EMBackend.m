@@ -86,17 +86,18 @@
 -(void)initDownloadManager
 {
     AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-    EMDownloadsManager2.sh.transferManager = self.transferManager;
+    
+    //EMDownloadsManager2.sh.transferManager = self.transferManager;
     
     NSString *bucketName = appCFG.bucketName;
     if (bucketName == nil) bucketName = AppManagement.sh.isTestApp?@"homage-emu-test":@"homage-emu-prod";
-    EMDownloadsManager2.sh.bucketName = bucketName;
+    [EMDownloadsManager2.sh resetManagerWithBucketName:bucketName];
 }
 
 -(AWSS3TransferManager *)transferManager
 {
     if (_transferManager) return _transferManager;
-    AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_UPLOAD_ACCESS_KEY secretKey:S3_UPLOAD_SECRET_KEY];
+    AWSStaticCredentialsProvider *credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:S3_ACCESS_KEY secretKey:S3_SECRET_KEY];
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
     configuration.maxRetryCount = 0;
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
