@@ -63,6 +63,12 @@
     return emuDefsWithAvailableLocalResources[randomIndex];
 }
 
+-(void)toggleShouldMuteLoopingVideos
+{
+    BOOL should = self.shouldMuteLoopingVideos?self.shouldMuteLoopingVideos.boolValue:NO;
+    self.shouldMuteLoopingVideos = @(!should);
+}
+
 
 -(NSInteger)chooseEmuIndexForOnboardingFromList:(NSArray *)emus withPrefferedEmus:(NSArray *)prefferedEmus
 {

@@ -50,10 +50,11 @@ class EmuScreenVC: UIViewController,
     @IBOutlet weak var guiPositiveButton: EMFlowButton!
     @IBOutlet weak var guiNegativeButton: EMFlowButton!
     
-    // Layout outlets
-    @IBOutlet weak var slotsContainerHeight: NSLayoutConstraint!
-    @IBOutlet weak var indicatorsContainerHeight: NSLayoutConstraint!
+    @IBOutlet weak var guiFavButton: UIButton!
+    @IBOutlet weak var guiMuteToggleButton: UIButton!
 
+    
+    // Layout outlets
     @IBOutlet weak var containerAspectRatio1_1: NSLayoutConstraint!
     @IBOutlet weak var containerAspectRatio16_9: NSLayoutConstraint!
     
@@ -67,7 +68,8 @@ class EmuScreenVC: UIViewController,
     //
     // Properties
     //
-
+    weak var footagesVC: EMFootagesVC? = nil
+    
     // Long videos renders
     var renderPreviewIndicatorTimer: NSTimer?
     var renderer: HCRender?
@@ -171,6 +173,7 @@ class EmuScreenVC: UIViewController,
         
         // Video output
         self.guiVideoPlayerContainer.hidden = true
+        self.hideVideo()
         
         // Buttons
         self.guiActionButtonContainer.hidden = true
@@ -182,6 +185,12 @@ class EmuScreenVC: UIViewController,
         
         // Emu aspect ratio
         self.updateAspectRatio()
+        
+        // Fav
+        self.updateFavButton()
+        
+        // Mute/Unmute
+        self.updateMuteButton()
     }
 
     func updateAspectRatio() {
@@ -374,7 +383,7 @@ class EmuScreenVC: UIViewController,
         
         // Show the result of the render.
         if let url = self.renderer?.outputURL() {
-            self.showVideoAtURL(url)
+            self.showVideoAtURL(url, animated: true)
         }
         
         // Clear up
@@ -434,6 +443,40 @@ class EmuScreenVC: UIViewController,
     //
     // MARK: - UI States
     //
+    func updateMuteButton() {
+        // Hide the mute button when it is irrelevent
+        let shouldHideMuteButton = !self.isVideoShown()
+        self.guiMuteToggleButton.hidden = shouldHideMuteButton
+        
+        guard let appCFG = AppCFG.cfgInContext(EMDB.sh().context) else {return}
+        guard let isMuted = appCFG.shouldMuteLoopingVideos?.boolValue else {return}
+
+        let imageName = isMuted ? "soundMuted" : "soundPlays"
+        self.guiMuteToggleButton.setImage(UIImage(named:imageName), forState: .Normal)
+    }
+    
+    func toggleMute() {
+        guard let appCFG = AppCFG.cfgInContext(EMDB.sh().context) else {return}
+        appCFG.toggleShouldMuteLoopingVideos()
+        EMDB.sh().save()
+    }
+    
+    func updateVideoPlayerMuteState() {
+        guard let appCFG = AppCFG.cfgInContext(EMDB.sh().context) else {return}
+        if let isMuted = appCFG.shouldMuteLoopingVideos?.boolValue {
+            self.videoVC?.player?.muted = isMuted
+        }
+    }
+    
+    func updateFavButton() {
+        guard let emu = self.currentEmu() else {return}
+        guard let isFav = emu.isFavorite?.boolValue else {return}
+        
+        let favButtonImageName = isFav ? "favIconOn" : "favIconOff"
+        self.guiFavButton.setImage(UIImage(named: favButtonImageName), forState: .Normal)
+        
+    }
+    
     func updateEmuUIStateForEmu() {
         guard self.emuDef != nil else {return}
         self.updateEmuUIStateForNormalEmu()
@@ -459,7 +502,8 @@ class EmuScreenVC: UIViewController,
         
         // If an output video already rendered, show it
         if emu.videoURL() != nil {
-            self.showVideoAtURL(emu.videoURL())
+            self.showVideoAtURL(emu.videoURL(), animated: true)
+            self.updateMuteButton()
             return
         }
         
@@ -471,6 +515,7 @@ class EmuScreenVC: UIViewController,
             self.renderer = nil
         }
         self.fullRenderForCurrentEmu(keepResult: true)
+        self.updateMuteButton()
     }
     
     func showSharing() {
@@ -557,42 +602,6 @@ class EmuScreenVC: UIViewController,
         self.anActionSheet?.showModalOnTopAnimated(true)
     }
     
-    func handleSheetActionWithIndexPath(indexPath: NSIndexPath, actionsMapping: EMActionsArray) {
-        guard let emu = self.currentEmu() else {return}
-        guard let emuDef = emu.emuDef else {return}
-        guard let actionName = actionsMapping.actionNameForIndexPath(indexPath) else {return}
-        
-        let duration = emuDef.requiredCaptureTime()
-        let dedicatedFootageRequired = emuDef.requiresDedicatedCapture()
-        
-        // Handle actions
-        switch actionName {
-
-        case EMK_EMU_FOOTAGE_ACTION_RETAKE:
-            //
-            // Open the recorder for a new take.
-            // Recorder should be opened for a retake.
-            //
-            let oids = [emu.oid as! AnyObject]
-            let requestInfo = [
-                emkRetakeEmuticonsOID:oids,
-                emkDuration:duration,
-                emkDedicatedFootage:dedicatedFootageRequired
-                ] as [NSObject:AnyObject]
-
-            // Notify main navigation controller that the recorder should be opened.
-            let recorder = EMRecorderVC2.recorderVCWithConfigInfo(requestInfo)
-            recorder.delegate = self
-            self.presentViewController(recorder, animated: true, completion: nil)
-            break
-        
-        case EMK_EMU_FOOTAGE_ACTION_CHOOSE:
-            break
-        
-        default:
-            break
-        }
-    }
     
     //
     // MARK: - Sharing
@@ -758,13 +767,16 @@ class EmuScreenVC: UIViewController,
     // MARK: - Video player
     //
     func showVideoAtURL(url: NSURL, animated: Bool = false) {
+        guard let appCFG = AppCFG.cfgInContext(EMDB.sh().context) else {return}
+        
         // Show the video
         self.videoVC?.setVideoURL(url)
         self.guiVideoPlayerContainer.hidden = false
-    
+        self.updateVideoPlayerMuteState()
+        
         // Reveal
         if animated {
-            UIView.animateWithDuration(0.2) {
+            UIView.animateWithDuration(0.3) {
                 self.guiVideoPlayerContainer.alpha = 1
             }
         } else {
@@ -804,6 +816,7 @@ class EmuScreenVC: UIViewController,
     // MARK: - Going back
     //
     func goBack() {
+        self.guiSharingContainer.hidden = true
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -871,15 +884,64 @@ class EmuScreenVC: UIViewController,
         }
     }
     
-    // MARK: - JGActionSheetDelegate
-    func actionSheet(actionSheet: JGActionSheet!, pressedButtonAtIndexPath indexPath: NSIndexPath!) {
+    // MARK: - EMHolySheetDelegate
+    func handleSheetActionWithIndexPath(indexPath: NSIndexPath, actionsMapping: EMActionsArray) {
+        guard let emu = self.currentEmu() else {return}
+        guard let emuDef = emu.emuDef else {return}
+        guard let actionName = actionsMapping.actionNameForIndexPath(indexPath) else {return}
         
+        let duration = emuDef.requiredCaptureTime()
+        let dedicatedFootageRequired = emuDef.requiresDedicatedCapture()
+        
+        // Handle actions
+        switch actionName {
+            
+        case EMK_EMU_FOOTAGE_ACTION_RETAKE:
+            
+            //
+            // Open the recorder for a new take.
+            // Recorder should be opened for a retake.
+            //
+            let oids = [emu.oid as! AnyObject]
+            let requestInfo = [
+                emkRetakeEmuticonsOID:oids,
+                emkDuration:duration,
+                emkDedicatedFootage:dedicatedFootageRequired
+                ] as [NSObject:AnyObject]
+            
+            // Notify main navigation controller that the recorder should be opened.
+            let recorder = EMRecorderVC2.recorderVCWithConfigInfo(requestInfo)
+            recorder.delegate = self
+            self.presentViewController(recorder, animated: true, completion: nil)
+            
+        case EMK_EMU_FOOTAGE_ACTION_CHOOSE:
+
+            //
+            // Open the footages screen
+            //
+            let footagesVC = EMFootagesVC(forFlow: .ChooseFootage)
+            footagesVC.delegate = self
+            footagesVC.selectedEmusOID = [emu.oid!]
+            self.footagesVC = footagesVC
+            self.presentViewController(footagesVC, animated: true, completion: nil)
+            
+            
+        default:
+            break
+        }
     }
     
     // MARK: - IB Actions
     // ===========
     // IB Actions.
     // ===========
+    @IBAction func onPressedFavButton(sender: AnyObject) {
+        guard let emu = self.currentEmu() else {return}
+        emu.toggleFavorite()
+        self.updateFavButton()
+    }
+    
+    
     @IBAction func onPressedBackButton(sender: AnyObject) {
         self.goBack()
     }
@@ -905,5 +967,15 @@ class EmuScreenVC: UIViewController,
         if emu.wasRendered?.boolValue == true {
             self.askAboutFootageOptions()
         }
+    }
+    
+    @IBAction func onRecognizedSwipeRight(sender: UISwipeGestureRecognizer) {
+        self.goBack()
+    }
+    
+    @IBAction func onPressedMuteToggleButton(sender: AnyObject) {
+        self.toggleMute()
+        self.updateMuteButton()
+        self.updateVideoPlayerMuteState()
     }
 }

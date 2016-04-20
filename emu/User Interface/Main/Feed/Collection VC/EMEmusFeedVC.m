@@ -638,11 +638,16 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 #pragma mark - Scrolling
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    // Ignore this when the feed is in selection mode.
+    if (self.currentState == EMEmusFeedStateSelecting) return;
+    
     // Update the nav bar where did we scroll to.
     CGPoint offset = scrollView.contentOffset;
     offset.y += scrollView.contentInset.top;
     [self.navBarVC childVCDidScrollToOffset:offset];
     
+    
+    // UI updates of tab and nav bar while scrolling.
     if (!self.inScroll && scrollView.isDragging) {
         self.inScroll = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldHideTabsBar
@@ -657,8 +662,12 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self handleVisibleCells];
-    
+
+    // Ignore this when the feed is in selection mode.
+    if (self.currentState == EMEmusFeedStateSelecting) return;
+
     self.inScroll = NO;
+
     [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                         object:self
                                                       userInfo:@{emkUIAnimated:@(YES)}];
@@ -698,6 +707,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         // Will not decelerate after dragging, so scrolling just ended.
         [self handleVisibleCells];
 
+        // Ignore this when the feed is in selection mode.
+        if (self.currentState == EMEmusFeedStateSelecting) return;
+
         self.inScroll = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                             object:self
@@ -716,6 +728,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     dispatch_after(DTIME(delay), dispatch_get_main_queue(), ^{
         [self handleVisibleCells];
         self.inScroll = NO;
+
+        // Ignore this when the feed is in selection mode.
+        if (self.currentState == EMEmusFeedStateSelecting) return;
         [[NSNotificationCenter defaultCenter] postNotificationName:emkUIShouldShowTabsBar
                                                             object:self
                                                           userInfo:@{emkUIAnimated:@(YES)}];

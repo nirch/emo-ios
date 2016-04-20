@@ -234,6 +234,8 @@
 -(BOOL)shouldItRenderInHD;
 -(void)toggleShouldRenderAsHDIfAvailable;
 
+-(void)toggleFavorite;
+
 // Info for uploaded content.
 -(NSString *)generateOIDForUpload;
 -(NSString *)s3KeyForUploadForOID:(NSString *)oid;

@@ -24,6 +24,8 @@
 -(EmuticonDef *)emuticonDefForOnboarding;
 -(EmuticonDef *)emuticonDefForOnboardingWithPrefferedEmus:(NSArray *)prefferedEmus;
 
+-(void)toggleShouldMuteLoopingVideos;
+
 #pragma mark - Sampled results
 -(BOOL)shouldUploadSampledResults;
 

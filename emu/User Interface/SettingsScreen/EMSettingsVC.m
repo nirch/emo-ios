@@ -216,18 +216,18 @@
     /**
      *  In App Purchases
      */
-    NSNumber *redeemCodeOption = [HMPanel.sh numberForKey:VK_SETTINGS_REDEEM_CODE_OPTION
-                                            fallbackValue:@0];
-    
-    NSMutableArray *iapItems = [NSMutableArray new];
-    [iapItems addObject:@{@"actionText":LS(@"SETTINGS_ACTION_RESTORE_PURCHASES"), @"icon":@"settingsIconRestorePurchases", @"actionName":@"restorePurchases", @"async":@YES}];
-    if ([redeemCodeOption isEqualToNumber:@1]) [iapItems addObject:@{@"actionText":LS(@"SETTINGS_ACTION_REDEEM_CODE"), @"icon":@"settingsIconRedeemCode", @"actionName":@"redeemCode", @"async":@YES}];
-    
-    sectionInfo = @{
-                @"title":LS(@"SETTINGS_IN_APP_PURCHASES_TITLE"),
-                @"items":iapItems
-                };
-    [self.settings addObject:sectionInfo];
+//    NSNumber *redeemCodeOption = [HMPanel.sh numberForKey:VK_SETTINGS_REDEEM_CODE_OPTION
+//                                            fallbackValue:@0];
+//    
+//    NSMutableArray *iapItems = [NSMutableArray new];
+//    [iapItems addObject:@{@"actionText":LS(@"SETTINGS_ACTION_RESTORE_PURCHASES"), @"icon":@"settingsIconRestorePurchases", @"actionName":@"restorePurchases", @"async":@YES}];
+//    if ([redeemCodeOption isEqualToNumber:@1]) [iapItems addObject:@{@"actionText":LS(@"SETTINGS_ACTION_REDEEM_CODE"), @"icon":@"settingsIconRedeemCode", @"actionName":@"redeemCode", @"async":@YES}];
+//    
+//    sectionInfo = @{
+//                @"title":LS(@"SETTINGS_IN_APP_PURCHASES_TITLE"),
+//                @"items":iapItems
+//                };
+//    [self.settings addObject:sectionInfo];
 
     /**
      *  Cache
@@ -247,7 +247,7 @@
     sectionInfo = @{
                     @"title":LS(@"SETTINGS_MISC_TITLE"),
                     @"items":@[
-                            @{@"actionText":LS(@"SETTINGS_UI_SOUND_EFFECTS"), @"icon":@"settingsIconUISound", @"actionName":@"toggleUISound", @"boolSettingName":@"uiSoundFX", @"appCFGBoolFieldName":@"playUISounds"},
+                            @{@"actionText":LS(@"SETTINGS_UI_SOUND_EFFECTS"), @"icon":@"settingsIconUISound", @"actionName":@"toggleUISound", @"boolSettingName":@"uiSoundFX", @"appCFGBoolFieldName":@"playUISounds"}
                             ]
                     };
     [self.settings addObject:sectionInfo];

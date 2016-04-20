@@ -2,7 +2,7 @@
 //  AppCFG+CoreDataProperties.h
 //  emu
 //
-//  Created by Aviv Wolf on 31/01/2016.
+//  Created by Aviv Wolf on 20/04/2016.
 //  Copyright © 2016 Homage. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -34,15 +34,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *onboardingUsingPackage;
 @property (nullable, nonatomic, retain) NSNumber *playUISounds;
 @property (nullable, nonatomic, retain) NSString *prefferedFootageOID;
+@property (nullable, nonatomic, retain) NSString *pushToken;
+@property (nullable, nonatomic, retain) NSNumber *showStatusBar;
 @property (nullable, nonatomic, retain) id tweaks;
 @property (nullable, nonatomic, retain) id uploadUserContent;
 @property (nullable, nonatomic, retain) NSNumber *userAskedInMainScreenAboutAlerts;
 @property (nullable, nonatomic, retain) NSNumber *userPrefferedShareType;
+@property (nullable, nonatomic, retain) NSString *userSignInID;
 @property (nullable, nonatomic, retain) NSNumber *userViewedEmuScreenTutorial;
 @property (nullable, nonatomic, retain) NSNumber *userViewedKBTutorial;
 @property (nullable, nonatomic, retain) NSNumber *userViewedMainTutorial;
-@property (nullable, nonatomic, retain) NSString *userSignInID;
-@property (nullable, nonatomic, retain) NSString *pushToken;
+@property (nullable, nonatomic, retain) NSNumber *shouldMuteLoopingVideos;
 
 @end
 

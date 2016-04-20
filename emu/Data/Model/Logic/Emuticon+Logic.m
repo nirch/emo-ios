@@ -109,6 +109,12 @@
     
 }
 
+-(void)toggleFavorite
+{
+    BOOL isFav = self.isFavorite?self.isFavorite.boolValue:NO;
+    self.isFavorite = @(!isFav);
+}
+
 
 -(NSURL *)thumbURL
 {

@@ -160,14 +160,17 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRk-Sp-pXs" userLabel="Full screen button">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XRk-Sp-pXs" userLabel="muteToggleButton">
                                         <rect key="frame" x="8" y="0.0" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="HPN-dW-XGh"/>
                                             <constraint firstAttribute="height" constant="44" id="SBM-Q9-sBx"/>
                                             <constraint firstAttribute="width" secondItem="XRk-Sp-pXs" secondAttribute="height" multiplier="1:1" id="vEM-nE-WfY"/>
                                         </constraints>
-                                        <state key="normal" image="fullScreenIcon"/>
+                                        <state key="normal" image="soundPlays"/>
+                                        <connections>
+                                            <action selector="onPressedMuteToggleButton:" destination="QF1-1A-wKk" eventType="touchUpInside" id="vQr-8S-aK5"/>
+                                        </connections>
                                     </button>
                                     <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TgP-v5-sBg">
                                         <rect key="frame" x="60" y="8" width="255" height="29"/>
@@ -188,6 +191,9 @@
                                             <constraint firstAttribute="width" secondItem="OBU-PS-H1u" secondAttribute="height" multiplier="1:1" id="eFg-In-KSX"/>
                                         </constraints>
                                         <state key="normal" image="favIconOff"/>
+                                        <connections>
+                                            <action selector="onPressedFavButton:" destination="QF1-1A-wKk" eventType="touchUpInside" id="ftc-m1-Vzj"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -306,6 +312,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="dvt-o2-7sZ" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="2LA-Cz-Vn5"/>
                             <constraint firstItem="oYs-FP-hCh" firstAttribute="height" secondItem="grK-vz-yTP" secondAttribute="height" id="3mv-FD-WEE"/>
@@ -337,6 +344,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="gradientName" value="gradientMainBG"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="1zH-xn-iSv" appends="YES" id="Wy2-wd-PlA"/>
+                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -345,10 +355,12 @@
                         <outlet property="guiActionButton" destination="Y21-x1-6ea" id="wMU-8Q-vqA"/>
                         <outlet property="guiActionButtonContainer" destination="grK-vz-yTP" id="5NX-V5-1NP"/>
                         <outlet property="guiEmusContainer" destination="w7F-DQ-Ndw" id="ize-15-Etd"/>
+                        <outlet property="guiFavButton" destination="OBU-PS-H1u" id="CoO-kh-wfY"/>
                         <outlet property="guiFlowButtonsContainer" destination="oYs-FP-hCh" id="IY4-5X-Xrt"/>
                         <outlet property="guiLongRenderLabel" destination="x7n-tg-H8V" id="mKN-Qa-3km"/>
                         <outlet property="guiLongRenderProgress" destination="wmy-Wx-Gle" id="Lkh-lE-DUN"/>
                         <outlet property="guiLongVideoIndicator" destination="d7q-8V-7gx" id="Eek-3R-n1h"/>
+                        <outlet property="guiMuteToggleButton" destination="XRk-Sp-pXs" id="lAM-19-ldf"/>
                         <outlet property="guiNavBarView" destination="dvt-o2-7sZ" id="9KC-SN-EqL"/>
                         <outlet property="guiNegativeButton" destination="g2D-4f-VSv" id="fC8-XU-sku"/>
                         <outlet property="guiPositiveButton" destination="Gze-xK-79q" id="xKt-LV-muT"/>
@@ -361,6 +373,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kPV-AA-YTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="1zH-xn-iSv">
+                    <connections>
+                        <action selector="onRecognizedSwipeRight:" destination="QF1-1A-wKk" id="LXO-15-aDA"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="311.5" y="340.5"/>
         </scene>
@@ -387,10 +404,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu instance cell" id="8Kf-oJ-IUf" customClass="EMEmuCell">
-                                        <rect key="frame" x="0.0" y="91" width="344" height="192.5"/>
+                                        <rect key="frame" x="0.0" y="91" width="344" height="193"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="344" height="192.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="193"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="fRO-1q-adt">
@@ -616,11 +633,11 @@
         <image name="backButton" width="12" height="21"/>
         <image name="cellStretchingBG" width="17" height="21"/>
         <image name="favIconOff" width="44" height="44"/>
-        <image name="fullScreenIcon" width="44" height="44"/>
         <image name="leftButton" width="12" height="21"/>
         <image name="leftGradBG" width="15" height="15"/>
         <image name="retakeIcon4" width="25" height="24"/>
         <image name="rightButton" width="12" height="21"/>
         <image name="rightGradBG" width="15" height="15"/>
+        <image name="soundPlays" width="44" height="44"/>
     </resources>
 </document>
