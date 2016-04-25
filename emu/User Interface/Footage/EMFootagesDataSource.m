@@ -133,7 +133,8 @@
     
     // First deselect a previous cell, if selected
     if (self.selectedIndexPath) {
-        [collectionView reloadItemsAtIndexPaths:@[_selectedIndexPath]];
+        NSIndexPath *indexPath = _selectedIndexPath;
+        [collectionView reloadItemsAtIndexPaths:@[indexPath]];
         _selectedIndexPath = nil;
     }
     

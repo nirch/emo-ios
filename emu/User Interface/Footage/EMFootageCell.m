@@ -63,6 +63,7 @@
 {
     self.oid = nil;
     self.thumbURL = nil;
+    self.gifURL = nil;
 }
 
 -(void)updateStateWithFootage:(UserFootage *)footage
@@ -123,7 +124,8 @@
 -(void)startPlayingFootage:(UserFootage *)footage
 {
     if (footage == nil || self.oid == nil) return;
-    
+    [self updateStateWithFootage:footage];
+
     // Highlight border of the cell and add a shadow
     CALayer *l = self.guiContainer.layer;
     UIImage *dottedPattern = [UIImage imageNamed:@"dashedBorderSelected"];
@@ -134,10 +136,9 @@
     l.shadowRadius = 5.0f;
     l.shadowOpacity = 0.4;
     
-    self.guiThumbImage.image = nil;
-    
-    if (self.gifURL) {
+    if (footage.isGIFAvailable) {
         // A gif is available. Play the animated gif.
+        self.guiThumbImage.image = nil;
         [self.guiAnimatedGif pin_setImageFromURL:self.gifURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];
         return;
     }
@@ -148,16 +149,18 @@
     NSString *ptn = [footage imagesPathPTN];
     NSTimeInterval duration = [footage duration].doubleValue;
     if (duration < 1) duration = 1;
-    
+
+    __weak EMFootageCell *wSelf = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSArray *imagesArray = [UserFootage imagesSequenceWithMaxNumberOfFrames:36
                                                                             ptn:ptn
                                                                            path:path];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.guiThumbImage.animationImages = imagesArray;
-            self.guiThumbImage.animationRepeatCount = 0;
-            self.guiThumbImage.animationDuration = duration;
-            [self.guiThumbImage startAnimating];
+            wSelf.guiThumbImage.image = nil;
+            wSelf.guiThumbImage.animationImages = imagesArray;
+            wSelf.guiThumbImage.animationRepeatCount = 0;
+            wSelf.guiThumbImage.animationDuration = duration;
+            [wSelf.guiThumbImage startAnimating];
         });
     });
 }
