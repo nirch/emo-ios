@@ -478,6 +478,14 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     }
 }
 
+-(void)backToFeedIfNotOnTop
+{
+    if (self.navigationController.presentingViewController.presentedViewController != self) {
+        // Another vc is already pushed on the stack
+        [self.navigationController popToViewController:self animated:NO];
+    }
+}
+
 #pragma mark - EMTopVCProtocol
 -(void)vcWasSelectedWithInfo:(NSDictionary *)info
 {

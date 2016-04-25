@@ -135,6 +135,12 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         self.guiTimingLabel.textColor = EmuStyle.colorMain1()
         self.hideRecordingPreviewAnimated(false)
         
+        // Fix timing bar layout issues on iPhone4S
+        // (no room for placing the timing bar under the camera feed)
+        if AppManagement.sh().isVerySmallScreen {
+            self.guiTimingContainer.transform = CGAffineTransformMakeTranslation(0, -50)
+        }
+        
         //
         // The long render progress bar
         //
@@ -194,9 +200,9 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
                              bgImage: bgImage)
         hfc.cameraPreviewView = self.guiCameraPreviewViewContainer
         hfc.maxAllowedCameraCaptureFPS = 18
-        hfc.setupAndStartCaptureSession()
         hfc.delegate = self
         self.captureSession = hfc
+        hfc.setupAndStartCaptureSession()
     }
     
     // MARK: - Configuration
@@ -498,7 +504,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
         // Rendering message
         self.guiTimingContainer.hidden = false
         self.guiTimingProgress.reset()
-        self.guiTimingLabel.text = "Please wait while rendering video"
+        self.guiTimingLabel.text = EML.s("WAIT_TILL_EMU_FINISHED")
         
         // Progress bar
         if self.duration > 2.0 {

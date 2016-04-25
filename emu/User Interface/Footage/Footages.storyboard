@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2nE-tI-NmN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2nE-tI-NmN">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -50,7 +50,7 @@
                                                             <rect key="frame" x="0.0" y="111" width="134" height="25"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXD-TY-4T6" customClass="EMLabel">
-                                                                    <rect key="frame" x="49" y="4" width="38" height="18"/>
+                                                                    <rect key="frame" x="48" y="4" width="38" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -324,6 +324,7 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="guiAddButton" destination="ZuG-Tw-gXS" id="cZp-53-tUf"/>
                         <outlet property="guiAddIcon" destination="4qS-Z1-fT9" id="9vD-2q-76v"/>
                         <outlet property="guiApplyChoiceBar" destination="ttR-XM-yvJ" id="r2D-XV-BIH"/>
                         <outlet property="guiBlurredView" destination="FRc-7P-VFS" id="yda-Za-jQt"/>
@@ -332,7 +333,9 @@
                         <outlet property="guiManageTakesBar" destination="i1U-tq-4df" id="2yX-rH-yvn"/>
                         <outlet property="guiNegativeButton" destination="hCm-0R-7PA" id="sKR-50-Lqb"/>
                         <outlet property="guiPositiveButton" destination="FCV-2w-oOs" id="gMe-KY-lQZ"/>
+                        <outlet property="guiSepLine" destination="HqN-Bu-4Jl" id="Fgf-hj-3KN"/>
                         <outlet property="guiSetAsDefaultButton" destination="3RW-9N-qOv" id="Ezb-LE-ZXo"/>
+                        <outlet property="guiTrashButton" destination="6fD-5w-RTW" id="e1J-0h-vKp"/>
                         <outlet property="guiWhosTakesSelector" destination="uzg-Ee-4wI" id="CsG-lI-RhH"/>
                         <outlet property="topSpacing" destination="EGa-sq-1xm" id="kty-W4-5R6"/>
                     </connections>

@@ -303,6 +303,12 @@
         }
     }
     
+    // Black & White effect
+    if (definedEffects[@"grayscale"] && [definedEffects[@"grayscale"] boolValue]) {
+        NSMutableDictionary *effect = [NSMutableDictionary new];
+        effect[hcrEffectType] = hcrEffectTypeGrayScale;
+        [effects addObject:effect];
+    }
     
     // Positioning effect
     if (definedEffects[@"position"]) {

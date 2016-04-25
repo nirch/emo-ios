@@ -381,11 +381,11 @@ class EmuScreenVC: UIViewController,
             self.updateLongRenderIndicator()
         }
         
-        // Show the result of the render.
-        if let url = self.renderer?.outputURL() {
-            self.showVideoAtURL(url, animated: true)
-        }
-        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue(), {
+            self.updateFullRenderStateIfRequired()
+        })
+            
         // Clear up
         self.renderer = nil
     }
@@ -767,8 +767,6 @@ class EmuScreenVC: UIViewController,
     // MARK: - Video player
     //
     func showVideoAtURL(url: NSURL, animated: Bool = false) {
-        guard let appCFG = AppCFG.cfgInContext(EMDB.sh().context) else {return}
-        
         // Show the video
         self.videoVC?.setVideoURL(url)
         self.guiVideoPlayerContainer.hidden = false

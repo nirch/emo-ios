@@ -404,10 +404,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emu instance cell" id="8Kf-oJ-IUf" customClass="EMEmuCell">
-                                        <rect key="frame" x="0.0" y="91" width="344" height="193"/>
+                                        <rect key="frame" x="0.0" y="91" width="344" height="192.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="344" height="193"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="192.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellStretchingBG" translatesAutoresizingMaskIntoConstraints="NO" id="fRO-1q-adt">
@@ -607,20 +607,30 @@
                                     <constraint firstAttribute="height" constant="18" id="GEO-Sw-mDf"/>
                                 </constraints>
                             </view>
+                            <button hidden="YES" opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kK9-lx-Sb4" userLabel="More sharing options">
+                                <rect key="frame" x="16" y="37" width="30" height="42"/>
+                                <state key="normal" image="sharingOptions"/>
+                                <connections>
+                                    <action selector="onPressedMoreSharingOptionsButton:" destination="bon-uR-woZ" eventType="touchUpInside" id="DYr-mM-ssk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="topMargin" secondItem="u8C-63-ZKL" secondAttribute="top" id="BfD-5W-Nf1"/>
                             <constraint firstItem="Ddp-dh-hwb" firstAttribute="centerY" secondItem="in9-oc-1ke" secondAttribute="centerY" id="C8K-z2-AtU"/>
+                            <constraint firstItem="kK9-lx-Sb4" firstAttribute="centerY" secondItem="in9-oc-1ke" secondAttribute="centerY" id="Ekz-7c-Qbt"/>
                             <constraint firstItem="Ddp-dh-hwb" firstAttribute="width" secondItem="in9-oc-1ke" secondAttribute="width" multiplier="0.6" id="FRX-L5-hTh"/>
                             <constraint firstAttribute="trailing" secondItem="u8C-63-ZKL" secondAttribute="trailing" id="KCE-MF-7dR"/>
                             <constraint firstAttribute="bottomMargin" secondItem="u8C-63-ZKL" secondAttribute="bottom" id="R1x-YY-2sZ"/>
                             <constraint firstItem="Ddp-dh-hwb" firstAttribute="centerX" secondItem="in9-oc-1ke" secondAttribute="centerX" id="Znd-v0-h3I"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="kK9-lx-Sb4" secondAttribute="leading" id="byS-zF-BYH"/>
                             <constraint firstItem="u8C-63-ZKL" firstAttribute="leading" secondItem="in9-oc-1ke" secondAttribute="leading" id="tbB-Iy-76F"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="guiCarousel" destination="u8C-63-ZKL" id="cNb-tw-dqA"/>
+                        <outlet property="guiMoreSharingOptionsButton" destination="kK9-lx-Sb4" id="EZs-ps-I9U"/>
                         <outlet property="guiRenderProgress" destination="Ddp-dh-hwb" id="h4f-yN-91c"/>
                     </connections>
                 </viewController>
@@ -638,6 +648,7 @@
         <image name="retakeIcon4" width="25" height="24"/>
         <image name="rightButton" width="12" height="21"/>
         <image name="rightGradBG" width="15" height="15"/>
+        <image name="sharingOptions" width="30" height="42"/>
         <image name="soundPlays" width="44" height="44"/>
     </resources>
 </document>

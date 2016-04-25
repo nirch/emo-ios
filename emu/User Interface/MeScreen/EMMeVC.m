@@ -13,6 +13,7 @@
 #import "EMDB.h"
 #import "EMUINotifications.h"
 #import "EMFootagesVC.h"
+#import "emu-Swift.h"
 
 @interface EMMeVC ()
 
@@ -147,9 +148,9 @@
     Emuticon *emu = [Emuticon findWithID:emuticonOID context:EMDB.sh.context];
     if (emu == nil) return;
     
-//    EMEmuticonScreenVC *vc = [EMEmuticonScreenVC emuticonScreenForEmuticonOID:emuticonOID];
-//    vc.themeColor = [EmuBaseStyle colorThemeMe];
-//    [self.navigationController pushViewController:vc animated:YES];
+    EmuScreenVC *emuScreenVC = [EmuScreenVC emuScreenVC:emu.emuDef.oid
+                                             themeColor:self.navBarThemeColor];
+    [self.navigationController pushViewController:emuScreenVC animated:YES];
 }
 
 -(void)openFootagesScreen

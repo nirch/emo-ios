@@ -11,6 +11,7 @@
 
 // General
 #import "AppManagement.h"
+#import "AppDelegate.h"
 
 // UI
 #import "EmuStyle.h"

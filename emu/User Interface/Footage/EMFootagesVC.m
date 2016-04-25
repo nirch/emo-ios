@@ -19,6 +19,7 @@
 #import "UIView+CommonAnimations.h"
 #import "EMRecorderDelegate.h"
 #import "EMDB.h"
+#import "emu-Swift.h"
 
 @interface EMFootagesVC () <
     EMNavBarDelegate,
@@ -33,12 +34,16 @@
 @property (weak, nonatomic) IBOutlet UIView *guiManageTakesBar;
 @property (weak, nonatomic) IBOutlet UIView *guiApplyChoiceBar;
 
-@property (weak, nonatomic) IBOutlet UIImageView *guiAddIcon;
-@property (weak, nonatomic) IBOutlet UIImageView *guiDeleteIcon;
-@property (weak, nonatomic) IBOutlet EMButton *guiSetAsDefaultButton;
-
 @property (weak, nonatomic) IBOutlet UISegmentedControl *guiWhosTakesSelector;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topSpacing;
+
+@property (weak, nonatomic) IBOutlet UIView *guiSepLine;
+@property (weak, nonatomic) IBOutlet UIButton *guiAddButton;
+@property (weak, nonatomic) IBOutlet UIButton *guiTrashButton;
+@property (weak, nonatomic) IBOutlet EMButton *guiSetAsDefaultButton;
+@property (weak, nonatomic) IBOutlet UIImageView *guiAddIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *guiDeleteIcon;
+
 
 @property (nonatomic, readwrite) EMFootagesFlowType flowType;
 
@@ -154,6 +159,20 @@
     self.navBarCFG = [EMFootagesNavigationCFG new];
     self.navBarVC.configurationSource = self.navBarCFG;
     [self.navBarVC updateUIByCurrentState];
+    
+    // Setup UI colors according to the navigation bar colors.
+    UIColor *colorThemeMe = [[EmuStyle colorThemeMe] colorWithAlphaComponent:0.92];
+    if ([self color:navBarColor isEqualToColor:colorThemeMe]) {
+        self.guiSepLine.backgroundColor = navBarColor;
+        [self.guiSetAsDefaultButton setTitleColor:navBarColor forState:UIControlStateNormal];
+        self.guiAddIcon.image = [UIImage imageNamed:@"plusMe"];
+        self.guiDeleteIcon.image = [UIImage imageNamed:@"trashMe"];
+    }
+}
+
+-(BOOL)color:(UIColor *)color1 isEqualToColor:(UIColor *)color2
+{
+    return CGColorEqualToColor(color1.CGColor, color2.CGColor);
 }
 
 -(NSInteger)currentState
@@ -337,21 +356,20 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)onAddButtonPressed:(id)sender
 {
-//    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
-//    NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
-//    EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
+    AppCFG *appCFG = [AppCFG cfgInContext:EMDB.sh.context];
+    NSArray *prefferedEmus = [HMPanel.sh listForKey:VK_ONBOARDING_EMUS_FOR_PREVIEW_LIST fallbackValue:nil];
+    EmuticonDef *emuticonDefForOnboarding = [appCFG emuticonDefForOnboardingWithPrefferedEmus:prefferedEmus];
     
-//    NSDictionary *configInfo =@{
-//                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
-//                                emkEmuticonDefName:emuticonDefForOnboarding.name
-//                                };
+    NSDictionary *configInfo =@{
+                                emkEmuticonDefOID:emuticonDefForOnboarding.oid,
+                                emkEmuticonDefName:emuticonDefForOnboarding.name
+                                };
     
-//    EMRecorderVC *recorderVC = [EMRecorderVC recorderVCWithConfigInfo:configInfo];
-//    recorderVC.delegate = self;
-//    [self presentViewController:recorderVC animated:YES completion:nil];
-
+    EMRecorderVC2 *recorderVC = [EMRecorderVC2 recorderVCWithConfigInfo:configInfo];
+    recorderVC.delegate = self;
+    [self presentViewController:recorderVC animated:YES completion:nil];
+    
     [self.guiAddIcon animateQuickPopIn];
-
 }
 
 - (IBAction)onDefaultButtonPressed:(id)sender

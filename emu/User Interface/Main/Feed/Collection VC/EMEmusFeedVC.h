@@ -45,7 +45,9 @@ typedef NS_ENUM(NSInteger, EMEmusFeedState){
 @property (nonatomic) NSString *requestsEmuOID;
 
 -(void)consumeNavigationRequests;
-
+-(void)backToFeedIfNotOnTop;
 -(void)restoreState;
+
+
 
 @end

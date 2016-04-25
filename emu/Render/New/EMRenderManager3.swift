@@ -448,10 +448,12 @@ class EMRenderManager3 : NSObject
             return
         }
         
-        guard let userInfo = self.userInfo[oid] as? [NSObject:AnyObject] else {
-            // Handle no user info available.
-            return
-        }
+        let userInfo = self.userInfo[oid] as? [NSObject:AnyObject]
+        
+//        guard let userInfo = self.userInfo[oid] as? [NSObject:AnyObject] else {
+//            // Handle no user info available.
+//            return
+//        }
         
         self.renderingPOOL[oid] = renderInfo;
         self.readyPool.removeValueForKey(oid)
@@ -509,7 +511,7 @@ class EMRenderManager3 : NSObject
         return nil
     }
     
-    func handleFinishedRenderOnMainThread(oid: String, renderInfo: [NSObject: AnyObject], userInfo: [NSObject: AnyObject]) {
+    func handleFinishedRenderOnMainThread(oid: String, renderInfo: [NSObject: AnyObject], userInfo: [NSObject: AnyObject]?) {
         #if DEBUG
             NSAssert(NSThread.isMainThread(), "%s should be called on the main thread", __PRETTY_FUNCTION__);
         #endif

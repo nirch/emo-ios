@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		8j2Lgz1BEMK8o0cghAv1uIM3wxE=
-		</data>
 		<key>Headers/HFBGRemover.h</key>
 		<data>
 		eK3nzxOgPTqSaAKQfNpzz+fUxwA=
@@ -66,7 +62,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		tJfA4RXvIaqe6S3IoZyUB8YNgx4=
+		SNM9/coCLjC48XoCVSfPfKBuxls=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -90,7 +86,7 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		Z1tSdJQbA4z7AbfithhSftphVuE=
+		d4m7IrSUzlGNtdFOzyLKCnlYQCg=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
@@ -312,11 +308,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Z1tSdJQbA4z7AbfithhSftphVuE=
+			d4m7IrSUzlGNtdFOzyLKCnlYQCg=
 			</data>
 			<key>hash2</key>
 			<data>
-			kkMf9qJEYwK2rptVSlKdfZmbXxbFHXFU27zWcUnVyQk=
+			zIvupCJiAC5eDZro+4LJ4/te1kEeGIWsGuG4XqvtO4A=
 			</data>
 		</dict>
 		<key>release_notes.txt</key>

@@ -10,8 +10,8 @@
 
 
 #import "HMPanel.h"
-//#import <Fabric/Fabric.h>
-//#import <Crashlytics/Crashlytics.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "AppManagement.h"
 #import "EMDB.h"
 #import "HMAnalyticsEvents.h"
@@ -71,10 +71,10 @@
 
 -(void)initCrashReports
 {
-//    [Fabric with:@[CrashlyticsKit]];
-//    Crashlytics *crashlytics = [Crashlytics sharedInstance];
-//    [crashlytics setObjectValue:[[UIDevice currentDevice] name] forKey:@"device name"];
-//    REMOTE_LOG(@"Initialized crashlytics");
+    [Fabric with:@[CrashlyticsKit]];
+    Crashlytics *crashlytics = [Crashlytics sharedInstance];
+    [crashlytics setObjectValue:[[UIDevice currentDevice] name] forKey:@"device name"];
+    REMOTE_LOG(@"Initialized crashlytics");
 }
 
 -(void)remoteKey:(NSString *)key value:(NSString *)value

@@ -43,6 +43,8 @@
         if ([previousTabIndex isEqualToNumber:newTabIndex]) {
             [feedVC consumeNavigationRequests];
         }
+    } else {
+        [feedVC backToFeedIfNotOnTop];
     }
 }
 

@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		ysD5EH5YCUt7JHjVNB0qDYTszNo=
-		</data>
 		<key>480x480_head_and_shoulders.ctr</key>
 		<data>
 		xMRX6dDh7xFfc5S5VEjETVDAscE=
@@ -106,7 +102,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		lwL7vILexjnqGT9VkNNb8X/AtsI=
+		6cfti6clSn3+m4JNtQ0hJ4XdOJc=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -130,7 +126,7 @@
 		</data>
 		<key>readme.txt</key>
 		<data>
-		WzhAaztAbB0esCCFLJwvoXbLesA=
+		XcU3ee06/BnPJxNnrzNidoC9VEg=
 		</data>
 		<key>release_notes.txt</key>
 		<data>
@@ -462,11 +458,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WzhAaztAbB0esCCFLJwvoXbLesA=
+			XcU3ee06/BnPJxNnrzNidoC9VEg=
 			</data>
 			<key>hash2</key>
 			<data>
-			4ksNWvqTxsg+ANH7n8U+3CXpCGEN1Yq5z2Rm2l/OPKU=
+			F406atTYpiMr3g7tR/uFIrvtAROUuAmyGw+dksQvh00=
 			</data>
 		</dict>
 		<key>release_notes.txt</key>

@@ -86,7 +86,7 @@
 -(void)clearGUI
 {
     self.guiContainer.backgroundColor = [UIColor clearColor];
-    
+
     self.guiThumbImage.image = nil;
     [self.guiThumbImage stopAnimating];
     self.guiThumbImage.animationImages = nil;
@@ -114,20 +114,15 @@
     // If an empty cell, nothing to do.
     if (self.oid == nil) return;
     
-    self.guiContainer.backgroundColor = [UIColor whiteColor];
     if (self.isDefault) self.guiIsDefaultIndicator.hidden = NO;
     if (self.isHD) self.guiHDIndicator.hidden = NO;
 
-    if (self.gifURL) {
-        [self.guiAnimatedGif pin_setImageFromURL:self.gifURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];
-    } else {
-        [self.guiThumbImage pin_setImageFromURL:self.thumbURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];
-    }
+    [self.guiThumbImage pin_setImageFromURL:self.thumbURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];    
 }
 
 -(void)startPlayingFootage:(UserFootage *)footage
 {
-    if (footage == nil || self.oid == nil || self.gifURL) return;
+    if (footage == nil || self.oid == nil) return;
     
     // Highlight border of the cell and add a shadow
     CALayer *l = self.guiContainer.layer;
@@ -139,6 +134,15 @@
     l.shadowRadius = 5.0f;
     l.shadowOpacity = 0.4;
     
+    self.guiThumbImage.image = nil;
+    
+    if (self.gifURL) {
+        // A gif is available. Play the animated gif.
+        [self.guiAnimatedGif pin_setImageFromURL:self.gifURL placeholderImage:[UIImage imageNamed:@"placeholderPositive480"]];
+        return;
+    }
+    
+    // No gif available (most probably an old style footage with a PNG Sequence)
     // Load images in background thread
     NSString *path = [footage pathForUserImages];
     NSString *ptn = [footage imagesPathPTN];

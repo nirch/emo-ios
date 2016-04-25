@@ -30,6 +30,7 @@ class EMSharingOptionsVC:
     //
     @IBOutlet weak var guiCarousel: iCarousel!
     @IBOutlet weak var guiRenderProgress: YLProgressBar!
+    @IBOutlet weak var guiMoreSharingOptionsButton: UIButton!
 
     // Delegate
     weak var delegate: EMInterfaceDelegate?
@@ -38,7 +39,8 @@ class EMSharingOptionsVC:
     var shareNames: [EMKShareMethod: String] = [EMKShareMethod: String]()
     var shareMethods: [EMKShareMethod] = [EMKShareMethod]()
     var colorsByShareMethod: [EMKShareMethod: UIColor] = [EMKShareMethod: UIColor]()
-
+    var forceShowAllShareOptions: Bool = false
+    
     var currentShareMethod: EMKShareMethod = EMKShareMethod.emkShareMethodFacebookMessanger
     var prefferedMediaType: EMKShareOption = EMKShareOption.emkShareOptionAnimatedGif
     
@@ -242,6 +244,15 @@ class EMSharingOptionsVC:
     // MARK: - iCarouselDataSource
     //
     func numberOfItemsInCarousel(carousel: iCarousel) -> Int {
+        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+            if app.isInFBMContext() && self.forceShowAllShareOptions == false {
+                carousel.scrollEnabled = false
+                self.guiMoreSharingOptionsButton.hidden = false
+                return 1
+            }
+        }
+        carousel.scrollEnabled = true
+        self.guiMoreSharingOptionsButton.hidden = true
         return self.shareMethods.count
     }
     
@@ -497,6 +508,7 @@ class EMSharingOptionsVC:
     }
     
     func sharerDidFinishWithInfo(info: [NSObject : AnyObject]!) {
+        self.update()
     }
     
     func sharerDidProgress(progress: Float, info: [NSObject : AnyObject]!) {
@@ -505,6 +517,9 @@ class EMSharingOptionsVC:
     
     func sharerDidShareObject(sharedObject: AnyObject!, withInfo info: [NSObject : AnyObject]!) {
         self.finishUp()
+        if let emu = sharedObject as? Emuticon {
+            emu.lastTimeShared = NSDate()
+        }
     }
     
     func finishUp() {
@@ -528,6 +543,25 @@ class EMSharingOptionsVC:
     func shareInputWasConfirmedWithText(text: String!) {
         self.sharer?.userInputText = text
         self.sharer?.share()
+    }
+    
+    
+    @IBAction func onPressedMoreSharingOptionsButton(sender: UIButton) {
+        self.forceShowAllShareOptions = true
+        UIView.animateWithDuration(0.2, animations: {
+            self.guiCarousel.userInteractionEnabled = false
+            self.guiCarousel.transform = CGAffineTransformMakeTranslation(1000, 0)
+            self.guiCarousel.alpha = 0
+        }) {finished in
+            self.guiCarousel.reloadData()
+            UIView.animateWithDuration(0.4, animations: {
+                self.guiCarousel.transform = CGAffineTransformIdentity
+                self.guiCarousel.alpha = 1
+            }) {finished in
+                self.guiCarousel.userInteractionEnabled = true
+            }
+        }
+        self.guiCarousel.reloadData()
     }
 }
 
@@ -559,3 +593,5 @@ class ShareOption: UIView {
         self.imageView?.image = UIImage(named: shareName)
     }
 }
+
+

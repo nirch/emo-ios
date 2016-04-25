@@ -202,11 +202,12 @@
     
     // Facebook Messenger URLs
     if ([_messengerUrlHandler canOpenURL:url sourceApplication:sourceApplication]) {
-        [_messengerUrlHandler openURL:url sourceApplication:sourceApplication];
-        return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                              openURL:url
-                                                    sourceApplication:sourceApplication
-                                                           annotation:annotation];
+        BOOL didOpenedFBMURL = [_messengerUrlHandler openURL:url sourceApplication:sourceApplication];
+        return didOpenedFBMURL;
+//        return [[FBSDKApplicationDelegate sharedInstance] application:application
+//                                                              openURL:url
+//                                                    sourceApplication:sourceApplication
+//                                                           annotation:annotation];
     }
 
     return NO;
@@ -231,6 +232,11 @@
 {
     self.fbContext = context;
     [self.currentFBMSharer onFBMOpen];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShouldShowFeed
+                                                            object:nil
+                                                          userInfo:nil];
+    });
     
     // Analytics
     [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
@@ -245,14 +251,11 @@
 {
     self.fbContext = context;
     [self.currentFBMSharer onFBMReply];
-    
-//    // If not on first screen, pop back to the main screen (with no animation).
-//    if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
-//        UINavigationController *nc = (UINavigationController *)self.window.rootViewController;
-//        [nc popToRootViewControllerAnimated:NO];
-//    }
-    
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:emkUINavigationShouldShowFeed
+                                                            object:nil
+                                                          userInfo:nil];
+    });
     
     // Analytics
     [HMPanel.sh reportSuperParameterKey:AK_S_IN_MESSANGER_CONTEXT value:@YES];
@@ -261,6 +264,10 @@
     [HMPanel.sh analyticsEvent:AK_E_FBM_INTEGRATION info:params.dictionary];
 }
 
+-(BOOL)isInFBMContext
+{
+    return self.fbContext != nil;
+}
 
 #pragma mark - Notifications
 -(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings

@@ -187,6 +187,13 @@
                      name:emkUINavigationShowBlockingProgress
                    object:nil];
     
+    // On should show the main content feed
+    [nc addUniqueObserver:self
+                 selector:@selector(onShouldShowTheFeed:)
+                     name:emkUINavigationShouldShowFeed
+                   object:nil];
+    
+    
     // On blocking progress modal view need to update progrees
     [nc addUniqueObserver:self
                  selector:@selector(onBlockingProgressUpdate:)
@@ -210,6 +217,7 @@
     [nc removeObserver:emkUIUserSelectedPack];
     [nc removeObserver:emkDataUpdatedUnhidePackages];
     [nc removeObserver:emkUINavigationShowBlockingProgress];
+    [nc removeObserver:emkUINavigationShouldShowFeed];
     [nc removeObserver:emkUINavigationUpdateBlockingProgress];
 }
 
@@ -334,6 +342,11 @@
     [self showBlockingProgressVC];
     NSString *title = info[@"title"];
     [self.blockingProgressVC updateTitle:title];
+}
+
+-(void)onShouldShowTheFeed:(NSNotification *)notification
+{
+    [self navigateToFeedWithInfo:notification.userInfo];
 }
 
 -(void)onBlockingProgressUpdate:(NSNotification *)notification
@@ -691,6 +704,11 @@
             [self.blockingProgressVC done];
         }
     });
+}
+
+-(void)navigateToFeedWithInfo:(NSDictionary *)info
+{
+    [self.tabsBarVC navigateToTabAtIndex:EMTabNameFeed animated:NO info:info];
 }
 
 #pragma mark - Segues
