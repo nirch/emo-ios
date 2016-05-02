@@ -44,6 +44,7 @@
 #import "emu-Swift.h"
 #import <SIAlertView.h>
 #import "EmuStyle.h"
+#import "EMAdBannerVC.h"
 
 #define TAG @"EMEmusFeedVC"
 
@@ -218,6 +219,11 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         
         self.selectionsActionBarVC = segue.destinationViewController;
         self.selectionsActionBarVC.delegate = self;
+        
+    } else if ([segue.identifier isEqualToString:@"embed feed bottom ad banner segue"]) {
+        
+        EMAdBannerVC *vc = segue.destinationViewController;
+        vc.grandParentVCForModal = self;
         
     }
 }

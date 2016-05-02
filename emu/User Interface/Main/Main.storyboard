@@ -225,7 +225,7 @@
                                     <constraint firstAttribute="height" constant="64" id="gbA-t7-csp"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="Fk3-LM-h6V" kind="embed" id="Wla-bG-sAM"/>
+                                    <segue destination="Fk3-LM-h6V" kind="embed" identifier="embed feed bottom ad banner segue" id="Wla-bG-sAM"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -1151,7 +1151,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="62559CC5-5978-4E67-B78F-1423CE6557A1" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="44856E88-71E5-43BF-BD00-20D8D9B6ED40" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
                                 <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYP-nE-gH7" customClass="FLAnimatedImageView">
@@ -1410,7 +1410,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="62559CC5-5978-4E67-B78F-1423CE6557A1" width="350" height="350">
+        <image name="44856E88-71E5-43BF-BD00-20D8D9B6ED40" width="350" height="350">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
