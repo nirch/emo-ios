@@ -72,6 +72,8 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 };
 @property (nonatomic) EMEmusFeedTitleState titleState;
 
+// Ads
+@property (weak, nonatomic) IBOutlet UIView *guiAdBannerContainerView;
 
 // Selection actions bar
 @property (weak, nonatomic) IBOutlet UIView *guiSelectionActionsBar;
@@ -329,11 +331,25 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
                  selector:@selector(onHandledStoreTransactions:)
                      name:emkDataProductsHandledTransactions
                    object:nil];
+
+    // Should show tabs bar
+    [nc addUniqueObserver:self
+                 selector:@selector(onHandleShouldShowTabsBar:)
+                     name:emkUIShouldShowTabsBar
+                   object:nil];
+
+    // Should hide tabs bar
+    [nc addUniqueObserver:self
+                 selector:@selector(onHandleShouldHideTabsBar:)
+                     name:emkUIShouldHideTabsBar
+                   object:nil];
 }
 
 -(void)removeObservers
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:emkUIShouldHideTabsBar];
+    [nc removeObserver:emkUIShouldShowTabsBar];
     [nc removeObserver:emkDataUpdatedPackages];
     [nc removeObserver:emkUIUserSelectedPack];
     [nc removeObserver:hmkRenderingFinished];
@@ -342,6 +358,21 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 }
 
 #pragma mark - Observers handlers
+-(void)onHandleShouldShowTabsBar:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.guiAdBannerContainerView.transform = CGAffineTransformIdentity;
+    }];
+}
+
+-(void)onHandleShouldHideTabsBar:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.guiAdBannerContainerView.transform = CGAffineTransformMakeTranslation(0, 39);
+    }];
+}
+
+
 -(void)onHandledStoreTransactions:(NSNotification *)notification
 {
     [self.guiCollectionView reloadData];

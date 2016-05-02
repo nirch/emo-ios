@@ -33,6 +33,9 @@
 #import "EMHolySheet.h"
 #import "EMEmuOptionsSheet.h"
 
+// Ads
+#import "EMAdLoader.h"
+
 // Notifications
 #import "HMNotificationCenter.h"
 #import "EMNotificationCenter.h"
@@ -59,6 +62,8 @@
 #import "HMServer.h"
 #import "HMServer+User.h"
 #import "HMServer+JEmu.h"
+#import "HMParams.h"
+#import "HMPanel.h"
 #import "HMParams.h"
 
 // Sharing

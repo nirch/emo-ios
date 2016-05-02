@@ -17,6 +17,9 @@ pod 'JGActionSheet', '~> 1.0'
 pod 'SIAlertView', '~> 1.3',            :inhibit_warnings => true
 pod 'iCarousel', '~> 1.8'
 
+# Ads
+pod 'mopub-ios-sdk', '~> 4.6'
+
 # Reporting and experiments
 pod 'Fabric'
 pod 'Crashlytics'

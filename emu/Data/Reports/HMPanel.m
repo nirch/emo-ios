@@ -12,6 +12,7 @@
 #import "HMPanel.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <MoPub.h>
 #import "AppManagement.h"
 #import "EMDB.h"
 #import "HMAnalyticsEvents.h"
@@ -71,7 +72,7 @@
 
 -(void)initCrashReports
 {
-    [Fabric with:@[CrashlyticsKit]];
+    [Fabric with:@[CrashlyticsKit, MoPubKit]];
     Crashlytics *crashlytics = [Crashlytics sharedInstance];
     [crashlytics setObjectValue:[[UIDevice currentDevice] name] forKey:@"device name"];
     REMOTE_LOG(@"Initialized crashlytics");
@@ -183,7 +184,7 @@
     id e = self.cfg[@"events"][event];
     
 // ----------------------------------------------
-// FABRIC Events currently deprecated.
+// Mixpanel Events currently deprecated.
 //     // Ensure the event is defined.
 //     // If it is not defined, warn about it in production and explode on test/development.
 //    if (![e isKindOfClass:[NSDictionary class]]) {

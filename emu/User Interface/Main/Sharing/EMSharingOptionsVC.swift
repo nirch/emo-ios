@@ -394,12 +394,21 @@ class EMSharingOptionsVC:
             extraCFG.addKey("titleColor", valueIfNotNil: titleColor)
         }
         
-//        self.sharer.info = shareInfo;
+        // Info about the share
+        let info = self.paramsForEmuticon(emuToShare)
+        info.addKey(AK_EP_SHARE_METHOD, valueIfNotNil: shareMethodName)
+        info.addKey(AK_EP_SENDER_UI, valueIfNotNil: "shareVC")
+        info.addKey(AK_EP_SHARED_MEDIA_TYPE, valueIfNotNil: self.sharerDataTypeToShareAsString())
+
+        let shareInfo = NSMutableDictionary(dictionary: info.dictionary)
+        
+        // Prepare the sharer
+        sharer.info = shareInfo
         sharer.extraCFG = NSMutableDictionary(dictionary: extraCFG.dictionary)
         sharer.objectToShare = emuToShare
-        sharer.delegate = self;
-        sharer.viewController = self;
-        sharer.view = self.view;
+        sharer.delegate = self
+        sharer.viewController = self
+        sharer.view = self.view
         sharer.shareOption = self.prefferedMediaType
         self._shareEmuUsingCurrentSharer()
     }
@@ -498,6 +507,14 @@ class EMSharingOptionsVC:
             return EMMediaDataType.Video
         }
     }
+    
+    func sharerDataTypeToShareAsString() -> String {
+        if self.sharerDataTypeToShare() == .GIF {
+            return "gif"
+        } else {
+            return "video"
+        }
+    }
 
     func sharerDidCancelWithInfo(info: [NSObject : AnyObject]!) {
         self.finishUp()
@@ -517,9 +534,14 @@ class EMSharingOptionsVC:
     
     func sharerDidShareObject(sharedObject: AnyObject!, withInfo info: [NSObject : AnyObject]!) {
         self.finishUp()
-        if let emu = sharedObject as? Emuticon {
-            emu.lastTimeShared = NSDate()
-        }
+
+        guard let emu = sharedObject as? Emuticon else {return}
+        emu.lastTimeShared = NSDate()
+        EMDB.sh().save()
+        
+        // Analytics
+        guard let p = HMPanel.sh() else {return}
+        p.analyticsEvent(AK_E_SHARE_SUCCESS, info: info)
     }
     
     func finishUp() {
@@ -562,6 +584,19 @@ class EMSharingOptionsVC:
             }
         }
         self.guiCarousel.reloadData()
+    }
+    
+    func paramsForEmuticon(emu: Emuticon) -> HMParams {
+        let params = HMParams()
+        params.addKey(AK_EP_EMUTICON_INSTANCE_OID, valueIfNotNil: emu.oid)
+        params.addKey(AK_EP_EMUTICON_NAME, valueIfNotNil: emu.emuDef?.name)
+        params.addKey(AK_EP_EMUTICON_OID, valueIfNotNil: emu.emuDef?.oid)
+        params.addKey(AK_EP_PACKAGE_NAME, valueIfNotNil: emu.emuDef?.package?.name)
+        params.addKey(AK_EP_PACKAGE_OID, valueIfNotNil: emu.emuDef?.package?.oid)
+        params.addKey(AK_EP_AUDIO_FILE_SET, valueIfNotNil: emu.audioFilePath != nil)
+        params.addKey(AK_EP_VIDEO_LOOP_TYPE_SET, valueIfNotNil: emu.videoLoopsEffect)
+        params.addKey(AK_EP_VIDEO_LOOPS_COUNT_SET, valueIfNotNil: emu.videoLoopsCount)
+        return params
     }
 }
 

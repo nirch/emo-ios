@@ -231,6 +231,10 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Evp-jL-8sI" userLabel="Ads container">
+                                <rect key="frame" x="-1" y="64" width="376" height="375"/>
+                                <color key="backgroundColor" red="0.99215686270000003" green="0.08235294118" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqU-1Y-K0h">
                                 <rect key="frame" x="0.0" y="488" width="375" height="115"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -324,16 +328,20 @@
                             <constraint firstItem="w7F-DQ-Ndw" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="PYH-fo-JpZ"/>
                             <constraint firstItem="tO9-WG-SCA" firstAttribute="height" secondItem="w7F-DQ-Ndw" secondAttribute="height" id="R4l-OV-pXM"/>
                             <constraint firstItem="w7F-DQ-Ndw" firstAttribute="top" secondItem="dvt-o2-7sZ" secondAttribute="bottom" id="SE5-1k-vfS"/>
+                            <constraint firstItem="Evp-jL-8sI" firstAttribute="height" secondItem="tO9-WG-SCA" secondAttribute="height" id="TwA-h2-Gnm"/>
                             <constraint firstItem="oYs-FP-hCh" firstAttribute="centerX" secondItem="grK-vz-yTP" secondAttribute="centerX" id="UCb-zm-F4a"/>
                             <constraint firstAttribute="trailing" secondItem="grK-vz-yTP" secondAttribute="trailing" id="YTH-ZB-LmF"/>
+                            <constraint firstItem="Evp-jL-8sI" firstAttribute="centerY" secondItem="tO9-WG-SCA" secondAttribute="centerY" id="ZzK-KR-Ssp"/>
                             <constraint firstItem="cqU-1Y-K0h" firstAttribute="centerX" secondItem="GRK-IY-xxq" secondAttribute="centerX" id="aLX-u3-Ydf"/>
                             <constraint firstAttribute="trailing" secondItem="pqD-K3-eJ1" secondAttribute="trailing" id="aSy-e2-wni"/>
                             <constraint firstAttribute="trailing" secondItem="w7F-DQ-Ndw" secondAttribute="trailing" id="bug-kX-9v0"/>
                             <constraint firstAttribute="trailing" secondItem="dvt-o2-7sZ" secondAttribute="trailing" id="cNc-dB-egy"/>
                             <constraint firstItem="oYs-FP-hCh" firstAttribute="width" secondItem="grK-vz-yTP" secondAttribute="width" id="d17-2D-p49"/>
+                            <constraint firstItem="Evp-jL-8sI" firstAttribute="centerX" secondItem="tO9-WG-SCA" secondAttribute="centerX" id="dKG-Iy-Z41"/>
                             <constraint firstItem="grK-vz-yTP" firstAttribute="top" secondItem="cqU-1Y-K0h" secondAttribute="bottom" id="fku-re-vcr"/>
                             <constraint firstItem="pqD-K3-eJ1" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="h6B-WD-Fra"/>
                             <constraint firstItem="tO9-WG-SCA" firstAttribute="centerX" secondItem="w7F-DQ-Ndw" secondAttribute="centerX" id="jz4-J2-g5d"/>
+                            <constraint firstItem="Evp-jL-8sI" firstAttribute="width" secondItem="tO9-WG-SCA" secondAttribute="width" id="m7U-ee-DFO"/>
                             <constraint firstItem="grK-vz-yTP" firstAttribute="leading" secondItem="GRK-IY-xxq" secondAttribute="leading" id="osI-Oq-KUi"/>
                             <constraint firstItem="tO9-WG-SCA" firstAttribute="width" secondItem="w7F-DQ-Ndw" secondAttribute="width" id="p6o-4U-SB7"/>
                             <constraint firstItem="cqU-1Y-K0h" firstAttribute="width" secondItem="GRK-IY-xxq" secondAttribute="width" id="pCr-NS-ENY"/>
@@ -354,6 +362,7 @@
                         <outlet property="containerAspectRatio1_1" destination="nWu-ah-L43" id="H2g-Js-LVX"/>
                         <outlet property="guiActionButton" destination="Y21-x1-6ea" id="wMU-8Q-vqA"/>
                         <outlet property="guiActionButtonContainer" destination="grK-vz-yTP" id="5NX-V5-1NP"/>
+                        <outlet property="guiAdsContainer" destination="Evp-jL-8sI" id="lVR-1s-a3M"/>
                         <outlet property="guiEmusContainer" destination="w7F-DQ-Ndw" id="ize-15-Etd"/>
                         <outlet property="guiFavButton" destination="OBU-PS-H1u" id="CoO-kh-wfY"/>
                         <outlet property="guiFlowButtonsContainer" destination="oYs-FP-hCh" id="IY4-5X-Xrt"/>
