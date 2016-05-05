@@ -475,35 +475,4 @@
     return url;
 }
 
-
-
-//-(AWSS3TransferManagerDownloadRequest *)newDownloadRequestForOID:(NSString *)oid resourceName:(NSString *)name
-//{
-//    // --------------
-//    // Don't enable this in production!
-//    // [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
-//    // --------------
-//    
-//    // Create a download request for specified bucket.
-//    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-//    downloadRequest.bucket = self.bucketName;
-//    
-//    // The s3 key of the remote file.
-//    NSString *key = [self s3KeyForOID:oid resourceName:name];
-//    downloadRequest.key = key;
-//    
-//    // Generate the destination local path.
-//    NSURL *localPathURL = [self localURLForOID:oid resourceName:name asTempFile:YES];
-//
-//    // Make sure temp file doesn't already exist (remove it if it does)
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    [fm removeItemAtURL:localPathURL error:nil];
-//    
-//    // Download to this local path.
-//    downloadRequest.downloadingFileURL = localPathURL;
-//    
-//    return downloadRequest;
-//}
-
-
 @end

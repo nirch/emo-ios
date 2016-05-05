@@ -115,7 +115,7 @@
  */
 -(NSURL *)animatedGifURL;
 -(NSURL *)animatedGifURLInHD:(BOOL)inHD;
-
+-(NSURL *)animatedGifURLInHD:(BOOL)inHD forSharing:(BOOL)forSharing;
 
 /**
  *  The path to the animated gif rendered for this emuticon object;
@@ -124,6 +124,7 @@
  */
 -(NSString *)animatedGifPath;
 -(NSString *)animatedGifPathInHD:(BOOL)inHD;
+-(NSString *)animatedGifPathInHD:(BOOL)inHD forSharing:(BOOL)forSharing;
 
 
 /**
@@ -133,6 +134,7 @@
  */
 -(NSData *)animatedGifData;
 -(NSData *)animatedGifDataInHD:(BOOL)inHD;
+-(NSData *)animatedGifDataInHD:(BOOL)inHD forSharing:(BOOL)forSharing;
 
 /**
  *  The path to the video rendered for this emuticon object;
@@ -186,6 +188,11 @@
  *  @param removeResources if set to YES, will delete downloaded resources of the related emuDef.
  */
 -(void)cleanUp:(BOOL)cleanUp andRemoveResources:(BOOL)removeResources;
+
+/**
+ *  Clean the temp renders used for sharing content.
+ */
+-(void)cleanUpTempRenders;
 
 /**
  *  The preffered user footage oid for this emuticon.

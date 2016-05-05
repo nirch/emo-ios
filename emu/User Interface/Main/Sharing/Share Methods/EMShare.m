@@ -24,6 +24,7 @@
     self = [super init];
     if (self) {
         self.requiresUserInput = NO;
+        self.tempGIFRenderedForSharing = NO;
     }
     return self;
 }

@@ -93,10 +93,10 @@
 -(void)startAutoFlipping
 {
     [self.flippingTimer invalidate];
-    self.flippingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
-                                                          target:self
-                                                        selector:@selector(onFlipRequired:)
-                                                        userInfo:nil repeats:YES];
+//    self.flippingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
+//                                                          target:self
+//                                                        selector:@selector(onFlipRequired:)
+//                                                        userInfo:nil repeats:YES];
 }
 
 -(void)stopAutoFlipping

@@ -45,7 +45,7 @@ class EMRenderManager3 : NSObject
 //    static private let FPS_LD_SHORT_PREVIEW = 6
     
     private var MAX_CONCURENT_RENDERS_SLOW = 1
-    private var MAX_CONCURENT_RENDERS = 2
+    private var MAX_CONCURENT_RENDERS = 3
     
     private var maxConcurrentRenders : Int
     
@@ -92,7 +92,11 @@ class EMRenderManager3 : NSObject
     //
     // MARK: - Rendering
     //
-    func renderVideoFromEmuGif(emu: Emuticon, loopsCount: Int = 5) -> HCRender? {
+    func renderFromEmuGif(emu: Emuticon,
+                          outputMediaType: EMMediaDataType = .Video,
+                          loopsCount: Int = 5,
+                          addWaterMark: Bool = false ) -> HCRender? {
+        
         guard emu.wasRendered?.boolValue == true else {return nil}
         guard let emuDef = emu.emuDef else {return nil}
         guard let gifPath = emu.animatedGifPath() else {return nil}
@@ -112,19 +116,48 @@ class EMRenderManager3 : NSObject
         renderCFG[hcrHeight] = emuDef.emuHeight != nil ? Int(emuDef.emuHeight!):240
         renderCFG[hcrDuration] = loopedDuration
         renderCFG[hcrFPS] = emuDef.fps()
-        renderCFG[hcrSourceLayersInfo] = [
+        
+        // layers info
+        var layersInfo = [
             [
                 hcrSourceType:hcrGIF,
                 hcrPath:gifPath,
                 hcrDuration: duration
             ]
-        ]
-        renderCFG[hcrOutputsInfo] = [
-            [
-                hcrOutputType:hcrVideo,
-                hcrPath:emu.videoPath()
+        ] as [[String:AnyObject]]
+
+        // Add watermark if required
+        if (addWaterMark) {
+            layersInfo.append([
+                hcrSourceType:hcrPNG,
+                hcrResourceName:"emu_watermark",
+                hcrEffects:[
+                    [
+                        hcrEffectType:"transform",
+                        hcrPositionUnits:hcrPositionUnitsPoints,
+                        hcrTransformValue:[hcrPosition:[34,9]]
+                    ]
+                ]
+            ])
+        }
+        renderCFG[hcrSourceLayersInfo] = layersInfo
+        
+        
+        if outputMediaType == .Video {
+            renderCFG[hcrOutputsInfo] = [
+                [
+                    hcrOutputType:hcrVideo,
+                    hcrPath:emu.videoPath()
+                ]
             ]
-        ]
+        } else {
+            renderCFG[hcrOutputsInfo] = [
+                [
+                    hcrOutputType:hcrGIF,
+                    hcrPath:emu.animatedGifPathInHD(false, forSharing: true)
+                ]
+            ]
+        }
         
         // Init the renderer with render CFG and check for setup errors.
         let uuid = NSUUID().UUIDString

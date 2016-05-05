@@ -25,6 +25,7 @@
 @property (nonatomic) NSString *selectionMessage;
 @property (nonatomic) BOOL requiresUserInput;
 @property (nonatomic) NSString *userInputText;
+@property (nonatomic) BOOL tempGIFRenderedForSharing;
 
 -(void)shareSelection;
 

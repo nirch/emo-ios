@@ -33,9 +33,6 @@
 #import "EMHolySheet.h"
 #import "EMEmuOptionsSheet.h"
 
-// Ads
-#import "EMAdLoader.h"
-
 // Notifications
 #import "HMNotificationCenter.h"
 #import "EMNotificationCenter.h"

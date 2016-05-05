@@ -70,10 +70,6 @@ class EmuScreenVC: UIViewController,
     //
     weak var footagesVC: EMFootagesVC? = nil
     
-    // Ads
-    @IBOutlet weak var guiAdsContainer: UIView!
-    var adLoader: EMAdLoader? = nil
-    
     // Long videos renders
     var renderPreviewIndicatorTimer: NSTimer?
     var renderer: HCRender?
@@ -201,9 +197,6 @@ class EmuScreenVC: UIViewController,
     }
     
     func initAds() {
-        guard self.adLoader == nil else {return}
-        self.adLoader = EMAdLoader()
-        self.adLoader?.createOrRefreshInContainer(self.guiAdsContainer!, containerVC: self)
     }
 
     func updateAspectRatio() {
@@ -827,6 +820,9 @@ class EmuScreenVC: UIViewController,
     // MARK: - Going back
     //
     func goBack() {
+        if let emu = self.currentEmu() {
+            emu.cleanUpTempRenders()
+        }
         self.guiSharingContainer.hidden = true
         self.navigationController?.popViewControllerAnimated(true)
     }

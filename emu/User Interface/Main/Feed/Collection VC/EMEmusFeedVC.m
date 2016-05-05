@@ -223,8 +223,8 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     } else if ([segue.identifier isEqualToString:@"embed feed bottom ad banner segue"]) {
         
         EMAdBannerVC *vc = segue.destinationViewController;
-        vc.grandParentVCForModal = self;
-        
+        vc.grandParentVCForModal = self; // Weak reference to this view controller.
+        vc.containerView = self.guiAdBannerContainerView; // Weak reference to the containing view.
     }
 }
 

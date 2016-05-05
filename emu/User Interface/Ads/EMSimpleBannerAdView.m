@@ -42,7 +42,7 @@
 
 -(NSString *)adUnitId
 {
-    return @"b1db1c2fa8064074bda433b6184e0a5e";
+    return @"8468204c72734abcbf3e62ea6101d906";
 }
 
 -(void)updateAd
@@ -73,7 +73,6 @@
 -(void)layoutSubviews
 {
     self.adView.center = [self convertPoint:self.center fromView:self.superview];
-    NSLog(@">>>> %@", self.adView);
 }
 
 -(void)setBannerDelegate:(id<MPAdViewDelegate>)delegate

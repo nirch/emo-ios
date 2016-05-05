@@ -77,7 +77,7 @@
 {
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
-    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD]];
+    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD] forSharing:self.tempGIFRenderedForSharing];
     
     AppDelegate *app = [[UIApplication sharedApplication] delegate];
     FBSDKMessengerContext *context = app.fbContext;

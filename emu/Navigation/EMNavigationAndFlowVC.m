@@ -115,7 +115,6 @@
     [self removeObservers];
 }
 
-
 #pragma mark - Observers
 -(void)initObservers
 {
@@ -527,6 +526,11 @@
         REMOTE_LOG(@"Already seen onboarding. Need to give user navigation control.");
         [self updateFlowState:EMNavFlowStateUserControlsNavigation];
         [self.splashVC hideAnimated:YES];
+        __weak EMNavigationAndFlowVC *wSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [wSelf.splashVC removeFromViewHeirarchy];
+            [wSelf.splashVC removeFromParentViewController];
+        });
     }
     [self handleFlow];
 }
@@ -733,27 +737,23 @@
 -(void)showTabsBarAnimated:(BOOL)animated
 {
     if (animated) {
-        self.guiTabsBar.hidden = NO;
         [UIView animateWithDuration:0.3 animations:^{
-            self.guiTabsBar.transform = CGAffineTransformIdentity;
+            [self showTabsBarAnimated:NO];
         }];
-    } else {
-        self.view.hidden = NO;
-        self.guiTabsBar.transform = CGAffineTransformIdentity;
+        return;
     }
+    self.guiTabsBar.transform = CGAffineTransformIdentity;
 }
 
 -(void)hideTabsBarAnimated:(BOOL)animated
 {
     if (animated) {
         [UIView animateWithDuration:0.3 animations:^{
-            self.guiTabsBar.transform = CGAffineTransformMakeTranslation(0, self.guiTabsBar.bounds.size.height);
-        } completion:^(BOOL finished) {
-            self.guiTabsBar.hidden = YES;
+            [self hideTabsBarAnimated:NO];
         }];
-    } else {
-        self.guiTabsBar.hidden = YES;
+        return;
     }
+    self.guiTabsBar.transform = CGAffineTransformMakeTranslation(0, self.guiTabsBar.bounds.size.height);
 }
 
 

@@ -71,4 +71,14 @@
     self.guiLabel.text = text;
 }
 
+-(void)removeFromViewHeirarchy
+{
+    [self.view removeFromSuperview];
+}
+
+-(void)dealloc
+{
+    
+}
+
 @end

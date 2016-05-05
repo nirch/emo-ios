@@ -213,6 +213,13 @@
     return NO;
 }
 
+-(void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    HMLOG(TAG, EM_APP, @"Memory warning captured in App Delegate");
+    REMOTE_LOG(@"Memory warning captured in App Delegate");
+    [[EMCaches sh] clearMemoryCache];
+}
+
 #pragma mark - FBSDKMessengerURLHandlerDelegate
 // Cancel
 -(void)messengerURLHandler:(FBSDKMessengerURLHandler *)messengerURLHandler didHandleCancelWithContext:(FBSDKMessengerURLHandlerOpenFromComposerContext *)context

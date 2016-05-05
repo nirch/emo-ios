@@ -128,6 +128,11 @@
     [self removeObservers];
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    return NO;
+}
+
 #pragma mark - Initializations
 /**
  *  Initialized the data source for the collection view of packs.

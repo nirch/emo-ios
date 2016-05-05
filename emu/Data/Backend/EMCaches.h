@@ -22,5 +22,6 @@
 -(void)clearCachedResultsForEmu:(Emuticon *)emu;
 -(void)checkCacheStatus;
 -(void)clearAllCache;
+-(void)clearMemoryCache;
 
 @end

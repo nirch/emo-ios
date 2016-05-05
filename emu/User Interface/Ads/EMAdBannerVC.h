@@ -11,5 +11,6 @@
 @interface EMAdBannerVC : UIViewController
 
 @property (nonatomic, weak) UIViewController *grandParentVCForModal;
+@property (nonatomic, weak) UIView *containerView;
 
 @end

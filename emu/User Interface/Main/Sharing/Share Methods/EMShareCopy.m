@@ -27,7 +27,7 @@
 {
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
-    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD]];
+    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD] forSharing:self.tempGIFRenderedForSharing];
     
     // Copy the data to clipboard.
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];

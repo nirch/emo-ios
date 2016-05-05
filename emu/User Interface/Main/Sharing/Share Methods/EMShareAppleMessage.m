@@ -31,7 +31,8 @@
 {
     // Get the data of the animated gif.
     Emuticon *emu = self.objectToShare;
-    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD]];
+    
+    NSData *gifData = [emu animatedGifDataInHD:[emu shouldItRenderInHD] forSharing:self.tempGIFRenderedForSharing];
     
     // Check if able to send text.
     if(![MFMessageComposeViewController canSendText]) {

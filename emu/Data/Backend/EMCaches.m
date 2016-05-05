@@ -40,10 +40,10 @@
         _gifsDataCache = [NSCache new];
         
         // Limit on disk cache to 10MB
-        // And don't hold in memory cache more than a minute.
+        // And don't hold in memory cache more than 30 seconds.
         PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
         rm.cache.diskCache.byteLimit = 10000000;
-        rm.cache.memoryCache.ageLimit = 60.0;
+        rm.cache.memoryCache.ageLimit = 30.0;
     }
     return self;
 }
@@ -84,6 +84,12 @@
     PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
     [rm.cache removeAllObjects:^(PINCache * _Nonnull cache) {
     }];
+}
+
+-(void)clearMemoryCache
+{
+    PINRemoteImageManager *rm = [PINRemoteImageManager sharedImageManager];
+    [rm.cache.memoryCache removeAllObjects];
 }
 
 @end

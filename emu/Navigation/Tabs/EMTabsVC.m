@@ -65,7 +65,6 @@
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:emkUINavigationTabSelected];
-    [nc removeObserver:emkUIUserSelectedPack];
 }
 
 #pragma mark - Observers handlers

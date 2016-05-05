@@ -158,6 +158,8 @@
 		085D69491B25B90B0083ADD9 /* emu_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D69481B25B90B0083ADD9 /* emu_latest_build_info.plist */; };
 		085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */; };
 		086005581A98B153008CD7DE /* EMUISound.m in Sources */ = {isa = PBXBuildFile; fileRef = 086005571A98B153008CD7DE /* EMUISound.m */; };
+		0860F7541CDA262A0030939C /* emu_watermark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0860F7531CDA262A0030939C /* emu_watermark.png */; };
+		0860F7551CDA262A0030939C /* emu_watermark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0860F7531CDA262A0030939C /* emu_watermark.png */; };
 		0863BB961CBD34DC00A421C4 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0863BB951CBD34DC00A421C4 /* Debug.storyboard */; };
 		0863BB971CBD34DC00A421C4 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0863BB951CBD34DC00A421C4 /* Debug.storyboard */; };
 		086578871BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 086578861BB7DCBB000DEDA7 /* EMFeaturedVC.m */; };
@@ -472,12 +474,6 @@
 		08D02DE61C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D02DE31C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m */; };
 		08D456761CC63E9C00CB6B73 /* EMEmuOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */; };
 		08D456771CC63E9C00CB6B73 /* EMEmuOptionsSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */; };
-		08D510F81CD0C8C800BB9ACD /* EMAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D510F71CD0C8C800BB9ACD /* EMAdView.m */; };
-		08D510F91CD0C8C800BB9ACD /* EMAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D510F71CD0C8C800BB9ACD /* EMAdView.m */; };
-		08D510FC1CD0DED500BB9ACD /* EMAdLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D510FB1CD0DED500BB9ACD /* EMAdLoader.m */; };
-		08D510FD1CD0DED500BB9ACD /* EMAdLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D510FB1CD0DED500BB9ACD /* EMAdLoader.m */; };
-		08D510FF1CD0E40100BB9ACD /* EMAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D510FE1CD0E40100BB9ACD /* EMAdView.xib */; };
-		08D511001CD0E40100BB9ACD /* EMAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D510FE1CD0E40100BB9ACD /* EMAdView.xib */; };
 		08D558B71B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D558B81B286114006BF723 /* EMDebugCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D558B61B286114006BF723 /* EMDebugCell.m */; };
 		08D929E91A77E09200B6A68F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D929E81A77E09200B6A68F /* OpenGLES.framework */; };
@@ -759,6 +755,7 @@
 		085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emubeta_latest_build_info.plist; sourceTree = "<group>"; };
 		086005561A98B153008CD7DE /* EMUISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMUISound.h; sourceTree = "<group>"; };
 		086005571A98B153008CD7DE /* EMUISound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMUISound.m; sourceTree = "<group>"; };
+		0860F7531CDA262A0030939C /* emu_watermark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emu_watermark.png; sourceTree = "<group>"; };
 		0863BB951CBD34DC00A421C4 /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		086578851BB7DCBB000DEDA7 /* EMFeaturedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFeaturedVC.h; sourceTree = "<group>"; };
 		086578861BB7DCBB000DEDA7 /* EMFeaturedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFeaturedVC.m; sourceTree = "<group>"; };
@@ -997,11 +994,6 @@
 		08D02DE31C6F939D00010F1E /* EmuticonDef+JointEmuLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmuticonDef+JointEmuLogic.m"; sourceTree = "<group>"; };
 		08D456741CC63E9C00CB6B73 /* EMEmuOptionsSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMEmuOptionsSheet.h; sourceTree = "<group>"; };
 		08D456751CC63E9C00CB6B73 /* EMEmuOptionsSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMEmuOptionsSheet.m; sourceTree = "<group>"; };
-		08D510F61CD0C8C800BB9ACD /* EMAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAdView.h; sourceTree = "<group>"; };
-		08D510F71CD0C8C800BB9ACD /* EMAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAdView.m; sourceTree = "<group>"; };
-		08D510FA1CD0DED500BB9ACD /* EMAdLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAdLoader.h; sourceTree = "<group>"; };
-		08D510FB1CD0DED500BB9ACD /* EMAdLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMAdLoader.m; sourceTree = "<group>"; };
-		08D510FE1CD0E40100BB9ACD /* EMAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EMAdView.xib; sourceTree = "<group>"; };
 		08D558B51B286114006BF723 /* EMDebugCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMDebugCell.h; sourceTree = "<group>"; };
 		08D558B61B286114006BF723 /* EMDebugCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMDebugCell.m; sourceTree = "<group>"; };
 		08D929841A77A36D00B6A68F /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2070,8 +2062,9 @@
 		08BD221E1C46462600A64FC8 /* New */ = {
 			isa = PBXGroup;
 			children = (
-				0892DE671C47B86900CA537D /* EMRenderTypes.h */,
 				08BD221F1C46464A00A64FC8 /* EMRenderManager3.swift */,
+				0860F7531CDA262A0030939C /* emu_watermark.png */,
+				0892DE671C47B86900CA537D /* EMRenderTypes.h */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -2194,11 +2187,6 @@
 		08D510F51CD0C83100BB9ACD /* Ads */ = {
 			isa = PBXGroup;
 			children = (
-				08D510FE1CD0E40100BB9ACD /* EMAdView.xib */,
-				08D510F61CD0C8C800BB9ACD /* EMAdView.h */,
-				08D510F71CD0C8C800BB9ACD /* EMAdView.m */,
-				08D510FA1CD0DED500BB9ACD /* EMAdLoader.h */,
-				08D510FB1CD0DED500BB9ACD /* EMAdLoader.m */,
 				08D957411CD6201D003465E2 /* EMAdBannerVC.h */,
 				08D957421CD6201D003465E2 /* EMAdBannerVC.m */,
 				0808F10E1CD600650055D207 /* EMSimpleBannerAdView.h */,
@@ -2537,12 +2525,12 @@
 				085348BC1BCD9A3B008BBBF9 /* 70s-thumb.jpg in Resources */,
 				0889BD461C5A559B004B81CB /* placeholder240.png in Resources */,
 				08FF199E1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
-				08D511001CD0E40100BB9ACD /* EMAdView.xib in Resources */,
 				08ED7FF91B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
 				08A4570D1BA02F08001AB79E /* NavBar.storyboard in Resources */,
 				08B4AB9B1CBE960C00A302D7 /* hearts-fg.gif in Resources */,
 				08AA14DA1B0BA658002E1B2F /* EMAlertsPermissionVC.xib in Resources */,
 				0845BDF41BC523AB00173B66 /* Tutorials.storyboard in Resources */,
+				0860F7551CDA262A0030939C /* emu_watermark.png in Resources */,
 				08967C281B5B9A9F000DDCF9 /* rendering.gif in Resources */,
 				0847E5651BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
 				08B4ABA91CBE960C00A302D7 /* teddies-fg.gif in Resources */,
@@ -2628,12 +2616,12 @@
 				08CED1101AA6DA8800C50D0C /* Analytics.plist in Resources */,
 				083248471BEB858900B4E82F /* TheLaunchScreen.storyboard in Resources */,
 				08ED7FF81B1DE5B600B6856F /* EMVideoSettingsPopover.xib in Resources */,
-				08D510FF1CD0E40100BB9ACD /* EMAdView.xib in Resources */,
 				0845BDF31BC523AB00173B66 /* Tutorials.storyboard in Resources */,
 				087C5D401BCC4F9F004B3121 /* Settings.storyboard in Resources */,
 				08B4AB9A1CBE960C00A302D7 /* hearts-fg.gif in Resources */,
 				08CA9A251BCFCDA5004A5A02 /* bw-thumb.jpg in Resources */,
 				08A907191ACABB82008534F7 /* EMAlertsPermissionVC.xib in Resources */,
+				0860F7541CDA262A0030939C /* emu_watermark.png in Resources */,
 				084349C21B837B1C009A653F /* EMShareInputBox.xib in Resources */,
 				0892DE6C1C47C4DD00CA537D /* rendering.mp4 in Resources */,
 				08B4ABA81CBE960C00A302D7 /* teddies-fg.gif in Resources */,
@@ -2890,7 +2878,6 @@
 				0880DBD41CB13B620050D227 /* HMPreviewView.m in Sources */,
 				0880DBD21CB13B620050D227 /* NSNotificationCenter+Utils.m in Sources */,
 				08AA146A1B0BA658002E1B2F /* EMPNGSequenceWriter.mm in Sources */,
-				08D510FD1CD0DED500BB9ACD /* EMAdLoader.m in Sources */,
 				08AA146B1B0BA658002E1B2F /* EMShareSaveToCameraRoll.m in Sources */,
 				08FB19651BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */,
 				08AA146D1B0BA658002E1B2F /* EMShareFBMessanger.m in Sources */,
@@ -2929,7 +2916,6 @@
 				08AA14841B0BA658002E1B2F /* EMPackagesVC.m in Sources */,
 				0808F1111CD600650055D207 /* EMSimpleBannerAdView.m in Sources */,
 				08CBF4851BE8CEC300466B36 /* EMSettingsNavigationVCViewController.m in Sources */,
-				08D510F91CD0C8C800BB9ACD /* EMAdView.m in Sources */,
 				08E30BBF1BB9C730009EDCFF /* Package+CoreDataProperties.m in Sources */,
 				08AA14861B0BA658002E1B2F /* HMJSONResponseSerializerWithData.m in Sources */,
 				08357F2F1BC932D000C302AA /* EMFootagesVC.m in Sources */,
@@ -3063,7 +3049,6 @@
 				08FB19541BC7C45F00F227C6 /* EMEmusFeedVC.m in Sources */,
 				0880DBD31CB13B620050D227 /* HMPreviewView.m in Sources */,
 				0880DBD11CB13B620050D227 /* NSNotificationCenter+Utils.m in Sources */,
-				08D510FC1CD0DED500BB9ACD /* EMAdLoader.m in Sources */,
 				08357F531BCA053A00C302AA /* EMEmusPickerDataSource.m in Sources */,
 				08CBF4801BE8C21C00466B36 /* EMSettingsVC.m in Sources */,
 				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
@@ -3102,7 +3087,6 @@
 				08CED0E61AA5EB6000C50D0C /* EMTutorialVC.m in Sources */,
 				0808F1101CD600650055D207 /* EMSimpleBannerAdView.m in Sources */,
 				0854EE331A9FA6CE00FD3833 /* EMShareCopy.m in Sources */,
-				08D510F81CD0C8C800BB9ACD /* EMAdView.m in Sources */,
 				0854EE361A9FA6F900FD3833 /* EMShare.m in Sources */,
 				086005581A98B153008CD7DE /* EMUISound.m in Sources */,
 				080CB3531AA50D5300603E30 /* EMPackagesVC.m in Sources */,

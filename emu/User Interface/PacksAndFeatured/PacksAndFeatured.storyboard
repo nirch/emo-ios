@@ -123,7 +123,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="delegate" destination="O1j-04-RAu" id="tsn-aL-nXf"/>
+                                    <outlet property="delegate" destination="O1j-04-RAu" id="xAS-e6-GlI"/>
                                 </connections>
                             </collectionView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFR-LJ-zqv" userLabel="Featured packs container">
@@ -154,7 +154,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="guiActivity" destination="b82-Ih-TTq" id="0zp-sJ-eDT"/>
-                        <outlet property="guiCollectionView" destination="7Oi-63-Jhd" id="khT-o8-zAW"/>
+                        <outlet property="guiCollectionView" destination="7Oi-63-Jhd" id="13D-wP-NIL"/>
                         <outlet property="guiFeaturedPacksContainer" destination="jFR-LJ-zqv" id="qGd-MP-2yw"/>
                     </connections>
                 </viewController>

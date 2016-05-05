@@ -15,6 +15,6 @@
 -(void)showAnimated:(BOOL)animated;
 -(void)hideAnimated:(BOOL)animted;
 -(void)setText:(NSString *)text;
-
+-(void)removeFromViewHeirarchy;
 
 @end

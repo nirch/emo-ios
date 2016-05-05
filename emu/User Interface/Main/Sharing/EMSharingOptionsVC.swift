@@ -419,24 +419,43 @@ class EMSharingOptionsVC:
         guard let emuToShare = self.emuToShare else {return}
 
         //
-        // First, check if need to create video for this share.
+        // First, check if need to create a file before sharing or just use an existing file.
         //
+        // Currently, this is the used logic:
+        //  - Unless emu pro was purchased, watermarks will be added to shared content (gifs and videos)
+        //  - If a video should be shared a temp video file will be rendered (if missing) before sharing.
+        //  - If a gif should be shared and a water mark is required a temp gif file with the watermark will be rendered (if missing) before sharing.
+        //  - If a gif should be shared without a watermark, will just use the already rendered gif shown as preview.
+        //
+        let requiresWaterMark = true // Determine if watermark required or not.
+
         if self.sharer?.shareOption == .emkShareOptionVideo {
+            
+            // Video
             if emuToShare.videoURL() == nil {
-                // Temp video file not created yet.
-                // Render it before sharing.
-                var requiresWaterMark = true
-                if emuToShare.emuDef!.package!.preventVideoWaterMarks?.boolValue != nil {requiresWaterMark = false}
-                if sharer.isKindOfClass(EMShareFBMessanger) {requiresWaterMark = false}
-                self.renderVideoBeforeShareForEmu(emuToShare, requiresWaterMark: requiresWaterMark)
+                // Temp Video file for sharing not created yet.
+                // Render and share later when the file is ready.
+                self.renderBeforeShareForEmu(emuToShare, mediaType: .Video, requiresWaterMark: requiresWaterMark)
+                return
+            }
+            
+        } else if requiresWaterMark {
+            self.sharer?.tempGIFRenderedForSharing = true
+            
+            // Gif with a watermark
+            if emuToShare.animatedGifURLInHD(false, forSharing: true) == nil {
+                // Temp Gif file for sharing not created yet.
+                // Render and share later when the file is ready.
+                self.renderBeforeShareForEmu(emuToShare, mediaType: .GIF, requiresWaterMark: true)
                 return
             }
         }
         
+        // Required file already exists. Share it.
         self._share()
     }
     
-    func renderVideoBeforeShareForEmu(emu: Emuticon, requiresWaterMark: Bool) {
+    func renderBeforeShareForEmu(emu: Emuticon, mediaType: EMMediaDataType, requiresWaterMark: Bool) {
         guard emu.emuDef!.allResourcesAvailable() else {return}
         guard emu.wasRendered?.boolValue == true else {return}
         guard self.renderer == nil else {return}
@@ -446,16 +465,21 @@ class EMSharingOptionsVC:
         info.addKey(emkEmuticonDefOID, valueIfNotNil: emu.emuDef?.oid)
         info.addKey(emkPackageOID, valueIfNotNil: emu.emuDef?.package?.name)
         
-        self.renderer = EMRenderManager3.sh().renderVideoFromEmuGif(emu, loopsCount: 4)
+        let loopsCount = mediaType == .Video ? 4 : 1
+        self.renderer = EMRenderManager3.sh().renderFromEmuGif(emu,
+                                                               outputMediaType: mediaType,
+                                                               loopsCount: loopsCount,
+                                                               addWaterMark: requiresWaterMark)
         if self.renderer == nil {
-            // Failed rendering video
+            // Failed rendering
             self.view.makeToast(EML.s("FAILED"))
             self.update()
             self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
             self.guiRenderProgress.hidden = true
         }
         
-        self.guiRenderProgress.setProgress(0.0, animated: false)
+        let startingProgress: CGFloat = mediaType == .Video ? 0.0 : 1.0
+        self.guiRenderProgress.setProgress(startingProgress, animated: true)
         self.guiRenderProgress.hidden = false
     }
     
@@ -529,7 +553,8 @@ class EMSharingOptionsVC:
     }
     
     func sharerDidProgress(progress: Float, info: [NSObject : AnyObject]!) {
-        
+        self.guiRenderProgress.hidden = false
+        self.guiRenderProgress.setProgress(CGFloat(progress), animated: false)
     }
     
     func sharerDidShareObject(sharedObject: AnyObject!, withInfo info: [NSObject : AnyObject]!) {
@@ -545,6 +570,7 @@ class EMSharingOptionsVC:
     }
     
     func finishUp() {
+        self.guiRenderProgress.hidden = true
         self.update()
         self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareDone, info: nil)
         self.emuToShare?.cleanUpVideoIfNotFullRender()
