@@ -22,5 +22,7 @@
  *  Update the UI of the cell according to current set properties.
  */
 -(void)updateGUI;
+-(void)stopAnimations;
+-(void)tappedWithCompletionBlock:(void(^)())completion;
 
 @end

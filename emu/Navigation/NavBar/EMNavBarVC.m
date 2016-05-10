@@ -277,6 +277,11 @@
 
 -(void)updateTitle:(NSString *)title
 {
+    [self updateTitle:title animated:YES playingSound:YES];
+}
+
+-(void)updateTitle:(NSString *)title animated:(BOOL)animated playingSound:(BOOL)playingSound
+{
     [UIView setAnimationsEnabled:NO];
     [self.guiTitle setTitle:title forState:UIControlStateNormal];
     [self.guiTitle layoutIfNeeded];
@@ -284,8 +289,11 @@
     
     if (self.guiTitle.alpha != 0) {
         self.guiTitle.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
-        [EMUISound.sh playSoundNamed:SND_POP];
-        [self showTitleAnimated:YES];
+        
+        if (playingSound)
+            [EMUISound.sh playSoundNamed:SND_POP];
+        
+        [self showTitleAnimated:animated];
     }
 }
 

@@ -888,6 +888,10 @@
 // ===========
 // IB Actions.
 // ===========
+- (IBAction)onPressedDebugButton:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UIApplicationMemoryWarningNotification" object:[UIApplication sharedApplication]];
+}
 
 
 @end

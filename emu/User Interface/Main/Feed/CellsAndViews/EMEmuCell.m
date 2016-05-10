@@ -231,30 +231,32 @@
     
     [self.guiThumbImage pin_cancelImageDownload];
     [self.guiThumbImage setImage:nil];
-    self.guiThumbImage.alpha = 0.85;
+    self.guiThumbImage.alpha = 0.75;
     
     [self.guiThumbImage pin_setImageFromURL:[NSURL fileURLWithPath:self.thumbPath] completion:^(PINRemoteImageManagerResult *result) {
 
         if (![oid isEqualToString:wSelf.oid]) return;
         self.guiThumbImage.hidden = NO;
-        
-        dispatch_after(DTIME(1.2 + (arc4random() % 20 / 10.0)), dispatch_get_main_queue(), ^{
+
+        dispatch_after(DTIME(0.8 + (arc4random() % 40 / 10.0)), dispatch_get_main_queue(), ^{
             // Ensure still related to the same emu.
             // If not, move along there is nothing to see here.
             if (![oid isEqualToString:wSelf.oid]) return;
+            
             // Async load the anim gif.
             wSelf.guiAnimatedGif.alpha = 0;
             [wSelf.guiAnimatedGif pin_setImageFromURL:self.gifURL
                                            completion:^(PINRemoteImageManagerResult *result) {
-                                               [UIView animateWithDuration:0.7 delay:0.0
+                                               [UIView animateWithDuration:0.5 delay:0.0
                                                                    options:UIViewAnimationOptionAllowUserInteraction
                                                                 animations:^{
                                                                     if (![oid isEqualToString:wSelf.oid]) return;
-                                                                    wSelf.guiAnimatedGif.alpha = 1;
                                                                     wSelf.guiThumbImage.alpha = 0;
+                                                                    wSelf.guiAnimatedGif.alpha = 1;
                                                                 } completion:^(BOOL finished) {
                                                                     if (![oid isEqualToString:wSelf.oid]) return;
                                                                     wSelf.guiThumbImage.hidden = YES;
+                                                                    wSelf.guiThumbImage.image = nil;
                                                                 }];
                                            }];
         

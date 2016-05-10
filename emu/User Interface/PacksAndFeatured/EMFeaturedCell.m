@@ -27,21 +27,31 @@
 
 @implementation EMFeaturedCell
 
--(void)setHighlighted:(BOOL)highlighted
+-(instancetype)initWithFrame:(CGRect)frame
 {
-    [super setHighlighted:highlighted];
-    [self setNeedsDisplay];
-    
+    self = [super initWithFrame:frame];
+    if (self) {
+        UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"EMFeaturedCell" owner:self options:nil] firstObject];
+        [self addSubview:view];
+        view.frame = self.bounds;
+    }
+    return self;
+}
+
+-(void)tappedWithCompletionBlock:(void(^)())completion
+{
     // Add some spring animation on clicked on cells.
-    self.transform = CGAffineTransformMakeScale(0.9, 0.9);
-    [UIView animateWithDuration:0.5
-                          delay:0.0
+    self.transform = CGAffineTransformMakeScale(0.7, 0.7);
+    [UIView animateWithDuration:0.7
+                          delay:0.1
          usingSpringWithDamping:0.3
           initialSpringVelocity:0.6
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          self.transform = CGAffineTransformIdentity;
-                     } completion:nil];
+                     } completion:^(BOOL finished) {
+                         completion();
+                     }];
 }
 
 
@@ -55,10 +65,10 @@
     
     self.guiDebugLabel.text = self.debugLabel;
     self.guiDebugLabel.hidden = YES;
-    [self updatePoster];
+    [self updatePosterAnimated:YES];
 }
 
--(void)updatePoster
+-(void)updatePosterAnimated:(BOOL)shouldAnimate
 {
     // Clear all.
     [self.guiPosterGif pin_cancelImageDownload];
@@ -70,10 +80,11 @@
     self.guiPosterOverlay.image = nil;
     self.guiLabel.text = self.label;
     self.guiLabel.alpha = 1.0;
+    self.guiPosterImage.alpha = 0;
+    self.guiPosterGif.alpha = 0;
 
-    
     // Display the image or animated gif
-    if ([self isPosterAnimatedGif]) {
+    if ([self isPosterAnimatedGif] && shouldAnimate) {
         [self loadPosterAnimatedGif];
     } else {
         [self loadPosterImage];
@@ -99,10 +110,16 @@
     [self.guiPosterImage pin_setImageFromURL:self.animatedPosterThumbURL
                             placeholderImage:[UIImage imageNamed:localThumbName]
                                   completion:^(PINRemoteImageManagerResult *result) {
+                                      [UIView animateWithDuration:0.3 animations:^{
+                                          self.guiPosterImage.alpha = 1;
+                                      }];
                                       // Load the big animated gif poster
                                       [self.guiPosterGif pin_setImageFromURL:self.posterURL completion:^(PINRemoteImageManagerResult *result) {
+                                          [UIView animateWithDuration:0.3 animations:^{
+                                              self.guiPosterGif.alpha = 1;
+                                          }];
                                           if (result.error == nil) {
-                                              self.guiPosterOverlay.alpha = 1;   
+                                              self.guiPosterOverlay.alpha = 1;
                                           }
                                       }];
     }];
@@ -110,7 +127,6 @@
 
 -(void)loadPosterImage
 {
-
     [self.guiPosterImage pin_setImageFromURL:self.posterURL];
 }
 
@@ -119,5 +135,9 @@
     [self.guiPosterOverlay pin_setImageFromURL:self.posterOverlayURL];
 }
 
+-(void)stopAnimations
+{
+    [self.guiPosterGif stopAnimating];
+}
 
 @end

@@ -130,7 +130,7 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    return NO;
+    return self.featuredPacksShown;
 }
 
 #pragma mark - Initializations

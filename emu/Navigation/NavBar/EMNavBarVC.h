@@ -75,6 +75,7 @@
  *  @param title    The new title text
  */
 -(void)updateTitle:(NSString *)title;
+-(void)updateTitle:(NSString *)title animated:(BOOL)animated playingSound:(BOOL)playingSound;
 
 /**
  *  Change the alpha of the title label.

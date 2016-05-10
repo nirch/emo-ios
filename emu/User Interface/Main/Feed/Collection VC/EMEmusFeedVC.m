@@ -48,6 +48,8 @@
 
 #define TAG @"EMEmusFeedVC"
 
+#define PACK_HEADER_HEIGHT 7
+
 @interface EMEmusFeedVC() <
     UICollectionViewDelegateFlowLayout,
     EMNavBarDelegate,
@@ -292,7 +294,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 {
     if (!self.alreadyInitializedGUIOnAppearance) {
         self.alreadyInitializedGUIOnAppearance = YES;
-        [self.navBarVC updateTitle:[SF:@"%@ %@", LS(@"PACKS"), @"▼"]];
+        [self.navBarVC updateTitle:[SF:@"%@ ▼", LS(@"PACKS")]];
     }
     
     // ABTEST:Main feed deceleration speed.
@@ -366,6 +368,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 #pragma mark - Observers handlers
 -(void)onHandleShouldShowTabsBar:(NSNotification *)notification
 {
+    [self updateTitleForCurrentSectionAnimated:NO playingSound:NO];
     [UIView animateWithDuration:0.3 animations:^{
         self.guiAdBannerContainerView.transform = CGAffineTransformIdentity;
     }];
@@ -661,25 +664,6 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     }
 }
 
-
--(void)updateTitleStateForOffset:(CGPoint)offset
-{
-    CGFloat y = offset.y;
-    HMLOG(TAG, EM_DBG, @"%@", @(y));
-    if (self.titleState == EMEmusFeedTitleStateLogo || self.titleState == EMEmusFeedTitleStatePacks) {
-        if (y>800) {
-            self.titleState = EMEmusFeedTitleStateHint;
-            [self.navBarVC updateTitle:@"▼"];
-            [self.navBarVC updateTitleAlpha:0.5];
-        }
-    } else if (self.titleState == EMEmusFeedTitleStateHint) {
-        if (y<800) {
-            self.titleState = EMEmusFeedTitleStatePacks;
-            [self.navBarVC updateTitleAlpha:1.0];
-        }
-    }
-}
-
 #pragma mark - Scrolling
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -782,6 +766,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         [UIView animateWithDuration:0.2 animations:^{
             self.navBarVC.view.alpha = 1;
         }];
+        [self updateTitleForCurrentSectionAnimated:YES playingSound:YES];
     });
 }
 
@@ -801,15 +786,25 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     UICollectionViewLayoutAttributes *attributes = [self.guiCollectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect frameForFirstCell = attributes.frame;
-    CGFloat headerHeight = 19;
+    CGFloat headerHeight = PACK_HEADER_HEIGHT;
     return CGRectOffset(frameForFirstCell, 0, -headerHeight);
 }
 
 -(CGPoint)offsetForHeaderForSection:(NSInteger)section
 {
     CGRect rectOfHeader = [self frameForHeaderForSection:section];
-    CGPoint newOffset = CGPointMake(0, rectOfHeader.origin.y - self.guiCollectionView.contentInset.top - 7);
+    CGPoint newOffset = CGPointMake(0, rectOfHeader.origin.y - self.guiCollectionView.contentInset.top);
     return newOffset;
+}
+
+-(void)updateTitleForCurrentSectionAnimated:(BOOL)animated playingSound:(BOOL)playingSound
+{
+    NSInteger section = [self currentTopSection];
+    NSString *sectionTitle = [self.dataSource titleForSection:section];
+    if (sectionTitle) {
+        sectionTitle = [SF: @"%@ ▼", sectionTitle];
+        [self.navBarVC updateTitle:sectionTitle animated:animated playingSound:playingSound];
+    }
 }
 
 #pragma mark - Handle visible cell
@@ -1274,22 +1269,6 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     // Ensure section index is in bounds.
     if (sectionIndex>0 && sectionIndex < [self.dataSource packsCount]) {
         [self scrollToSection:sectionIndex animated:YES];
-    }
-}
-
-- (IBAction)onPressedPackSectionPriceButton:(UIButton *)sender
-{
-    NSInteger sectionIndex = sender.tag;
-    if (sectionIndex>=0 && sectionIndex < [self.dataSource packsCount]) {
-        [self productPopoverForSectionIndex:sectionIndex sender:sender];
-    }
-}
-
-- (IBAction)onPressedPackSectionHDButton:(UIButton *)sender
-{
-    NSInteger sectionIndex = sender.tag;
-    if (sectionIndex>=0 && sectionIndex < [self.dataSource packsCount]) {
-        [self productPopoverForSectionIndex:sectionIndex sender:sender];
     }
 }
 
