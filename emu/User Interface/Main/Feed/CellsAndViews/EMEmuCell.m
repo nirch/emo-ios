@@ -238,7 +238,7 @@
         if (![oid isEqualToString:wSelf.oid]) return;
         self.guiThumbImage.hidden = NO;
 
-        dispatch_after(DTIME(0.8 + (arc4random() % 40 / 10.0)), dispatch_get_main_queue(), ^{
+        dispatch_after(DTIME(0.4 + (arc4random() % 40 / 20.0)), dispatch_get_main_queue(), ^{
             // Ensure still related to the same emu.
             // If not, move along there is nothing to see here.
             if (![oid isEqualToString:wSelf.oid]) return;

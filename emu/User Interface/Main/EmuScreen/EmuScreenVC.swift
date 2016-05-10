@@ -113,8 +113,6 @@ class EmuScreenVC: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.emusVC?.refresh()
-        
         // Messeges hidden by default
         self.hideSharing()
         self.showUserMessage("", messageText: "")
@@ -135,12 +133,14 @@ class EmuScreenVC: UIViewController,
         
         // Init Ads
         self.initAds()
+
+        // Refresh current emu.
+        self.refreshCurrentEmu()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.initObservers()
-        self.refreshCurrentEmu()
     }
     
     override func viewWillDisappear(animated: Bool) {
