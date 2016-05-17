@@ -54,6 +54,10 @@
 		08271FD71B01F5B90046F38E /* startRecording.wav in Resources */ = {isa = PBXBuildFile; fileRef = 08271FBC1B01F5B90046F38E /* startRecording.wav */; };
 		08271FE21B0203820046F38E /* onboarding_packages_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 08271FE11B0203820046F38E /* onboarding_packages_test.json */; };
 		082720C01B038CCB0046F38E /* EMCaches.m in Sources */ = {isa = PBXBuildFile; fileRef = 082720BF1B038CCB0046F38E /* EMCaches.m */; };
+		082B6D631CE9BBFA00920851 /* Store.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 082B6D621CE9BBFA00920851 /* Store.storyboard */; };
+		082B6D641CE9BBFA00920851 /* Store.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 082B6D621CE9BBFA00920851 /* Store.storyboard */; };
+		082B6D671CE9BE3D00920851 /* EMStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 082B6D661CE9BE3D00920851 /* EMStoreVC.m */; };
+		082B6D681CE9BE3D00920851 /* EMStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 082B6D661CE9BE3D00920851 /* EMStoreVC.m */; };
 		082C8B991C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 082C8B981C3D31ED00D6C6B7 /* replaced-bg2-480.png */; };
 		082C8B9A1C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 082C8B981C3D31ED00D6C6B7 /* replaced-bg2-480.png */; };
 		082C8B9C1C3D378600D6C6B7 /* replaced-bg3-480.png in Resources */ = {isa = PBXBuildFile; fileRef = 082C8B9B1C3D378600D6C6B7 /* replaced-bg3-480.png */; };
@@ -651,6 +655,9 @@
 		082720BE1B038CCB0046F38E /* EMCaches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCaches.h; sourceTree = "<group>"; };
 		082720BF1B038CCB0046F38E /* EMCaches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMCaches.m; sourceTree = "<group>"; };
 		082902721AFA7ACF004DE369 /* s3-2006-03-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "s3-2006-03-01.json"; sourceTree = "<group>"; };
+		082B6D621CE9BBFA00920851 /* Store.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Store.storyboard; sourceTree = "<group>"; };
+		082B6D651CE9BE3D00920851 /* EMStoreVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMStoreVC.h; sourceTree = "<group>"; };
+		082B6D661CE9BE3D00920851 /* EMStoreVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMStoreVC.m; sourceTree = "<group>"; };
 		082C8B981C3D31ED00D6C6B7 /* replaced-bg2-480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replaced-bg2-480.png"; sourceTree = "<group>"; };
 		082C8B9B1C3D378600D6C6B7 /* replaced-bg3-480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replaced-bg3-480.png"; sourceTree = "<group>"; };
 		082C8B9E1C3D3B1800D6C6B7 /* replaced-bg1-480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replaced-bg1-480.png"; sourceTree = "<group>"; };
@@ -1266,6 +1273,16 @@
 				08B4AB7B1CBE960C00A302D7 /* love */,
 			);
 			path = emus;
+			sourceTree = "<group>";
+		};
+		082B6D611CE9BBC300920851 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				082B6D621CE9BBFA00920851 /* Store.storyboard */,
+				082B6D651CE9BE3D00920851 /* EMStoreVC.h */,
+				082B6D661CE9BE3D00920851 /* EMStoreVC.m */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 		082C8B911C3C630500D6C6B7 /* backgrounds */ = {
@@ -2115,6 +2132,7 @@
 				08CB89641A9AA12A00224A38 /* Emoticons */,
 				08CB89751A9AA12A00224A38 /* Sharing */,
 				08A907131ACAB2D2008534F7 /* AlertsPermission */,
+				082B6D611CE9BBC300920851 /* Store */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -2546,6 +2564,7 @@
 				08B4ABA91CBE960C00A302D7 /* teddies-fg.gif in Resources */,
 				08AA14DD1B0BA658002E1B2F /* endRecording.wav in Resources */,
 				08AA14E01B0BA658002E1B2F /* cancel.wav in Resources */,
+				082B6D641CE9BBFA00920851 /* Store.storyboard in Resources */,
 				08B4ABA31CBE960C00A302D7 /* kiss-bg.gif in Resources */,
 				0889BD5A1C5A559B004B81CB /* placeholderPositive480.png in Resources */,
 				08820F921C3C033900E6E0ED /* EMRecorder2.storyboard in Resources */,
@@ -2638,6 +2657,7 @@
 				08B4ABA81CBE960C00A302D7 /* teddies-fg.gif in Resources */,
 				0889BD441C5A559B004B81CB /* placeholder240.png in Resources */,
 				08967C271B5B9A9F000DDCF9 /* rendering.gif in Resources */,
+				082B6D631CE9BBFA00920851 /* Store.storyboard in Resources */,
 				08B4ABA21CBE960C00A302D7 /* kiss-bg.gif in Resources */,
 				0892DE6A1C47C4DC00CA537D /* downloading.mp4 in Resources */,
 				08271FCB1B01F5B90046F38E /* endRecording.wav in Resources */,
@@ -2863,6 +2883,7 @@
 				087592511BEB5FAD0090555B /* EMFullScreenGifPlayer.m in Sources */,
 				08AA145B1B0BA658002E1B2F /* HMServer+Packages.m in Sources */,
 				081B087A1BB5C7AB003AFF16 /* Emuticon.m in Sources */,
+				082B6D681CE9BE3D00920851 /* EMStoreVC.m in Sources */,
 				08ED7FF61B1DDD1600B6856F /* EMVideoSettingsPopover.m in Sources */,
 				08CBA5411C60EDE400574F0B /* SlotsVC.swift in Sources */,
 				08BD22211C46464A00A64FC8 /* EMRenderManager3.swift in Sources */,
@@ -3035,6 +3056,7 @@
 				08CED1251AA7281B00C50D0C /* HMParams.m in Sources */,
 				08357F461BC9F53000C302AA /* EMMeNavigationCFG.m in Sources */,
 				08CB89781A9AA12A00224A38 /* EMAnimatedGifPlayer.m in Sources */,
+				082B6D671CE9BE3D00920851 /* EMStoreVC.m in Sources */,
 				082C8BAB1C3D563500D6C6B7 /* EML.m in Sources */,
 				087592501BEB5FAD0090555B /* EMFullScreenGifPlayer.m in Sources */,
 				080B05A11AB068C7003C19E7 /* HMServer+Packages.m in Sources */,

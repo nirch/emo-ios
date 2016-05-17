@@ -31,6 +31,10 @@
  */
 @property (nonatomic) BOOL selectable;
 
+/**
+ *  Slow/Fast delay after loading thumb and before loading animated gif.
+ */
+@property (nonatomic) BOOL longerDelayBeforeLoadingGif;
 
 /**
  *  The state of the cell according to the related emu.

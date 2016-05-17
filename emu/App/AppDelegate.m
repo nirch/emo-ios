@@ -10,6 +10,7 @@
 
 #define TAG @"AppDelegate"
 
+#import "mach/mach.h"
 #import <objc/message.h>
 #import "AppDelegate.h"
 #import "EMDB.h"
@@ -34,6 +35,8 @@
 
 @property (nonatomic) FBSDKMessengerURLHandler *messengerUrlHandler;
 @property (nonatomic) EMURLSchemeHandler *emuURLHandler;
+
+//@property (nonnull) NSTimer *debugT;
 
 @end
 
@@ -204,12 +207,7 @@
     if ([_messengerUrlHandler canOpenURL:url sourceApplication:sourceApplication]) {
         BOOL didOpenedFBMURL = [_messengerUrlHandler openURL:url sourceApplication:sourceApplication];
         return didOpenedFBMURL;
-//        return [[FBSDKApplicationDelegate sharedInstance] application:application
-//                                                              openURL:url
-//                                                    sourceApplication:sourceApplication
-//                                                           annotation:annotation];
     }
-
     return NO;
 }
 
@@ -217,7 +215,25 @@
 {
     HMLOG(TAG, EM_APP, @"Memory warning captured in App Delegate");
     REMOTE_LOG(@"Memory warning captured in App Delegate");
+    [self report_memory];
     [[EMCaches sh] clearMemoryCache];
+    [self report_memory];
+}
+
+-(void) report_memory {
+    struct task_basic_info info;
+    mach_msg_type_number_t size = sizeof(info);
+    kern_return_t kerr = task_info(mach_task_self(),
+                                   TASK_BASIC_INFO,
+                                   (task_info_t)&info,
+                                   &size);
+    if( kerr == KERN_SUCCESS ) {
+        NSLog(@"Memory in use (in bytes): %lu", info.resident_size);
+        REMOTE_LOG(@"Memory in use (in bytes): %lu", info.resident_size);
+    } else {
+        NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
+        REMOTE_LOG(@"Error with task_info(): %s", mach_error_string(kerr));
+    }
 }
 
 #pragma mark - FBSDKMessengerURLHandlerDelegate

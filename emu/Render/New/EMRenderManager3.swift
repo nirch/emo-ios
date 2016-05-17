@@ -45,7 +45,7 @@ class EMRenderManager3 : NSObject
 //    static private let FPS_LD_SHORT_PREVIEW = 6
     
     private var MAX_CONCURENT_RENDERS_SLOW = 1
-    private var MAX_CONCURENT_RENDERS = 3
+    private var MAX_CONCURENT_RENDERS = 2
     
     private var maxConcurrentRenders : Int
     

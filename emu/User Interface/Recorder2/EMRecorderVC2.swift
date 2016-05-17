@@ -59,7 +59,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
     var emuticonsOID : NSArray?
     var msgUUID: String = ""
     var latestRecordingInfo : [NSObject:AnyObject]?
-    var shouldRecordAudio : Bool = true
+    var shouldRecordAudio : Bool = false
     
     // Timing
     var duration : NSTimeInterval = 2.0

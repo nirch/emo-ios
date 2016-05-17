@@ -14,6 +14,7 @@
 #import "EMPacksVC.h"
 #import "EMFeedNavigationVC.h"
 #import "EMMeNavigationVC.h"
+#import "EMStoreVC.h"
 #import "EMSettingsNavigationVCViewController.h"
 #import "EMTopVCProtocol.h"
 #import "EMUINotifications.h"
@@ -100,10 +101,10 @@
     feedVC.title = @"Feed";
     [viewControllers addObject:feedVC];
     
-//    // Search
-//    UIViewController *searchVC = [EMTestVC testVCWithFrame:f backgroundColor:[EmuStyle colorThemeSearch]];
-//    searchVC.title = @"Search";
-//    [viewControllers addObject:searchVC];
+    // Store
+    UIViewController *storeVC = [EMStoreVC storeVC];
+    storeVC.title = @"Emu Store";
+    [viewControllers addObject:storeVC];
     
     // Me screen
     UIViewController *meVC = [EMMeNavigationVC meNavigationVC];

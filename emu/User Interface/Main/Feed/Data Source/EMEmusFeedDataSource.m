@@ -64,7 +64,7 @@
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:@"emuDef.package.prioritizedIdentifier"
-                                                                                     cacheName:@"emus by pack for feed"];
+                                                                                     cacheName:nil]; // @"emus by pack for feed"
     _frc = frc;
     [_frc performFetch:nil];
     return _frc;

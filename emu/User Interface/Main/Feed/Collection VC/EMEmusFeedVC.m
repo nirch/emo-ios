@@ -184,7 +184,6 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 -(void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    
 }
 
 #pragma mark - Persisting state

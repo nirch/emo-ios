@@ -104,7 +104,6 @@
 
 -(void)loadPosterAnimatedGif
 {
-    self.guiLabel.alpha = 0;
     self.guiPosterOverlay.alpha = 0;
     NSString *localThumbName = [self.animatedPosterThumbURL lastPathComponent];
     [self.guiPosterImage pin_setImageFromURL:self.animatedPosterThumbURL

@@ -57,7 +57,7 @@
     self.guiIcon.image = nil;
     self.guiPlaceHolderLabel.text = self.label;
     self.guiPlaceHolderLabel.hidden = YES;
-    
+
     if (!self.isBanner) {
         
         // Not a banner.

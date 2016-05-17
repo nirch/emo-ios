@@ -22,7 +22,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-kr-U5c" userLabel="Tabs VC Continer">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <connections>
-                                    <segue destination="CRd-Vv-pGt" kind="embed" id="gKA-0e-azK"/>
+                                    <segue destination="CRd-Vv-pGt" kind="embed" identifier="tabs vc embed segue" id="gKA-0e-azK"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XnQ-yt-jzU" userLabel="Tab bar container">
@@ -108,10 +108,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbH-vK-wmq" userLabel="tab 1">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="39"/>
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="39"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DCL-xE-Q4x">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="39"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconFeatured">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -121,7 +121,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyU-X8-UEl" userLabel="Sep H">
-                                        <rect key="frame" x="149" y="5" width="1" height="30"/>
+                                        <rect key="frame" x="119" y="5" width="1" height="30"/>
                                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="xPn-k6-fCv"/>
@@ -150,10 +150,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Utc-RI-HiA" userLabel="tab 2">
-                                <rect key="frame" x="150" y="-56" width="150" height="151"/>
+                                <rect key="frame" x="120" y="-41" width="120" height="121"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-Sz-KPX">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-Sz-KPX">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="121"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconFeed">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -163,7 +163,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nm0-rV-6iL" userLabel="Sep H">
-                                        <rect key="frame" x="149" y="61" width="1" height="30"/>
+                                        <rect key="frame" x="119" y="46" width="1" height="30"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="gXW-Kc-K5h"/>
@@ -186,49 +186,60 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdK-Yw-ita" userLabel="tab 3 (disabled for now)">
-                                <rect key="frame" x="300" y="0.0" width="0.0" height="39"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdK-Yw-ita" userLabel="tab 3">
+                                <rect key="frame" x="240" y="0.0" width="120" height="39"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remove Ads" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mK-1O-VTH">
+                                        <rect key="frame" x="0.0" y="28" width="120" height="11"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgl-Ud-ATd" userLabel="Sep H">
+                                        <rect key="frame" x="119" y="5" width="1" height="30"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1" id="495-jg-V0N"/>
+                                        </constraints>
+                                    </view>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0h-ez-jZ8">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="39"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <state key="normal" image="tabsIconSearch">
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="tabsIconStore">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="onPressedTabButton:" destination="lQG-Ze-zvr" eventType="touchUpInside" id="AjM-rz-QCY"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgl-Ud-ATd" userLabel="Sep H">
-                                        <rect key="frame" x="-1" y="5" width="1" height="30"/>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="1" id="495-jg-V0N"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="right" secondItem="fgl-Ud-ATd" secondAttribute="right" id="0kW-kp-Sg1"/>
                                     <constraint firstItem="h0h-ez-jZ8" firstAttribute="leading" secondItem="bdK-Yw-ita" secondAttribute="leading" id="64h-6B-fTV"/>
                                     <constraint firstAttribute="trailing" secondItem="h0h-ez-jZ8" secondAttribute="trailing" id="Bxm-sm-BCy"/>
+                                    <constraint firstAttribute="trailing" secondItem="8mK-1O-VTH" secondAttribute="trailing" id="NPw-mN-064"/>
+                                    <constraint firstItem="8mK-1O-VTH" firstAttribute="leading" secondItem="bdK-Yw-ita" secondAttribute="leading" id="f7c-OJ-JAE"/>
                                     <constraint firstAttribute="width" id="iFq-R0-xNP"/>
                                     <constraint firstItem="h0h-ez-jZ8" firstAttribute="top" secondItem="bdK-Yw-ita" secondAttribute="top" id="mbG-ON-0LR"/>
                                     <constraint firstAttribute="bottom" secondItem="h0h-ez-jZ8" secondAttribute="bottom" id="mj8-i0-YwB"/>
                                     <constraint firstAttribute="height" secondItem="fgl-Ud-ATd" secondAttribute="height" multiplier="0.8" id="q54-cU-NM1"/>
+                                    <constraint firstAttribute="bottom" secondItem="8mK-1O-VTH" secondAttribute="bottom" id="s9t-Ri-nZA"/>
                                     <constraint firstAttribute="centerY" secondItem="fgl-Ud-ATd" secondAttribute="centerY" id="ugk-22-fC1"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="iFq-R0-xNP"/>
                                         <exclude reference="q54-cU-NM1"/>
                                     </mask>
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xg3-RC-PcF" userLabel="tab 4">
-                                <rect key="frame" x="300" y="0.0" width="150" height="39"/>
+                                <rect key="frame" x="360" y="0.0" width="120" height="39"/>
                                 <subviews>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wer-SY-n9P">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="39"/>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wer-SY-n9P">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconMe">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -238,7 +249,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K1F-md-Nn0" userLabel="Sep H">
-                                        <rect key="frame" x="149" y="5" width="1" height="30"/>
+                                        <rect key="frame" x="119" y="5" width="1" height="30"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="0NA-8d-042"/>
@@ -262,10 +273,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOl-5O-aNu" userLabel="tab 5">
-                                <rect key="frame" x="450" y="0.0" width="150" height="39"/>
+                                <rect key="frame" x="480" y="0.0" width="120" height="39"/>
                                 <subviews>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mV-Zn-5et">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="39"/>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mV-Zn-5et">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" image="tabsIconSettings">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -275,7 +286,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Yo-Uv-Cnv" userLabel="Sep H">
-                                        <rect key="frame" x="149" y="5" width="1" height="30"/>
+                                        <rect key="frame" x="119" y="5" width="1" height="30"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="6BX-C9-qsn"/>
@@ -306,6 +317,7 @@
                             <constraint firstAttribute="centerY" secondItem="YOl-5O-aNu" secondAttribute="centerY" id="4R8-Di-XQB"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="height" secondItem="YOl-5O-aNu" secondAttribute="height" id="5N5-3t-z9P"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="height" secondItem="bdK-Yw-ita" secondAttribute="height" id="AfK-tC-aE5"/>
+                            <constraint firstItem="bdK-Yw-ita" firstAttribute="width" secondItem="nbH-vK-wmq" secondAttribute="width" id="Cdo-q0-Z0n"/>
                             <constraint firstItem="9Yo-Uv-Cnv" firstAttribute="height" secondItem="nyU-X8-UEl" secondAttribute="height" id="HbZ-8n-tWm"/>
                             <constraint firstItem="nm0-rV-6iL" firstAttribute="height" secondItem="nyU-X8-UEl" secondAttribute="height" id="Hrl-Ye-Tod"/>
                             <constraint firstItem="xg3-RC-PcF" firstAttribute="height" secondItem="nbH-vK-wmq" secondAttribute="height" id="Lhx-v4-mc7"/>
@@ -314,7 +326,7 @@
                             <constraint firstAttribute="width" secondItem="BKx-Tg-YD9" secondAttribute="width" id="OCb-Ax-sOn"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="bdK-Yw-ita" secondAttribute="width" id="Ouo-Vc-2Ja"/>
                             <constraint firstAttribute="centerY" secondItem="nbH-vK-wmq" secondAttribute="centerY" id="PwD-Gz-rSx"/>
-                            <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="lDB-Gj-JAs" secondAttribute="width" multiplier="0.25" id="UOF-PY-Rwc"/>
+                            <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="lDB-Gj-JAs" secondAttribute="width" multiplier="0.2" id="UOF-PY-Rwc"/>
                             <constraint firstAttribute="centerY" secondItem="xg3-RC-PcF" secondAttribute="centerY" id="Vbe-Ba-LPF"/>
                             <constraint firstItem="nbH-vK-wmq" firstAttribute="width" secondItem="YOl-5O-aNu" secondAttribute="width" id="WKG-Gg-J4K"/>
                             <constraint firstItem="YOl-5O-aNu" firstAttribute="width" secondItem="nbH-vK-wmq" secondAttribute="width" id="WY2-kD-QWk"/>
@@ -351,14 +363,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BoE-9E-6jR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2989" y="1859"/>
+            <point key="canvasLocation" x="2989" y="1858.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="tabsIconFeatured" width="27" height="34"/>
         <image name="tabsIconFeed" width="36" height="36"/>
         <image name="tabsIconMe" width="33" height="32"/>
-        <image name="tabsIconSearch" width="34" height="34"/>
         <image name="tabsIconSettings" width="34" height="34"/>
+        <image name="tabsIconStore" width="23" height="24"/>
     </resources>
 </document>

@@ -50,7 +50,7 @@
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                           managedObjectContext:EMDB.sh.context
                                                                             sectionNameKeyPath:nil
-                                                                                     cacheName:@"Root"];
+                                                                                     cacheName:nil]; // @"Root"
     _frc = frc;
     [_frc performFetch:nil];
     return _frc;

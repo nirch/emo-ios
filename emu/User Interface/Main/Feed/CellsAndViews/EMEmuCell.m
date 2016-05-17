@@ -32,12 +32,35 @@
 @property (weak, nonatomic) IBOutlet UILabel *guiDebugLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *guiSelectionIndicator;
 
+@property (nonatomic) NSTimeInterval loadGifDelay;
+@property (nonatomic) NSInteger loadGifRandomDelay;
+
 @property (nonatomic) NSString *thumbPath;
 @property (nonatomic) NSURL *gifURL;
 
 @end
 
 @implementation EMEmuCell
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.longerDelayBeforeLoadingGif = NO;
+    }
+    return self;
+}
+
+-(void)setLongerDelayBeforeLoadingGif:(BOOL)longerDelayBeforeLoadingGif
+{
+    if (longerDelayBeforeLoadingGif) {
+        self.loadGifDelay = 1.0f;
+        self.loadGifRandomDelay = 80;
+    } else {
+        self.loadGifDelay = 0.2f;
+        self.loadGifRandomDelay = 10;
+    }
+}
 
 -(void)setHighlighted:(BOOL)highlighted
 {
@@ -234,11 +257,10 @@
     self.guiThumbImage.alpha = 0.75;
     
     [self.guiThumbImage pin_setImageFromURL:[NSURL fileURLWithPath:self.thumbPath] completion:^(PINRemoteImageManagerResult *result) {
-
         if (![oid isEqualToString:wSelf.oid]) return;
         self.guiThumbImage.hidden = NO;
-
-        dispatch_after(DTIME(0.4 + (arc4random() % 40 / 20.0)), dispatch_get_main_queue(), ^{
+        
+        dispatch_after(DTIME(self.loadGifDelay + ((arc4random() % self.loadGifRandomDelay) / 10.0)), dispatch_get_main_queue(), ^{
             // Ensure still related to the same emu.
             // If not, move along there is nothing to see here.
             if (![oid isEqualToString:wSelf.oid]) return;
@@ -259,7 +281,6 @@
                                                                     wSelf.guiThumbImage.image = nil;
                                                                 }];
                                            }];
-        
         });
     }];
 }
@@ -269,16 +290,16 @@
     // Clear indicators
     self.guiFailedImage.hidden = YES;
     
-    if (self.guiDownloadingAnimatedGif.animatedImage == nil) {
-        [self loadAnimatedGifNamed:@"downloading"
-               inAnimatedImageView:self.guiDownloadingAnimatedGif];
-        self.guiDownloadingAnimatedGif.alpha = 0.2;
-    }
-
-    if (self.guiRenderingAnimatedGif.animatedImage == nil) {
-        [self loadAnimatedGifNamed:@"rendering"
-               inAnimatedImageView:self.guiRenderingAnimatedGif];
-    }
+//    if (self.guiDownloadingAnimatedGif.animatedImage == nil) {
+//        [self loadAnimatedGifNamed:@"downloading"
+//               inAnimatedImageView:self.guiDownloadingAnimatedGif];
+//        self.guiDownloadingAnimatedGif.alpha = 0.2;
+//    }
+//
+//    if (self.guiRenderingAnimatedGif.animatedImage == nil) {
+//        [self loadAnimatedGifNamed:@"rendering"
+//               inAnimatedImageView:self.guiRenderingAnimatedGif];
+//    }
     
     self.guiDownloadingAnimatedGif.hidden = YES;
     self.guiRenderingAnimatedGif.hidden = YES;
@@ -303,19 +324,19 @@
     self.guiEmptyButton.hidden = YES;
 }
 
--(void)loadAnimatedGifNamed:(NSString *)gifName inAnimatedImageView:(FLAnimatedImageView *)imageView
-{
-    NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    NSData *animGifData = [EMCaches.sh.gifsDataCache objectForKey:gifName];
-    if (animGifData == nil) {
-        animGifData = [NSData dataWithContentsOfURL:gifURL options:NSDataReadingMappedIfSafe error:nil];
-        [EMCaches.sh.gifsDataCache setObject:animGifData forKey:gifName];
-    }
-    
-    FLAnimatedImage *animatedImage = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-    imageView.animatedImage = animatedImage;
-}
+//-(void)loadAnimatedGifNamed:(NSString *)gifName inAnimatedImageView:(FLAnimatedImageView *)imageView
+//{
+//    NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
+//    imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    
+//    NSData *animGifData = [EMCaches.sh.gifsDataCache objectForKey:gifName];
+//    if (animGifData == nil) {
+//        animGifData = [NSData dataWithContentsOfURL:gifURL options:NSDataReadingMappedIfSafe error:nil];
+//        [EMCaches.sh.gifsDataCache setObject:animGifData forKey:gifName];
+//    }
+//    
+//    FLAnimatedImage *animatedImage = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+//    imageView.animatedImage = animatedImage;
+//}
 
 @end

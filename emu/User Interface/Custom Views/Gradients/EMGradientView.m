@@ -6,6 +6,12 @@
 //  Copyright (c) 2015 Homage. All rights reserved.
 //
 
+
+/** DEPRECATED!!! **/
+/**
+ *  All background gradient views are deprecated.
+ *  Simple solid background views will now be used instead.
+ */
 #import "EMGradientView.h"
 
 @interface EMGradientView()
@@ -18,39 +24,25 @@
 
 -(void)setGradientName:(NSString *)gradientName
 {
-    id o = [EmuStyle class];
-    SEL gradientSelector = NSSelectorFromString(gradientName);
-    if ([o respondsToSelector:gradientSelector]) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        self.gradient = [o performSelector:gradientSelector withObject:nil];
-        #pragma clang diagnostic pop
-    }
+    // Deprecated. Do nothing.
 }
 
-- (void)drawRect:(CGRect)rect
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self.gradient == nil)
-        return;
-    
-    CGContextRef currentContext = UIGraphicsGetCurrentContext();
-    
-    CGColorSpaceRef rgbColorspace = CGColorSpaceCreateDeviceRGB();
-    
-    // Set to bounds.
-    CGRect currentBounds = self.bounds;
-    
-    // Draw the linear gradient.
-    CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
-    CGPoint bottomCenter = CGPointMake(CGRectGetMidX(currentBounds), currentBounds.size.height);
-    CGContextDrawLinearGradient(currentContext,
-                                self.gradient.CGGradient,
-                                topCenter,
-                                bottomCenter,
-                                0);
-    
-    // Release and done
-    CGColorSpaceRelease(rgbColorspace);
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Deprecated the custom gradient views in emu.
+        // Replaced with hard coded view containing a small low res stretched UIImage.
+        // Reason: all gradient background in the app were exectly the same and the solution with the UIImage
+        // has lower memory consumption.
+        UIImageView *containedImageView = [UIImageView new];
+        containedImageView.frame = self.bounds;
+        containedImageView.image = [UIImage imageNamed:@"gradientBG"];
+        containedImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        [self addSubview:containedImageView];
+        [self sendSubviewToBack:containedImageView];
+    }
+    return self;
 }
 
 @end

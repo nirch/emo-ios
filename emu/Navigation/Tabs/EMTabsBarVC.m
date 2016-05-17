@@ -71,7 +71,7 @@
     self.tabsThemeColors = @[
                              [EmuStyle colorThemeFeatured],
                              [EmuStyle colorThemeFeed],
-//                             [EmuStyle colorThemeSearch],
+                             [EmuStyle colorThemeStore],
                              [EmuStyle colorThemeMe],
                              [EmuStyle colorThemeSettings]
                              ];
@@ -193,6 +193,7 @@
     NSArray *themeColors = @[
                              [EmuStyle colorThemeFeatured],
                              [EmuStyle colorThemeFeed],
+                             [EmuStyle colorThemeStore],
                              [EmuStyle colorThemeMe],
                              [EmuStyle colorThemeSettings]
                              ];
