@@ -17,6 +17,7 @@
 @interface EMGradientView()
 
 @property (nonatomic, weak) PCGradient* gradient;
+@property (nonatomic, weak) UIView *containedImageView;
 
 @end
 
@@ -37,14 +38,23 @@
         // has lower memory consumption.
         UIImageView *containedImageView = [UIImageView new];
         CGRect frame = self.bounds;
-        frame = CGRectInset(frame, 0, 20);
+        frame.size.height -= 20;
+        frame.origin.y = 20;
         containedImageView.frame = frame;
         containedImageView.image = [UIImage imageNamed:@"gradientBG"];
         containedImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        self.containedImageView = containedImageView;
+        self.clipsToBounds = YES;
+        containedImageView.clipsToBounds = YES;
         [self addSubview:containedImageView];
         [self sendSubviewToBack:containedImageView];
     }
     return self;
+}
+
+-(void)setHideGradientBackground:(BOOL)hideGradientBackground
+{
+    self.containedImageView.hidden = hideGradientBackground;
 }
 
 @end

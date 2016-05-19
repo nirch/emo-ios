@@ -12,5 +12,6 @@
 @interface EMGradientView : UIView
 
 @property (nonatomic) NSString *gradientName;
+@property (nonatomic) BOOL hideGradientBackground;
 
 @end

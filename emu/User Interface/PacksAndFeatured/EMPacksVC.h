@@ -19,6 +19,8 @@
  */
 @property (nonatomic, readonly) BOOL featuredPacksShown;
 
+@property (nonatomic) BOOL hideGradientBackground;
+
 /**
  *  Instantiates a new instance of the packs view controller.
  *  The featured packs VC will not be shown.

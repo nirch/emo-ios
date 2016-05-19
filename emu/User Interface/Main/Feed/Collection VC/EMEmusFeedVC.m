@@ -824,6 +824,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
     
     NSString *topPackOID = [self.dataSource packOIDForSection:self.currentTopSection];
     EMPacksVC *packsVC = [EMPacksVC packsVC];
+    packsVC.hideGradientBackground = YES;
     [popoverController addChildViewController:packsVC];
     [popoverController.view addSubview:packsVC.view];
 

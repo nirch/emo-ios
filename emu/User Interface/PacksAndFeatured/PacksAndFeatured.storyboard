@@ -155,6 +155,7 @@
                         <outlet property="guiActivity" destination="b82-Ih-TTq" id="0zp-sJ-eDT"/>
                         <outlet property="guiCollectionView" destination="7Oi-63-Jhd" id="13D-wP-NIL"/>
                         <outlet property="guiFeaturedPacksContainer" destination="jFR-LJ-zqv" id="qGd-MP-2yw"/>
+                        <outlet property="guiGradientBG" destination="1SO-Mu-VwT" id="wUz-0l-D0v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1wp-hv-h8w" userLabel="First Responder" sceneMemberID="firstResponder"/>

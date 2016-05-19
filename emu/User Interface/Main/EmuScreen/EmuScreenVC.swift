@@ -681,7 +681,8 @@ class EmuScreenVC: UIViewController,
         alert.buttonColor = EmuStyle.colorButtonBGPositive()
         alert.cancelButtonColor = EmuStyle.colorButtonBGNegative()
         alert.addButtonWithTitle(EML.s("EMU_STORE"), type: .Default) { alertView in
-            
+            let nc = NSNotificationCenter.defaultCenter()
+            nc.postNotificationName(emkNavigateToStore, object: self)
         }
         alert.addButtonWithTitle(EML.s("CANCEL"), type: .Cancel, handler: nil)
         alert.show()

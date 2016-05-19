@@ -20,6 +20,7 @@
 #import "EMTopVCProtocol.h"
 #import "EMNotificationCenter.h"
 #import "EMUINotifications.h"
+#import "EMGradientView.h"
 #import "EMDB.h"
 
 #define TAG @"EMPacksVC"
@@ -39,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *guiFeaturedPacksContainer;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiActivity;
+@property (strong, nonatomic) IBOutlet EMGradientView *guiGradientBG;
 
 // UI initialization
 @property (nonatomic) BOOL alreadyInitializedGUIOnAppearance;
@@ -100,6 +102,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    self.guiGradientBG.hideGradientBackground = self.hideGradientBackground;
 
     // Init observers
     [self initObservers];
@@ -246,19 +250,6 @@
 
 -(void)onDebug:(NSNotification *)notification
 {
-    // Delete cache
-    self.guiCollectionView.alpha = 0;
-    self.guiFeaturedPacksContainer.alpha = 0;
-    [self.guiActivity startAnimating];
-    PINCache *cache = [PINRemoteImageManager sharedImageManager].cache;
-    [cache removeAllObjects:^(PINCache * _Nonnull cache) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Reload data
-            [[NSNotificationCenter defaultCenter] postNotificationName:emkDataRequiredPackages
-                                                                object:self
-                                                              userInfo:@{@"forced_reload":@YES, @"delete all and clean":@YES}];            
-        });
-    }];
 }
 
 #pragma mark - Data

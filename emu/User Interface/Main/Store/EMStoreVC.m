@@ -11,17 +11,21 @@
 #import "EMStoreDataSource.h"
 #import "EMNotificationCenter.h"
 #import "EMBackend+AppStore.h"
+#import "EMStoreNavigationCFG.h"
 #import <UIView+Toast.h>
 
 @interface EMStoreVC () <
     UICollectionViewDelegateFlowLayout,
-    UICollectionViewDelegate
+    UICollectionViewDelegate,
+    EMNavBarDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *guiCollectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *guiContactingStoreActivity;
 
 @property (nonatomic) EMNavBarVC *navBarVC;
+@property (nonatomic) id<EMNavBarConfigurationSource> navBarCFG;
+
 @property (nonatomic) id<UICollectionViewDataSource> dataSource;
 @property (nonatomic) CGSize bigCellSize;
 @property (nonatomic) CGSize smallCellSize;
@@ -163,6 +167,10 @@
 -(void)initNavigationBar
 {
     self.navBarVC = [EMNavBarVC navBarVCInParentVC:self themeColor:[EmuStyle colorThemeStore]];
+    self.navBarVC.delegate = self;
+    self.navBarCFG = [EMStoreNavigationCFG new];
+    self.navBarVC.configurationSource = self.navBarCFG;
+    [self.navBarVC updateUIByCurrentState];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -176,6 +184,28 @@
     } else {
         return self.smallCellSize;
     }
+}
+
+#pragma mark - EMNavBarDelegate
+-(NSInteger)currentState
+{
+    return EMStoreStateNormal;
+}
+
+-(void)navBarOnUserActionNamed:(NSString *)actionName sender:(id)sender state:(NSInteger)state info:(NSDictionary *)info
+{
+    if ([actionName isEqualToString:EMK_NAV_ACTION_RESTORE_PURCHASES]) {
+        [self showActivityAnimated:YES];
+        [EMBackend.sh restorePurchases];
+    }
+}
+
+-(void)navBarOnLogoButtonPressed:(UIButton *)sender
+{
+}
+
+-(void)navBarOnTitleButtonPressed:(UIButton *)sender
+{
 }
 
 #pragma mark - Actions

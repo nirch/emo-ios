@@ -10,6 +10,7 @@
 #import "EMNotificationCenter.h"
 #import "EMUISound.h"
 #import "AppManagement.h"
+#import "UIView+CommonAnimations.h"
 
 #define TAG @"EMNavBarVC"
 #define ARC4RANDOM_MAX 0x100000000
@@ -406,6 +407,7 @@
     dispatch_after(DTIME(0.7), dispatch_get_main_queue(), ^{
         self.ignoreActions = ignoreActions;
     });    
+    [sender animateQuickPopIn];
 }
 
 - (IBAction)onActionButton2Pressed:(id)sender
@@ -419,6 +421,7 @@
     dispatch_after(DTIME(0.7), dispatch_get_main_queue(), ^{
         self.ignoreActions = ignoreActions;
     });
+    [sender animateQuickPopIn];
 }
 
 

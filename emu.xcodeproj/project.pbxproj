@@ -35,6 +35,8 @@
 		081953741CEC9A2C00CE58E5 /* Feature+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 081953721CEC9A2C00CE58E5 /* Feature+Logic.m */; };
 		081971241BE9C0C00096CD75 /* UIView+Heirarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 081971231BE9C0C00096CD75 /* UIView+Heirarchy.m */; };
 		081971261BE9C0C00096CD75 /* UIView+Heirarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 081971231BE9C0C00096CD75 /* UIView+Heirarchy.m */; };
+		08197D251CEDFB2E002C555C /* EMStoreNavigationCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08197D241CEDFB2E002C555C /* EMStoreNavigationCFG.m */; };
+		08197D261CEDFB2E002C555C /* EMStoreNavigationCFG.m in Sources */ = {isa = PBXBuildFile; fileRef = 08197D241CEDFB2E002C555C /* EMStoreNavigationCFG.m */; };
 		081B08771BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08641BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m */; };
 		081B08781BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08641BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m */; };
 		081B08791BB5C7AB003AFF16 /* Emuticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 081B08661BB5C7AB003AFF16 /* Emuticon.m */; };
@@ -649,6 +651,8 @@
 		081953721CEC9A2C00CE58E5 /* Feature+Logic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Feature+Logic.m"; sourceTree = "<group>"; };
 		081971221BE9C0C00096CD75 /* UIView+Heirarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Heirarchy.h"; sourceTree = "<group>"; };
 		081971231BE9C0C00096CD75 /* UIView+Heirarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Heirarchy.m"; sourceTree = "<group>"; };
+		08197D231CEDFB2E002C555C /* EMStoreNavigationCFG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMStoreNavigationCFG.h; sourceTree = "<group>"; };
+		08197D241CEDFB2E002C555C /* EMStoreNavigationCFG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMStoreNavigationCFG.m; sourceTree = "<group>"; };
 		081B08631BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Emuticon+CoreDataProperties.h"; sourceTree = "<group>"; };
 		081B08641BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Emuticon+CoreDataProperties.m"; sourceTree = "<group>"; };
 		081B08651BB5C7AB003AFF16 /* Emuticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emuticon.h; sourceTree = "<group>"; };
@@ -1310,6 +1314,8 @@
 				082B6D621CE9BBFA00920851 /* Store.storyboard */,
 				082B6D651CE9BE3D00920851 /* EMStoreVC.h */,
 				082B6D661CE9BE3D00920851 /* EMStoreVC.m */,
+				08197D231CEDFB2E002C555C /* EMStoreNavigationCFG.h */,
+				08197D241CEDFB2E002C555C /* EMStoreNavigationCFG.m */,
 				084A0BE31CEB291500BA72F9 /* EMStoreDataSource.h */,
 				084A0BE41CEB291500BA72F9 /* EMStoreDataSource.m */,
 				08ED9EAD1CEB3131007242C1 /* EMStoreCell.h */,
@@ -2912,6 +2918,7 @@
 				0880DBBC1CB13B620050D227 /* HMBackgroundMarks.m in Sources */,
 				08A886EF1CEB3C27001B8218 /* EMBuyButton.m in Sources */,
 				081B08781BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */,
+				08197D261CEDFB2E002C555C /* EMStoreNavigationCFG.m in Sources */,
 				08AA14561B0BA658002E1B2F /* EMPagerView.m in Sources */,
 				0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */,
 				084A0BE61CEB291500BA72F9 /* EMStoreDataSource.m in Sources */,
@@ -3091,6 +3098,7 @@
 				08A456E31B9DC22A001AB79E /* EMTabsBarVC.m in Sources */,
 				08A886EE1CEB3C27001B8218 /* EMBuyButton.m in Sources */,
 				0880DBBB1CB13B620050D227 /* HMBackgroundMarks.m in Sources */,
+				08197D251CEDFB2E002C555C /* EMStoreNavigationCFG.m in Sources */,
 				081B087B1BB5C7AB003AFF16 /* UserFootage+CoreDataProperties.m in Sources */,
 				08AE9D011C5E3CE50075B03C /* HMServer+JEmu.m in Sources */,
 				084A0BE51CEB291500BA72F9 /* EMStoreDataSource.m in Sources */,

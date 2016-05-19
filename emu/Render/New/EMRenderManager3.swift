@@ -127,7 +127,14 @@ class EMRenderManager3 : NSObject
         ] as [[String:AnyObject]]
 
         // Add watermark if required
-        if (addWaterMark) {
+        var shouldAddAWaterMark = addWaterMark
+        if shouldAddAWaterMark && Feature.isRemoveWatermarksUnlockedInContext(EMDB.sh().context) {
+            // Well, user paid to remove all watermarks from the content.
+            // So just don't!
+            shouldAddAWaterMark = false
+        }
+        
+        if (shouldAddAWaterMark) {
             layersInfo.append([
                 hcrSourceType:hcrPNG,
                 hcrResourceName:"emu_watermark",

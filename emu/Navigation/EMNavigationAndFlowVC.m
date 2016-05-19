@@ -135,6 +135,12 @@
                  selector:@selector(onNavigateToEmu:)
                      name:emkNavigateToEmuOID
                    object:nil];
+
+    [nc addUniqueObserver:self
+                 selector:@selector(onNavigateToStore:)
+                     name:emkNavigateToStore
+                   object:nil];
+
     
     // Packages data refresh
     [nc addUniqueObserver:self
@@ -208,6 +214,7 @@
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkJointEmuNavigateToInviteCode];
     [nc removeObserver:emkNavigateToEmuOID];
+    [nc removeObserver:emkNavigateToStore];
     [nc removeObserver:emkUIDataRefreshPackages];
     [nc removeObserver:emkUIShouldHideTabsBar];
     [nc removeObserver:emkUIShouldShowTabsBar];
@@ -285,6 +292,11 @@
     NSDictionary *info = notification.userInfo;
     NSString *emuOID = info[emkEmuticonOID];
     [self navigateToContentRelatedToToEmuOID:emuOID];
+}
+
+-(void)onNavigateToStore:(NSNotification *)notification
+{
+    [self navigateToStore];
 }
 
 -(void)onPackagesDataRefresh:(NSNotification *)notification
@@ -663,6 +675,12 @@
     dispatch_after(DTIME(1), dispatch_get_main_queue(), ^{
         [self navigateIfPossibleToContentWithInfo:params.dictionary];
     });
+}
+
+-(void)navigateToStore
+{
+    [self.tabsBarVC navigateToTabAtIndex:EMTabNameStore animated:NO info:nil];
+    [self showTabsBarAnimated:YES];
 }
 
 -(void)navigateToContentRelatedToToEmuOID:(NSString *)emuOID

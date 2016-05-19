@@ -15,8 +15,9 @@
 typedef NS_ENUM(NSInteger, EMTabName){
     EMTabNameFeatured                           = 0,
     EMTabNameFeed                               = 1,
-    EMTabNameMe                                 = 2,
-    EMTabNameSettings                           = 3,
+    EMTabNameStore                              = 2,
+    EMTabNameMe                                 = 3,
+    EMTabNameSettings                           = 4,
 };
 
 @interface EMTabsBarVC : UIViewController
