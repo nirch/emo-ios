@@ -28,9 +28,9 @@
 @property (nonatomic, readonly) AWSS3TransferManager *transferManager;
 
 #pragma mark - In App Purchases
+@property (nonatomic) NSMutableArray *productsOrderedPID;
+@property (nonatomic) NSMutableDictionary *productsInfo;
 @property (nonatomic) SKProductsRequest *productsRequest;
-@property (nonatomic) NSMutableDictionary *productsByPID;
-@property (nonatomic) NSMutableDictionary *packOIDByPID;
 @property (nonatomic) BOOL isAlreadyListeningToTransactions;
 
 #pragma mark - Data updates and navigations

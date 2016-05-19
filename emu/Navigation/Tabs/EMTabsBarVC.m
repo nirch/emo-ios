@@ -21,6 +21,8 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *guiTabsBarButtons;
 @property (weak, nonatomic) IBOutlet UIView *guiTabsSeparator;
+@property (weak, nonatomic) IBOutlet UILabel *guiStoreLabel;
+@property (weak, nonatomic) IBOutlet UIButton *guiStoreButton;
 
 @property (nonatomic) BOOL alreadyInitializedGUI;
 @property (nonatomic, weak) UIView *selectorView;
@@ -64,6 +66,7 @@
     [self initSelectorView];
     
     self.alreadyInitializedGUI = YES;
+    self.guiStoreLabel.text = LS(@"EMU_STORE");
 }
 
 -(void)initTabsThemeColors
@@ -181,6 +184,34 @@
     self.selectedTab = index;
     [self updateThemeAnimated:animated];
     [self updateSelectorAnimated:animated];
+    
+    // Control the store tab
+    [self updateStoreTabAnimated:animated selectedIndex:index];
+}
+
+-(void)updateStoreTabAnimated:(BOOL)animated selectedIndex:(NSInteger)index
+{
+    if (animated) {
+        [UIView animateWithDuration:0.7
+                              delay:0
+             usingSpringWithDamping:0.44
+              initialSpringVelocity:0.8
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             [self updateStoreTabAnimated:NO selectedIndex:index];
+                         } completion:nil];
+        return;
+    }
+    
+    if (index == 2) {
+        self.guiStoreLabel.alpha = 0;
+        CGAffineTransform t = CGAffineTransformMakeScale(1.2, 1.2);
+        t = CGAffineTransformTranslate(t, 0, 3);
+        self.guiStoreButton.transform = t;
+    } else {
+        self.guiStoreLabel.alpha = 1;
+        self.guiStoreButton.transform = CGAffineTransformIdentity;
+    }
 }
 
 -(NSInteger)currentTabIndex

@@ -20,6 +20,7 @@ class EMSharingOptionsVC:
     //
     static let emkUIActionShareMethodChanged = "emk ui action share method changed"
     static let emkUIActionShare = "emk ui action share"
+    static let emkUIActionShareMethodLocked = "emk ui action share method locked"
     static let emkUIActionShareDone = "emk ui action share done"
     static let emkShareMethod = "emk share method"
     static let emkShareButtonTitle = "emk share button title"
@@ -266,10 +267,22 @@ class EMSharingOptionsVC:
             let shareMethod = self.shareMethods[index % self.shareMethods.count]
             sb.shareMethod = shareMethod
             sb.shareName = self.shareNames[shareMethod]
+            sb.locked = self.isShareMethodLocked(shareMethod)
             sb.updateGUI()
         }
         
         return view!
+    }
+    
+    func isShareMethodLocked(shareMethod: EMKShareMethod) -> Bool {
+        switch shareMethod {
+        case .emkShareMethodCopy:
+            return !Feature.isAllowSaveAndCopyUnlockedInContext(EMDB.sh().context)
+        case .emkShareMethodSaveToCameraRoll:
+            return !Feature.isAllowSaveAndCopyUnlockedInContext(EMDB.sh().context)
+        default:
+            return false
+        }
     }
     
     func buttonFrame() -> CGRect {
@@ -309,11 +322,17 @@ class EMSharingOptionsVC:
         guard let view = carousel.itemViewAtIndex(index) else {return}
 
         EMUISound.sh().playSoundNamed(SND_POP)
-        carousel.userInteractionEnabled = false
+        
         view.animateQuickPopIn()
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+        let locked = self.isShareMethodLocked(self.currentShareMethod)
+        if !locked {carousel.userInteractionEnabled = false}
         dispatch_after(delayTime, dispatch_get_main_queue()) {
-            self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShare, info: nil)
+            if locked {
+                self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShareMethodLocked, info: nil)
+            } else {
+                self.delegate?.controlSentActionNamed(EMSharingOptionsVC.emkUIActionShare, info: nil)
+            }
         }
     }
     
@@ -632,6 +651,7 @@ class ShareOption: UIView {
     
     var shareMethod: EMKShareMethod?
     var shareName: String?
+    var locked: Bool = false
     weak var imageView: UIImageView?
     
     override init(frame: CGRect) {
@@ -651,7 +671,11 @@ class ShareOption: UIView {
     
     func updateGUI() {
         guard let shareName = self.shareName else {return}
-        self.imageView?.image = UIImage(named: shareName)
+        if self.locked {
+            self.imageView?.image = UIImage(named: "locked_"+shareName)
+        } else {
+            self.imageView?.image = UIImage(named: shareName)
+        }
     }
 }
 

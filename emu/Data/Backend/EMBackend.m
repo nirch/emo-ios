@@ -39,8 +39,6 @@
 @implementation EMBackend
 
 @synthesize transferManager = _transferManager;
-@synthesize productsByPID = _productsByPID;
-@synthesize productsRequest = _productsRequest;
 
 #pragma mark - Initialization
 // A singleton

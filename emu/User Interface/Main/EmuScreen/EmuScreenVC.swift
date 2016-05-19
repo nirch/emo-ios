@@ -674,6 +674,20 @@ class EmuScreenVC: UIViewController,
     }
     
     //
+    // MARK: - Share option locked message
+    //
+    func showShareOptionLockedMessage() {
+        let alert = SIAlertView(title: EML.s("SHARE_METHOD_LOCKED_TITLE"), andMessage: EML.s("SHARE_METHOD_LOCKED_MESSAGE"))
+        alert.buttonColor = EmuStyle.colorButtonBGPositive()
+        alert.cancelButtonColor = EmuStyle.colorButtonBGNegative()
+        alert.addButtonWithTitle(EML.s("EMU_STORE"), type: .Default) { alertView in
+            
+        }
+        alert.addButtonWithTitle(EML.s("CANCEL"), type: .Cancel, handler: nil)
+        alert.show()
+    }
+    
+    //
     // MARK: - EmuSelectionProtocol
     //
     func emuSelected(emu: Emuticon?) {
@@ -728,6 +742,10 @@ class EmuScreenVC: UIViewController,
             // Pressed a share option.
             // Share the current emu.
             self.shareCurrentEmu()
+            return
+            
+        case EMSharingOptionsVC.emkUIActionShareMethodLocked:
+            self.showShareOptionLockedMessage()
             return
             
         case EMSharingOptionsVC.emkUIActionShareMethodChanged:

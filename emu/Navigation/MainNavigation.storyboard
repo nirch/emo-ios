@@ -189,10 +189,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdK-Yw-ita" userLabel="tab 3">
                                 <rect key="frame" x="240" y="0.0" width="120" height="39"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remove Ads" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mK-1O-VTH">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emu Store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mK-1O-VTH">
                                         <rect key="frame" x="0.0" y="28" width="120" height="11"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgl-Ud-ATd" userLabel="Sep H">
@@ -353,6 +353,8 @@
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="guiStoreButton" destination="h0h-ez-jZ8" id="Vue-44-YVt"/>
+                        <outlet property="guiStoreLabel" destination="8mK-1O-VTH" id="0p4-pH-wyM"/>
                         <outlet property="guiTabsSeparator" destination="BKx-Tg-YD9" id="8qB-tO-85e"/>
                         <outletCollection property="guiTabsBarButtons" destination="DCL-xE-Q4x" id="q4W-oi-nMG"/>
                         <outletCollection property="guiTabsBarButtons" destination="sRx-Sz-KPX" id="avI-M9-Acd"/>

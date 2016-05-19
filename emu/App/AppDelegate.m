@@ -229,7 +229,7 @@
                                    &size);
     if( kerr == KERN_SUCCESS ) {
         NSLog(@"Memory in use (in bytes): %lu", info.resident_size);
-        REMOTE_LOG(@"Memory in use (in bytes): %lu", info.resident_size);
+        REMOTE_LOG(@"Memory in use (in bytes): %lu", (unsigned long)info.resident_size);
     } else {
         NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
         REMOTE_LOG(@"Error with task_info(): %s", mach_error_string(kerr));

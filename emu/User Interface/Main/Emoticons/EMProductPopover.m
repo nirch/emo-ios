@@ -71,18 +71,18 @@
 #pragma mark - Observers
 -(void)initObservers
 {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    // On packages data refresh required.
-    [nc addUniqueObserver:self
-                 selector:@selector(onUpdatedProductInfo:)
-                     name:emkDataProductsInfoUpdated
-                   object:nil];
+//    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+//    // On packages data refresh required.
+//    [nc addUniqueObserver:self
+//                 selector:@selector(onUpdatedProductInfo:)
+//                     name:emkDataProductsInfoUpdated
+//                   object:nil];
 }
 
 -(void)removeObservers
 {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:emkDataProductsInfoUpdated];
+//    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+//    [nc removeObserver:emkDataProductsInfoUpdated];
 }
 
 #pragma mark - Observers handlers
@@ -102,8 +102,8 @@
 #pragma mark - Refresh product info
 -(void)refreshPackageProductInfo
 {
-    Package *package = [Package findWithID:self.packageOID context:EMDB.sh.context];
-    [EMBackend.sh refreshProductInfoForPack:package];
+//    Package *package = [Package findWithID:self.packageOID context:EMDB.sh.context];
+//    [EMBackend.sh refreshProductInfoForPack:package];
 }
 
 #pragma mark - Update UI

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>production</key>
+	<array>
+		<dict>
+			<key>pid</key>
+			<string>iOS_emu_pro_purchase</string>
+			<key>description</key>
+			<string>iOS emu pro onetime purchase</string>
+			<key>thumbName</key>
+			<string>emuProLogo</string>
+			<key>related_feature_oid</key>
+			<string>Emu pro</string>
+		</dict>
+		<dict>
+			<key>pid</key>
+			<string>iOS_emu_allow_save_purchase</string>
+			<key>description</key>
+			<string>iOS emu allow save</string>
+			<key>thumbName</key>
+			<string>allowSaveAndCopy</string>
+			<key>related_feature_oid</key>
+			<string>Allow save and copy</string>
+		</dict>
+		<dict>
+			<key>pid</key>
+			<string>iOS_emu_remove_ads_purchase</string>
+			<key>description</key>
+			<string>iOS emu remove ads</string>
+			<key>thumbName</key>
+			<string>blockAds</string>
+			<key>related_feature_oid</key>
+			<string>Block ads</string>
+		</dict>
+		<dict>
+			<key>pid</key>
+			<string>iOS_emu_remove_watermarks_purchase</string>
+			<key>description</key>
+			<string>iOS emu remove watermarks</string>
+			<key>thumbName</key>
+			<string>removeWatermarks</string>
+			<key>related_feature_oid</key>
+			<string>Remove watermarks</string>
+		</dict>
+	</array>
+	<key>test</key>
+	<array>
+		<dict>
+			<key>pid</key>
+			<string>test_iOS_emu_pro_purchase</string>
+			<key>description</key>
+			<string>iOS emu pro onetime purchase</string>
+			<key>thumbName</key>
+			<string>emuProLogo</string>
+			<key>related_feature_oid</key>
+			<string>Emu pro</string>
+		</dict>
+		<dict>
+			<key>pid</key>
+			<string>test_iOS_emu_allow_save_purchase</string>
+			<key>description</key>
+			<string>iOS emu allow save</string>
+			<key>thumbName</key>
+			<string>allowSaveAndCopy</string>
+			<key>related_feature_oid</key>
+			<string>Allow save and copy</string>
+		</dict>
+		<dict>
+			<key>pid</key>
+			<string>test_iOS_emu_remove_ads_purchase</string>
+			<key>description</key>
+			<string>iOS emu remove ads</string>
+			<key>thumbName</key>
+			<string>blockAds</string>
+			<key>related_feature_oid</key>
+			<string>Block ads</string>
+		</dict>
+		<dict>
+			<key>pid</key>
+			<string>test_iOS_emu_remove_watermarks_purchase</string>
+			<key>description</key>
+			<string>iOS emu remove watermarks</string>
+			<key>thumbName</key>
+			<string>removeWatermarks</string>
+			<key>related_feature_oid</key>
+			<string>Remove watermarks</string>
+		</dict>
+	</array>
+</dict>
+</plist>

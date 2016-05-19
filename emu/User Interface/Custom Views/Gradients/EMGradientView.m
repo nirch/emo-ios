@@ -36,7 +36,9 @@
         // Reason: all gradient background in the app were exectly the same and the solution with the UIImage
         // has lower memory consumption.
         UIImageView *containedImageView = [UIImageView new];
-        containedImageView.frame = self.bounds;
+        CGRect frame = self.bounds;
+        frame = CGRectInset(frame, 0, 20);
+        containedImageView.frame = frame;
         containedImageView.image = [UIImage imageNamed:@"gradientBG"];
         containedImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         [self addSubview:containedImageView];

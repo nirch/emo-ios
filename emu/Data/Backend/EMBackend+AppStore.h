@@ -14,10 +14,11 @@
 >
 
 #define emkProductTypeHDPackage @"hdPackContent"
+#define emkProductTypeUnlockFeature @"unlocked feature"
 
 -(void)storeRefreshProductsInfo;
--(void)refreshProductInfoForPack:(Package *)package;
--(void)refreshInfoForPacksWithProductsPIDS:(NSSet *)premiumPIDS;
+//-(void)refreshProductInfoForPack:(Package *)package;
+//-(void)refreshInfoForPacksWithProductsPIDS:(NSSet *)premiumPIDS;
 -(void)buyProductWithIdentifier:(NSString *)productIdentifier;
 -(void)restorePurchases;
 

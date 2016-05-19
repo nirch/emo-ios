@@ -29,6 +29,9 @@
 #import "Package.h"
 #import "Package+Logic.h"
 
+#import "Feature.h"
+#import "Feature+Logic.h"
+
 // Keys for passing info around
 #define emkPath                     @"path"
 #define emkResourcesLocalPath       @"resources local path"

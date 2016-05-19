@@ -290,16 +290,16 @@
     // Clear indicators
     self.guiFailedImage.hidden = YES;
     
-//    if (self.guiDownloadingAnimatedGif.animatedImage == nil) {
-//        [self loadAnimatedGifNamed:@"downloading"
-//               inAnimatedImageView:self.guiDownloadingAnimatedGif];
-//        self.guiDownloadingAnimatedGif.alpha = 0.2;
-//    }
-//
-//    if (self.guiRenderingAnimatedGif.animatedImage == nil) {
-//        [self loadAnimatedGifNamed:@"rendering"
-//               inAnimatedImageView:self.guiRenderingAnimatedGif];
-//    }
+    if (self.guiDownloadingAnimatedGif.animatedImage == nil) {
+        [self loadAnimatedGifNamed:@"downloading"
+               inAnimatedImageView:self.guiDownloadingAnimatedGif];
+        self.guiDownloadingAnimatedGif.alpha = 0.2;
+    }
+
+    if (self.guiRenderingAnimatedGif.animatedImage == nil) {
+        [self loadAnimatedGifNamed:@"rendering"
+               inAnimatedImageView:self.guiRenderingAnimatedGif];
+    }
     
     self.guiDownloadingAnimatedGif.hidden = YES;
     self.guiRenderingAnimatedGif.hidden = YES;
@@ -324,19 +324,19 @@
     self.guiEmptyButton.hidden = YES;
 }
 
-//-(void)loadAnimatedGifNamed:(NSString *)gifName inAnimatedImageView:(FLAnimatedImageView *)imageView
-//{
-//    NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
-//    imageView.contentMode = UIViewContentModeScaleAspectFit;
-//    
-//    NSData *animGifData = [EMCaches.sh.gifsDataCache objectForKey:gifName];
-//    if (animGifData == nil) {
-//        animGifData = [NSData dataWithContentsOfURL:gifURL options:NSDataReadingMappedIfSafe error:nil];
-//        [EMCaches.sh.gifsDataCache setObject:animGifData forKey:gifName];
-//    }
-//    
-//    FLAnimatedImage *animatedImage = [FLAnimatedImage animatedImageWithGIFData:animGifData];
-//    imageView.animatedImage = animatedImage;
-//}
+-(void)loadAnimatedGifNamed:(NSString *)gifName inAnimatedImageView:(FLAnimatedImageView *)imageView
+{
+    NSURL *gifURL = [[NSBundle mainBundle] URLForResource:gifName withExtension:@"gif"];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    NSData *animGifData = [EMCaches.sh.gifsDataCache objectForKey:gifName];
+    if (animGifData == nil) {
+        animGifData = [NSData dataWithContentsOfURL:gifURL options:NSDataReadingMappedIfSafe error:nil];
+        [EMCaches.sh.gifsDataCache setObject:animGifData forKey:gifName];
+    }
+    
+    FLAnimatedImage *animatedImage = [FLAnimatedImage animatedImageWithGIFData:animGifData];
+    imageView.animatedImage = animatedImage;
+}
 
 @end
