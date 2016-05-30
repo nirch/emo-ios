@@ -62,6 +62,7 @@
 #import "HMParams.h"
 #import "HMPanel.h"
 #import "HMParams.h"
+#import "EMCaches.h"
 
 // Sharing
 #import "EMShare.h"

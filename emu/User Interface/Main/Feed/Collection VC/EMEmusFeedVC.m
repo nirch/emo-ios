@@ -77,6 +77,7 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
 // Ads
 @property (weak, nonatomic) IBOutlet UIView *guiAdBannerContainerView;
+@property (weak, nonatomic) EMAdBannerVC *adBannerVC;
 
 // Selection actions bar
 @property (weak, nonatomic) IBOutlet UIView *guiSelectionActionsBar;
@@ -136,6 +137,17 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
 
     // Data
     [self refreshGUIWithLocalData];
+    
+    // Block ads if user paid for blocking ads
+    if ([Feature isBlockAdsUnlockedInContext:EMDB.sh.context]) {
+        if (self.adBannerVC) {
+            [self.guiAdBannerContainerView removeFromSuperview];
+            [self.adBannerVC removeFromParentViewController];
+            self.guiAdBannerContainerView = nil;
+            self.adBannerVC = nil;
+        }
+    }
+
 }
 
 
@@ -226,7 +238,21 @@ typedef NS_ENUM(NSInteger, EMEmusFeedTitleState) {
         EMAdBannerVC *vc = segue.destinationViewController;
         vc.grandParentVCForModal = self; // Weak reference to this view controller.
         vc.containerView = self.guiAdBannerContainerView; // Weak reference to the containing view.
+        self.adBannerVC = vc;
     }
+}
+
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"embed feed bottom ad banner segue"]) {
+        // If ads should be blocked, don't show banners.
+        if ([Feature isBlockAdsUnlockedInContext:EMDB.sh.context]) {
+            [self.guiAdBannerContainerView removeFromSuperview];
+            self.guiAdBannerContainerView = nil;
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark - Initializations

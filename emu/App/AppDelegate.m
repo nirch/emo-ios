@@ -62,7 +62,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialize rendering tracking
-    [HSDKCore.sh useInEnvironment:sdkEnvDev];
+    sdkENV sdkEnvironment = [AppManagement.sh isDevApp] || [AppManagement.sh isTestApp] ? sdkEnvDev : sdkEnvProduction;
+    [HSDKCore.sh useInEnvironment:sdkEnvironment];
     
     // Initialize Logging
     [self initLogging];

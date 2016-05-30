@@ -471,7 +471,7 @@ class EMRecorderVC2: UIViewController, HFCaptureSessionDelegate, EMOnboardingDel
             self.guiRecordButton.hidden = false
             self.guiRestartButton.hidden = false
             self.guiTimingContainer.hidden = false
-            self.guiHelpButton.hidden = false
+            self.guiHelpButton.hidden = true // Enable help button here when help screen implemented.
             self.updateTimingIndicator()
             self.onBoardingVC?.setOnBoardingStage(EMOnBoardingStage.ExtractionPreview, animated: true)
         default:

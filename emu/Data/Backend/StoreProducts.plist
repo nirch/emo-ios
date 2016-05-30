@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>pid</key>
-			<string>iOS_emu_pro_purchase</string>
+			<string>iOS_emu_pro_purchase_prod</string>
 			<key>description</key>
 			<string>iOS emu pro onetime purchase</string>
 			<key>thumbName</key>
@@ -16,7 +16,7 @@
 		</dict>
 		<dict>
 			<key>pid</key>
-			<string>iOS_emu_allow_save_purchase</string>
+			<string>iOS_emu_allow_save_purchase_prod</string>
 			<key>description</key>
 			<string>iOS emu allow save</string>
 			<key>thumbName</key>

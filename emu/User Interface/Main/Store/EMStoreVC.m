@@ -208,6 +208,11 @@
 {
 }
 
+-(UIColor *)navBarThemeColor
+{
+    return self.navBarThemeColor;
+}
+
 #pragma mark - Actions
 -(void)buyProductWithPID:(NSString *)pid
 {

@@ -975,6 +975,14 @@ class EmuScreenVC: UIViewController,
     @IBAction func onPressedActionButton(sender: AnyObject) {
         EMUISound.sh().playSoundNamed(SND_SOFT_CLICK)
         guard self.currentEmu() != nil else {return}
+        guard let currentShareMethod = self.sharingOptionsVC?.currentShareMethod else {return}
+        guard self.sharingOptionsVC?.isShareMethodLocked(currentShareMethod) == false else {
+            // Share method is locked.
+            // So sharing will not be allowed and user will be presented with a message 
+            // refering her to the in app store.
+            self.showShareOptionLockedMessage()
+            return;
+        }
         self.shareCurrentEmu()
     }
 

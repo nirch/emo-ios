@@ -11,7 +11,7 @@
 #import "MPAdView.h"
 #import "UIView+CommonAnimations.h"
 
-#define BANNER_ADS_TTL 60*2
+#define BANNER_ADS_TTL 60*3 // Update banner no more than once every 3 minutes
 
 @interface EMAdBannerVC () <
     MPAdViewDelegate

@@ -578,6 +578,7 @@ class EMRenderManager3 : NSObject
             
             // Post notification to the UI
             let nc = NSNotificationCenter.defaultCenter()
+            EMCaches.sh().clearCachedResultsForEmu(emu)
             nc.postNotificationName(hmkRenderingFinished, object: self, userInfo: userInfo)
         }
         
