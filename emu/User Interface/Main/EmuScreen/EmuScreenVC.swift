@@ -211,9 +211,9 @@ class EmuScreenVC: UIViewController,
         
         if wideAspectRatio {
             self.containerAspectRatio1_1.priority = UILayoutPriority(1)
-            self.containerAspectRatio16_9.priority = UILayoutPriority(1000)
+            self.containerAspectRatio16_9.priority = UILayoutPriority(750)
         } else {
-            self.containerAspectRatio1_1.priority = UILayoutPriority(1000)
+            self.containerAspectRatio1_1.priority = UILayoutPriority(750)
             self.containerAspectRatio16_9.priority = UILayoutPriority(1)
         }
     }
@@ -438,11 +438,12 @@ class EmuScreenVC: UIViewController,
     // MARK: - Current emu
     //
     func refreshCurrentEmu(forcedRefresh forcedRefresh: Bool = false) {
-        guard self.currentEmu() != nil else {
+        guard let emu = self.currentEmu() else {
             // No emu instance? update UI to indicate that no emu is in focus.
             self.updateEmuUIStateForEmu()
             return
         }
+        emu.lastTimeViewed = NSDate()
         self.updateEmuUIStateForEmu()
     }
     

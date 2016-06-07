@@ -61,6 +61,7 @@
     CGFloat cellWidth = cellHeight*FEATURED_ASPECT_RATIO;
     self.cellSize = CGSizeMake(cellWidth, cellHeight);
     self.marginForCentering = (self.guiCollectionView.bounds.size.width - cellWidth) / 2.0f;
+    
     [self refreshUIWithLocalData];
 }
 

@@ -98,9 +98,17 @@
 
 -(NSString *)titleForSection:(NSInteger)section
 {
-    Emuticon *emu = [self.frc objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+    NSInteger sectionInBounds = [self secionIndexInBounds:section];
+    Emuticon *emu = [self.frc objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionInBounds]];
     Package *pack = emu.emuDef.package;
     return pack.label;
+}
+
+-(NSInteger)secionIndexInBounds:(NSInteger)section
+{
+    if (section<=0) return 0;
+    if (section>=self.frc.sections.count) return section-1;
+    return section;
 }
 
 -(NSString *)packOIDForSection:(NSInteger)section
@@ -113,7 +121,8 @@
 {
     // In bounds validation.
     if (self.frc.sections.count < 1) return nil;
-    if (section >= self.frc.sections.count) section = self.frc.sections.count-1;
+    
+    section = [self secionIndexInBounds:section];
 
     // Get the object.
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
@@ -168,6 +177,7 @@
  */
 -(NSArray *)indexPathsForSection:(NSInteger)section
 {
+    section = [self secionIndexInBounds:section];
     NSMutableArray *indexPaths = [NSMutableArray new];
     id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
     NSInteger emusCount = [sectionInfo numberOfObjects];
@@ -296,6 +306,7 @@
     // Check if all emus selected already in this section.
     // If all selected, will unselect all.
     // If not all selected should selected all remaining unselected ones.
+    section = [self secionIndexInBounds:section];
     NSArray *indexPaths = [self indexPathsForSection:section];
     BOOL shouldSelect = NO;
     for (NSIndexPath *indexPath in indexPaths) {

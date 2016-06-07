@@ -11,6 +11,7 @@
 #import "EMDB.h"
 #import <iCarousel.h>
 #import "EMUINotifications.h"
+#import "EMNotificationCenter.h"
 
 
 @interface EMFeaturedPacksVC ()<
@@ -40,7 +41,15 @@
 {
     [super viewDidAppear:animated];
     [self initGUIOnAppearance];
+    [self initObservers];
+    
     self.guiCarousel.userInteractionEnabled = YES;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeObservers];
 }
 
 -(void)initGUIOnAppearance
@@ -60,7 +69,35 @@
         CGSize size = CGSizeMake(self.view.bounds.size.width * 0.65,0);
         size.height = size.width * 0.5714f;
         self.posterFrame = CGRectMake(0, 0, size.width, size.height);
+    } else {
+        [self refreshLocalData];
+        [self.guiCarousel reloadData];
     }
+}
+
+#pragma mark - Observers
+-(void)initObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    // On packages data refresh required.
+    [nc addUniqueObserver:self
+                 selector:@selector(onUpdatedData:)
+                     name:emkDataUpdatedPackages
+                   object:nil];
+}
+
+-(void)removeObservers
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:emkDataUpdatedPackages];
+}
+
+#pragma mark - Observers handlers
+-(void)onUpdatedData:(NSNotification *)notification
+{
+    [self refreshLocalData];
+    [self.guiCarousel reloadData];
 }
 
 #pragma mark - Data

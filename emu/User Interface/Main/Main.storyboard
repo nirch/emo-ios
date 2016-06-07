@@ -195,15 +195,6 @@
                                     <outlet property="delegate" destination="hdW-YC-ZoO" id="YZB-Ri-auN"/>
                                 </connections>
                             </collectionView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6s-v3-OtV">
-                                <rect key="frame" x="0.0" y="613" width="375" height="54"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="54" id="OJv-8q-P6E"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="t8h-f4-ew6" kind="embed" identifier="selections action bar segue" id="ZF5-Mz-gNp"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgp-N9-R3M" userLabel="Ad Banner Container View">
                                 <rect key="frame" x="0.0" y="563" width="375" height="64"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -212,6 +203,15 @@
                                 </constraints>
                                 <connections>
                                     <segue destination="Fk3-LM-h6V" kind="embed" identifier="embed feed bottom ad banner segue" id="Wla-bG-sAM"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6s-v3-OtV">
+                                <rect key="frame" x="0.0" y="613" width="375" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="OJv-8q-P6E"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="t8h-f4-ew6" kind="embed" identifier="selections action bar segue" id="ZF5-Mz-gNp"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -1137,7 +1137,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B8C1BCA3-D573-4A7B-8879-BCC389556E6D" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5BDC12A5-BEB8-4942-911D-EEE457E957EB" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jX-6pv">
                                 <rect key="frame" x="0.0" y="0.0" width="365" height="365"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYP-nE-gH7" customClass="FLAnimatedImageView">
@@ -1396,7 +1396,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="B8C1BCA3-D573-4A7B-8879-BCC389556E6D" width="350" height="350">
+        <image name="5BDC12A5-BEB8-4942-911D-EEE457E957EB" width="350" height="350">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
