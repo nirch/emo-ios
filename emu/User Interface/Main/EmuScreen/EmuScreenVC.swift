@@ -141,6 +141,7 @@ class EmuScreenVC: UIViewController,
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.initObservers()
+        self.updateFavButton()
     }
     
     override func viewWillDisappear(animated: Bool) {
