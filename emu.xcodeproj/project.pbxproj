@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */; };
-		0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */; };
-		0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */; };
-		0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */; };
+		08022F7C1D12A06D005E37EF /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F701D12A06D005E37EF /* HMParser.m */; };
+		08022F7D1D12A06D005E37EF /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F701D12A06D005E37EF /* HMParser.m */; };
+		08022F7E1D12A06D005E37EF /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F721D12A06D005E37EF /* NSDictionary+TypeSafeValues.m */; };
+		08022F7F1D12A06D005E37EF /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F721D12A06D005E37EF /* NSDictionary+TypeSafeValues.m */; };
+		08022F801D12A06D005E37EF /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F751D12A06D005E37EF /* HMFileHash.m */; };
+		08022F811D12A06D005E37EF /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F751D12A06D005E37EF /* HMFileHash.m */; };
+		08022F821D12A06D005E37EF /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F791D12A06D005E37EF /* NSNotification+Utils.m */; };
+		08022F831D12A06D005E37EF /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F791D12A06D005E37EF /* NSNotification+Utils.m */; };
+		08022F841D12A06D005E37EF /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F7B1D12A06D005E37EF /* NSNotificationCenter+Utils.m */; };
+		08022F851D12A06D005E37EF /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 08022F7B1D12A06D005E37EF /* NSNotificationCenter+Utils.m */; };
 		0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD711AA37DC20078F14B /* EMAppCFGParser.m */; };
 		0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD731AA37DC20078F14B /* EMEmuticonParser.m */; };
 		0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0806BD771AA37DC20078F14B /* EMPackageParser.m */; };
@@ -167,7 +173,6 @@
 		085C67721A937EC9007BC910 /* AppCFG+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670B1A937EC9007BC910 /* AppCFG+Logic.m */; };
 		085C67741A937EC9007BC910 /* UserFootage+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670F1A937EC9007BC910 /* UserFootage+Logic.m */; };
 		085C67751A937EC9007BC910 /* NSManagedObject+FindAndCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C67111A937EC9007BC910 /* NSManagedObject+FindAndCreate.m */; };
-		085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 085C67141A937EC9007BC910 /* EMPNGSequenceWriter.mm */; };
 		085C67921A937EC9007BC910 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C67361A937EC9007BC910 /* LaunchScreen.xib */; };
 		085D69491B25B90B0083ADD9 /* emu_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D69481B25B90B0083ADD9 /* emu_latest_build_info.plist */; };
 		085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 085D694A1B25B9160083ADD9 /* emubeta_latest_build_info.plist */; };
@@ -184,8 +189,6 @@
 		0867479F1C6B71B900AAE545 /* EMOBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867479A1C6B71B900AAE545 /* EMOBCell.m */; };
 		086747A01C6B71B900AAE545 /* EMOnboardingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867479D1C6B71B900AAE545 /* EMOnboardingVC.m */; };
 		086747A11C6B71B900AAE545 /* EMOnboardingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867479D1C6B71B900AAE545 /* EMOnboardingVC.m */; };
-		086747AC1C6B71E400AAE545 /* EMControlsBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 086747A41C6B71E400AAE545 /* EMControlsBarVC.m */; };
-		086747AD1C6B71E400AAE545 /* EMControlsBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 086747A41C6B71E400AAE545 /* EMControlsBarVC.m */; };
 		086747AE1C6B71E400AAE545 /* EMFlowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 086747A71C6B71E400AAE545 /* EMFlowButton.m */; };
 		086747AF1C6B71E400AAE545 /* EMFlowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 086747A71C6B71E400AAE545 /* EMFlowButton.m */; };
 		086747B01C6B71E400AAE545 /* EMMessageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 086747A91C6B71E400AAE545 /* EMMessageButton.m */; };
@@ -205,46 +208,6 @@
 		087C5D3D1BCBF8B3004B3121 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 087C5D3C1BCBF8B3004B3121 /* libPods.a */; };
 		087C5D401BCC4F9F004B3121 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */; };
 		087C5D411BCC4F9F004B3121 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */; };
-		0880DBB31CB13B620050D227 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB811CB13B620050D227 /* HMCaptureSession.mm */; };
-		0880DBB41CB13B620050D227 /* HMCaptureSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB811CB13B620050D227 /* HMCaptureSession.mm */; };
-		0880DBB51CB13B620050D227 /* HMCaptureSessionError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB831CB13B620050D227 /* HMCaptureSessionError.m */; };
-		0880DBB61CB13B620050D227 /* HMCaptureSessionError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB831CB13B620050D227 /* HMCaptureSessionError.m */; };
-		0880DBB71CB13B620050D227 /* _uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0880DB871CB13B620050D227 /* _uniformBGParams.xml */; };
-		0880DBB81CB13B620050D227 /* _uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0880DB871CB13B620050D227 /* _uniformBGParams.xml */; };
-		0880DBB91CB13B620050D227 /* uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0880DB881CB13B620050D227 /* uniformBGParams.xml */; };
-		0880DBBA1CB13B620050D227 /* uniformBGParams.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0880DB881CB13B620050D227 /* uniformBGParams.xml */; };
-		0880DBBB1CB13B620050D227 /* HMBackgroundMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB8B1CB13B620050D227 /* HMBackgroundMarks.m */; };
-		0880DBBC1CB13B620050D227 /* HMBackgroundMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB8B1CB13B620050D227 /* HMBackgroundMarks.m */; };
-		0880DBBD1CB13B620050D227 /* HMBackgroundRemoval.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB8D1CB13B620050D227 /* HMBackgroundRemoval.mm */; };
-		0880DBBE1CB13B620050D227 /* HMBackgroundRemoval.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB8D1CB13B620050D227 /* HMBackgroundRemoval.mm */; };
-		0880DBBF1CB13B620050D227 /* HMBackgroundRemovalDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB8F1CB13B620050D227 /* HMBackgroundRemovalDebugger.mm */; };
-		0880DBC01CB13B620050D227 /* HMBackgroundRemovalDebugger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB8F1CB13B620050D227 /* HMBackgroundRemovalDebugger.mm */; };
-		0880DBC11CB13B620050D227 /* HMGMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB911CB13B620050D227 /* HMGMError.m */; };
-		0880DBC21CB13B620050D227 /* HMGMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB911CB13B620050D227 /* HMGMError.m */; };
-		0880DBC31CB13B620050D227 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB951CB13B620050D227 /* HMParser.m */; };
-		0880DBC41CB13B620050D227 /* HMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB951CB13B620050D227 /* HMParser.m */; };
-		0880DBC51CB13B620050D227 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB971CB13B620050D227 /* NSDictionary+TypeSafeValues.m */; };
-		0880DBC61CB13B620050D227 /* NSDictionary+TypeSafeValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB971CB13B620050D227 /* NSDictionary+TypeSafeValues.m */; };
-		0880DBC71CB13B620050D227 /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB9A1CB13B620050D227 /* HMFileHash.m */; };
-		0880DBC81CB13B620050D227 /* HMFileHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB9A1CB13B620050D227 /* HMFileHash.m */; };
-		0880DBC91CB13B620050D227 /* HMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB9C1CB13B620050D227 /* HMError.m */; };
-		0880DBCA1CB13B620050D227 /* HMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DB9C1CB13B620050D227 /* HMError.m */; };
-		0880DBCB1CB13B620050D227 /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA01CB13B620050D227 /* HMImages.m */; };
-		0880DBCC1CB13B620050D227 /* HMImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA01CB13B620050D227 /* HMImages.m */; };
-		0880DBCD1CB13B620050D227 /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA21CB13B620050D227 /* HMImageTools.mm */; };
-		0880DBCE1CB13B620050D227 /* HMImageTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA21CB13B620050D227 /* HMImageTools.mm */; };
-		0880DBCF1CB13B620050D227 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA61CB13B620050D227 /* NSNotification+Utils.m */; };
-		0880DBD01CB13B620050D227 /* NSNotification+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA61CB13B620050D227 /* NSNotification+Utils.m */; };
-		0880DBD11CB13B620050D227 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA81CB13B620050D227 /* NSNotificationCenter+Utils.m */; };
-		0880DBD21CB13B620050D227 /* NSNotificationCenter+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBA81CB13B620050D227 /* NSNotificationCenter+Utils.m */; };
-		0880DBD31CB13B620050D227 /* HMPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBAB1CB13B620050D227 /* HMPreviewView.m */; };
-		0880DBD41CB13B620050D227 /* HMPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBAB1CB13B620050D227 /* HMPreviewView.m */; };
-		0880DBD51CB13B620050D227 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0880DBAD1CB13B620050D227 /* passThrough.fsh */; };
-		0880DBD61CB13B620050D227 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0880DBAD1CB13B620050D227 /* passThrough.fsh */; };
-		0880DBD71CB13B620050D227 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0880DBAE1CB13B620050D227 /* passThrough.vsh */; };
-		0880DBD81CB13B620050D227 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0880DBAE1CB13B620050D227 /* passThrough.vsh */; };
-		0880DBD91CB13B620050D227 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBAF1CB13B620050D227 /* ShaderUtilities.c */; };
-		0880DBDA1CB13B620050D227 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 0880DBAF1CB13B620050D227 /* ShaderUtilities.c */; };
 		0880DBDB1CB13C010050D227 /* HomageSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; };
 		0880DBDC1CB13C010050D227 /* HomageSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0880DBDD1CB13C010050D227 /* HomageSDKFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08820F6C1C3BAEF800E6E0ED /* HomageSDKFlow.framework */; };
@@ -348,7 +311,6 @@
 		08AA14651B0BA658002E1B2F /* AppCFG+Logic.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C670B1A937EC9007BC910 /* AppCFG+Logic.m */; };
 		08AA14661B0BA658002E1B2F /* EmuStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B589A41A93BB7B008D9068 /* EmuStyle.m */; };
 		08AA14671B0BA658002E1B2F /* EMActionsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 089EAB821AE674D90074AD09 /* EMActionsArray.m */; };
-		08AA146A1B0BA658002E1B2F /* EMPNGSequenceWriter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 085C67141A937EC9007BC910 /* EMPNGSequenceWriter.mm */; };
 		08AA146B1B0BA658002E1B2F /* EMShareSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 0854EE391A9FC37000FD3833 /* EMShareSaveToCameraRoll.m */; };
 		08AA146D1B0BA658002E1B2F /* EMShareFBMessanger.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EBB4161ABC8E7800A91E71 /* EMShareFBMessanger.m */; };
 		08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C66DF1A937EC9007BC910 /* AppDelegate.m */; };
@@ -606,6 +568,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08022F6F1D12A06D005E37EF /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
+		08022F701D12A06D005E37EF /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
+		08022F711D12A06D005E37EF /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
+		08022F721D12A06D005E37EF /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
+		08022F741D12A06D005E37EF /* HMFileHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFileHash.h; sourceTree = "<group>"; };
+		08022F751D12A06D005E37EF /* HMFileHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFileHash.m; sourceTree = "<group>"; };
+		08022F771D12A06D005E37EF /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
+		08022F781D12A06D005E37EF /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
+		08022F791D12A06D005E37EF /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
+		08022F7A1D12A06D005E37EF /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
+		08022F7B1D12A06D005E37EF /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
 		0805ABBF1B492C9E0099ECBE /* HrEffectBW.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HrEffectBW.cpp; sourceTree = "<group>"; };
 		0805ABC01B492C9E0099ECBE /* HrEffectBW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HrEffectBW.h; sourceTree = "<group>"; };
 		0805ABC31B4A80380099ECBE /* HrEffectRGBA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HrEffectRGBA.cpp; sourceTree = "<group>"; };
@@ -832,46 +805,6 @@
 		0875924F1BEB5FAD0090555B /* EMFullScreenGifPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMFullScreenGifPlayer.m; sourceTree = "<group>"; };
 		087C5D3C1BCBF8B3004B3121 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		087C5D3F1BCC4F9F004B3121 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
-		0880DB801CB13B620050D227 /* HMCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSession.h; sourceTree = "<group>"; };
-		0880DB811CB13B620050D227 /* HMCaptureSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMCaptureSession.mm; sourceTree = "<group>"; };
-		0880DB821CB13B620050D227 /* HMCaptureSessionError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMCaptureSessionError.h; sourceTree = "<group>"; };
-		0880DB831CB13B620050D227 /* HMCaptureSessionError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMCaptureSessionError.m; sourceTree = "<group>"; };
-		0880DB851CB13B620050D227 /* HMWriterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMWriterProtocol.h; sourceTree = "<group>"; };
-		0880DB871CB13B620050D227 /* _uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = _uniformBGParams.xml; sourceTree = "<group>"; };
-		0880DB881CB13B620050D227 /* uniformBGParams.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = uniformBGParams.xml; sourceTree = "<group>"; };
-		0880DB8A1CB13B620050D227 /* HMBackgroundMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBackgroundMarks.h; sourceTree = "<group>"; };
-		0880DB8B1CB13B620050D227 /* HMBackgroundMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMBackgroundMarks.m; sourceTree = "<group>"; };
-		0880DB8C1CB13B620050D227 /* HMBackgroundRemoval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBackgroundRemoval.h; sourceTree = "<group>"; };
-		0880DB8D1CB13B620050D227 /* HMBackgroundRemoval.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMBackgroundRemoval.mm; sourceTree = "<group>"; };
-		0880DB8E1CB13B620050D227 /* HMBackgroundRemovalDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMBackgroundRemovalDebugger.h; sourceTree = "<group>"; };
-		0880DB8F1CB13B620050D227 /* HMBackgroundRemovalDebugger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMBackgroundRemovalDebugger.mm; sourceTree = "<group>"; };
-		0880DB901CB13B620050D227 /* HMGMError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGMError.h; sourceTree = "<group>"; };
-		0880DB911CB13B620050D227 /* HMGMError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGMError.m; sourceTree = "<group>"; };
-		0880DB921CB13B620050D227 /* HMVideoProcessingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVideoProcessingProtocol.h; sourceTree = "<group>"; };
-		0880DB941CB13B620050D227 /* HMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMParser.h; sourceTree = "<group>"; };
-		0880DB951CB13B620050D227 /* HMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMParser.m; sourceTree = "<group>"; };
-		0880DB961CB13B620050D227 /* NSDictionary+TypeSafeValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TypeSafeValues.h"; sourceTree = "<group>"; };
-		0880DB971CB13B620050D227 /* NSDictionary+TypeSafeValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TypeSafeValues.m"; sourceTree = "<group>"; };
-		0880DB991CB13B620050D227 /* HMFileHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMFileHash.h; sourceTree = "<group>"; };
-		0880DB9A1CB13B620050D227 /* HMFileHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMFileHash.m; sourceTree = "<group>"; };
-		0880DB9B1CB13B620050D227 /* HMError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMError.h; sourceTree = "<group>"; };
-		0880DB9C1CB13B620050D227 /* HMError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMError.m; sourceTree = "<group>"; };
-		0880DB9D1CB13B620050D227 /* HMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSDK.h; sourceTree = "<group>"; };
-		0880DB9F1CB13B620050D227 /* HMImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMImages.h; sourceTree = "<group>"; };
-		0880DBA01CB13B620050D227 /* HMImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMImages.m; sourceTree = "<group>"; };
-		0880DBA11CB13B620050D227 /* HMImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMImageTools.h; sourceTree = "<group>"; };
-		0880DBA21CB13B620050D227 /* HMImageTools.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HMImageTools.mm; sourceTree = "<group>"; };
-		0880DBA41CB13B620050D227 /* HMNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMNotificationCenter.h; sourceTree = "<group>"; };
-		0880DBA51CB13B620050D227 /* NSNotification+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotification+Utils.h"; sourceTree = "<group>"; };
-		0880DBA61CB13B620050D227 /* NSNotification+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotification+Utils.m"; sourceTree = "<group>"; };
-		0880DBA71CB13B620050D227 /* NSNotificationCenter+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+Utils.h"; sourceTree = "<group>"; };
-		0880DBA81CB13B620050D227 /* NSNotificationCenter+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+Utils.m"; sourceTree = "<group>"; };
-		0880DBAA1CB13B620050D227 /* HMPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMPreviewView.h; sourceTree = "<group>"; };
-		0880DBAB1CB13B620050D227 /* HMPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMPreviewView.m; sourceTree = "<group>"; };
-		0880DBAD1CB13B620050D227 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
-		0880DBAE1CB13B620050D227 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
-		0880DBAF1CB13B620050D227 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
-		0880DBB01CB13B620050D227 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
 		0881F0B41BC67A2E005A7323 /* UIView+CommonAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CommonAnimations.h"; sourceTree = "<group>"; };
 		0881F0B51BC67A2E005A7323 /* UIView+CommonAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CommonAnimations.m"; sourceTree = "<group>"; };
 		08820F6B1C3BAEF800E6E0ED /* HomageSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HomageSDKCore.framework; sourceTree = "<group>"; };
@@ -1147,6 +1080,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08022F6D1D12A06D005E37EF /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				08022F6E1D12A06D005E37EF /* data */,
+				08022F731D12A06D005E37EF /* hash */,
+				08022F761D12A06D005E37EF /* notifications center */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		08022F6E1D12A06D005E37EF /* data */ = {
+			isa = PBXGroup;
+			children = (
+				08022F6F1D12A06D005E37EF /* HMParser.h */,
+				08022F701D12A06D005E37EF /* HMParser.m */,
+				08022F711D12A06D005E37EF /* NSDictionary+TypeSafeValues.h */,
+				08022F721D12A06D005E37EF /* NSDictionary+TypeSafeValues.m */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		08022F731D12A06D005E37EF /* hash */ = {
+			isa = PBXGroup;
+			children = (
+				08022F741D12A06D005E37EF /* HMFileHash.h */,
+				08022F751D12A06D005E37EF /* HMFileHash.m */,
+			);
+			path = hash;
+			sourceTree = "<group>";
+		};
+		08022F761D12A06D005E37EF /* notifications center */ = {
+			isa = PBXGroup;
+			children = (
+				08022F771D12A06D005E37EF /* HMNotificationCenter.h */,
+				08022F781D12A06D005E37EF /* NSNotification+Utils.h */,
+				08022F791D12A06D005E37EF /* NSNotification+Utils.m */,
+				08022F7A1D12A06D005E37EF /* NSNotificationCenter+Utils.h */,
+				08022F7B1D12A06D005E37EF /* NSNotificationCenter+Utils.m */,
+			);
+			path = "notifications center";
+			sourceTree = "<group>";
+		};
 		0805ABBE1B492C7C0099ECBE /* fx */ = {
 			isa = PBXGroup;
 			children = (
@@ -1778,141 +1753,6 @@
 			path = SettingsScreen;
 			sourceTree = "<group>";
 		};
-		0880DB7B1CB13B620050D227 /* homageSDK */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB7C1CB13B620050D227 /* camera and video processing */,
-				0880DB931CB13B620050D227 /* data */,
-				0880DB981CB13B620050D227 /* hash */,
-				0880DB9B1CB13B620050D227 /* HMError.h */,
-				0880DB9C1CB13B620050D227 /* HMError.m */,
-				0880DB9D1CB13B620050D227 /* HMSDK.h */,
-				0880DB9E1CB13B620050D227 /* images */,
-				0880DBA31CB13B620050D227 /* notifications center */,
-				0880DBA91CB13B620050D227 /* user interface */,
-			);
-			path = homageSDK;
-			sourceTree = "<group>";
-		};
-		0880DB7C1CB13B620050D227 /* camera and video processing */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB7D1CB13B620050D227 /* capture session */,
-				0880DB841CB13B620050D227 /* output */,
-				0880DB861CB13B620050D227 /* resources */,
-				0880DB891CB13B620050D227 /* video processing */,
-			);
-			path = "camera and video processing";
-			sourceTree = "<group>";
-		};
-		0880DB7D1CB13B620050D227 /* capture session */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB801CB13B620050D227 /* HMCaptureSession.h */,
-				0880DB811CB13B620050D227 /* HMCaptureSession.mm */,
-				0880DB821CB13B620050D227 /* HMCaptureSessionError.h */,
-				0880DB831CB13B620050D227 /* HMCaptureSessionError.m */,
-			);
-			path = "capture session";
-			sourceTree = "<group>";
-		};
-		0880DB841CB13B620050D227 /* output */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB851CB13B620050D227 /* HMWriterProtocol.h */,
-			);
-			path = output;
-			sourceTree = "<group>";
-		};
-		0880DB861CB13B620050D227 /* resources */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB871CB13B620050D227 /* _uniformBGParams.xml */,
-				0880DB881CB13B620050D227 /* uniformBGParams.xml */,
-			);
-			path = resources;
-			sourceTree = "<group>";
-		};
-		0880DB891CB13B620050D227 /* video processing */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB8A1CB13B620050D227 /* HMBackgroundMarks.h */,
-				0880DB8B1CB13B620050D227 /* HMBackgroundMarks.m */,
-				0880DB8C1CB13B620050D227 /* HMBackgroundRemoval.h */,
-				0880DB8D1CB13B620050D227 /* HMBackgroundRemoval.mm */,
-				0880DB8E1CB13B620050D227 /* HMBackgroundRemovalDebugger.h */,
-				0880DB8F1CB13B620050D227 /* HMBackgroundRemovalDebugger.mm */,
-				0880DB901CB13B620050D227 /* HMGMError.h */,
-				0880DB911CB13B620050D227 /* HMGMError.m */,
-				0880DB921CB13B620050D227 /* HMVideoProcessingProtocol.h */,
-			);
-			path = "video processing";
-			sourceTree = "<group>";
-		};
-		0880DB931CB13B620050D227 /* data */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB941CB13B620050D227 /* HMParser.h */,
-				0880DB951CB13B620050D227 /* HMParser.m */,
-				0880DB961CB13B620050D227 /* NSDictionary+TypeSafeValues.h */,
-				0880DB971CB13B620050D227 /* NSDictionary+TypeSafeValues.m */,
-			);
-			path = data;
-			sourceTree = "<group>";
-		};
-		0880DB981CB13B620050D227 /* hash */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB991CB13B620050D227 /* HMFileHash.h */,
-				0880DB9A1CB13B620050D227 /* HMFileHash.m */,
-			);
-			path = hash;
-			sourceTree = "<group>";
-		};
-		0880DB9E1CB13B620050D227 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				0880DB9F1CB13B620050D227 /* HMImages.h */,
-				0880DBA01CB13B620050D227 /* HMImages.m */,
-				0880DBA11CB13B620050D227 /* HMImageTools.h */,
-				0880DBA21CB13B620050D227 /* HMImageTools.mm */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
-		0880DBA31CB13B620050D227 /* notifications center */ = {
-			isa = PBXGroup;
-			children = (
-				0880DBA41CB13B620050D227 /* HMNotificationCenter.h */,
-				0880DBA51CB13B620050D227 /* NSNotification+Utils.h */,
-				0880DBA61CB13B620050D227 /* NSNotification+Utils.m */,
-				0880DBA71CB13B620050D227 /* NSNotificationCenter+Utils.h */,
-				0880DBA81CB13B620050D227 /* NSNotificationCenter+Utils.m */,
-			);
-			path = "notifications center";
-			sourceTree = "<group>";
-		};
-		0880DBA91CB13B620050D227 /* user interface */ = {
-			isa = PBXGroup;
-			children = (
-				0880DBAA1CB13B620050D227 /* HMPreviewView.h */,
-				0880DBAB1CB13B620050D227 /* HMPreviewView.m */,
-				0880DBAC1CB13B620050D227 /* Shaders */,
-				0880DBAF1CB13B620050D227 /* ShaderUtilities.c */,
-				0880DBB01CB13B620050D227 /* ShaderUtilities.h */,
-			);
-			path = "user interface";
-			sourceTree = "<group>";
-		};
-		0880DBAC1CB13B620050D227 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				0880DBAD1CB13B620050D227 /* passThrough.fsh */,
-				0880DBAE1CB13B620050D227 /* passThrough.vsh */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
 		08819CD91B2CCBFB00D2D77A /* Downloads Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -2277,7 +2117,6 @@
 				08D929851A77A36D00B6A68F /* Products */,
 				66A306109166C5AB9F6B2628 /* Pods */,
 				F818AC31536FB92317D788B6 /* Frameworks */,
-				0880DB7B1CB13B620050D227 /* homageSDK */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2301,6 +2140,7 @@
 				08AA14271B08EDA1002E1B2F /* Localization */,
 				08CB898C1A9B2F9200224A38 /* Render */,
 				08271FAD1B01F5B90046F38E /* Local Resources */,
+				08022F6D1D12A06D005E37EF /* Misc */,
 				085C66E61A937EC9007BC910 /* Data */,
 				085348C51BCEAD5B008BBBF9 /* URL Schemes */,
 				08D929F61A77E14400B6A68F /* Frameworks */,
@@ -2578,7 +2418,6 @@
 				08AA14BE1B0BA658002E1B2F /* SourceSansPro-Semibold.ttf in Resources */,
 				08967C0A1B57CD02000DDCF9 /* Main.storyboard in Resources */,
 				0889BD4A1C5A559B004B81CB /* placeholder480.png in Resources */,
-				0880DBD81CB13B620050D227 /* passThrough.vsh in Resources */,
 				08B4ABA71CBE960C00A302D7 /* teddies-bg.gif in Resources */,
 				08AA14C51B0BA658002E1B2F /* pressedButton.wav in Resources */,
 				08AA14C61B0BA658002E1B2F /* clear480x480.png in Resources */,
@@ -2630,7 +2469,6 @@
 				08A457091BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				0889BD561C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				0896D5261B2D8D430094ED41 /* sil-1.png in Resources */,
-				0880DBBA1CB13B620050D227 /* uniformBGParams.xml in Resources */,
 				08AA14FA1B0BA658002E1B2F /* goodBG.wav in Resources */,
 				0892DE6B1C47C4DD00CA537D /* downloading.mp4 in Resources */,
 				08B4AB991CBE960C00A302D7 /* hearts-bg.gif in Resources */,
@@ -2639,10 +2477,8 @@
 				0889BD4E1C5A559B004B81CB /* placeholderNegative240.png in Resources */,
 				0863BB971CBD34DC00A421C4 /* Debug.storyboard in Resources */,
 				083814271BBB3139004D902E /* pop.wav in Resources */,
-				0880DBB81CB13B620050D227 /* _uniformBGParams.xml in Resources */,
 				08357F2B1BC9328F00C302AA /* Footages.storyboard in Resources */,
 				083248531BECB3C500B4E82F /* EMBlockingProgressVC.storyboard in Resources */,
-				0880DBD61CB13B620050D227 /* passThrough.fsh in Resources */,
 				082C8B9A1C3D31ED00D6C6B7 /* replaced-bg2-480.png in Resources */,
 				085D694B1B25B9160083ADD9 /* emubeta_latest_build_info.plist in Resources */,
 				08A456D31B9D8D5A001AB79E /* MainNavigation.storyboard in Resources */,
@@ -2674,7 +2510,6 @@
 				08A4570C1BA02F08001AB79E /* NavBar.storyboard in Resources */,
 				08A457081BA02844001AB79E /* PacksAndFeatured.storyboard in Resources */,
 				08B4ABA61CBE960C00A302D7 /* teddies-bg.gif in Resources */,
-				0880DBD71CB13B620050D227 /* passThrough.vsh in Resources */,
 				08271FD11B01F5B90046F38E /* pressedButton.wav in Resources */,
 				08B4ABA01CBE960C00A302D7 /* hot-mask-v1.png in Resources */,
 				0889BD581C5A559B004B81CB /* placeholderPositive480.png in Resources */,
@@ -2723,7 +2558,6 @@
 				08AA14351B08F062002E1B2F /* Localizable.strings in Resources */,
 				08FF199D1C5BC09B00E15C36 /* EmuScreen.storyboard in Resources */,
 				08CF07B01B4D65CC00034BB5 /* shareapp.html in Resources */,
-				0880DBB91CB13B620050D227 /* uniformBGParams.xml in Resources */,
 				08409E9B1AB1C69700EC0930 /* SplashView.xib in Resources */,
 				0889BD4C1C5A559B004B81CB /* placeholderNegative240.png in Resources */,
 				08357F3A1BC9EC0400C302AA /* Me.storyboard in Resources */,
@@ -2733,10 +2567,8 @@
 				0889BD541C5A559B004B81CB /* placeholderPositive240.png in Resources */,
 				08967C251B5B9A9F000DDCF9 /* downloading.gif in Resources */,
 				0847E5641BCCF03F00F63CF1 /* emuDefaultContour480_OCT_13.ctr in Resources */,
-				0880DBB71CB13B620050D227 /* _uniformBGParams.xml in Resources */,
 				0896D5241B2D8D430094ED41 /* sil-1.png in Resources */,
 				085348C31BCD9A3B008BBBF9 /* party-thumb.jpg in Resources */,
-				0880DBD51CB13B620050D227 /* passThrough.fsh in Resources */,
 				082C8B9F1C3D3B1800D6C6B7 /* replaced-bg1-480.png in Resources */,
 				083814291BBB33EB004D902E /* popQ.wav in Resources */,
 				08271FCD1B01F5B90046F38E /* goodBG.wav in Resources */,
@@ -2910,25 +2742,21 @@
 				086578881BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */,
 				08C88DE01C70D9C700300AAA /* EMVideoVC.swift in Sources */,
 				084AF5381B3A14D00056FC34 /* EMShareTwitter.m in Sources */,
-				0880DBC01CB13B620050D227 /* HMBackgroundRemovalDebugger.mm in Sources */,
 				08AA144F1B0BA658002E1B2F /* EMAppCFGParser.m in Sources */,
 				08A456E41B9DC22A001AB79E /* EMTabsBarVC.m in Sources */,
 				0889BD2C1C5A15C0004B81CB /* UserTempFootage.m in Sources */,
 				081B087C1BB5C7AB003AFF16 /* UserFootage+CoreDataProperties.m in Sources */,
-				0880DBBC1CB13B620050D227 /* HMBackgroundMarks.m in Sources */,
 				08A886EF1CEB3C27001B8218 /* EMBuyButton.m in Sources */,
 				081B08781BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */,
 				08197D261CEDFB2E002C555C /* EMStoreNavigationCFG.m in Sources */,
 				08AA14561B0BA658002E1B2F /* EMPagerView.m in Sources */,
-				0805ABC61B4A813E0099ECBE /* HrEffectRGBA.cpp in Sources */,
 				084A0BE61CEB291500BA72F9 /* EMStoreDataSource.m in Sources */,
 				08A456E81B9DDD41001AB79E /* EMTestVC.m in Sources */,
-				0880DBC41CB13B620050D227 /* HMParser.m in Sources */,
 				08AA14571B0BA658002E1B2F /* EmuBaseStyle.m in Sources */,
+				08022F7D1D12A06D005E37EF /* HMParser.m in Sources */,
 				0845BDFA1BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */,
 				0867479F1C6B71B900AAE545 /* EMOBCell.m in Sources */,
 				081953701CEC99F200CE58E5 /* Feature.m in Sources */,
-				086747AD1C6B71E400AAE545 /* EMControlsBarVC.m in Sources */,
 				08AA14581B0BA658002E1B2F /* HMParams.m in Sources */,
 				08357F471BC9F53000C302AA /* EMMeNavigationCFG.m in Sources */,
 				08AA145A1B0BA658002E1B2F /* EMAnimatedGifPlayer.m in Sources */,
@@ -2962,21 +2790,18 @@
 				08357F541BCA053A00C302AA /* EMEmusPickerDataSource.m in Sources */,
 				08AE9CDA1C5D5F8D0075B03C /* EMUserParser.m in Sources */,
 				08CBF4811BE8C21C00466B36 /* EMSettingsVC.m in Sources */,
-				0880DBD41CB13B620050D227 /* HMPreviewView.m in Sources */,
-				0880DBD21CB13B620050D227 /* NSNotificationCenter+Utils.m in Sources */,
-				08AA146A1B0BA658002E1B2F /* EMPNGSequenceWriter.mm in Sources */,
 				08AA146B1B0BA658002E1B2F /* EMShareSaveToCameraRoll.m in Sources */,
 				08FB19651BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */,
 				08AA146D1B0BA658002E1B2F /* EMShareFBMessanger.m in Sources */,
 				08AA146E1B0BA658002E1B2F /* AppDelegate.m in Sources */,
 				08851DF01B540BD500DC9619 /* MongoID.m in Sources */,
-				0880DBCA1CB13B620050D227 /* HMError.m in Sources */,
 				0881F0B71BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */,
 				08357F331BC932F200C302AA /* EMFootagesDataSource.m in Sources */,
 				081971261BE9C0C00096CD75 /* UIView+Heirarchy.m in Sources */,
 				08820F8F1C3C022C00E6E0ED /* EMRecorderVC2.swift in Sources */,
 				08FB19511BC7C45F00F227C6 /* EMEmuCell.m in Sources */,
 				08AA146F1B0BA658002E1B2F /* EMDB+Files.m in Sources */,
+				08022F831D12A06D005E37EF /* NSNotification+Utils.m in Sources */,
 				081B087E1BB5C7AB003AFF16 /* UserFootage.m in Sources */,
 				0830B3B21BE82721003E64BA /* EMBackend+AppStore.m in Sources */,
 				08A457111BA03948001AB79E /* EMNavBarVC.m in Sources */,
@@ -2984,8 +2809,6 @@
 				086747BA1C6B73AA00AAE545 /* EMTickingProgressView.m in Sources */,
 				081B08861BB5C7AB003AFF16 /* EmuticonDef.m in Sources */,
 				08967C2C1B5BAEED000DDCF9 /* EMDownloadsManager2.m in Sources */,
-				0880DBCC1CB13B620050D227 /* HMImages.m in Sources */,
-				0880DBCE1CB13B620050D227 /* HMImageTools.mm in Sources */,
 				08AA14731B0BA658002E1B2F /* EMunizingView.m in Sources */,
 				08ED7FBD1B1B52AF00B6856F /* HMExperiments.m in Sources */,
 				08357F3F1BC9EDBD00C302AA /* EMMeVC.m in Sources */,
@@ -2997,6 +2820,7 @@
 				08D957441CD6201D003465E2 /* EMAdBannerVC.m in Sources */,
 				08AA147F1B0BA658002E1B2F /* EMTutorialVC.m in Sources */,
 				08AA14811B0BA658002E1B2F /* EMShareCopy.m in Sources */,
+				08022F851D12A06D005E37EF /* NSNotificationCenter+Utils.m in Sources */,
 				08AA14821B0BA658002E1B2F /* EMShare.m in Sources */,
 				08AA14831B0BA658002E1B2F /* EMUISound.m in Sources */,
 				08F104C31C6E3F7700546229 /* YLProgressBar.m in Sources */,
@@ -3011,7 +2835,6 @@
 				084FDA961C5E7FCC008BC87E /* EMUploadPublicFootageForJointEmu.m in Sources */,
 				08D558B81B286114006BF723 /* EMDebugCell.m in Sources */,
 				08357F371BC9331000C302AA /* EMFootageCell.m in Sources */,
-				0880DBC21CB13B620050D227 /* HMGMError.m in Sources */,
 				085348CD1BCEED99008BBBF9 /* EMUnhidePackagesParser.m in Sources */,
 				08FB194F1BC7C45F00F227C6 /* EMCounterCircleContainerView.m in Sources */,
 				08FB19571BC7C45F00F227C6 /* EMEmusFeedDataSource.m in Sources */,
@@ -3021,15 +2844,11 @@
 				08AA148D1B0BA658002E1B2F /* EMHolySheet.m in Sources */,
 				08A457051BA02844001AB79E /* EMPackCell.m in Sources */,
 				08FF19A11C5BC0DC00E15C36 /* EmuScreenVC.swift in Sources */,
-				0805ABC21B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				083248501BECB22B00B4E82F /* EMBlockingProgressVC.m in Sources */,
+				08022F7F1D12A06D005E37EF /* NSDictionary+TypeSafeValues.m in Sources */,
+				08022F811D12A06D005E37EF /* HMFileHash.m in Sources */,
 				08AA148F1B0BA658002E1B2F /* main.m in Sources */,
-				0880DBB41CB13B620050D227 /* HMCaptureSession.mm in Sources */,
-				0880DBC61CB13B620050D227 /* NSDictionary+TypeSafeValues.m in Sources */,
-				0880DBC81CB13B620050D227 /* HMFileHash.m in Sources */,
-				0880DBDA1CB13B620050D227 /* ShaderUtilities.c in Sources */,
 				08AE9D0F1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m in Sources */,
-				0880DBB61CB13B620050D227 /* HMCaptureSessionError.m in Sources */,
 				08E30BC71BB9CF6E009EDCFF /* UIView+MotionEffect.m in Sources */,
 				0865788C1BB7E148000DEDA7 /* EMFeaturedCell.m in Sources */,
 				08AE9CCD1C5D55A00075B03C /* HMServer+User.m in Sources */,
@@ -3043,7 +2862,6 @@
 				08AA14961B0BA658002E1B2F /* EMEmuticonParser.m in Sources */,
 				085348C91BCEAD92008BBBF9 /* EMURLSchemeHandler.m in Sources */,
 				08AA14971B0BA658002E1B2F /* UserFootage+Logic.m in Sources */,
-				0880DBBE1CB13B620050D227 /* HMBackgroundRemoval.mm in Sources */,
 				08AA14981B0BA658002E1B2F /* EMAlertsPermissionVC.m in Sources */,
 				08BE1F9F1B28487C00A34232 /* EMDebugViewController.m in Sources */,
 				08AA14991B0BA658002E1B2F /* EMGradientView.m in Sources */,
@@ -3066,7 +2884,6 @@
 				084DAC0D1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */,
 				0869D8621B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
 				08AE9D031C5E3CE50075B03C /* HMServer+JEmu.m in Sources */,
-				0880DBD01CB13B620050D227 /* NSNotification+Utils.m in Sources */,
 				08357F501BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,
 				08FB19611BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */,
 				08CA9AA61BD05302004A5A02 /* emu.xcdatamodeld in Sources */,
@@ -3090,26 +2907,22 @@
 				08AE9CCC1C5D55A00075B03C /* HMServer+User.m in Sources */,
 				08C88DDE1C70D9C700300AAA /* EMVideoVC.swift in Sources */,
 				0806BD7D1AA37DC20078F14B /* EMPackageParser.m in Sources */,
-				0880DBBF1CB13B620050D227 /* HMBackgroundRemovalDebugger.mm in Sources */,
 				086578871BB7DCBB000DEDA7 /* EMFeaturedVC.m in Sources */,
 				084AF5371B3A14D00056FC34 /* EMShareTwitter.m in Sources */,
 				0806BD7A1AA37DC20078F14B /* EMAppCFGParser.m in Sources */,
 				0889BD2A1C5A15C0004B81CB /* UserTempFootage.m in Sources */,
 				08A456E31B9DC22A001AB79E /* EMTabsBarVC.m in Sources */,
 				08A886EE1CEB3C27001B8218 /* EMBuyButton.m in Sources */,
-				0880DBBB1CB13B620050D227 /* HMBackgroundMarks.m in Sources */,
 				08197D251CEDFB2E002C555C /* EMStoreNavigationCFG.m in Sources */,
 				081B087B1BB5C7AB003AFF16 /* UserFootage+CoreDataProperties.m in Sources */,
 				08AE9D011C5E3CE50075B03C /* HMServer+JEmu.m in Sources */,
 				084A0BE51CEB291500BA72F9 /* EMStoreDataSource.m in Sources */,
 				081B08771BB5C7AB003AFF16 /* Emuticon+CoreDataProperties.m in Sources */,
+				08022F7C1D12A06D005E37EF /* HMParser.m in Sources */,
 				083C3E4A1A94BD99007A298C /* EMPagerView.m in Sources */,
-				0880DBC31CB13B620050D227 /* HMParser.m in Sources */,
-				0805ABC51B4A80380099ECBE /* HrEffectRGBA.cpp in Sources */,
 				08A456E71B9DDD41001AB79E /* EMTestVC.m in Sources */,
 				0819536F1CEC99F200CE58E5 /* Feature.m in Sources */,
 				0867479E1C6B71B900AAE545 /* EMOBCell.m in Sources */,
-				086747AC1C6B71E400AAE545 /* EMControlsBarVC.m in Sources */,
 				08B589A21A93BB65008D9068 /* EmuBaseStyle.m in Sources */,
 				08AE9D071C5E3DAB0075B03C /* EMJointEmuNewParser.m in Sources */,
 				0845BDF91BC5607900173B66 /* Emuticon+DownloadsHelpers.m in Sources */,
@@ -3143,28 +2956,23 @@
 				08E35B7E1BE8E1860026F11B /* EMSettingsSectionCell.m in Sources */,
 				089EAB831AE674D90074AD09 /* EMActionsArray.m in Sources */,
 				08FB19541BC7C45F00F227C6 /* EMEmusFeedVC.m in Sources */,
-				0880DBD31CB13B620050D227 /* HMPreviewView.m in Sources */,
-				0880DBD11CB13B620050D227 /* NSNotificationCenter+Utils.m in Sources */,
 				08357F531BCA053A00C302AA /* EMEmusPickerDataSource.m in Sources */,
 				08CBF4801BE8C21C00466B36 /* EMSettingsVC.m in Sources */,
-				085C67761A937EC9007BC910 /* EMPNGSequenceWriter.mm in Sources */,
 				0854EE3A1A9FC37000FD3833 /* EMShareSaveToCameraRoll.m in Sources */,
 				08FB19641BC7C51400F227C6 /* EMMajorRetakeOptionsSheet.m in Sources */,
 				08EBB4171ABC8E7800A91E71 /* EMShareFBMessanger.m in Sources */,
-				0880DBC91CB13B620050D227 /* HMError.m in Sources */,
 				085C675E1A937EC9007BC910 /* AppDelegate.m in Sources */,
 				08851DEE1B540BD500DC9619 /* MongoID.m in Sources */,
 				0881F0B61BC67A2E005A7323 /* UIView+CommonAnimations.m in Sources */,
 				08357F321BC932F200C302AA /* EMFootagesDataSource.m in Sources */,
 				081971241BE9C0C00096CD75 /* UIView+Heirarchy.m in Sources */,
+				08022F821D12A06D005E37EF /* NSNotification+Utils.m in Sources */,
 				08FB19501BC7C45F00F227C6 /* EMEmuCell.m in Sources */,
 				08820F8E1C3C022C00E6E0ED /* EMRecorderVC2.swift in Sources */,
 				080C9F501AA478C00066FB30 /* EMDB+Files.m in Sources */,
 				081B087D1BB5C7AB003AFF16 /* UserFootage.m in Sources */,
 				086747B91C6B73AA00AAE545 /* EMTickingProgressView.m in Sources */,
 				08FF19A31C5C0D0800E15C36 /* EmusVC.swift in Sources */,
-				0880DBCB1CB13B620050D227 /* HMImages.m in Sources */,
-				0880DBCD1CB13B620050D227 /* HMImageTools.mm in Sources */,
 				0830B3B01BE82721003E64BA /* EMBackend+AppStore.m in Sources */,
 				08A457101BA03948001AB79E /* EMNavBarVC.m in Sources */,
 				081B08851BB5C7AB003AFF16 /* EmuticonDef.m in Sources */,
@@ -3177,6 +2985,7 @@
 				08D957431CD6201D003465E2 /* EMAdBannerVC.m in Sources */,
 				08AE9D0D1C5E47EF0075B03C /* Emuticon+JointEmuLogic.m in Sources */,
 				080CB39B1AA51B6100603E30 /* EMPackageCell.m in Sources */,
+				08022F841D12A06D005E37EF /* NSNotificationCenter+Utils.m in Sources */,
 				08FB195C1BC7C45F00F227C6 /* EMEmusFeedNavigationCFG.m in Sources */,
 				08F104C21C6E3F7700546229 /* YLProgressBar.m in Sources */,
 				08B589831A938C5A008D9068 /* EmuticonDef+Logic.m in Sources */,
@@ -3190,7 +2999,6 @@
 				08E30BBE1BB9C730009EDCFF /* Package+CoreDataProperties.m in Sources */,
 				080B059B1AB064E2003C19E7 /* HMJSONResponseSerializerWithData.m in Sources */,
 				08357F2E1BC932D000C302AA /* EMFootagesVC.m in Sources */,
-				0880DBC11CB13B620050D227 /* HMGMError.m in Sources */,
 				08B589861A9391B3008D9068 /* Emuticon+Logic.m in Sources */,
 				081B08891BB5C7AB003AFF16 /* AppCFG.m in Sources */,
 				086747A01C6B71B900AAE545 /* EMOnboardingVC.m in Sources */,
@@ -3202,14 +3010,10 @@
 				08FB194E1BC7C45F00F227C6 /* EMCounterCircleContainerView.m in Sources */,
 				08FB19561BC7C45F00F227C6 /* EMEmusFeedDataSource.m in Sources */,
 				08E8F75C1AE5535000B27D2C /* EMHolySheet.m in Sources */,
+				08022F7E1D12A06D005E37EF /* NSDictionary+TypeSafeValues.m in Sources */,
+				08022F801D12A06D005E37EF /* HMFileHash.m in Sources */,
 				08A457041BA02844001AB79E /* EMPackCell.m in Sources */,
-				0880DBB31CB13B620050D227 /* HMCaptureSession.mm in Sources */,
-				0880DBC51CB13B620050D227 /* NSDictionary+TypeSafeValues.m in Sources */,
-				0880DBC71CB13B620050D227 /* HMFileHash.m in Sources */,
-				0880DBD91CB13B620050D227 /* ShaderUtilities.c in Sources */,
 				0889BD231C5A1566004B81CB /* PlaceHolderFootage.m in Sources */,
-				0880DBB51CB13B620050D227 /* HMCaptureSessionError.m in Sources */,
-				0805ABC11B492C9E0099ECBE /* HrEffectBW.cpp in Sources */,
 				0832484F1BECB22B00B4E82F /* EMBlockingProgressVC.m in Sources */,
 				085C67621A937EC9007BC910 /* main.m in Sources */,
 				08E30BC61BB9CF6E009EDCFF /* UIView+MotionEffect.m in Sources */,
@@ -3222,7 +3026,6 @@
 				08A456DB1B9DAF34001AB79E /* EMNavigationAndFlowVC.m in Sources */,
 				080B05991AB064E2003C19E7 /* BSONIdGenerator.m in Sources */,
 				0806BD7B1AA37DC20078F14B /* EMEmuticonParser.m in Sources */,
-				0880DBBD1CB13B620050D227 /* HMBackgroundRemoval.mm in Sources */,
 				085348C81BCEAD92008BBBF9 /* EMURLSchemeHandler.m in Sources */,
 				085C67741A937EC9007BC910 /* UserFootage+Logic.m in Sources */,
 				08A9071C1ACABB9E008534F7 /* EMAlertsPermissionVC.m in Sources */,
@@ -3245,7 +3048,6 @@
 				08AA57CC1CC4B603002FD435 /* EmuticonDef+DownloadsHelpers.m in Sources */,
 				083814331BBBC0C8004D902E /* EMCustomPopoverVC.m in Sources */,
 				084DAC0C1BEEA5D100FC9FE2 /* EMSoundPlayback.m in Sources */,
-				0880DBCF1CB13B620050D227 /* NSNotification+Utils.m in Sources */,
 				0869D8611B1E53E800A5E2F5 /* EMShareDocumentInteraction.m in Sources */,
 				08357F4F1BCA04E400C302AA /* EMEmusPickerVC.m in Sources */,
 				08FB19601BC7C45F00F227C6 /* EMFeedSelectionsActionBarVC.m in Sources */,
@@ -3284,22 +3086,12 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"../homage-cv-app/Homage/**",
-					"../homage-cv-app/Core/Util/**",
-					"../homage-cv-app/Core/ImageLib/**",
-					"../homage-cv-app/VimGui/**",
-					"../homage-cv-app/Tracking/**",
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
@@ -3307,11 +3099,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3319,13 +3106,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-lGpw",
-					"-lUtil",
-					"-lImage",
-					"-lPlnTracker",
-					"-lMattingLib",
-					"-lEdgeLib",
-					"-lHrRendererLib",
 					"-l\"icucore\"",
 					"-framework",
 					"\"Accelerate\"",
@@ -3392,22 +3172,12 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"../homage-cv-app/Homage/**",
-					"../homage-cv-app/Core/Util/**",
-					"../homage-cv-app/Core/ImageLib/**",
-					"../homage-cv-app/VimGui/**",
-					"../homage-cv-app/Tracking/**",
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
@@ -3415,11 +3185,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3427,13 +3192,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-lGpw",
-					"-lUtil",
-					"-lImage",
-					"-lPlnTracker",
-					"-lMattingLib",
-					"-lEdgeLib",
-					"-lHrRendererLib",
 					"-l\"icucore\"",
 					"-framework",
 					"\"Accelerate\"",
@@ -3579,22 +3337,12 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 					"$(PROJECT_DIR)/HSDK",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/emu/App/Supporting Files/emu-prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"../homage-cv-app/Homage/**",
-					"../homage-cv-app/Core/Util/**",
-					"../homage-cv-app/Core/ImageLib/**",
-					"../homage-cv-app/VimGui/**",
-					"../homage-cv-app/Tracking/**",
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
@@ -3602,11 +3350,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
@@ -3614,13 +3357,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-lGpw",
-					"-lUtil",
-					"-lImage",
-					"-lPlnTracker",
-					"-lMattingLib",
-					"-lEdgeLib",
-					"-lHrRendererLib",
 					"-l\"icucore\"",
 					"-framework",
 					"\"Accelerate\"",
@@ -3684,11 +3420,6 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Homage/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/VimGui/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Tracking/Lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
-					"../homage-cv-app/Edge/lib/Release$(EFFECTIVE_PLATFORM_NAME)/**",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 					"$(PROJECT_DIR)/HSDK",
@@ -3703,11 +3434,6 @@
 					NS_BLOCK_ASSERTIONS,
 				);
 				HEADER_SEARCH_PATHS = (
-					"../homage-cv-app/Homage/**",
-					"../homage-cv-app/Core/Util/**",
-					"../homage-cv-app/Core/ImageLib/**",
-					"../homage-cv-app/VimGui/**",
-					"../homage-cv-app/Tracking/**",
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
@@ -3715,24 +3441,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"../homage-cv-app/Core/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Homage/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/VimGui/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Tracking/Lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
-					"../homage-cv-app/Edge/lib/$(CV_BUILD_TYPE)$(EFFECTIVE_PLATFORM_NAME)",
 					"$(PROJECT_DIR)",
 					"$(inherited)",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-lGpw",
-					"-lUtil",
-					"-lImage",
-					"-lPlnTracker",
-					"-lMattingLib",
-					"-lEdgeLib",
-					"-lHrRendererLib",
 					"-l\"icucore\"",
 					"-framework",
 					"\"Accelerate\"",
